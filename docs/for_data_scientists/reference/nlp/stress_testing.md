@@ -1,0 +1,65 @@
+AI Stress Testing
+==========================
+
+To run RIME on NLP data, execute the RIME CLI using the `rime-engine run-nlp` command and specify the runtime parameters using the `--config-path` argument. Below is an overview of the supported configuration arguments for the runtime config.
+
+### Template
+```python
+{
+  "run_name": "Run Name",                       (REQUIRED)
+  "data_info": {...},                           (REQUIRED)
+  "model_info": {...},                          (REQUIRED)
+  "model_task": "Task Name",                    (REQUIRED)
+  "data_profiling_info": {...},
+  "tests_config_path": "path/to/tests/config",
+  "tests_config": {...},
+  "prediction_info": {...},
+  "random_seed": null,
+}
+```
+
+### Arguments
+
+- **`run_name`**: string, ***required***
+
+    The name under which your run will appear in the UI.
+
+- **`data_info`**: DataInfo, ***required***
+
+    Configuration for the datasources to use. For a reference on how to configure a datasource, see [Data Configuration](data_source.md).
+
+- **`model_info`**: ModelInfo, ***required***
+
+    Configuration for the model to use. For a reference on how to configure a model, see [NLP Model Configuration](model_source.md). If you are not providing a model, this should be `null`.
+
+- **`model_task`**: string, ***required***
+
+    Specification of the model task. Currently, the supported values are `"Text Classification"`, `"Named Entity Recognition"`, and `"Natural Language Inference"`.
+
+- `data_profiling_info`: DataProfilingInfo, *default* = `DataProfilingInfo()`
+
+    Specification of how to profile and interpret the data. For a guide on how
+    to specify this info, see [Data Profiling Configuration](data_profiling.md).
+
+    NOTE: this argument can also not be provided, in which all the defaults
+    will be used.
+
+- `tests_config_path`: string or `null`, *default* = `null`
+
+    Path to a TestSuiteConfig JSON file. If both `tests_config_path` and `test_config` are `null` RIME will use the default [TestSuiteConfig()](test_suite.rst) for the specified model task.  
+   
+   NOTE: Only one of `tests_config_path` OR `test_config` should be specified.
+
+- `tests_config`: TestSuiteConfig or `null`, *default* = `null`
+
+    Specification of which tests to run and what test parameters to use. If both `tests_config_path` and `tests_config` are `null` RIME will use the default [TestSuiteConfig()](test_suite.rst).  
+    
+    NOTE: Only one of `tests_config_path` OR `tests_config` should be specified.
+
+- `prediction_info`: PredictionInfo or `null`, *default* = `null`
+
+    Specification of how to handle model predictions for this run. For a guide on how to specify this info, see [NLP Prediction Configuration](prediction_info.md). NOTE: this argument can also not be provided, in which case the default configuration is used.
+
+- `random_seed`: int or `null`, *default* = `null`
+
+    The random seed to use for the run.

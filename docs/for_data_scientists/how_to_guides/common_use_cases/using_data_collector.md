@@ -1,0 +1,7 @@
+# Using the Data Collector
+
+Running a production AI service requires keeping records of your inputs and often demands routine
+tests of your model. Once you've deployed an AI Firewall alongside your production model, you can
+log datapoints to a data collector and schedule routine or manual runs on your data.
+In this <a class="reference external" href="https://colab.research.google.com/drive/1uRVK9P1I8fd-FZIl0jKvEBlBTmt-Pq1Q" target="_blank">Notebook Walkthrough</a>,
+we show how to make such changes.

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RIME Data Format Check &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+        <script src="../../../_static/main.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Reference" href="../../reference.html" />
+    <link rel="prev" title="Debugging the Python SDK" href="sdk.html" />
+<link href="../../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../../index.html">
+        <img src="../../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> RIME
+          </a>
+              <div class="version">
+                0.20.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelogs.html">Release Notes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/index.html">RIME overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering the RI Platform</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/index.html">Administering the RI Platform</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing the RI Platform</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data science with the RI Platform</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../get_started.html">Get Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../how_to_guides.html">How-To Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/api-authentication.html">API Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/adversarial_nlp.html">NLP Adversarial Robustness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/compare_test_runs.html">Comparing Two Test Runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/compliance.html">Compliance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/upload_data.html">Uploading Data to RIME</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/querying_results.html">Querying RIME Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/updating_a_firewall.html">Updating a Firewall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/using_data_collector.html">Using the Data Collector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/scheduling_ct_runs.html">Scheduling Continuous Testing Runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/rest_api.html">Using the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/modelcards.html">Model cards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/embeddings.html">Custom embeddings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../platform_integrations.html">Platform Integrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model_integrations.html">Model Integrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_integrations.html">Data Integrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../alerting/setup_alerts.html">Alerts and Notifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../alerting/test_run_progress.html">Test Run Progress</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../customization/custom_metrics.html">Custom Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../customization/custom_tests.html">Custom Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../customization/custom_docker.html">Run RIME on Managed Docker Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk.html">Debugging the Python SDK</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">RIME Data Format Check</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tabular">Tabular</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nlp">NLP</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">RIME in-depth reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../how_to_guides.html">How-To Guides</a></li>
+      <li class="breadcrumb-item active">RIME Data Format Check</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/for_data_scientists/how_to_guides/troubleshooting/rime_data_format_check.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="rime-data-format-check">
+<h1>RIME Data Format Check<a class="headerlink" href="#rime-data-format-check" title="Permalink to this heading"></a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">rime-data-format-check</span></code> is a command-line utility that validates data for use with the RIME platform by performing a series of sanity checks, depending on the nature of the data (tabular vs. NLP).</p>
+<p>Be sure to have the Python SDK installed beforehand:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install rime-sdk
+</pre></div>
+</div>
+<p>After installation, you will be able to run <code class="docutils literal notranslate"><span class="pre">rime-data-format-check</span></code> commands in your shell. Try running it with <code class="docutils literal notranslate"><span class="pre">--help</span></code> to see what flags to specify to use it on your data:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-data-format-check --help
+
+usage: rime-data-format-check <span class="o">[</span>-h<span class="o">]</span> <span class="o">(</span>-nlp <span class="p">|</span> -tabular<span class="o">)</span> --ref-path REF_PATH
+                              --eval-path EVAL_PATH --task <span class="o">{</span>Multi-class
+                              Classification,Regression,Binary
+                              Classification,Named Entity Recognition,Text
+                              Classification<span class="o">}</span>
+                              <span class="o">[</span>--preds-ref-path PREDS_REF_PATH<span class="o">]</span>
+                              <span class="o">[</span>--preds-eval-path PREDS_EVAL_PATH<span class="o">]</span>
+                              <span class="o">[</span>--label-col-name LABEL_COL_NAME<span class="o">]</span>
+                              <span class="o">[</span>--pred-col-name PRED_COL_NAME<span class="o">]</span>
+                              <span class="o">[</span>--timestamp-col-name TIMESTAMP_COL_NAME<span class="o">]</span>
+</pre></div>
+</div>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
+<section id="tabular">
+<h3>Tabular<a class="headerlink" href="#tabular" title="Permalink to this heading"></a></h3>
+<p><strong>For a full list of the requirements for tabular input data, see the specification <a class="reference internal" href="../../reference/tabular/task_data_format.html"><span class="doc std std-doc">here</span></a>.</strong></p>
+<p>These examples were run using the Kaggle Titanic <a class="reference external" href="https://www.kaggle.com/c/titanic/data">dataset</a>.</p>
+<section id="basic-usage-no-labels-or-predictions">
+<h4>1. Basic Usage (no labels or predictions)<a class="headerlink" href="#basic-usage-no-labels-or-predictions" title="Permalink to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-data-format-check -tabular <span class="se">\</span>
+  --task <span class="s2">&quot;Binary Classification&quot;</span> <span class="se">\</span>
+  --ref-path data/titanic/train.csv <span class="se">\</span>
+  --eval-path data/titanic/test.csv
+</pre></div>
+</div>
+<p>Output (PASSING):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+Inspecting &#39;data/titanic/train.csv&#39;
+Done!
+
+Inspecting &#39;data/titanic/test.csv&#39;
+Done!
+
+WARNING: No prediction column is provided. Although you can still run RIME without predictions, it will not be as powerful as if you run it WITH predictions.
+
+WARNING: No label column is provided. Although you can still run RIME without labels, it will not be as powerful as if you run it WITH labels.
+
+
+---
+
+
+Your data should work with RIME!
+
+</pre></div>
+</div>
+</section>
+<section id="with-labels-and-a-sample-failure">
+<h4>2. With Labels (and a sample failure)<a class="headerlink" href="#with-labels-and-a-sample-failure" title="Permalink to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-data-format-check -tabular <span class="se">\</span>
+  --task <span class="s2">&quot;Binary Classification&quot;</span> <span class="se">\</span>
+  --ref-path data/titanic/train.csv <span class="se">\</span>
+  --eval-path data/titanic/test.csv <span class="se">\</span>
+  --label-col-name <span class="s2">&quot;Survived&quot;</span>
+</pre></div>
+</div>
+<p>Output (ERROR):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+Inspecting &#39;data/titanic/train.csv&#39;
+Done!
+
+Inspecting &#39;data/titanic/test.csv&#39;
+
+---
+
+Error:
+
+Label column (Survived) not found in data (data/titanic/test.csv). If a label column exists in one dataset, it MUST exist in the other.
+
+</pre></div>
+</div>
+<p>In this case, it looks like we’re missing the label column from our evaluation set.
+For the Titanic dataset, these values are provided in the <code class="docutils literal notranslate"><span class="pre">gender_submission.csv</span></code>.</p>
+<p>Adding the label column to the evaluation set should resolve the issue:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">df_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;titanic/test.csv&quot;</span><span class="p">)</span>
+<span class="n">df_labels</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;titanic/gender_submission.csv&quot;</span><span class="p">)</span>
+<span class="n">df_test_with_labels</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_test</span><span class="p">,</span> <span class="n">df_labels</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;PassengerId&quot;</span><span class="p">])</span>
+<span class="n">df_test_with_labels</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;titanic/test_with_labels.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using the updated evaluation set, the data checks should pass:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-data-format-check -tabular <span class="se">\</span>
+  --task <span class="s2">&quot;Binary Classification&quot;</span> <span class="se">\</span>
+  --ref-path data/titanic/train.csv <span class="se">\</span>
+  --eval-path data/titanic/test_with_labels.csv <span class="se">\</span>
+  --label-col-name <span class="s2">&quot;Survived&quot;</span>
+</pre></div>
+</div>
+<p>Output (PASSING):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+Inspecting &#39;data/titanic/train.csv&#39;
+Done!
+
+Inspecting &#39;data/titanic/test_with_labels.csv&#39;
+Done!
+
+WARNING: No prediction column is provided. Although you can still run RIME without predictions, it will not be as powerful as if you run it WITH predictions.
+
+
+---
+
+
+Your data should work with RIME!
+
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">--pred-col-name</span></code> flag operates identically to <code class="docutils literal notranslate"><span class="pre">--label-col-name</span></code>.</p>
+</section>
+</section>
+<section id="nlp">
+<h3>NLP<a class="headerlink" href="#nlp" title="Permalink to this heading"></a></h3>
+<p><strong>For a full list of the requirements for NLP input data, see the specification <a class="reference internal" href="../../reference/nlp/task_data_format.html"><span class="doc std std-doc">here</span></a>.</strong></p>
+<p>These examples were run on a formatted version of the arXiv <a class="reference external" href="https://www.kaggle.com/Cornell-University/arxiv">dataset</a>,
+where input files contains data points with the following structure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="ow">in</span> <span class="n">data</span><span class="o">/</span><span class="n">classification</span><span class="o">/</span><span class="n">arxiv</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">json</span><span class="p">)</span>
+<span class="p">[</span>
+  <span class="o">...</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;On maxima and ladder processes for a dense class of Levy processes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;2007-05-23 00:00:00&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s2">&quot;probabilities&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.11</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.82</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+  <span class="p">},</span>
+  <span class="o">...</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<section id="basic-usage-predictions-included-with-inputs">
+<h4>1. Basic Usage (predictions included with inputs)<a class="headerlink" href="#basic-usage-predictions-included-with-inputs" title="Permalink to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-data-format-check -nlp <span class="se">\</span>
+  --task <span class="s2">&quot;Text Classification&quot;</span> <span class="se">\</span>
+  --ref-path data/classification/arxiv/train.json <span class="se">\</span>
+  --eval-path data/classification/arxiv/val.json
+</pre></div>
+</div>
+<p>Output (PASSING)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-data-format-check -nlp <span class="se">\</span>
+  --task <span class="s2">&quot;Text Classification&quot;</span> <span class="se">\</span>
+  --ref-path ../../../rime-data-format-check/data/classification/arxiv/train.json <span class="se">\</span>
+  --eval-path ../../../rime-data-format-check/data/classification/arxiv/val.json
+
+Inspecting <span class="s1">&#39;../../../rime-data-format-check/data/classification/arxiv/train.json&#39;</span>:
+<span class="m">100</span>%<span class="p">|</span>█████████████████████████████████████████████████████████████████████████████<span class="p">|</span> <span class="m">50000</span>/50000 <span class="o">[</span><span class="m">00</span>:01&lt;<span class="m">00</span>:00, <span class="m">33219</span>.50it/s<span class="o">]</span>
+
+Inspecting <span class="s1">&#39;../../../rime-data-format-check/data/classification/arxiv/val.json&#39;</span>:
+<span class="m">100</span>%<span class="p">|</span>███████████████████████████████████████████████████████████████████████████<span class="p">|</span> <span class="m">147087</span>/147087 <span class="o">[</span><span class="m">00</span>:04&lt;<span class="m">00</span>:00, <span class="m">33319</span>.64it/s<span class="o">]</span>
+
+---
+
+
+Your data should work with RIME!
+</pre></div>
+</div>
+</section>
+<section id="with-predictions-provided-separately-and-a-sample-failure">
+<h4>2. With Predictions Provided Separately (and a sample failure)<a class="headerlink" href="#with-predictions-provided-separately-and-a-sample-failure" title="Permalink to this heading"></a></h4>
+<p>In this example, predictions are omitted from the inputs and provided in a
+separate file, <code class="docutils literal notranslate"><span class="pre">data/classification/arxiv/train_preds.json</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="ow">in</span> <span class="n">data</span><span class="o">/</span><span class="n">classification</span><span class="o">/</span><span class="n">arxiv</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">json</span><span class="p">)</span>
+<span class="p">[</span>
+  <span class="o">...</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;On maxima and ladder processes for a dense class of Levy processes&quot;</span>
+    <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;2007-05-23 00:00:00&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="mi">4</span>
+  <span class="p">},</span>
+  <span class="o">...</span>
+<span class="p">]</span>
+
+<span class="p">(</span><span class="ow">in</span> <span class="n">data</span><span class="o">/</span><span class="n">classification</span><span class="o">/</span><span class="n">arxiv</span><span class="o">/</span><span class="n">train_preds</span><span class="o">.</span><span class="n">json</span><span class="p">)</span>
+<span class="p">[</span>
+  <span class="o">...</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;probabilities&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.11</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.82</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+  <span class="p">},</span>
+  <span class="o">...</span>
+<span class="p">]</span>
+
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-data-format-check -nlp <span class="se">\</span>
+  --task <span class="s2">&quot;Text Classification&quot;</span> <span class="se">\</span>
+  --ref-path data/classification/arxiv/train.json <span class="se">\</span>
+  --preds-ref-path data/classification/arxiv/train_preds.json <span class="se">\</span>
+  --eval-path data/classification/arxiv/val.json <span class="se">\</span>
+  --preds-eval-path data/classification/arxiv/val_preds.json
+</pre></div>
+</div>
+<p>Output (ERROR):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+
+Inspecting &#39;data/classification/arxiv/train_preds.json&#39;:
+  0%|                                                                             | 35/50000 [00:00&lt;00:02, 24377.39it/s]
+
+---
+
+Error:
+
+File &#39;data/classification/arxiv/train_preds.json&#39;, Index 35:
+
+Key &#39;probabilities&#39; error:
+Or(&lt;class &#39;float&#39;&gt;) did not validate 24
+24 should be instance of &#39;float&#39;
+
+---
+
+Inputs for task &#39;Text Classification&#39; must adhere to the following structure:
+
+{&#39;probabilities&#39;: [&lt;class &#39;float&#39;&gt;]}
+
+</pre></div>
+</div>
+<p>In this case, it looks like one of our prediction entities has an invalid value of <code class="docutils literal notranslate"><span class="pre">24</span></code>,
+an <code class="docutils literal notranslate"><span class="pre">int</span></code> instead of the expected <code class="docutils literal notranslate"><span class="pre">float</span></code>.</p>
+<p>The element at the specified file (<code class="docutils literal notranslate"><span class="pre">data/classification/arxiv/train_preds.json</span></code>) and index (<code class="docutils literal notranslate"><span class="pre">35</span></code>)
+has the following values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;probabilities&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">24</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.68</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>It appears that the first value, <code class="docutils literal notranslate"><span class="pre">24</span></code>, should actually be <code class="docutils literal notranslate"><span class="pre">0.24</span></code>. Adusting the value resolves the issue:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+Inspecting &#39;data/classification/arxiv/train_preds.json&#39;:
+100%|█████████████████████████████████████████████████████████████████████████████|50000/50000 [00:01&lt;00:00, 26954.06it/s]
+
+Inspecting &#39;data/classification/arxiv/val_preds.json&#39;:
+100%|███████████████████████████████████████████████████████████████████████████|147087/147087 [00:05&lt;00:00, 27215.18it/s]
+
+Inspecting &#39;data/classification/arxiv/train.json&#39;:
+100%|█████████████████████████████████████████████████████████████████████████████|50000/50000 [00:01&lt;00:00, 32684.76it/s]
+
+Inspecting &#39;data/classification/arxiv/val.json&#39;:
+100%|███████████████████████████████████████████████████████████████████████████|147087/147087 [00:04&lt;00:00, 32876.84it/s]
+
+---
+
+
+Your data should work with RIME!
+
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sdk.html" class="btn btn-neutral float-left" title="Debugging the Python SDK" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../reference.html" class="btn btn-neutral float-right" title="Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

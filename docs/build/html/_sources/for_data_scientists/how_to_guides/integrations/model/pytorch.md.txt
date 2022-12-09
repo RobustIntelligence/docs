@@ -1,0 +1,100 @@
+# PyTorch
+
+Copy the code snippet below and follow the commented steps to connect RIME to a PyTorch model.
+
+Once that is done, you can specify that model file when [configuring your model source](/for_data_scientists/reference/tabular/model_source.md).
+
+```python
+"""Template for connecting a PyTorch model to RIME.
+
+We expect this file to contain a `predict_df` function that takes in a Pandas 
+DataFrame corresponding to one or more rows in the dataset. This method should
+return a NumPy array containing scores between 0 and 1 for each row in the dataset.
+The DataFrame will be loaded from the data sources you configure.
+
+This specific file implements this assuming that 1) you use a standardization 
+scaler on the input data, 2) you define the model class in this file, and 3) 
+you saved the model via state_dict (see section 4 of: 
+https://pytorch.org/tutorials/recipes/recipes/saving_and_loading_models_for_inference.html). 
+
+"""
+
+from pathlib import Path
+
+import joblib
+import numpy as np
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+
+import torch
+import torch.nn as nn
+
+# Step 1: Define the model class.
+
+class BinaryClassification(nn.Module):
+    def __init__(self):
+        """Define network architecture."""
+
+        super().__init__()
+
+        input_dims = 30
+        hidden_dims = 64
+
+        self.layer_1 = nn.Linear(input_dims, hidden_dims) 
+        self.layer_2 = nn.Linear(hidden_dims, hidden_dims)
+        self.layer_out = nn.Linear(hidden_dims, 1) 
+
+        self.relu = nn.ReLU()
+        self.dropout = nn.Dropout(p=0.1)
+        self.batchnorm1 = nn.BatchNorm1d(hidden_dims)
+        self.batchnorm2 = nn.BatchNorm1d(hidden_dims)
+
+    def forward(self, inputs: torch.FloatTensor):
+        """Implement the forward pass."""
+
+        x = self.relu(self.layer_1(inputs))
+        x = self.batchnorm1(x)
+        x = self.relu(self.layer_2(x))
+        x = self.batchnorm2(x)
+        x = self.dropout(x)
+        x = self.layer_out(x)
+
+        return x
+
+# Step 2: Load the model and scaler.
+
+model_dir = Path(__file__).parent / "model"
+scaler: StandardScaler = joblib.load(model_dir / "scaler.bin")
+
+model = BinaryClassification()
+model.load_state_dict(torch.load(model_dir / "model.pt"))
+model.eval()
+
+# Step 3: If the model requires additional preprocessing to the input data, 
+# include the logic in the below 'preprocess_df' function or 'predict_df'
+# function. By default, RIME passes rows from the dataset defined in the config
+# to 'predict_df' with the label and prediction columns omitted.
+
+def preprocess_df(df: pd.DataFrame) -> pd.DataFrame:
+    """Apply preprocessing to rows of the dataframe."""
+
+    return scaler.transform(df)
+
+# Step 4: Implement the below function that returns a prediction per row in
+# the dataset, with any additional preprocessing if necessary.
+
+def predict_df(df: pd.DataFrame) -> np.ndarray:
+    """Return array of probabilities assigned to the positive class."""
+
+    # Apply custom preprocessing to the row.
+    df = preprocess_df(df)
+
+    output = model(torch.FloatTensor(df))
+    preds = torch.sigmoid(output)
+    preds = preds.detach().numpy().reshape(-1)
+
+    if np.isnan(preds).any():
+      raise ValueError("Unable to return predictions, model outputs NaN.")
+
+    return preds
+```

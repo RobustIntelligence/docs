@@ -1,0 +1,26 @@
+# Configuring SMTP for alerts
+
+Sending alerts over email requires access to an SMTP server.
+
+1.  Sign in to an RI Platform instance.  
+    >   The Workspaces page appears.
+2.  Click *Settings* in the lower left corner.  
+    >   The Organization Settings page appears.
+3.  Click *SMTP Configuration*.  
+    >   The SMTP Configuration pane appears.
+4.  Type the email address for the SMTP server in *Email*.  
+5.  Type the password for the SMTP server in *Email Password*.  
+6.  Type the URL for the SMTP server in *Server Url*.  
+7.  Type a port number in *Port*.  
+    >   The choice of port number defines the expected encryption approach.  
+    | Port | Behavior                                |
+    |------|-----------------------------------------|
+    | 25   | No encryption                           |
+    | 465  | Secure Sockets Layer (SSL)              |
+    | 587  | Opportunistic TLS (STARTTLS)            |
+    | 2525 | Transport Layer Security (TLS)          |
+8.  From the *Timezone* drop-down, select a time zone.  
+    >   Email sent from this SMTP server bases timestamps on the selected time zone.
+9.  Click *Save*.  
+
+The RI Platform instance can now [send email alerts](../../for_data_scientists/how_to_guides/alerting/setup_alerts.md) using the configured SMTP server.

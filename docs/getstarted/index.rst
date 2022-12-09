@@ -1,0 +1,70 @@
+RIME overview
+================================
+
+.. include:: explanation/product-overview.md
+   :parser: myst_parser.sphinx_
+
+Please see the below section for a description of what "Summary Tests" are and what information they provide:
+
+.. toctree::
+   :maxdepth: 1
+
+   explanation/summary_tests.md
+
+Please see below for a list of summary tests (including when
+they are run), as well as detailed descriptions of all RIME tests.
+
+RI Platform consolidated test database
+--------------------------------------
+.. csv-table:: 
+   :class: datatable
+   :file: test_db.csv
+   :header-rows: 1
+   :stub-columns: 1
+
+.. A complete list of all tests in our stress testing suite is linked `here <https://docs.google.com/spreadsheets/d/1eQLCsB3K7uWta9SLXW7XB6j_pNN-41O-GRF9WFQVeZI/edit?usp=sharing>`__.
+.. Attempted iframe
+.. TODO find a way to make this interactable/filterable/sortable maybe raw:: html
+   <iframe width="1000px" height="1000px" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTJjZLwvr4OUgkS-5TerhZa5319TI32M1hdDP7vLwWcPRtmvj9noeG9o28qwyIDPQJk6SchEu-_7I9R/pubhtml?gid=1697554255&amp;single=true&amp;widget=true&amp;headers=false">
+   </iframe>
+
+Tabular
+---------------------------------------
+.. toctree::
+   :maxdepth: 1
+
+   explanation/tabular_test_categories.md
+   explanation/tests/tabular/tests.md
+
+NLP
+---------------------------------------
+.. toctree::
+   :maxdepth: 1
+
+   explanation/unstructured_test_categories.md
+   explanation/tests/nlp/text_classification_tests.md
+   explanation/tests/nlp/natural_language_inference_tests.md
+   explanation/tests/nlp/named_entity_recognition_tests.md
+
+CV
+---------------------------------------
+.. toctree::
+   :maxdepth: 1
+
+   explanation/unstructured_test_categories.md
+   explanation/tests/cv/image_classification_tests.md
+   explanation/tests/cv/object_detection_tests.md
+
+.. Compliance
+   ---------------------------------------
+   .. toctree::
+      :maxdepth: 1
+
+      explanation/compliance_test_categories.md
+
+RIME local trial
+---------------------------------------
+.. toctree::
+   :maxdepth: 1
+
+   local_trial/index.rst 

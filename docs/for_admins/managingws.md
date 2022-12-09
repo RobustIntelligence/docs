@@ -1,0 +1,50 @@
+# Managing Workspaces
+
+User accounts with the correct privileges can create, edit, and remove workspaces. These privileges depend on the user account [role](userroles.md) and [RBAC](rbac.md) level.
+
+## Creating a Workspace
+
+1.  Sign in to a user account that has administrative privileges for an RI
+    Platform instance.  
+    >   The Workspaces page appears.
+2.  Click *Create Workspace*.
+    >   The Create New Workspace dialog box appears.
+3.  In *Name*, type a name for the workspace.
+4.  (Optional) In *Description*, type a description for the workspace.
+5.  From the *Agent Setup* drop-down, select a set of agents.
+6.  From the list of selected agents, click *Set as Default* for the default agent.
+    >   When only one agent is selected, the RI Platform automatically assigns
+    >   that agent as the default agent for the workspace.
+7.  (Optional) Click the *Members* tab.
+    >   The Members tab appears.
+8.  In the *Add Team Members* field, type a username or email address and click *Add*.
+    >   Skip this step when omitting the optional previous step. Granting membership
+    >   after workspace creation is discussed in [Role-based Access Contro](rbac.md).
+7.  Click *Create*.
+
+The workspace is ready to use.
+
+## Editing a Workspace
+
+1.  Sign in to a user account that has administrative privileges for an RI
+    Platform instance.  
+    >   The Workspaces page appears.
+2.  Click the three-dot menu to the right of the workspace name and select *Manage Workspace*.
+    >   The Workspace Settings page appears with the General tab selected.
+3.  In the *General* pane, make changes and click *Save*.
+
+The workspace settings are changed. Changes to [workspace membership](rbac.md), [API access tokens](api-authentication.md),
+[managed images](mimgoverview.md), [agents](agentoverview.md), and [data sources](data-sources.md) are discussed in their respective sections.
+
+## Removing a Workspace
+
+1.  Sign in to a user account that has administrative privileges for an RI
+    Platform instance.  
+    >   The Workspaces page appears.
+2.  Click the three-dot menu to the right of the workspace name and select *Remove*.
+    >   A confirmation dialog box appears.
+3.  Click *Remove Workspace*.
+
+The RI Platform instance deletes the workspace, along with all projects and test runs in that workspace.
+
+<!--## For earlier releases of the RI Platform-->

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API access tokens &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+        <script src="../_static/main.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Workspaces" href="workspaces.html" />
+    <link rel="prev" title="SSO configuration" href="sso.html" />
+<link href="../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../index.html">
+        <img src="../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> RIME
+          </a>
+              <div class="version">
+                0.20.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelogs.html">Release Notes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getstarted/index.html">RIME overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering the RI Platform</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Administering the RI Platform</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="users.html">Managing users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userroles.html">User account roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rbac.html">Role-based Access Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userauthn.html">Native user authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sso.html">SSO configuration</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">API access tokens</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#generating-an-api-access-token">Generating an API access token.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#authenticating-to-the-sdk-with-the-api-token">Authenticating to the SDK with the API token</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#using-the-sdk">Using the SDK</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-the-python-requests-api">Using the Python requests API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-the-curl-utility">Using the <code class="docutils literal notranslate"><span class="pre">curl</span></code> utility</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="workspaces.html">Workspaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managingws.html">Managing Workspaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="agentmgmt.html">Managing agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mimgoverview.html">Managed Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-sources.html">Configuring data sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="audit-logs.html">Audit Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="smtp-configuration.html">Configuring SMTP for alerts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting/faq.html">FAQ</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing the RI Platform</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data science with the RI Platform</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../for_data_scientists/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../for_data_scientists/reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">RIME in-depth reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Administering the RI Platform</a></li>
+      <li class="breadcrumb-item active">API access tokens</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/for_admins/api-authentication.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-access-tokens">
+<h1>API access tokens<a class="headerlink" href="#api-access-tokens" title="Permalink to this heading"></a></h1>
+<p>Access tokens authorize a user account to issue calls to the RI Platform REST API or Python SDK. API Access Tokens are tied to a specific <a class="reference internal" href="workspaces.html"><span class="doc std std-doc">workspace</span></a> and <a class="reference internal" href="users.html"><span class="doc std std-doc">user</span></a>. Users with the Organizaton administrator <a class="reference internal" href="userroles.html"><span class="doc std std-doc">role</span></a> manage API access tokens for all user accounts that are members of a workspace. By default, an API access token is assigned to “Workspace 1” and the default administrator account. An RI Platform instance can have a maximum of 200 API access tokens across all workspaces. API access tokens expire 270 days after creation.</p>
+<section id="generating-an-api-access-token">
+<h2>Generating an API access token.<a class="headerlink" href="#generating-an-api-access-token" title="Permalink to this heading"></a></h2>
+<ol class="arabic">
+<li><p>Sign in to a user account.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Select a workspace.</p>
+<blockquote>
+<div><p>The workspace summary page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click the <em>Settings</em> icon in the lower left corner.</p>
+<blockquote>
+<div><p>The Workspace Settings page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click <em>API Access Tokens</em>.</p>
+<blockquote>
+<div><p>The API Access Tokens pane appears.</p>
+</div></blockquote>
+</li>
+<li><p>In <em>Token Name</em>, type a name for the API access token then click <em>Create Token</em>.</p>
+<blockquote>
+<div><p>A confirmation dialog box appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click the Copy to Clipboard icon at the right of the text field that displays the token.</p>
+<blockquote>
+<div><p>The API access token is copied to the system clipboard.</p>
+</div></blockquote>
+</li>
+<li><p>Paste the API access token into a document for future reference.</p>
+<blockquote>
+<div><p>As a best practice, keep this document secure.</p>
+</div></blockquote>
+</li>
+</ol>
+<!--img src="../_static/api-access-tokens.png"-->
+</section>
+<section id="authenticating-to-the-sdk-with-the-api-token">
+<h2>Authenticating to the SDK with the API token<a class="headerlink" href="#authenticating-to-the-sdk-with-the-api-token" title="Permalink to this heading"></a></h2>
+<p>The API token must be passed with each request to the REST API. The method used varies depending on the API access method used.</p>
+<section id="using-the-sdk">
+<h3>Using the SDK<a class="headerlink" href="#using-the-sdk" title="Permalink to this heading"></a></h3>
+<p>Import the SDK with <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">rime</span></code>, assign the value of the token to the <code class="docutils literal notranslate"><span class="pre">API_TOKEN</span></code> variable, and initialize the client with the <code class="docutils literal notranslate"><span class="pre">Client(</span></code><em>cluster_url</em><code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">API_TOKEN)</span></code> call. Replace <code class="docutils literal notranslate"><span class="pre">cluster_url</span></code> with the URI of the API call. Sample request:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># value of the API access token </span>
+<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># dedicated domain of RI Platform instance, such as rime.stable.rime.dev)</span>
+<span class="n">rime_client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">API_TOKEN</span><span class="p">)</span>
+
+<span class="n">project</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Fraud Demo&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;This is an Onboarding Demo&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="using-the-python-requests-api">
+<h3>Using the Python requests API<a class="headerlink" href="#using-the-python-requests-api" title="Permalink to this heading"></a></h3>
+<p>When the Robust Intelligence SDK is unavailable in a specific environment, construct requests using the standard Python requests library. Sample request:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;rime-api-key&quot;</span><span class="p">:</span> <span class="n">PASTE_API_KEY</span> <span class="n">here</span><span class="p">}</span>
+
+<span class="c1"># CREATE A PROJECT</span>
+<span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;new&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;for rest testing&quot;</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;https://rime.latest.rime.dev/projects&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="using-the-curl-utility">
+<h3>Using the <code class="docutils literal notranslate"><span class="pre">curl</span></code> utility<a class="headerlink" href="#using-the-curl-utility" title="Permalink to this heading"></a></h3>
+<p>You can make REST API calls directly from the command line with the <code class="docutils literal notranslate"><span class="pre">curl</span></code> utility.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sso.html" class="btn btn-neutral float-left" title="SSO configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="workspaces.html" class="btn btn-neutral float-right" title="Workspaces" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

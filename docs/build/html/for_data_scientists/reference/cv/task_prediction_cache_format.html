@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prediction Cache Data Format &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+        <script src="../../../_static/main.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Specify a Computer Vision Model" href="specify_model_cv.html" />
+    <link rel="prev" title="Input Data Format" href="task_data_format.html" />
+<link href="../../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../../index.html">
+        <img src="../../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> RIME
+          </a>
+              <div class="version">
+                0.20.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelogs.html">Release Notes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/index.html">RIME overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering the RI Platform</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/index.html">Administering the RI Platform</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing the RI Platform</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data science with the RI Platform</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../reference.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../tabular.html">Tabular Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nlp.html">NLP Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../cv.html">CV Configuration</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../cv.html#rime-configuration">RIME Configuration</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="stress_testing.html">AI Stress Testing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="firewall_continuous_tests.html">AI Firewall Continuous Tests</a></li>
+<li class="toctree-l4"><a class="reference internal" href="data_source.html">Data Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model_source.html">Model Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="prediction_info.html">Prediction Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="task_data_format.html">Input Data Format</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Prediction Cache Data Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="specify_model_cv.html">Specify a Computer Vision Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="specify_image_loading.html">Specify an Image Loading Function</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../cv.html#profiling-configuration">Profiling Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cv.html#tests-configuration">Tests Configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">RIME in-depth reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../reference.html">Reference</a></li>
+          <li class="breadcrumb-item"><a href="../cv.html">CV Configuration</a></li>
+      <li class="breadcrumb-item active">Prediction Cache Data Format</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/for_data_scientists/reference/cv/task_prediction_cache_format.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="prediction-cache-data-format">
+<h1>Prediction Cache Data Format<a class="headerlink" href="#prediction-cache-data-format" title="Permalink to this heading"></a></h1>
+<section id="supported-file-formats">
+<h2>Supported File Formats<a class="headerlink" href="#supported-file-formats" title="Permalink to this heading"></a></h2>
+<p>RIME CV supports the same file formats for the prediction cache as it does for the <a class="reference internal" href="task_data_format.html"><span class="doc std std-doc">input data</span></a>, namely <a class="reference external" href="https://www.json.org/json-en.html">JSON</a> (<code class="docutils literal notranslate"><span class="pre">.json</span></code>) and JSON lines (<code class="docutils literal notranslate"><span class="pre">.jsonl</span></code>) formats. Each prediction should be stored in its own dictionary in the json list or as a dictionary on its own line for JSONL files.</p>
+<p>To use a prediction cache for a given test run, it is currently required that a prediction be present for every data point in the corresponding input data. For example, if a dataset is of size <code class="docutils literal notranslate"><span class="pre">N</span></code>, line <code class="docutils literal notranslate"><span class="pre">i</span></code> in the prediction cache should contain the model output for input example <code class="docutils literal notranslate"><span class="pre">i</span></code> in the dataset for every <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">i</span> <span class="pre">&lt;</span> <span class="pre">N</span></code>.</p>
+<p>The data format for each prediction is similar to that for the <a class="reference internal" href="task_data_format.html"><span class="doc std std-doc">input data</span></a>, the only difference being the “image identifier” and ground truth label keys for the CV task are removed.</p>
+<section id="image-classification">
+<h3>Image Classification<a class="headerlink" href="#image-classification" title="Permalink to this heading"></a></h3>
+<p>For the Image Classification task, each prediction is represented by a dictionary containing the following key-value pair:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;probabilities&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.94</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">]</span>                 <span class="p">(</span><span class="n">REQUIRED</span><span class="p">)</span>
+    <span class="p">},</span>
+    <span class="o">...</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">probabilities</span></code></strong>: List[float],  <em><strong>required</strong></em></p>
+<p>The model prediction for this data point. This should be a normalized vector of class probabilities, with a probability for each possible class.</p>
+</li>
+</ul>
+</section>
+<section id="object-detection">
+<h3>Object Detection<a class="headerlink" href="#object-detection" title="Permalink to this heading"></a></h3>
+<p>For the Object Detection task, each prediction is represented by a dictionary of the following form:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;predicted_bounding_boxes&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;x_min&quot;</span><span class="p">:</span> <span class="mf">0.3051212430000305</span><span class="p">,</span>
+                <span class="s2">&quot;x_max&quot;</span><span class="p">:</span> <span class="mf">0.5722537040710449</span><span class="p">,</span>
+                <span class="s2">&quot;y_min&quot;</span><span class="p">:</span> <span class="mf">0.07785701006650925</span><span class="p">,</span>
+                <span class="s2">&quot;y_max&quot;</span><span class="p">:</span> <span class="mf">0.5583255887031555</span><span class="p">,</span>
+                <span class="s2">&quot;probabilities&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="mf">0.38</span><span class="p">,</span>
+                    <span class="mi">0</span><span class="p">,</span>
+                    <span class="mi">0</span><span class="p">,</span>
+                    <span class="mf">0.62</span><span class="p">,</span>
+                    <span class="mi">0</span>
+                <span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+        <span class="o">...</span>
+    <span class="p">}</span>
+    <span class="o">...</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">predicted_bounding_boxes</span></code></strong>: List[dict]</p>
+<p>The model prediction for this data point. It should be a list of predicted bounding boxes where each element is a dictionary. Each predicted box dictionary contains a “probabilities” key which represents the confidence for each class and four coordinates indicating the location of the box.</p>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="task_data_format.html" class="btn btn-neutral float-left" title="Input Data Format" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="specify_model_cv.html" class="btn btn-neutral float-right" title="Specify a Computer Vision Model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

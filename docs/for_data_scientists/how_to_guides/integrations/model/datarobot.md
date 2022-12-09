@@ -1,0 +1,88 @@
+# DataRobot
+
+Copy the code snippet below and follow the commented steps, replacing all the TODOs with necessary credentials/endpoints, to connect RIME to a deployed DataRobot model.
+
+Once that is done, you can specify that model file when [configuring your model source](/for_data_scientists/reference/tabular/model_source.md).
+
+```python
+"""Template for connecting a model hosted on DataRobot to RIME.
+
+We expect this file to contain a `predict_df` function that takes in a Pandas 
+DataFrame corresponding to one or more rows in the dataset. This method should
+return a NumPy array containing scores between 0 and 1 for each row in the dataset.
+The DataFrame will be loaded from the data sources you configure.
+
+This specific file implements this assuming that 1) your model is hosted
+on DataRobot and 2) that you have the requests library installed.
+
+"""
+
+import time
+
+import numpy as np
+import pandas as pd
+import requests
+
+# Step 1: Define endpoint variables.
+API_URL = 'https://app2.datarobot.com/api/v2/deployments/{deployment_id}/predictions/'
+API_KEY = 'TODO: API Key'
+DEPLOYMENT_ID = 'TODO: Deployment ID'
+
+MAX_PREDICTION_FILE_SIZE_BYTES = 52428800  # 50 MB
+
+# Step 2: If the model requires additional preprocessing to the input data, 
+# include the logic in the below 'preprocess_df' function or 'predict_df'
+# function. By default, RIME passes rows from the dataset defined in the config
+# to 'predict_df' with the label and prediction columns omitted.
+
+def preprocess_df(df: pd.DataFrame) -> pd.DataFrame:
+    """Apply preprocessing to rows of the dataframe."""
+
+    return df
+
+# Step 3: Implement the below function that returns a prediction per row in
+# the dataset, with any additional preprocessing if necessary.
+
+def predict_df(df: pd.DataFrame) -> np.ndarray:
+    """Return array of probabilities assigned to the positive class."""
+
+    x = preprocess_df(df)
+    data = pd.DataFrame.to_json(x, orient="records")
+    headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer {}'.format(API_KEY),
+    }
+
+    url = API_URL.format(deployment_id=DEPLOYMENT_ID)
+
+    # Make API request for predictions
+    success = False
+    while not success:
+        predictions_response = requests.post(
+            url,
+            data=data,
+            headers=headers,
+        )
+        # Make sure we are not running into a 429 (too many requests) error
+        if predictions_response.status_code == 429:
+            time.sleep(int(predictions_response.headers['Retry-After']))
+        else:
+            success = True
+
+    # Get response data
+    res = predictions_response.json()['data']
+    
+    # Get the prediction for the case where label == 1
+    # NOTE: this is only for binary classification
+    preds = []
+    for pred in res:
+        for val in pred["predictionValues"]:
+            if val["label"] == 1:
+                preds.append(val["value"])
+                break
+        else:
+            raise ValueError(
+                f"No prediction for input row {pred['rowId']} and label == 1"
+            )
+    return np.array(preds)
+```

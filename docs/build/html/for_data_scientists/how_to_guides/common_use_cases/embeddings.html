@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom embeddings &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+        <script src="../../../_static/main.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Platform Integrations" href="../platform_integrations.html" />
+    <link rel="prev" title="Model cards" href="modelcards.html" />
+<link href="../../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../../index.html">
+        <img src="../../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> RIME
+          </a>
+              <div class="version">
+                0.20.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelogs.html">Release Notes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/index.html">RIME overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering the RI Platform</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/index.html">Administering the RI Platform</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing the RI Platform</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data science with the RI Platform</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../get_started.html">Get Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../how_to_guides.html">How-To Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="api-authentication.html">API Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adversarial_nlp.html">NLP Adversarial Robustness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compare_test_runs.html">Comparing Two Test Runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compliance.html">Compliance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="upload_data.html">Uploading Data to RIME</a></li>
+<li class="toctree-l2"><a class="reference internal" href="querying_results.html">Querying RIME Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updating_a_firewall.html">Updating a Firewall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_data_collector.html">Using the Data Collector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling_ct_runs.html">Scheduling Continuous Testing Runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api.html">Using the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modelcards.html">Model cards</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Custom embeddings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nlp-custom-embedding-example">NLP custom embedding example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tabular-custom-embedding-example">Tabular custom embedding example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../platform_integrations.html">Platform Integrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model_integrations.html">Model Integrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_integrations.html">Data Integrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../alerting/setup_alerts.html">Alerts and Notifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../alerting/test_run_progress.html">Test Run Progress</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../customization/custom_metrics.html">Custom Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../customization/custom_tests.html">Custom Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../customization/custom_docker.html">Run RIME on Managed Docker Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/sdk.html">Debugging the Python SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/rime_data_format_check.html">RIME Data Format Check</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">RIME in-depth reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../how_to_guides.html">How-To Guides</a></li>
+      <li class="breadcrumb-item active">Custom embeddings</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/for_data_scientists/how_to_guides/common_use_cases/embeddings.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="custom-embeddings">
+<h1>Custom embeddings<a class="headerlink" href="#custom-embeddings" title="Permalink to this heading"></a></h1>
+<p>Data science often makes use of an extremely high number of dimensions to perform
+mathematical transformations as part of the analysis of a data set. When these
+dimensions don’t provide useful information without their adjacent contexts, an
+embedding provides a way to attempt a holistic analysis by grouping similar dimensions.</p>
+<p>You can specify the particular embeddings used by your model and make them available to
+the RI Platform by using the Python SDK.</p>
+<section id="nlp-custom-embedding-example">
+<h2>NLP custom embedding example<a class="headerlink" href="#nlp-custom-embedding-example" title="Permalink to this heading"></a></h2>
+<p>This example uses a custom configuration to define the embedding used by the model and then references the loading function as normal.</p>
+<p>The NLP custom configuration JSON object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;ArXiv ( With Model )&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;ref_path&quot;</span><span class="p">:</span> <span class="s2">&quot;test_data/data/nlp/classification/arxiv-small-train.json&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;eval_path&quot;</span><span class="p">:</span> <span class="s2">&quot;test_data/data/nlp/classification/arxiv-small-val.json&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;embeddings&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;sentence_embedding&quot;</span>
+      <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;model_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;test_data/models/nlp/classification/model.py&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;model_task&quot;</span><span class="p">:</span> <span class="s2">&quot;Text Classification&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;random_seed&quot;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+  <span class="s2">&quot;silent_errors&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+  <span class="s2">&quot;tests_config_path&quot;</span><span class="p">:</span> <span class="s2">&quot;test_data/configs/nlp/classification/test_config.json&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The data relating to that configuration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;2007-06-12 23:12:00&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Variations on Kaluza-Klein Cosmology&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sentence_embedding&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="o">-</span><span class="mf">1.011288046836853</span><span class="p">,</span>
+      <span class="mf">0.4852420687675476</span><span class="p">,</span>
+      <span class="o">-</span><span class="mf">3.2986080646514893</span><span class="p">,</span>
+      <span class="o">-</span><span class="mf">1.771178960800171</span><span class="p">,</span>
+      <span class="o">-</span><span class="mf">0.5122381448745728</span><span class="p">,</span>
+      <span class="o">-</span><span class="mf">0.4211215376853943</span><span class="p">,</span>
+      <span class="o">-</span><span class="mf">0.5741060972213745</span><span class="p">,</span>
+      <span class="mf">1.1818445920944214</span><span class="p">,</span>
+      <span class="o">-</span><span class="mf">0.5698719024658203</span><span class="p">,</span>
+      <span class="o">-</span><span class="mf">0.95805424451828</span><span class="p">,</span>
+      <span class="mf">1.6936663389205933</span><span class="p">,</span>
+      <span class="o">-</span><span class="mf">0.4567836821079254</span><span class="p">,</span>
+      <span class="o">-</span><span class="mf">0.4774229824542999</span><span class="p">,</span>
+      <span class="mf">0.5969648361206055</span><span class="p">,</span>
+      <span class="mf">0.6787158250808716</span><span class="p">,</span>
+      <span class="o">-</span><span class="mf">0.9607284069061279</span><span class="p">,</span>
+      <span class="o">-</span><span class="mf">0.2594589293003082</span><span class="p">,</span>
+      <span class="o">-</span><span class="mf">0.38474351167678833</span><span class="p">,</span>
+      <span class="o">-</span><span class="mf">1.2812590599060059</span><span class="p">,</span>
+      <span class="o">-</span><span class="mf">0.6660887598991394</span>
+    <span class="p">]</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;2007-06-12 23:12:00&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Negative Energy Densities in Extended Sources Generating Closed Timelike</span><span class="se">\n</span><span class="s2">  Curves in General Relativity with and without Torsion&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sentence_embedding&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="o">-</span><span class="mf">0.2336328625679016</span><span class="p">,</span>
+      <span class="o">-</span><span class="mf">0.007996942847967148</span><span class="p">,</span>
+      <span class="o">-</span><span class="mf">3.97566819190979</span><span class="p">,</span>
+</pre></div>
+</div>
+</section>
+<section id="tabular-custom-embedding-example">
+<h2>Tabular custom embedding example<a class="headerlink" href="#tabular-custom-embedding-example" title="Permalink to this heading"></a></h2>
+<p>For tabular data, an example embedding is defined by the following JSON:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="o">...</span>
+  <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="o">...</span>
+    <span class="s2">&quot;embeddings&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;foobar&quot;</span><span class="p">:</span> <span class="s2">&quot;cols&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;colX&quot;</span><span class="p">,</span> <span class="s2">&quot;colY&quot;</span><span class="p">,</span> <span class="s2">&quot;colZ&quot;</span><span class="p">]}]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The dataset must include the specified columns <code class="docutils literal notranslate"><span class="pre">colX</span></code>, <code class="docutils literal notranslate"><span class="pre">colY</span></code>, and <code class="docutils literal notranslate"><span class="pre">colZ</span></code>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modelcards.html" class="btn btn-neutral float-left" title="Model cards" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../platform_integrations.html" class="btn btn-neutral float-right" title="Platform Integrations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

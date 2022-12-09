@@ -1,0 +1,252 @@
+<style>
+#warning-box {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  background-color:#f2dede;
+  border-color:#ebccd1;
+}
+
+#alert-yellow {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  background-color:#fcf8e3;
+  border-color:#faebcc;
+}
+
+#alert-blue {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  background-color:#e3e7fc;
+  border-color:#cddcfa;
+}
+
+#alert-turquoise {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  background-color:#e3f4fc;
+  border-color:#ccf2fa;
+}
+
+#turquoise-header {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  border-color:#3b808a;
+  color:#3b808a;
+}
+
+#yellow-header {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  border-color:#8a6d3b;
+  color:#8a6d3b;
+}
+
+#blue-header {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  border-color:#3B588A;
+  color:#3B588A;
+}
+</style>
+
+# Installation
+The Local Trial installation consists of two parts:
+1. The Docker containers
+    - These create the infrastructure necessary to process and display test results.
+2. The Python package
+    - This contains the `rime-engine` command-line interface (CLI) and Python libraries used to run tests on your models and data.
+
+## Prerequisites
+Verify that the system meets the following requirements before beginning:
+- The following resources:
+    - at least 4 GB RAM
+    - at least 12 GB free disk space
+    - 3.7 ≤ `python` ≤ 3.9
+    - one of the following package managers
+        - `pip`
+        - `conda`
+- [Docker](https://docs.docker.com/engine/install/) >= 20.10.0
+    - **Linux Users:** You will also need to follow these [post installation instructions](https://docs.docker.com/engine/install/linux-postinstall/) to use Docker without root access.
+- [Docker Compose](https://docs.docker.com/compose/install/) >= 1.29.0
+- The `rime_trial` bundle ( {{ '[download here](https://storage.googleapis.com/rime-trial-zips/rime-trial-{}.tar.gz)'.format(env.config.version) }} )
+- A `token.txt` file (will be provided by your RI representative)
+
+**NOTE for M1 Mac Users**: We recommend using the [Rosetta Translation Environment](https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment) to run the RI Local Trial, as many dependent packages do not have native M1 support yet.
+- Additionally, you will need to downgrade the MongoDB dependency in `docker-compose.yml` due to M1 incompatibility:
+  ```
+  # for M1 compatibility
+  image: bitnami/mongodb:4.4.6
+  ```
+
+## Install the Docker Containers
+### Set Up Your Environment
+To avoid interfering with your other projects' dependencies, we will create a new Python virtual environment for the Local Trial.
+
+1. Download ( {{'[link here](https://storage.googleapis.com/rime-trial-zips/rime-trial-{}.tar.gz)'.format(env.config.version)}} )
+   and extract ({{ '`tar -xzf rime-trial-{}.tar.gz`'.format(env.config.version) }}) the `rime_trial` bundle.
+2. Place the `token.txt` file inside of `rime_trial/`.
+3. Step into `rime_trial/` --- this will be our working directory throughout the installation.
+4. Select a virtual environment manager (currently either `pip` or Conda) and follow the appropriate instructions below.
+    <p id="alert-turquoise">
+    <b>Pip Installation</b>
+    </p>
+
+    1. Create a new [python virtual
+    environment](https://docs.python.org/3/library/venv.html).
+        ```
+        python -m venv rime-venv
+        ```
+    2. Activate the virtual environment.
+       <p id="turquoise-header">
+       <b>macOS & Linux</b>
+       </p>
+
+       ```bash
+       source rime-venv/bin/activate
+       ```
+
+       <p id="blue-header">
+       <b>Windows</b>
+       </p>
+
+       ```powershell
+       .\rime-venv\Scripts\activate
+       ```
+    3. Update pip and install required Python packages from
+        `trial_requirements.txt`.
+        ```
+        pip install --upgrade pip
+        pip install -r trial_requirements.txt
+        ```
+
+    <p id="alert-blue">
+    <b>Conda Installation</b>
+    </p>
+
+    1. Create a new [conda virtual
+    environment](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html).
+    Replace `$PYTHON_VERSION_YOU_WISH_TO_USE` with the version of Python that you
+    wish to use (e.g., `3.8`).
+        ```
+        conda create --name rime-venv python=$PYTHON_VERSION_YOU_WISH_TO_USE
+        ```
+    2. Activate the virtual environment.
+        ```
+        conda activate rime-venv
+        ```
+    5. Update pip and install required Python packages from
+        `trial_requirements.txt`.
+        ```
+        pip install --upgrade pip
+        pip install -r trial_requirements.txt
+        ```
+
+
+### Start RI
+<p id="alert-yellow">
+<b>NOTE:</b> Running the start command will generate a Robust Intelligence
+license file and place it in a newly created .robustintelligence folder in your
+$HOME directory.
+</p>
+
+1. Run the rime_helper `start` command to start the backend and frontend.
+    ```bash
+    python rime_helper.py start
+    ```
+2. Wait until you see the following message indicating that the backend and
+frontend have successfully started and that the UI can be viewed at
+[http://localhost:8080](http://localhost:8080).
+    ```bash
+    RI is available at http://localhost:8080
+    ```
+3. (OPTIONAL) If you are running the Docker containers on a remote instance and would like to use
+**port forwarding** to view the UI on your local machine, we recommend using SSH tunneling:
+    ```bash
+    ssh -NT -L localhost:8080:localhost:8080 user@hostname
+    ```
+
+#### Log in to the Web Client
+Local Trial deployments of the RI Platform are preconfigured with a user account that has administrator [privileges](../../../../for_admins/users.md).
+Your Robust Intelligence representative will provide you with the relevant credentials.
+
+Open a web browser to [http://localhost:8080](http://localhost:8080) and log in using the one-time credentials.
+
+### Stop RI
+<p id="warning-box">
+<b>WARNING:</b> The commands below will permanently delete existing RI test runs.
+</p>
+
+To stop RI, run the following. Note that this command will also delete existing test runs.
+```bash
+python rime_helper.py stop
+```
+
+**To completely remove RI, you can uninstall.**
+```bash
+python rime_helper.py uninstall
+```
+
+## Install the Python Package
+1. Install the `rime` Python package.
+    ```bash
+    pip install -r rime_requirements.txt
+    ```
+2. Configure environment variables for use in CLI commands:
+    <p id="turquoise-header">
+    <b>macOS & Linux</b>
+    </p>
+
+    ```bash
+    export RIME_UPLOAD_URL=localhost:5001
+    export RIME_FIREWALL_URL=localhost:5002
+    export RIME_DISABLE_TLS=True # Recommended for local uploads only!
+    ```
+
+    <p id="blue-header">
+    <b>Windows</b>
+    </p>
+
+    ```
+    $Env:RIME_UPLOAD_URL = 'localhost:5001'
+    $Env:RIME_FIREWALL_URL = 'localhost:5002'
+    $Env:RIME_DISABLE_TLS = 'True' # Recommended for local uploads only!
+    ```
+
+{{ troubleshooting_local_installation_redirect }}
+
+### Install the NLP Dependencies (Optional)
+
+To use RI with Natural Language Processing models, additional Python dependencies must be installed.
+
+```bash
+pip install -r nlp_requirements.txt
+```
+
+### Install the CV Dependencies (Optional)
+
+To use RI with Computer Vision models, additional Python dependencies must be installed.
+
+```bash
+pip install -r cv_requirements.txt
+```

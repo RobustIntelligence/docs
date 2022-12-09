@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NLP Adversarial Robustness &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+        <script src="../../../_static/main.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Comparing Two Test Runs" href="compare_test_runs.html" />
+    <link rel="prev" title="API Authentication" href="api-authentication.html" />
+<link href="../../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../../index.html">
+        <img src="../../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> RIME
+          </a>
+              <div class="version">
+                0.20.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelogs.html">Release Notes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/index.html">RIME overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering the RI Platform</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/index.html">Administering the RI Platform</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing the RI Platform</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data science with the RI Platform</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../get_started.html">Get Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../how_to_guides.html">How-To Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="api-authentication.html">API Authentication</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">NLP Adversarial Robustness</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#adversarial-nlp-walkthrough">Adversarial NLP Walkthrough</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-the-image">Create the Image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-project-start-stress-test">Create a Project + Start Stress Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#review-adversarial-stress-test-run">Review Adversarial Stress Test Run</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#query-results">Query Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reviewing-test-case-results">Reviewing Test Case Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="compare_test_runs.html">Comparing Two Test Runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compliance.html">Compliance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="upload_data.html">Uploading Data to RIME</a></li>
+<li class="toctree-l2"><a class="reference internal" href="querying_results.html">Querying RIME Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updating_a_firewall.html">Updating a Firewall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_data_collector.html">Using the Data Collector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling_ct_runs.html">Scheduling Continuous Testing Runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api.html">Using the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modelcards.html">Model cards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="embeddings.html">Custom embeddings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../platform_integrations.html">Platform Integrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model_integrations.html">Model Integrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_integrations.html">Data Integrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../alerting/setup_alerts.html">Alerts and Notifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../alerting/test_run_progress.html">Test Run Progress</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../customization/custom_metrics.html">Custom Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../customization/custom_tests.html">Custom Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../customization/custom_docker.html">Run RIME on Managed Docker Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/sdk.html">Debugging the Python SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/rime_data_format_check.html">RIME Data Format Check</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">RIME in-depth reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../how_to_guides.html">How-To Guides</a></li>
+      <li class="breadcrumb-item active">NLP Adversarial Robustness</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/for_data_scientists/how_to_guides/common_use_cases/adversarial_nlp.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="nlp-adversarial-robustness">
+<h1>NLP Adversarial Robustness<a class="headerlink" href="#nlp-adversarial-robustness" title="Permalink to this heading"></a></h1>
+<p>This walkthrough will cover how to test your NLP model’s robustness to adversarial attacks.
+To run the demo, navigate to the <a target="_blank" rel="noopener"
+href="https://colab.research.google.com/drive/1UeAxSq4zkxEiJ3FOcAeyi6lXrP8dOeHB">Adversarial NLP Colab Notebook</a> and follow the instructions or reference the tutorial below.</p>
+<section id="adversarial-nlp-walkthrough">
+<h2>Adversarial NLP Walkthrough<a class="headerlink" href="#adversarial-nlp-walkthrough" title="Permalink to this heading"></a></h2>
+<p>You are the AI Risk Officer at a Consumer Social Company. The NLP team has been tasked with implementing a text classification model to predict the top-level “sentiment” of posts on the app. These predictions will later be consumed by multiple models throughout the company, such as recommendation, lead prediction, and the core advertisement models. You want to verify your models are sufficiently robust to adversaries seeking to exploit model vulnerabilities and boost content that your user base does not actually like.</p>
+<p>In this Notebook Walkthrough, we will review our core product of <strong>AI Stress Testing</strong> of NLP models in an <em>adversarial setting</em>. RIME AI Stress Testing allows you to test any text classification model on any dataset. In this way, you will be able to quantify your model’s vulnerability to attacks and noisy data.</p>
+<p>Your team’s NLP models are fine-tuned from state-of-the-art transformer models found on <a class="reference external" href="https://huggingface.co/models">Hugging Face’s Model Hub 🤗</a>. In particular, you have chosen to fine-tune a <a class="reference external" href="https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english">DistilBERT</a> on data similar to the <a class="reference external" href="https://huggingface.co/datasets/sst2">Stanford Sentiment Treebank</a> dataset for a lightweight yet performant model.</p>
+<p>To begin, please specify your RIME cluster’s URL and personal access token.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># set these before beginning!</span>
+<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># e.g., rime.&lt;name&gt;.rime.dev</span>
+<span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">rime</span><span class="o">-</span><span class="n">sdk</span> <span class="o">&amp;&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
+<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">seaborn</span>
+</pre></div>
+</div>
+</section>
+<section id="create-the-image">
+<h2>Create the Image<a class="headerlink" href="#create-the-image" title="Permalink to this heading"></a></h2>
+<p>First, we connect to the RIME cluster using the URL and API Token. To connect with Hugging Face, we create a managed image with the <code class="docutils literal notranslate"><span class="pre">transformers</span></code> and <code class="docutils literal notranslate"><span class="pre">datasets</span></code> dependencies installed.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
+
+<span class="n">image_name</span> <span class="o">=</span> <span class="s2">&quot;adversarial_nlp&quot;</span>
+
+<span class="c1"># connect to your cluster</span>
+<span class="n">rime_client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="n">API_TOKEN</span><span class="p">)</span>
+
+<span class="c1"># Specify pip requirements for the run. Some models require additional dependencies.</span>
+<span class="n">requirements</span> <span class="o">=</span> <span class="p">[</span>
+     <span class="n">rime_client</span><span class="o">.</span><span class="n">pip_requirement</span><span class="p">(</span><span class="s2">&quot;transformers&quot;</span><span class="p">),</span>
+     <span class="n">rime_client</span><span class="o">.</span><span class="n">pip_requirement</span><span class="p">(</span><span class="s2">&quot;datasets&quot;</span><span class="p">),</span>
+     <span class="c1"># Uncomment if you need sentencepiece</span>
+     <span class="c1"># rime_client.pip_requirement(&quot;sentencepiece&quot;),</span>
+   <span class="p">]</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">img</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">image_name</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">list_managed_images</span><span class="p">()[</span><span class="mi">0</span><span class="p">]]):</span>
+    <span class="c1"># Start a new image building job</span>
+    <span class="n">builder_job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_managed_image</span><span class="p">(</span><span class="n">image_name</span><span class="p">,</span> <span class="n">requirements</span><span class="p">)</span>
+
+    <span class="c1"># Wait until the job has finished and print out status information.</span>
+    <span class="c1"># Once this prints out the `READY` status, your image is available for use in stress tests.</span>
+    <span class="n">builder_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">poll_rate_sec</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="create-a-project-start-stress-test">
+<h2>Create a Project + Start Stress Test<a class="headerlink" href="#create-a-project-start-stress-test" title="Permalink to this heading"></a></h2>
+<p>Below, create a project to store this and other future adversarial robustness stress test run results.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span>
+    <span class="s2">&quot;NLP - Adversarial Robustness&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;Evaluating the robustness of text classification models against adversarial attacks.&quot;</span>
+<span class="p">)</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;DistilBERT Adversarial Robustness&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;huggingface&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;dataset_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;sst2&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;text_key&quot;</span><span class="p">:</span> <span class="s2">&quot;sentence&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;label_key&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;eval_label_key&quot;</span><span class="p">:</span> <span class="kc">None</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;prediction_info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;n_samples&quot;</span><span class="p">:</span> <span class="mi">500</span><span class="p">},</span>
+    <span class="s2">&quot;model_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;huggingface_classification&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;distilbert-base-uncased-finetuned-sst-2-english&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;model_task&quot;</span><span class="p">:</span> <span class="s2">&quot;Text Classification&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;test_config&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Adversarial&quot;</span><span class="p">]}</span>
+<span class="p">}</span>
+
+<span class="c1"># Launch a stress test run</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="n">test_run_config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">data_type</span><span class="o">=</span><span class="s1">&#39;nlp&#39;</span><span class="p">,</span> <span class="n">rime_managed_image</span><span class="o">=</span><span class="n">image_name</span><span class="p">)</span>
+
+<span class="c1"># Attach to the job and print status until completion</span>
+<span class="n">job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">poll_rate_sec</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="review-adversarial-stress-test-run">
+<h2>Review Adversarial Stress Test Run<a class="headerlink" href="#review-adversarial-stress-test-run" title="Permalink to this heading"></a></h2>
+<p>Now that the test run is complete, we can check out the results in the RIME web interface.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">job</span><span class="o">.</span><span class="n">get_link</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="query-results">
+<h2>Query Results<a class="headerlink" href="#query-results" title="Permalink to this heading"></a></h2>
+<p>Alternatively, we can query the test case results to identify model vulnerabilities.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">test_run</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
+<span class="n">result_df</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_result_df</span><span class="p">()</span>
+<span class="n">result_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Test Severity</strong>: Let’s plot some of the results. First, let’s check the severity distribution of attack tests.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
+
+<span class="n">severity_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">result_df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;severity_counts&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+<span class="n">severity_counts</span> <span class="o">=</span> <span class="n">result_df</span><span class="p">[</span><span class="n">severity_cols</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">severity_counts</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">severity_cols</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
+</pre></div>
+</div>
+<p><img alt="png" src="../../../_images/adversarial_bar.png" /></p>
+</section>
+<section id="reviewing-test-case-results">
+<h2>Reviewing Test Case Results<a class="headerlink" href="#reviewing-test-case-results" title="Permalink to this heading"></a></h2>
+<p>Next, let’s look at the results by attack type.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">test_cases_df</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_cases_df</span><span class="p">(</span><span class="n">show_test_case_metrics</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">test_cases_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">test_type_pass_rates</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="p">(</span><span class="n">batch_df</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PASS&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">batch_df</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">batch_df</span> <span class="ow">in</span> <span class="n">test_cases_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;test_batch_type&quot;</span><span class="p">)}</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">test_type_pass_rates</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="n">x</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">test_type_pass_rates</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;h&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Pass Rate&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Test Type&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><img alt="png" src="../../../_images/adversarial_pie.png" /></p>
+<p>It’s evident that while this model is fairly robust to homoglyph-type attacks, it frequently fails to withstand character-level perturbations, indicating that additional data augmentation and/or a data sanitation pipeline should be applied before this model goes into production! One way to add additional augmented data to your training problem is through querying the results:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="k">def</span> <span class="nf">filter_rows</span><span class="p">(</span><span class="n">text_series</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">label_series</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">filter_indices</span> <span class="o">=</span> <span class="o">~</span><span class="n">label_series</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Augmented&#39;</span><span class="p">:</span> <span class="n">text_series</span><span class="p">[</span><span class="n">filter_indices</span><span class="p">],</span> <span class="s2">&quot;Labels&quot;</span><span class="p">:</span> <span class="n">label_series</span><span class="p">[</span><span class="n">filter_indices</span><span class="p">]})</span>
+
+<span class="n">failed_df</span> <span class="o">=</span> <span class="n">test_cases_df</span><span class="p">[</span><span class="n">test_cases_df</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;FAIL&#39;</span><span class="p">]</span>
+
+<span class="c1"># Simpler transformation-style augmentations</span>
+<span class="n">transformed_col</span> <span class="o">=</span>  <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">test_cases_df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;transformed&#39;</span><span class="p">)][</span><span class="mi">0</span><span class="p">]</span> 
+<span class="n">class_col</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">test_cases_df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;transformed_class&#39;</span><span class="p">)][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">transformed_df</span> <span class="o">=</span> <span class="n">filter_rows</span><span class="p">(</span><span class="n">failed_df</span><span class="p">[</span><span class="n">transformed_col</span><span class="p">],</span> <span class="n">failed_df</span><span class="p">[</span><span class="n">class_col</span><span class="p">])</span>
+
+<span class="c1"># Evolutionary attacks examples</span>
+<span class="n">perturbed_col</span> <span class="o">=</span>  <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">test_cases_df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;perturbed&#39;</span><span class="p">)][</span><span class="mi">0</span><span class="p">]</span> 
+<span class="n">perturbed_class_col</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">test_cases_df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;perturbed_class&#39;</span><span class="p">)][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">perturbed_df</span> <span class="o">=</span> <span class="n">filter_rows</span><span class="p">(</span><span class="n">failed_df</span><span class="p">[</span><span class="n">perturbed_col</span><span class="p">],</span> <span class="n">failed_df</span><span class="p">[</span><span class="n">perturbed_class_col</span><span class="p">])</span>
+
+<span class="n">augmented_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">perturbed_df</span><span class="p">,</span> <span class="n">transformed_df</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">augmented_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="api-authentication.html" class="btn btn-neutral float-left" title="API Authentication" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="compare_test_runs.html" class="btn btn-neutral float-right" title="Comparing Two Test Runs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

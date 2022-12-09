@@ -1,0 +1,22 @@
+Specify an Image Loading Function
+==========================
+
+The RIME software needs to load images into memory to perform computations. Different companies have different ways of loading images into memory. For example, images can be stored in a variety of different file formats (e.g. jpg, png, tiff). To facilitate a better user experience, users are able to define their own way of loading images into memory via providing a file which defines a function called`load_image`. Below we describe the expected inputs/outputs of the function and provide an example.
+
+### Inputs and Outputs
+
+- Inputs: a dictionary which is a single element in the dataset json that the user provides. Depending on what information the user needs to load an image into memory, the user can place this information into the dictionary as different keys when the user defines the dataset json. In this fashion, the user can access this information by accessing the right keys in this input dictionary.
+
+- Outputs: a `PIL Image` object
+
+### Example
+
+The below example is also the default `load_image` function RIME assumes if `load_path` is not specified in `data_info` by the user ([see here for more info on `load_path`](data_source.md)). This means that by default we expect there to be an `image_path` key in each datapoint dictionary.
+
+```
+from PIL import Image
+
+def load_image(datapoint_info: dict) -> Image:
+    """Give RIME a way to load images into memory."""
+    return Image.open(datapoint_info["image_path"])
+```

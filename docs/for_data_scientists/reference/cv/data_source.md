@@ -1,0 +1,33 @@
+Data Configuration
+==================
+
+Configuring a data source can be done by specifying a mapping in the main RIME JSON configuration file, under the
+`data_info` argument.
+
+
+## Stress Testing
+### Template
+```python
+{
+    "data_info": {
+        "ref_path": "path/to/ref.json",        (REQUIRED)
+        "eval_path": "path/to/eval.json",      (REQUIRED)
+        "load_path": "path/to/image_loader.py",    (OPTIONAL)
+    },
+    ...
+}
+```
+
+### Arguments
+
+- **`ref_path`**: string, ***required***
+
+    Path to reference data file. Please reference the [CV file guide](task_data_format) for a description of supported file formats.
+
+- **`eval_path`**: string, ***required***
+    
+    Path to evaluation data file. Please reference the [CV file guide](task_data_format) for a description of supported file formats.
+
+- **`load_path`**: string, ***optional***
+    
+    Path to python file which provides an image loading function. If this is not specified, the default image loading function is used. For more information on this function and what the default function is see [here](specify_image_loading.md).

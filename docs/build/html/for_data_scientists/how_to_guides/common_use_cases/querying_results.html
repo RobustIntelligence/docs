@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Querying RIME Results &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+        <script src="../../../_static/main.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Updating a Firewall" href="updating_a_firewall.html" />
+    <link rel="prev" title="Uploading Data to RIME" href="upload_data.html" />
+<link href="../../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../../index.html">
+        <img src="../../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> RIME
+          </a>
+              <div class="version">
+                0.20.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelogs.html">Release Notes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/index.html">RIME overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering the RI Platform</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/index.html">Administering the RI Platform</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing the RI Platform</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data science with the RI Platform</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../get_started.html">Get Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../how_to_guides.html">How-To Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="api-authentication.html">API Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adversarial_nlp.html">NLP Adversarial Robustness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compare_test_runs.html">Comparing Two Test Runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compliance.html">Compliance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="upload_data.html">Uploading Data to RIME</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Querying RIME Results</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-the-results">Get the Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="updating_a_firewall.html">Updating a Firewall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_data_collector.html">Using the Data Collector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling_ct_runs.html">Scheduling Continuous Testing Runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api.html">Using the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modelcards.html">Model cards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="embeddings.html">Custom embeddings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../platform_integrations.html">Platform Integrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model_integrations.html">Model Integrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_integrations.html">Data Integrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../alerting/setup_alerts.html">Alerts and Notifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../alerting/test_run_progress.html">Test Run Progress</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../customization/custom_metrics.html">Custom Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../customization/custom_tests.html">Custom Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../customization/custom_docker.html">Run RIME on Managed Docker Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/sdk.html">Debugging the Python SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/rime_data_format_check.html">RIME Data Format Check</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">RIME in-depth reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../how_to_guides.html">How-To Guides</a></li>
+      <li class="breadcrumb-item active">Querying RIME Results</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/for_data_scientists/how_to_guides/common_use_cases/querying_results.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="querying-rime-results">
+<h1>Querying RIME Results<a class="headerlink" href="#querying-rime-results" title="Permalink to this heading"></a></h1>
+<p>Besides viewing RIME results in the web application, you may use the Python SDK to retrieve data that can be programmatically parsed. This functionality is very helpful for incorporating RIME into your production model/data pipelines. For instance, if you are interested in the results of a specific feature, test, or statistic, you can fetch stress testing results from the RIME backend and write code to make decisions (e.g. whether to deploy the model) based on the results.</p>
+<p>To begin, initialize the <code class="docutils literal notranslate"><span class="pre">Client</span></code> and point it to the location of your RIME backend.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;rime.&lt;YOUR_ORG_NAME&gt;.rime.dev&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;YOUR_API_TOKEN&gt;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="get-the-results">
+<h2>Get the Results<a class="headerlink" href="#get-the-results" title="Permalink to this heading"></a></h2>
+<p>To retrieve information about the test run results, first retrieve the desired test run object:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">test_run</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">(</span><span class="s2">&quot;your_desired_test_run_id_here&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the user is running Continuous Testing and wants to retrieve a test run corresponding to a specific time bin, this appoach can be deployed:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">test_runs</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">get_test_runs</span><span class="p">()</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="n">desired_start</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">test_run</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">test_run</span> <span class="k">for</span> <span class="n">test_run</span> <span class="ow">in</span> <span class="n">test_runs</span> <span class="k">if</span> <span class="n">test_run</span><span class="o">.</span><span class="n">start_time</span> <span class="o">==</span> <span class="n">desired_start</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now the user can analyze the results of the test run at varying levels of granularity! We can begin by retrieving a high-level summary of the test run as a Pandas DataFrame:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">high_level_results</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_result_df</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../../_static/queryability_high_level_results.png">
+<p>If we want to dig into a specific test batch (i.e. look at the <code class="docutils literal notranslate"><span class="pre">unseen</span> <span class="pre">categorical</span></code> test specifically), we can do the following to get a results overview as a Pandas Series:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">test_batch</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_batch</span><span class="p">(</span><span class="s2">&quot;unseen_categorical&quot;</span><span class="p">)</span>
+<span class="n">high_level_test_batch_results</span> <span class="o">=</span> <span class="n">test_batch</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../../_static/queryability_high_level_batch_results.png">
+<p>If we want more granularity, we can retrieve all the individual test cases for the given test batch (e.g. the results of <code class="docutils literal notranslate"><span class="pre">unseen</span> <span class="pre">categorical</span></code> over each feature) as a Pandas DataFrame:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">granular_test_batch_results</span> <span class="o">=</span> <span class="n">test_batch</span><span class="o">.</span><span class="n">get_test_cases_df</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../../_static/queryability_granular_test_batch_results.png">
+<p>In general, we can retrieve this granular information for all tests at once as a Pandas DataFrame:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">all_granular_test_batch_results</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_cases_df</span><span class="p">(</span><span class="n">show_test_case_metrics</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<img src="../../../_static/queryability_all_granular_test_batch_results.png">
+<p>At the test-case level, RIME returns information that can be test-specific. If we are placing the test cases for all tests into the same table, this could result in a sparse table with columns that are empty for most rows. If the user wants to avoid this sparsity and only retrieve common columns across all tests the user can simply leave the <code class="docutils literal notranslate"><span class="pre">show_test_case_metrics</span></code> flag unspecified as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">limited_all_granular_test_batch_results</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_cases_df</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../../_static/queryability_limited_all_granular_test_batch_results.png">
+<p>The user can also get an iterator representing all of the test batches. This can be useful if the user does not know the name of the test batch they want to query or if the user has a custom use case which involves iterating over all test batch objects:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">iterator_over_all_test_batches</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_batches</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="upload_data.html" class="btn btn-neutral float-left" title="Uploading Data to RIME" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="updating_a_firewall.html" class="btn btn-neutral float-right" title="Updating a Firewall" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

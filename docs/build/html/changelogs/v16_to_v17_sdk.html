@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RIME v17 SDK Breaking Changes &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+        <script src="../_static/main.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="RIME v16 Release Note" href="v16.html" />
+    <link rel="prev" title="RIME v17 Release Note" href="v17.html" />
+<link href="../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../index.html">
+        <img src="../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> RIME
+          </a>
+              <div class="version">
+                0.20.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../changelogs.html">Release Notes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="v20.html">RIME v20 Release Note</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v19.html">RIME v19 Release Note</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v18.html">RIME v18 Release Note</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v17.html">RIME v17 Release Note</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">RIME v17 SDK Breaking Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#this-is-a-guide-on-how-to-port-your-v16-based-sdk-code-to-v17-sdk">This is a guide on how to port your v16-based SDK code to v17 SDK.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sample-notebooks">Sample Notebooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#class-name-changes">Class Name Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#authentication">Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#project-class-enhancements">Project Class Enhancements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#firewall-creation">Firewall Creation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#job-and-testrun-classes">Job and TestRun classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#querying-capabilities">Querying Capabilities</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="v16.html">RIME v16 Release Note</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v15.html">RIME v15 Release Note</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v14.html">RIME v14 Release Note</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v13.html">RIME v13 Release Note</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v12.html">RIME v12 Release Note</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v11.html">RIME v11 Release Note</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getstarted/index.html">RIME overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering the RI Platform</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../for_admins/index.html">Administering the RI Platform</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing the RI Platform</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data science with the RI Platform</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../for_data_scientists/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../for_data_scientists/reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">RIME in-depth reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../changelogs.html">Release Notes</a></li>
+      <li class="breadcrumb-item active">RIME v17 SDK Breaking Changes</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/changelogs/v16_to_v17_sdk.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="rime-v17-sdk-breaking-changes">
+<h1>RIME v17 SDK Breaking Changes<a class="headerlink" href="#rime-v17-sdk-breaking-changes" title="Permalink to this heading"></a></h1>
+<section id="this-is-a-guide-on-how-to-port-your-v16-based-sdk-code-to-v17-sdk">
+<h2>This is a guide on how to port your v16-based SDK code to v17 SDK.<a class="headerlink" href="#this-is-a-guide-on-how-to-port-your-v16-based-sdk-code-to-v17-sdk" title="Permalink to this heading"></a></h2>
+</section>
+<section id="sample-notebooks">
+<h2>Sample Notebooks<a class="headerlink" href="#sample-notebooks" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>Compare the <a class="reference external" href="https://colab.research.google.com/drive/13g7PO-ObLt_BOO58rF-N_Sk7ursi0bHu#scrollTo=LhYmw2kM0ebb" target="_blank">v16 notebook (previous release)</a>
+and the <a class="reference external" href="https://colab.research.google.com/drive/1o_jG_Z0Mxd5lqXN2pvaH9OT3_4u-bhKT" target="_blank">v17 notebook (current release)</a>
+to understand the differences in user experience.</p></li>
+</ul>
+</section>
+<section id="class-name-changes">
+<h2>Class Name Changes<a class="headerlink" href="#class-name-changes" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>The SDK class names have been renamed to avoid “RIME”.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>  <span class="c1">#v16 </span>
+  <span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">RIMEClient</span><span class="p">,</span> <span class="n">RIMEStressTestJob</span><span class="p">,</span> <span class="n">RIMEProject</span><span class="p">,</span> <span class="n">RIMEFirewall</span> 
+  
+  <span class="c1">#v17 improvement</span>
+  <span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">Project</span><span class="p">,</span> <span class="n">Job</span><span class="p">,</span> <span class="n">TestRun</span><span class="p">,</span> <span class="n">Firewall</span> 
+</pre></div>
+</div>
+</section>
+<section id="authentication">
+<h2>Authentication<a class="headerlink" href="#authentication" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>Authentication errors are thrown when you establish the client as opposed to when you use the client.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>  <span class="c1">#v16 </span>
+  <span class="n">rime_client</span> <span class="o">=</span> <span class="n">RIMEClient</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">API_TOKEN</span><span class="p">)</span>
+  <span class="n">project</span> <span class="o">=</span>   <span class="n">rime_client</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+  <span class="s2">&quot;Unauthenticated API error&quot;</span>
+  
+  <span class="c1">#v17 improvement</span>
+  <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">API_TOKEN</span><span class="p">)</span>
+  <span class="s2">&quot;Unauthenticated API error&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="project-class-enhancements">
+<h2>Project Class Enhancements<a class="headerlink" href="#project-class-enhancements" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>Firewall CRUD operations have moved from the client to project class.</p></li>
+<li><p>Ability to list test runs part of a project.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>  <span class="c1">#v16 </span>
+  <span class="n">project</span> <span class="o">=</span>  <span class="n">rime_client</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+  <span class="n">rime_client</span><span class="o">.</span><span class="n">create_firewall</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">bin_size_seconds</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">test_run_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">project_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+  <span class="n">firewall</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">get_firewall_for_project</span><span class="p">(</span><span class="n">project_id</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+  
+  <span class="c1">#v17 improvement</span>
+  <span class="n">project</span> <span class="o">=</span>  <span class="n">client</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+  <span class="n">project</span><span class="o">.</span><span class="n">create_firewall</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">bin_size</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">test_run_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+  <span class="n">firewall</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">get_firewall</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="firewall-creation">
+<h2>Firewall Creation<a class="headerlink" href="#firewall-creation" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>When creating a firewall, you specify the bin size as a string as opposed to bin size in seconds float value.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>  <span class="c1">#v16 </span>
+  <span class="n">rime_client</span><span class="o">.</span><span class="n">create_firewall</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">bin_size_seconds</span> <span class="o">=</span> <span class="s2">&quot;=60*60&quot;</span><span class="p">,</span> <span class="n">test_run_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">project_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+  <span class="n">rime_client</span><span class="o">.</span><span class="n">create_firewall</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">bin_size_seconds</span> <span class="o">=</span> <span class="s2">&quot;=60*60*24&quot;</span><span class="p">,</span> <span class="n">test_run_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">project_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+  <span class="c1">#v17 improvement</span>
+  <span class="n">project</span><span class="o">.</span><span class="n">create_firewall</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">bin_size</span> <span class="o">=</span> <span class="s2">&quot;hour&quot;</span><span class="p">,</span> <span class="n">test_run_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+  <span class="n">project</span><span class="o">.</span><span class="n">create_firewall</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">bin_size</span> <span class="o">=</span> <span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">test_run_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="job-and-testrun-classes">
+<h2>Job and TestRun classes<a class="headerlink" href="#job-and-testrun-classes" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>The SDK now has Job and TestRun classes.</p></li>
+<li><p>The Job class is used to track the status of a job that has been kicked off.</p></li>
+<li><p>The TestRun class is used after a job has successfully completed and you want to access
+the results or the test run.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>  <span class="c1">#v16 </span>
+  <span class="n">stress_job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="n">test_run_config</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">project_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+  <span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">wait_until_finish</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+  <span class="n">rime_client</span><span class="o">.</span><span class="n">list_stress_test_jobs</span><span class="p">()</span>
+  <span class="n">stress_job</span><span class="o">.</span><span class="n">get_link</span><span class="p">()</span>
+  <span class="n">stress_job</span><span class="o">.</span><span class="n">get_test_run_result</span><span class="p">()</span>
+  
+  
+  <span class="c1">#v17 improvement</span>
+  <span class="n">job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="n">test_run_config</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">project_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">wait_until_finish</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+  <span class="n">client</span><span class="o">.</span><span class="n">list_stress_test_jobs</span><span class="p">()</span>
+  <span class="n">project</span><span class="o">.</span><span class="n">list_test_runs</span><span class="p">()</span>
+  <span class="n">test_run</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
+  <span class="n">test_run</span><span class="o">.</span><span class="n">get_link</span><span class="p">()</span>
+  <span class="n">test_run</span><span class="o">.</span><span class="n">get_result_df</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="querying-capabilities">
+<h2>Querying Capabilities<a class="headerlink" href="#querying-capabilities" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>Results are queried from the TestRun class as opposed to the Job class.</p></li>
+<li><p>Querying method names have changed.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#v16 </span>
+<span class="n">stress_job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="n">test_run_config</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">project_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> 
+<span class="n">stress_job</span><span class="o">.</span><span class="n">get_test_run_result</span><span class="p">()</span>
+<span class="n">stress_job</span><span class="o">.</span><span class="n">get_test_cases_result</span><span class="p">()</span>
+
+<span class="c1">#v17 improvement</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="n">test_run_config</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">project_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">test_run</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
+<span class="n">test_run</span><span class="o">.</span><span class="n">get_result_df</span><span class="p">()</span>
+<span class="n">test_run</span><span class="o">.</span><span class="n">get_test_cases_df</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="v17.html" class="btn btn-neutral float-left" title="RIME v17 Release Note" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="v16.html" class="btn btn-neutral float-right" title="RIME v16 Release Note" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

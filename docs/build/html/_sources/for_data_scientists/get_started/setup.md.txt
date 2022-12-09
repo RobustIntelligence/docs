@@ -1,0 +1,27 @@
+# Setup
+
+In order to run RIME, you need do three things:
+1. Get your RIME cluster URL
+2. Create an API token in the UI
+3. Install the RIME SDK
+
+## Cluster URL
+
+The first order of business is figuring out the cluster URL for your RIME cluster. This is the URL
+at which you will view your results, and is also used to upload your results. It is usually in the
+form `rime.{}.rime.dev`. If you have any questions about what your cluster URL is, please ask your
+administrator (or whoever set up the RIME cluster).
+
+
+## API Token
+
+You now need to create an API Token. This will be used to connect programmatically to the RIME cluster.
+Creating this API Token is done via the UI. Go to `Settings` -> `API Access Tokens` and create your own 
+token. Make sure to write this down.
+
+## Install the RIME SDK
+
+The RIME SDK is a Python package for interacting with RIME programmatically. This SDK is available
+on pypi, so it can easily be installed with `pip install rime-sdk`. This will install the most recent
+version of the RIME SDK. If your cluster is on an older version of RIME, you can install that specific
+version with `pip install rime-sdk==X.Y.Z`.

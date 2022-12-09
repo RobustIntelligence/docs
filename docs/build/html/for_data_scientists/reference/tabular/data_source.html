@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Configuration &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+        <script src="../../../_static/main.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Model Configuration" href="model_source.html" />
+    <link rel="prev" title="Input Data Format" href="task_data_format.html" />
+<link href="../../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../../index.html">
+        <img src="../../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> RIME
+          </a>
+              <div class="version">
+                0.20.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelogs.html">Release Notes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/index.html">RIME overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering the RI Platform</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/index.html">Administering the RI Platform</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing the RI Platform</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data science with the RI Platform</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../reference.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../tabular.html">Tabular Configuration</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../tabular.html#rime-configuration">RIME Configuration</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="stress_testing.html">AI Stress Testing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="continuous_testing.html">AI Firewall Continuous Tests</a></li>
+<li class="toctree-l4"><a class="reference internal" href="task_data_format.html">Input Data Format</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Data Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model_source.html">Model Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="specify_model.html">Specify a Model</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../tabular.html#profiling-configuration">Profiling Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tabular.html#tests-configuration">Tests Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nlp.html">NLP Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cv.html">CV Configuration</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">RIME in-depth reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../reference.html">Reference</a></li>
+          <li class="breadcrumb-item"><a href="../tabular.html">Tabular Configuration</a></li>
+      <li class="breadcrumb-item active">Data Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/for_data_scientists/reference/tabular/data_source.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-configuration">
+<h1>Data Configuration<a class="headerlink" href="#data-configuration" title="Permalink to this heading"></a></h1>
+<p>Configuring a data source can be done by specifying a mapping in the main RIME JSON configuration file, under the
+<code class="docutils literal notranslate"><span class="pre">data_info</span></code> argument.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">data_info</span></code> configuration can take on different forms, offering a tradeoff between simplicity and flexibility. In the <strong>default</strong> approach,
+you may choose to specify the file paths to both the reference and evaluation datasets, along with supporting arguments such as <code class="docutils literal notranslate"><span class="pre">pred_col</span></code>,
+<code class="docutils literal notranslate"><span class="pre">label_col</span></code>, and more. This is the easiest configuration to get started with.
+In the <strong>split</strong> approach, you may choose to specify a separate “single” data info struct for both the reference and evaluation datasets:
+<code class="docutils literal notranslate"><span class="pre">ref_data_info</span></code> and <code class="docutils literal notranslate"><span class="pre">eval_data_info</span></code>. Both the reference and evaluation single data info structs can take on different configuration types,
+from a file-path based approach, to a custom data loader, to a Delta Lake table, to our data collector (for Continuous Testing only). This allows
+you to specify different data loaders for the reference and evaluation datasets. The configuration
+templates for all of these data infos are also detailed below.</p>
+<p>NOTE: for AI Continuous Testing, predictions are required. Either <code class="docutils literal notranslate"><span class="pre">pred_col</span></code> must be specified or <code class="docutils literal notranslate"><span class="pre">ref_pred_path</span></code> and <code class="docutils literal notranslate"><span class="pre">eval_pred_path</span></code> must be specified.</p>
+<section id="default-data-info-template">
+<h2>Default Data Info Template<a class="headerlink" href="#default-data-info-template" title="Permalink to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;ref_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path/to/ref.csv&quot;</span><span class="p">,</span>              <span class="p">(</span><span class="n">REQUIRED</span><span class="p">)</span>
+        <span class="s2">&quot;eval_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path/to/eval.csv&quot;</span><span class="p">,</span>            <span class="p">(</span><span class="n">REQUIRED</span><span class="p">)</span>
+        <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;Label&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="s2">&quot;Prediction&quot;</span><span class="p">,</span>                   <span class="p">(</span><span class="n">WORKS</span> <span class="n">FOR</span> <span class="n">ALL</span> <span class="n">TASKS</span> <span class="n">EXCEPT</span> <span class="n">MULTI</span><span class="o">-</span><span class="n">CLASS</span><span class="p">,</span> <span class="n">REQUIRED</span> <span class="n">FOR</span> <span class="n">CONTINUOUS</span> <span class="n">TESTING</span><span class="p">)</span>
+        <span class="s2">&quot;ref_pred_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path/to/ref/preds.csv&quot;</span><span class="p">,</span>   <span class="p">(</span><span class="n">ONLY</span> <span class="n">SPECIFY</span> <span class="n">FOR</span> <span class="n">MULTI</span><span class="o">-</span><span class="n">CLASS</span><span class="p">,</span> <span class="n">REQUIRED</span> <span class="n">FOR</span> <span class="n">CONTINUOUS</span> <span class="n">TESTING</span><span class="p">)</span>
+        <span class="s2">&quot;eval_pred_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path/to/eval/preds.csv&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">ONLY</span> <span class="n">SPECIFY</span> <span class="n">FOR</span> <span class="n">MULTI</span><span class="o">-</span><span class="n">CLASS</span><span class="p">,</span> <span class="n">REQUIRED</span> <span class="n">FOR</span> <span class="n">CONTINUOUS</span> <span class="n">TESTING</span><span class="p">)</span>
+        <span class="s2">&quot;nrows&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s2">&quot;categorical_features&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s2">&quot;features_not_in_model&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s2">&quot;feature_type_path&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s2">&quot;ranking_info&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>                        <span class="p">(</span><span class="n">REQUIRED</span> <span class="n">FOR</span> <span class="n">RANKING</span><span class="p">)</span>
+        <span class="s2">&quot;loading_kwargs&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s2">&quot;embeddings&quot;</span><span class="p">:</span> <span class="n">null</span>
+    <span class="p">},</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments">
+<h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this heading"></a></h2>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ref_path</span></code></strong>: string, <em><strong>required</strong></em></p>
+<p>Path to reference data file.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">eval_path</span></code></strong>: string, <em><strong>required</strong></em></p>
+<p>Path to evaluation data file.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">label_col</span></code>: string or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Name of column in data that corresponds to the labels.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pred_col</span></code>: string or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Name of column in data that corresponds to the predictions.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ref_pred_path</span></code>: string or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Path to a CSV or Parquet file containing the predictions on the reference dataset. This is how
+predictions are specified for multi-class models.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eval_pred_path</span></code>: string or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Path to a CSV or Parquet file containing the predictions on the evaluation dataset. This is how
+predictions are specified for multi-class models.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nrows</span></code>: int or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Number of rows of data to load and test. If <code class="docutils literal notranslate"><span class="pre">null</span></code>, will load all rows. By default it is <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">categorical_features</span></code>: list or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>List of categorical features in data. If provided, these should be ALL the categorical features. If <code class="docutils literal notranslate"><span class="pre">null</span></code>, RIME will automatically determine whether a column is categorical or not. By default it is <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">protected_features</span></code>: list or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>List of protected features in data. If the <code class="docutils literal notranslate"><span class="pre">Bias</span> <span class="pre">and</span> <span class="pre">Fairness</span></code> category is added to <code class="docutils literal notranslate"><span class="pre">categories</span></code> in the test config (see <a class="reference internal" href="tests.html"><span class="doc std std-doc">TestSuiteConfig()</span></a>, and <code class="docutils literal notranslate"><span class="pre">protected_features</span></code> are included, a set of bias and fairness tests will be run over the protected features.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">features_not_in_model</span></code>: list or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>List of features in the dataset that are not used by the model. Specifying this will ensure that only relevant tests are run on these features.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">feature_type_path</span></code>: string, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Path to a CSV file that specifies the data type of each feature. The file should have two columns: <code class="docutils literal notranslate"><span class="pre">FeatureName</span></code> and <code class="docutils literal notranslate"><span class="pre">FeatureType</span></code>. The possible values for <code class="docutils literal notranslate"><span class="pre">FeatureType</span></code> are <code class="docutils literal notranslate"><span class="pre">BoolCategoricalColumn</span></code>, <code class="docutils literal notranslate"><span class="pre">DomainColumn</span></code>, <code class="docutils literal notranslate"><span class="pre">EmailColumn</span></code>, <code class="docutils literal notranslate"><span class="pre">NumericCategoricalColumn</span></code>, <code class="docutils literal notranslate"><span class="pre">StringCategoricalColumn</span></code>, <code class="docutils literal notranslate"><span class="pre">UrlColumn</span></code>, <code class="docutils literal notranslate"><span class="pre">FloatColumn</span></code>, <code class="docutils literal notranslate"><span class="pre">IntegerColumn</span></code>.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ranking_info</span></code>: mapping, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Arguments to be used for Ranking tasks. If you are not running RIME on a Ranking task this value should be null. If you are running on a Ranking task, the following keys should be provided:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">query_col</span></code>: string, <em>required</em></p>
+<p>Name of column in dataset that contains the query ids.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nqueries</span></code>: int or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Number of queries to consider when running RIME. If <code class="docutils literal notranslate"><span class="pre">null</span></code>, will use all queries.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nrows_per_query</span></code>: int or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Number of rows to use per query when running RIME. If <code class="docutils literal notranslate"><span class="pre">null</span></code>, will use all rows.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">drop_query_id</span></code>: bool, <em>default</em> = True</p>
+<p>Whether to drop the query ID column from the dataset to avoid passing as a feature to the model.</p>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">loading_kwargs</span></code>: mapping, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Keyword arguments to be passed to the <code class="docutils literal notranslate"><span class="pre">pandas</span></code> loading function (either <code class="docutils literal notranslate"><span class="pre">pd.read_CSV</span></code> or <code class="docutils literal notranslate"><span class="pre">pd.read_Parquet</span></code>, depending on your data format). NOTE: if you wish to specify <code class="docutils literal notranslate"><span class="pre">nrows</span></code>, this should NOT be done with these kwargs but rather with the <code class="docutils literal notranslate"><span class="pre">nrows</span></code> parameter above.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">embeddings</span></code>: list or <code class="docutils literal notranslate"><span class="pre">null</span></code>, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>A list of dictionaries corresponding to information for each embedding. The arguments for each dictionary are described below.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: string</p>
+<p>Name of the embedding to be shown in the test run results.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cols</span></code>: list</p>
+<p>List of column names corresponding to the embedding. For example, suppose each data row is represented by columns <code class="docutils literal notranslate"><span class="pre">age</span></code>, <code class="docutils literal notranslate"><span class="pre">is_member</span></code>, <code class="docutils literal notranslate"><span class="pre">query_0</span></code>, <code class="docutils literal notranslate"><span class="pre">query_1</span></code>, <code class="docutils literal notranslate"><span class="pre">query_2</span></code>, etc., where each column “<code class="docutils literal notranslate"><span class="pre">query_\d</span></code>” is a dimension of a sentence embedding extracted from a user query. Specifying <code class="docutils literal notranslate"><span class="pre">&quot;embeddings&quot;:</span> <span class="pre">[{&quot;name&quot;:</span> <span class="pre">&quot;user_query&quot;,</span> <span class="pre">&quot;cols&quot;:</span> <span class="pre">[&quot;query_0&quot;,</span> <span class="pre">&quot;query_1&quot;,</span> <span class="pre">&quot;query_2&quot;,</span> <span class="pre">...]}]</span></code>  (i.e., specifying each column contained by the embedding) would direct the RI Platform to treat these columns as a single dense vector-valued embedding feature.</p>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="split-data-info-template">
+<h2>Split Data Info Template<a class="headerlink" href="#split-data-info-template" title="Permalink to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;ref_data_info&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>              <span class="p">(</span><span class="n">REQUIRED</span><span class="p">)</span>
+        <span class="s2">&quot;eval_data_info&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>            <span class="p">(</span><span class="n">REQUIRED</span><span class="p">)</span>
+    <span class="p">},</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h2>Arguments<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ref_data_info</span></code></strong>: SingleDataInfo, <em><strong>required</strong></em></p>
+<p>Path to single data info struct (see below).</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">eval_data_info</span></code></strong>: SingleDataInfo, <em><strong>required</strong></em></p>
+<p>Path to single data info struct (see below).</p>
+</li>
+</ul>
+</section>
+<section id="single-data-info-templates">
+<h2>Single Data Info Templates<a class="headerlink" href="#single-data-info-templates" title="Permalink to this heading"></a></h2>
+<p>Note that these single data info structs can be used to specify both the <code class="docutils literal notranslate"><span class="pre">ref_data_info</span></code> as well as <code class="docutils literal notranslate"><span class="pre">eval_data_info</span></code>
+in the split data into template above.</p>
+<p>Note that <em>all</em> single data info structs also take in a set of tabular parameters which allow the user to additionally
+specify properties of their data. These parameters include fields such as <code class="docutils literal notranslate"><span class="pre">label_col</span></code>, <code class="docutils literal notranslate"><span class="pre">pred_col</span></code>, <code class="docutils literal notranslate"><span class="pre">nrows</span></code>, <code class="docutils literal notranslate"><span class="pre">protected_features</span></code>,
+and more. The full list is detailed below. Note that for AI Continuous Testing, predictions are required.
+Either <code class="docutils literal notranslate"><span class="pre">pred_col</span></code> must be specified or <code class="docutils literal notranslate"><span class="pre">pred_path</span></code> must be specified.</p>
+<section id="general-tabular-parameters-for-single-data-info">
+<h3>General Tabular Parameters for Single Data Info<a class="headerlink" href="#general-tabular-parameters-for-single-data-info" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;Label&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="s2">&quot;Prediction&quot;</span><span class="p">,</span>                   <span class="p">(</span><span class="n">WORKS</span> <span class="n">FOR</span> <span class="n">ALL</span> <span class="n">TASKS</span> <span class="n">EXCEPT</span> <span class="n">MULTI</span><span class="o">-</span><span class="n">CLASS</span><span class="p">,</span> <span class="n">REQUIRED</span> <span class="n">FOR</span> <span class="n">CONTINUOUS</span> <span class="n">TESTING</span><span class="p">)</span>
+    <span class="s2">&quot;pred_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path/to/preds.csv&quot;</span><span class="p">,</span>           <span class="p">(</span><span class="n">ONLY</span> <span class="n">SPECIFY</span> <span class="n">FOR</span> <span class="n">MULTI</span><span class="o">-</span><span class="n">CLASS</span><span class="p">,</span> <span class="n">REQUIRED</span> <span class="n">FOR</span> <span class="n">CONTINUOUS</span> <span class="n">TESTING</span><span class="p">)</span>
+    <span class="s2">&quot;nrows&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s2">&quot;nrows_per_time_bin&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s2">&quot;categorical_features&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s2">&quot;features_not_in_model&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s2">&quot;feature_type_path&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s2">&quot;ranking_info&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>                       <span class="p">(</span><span class="n">REQUIRED</span> <span class="n">FOR</span> <span class="n">RANKING</span><span class="p">)</span>
+    <span class="s2">&quot;loading_kwargs&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s2">&quot;embeddings&quot;</span><span class="p">:</span> <span class="n">null</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>Arguments<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">label_col</span></code>: string or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Name of column in data that corresponds to the labels.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pred_col</span></code>: string or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Name of column in data that corresponds to the predictions.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pred_path</span></code>: string or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Path to a CSV or Parquet file containing the predictions on the evaluation dataset. This is how
+predictions are specified for multi-class models.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nrows</span></code>: int or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Number of rows of data to load and test. If <code class="docutils literal notranslate"><span class="pre">null</span></code>, will load all rows. By default it is <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nrows_per_time_bin</span></code>: int or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Number of rows of data per time bin to load and test in continuous testing (does not affect stress testing results). If <code class="docutils literal notranslate"><span class="pre">null</span></code>, will load all rows. By default it is <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">categorical_features</span></code>: list or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>List of categorical features in data. If provided, these should be ALL the categorical features. If <code class="docutils literal notranslate"><span class="pre">null</span></code>, RIME will automatically determine whether a column is categorical or not. By default it is <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">protected_features</span></code>: list or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>List of protected features in data. If the <code class="docutils literal notranslate"><span class="pre">Bias</span> <span class="pre">And</span> <span class="pre">Fairness</span></code> category is added to <code class="docutils literal notranslate"><span class="pre">categories</span></code> in the test config (see <a class="reference internal" href="tests.html"><span class="doc std std-doc">TestSuiteConfig()</span></a>, and <code class="docutils literal notranslate"><span class="pre">protected_features</span></code> are included - a set of bias and fairness tests will be run over the protected features.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">features_not_in_model</span></code>: list or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>List of features in the dataset that are not used by the model. Specifying this will ensure that only relevant tests are run on these features.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">feature_type_path</span></code>: string, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Path to a CSV file that specifies the data type of each feature. The file should have two columns: <code class="docutils literal notranslate"><span class="pre">FeatureName</span></code> and <code class="docutils literal notranslate"><span class="pre">FeatureType</span></code>. The possible values for <code class="docutils literal notranslate"><span class="pre">FeatureType</span></code> are <code class="docutils literal notranslate"><span class="pre">BoolCategoricalColumn</span></code>, <code class="docutils literal notranslate"><span class="pre">DomainColumn</span></code>, <code class="docutils literal notranslate"><span class="pre">EmailColumn</span></code>, <code class="docutils literal notranslate"><span class="pre">NumericCategoricalColumn</span></code>, <code class="docutils literal notranslate"><span class="pre">StringCategoricalColumn</span></code>, <code class="docutils literal notranslate"><span class="pre">UrlColumn</span></code>, <code class="docutils literal notranslate"><span class="pre">FloatColumn</span></code>, <code class="docutils literal notranslate"><span class="pre">IntegerColumn</span></code>.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ranking_info</span></code>: mapping, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Arguments to be used for Ranking tasks. If you are not running RIME on a Ranking task this value should be null. If you are running on a Ranking task, the following keys should be provided:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">query_col</span></code>: string, <em>required</em></p>
+<p>Name of column in dataset that contains the query ids.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nqueries</span></code>: int or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Number of queries to consider when running RIME. If <code class="docutils literal notranslate"><span class="pre">null</span></code>, will use all queries.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nrows_per_query</span></code>: int or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Number of rows to use per query when running RIME. If <code class="docutils literal notranslate"><span class="pre">null</span></code>, will use all rows.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">drop_query_id</span></code>: bool, <em>default</em> = True</p>
+<p>Whether to drop the query ID column from the dataset to avoid passing as a feature to the model.</p>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">loading_kwargs</span></code>: mapping, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Keyword arguments to be passed to the <code class="docutils literal notranslate"><span class="pre">pandas</span></code> loading function (either <code class="docutils literal notranslate"><span class="pre">pd.read_CSV</span></code> or <code class="docutils literal notranslate"><span class="pre">pd.read_Parquet</span></code>, depending on your data format). NOTE: if you wish to specify <code class="docutils literal notranslate"><span class="pre">nrows</span></code>, this should NOT be done with these kwargs but rather with the <code class="docutils literal notranslate"><span class="pre">nrows</span></code> parameter above.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">embeddings</span></code>: list or <code class="docutils literal notranslate"><span class="pre">null</span></code>, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>A list of dictionaries corresponding to information for each embedding. The arguments for each dictionary are described below.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: string</p>
+<p>Name of the embedding to be shown in the test run results.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cols</span></code>: list</p>
+<p>List of column names corresponding to the embedding. For example, suppose each data row is represented by columns <code class="docutils literal notranslate"><span class="pre">age</span></code>, <code class="docutils literal notranslate"><span class="pre">is_member</span></code>, <code class="docutils literal notranslate"><span class="pre">query_0</span></code>, <code class="docutils literal notranslate"><span class="pre">query_1</span></code>, <code class="docutils literal notranslate"><span class="pre">query_2</span></code>, etc., where each column “<code class="docutils literal notranslate"><span class="pre">query_\d</span></code>” is a dimension of a sentence embedding extracted from a user query. Specifying <code class="docutils literal notranslate"><span class="pre">&quot;embeddings&quot;:</span> <span class="pre">[{&quot;name&quot;:</span> <span class="pre">&quot;user_query&quot;,</span> <span class="pre">&quot;cols&quot;:</span> <span class="pre">[&quot;query_0&quot;,</span> <span class="pre">&quot;query_1&quot;,</span> <span class="pre">&quot;query_2&quot;,</span> <span class="pre">...]}]</span></code>  (i.e., specifying each column contained by the embedding) would direct the RI Platform to treat these columns as a single dense vector-valued embedding feature.</p>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="file-based-single-data-info-template">
+<h3>File-based Single Data Info Template<a class="headerlink" href="#file-based-single-data-info-template" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;file_name&quot;</span><span class="p">:</span> <span class="s2">&quot;path/to/file.csv&quot;</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">tabular_params</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h3>Arguments<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">file_name</span></code></strong>: string, <em><strong>required</strong></em></p>
+<p>Path to data file.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">**tabular_params</span></code></strong>: Dict</p>
+<p>See Tabular Parameters above.</p>
+</li>
+</ul>
+</section>
+<section id="custom-dataloader-single-data-info-template">
+<h3>Custom Dataloader Single Data Info Template<a class="headerlink" href="#custom-dataloader-single-data-info-template" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;load_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path/to/custom_loader.py&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;load_func_name&quot;</span><span class="p">:</span> <span class="s2">&quot;load_fn_name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;loader_kwargs&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s2">&quot;loader_kwargs_json&quot;</span><span class="p">:</span> <span class="n">null</span>
+    <span class="o">**</span><span class="n">tabular_params</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>Arguments<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">load_path</span></code></strong>: string, <em><strong>required</strong></em></p>
+<p>Path to custom loader Python file.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">load_func_name</span></code></strong>: string, <em><strong>required</strong></em></p>
+<p>Name of the loader function. Must be defined within the Python file.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">loader_kwargs</span></code></strong>: Dict, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Arguments to pass in to the loader function, in dictionary form. We pass these arguments in as **kwargs.
+Only one of <code class="docutils literal notranslate"><span class="pre">loader_kwargs</span></code> and <code class="docutils literal notranslate"><span class="pre">loader_kwargs_json</span></code> can be specified.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">**loader_kwargs_json</span></code></strong>: Dict</p>
+<p>Arguments to pass in to the loader function, in JSON-serialized string form.
+We pass these arguments in as **kwargs.
+Only one of <code class="docutils literal notranslate"><span class="pre">loader_kwargs</span></code> and <code class="docutils literal notranslate"><span class="pre">loader_kwargs_json</span></code> can be specified.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">**tabular_params</span></code></strong>: Dict</p>
+<p>See Tabular Parameters above.</p>
+</li>
+</ul>
+</section>
+<section id="data-collector-single-data-info-template">
+<h3>Data Collector Single Data Info Template<a class="headerlink" href="#data-collector-single-data-info-template" title="Permalink to this heading"></a></h3>
+<p>NOTE: this can only be specified as part of a Continuous Testing config, not offline testing config. See the
+<a class="reference internal" href="firewall_continuous_tests.html"><span class="doc std std-doc">Continuous Tests Configuration</span></a> for more details.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;start_time&quot;</span><span class="p">:</span> <span class="n">start_time</span><span class="p">,</span>
+    <span class="s2">&quot;end_time&quot;</span><span class="p">:</span> <span class="n">end_time</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">tabular_params</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3>Arguments<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">start_time</span></code></strong>: int, <em><strong>required</strong></em></p>
+<p>Start time of the data collector to fetch data from. Format is UNIX epoch time in seconds.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">end_time</span></code></strong>: int, <em><strong>required</strong></em></p>
+<p>End time of the data collector to fetch data from. Format is UNIX epoch time in seconds.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">**tabular_params</span></code></strong>: Dict</p>
+<p>See Tabular Parameters above.</p>
+</li>
+</ul>
+</section>
+<section id="intersections-template">
+<h3>Intersections Template<a class="headerlink" href="#intersections-template" title="Permalink to this heading"></a></h3>
+<p>Specifies a custom group based on a specified intersection of features. Subset performance tests run over the specified intersection.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="p">{</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;ref_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;eval_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ref_pred_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;eval_pred_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;Column label&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;feature1&quot;</span><span class="p">,</span> <span class="s2">&quot;feature2&quot;</span><span class="p">,</span> <span class="s2">&quot;feature3&quot;</span><span class="p">],</span>
+	        <span class="s2">&quot;intersections&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;feature1&quot;</span><span class="p">,</span> <span class="s2">&quot;feature2&quot;</span><span class="p">,</span> <span class="s2">&quot;feature3&quot;</span><span class="p">]},</span> <span class="p">{</span><span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;feature3&quot;</span><span class="p">,</span> <span class="s2">&quot;feature4&quot;</span><span class="p">]}]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3>Arguments<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ref_path</span></code></strong>: string, <em><strong>required</strong></em></p>
+<p>Path to reference data file.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">eval_path</span></code></strong>: string, <em><strong>required</strong></em></p>
+<p>Path to evaluation data file.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ref_pred_path</span></code></strong>: string, <em><strong>required</strong></em></p>
+<p>Path to a CSV or Parquet file containing the predictions on the reference dataset. This is how
+predictions are specified for multi-class models.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">eval_pred_path</span></code></strong>: string, <em><strong>required</strong></em></p>
+<p>Path to a CSV or Parquet file containing the predictions on the evaluation dataset. This is how
+predictions are specified for multi-class models.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">label_col</span></code></strong>: string, <em><strong>required</strong></em></p>
+<p>Name of column in data that corresponds to the labels.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">protected_features</span></code></strong>: array, <em><strong>required</strong></em></p>
+<p>List of protected features in data. If the <code class="docutils literal notranslate"><span class="pre">Bias</span> <span class="pre">And</span> <span class="pre">Fairness</span></code> category is added to <code class="docutils literal notranslate"><span class="pre">categories</span></code> in the test config (see <a class="reference internal" href="tests.html"><span class="doc std std-doc">TestSuiteConfig()</span></a>, and <code class="docutils literal notranslate"><span class="pre">protected_features</span></code> are included, a set of bias and fairness tests will be run over the protected features.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">intersections</span></code></strong>: array, <em><strong>required</strong></em></p>
+<p>A list of arrays of features. The intersection of the sets of features specifies a custom group on which the performance tests are run.</p>
+</li>
+</ul>
+</section>
+<section id="delta-lake-single-data-info-template">
+<h3>Delta Lake Single Data Info Template<a class="headerlink" href="#delta-lake-single-data-info-template" title="Permalink to this heading"></a></h3>
+<p>NOTE: the Databricks secret access token (along with the “server_hostname” and “http_path”)
+are specified as part of <a class="reference internal" href="../../../for_admins/how_to_guides/data-sources.html"><span class="doc std std-doc">Data Sources Configuration</span></a>.
+If you are launching a manual Stress Test run or Continuous Test run,
+do not fill in the server_hostname or http_path fields; those fields + the secret token
+will automatically be inserted if you specify the corresponding data source name when
+kicking off the run.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;server_hostname&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;workspace-id&gt;.cloud.databricks.com&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;http_path&quot;</span><span class="p">:</span> <span class="s2">&quot;http/path&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;table_name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;start_time&quot;</span><span class="p">:</span> <span class="n">start_time</span><span class="p">,</span>
+    <span class="s2">&quot;end_time&quot;</span><span class="p">:</span> <span class="n">end_time</span><span class="p">,</span>
+    <span class="s2">&quot;time_col&quot;</span><span class="p">:</span> <span class="s2">&quot;Timestamp column&quot;</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">tabular_params</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3>Arguments<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">server_hostname</span></code></strong>: string, <em><strong>required</strong></em></p>
+<p>Server hostname of the Databricks cluster. This should be specified as part of a Data Source.
+See <a class="reference external" href="https://docs.databricks.com/dev-tools/python-sql-connector.html">Databricks docs</a> for more details.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">http_path</span></code></strong>: string, <em><strong>required</strong></em></p>
+<p>HTTP Path of the Databricks cluster. This should be specified as part of a Data Source.
+See <a class="reference external" href="https://docs.databricks.com/dev-tools/python-sql-connector.html">Databricks docs</a> for more details.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">table_name</span></code></strong>: string, <em><strong>required</strong></em></p>
+<p>Name of the Delta Lake table.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">start_time</span></code></strong>: int, <em><strong>required</strong></em></p>
+<p>Start time of the Delta Lake table to fetch data from. Format is UNIX epoch time in seconds.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">end_time</span></code></strong>: int, <em><strong>required</strong></em></p>
+<p>End time of the Delta Lake table to fetch data from. Format is UNIX epoch time in seconds.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">time_col</span></code></strong>: string, <em><strong>required</strong></em></p>
+<p>Name of the timestamp column. This is a required field in order to determine the range of
+data which satisfies the <code class="docutils literal notranslate"><span class="pre">start_time</span></code> and <code class="docutils literal notranslate"><span class="pre">end_time</span></code> params.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">**tabular_params</span></code></strong>: Dict</p>
+<p>See Tabular Parameters above.</p>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="task_data_format.html" class="btn btn-neutral float-left" title="Input Data Format" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="model_source.html" class="btn btn-neutral float-right" title="Model Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
