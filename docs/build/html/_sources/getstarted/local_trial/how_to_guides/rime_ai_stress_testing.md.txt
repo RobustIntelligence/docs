@@ -12,7 +12,7 @@ This model was trained on a slightly modified version of the <a target="_blank" 
 
 In this example, we will be providing the model directly to RI, which enables the most thorough possible analysis. However, RI can be run with prediction logs alone (or even just datasets), which we will illustrate below as well.
 
-To start a run of AI Stress Testing using a model and datasets:
+To kick off a run of AI Stress Testing using a model and datasets:
 ```bash
 rime-engine run-stress-tests --config-path examples/income/stress_tests_model.json
 ```
@@ -22,19 +22,21 @@ rime-engine run-stress-tests --config-path examples/income/stress_tests_model.js
 
 ### Stress Testing with Prediction Logs
 
-To start a run of AI Stress Testing using prediction logs (no model) and datasets:
+To kick off a run of AI Stress Testing using a model and datasets:
 ```bash
 rime-engine run-stress-tests --config-path examples/income/stress_tests_prediction_logs.json
 ```
 
 Note that the command is exactly the same EXCEPT for the `--config-path` provided.
 
-### Stress Testing with Bias And Fairness Tests
+### Stress Testing with Bias And Fairness tests
 
-To start a specific suite of tests geared towards bias and fairness:
+This will run a specific suite of tests geared towards bias and fairness.
+
+To kick off a run in the Compliance setting:
 
 ```bash
-rime-engine run-stress-tests --config-path examples/income/stress_tests_bias_and_fairness.json
+rime-engine run-stress-tests --config-path examples/income/stress_tests_compliance.json
 ```
 
 The command is exactly the same as the others; however, in the configuration file we have specified `Bias And Fairness` under `categories` as well as a list of `protected_features` in our `data_info`:
@@ -93,7 +95,7 @@ For a detailed reference on what the configuration should look like, see [AI Str
 
 ### Run the CLI
 
-To start a run of AI Stress Testing using your configuration file, simply replace the `--config-path` argument below:
+To kick off a run of AI Stress Testing using your configuration file, simply replace the `--config-path` argument below:
 ```bash
 rime-engine run-stress-tests --config-path <PATH-TO-CONFIGURATION>
 ```
