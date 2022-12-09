@@ -4,11 +4,10 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Configuring data sources &mdash; RIME  documentation</title>
+  <title>Data Sources Configuration &mdash; RIME  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -21,11 +20,11 @@
         <script src="../../_static/sphinx_highlight.js"></script>
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
-        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-        <script src="../../_static/main.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Audit Logs" href="audit-logs.html" />
+    <link rel="prev" title="SSO Configuration" href="sso.html" />
 <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -45,7 +44,7 @@
             <a href="../../index.html" class="icon icon-home"> RIME
           </a>
               <div class="version">
-                0.20.4
+                0.19.7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -55,30 +54,31 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../changelogs.html">Release Notes</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../getstarted/index.html">RIME overview</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Administering the RI Platform</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../index.html">Administering the RI Platform</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Installing the RI Platform</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Guide</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Data science with the RI Platform</span></p>
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/get_started.html">Get Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/how_to_guides.html">How-To Guides</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/reference.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/explanation.html">Explanation</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">RIME in-depth reference</a></li>
+<p class="caption" role="heading"><span class="caption-text">Other Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../changelogs.html">Release Notes</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">For Administrators</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../installation_guide.html">Installation Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../how_to_guides.html">How-To Guides</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="workspaces.html">Workspaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="users.html">User Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sso.html">SSO Configuration</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Data Sources Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="audit-logs.html">Audit Logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-authentication.html">API Access Tokens</a></li>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting/faq.html">FAQ</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../local_trial/index.html">Local Trial</a></li>
 </ul>
 
         </div>
@@ -95,7 +95,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a></li>
-      <li class="breadcrumb-item active">Configuring data sources</li>
+          <li class="breadcrumb-item"><a href="../index.html">For Administrators</a></li>
+          <li class="breadcrumb-item"><a href="../how_to_guides.html">How-To Guides</a></li>
+      <li class="breadcrumb-item active">Data Sources Configuration</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/for_admins/how_to_guides/data-sources.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -105,75 +107,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="configuring-data-sources">
-<h1>Configuring data sources<a class="headerlink" href="#configuring-data-sources" title="Permalink to this heading"></a></h1>
-<p>Administrators can configure data sources that the RI Platform can access.
-Sensitive information, such as access tokens, are stored in a secret manager
-service built using Hashicorp Vault.</p>
-<section id="supported-data-sources">
-<h2>Supported data sources<a class="headerlink" href="#supported-data-sources" title="Permalink to this heading"></a></h2>
-<p>The RI Platform supports the following data sources.</p>
-<section id="configurable-through-the-ri-platform-ui">
-<h3>Configurable through the RI Platform UI<a class="headerlink" href="#configurable-through-the-ri-platform-ui" title="Permalink to this heading"></a></h3>
+  <section id="data-sources-configuration">
+<h1>Data Sources Configuration<a class="headerlink" href="#data-sources-configuration" title="Permalink to this heading"></a></h1>
 <ul class="simple">
-<li><p><a class="reference internal" href="../../for_data_scientists/how_to_guides/integrations/data/databricks_deltalake.html"><span class="doc std std-doc">Databricks Deltalake</span></a></p></li>
+<li><p>Administrators can configure data sources using the UI from the “Data Sources”
+page under the “Organization Settings”. You can see how in the below image.</p></li>
+<li><p>Sensitive information such as access tokens will be securely stored in a
+secret manager service built on top of Hashicorp Vault.</p></li>
+<li><p>Supported Data Sources - <a class="reference internal" href="../../for_data_scientists/how_to_guides/integrations/data/databricks_deltalake.html"><span class="doc std std-doc">Databricks Deltalake</span></a></p></li>
+<li><p>Note:</p>
+<ul>
+<li><p>Native cloud stores like S3 and Google Cloud Storage are also supported.
+However, they can only be configured during deployment and not via the UI.</p></li>
 </ul>
-</section>
-<section id="configurable-at-deploy-time">
-<h3>Configurable at deploy time<a class="headerlink" href="#configurable-at-deploy-time" title="Permalink to this heading"></a></h3>
-<p>These sources can only be configured when deploying an RI Platform instance:</p>
-<ul class="simple">
-<li><p>Amazon S3</p></li>
-<li><p>Google Cloud Storage</p></li>
-</ul>
-</section>
-</section>
-<section id="adding-a-data-source">
-<h2>Adding a data source<a class="headerlink" href="#adding-a-data-source" title="Permalink to this heading"></a></h2>
-<p>An administrator can add or modify a data source that RI Platform can use.</p>
-<ol class="arabic">
-<li><p>Sign in to a RIME instance.<br />
-The Workspaces page appears.</p></li>
-<li><p>Click the three-dot menu at the right side of a workspace and select <em>Manage Workspace</em>.<br />
-The Workspace Settings page appears. The user account logged in must have the Workspace
-administrator role for the selected workspace.</p></li>
-<li><p>Click <em>Data Sources</em> in the left navigation bar.<br />
-The Data Sources configuration pane appears.</p></li>
-<li><p>Click <em>Add Data Source</em>.<br />
-The Add Data Source dialog box appears.</p></li>
-<li><p>In <em>Name</em>, type a name for the data source.</p></li>
-<li><p>From the <em>Data Source Type</em> drop-down, choose a type.</p></li>
-<li><p>In <em>Server Hostname</em>, type the fully-qualified domain name (FQDN) for the server.</p></li>
-<li><p>In <em>HTTP Path</em>, type the path to the data source.</p></li>
-<li><p>From the <em>Credentials Privilege</em> drop-down, choose a privilege level.</p>
-<table class="colwidths-auto docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Level</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Workspace</p></td>
-<td><p>All users share a single access token to authenticate.</p></td>
-</tr>
-<tr class="row-odd"><td><p>Members</p></td>
-<td><p>Each user configures their credentials and uses a personal token to authenticate.</p></td>
-</tr>
-</tbody>
-</table>
 </li>
-<li><p>Click <em>Save</em>.</p></li>
-</ol>
-<p>The new data source is now available to the RI Platform.</p>
-<!--
-<img src="../../_static/data-sources.png" alt="toy image text" width="960px">
-<img src="../../_static/delta-lake.png" alt="toy image text" width="960px"> --></section>
-</section>
+</ul>
+<img src="../../_static/data-sources.png">
+<img src="../../_static/delta-lake.png"></section>
 
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sso.html" class="btn btn-neutral float-left" title="SSO Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="audit-logs.html" class="btn btn-neutral float-right" title="Audit Logs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

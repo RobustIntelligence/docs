@@ -11,11 +11,11 @@ This JSON file contains several global configuration options, which, if specifie
 
 - **`categories`**: List[str], *default* = ``[]``
 
-    Test categories to run. Options include `Abnormal Inputs`, `Attacks`, `Bias and Fairness`, `Data Cleanliness`, `Data Poisoning Detection`, `Drift`, `Model Performance`, `Subset Performance`, and `Transformations`.
+    Test categories to run. Options include `Abnormal Inputs`, `Drift`, `Subset Performance`, `Data Cleanliness`, `Transformations`, `Attacks`, `Bias And Fairness`, `Finance Compliance`, `Healthcare Compliance`, and `Hiring Compliance`.
 
 - **`run_default`**: Optional[bool], *default* = ``null``
 
-    Whether to run default categories or not. Defaults to `True` if no `categories` are specified, `False` if any are. The default categories are `Attacks`, `Model Performance`, `Subset Performance`, and `Transformations`.
+    Whether to run default categories or not. Defaults to `True` if no `categories` are specified, `False` if any are. The default categories are `Abnormal Inputs`, `Drift`, `Subset Performance`, `Data Cleanliness` and `Transformations`.
 - **`global_exclude_columns`**: Optional[List[str]], *default* = `null`
 
     Columns to exclude from all tests.
@@ -57,10 +57,9 @@ Below is the default configuration for all tests. A copy of this can also be fou
   "categories": [],
   "run_default": null,
   "custom_tests": null,
-  "dynamic_configs": {},
   "numeric_outlier": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -71,7 +70,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "unseen_categorical": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -79,7 +78,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "unseen_domain": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -87,7 +86,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "unseen_email": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -95,7 +94,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "unseen_url": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -103,7 +102,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "rare_categories": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -125,7 +124,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   "req_characters": {
     "column_specific_params": {},
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -133,7 +132,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "inconsistencies": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -145,7 +144,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "capitalization": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -153,7 +152,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "empty_string": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -161,16 +160,250 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "embedding_anomalies": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     },
     "distance_quantile": 0.995
   },
+  "feat_subset_auc": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_accuracy": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_f1": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_macro_f1": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_precision": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_macro_precision": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_fpr": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_recall": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_macro_recall": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_pred_variance_pos": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_pred_variance_neg": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_rmse": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_mae": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_mape": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_rank_correlation": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_ndcg": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_mrr": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_multiclass_acc": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_multiclass_auc": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_auc": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_accuracy": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_f1": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_macro_f1": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_precision": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_macro_precision": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_fpr": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_recall": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_macro_recall": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_pred_variance_pos": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_pred_variance_neg": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_pred_variance_all": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_rmse": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_mae": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_mape": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_rank_correlation": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_ndcg": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_mrr": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_multiclass_acc": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_multiclass_auc": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
   "correlation_feat_drift": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "correlation_drift_thresholds": [
       0.3,
       0.5,
@@ -182,7 +415,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "correlation_label_drift": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "correlation_drift_thresholds": [
       0.3,
       0.5,
@@ -192,7 +425,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "mutual_information_feat_drift": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "min_mutual_information": 0.1,
     "mutual_information_thresholds": [
       0.1,
@@ -204,7 +437,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "mutual_information_label_drift": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "mutual_information_thresholds": [
       0.1,
       0.2,
@@ -212,10 +445,11 @@ Below is the default configuration for all tests. A copy of this can also be fou
     ]
   },
   "categorical_label_drift": {
-    "run": false,
+    "run": true,
     "drift_statistic": "Population Stability Index",
     "params": {
-      "psi_thresholds": [
+      "run": true,
+      "distance_thresholds": [
         0.2,
         0.4,
         0.6
@@ -223,10 +457,11 @@ Below is the default configuration for all tests. A copy of this can also be fou
     }
   },
   "multiclass_pred_label_drift": {
-    "run": false,
+    "run": true,
     "drift_statistic": "Population Stability Index",
     "params": {
-      "psi_thresholds": [
+      "run": true,
+      "distance_thresholds": [
         0.2,
         0.4,
         0.6
@@ -234,36 +469,41 @@ Below is the default configuration for all tests. A copy of this can also be fou
     }
   },
   "regression_label_drift": {
-    "run": false,
-    "drift_statistic": "Population Stability Index",
-    "params": {
-      "psi_thresholds": [
-        0.2,
-        0.4,
-        0.6
-      ],
-      "num_bins": 100
-    }
+    "run": true,
+    "p_value_threshold": 0.05,
+    "ks_stat_thresholds": [
+      0.1,
+      0.33,
+      0.67
+    ]
   },
   "categorical_drift": {
     "exclude_columns": [],
-    "run": false,
-    "min_sample_size": 100,
+    "run": true,
+    "drift_scaling_factor": 0.005,
     "performance_change_thresholds": null,
-    "max_sample_size": null,
     "drift_statistic": "Population Stability Index",
     "params": {
+      "run": true,
+      "drift_scaling_factor": 0.005,
+      "performance_change_thresholds": null,
+      "min_sample_size": 100,
+      "max_sample_size": null,
       "distance_threshold": 0.2
     },
     "ignore_nans": true
   },
   "continuous_drift": {
     "exclude_columns": [],
-    "run": false,
-    "min_sample_size": 100,
+    "run": true,
+    "drift_scaling_factor": 0.005,
     "performance_change_thresholds": null,
     "drift_statistic": "Population Stability Index",
     "params": {
+      "run": true,
+      "drift_scaling_factor": 0.005,
+      "performance_change_thresholds": null,
+      "min_sample_size": 100,
       "min_num_quantiles": 1000,
       "distance_threshold": 0.2,
       "num_bins": 100
@@ -271,7 +511,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "ignore_nans": true
   },
   "prediction_drift": {
-    "run": false,
+    "run": true,
     "drift_statistic": "Population Stability Index",
     "params": {
       "run": true,
@@ -286,34 +526,42 @@ Below is the default configuration for all tests. A copy of this can also be fou
     }
   },
   "embedding_drift": {
-    "run": false,
-    "min_sample_size": 100,
+    "exclude_columns": [],
+    "run": true,
+    "drift_scaling_factor": 0.005,
     "performance_change_thresholds": null,
     "drift_statistic": "euclidean_distance",
     "params": {
+      "run": true,
+      "drift_scaling_factor": 0.005,
+      "performance_change_thresholds": null,
+      "min_sample_size": 100,
       "distance_threshold": 0.1,
       "normalize": true
     }
   },
+  "overall_metrics": {
+    "run": true,
+    "metrics_specific_thresholds": {}
+  },
   "avg_confidence": {
     "run": true,
     "severity_thresholds": [
-      0.05,
-      0.1,
-      0.2
+      0.03,
+      0.08,
+      0.13
     ]
   },
   "atc": {
     "run": true,
     "severity_thresholds": [
-      0.05,
-      0.1,
-      0.2
+      0.03,
+      0.08,
+      0.13
     ]
   },
   "calibration_comparison": {
     "run": true,
-    "num_bins": 10,
     "severity_level_thresholds": [
       0.02,
       0.06,
@@ -321,7 +569,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
     ]
   },
   "label_imbalance": {
-    "run": false,
+    "run": true,
     "severity_thresholds": [
       0.6,
       0.75,
@@ -332,6 +580,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   "global_exclude_columns": null,
   "global_abnormal_inputs_performance_change_config": null,
   "global_transformation_performance_change_config": null,
+  "global_drift_scaling_factor": null,
   "out_of_range_substitution": {
     "exclude_columns": [],
     "run": false,
@@ -492,7 +741,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "vulnerability": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "severity_level_thresholds": null,
     "sample_size": 10,
     "search_count": 10
@@ -506,7 +755,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "multi_feat_vulnerability": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "severity_level_thresholds": null,
     "l0_constraint": 3,
     "sample_size": 10,
@@ -520,27 +769,9 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "sample_size": 10,
     "linf_constraint": 0.01
   },
-  "hopskipjump_attack": {
-    "exclude_columns": [],
-    "run": false,
-    "severity_thresholds": [
-      0.05,
-      0.15,
-      0.25
-    ],
-    "sample_size": 10,
-    "attack_params": {
-      "targeted": false,
-      "norm": 2,
-      "max_iter": 50,
-      "max_eval": 1000,
-      "init_eval": 100,
-      "init_size": 100
-    }
-  },
   "int_feature_type": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -548,7 +779,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "float_feature_type": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -556,7 +787,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "str_feature_type": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -564,7 +795,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "bool_feature_type": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -572,7 +803,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "url_feature_type": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -580,7 +811,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "domain_feature_type": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -588,7 +819,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "email_feature_type": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -596,7 +827,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "null_check": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -604,23 +835,28 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "null_proportion": {
     "exclude_columns": [],
-    "run": false,
-    "min_sample_size": 100,
+    "run": true,
+    "drift_scaling_factor": 0.005,
     "performance_change_thresholds": null,
-    "p_value_threshold": 0.05
+    "p_value_threshold": 0.05,
+    "min_sample_size": 100
   },
   "row_null_proportion": {
     "exclude_columns": [],
-    "run": false,
-    "min_sample_size": 100,
+    "run": true,
+    "drift_scaling_factor": 0.005,
     "performance_change_thresholds": null,
     "drift_statistic": "Population Stability Index",
     "params": {
+      "exclude_columns": [],
+      "run": true,
+      "drift_scaling_factor": 0.005,
+      "performance_change_thresholds": null,
       "psi_threshold": 0.2
     }
   },
   "required_features": {
-    "run": false,
+    "run": true,
     "required_feats": null,
     "allowed_feats": null,
     "ordered": false,
@@ -632,7 +868,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "mi_decrease_feature_to_label": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "severity_thresholds": [
       0.1,
       0.2,
@@ -642,7 +878,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "high_mi_feature_to_label": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "severity_thresholds": [
       0.7,
       0.8,
@@ -651,7 +887,7 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "high_feature_correlation": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "severity_thresholds": [
       0.7,
       0.8,
@@ -660,69 +896,70 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "max_pairwise_tests": 200,
     "min_num_samples": 100
   },
+  "demographic_parity": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "demographic_parity_avg_pred": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "demographic_parity_avg_rank": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
   "protected_feature_drift": {
     "exclude_columns": [],
-    "run": false,
-    "min_sample_size": 100,
+    "run": true,
+    "drift_scaling_factor": 0.005,
     "performance_change_thresholds": null,
-    "max_sample_size": null,
     "drift_statistic": "Population Stability Index",
     "params": {
+      "run": true,
+      "drift_scaling_factor": 0.005,
+      "performance_change_thresholds": null,
+      "min_sample_size": 100,
+      "max_sample_size": null,
       "distance_threshold": 0.2
     },
     "ignore_nans": true
   },
   "protected_proxies": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "severity_thresholds": [
       0.2,
       0.3,
       0.4
     ]
   },
-  "class_imbalance": {
-    "exclude_columns": [],
-    "run": false,
-    "min_sample_size": 20,
-    "performance_change_thresholds": [
-      0.9,
-      0.93,
-      0.96
-    ],
-    "metric": null
-  },
-  "equalized_odds": {
-    "exclude_columns": [],
-    "run": false,
-    "min_sample_size": 20,
-    "performance_change_thresholds": [
-      0.1,
-      0.2,
-      0.3
-    ]
-  },
   "intersectional_group_fairness": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "min_sample_size": 20,
     "performance_change_thresholds": null
   },
   "group_fairness_avg_pred": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "min_sample_size": 20,
     "performance_change_thresholds": null
   },
   "group_fairness_avg_rank": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "min_sample_size": 20,
     "performance_change_thresholds": null
   },
-  "demographic_parity": {
+  "selection_rate": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "min_sample_size": 20,
     "performance_change_thresholds": [
       0.8,
@@ -730,19 +967,9 @@ Below is the default configuration for all tests. A copy of this can also be fou
       0.6
     ]
   },
-  "demographic_parity_avg_pred": {
+  "selection_rate_avg_pred": {
     "exclude_columns": [],
-    "run": false,
-    "min_sample_size": 20,
-    "performance_change_thresholds": [
-      0.8,
-      0.7,
-      0.6
-    ]
-  },
-  "demographic_parity_avg_rank": {
-    "exclude_columns": [],
-    "run": false,
+    "run": true,
     "min_sample_size": 20,
     "performance_change_thresholds": [
       0.8,
@@ -751,17 +978,16 @@ Below is the default configuration for all tests. A copy of this can also be fou
     ]
   },
   "chi_squared_independence": {
-    "run": false,
+    "run": true,
     "p_value_thresholds": [
-      0.005,
       0.01,
-      0.05
+      0.05,
+      0.1
     ],
-    "min_sample_size": 100,
-    "min_subset_sample_size": 20
+    "min_sample_size": 100
   },
   "predict_protected_features": {
-    "run": false,
+    "run": true,
     "accuracy_thresholds": [
       0.8,
       0.85,
@@ -775,63 +1001,42 @@ Below is the default configuration for all tests. A copy of this can also be fou
   },
   "subset_sensitivity_pos_pred": {
     "exclude_columns": [],
-    "run": false,
-    "performance_thresholds": [
-      0.1,
-      0.2,
-      0.3
-    ],
+    "run": true,
     "min_sample_size": 20,
+    "performance_change_thresholds": null,
     "num_samples_to_simulate": 100
   },
   "subset_sensitivity_avg_pred": {
     "exclude_columns": [],
-    "run": false,
-    "performance_thresholds": [
-      0.1,
-      0.2,
-      0.3
-    ],
+    "run": true,
     "min_sample_size": 20,
+    "performance_change_thresholds": null,
     "num_samples_to_simulate": 100
   },
   "subset_sensitivity_avg_rank": {
     "exclude_columns": [],
-    "run": false,
-    "performance_thresholds": [
-      0.1,
-      0.2,
-      0.3
-    ],
+    "run": true,
     "min_sample_size": 20,
+    "performance_change_thresholds": null,
     "num_samples_to_simulate": 100
   },
   "equal_opportunity": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "min_sample_size": 20,
     "performance_change_thresholds": null
   },
   "equal_opp_macro_recall": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "min_sample_size": 20,
     "performance_change_thresholds": null
   },
   "predictive_equality": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "min_sample_size": 20,
     "performance_change_thresholds": null
-  },
-  "exact_match_label_flipping": {
-    "exclude_columns": [],
-    "run": false,
-    "severity_thresholds": [
-      0.0,
-      0.001,
-      0.005
-    ]
   }
 }
 ```

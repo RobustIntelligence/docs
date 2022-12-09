@@ -39,7 +39,8 @@ Here is an example config:
     "tests_config": {
         "custom_tests": [
             {
-                "test_path": upload_path
+                "test_path": upload_path,
+                "custom_test_category":  "Example Test Category 1"
             },
             {
                 "custom_test_type": "ABNORMAL_INPUTS",
@@ -48,7 +49,7 @@ Here is an example config:
                     "arg_1": 5,
                     "arg_2": "example_argument_string"
                 },
-                "custom_test_category": "Example"
+                "custom_test_category": "Example Test Category 2"
             }
         ]
     }

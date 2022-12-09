@@ -12,11 +12,11 @@ Global Configuration Options
 
 - ``categories``: List, *default* = ``[]``
 
-    Test categories to run. Options include `Abnormal Inputs`, `Adversarial`, `Data Cleanliness`, `Data Poisoning Detection`, `Drift`, `Model Performance`, `Subset Performance`, and `Transformations`.
+    Test categories to run. Options include `Abnormal Inputs`, `Attacks`, `Drift`, `Subset Performance`, `Transformations`, and `Adversarial`.
 
 - ``run_default``: Optional[bool], *default* = ``null``
 
-    Whether to run default categories or not. Defaults to `True` if no `categories` are specified, `False` if any are. The default categories are `Data Cleanliness`, `Model Performance`, `Subset Performance`, and `Transformations`.
+    Whether to run default categories or not. Defaults to `True` if no `categories` are specified, `False` if any are. The default categories are `Abnormal Inputs`, `Drift`, `Subset Performance`, `Attacks`, `Data Cleanliness` and `Transformations`.
 
 - ``global_sample_size``: int or ``null``, *default* = ``null``
 

@@ -1,50 +1,13 @@
-# Configuring data sources
+# Data Sources Configuration
 
-Administrators can configure data sources that the RI Platform can access.
-Sensitive information, such as access tokens, are stored in a secret manager
-service built using Hashicorp Vault.
+* Administrators can configure data sources using the UI from the "Data Sources" 
+page under the "Organization Settings". You can see how in the below image.
+* Sensitive information such as access tokens will be securely stored in a 
+secret manager service built on top of Hashicorp Vault. 
+* Supported Data Sources - [Databricks Deltalake](/for_data_scientists/how_to_guides/integrations/data/databricks_deltalake.md)
+* Note: 
+  * Native cloud stores like S3 and Google Cloud Storage are also supported.
+  However, they can only be configured during deployment and not via the UI. 
 
-## Supported data sources
-
-The RI Platform supports the following data sources.
-
-### Configurable through the RI Platform UI
-
-* [Databricks Deltalake](/for_data_scientists/how_to_guides/integrations/data/databricks_deltalake.md)
-
-### Configurable at deploy time
-
-These sources can only be configured when deploying an RI Platform instance:
-
-* Amazon S3 
-* Google Cloud Storage
-
-## Adding a data source
-
-An administrator can add or modify a data source that RI Platform can use. 
-
-1.  Sign in to a RIME instance.  
-      The Workspaces page appears.
-2.  Click the three-dot menu at the right side of a workspace and select *Manage Workspace*.  
-      The Workspace Settings page appears. The user account logged in must have the Workspace
-      administrator role for the selected workspace.
-3.  Click *Data Sources* in the left navigation bar.  
-      The Data Sources configuration pane appears.
-4.  Click *Add Data Source*.  
-      The Add Data Source dialog box appears.
-5.  In *Name*, type a name for the data source.
-6.  From the *Data Source Type* drop-down, choose a type.
-7.  In *Server Hostname*, type the fully-qualified domain name (FQDN) for the server.
-8.  In *HTTP Path*, type the path to the data source.
-9.  From the *Credentials Privilege* drop-down, choose a privilege level.
-      | Level     | Description                                                                       |
-      |-----------|-----------------------------------------------------------------------------------|
-      | Workspace | All users share a single access token to authenticate.                            |
-      | Members   | Each user configures their credentials and uses a personal token to authenticate. |
-10. Click *Save*.
-
-The new data source is now available to the RI Platform.
-
-<!--
-<img src="../../_static/data-sources.png" alt="toy image text" width="960px">
-<img src="../../_static/delta-lake.png" alt="toy image text" width="960px"> -->
+<img src="../../_static/data-sources.png">
+<img src="../../_static/delta-lake.png">

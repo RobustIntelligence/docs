@@ -43,24 +43,24 @@ Custom Notebooks
 
 .. |Fraud_notebook| raw:: html
 
-    <a class="reference external" href="https://colab.research.google.com/drive/1qytdRPqE1hsJ2aKrCW3WvaBoVWdKLeL6" target="_blank">Fraud Detection (Binary Classification)</a>
+    <a class="reference external" href="https://colab.research.google.com/drive/1ltzfVQ4GGU9pxuTh7dXOkSt9i-JIQtkA" target="_blank">Fraud Detection (Binary Classification)</a>
 
 .. |NYC_notebook| raw:: html
 
-    <a class="reference external" href="https://colab.research.google.com/drive/1xbBQo0P57PfdeJz1cZacuGNpTknewKe7" target="_blank">NYC Taxi Dataset (Regression)</a>
+    <a class="reference external" href="https://colab.research.google.com/drive/1vvPk5yze-2DcOBr2EKulU80jidZNYIpT" target="_blank">NYC Taxi Dataset (Regression)</a>
 
 .. |Movie_notebook| raw:: html
 
-    <a class="reference external" href="https://colab.research.google.com/drive/1a5EEO4Ax0Ly3dLFuBP0BuqtKUdMupoGi" target="_blank">Movie Recommendations (Ranking)</a>
+    <a class="reference external" href="https://colab.research.google.com/drive/1avKr83vnrtX8klH74h6JT6pLKbu5Q0Y7" target="_blank">Movie Recommendations (Ranking)</a>
 
 .. |ArXiv_notebook| raw:: html
 
-    <a class="reference external" href="https://colab.research.google.com/drive/1IwN3aLeCCAzWl8MCk35wpyYYdu7Y1JgI" target="_blank">ArXiv Dataset (NLP, Classification)</a>
+    <a class="reference external" href="https://colab.research.google.com/drive/1ZLcxz8xfNglHmgLsri44b6H2bMCxaXGN" target="_blank">ArXiv Dataset (NLP, Classification)</a>
 
 .. |Animals_notebook| raw:: html
 
-    <a class="reference external" href="https://colab.research.google.com/drive/1ul-WPOfpqEF6Te_SLKsP9PptpTXeYbPT" target="_blank">Animals with Attributes 2 (Images, Classification)</a>
+    <a class="reference external" href="https://colab.research.google.com/drive/1YiwAd9KbWhNc4TqNyFNOC8A3LeCeMmL0" target="_blank">Animals with Attributes 2 (Images, Classification)</a>
 
 .. |Custom_notebook| raw:: html
 
-    <a class="reference external" href="https://colab.research.google.com/drive/1bW0gdXep4BSBchuVaBUx4OtzZ3TYNm_p" target="_blank">Use RIME with your Own Dataset/Model</a>
+    <a class="reference external" href="https://colab.research.google.com/drive/11H5L4UAaVhk3BhS7uv4dIBxzARrv3axX" target="_blank">Use RIME with your Own Dataset/Model</a>

@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terraform Variables Reference &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<link href="../../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../../index.html">
+        <img src="../../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> RIME
+          </a>
+              <div class="version">
+                0.19.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_data_scientists/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_data_scientists/reference.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_data_scientists/explanation.html">Explanation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelogs.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">For Administrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../local_trial/index.html">Local Trial</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Terraform Variables Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/for_admins/installation_guide/self_hosted/terraform_variables.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="terraform-variables-reference">
+<h1>Terraform Variables Reference<a class="headerlink" href="#terraform-variables-reference" title="Permalink to this heading"></a></h1>
+<p>Below you can find a full description of all variables in the RI Platform Terraform configuration (<code class="docutils literal notranslate"><span class="pre">main.tf</span></code>).</p>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>variable &quot;create_managed_helm_release&quot; {
+  description = &lt;&lt;EOT
+  Whether to deploy a RIME Helm chart onto the provisioned infrastructure managed by Terraform.
+  Changing the state of this variable will either install/uninstall the RIME deployment
+  once the change is applied in Terraform. If you want to install the RIME package manually,
+  set this to false and use the generated values YAML file to deploy the release
+  on the provisioned infrastructure.
+  EOT
+  type        = bool
+  default     = false
+}
+
+variable &quot;helm_values_output_dir&quot; {
+  description = &lt;&lt;EOT
+  The directory where to write the generated values YAML files used to configure each Helm release.
+  For each namespace in `k8s_namespaces`, a Helm chart &quot;$helm_values_output_dir/values_$namespace.yaml&quot;
+  will be created. For each rime agent namespace, a values file will be created in an agents/ subdirectory.
+  EOT
+  type        = string
+  default     = &quot;&quot;
+}
+
+variable &quot;image_registry_config&quot; {
+  description = &lt;&lt;EOT
+  The configuration for the RIME Image Registry service, which manages custom images
+  for running RIME stress tests with different Python model requirements:
+    * enable:                       whether or not to enable the RIME Image Registry service.
+    * allow_external_custom_images: whether to allow custom external images that are not
+                                    managed by the image registry for model testing.
+    * repository_prefix:            the prefix used for all repositories created
+                                    and managed by the RIME Image Registry service.
+  EOT
+  type = object({
+    enable                       = bool
+    allow_external_custom_images = bool
+    repository_prefix            = string
+  })
+  default = {
+    enable                       = true
+    allow_external_custom_images = false
+    repository_prefix            = &quot;rime-managed-images&quot;
+  }
+  # See https://docs.aws.amazon.com/AmazonECR/latest/userguide/repository-create.html
+  # for repository naming rules.
+  validation {
+    condition     = !var.image_registry_config.enable || can(regex(&quot;^[a-z][a-z0-9]*(?:[/_-][a-z0-9]+)*$&quot;, var.image_registry_config.repository_prefix))
+    error_message = &quot;The repository prefix must be 1 or more lowercase alphanumeric words separated by a &#39;-&#39;, &#39;_&#39;, or &#39;/&#39; where the first character is a letter.&quot;
+  }
+}
+
+variable &quot;k8s_namespaces&quot; {
+  description = &lt;&lt;EOT
+    All Kubernetes namespaces where the RIME Helm chart is to be installed.
+    A Helm chart will be constructed for each of these called &quot;$helm_values_output_dir/values_$namespace.yaml&quot;.
+    For manual installation of these Helm charts, be sure to install them in their intended namespace.
+    EOT
+  type = list(object({
+    namespace = string
+    primary   = bool
+  }))
+  default = [
+    {
+      namespace = &quot;default&quot;
+      primary   = true
+    }
+  ]
+  # These conditions should match the conditions of modules that rely on this variable.
+  # Currently the modules that rely on these conditions are:
+  #   - rime_helm_release/s3_blob_store (each k8s_namespace is included in the blob-store S3 bucket name, which has a limit on length and what characters can be included)
+  validation {
+    condition = (
+      length([for n in var.k8s_namespaces : n if n.primary]) == 1 &amp;&amp;
+      alltrue([for n in var.k8s_namespaces : length(n.namespace) &lt;= 12 &amp;&amp; can(regex(&quot;^[a-z0-9.-]+$&quot;, n.namespace))])
+    )
+    error_message = &quot;Must have one and only one primary namespace, and each namespace must be &lt;= 12 in characters and contain only letters, numbers, dots (.), and hyphens (-).&quot;
+  }
+}
+
+variable &quot;resource_name_suffix&quot; {
+  description = &lt;&lt;EOT
+  A suffix to use with the names of resources created by this module.
+  EOT
+  type        = string
+  # These conditions should match the conditions of modules that rely on this variable.
+  # Currently the modules that rely on these conditions are:
+  #   - rime_helm_release/s3_blob_store (resource_name_suffix is included in the blob-store S3 bucket name, which has a limit on length and what characters can be included)
+  validation {
+    condition = (
+      length(var.resource_name_suffix) &lt;= 25 &amp;&amp;
+      can(regex(&quot;^[a-z0-9.-]+$&quot;, var.resource_name_suffix))
+    )
+    error_message = &quot;Must not be longer than 25 characters and must contain only letters, numbers, dots (.), and hyphens (-).&quot;
+  }
+}
+
+variable &quot;rime_docker_backend_image&quot; {
+  description = &quot;The name of the Docker image for RIME&#39;s backend services.&quot;
+  type        = string
+  default     = &quot;robustintelligencehq/rime-backend&quot;
+}
+
+variable &quot;rime_docker_agent_image&quot; {
+  description = &quot;The name of the Docker image for RIME agent, not including a tag.&quot;
+  type        = string
+  default     = &quot;robustintelligencehq/rime-agent&quot;
+}
+
+variable &quot;rime_docker_frontend_image&quot; {
+  description = &quot;The name of the Docker image for RIME&#39;s frontend services.&quot;
+  type        = string
+  default     = &quot;robustintelligencehq/rime-frontend&quot;
+}
+
+variable &quot;rime_docker_image_builder_image&quot; {
+  description = &quot;The name of the Docker image for RIME&#39;s image builder service.&quot;
+  type        = string
+  default     = &quot;robustintelligencehq/rime-image-builder&quot;
+}
+
+# Note: this docker image must be specified as the specific image for a given
+# client&#39;s model testing so it does not have a default.
+variable &quot;rime_docker_model_testing_image&quot; {
+  description = &quot;The name of the Docker image for RIME&#39;s model testing jobs.&quot;
+  type        = string
+}
+
+variable &quot;rime_docker_secret_name&quot; {
+  description = &quot;The name of the Kubernetes secret used to pull the Docker image for RIME&#39;s backend services.&quot;
+  type        = string
+  default     = &quot;rimecreds&quot;
+}
+
+variable &quot;dns_config&quot; {
+  description = &lt;&lt;EOT
+  Configuration for rime dns config. Should be structured like
+  {
+    create_route53: bool (default true)
+    rime_domain: string (required)
+    acm_domain: string (default rime_domain) Only add this if your acm cert base domain is different from the rime domain
+  }
+  If create_route53 is false, it is expected that you have a valid zone and cert for rime_domain already created
+  EOT
+  type        = map(any)
+}
+
+variable &quot;rime_repository&quot; {
+  description = &quot;Repository URL where to locate the requested RIME chart for the give `rime_version`.&quot;
+  type        = string
+}
+
+variable &quot;rime_version&quot; {
+  description = &quot;The version of the RIME software to be installed.&quot;
+  type        = string
+}
+
+variable &quot;s3_authorized_bucket_path_arns&quot; {
+  description = &lt;&lt;EOT
+  A list of all S3 bucket path arns of which RIME will be granted access to.
+  Each path must be of the form:
+      arn:aws:s3:::&lt;BUCKET&gt;/sub/path
+  where &lt;BUCKET&gt; is the name of the S3 bucket and `sub/path` comprises
+  some path within the bucket. You can also use wildcards &#39;?&#39; or &#39;*&#39; within
+  the arn specification (e.g. &#39;arn:aws:s3:::datasets/*&#39;).
+  EOT
+  type        = list(string)
+}
+
+variable &quot;install_cluster_autoscaler&quot; {
+  description = &quot;Whether or not to install the cluster autoscaler.&quot;
+  type        = bool
+  default     = false
+}
+
+variable &quot;cluster_name&quot; {
+  description = &quot;Name of eks cluster.&quot;
+  type        = string
+  default     = &quot;&quot;
+}
+
+variable &quot;install_external_dns&quot; {
+  description = &quot;Whether or not to install external dns.&quot;
+  type        = bool
+  default     = false
+}
+
+variable &quot;install_datadog&quot; {
+  description = &quot;Whether or not to install the Datadog Agent.&quot;
+  type        = bool
+  default     = false
+}
+
+variable &quot;create_eks&quot; {
+  description = &quot;Whether or not to create a new EKS cluster to run RIME on. If false, cluster_name must be the name of an already provisioned cluster.&quot;
+  type        = bool
+  default     = true
+}
+
+variable &quot;vpc_id&quot; {
+  description = &quot;VPC where the cluster and workers will be deployed. Must be specified if create_eks is true.&quot;
+  type        = string
+  default     = &quot;&quot;
+}
+
+variable &quot;private_subnet_ids&quot; {
+  description = &quot;A list of private subnet ids to place the EKS cluster and workers within. Must be specified if create_eks is true&quot;
+  type        = list(string)
+  default     = []
+}
+
+variable &quot;public_subnet_ids&quot; {
+  description = &quot;A list of public subnet ids for EKS cluster load balancers to work in&quot;
+  type        = list(string)
+  default     = []
+}
+
+variable &quot;cluster_version&quot; {
+  description = &quot;Kubernetes version to use for the EKS cluster.&quot;
+  type        = string
+  default     = &quot;1.20&quot;
+}
+
+variable &quot;node_ssh_key&quot; {
+  description = &quot;EC2 ssh key to be added to nodes for ssh access. This is only applicable if create_eks is true&quot;
+  type        = string
+  default     = &quot;&quot;
+}
+
+variable &quot;tags&quot; {
+  description = &quot;A map of tags to add to all resources. Tags added to launch configuration or templates override these values for ASG Tags only.&quot;
+  type        = map(string)
+  default     = {}
+}
+
+variable &quot;server_worker_group_min_size&quot; {
+  description = &quot;Minimum size of the server worker group. Must be &gt;= 1&quot;
+  type        = number
+  default     = 4
+
+  validation {
+    condition     = var.server_worker_group_min_size &gt;= 1
+    error_message = &quot;Server worker group min size must be greater than or equal to 1.&quot;
+  }
+}
+
+variable &quot;server_worker_group_max_size&quot; {
+  description = &quot;Maximum size of the server worker group. Must be &gt;= min size. For best performance we recommend &gt;= 10 nodes as the max size.&quot;
+  type        = number
+  default     = 10
+}
+
+variable &quot;model_testing_worker_group_instance_types&quot; {
+  description = &quot;Instance types for the model testing worker group.&quot;
+  type        = list(string)
+  default     = [&quot;t2.xlarge&quot;, &quot;t3.xlarge&quot;, &quot;t3a.xlarge&quot;]
+}
+
+variable &quot;model_testing_worker_group_min_size&quot; {
+  description = &quot;Minimum size of the model testing worker group. Must be &gt;= 1&quot;
+  type        = number
+  default     = 0
+
+  validation {
+    condition     = var.model_testing_worker_group_min_size &gt;= 0
+    error_message = &quot;Model testing worker group min size must be greater than or equal to 0.&quot;
+  }
+}
+
+variable &quot;model_testing_worker_group_max_size&quot; {
+  description = &quot;Maximum size of the model testing worker group. Must be &gt;= min size. For best performance we recommend &gt;= 10 nodes as the max size.&quot;
+  type        = number
+  default     = 10
+}
+
+variable &quot;model_testing_worker_group_use_spot&quot; {
+  description = &quot;Use spot instances for model testing worker group.&quot;
+  type        = bool
+  default     = true
+}
+
+variable &quot;map_roles&quot; {
+  description = &quot;Additional IAM roles to add to the aws-auth configmap. You will need to set this for any role you want to allow access to eks&quot;
+  type = list(object({
+    rolearn  = string
+    username = string
+    groups   = list(string)
+  }))
+
+  default = []
+}
+
+variable &quot;map_users&quot; {
+  description = &quot;Additional IAM users to add to the aws-auth configmap. You will need to set this for any role you want to allow access to eks.&quot;
+  type = list(object({
+    userarn  = string
+    username = string
+    groups   = list(string)
+  }))
+
+  default = []
+}
+
+variable &quot;mongo_db_size&quot; {
+  description = &quot;MongoDb volume size&quot;
+  type        = string
+  default     = &quot;32Gi&quot;
+}
+
+variable &quot;install_velero&quot; {
+  description = &quot;Whether or not to install Velero.&quot;
+  type        = bool
+  default     = false
+}
+
+variable &quot;velero_backup_schedule&quot; {
+  description = &quot;Backup schedule time in cron time string format.&quot;
+  type        = string
+  default     = &quot;0 2 * * *&quot;
+}
+
+variable &quot;velero_backup_ttl&quot; {
+  description = &quot;A suffix to name the IAM policy and role with.&quot;
+  type        = string
+  default     = &quot;336h&quot;
+}
+
+variable &quot;allow_ecr_pull&quot; {
+  description = &quot;Allow nodes to pull from ecr&quot;
+  type        = bool
+  default     = true
+}
+
+variable &quot;lb_security_group_rules&quot; {
+  description = &lt;&lt;EOT
+  Configuration for lb security group rules. Should be structured like
+  {
+    type              = string
+    from_port         = string
+    to_port           = string
+    protocol          = string
+    description       = string
+    cidr_blocks       = string
+    ipv6_cidr_blocks  = list(string)
+    self              = bool
+    prefix_list_ids   = list(string)
+    source_security_group_id = string
+  }
+  See https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule for details
+  EOT
+  type = list(object({
+    type                     = string
+    from_port                = number
+    to_port                  = number
+    protocol                 = string
+    description              = string
+    cidr_blocks              = list(string)
+    ipv6_cidr_blocks         = list(string)
+    self                     = bool
+    prefix_list_ids          = list(string)
+    source_security_group_id = string
+  }))
+  default = []
+}
+
+// TODO(chris): change to verbosity level instead of boolean
+variable &quot;verbose&quot; {
+  description = &quot;Whether to use verbose mode for RIME application services.&quot;
+  type        = bool
+  default     = false
+}
+
+variable &quot;rime_secrets_name&quot; {
+  description = &quot;Name of secrets manager secret where Rime values are stored&quot;
+  type        = string
+  default     = &quot;rime-secrets&quot;
+}
+
+variable &quot;use_blob_store&quot; {
+  description = &quot;Whether to use blob store for the cluster.&quot;
+  type        = bool
+  default     = true
+}
+
+
+variable &quot;enable_log_archival&quot; {
+  description = &quot;Whether to archive logs to blob store.&quot;
+  type        = bool
+  default     = false
+}
+
+variable &quot;use_file_upload_service&quot; {
+  description = &quot;Whether to use file upload service.&quot;
+  type        = bool
+  default     = true
+}
+
+variable &quot;eks_cluster_node_iam_policies&quot; {
+  description = &quot;Policies to attach to eks worker nodes.&quot;
+  type        = list(string)
+  default     = []
+}
+
+variable &quot;user_pilot_flow&quot; {
+  description = &quot;A unique flow ID shown when choosing the option of \&quot;Trigger manually\&quot; on userpilot dashboard&quot;
+  type        = string
+  default     = &quot;&quot;
+}
+
+variable &quot;internal_lbs&quot; {
+  description = &quot;Whether or not the load balancers should be spun up as internal.&quot;
+  type        = bool
+  default     = false
+}
+
+variable &quot;ip_allowlist&quot; {
+  # Note: external client IP addresses are preserved by the load balancer. You may also want to include the external IP
+  # address for the cluster on the allowlist if OIDC is being used, since OIDC will make a callback to the auth-server
+  # using that IP address.
+  description = &quot;A set of CIDR routes to add to the allowlist for all ingresses. If not specified, all IP addresses are allowed.&quot;
+  type        = list(string)
+  default     = []
+}
+
+variable &quot;enable_api_key_auth&quot; {
+  description = &quot;Use api keys to authenticate api requests&quot;
+  type        = bool
+  default     = true
+}
+
+variable &quot;enable_additional_mongo_metrics&quot; {
+  description = &quot;If enabled, mongo will expose additional collection-level metrics to the datadog agent&quot;
+  type        = bool
+  default     = true
+}
+
+variable &quot;rime_agent_configs&quot; {
+  description = &lt;&lt;EOT
+  Custom configuration agent deployments, providing access to separate-namespace deployments and custom value files.
+    NOTE: If you want to deploy agents together with the control plane, simply do not include this variable.
+    If not specified, agents will automatically be deployed into same namespaces as control planes.
+  Note that the rime agent deployments will still adhere to the setting of
+  create_managed_helm_release, and will only be installed if this is enabled.
+  * namespace:                the k8s namespace for the rime-agent deployment
+  * custom_values_file_path:  path to custom values file for rime-agent helm chart
+  * cp_namespace:             the namespace where the control plane for this rime agent is
+  * cp_release_name:          the release name of the control plane, which is prepended to service names and necessary
+                                for the rime agent to be able to locate the correct CP services.
+                                If not specified, defaults to &quot;rime.&quot;
+                                In dev environments, we often deploy CP with release name rime-workspace1, etc.
+EOT
+  type = list(object({
+    namespace               = string
+    custom_values_file_path = string
+    cp_namespace            = string
+    cp_release_name         = string
+  }))
+  default = []
+}
+
+variable &quot;include_internal_agent&quot; {
+  description = &quot;If false, deploys all control planes without an internal agent (i.e. a &#39;split&#39; deployment)&quot;
+  type        = bool
+  default     = true
+}
+
+variable &quot;use_rmq_health&quot; {
+  description = &quot;Whether to start the rmq-health service.&quot;
+  type        = bool
+  default     = true
+}
+
+variable &quot;use_rmq_resource_cleaner&quot; {
+  description = &quot;Whether to use the rmq resource cleaner given that the rmq-health service is used.&quot;
+  type        = bool
+  default     = true
+}
+
+variable &quot;rmq_resource_cleaner_frequency&quot; {
+  description = &quot;The frequency for running the rmq resource cleaner.&quot;
+  type        = string
+  default     = &quot;5m&quot;
+}
+
+variable &quot;use_rmq_metrics_updater&quot; {
+  description = &quot;Whether to use the rmq metrics updater given that the rmq-health service is used.&quot;
+  type        = bool
+  default     = true
+}
+
+variable &quot;rmq_metrics_updater_frequency&quot; {
+  description = &quot;The frequency for updating the rmq metrics.&quot;
+  type        = string
+  default     = &quot;1s&quot;
+}
+
+variable &quot;docker_registry&quot; {
+  description = &quot;The name of the Docker registry that holds the chart images&quot;
+  type        = string
+  default     = &quot;docker.io&quot;
+}
+variable &quot;server_worker_groups_overrides&quot; {
+  description = &quot;A dictionary that specifies overrides for the server worker group launch templates. See https://github.com/terraform-aws-modules/terraform-aws-eks/blob/v17.24.0/locals.tf#L36 for valid values.&quot;
+  type        = any
+  default     = {}
+}
+
+variable &quot;model_testing_worker_groups_overrides&quot; {
+  description = &quot;A dictionary that specifies overrides for the model testing worker group launch templates. See https://github.com/terraform-aws-modules/terraform-aws-eks/blob/v17.24.0/locals.tf#L36 for valid values.&quot;
+  type        = any
+  default     = {}
+}
+
+variable &quot;overwrite_license&quot; {
+  description = &quot;Whether to use the license from the configured Secret Store to overwrite the cluster license. This variable is ignored during the first deployment.&quot;
+  type        = bool
+  default     = false
+}
+
+variable &quot;create_scheduled_ct&quot; {
+  description = &quot;Whether to deploy a RIME Scheduled CT Cron Job&quot;
+  type        = bool
+  default     = false
+}
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

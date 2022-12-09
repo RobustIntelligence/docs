@@ -8,7 +8,6 @@
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -21,8 +20,6 @@
         <script src="../../../_static/sphinx_highlight.js"></script>
         <script src="../../../_static/clipboard.min.js"></script>
         <script src="../../../_static/copybutton.js"></script>
-        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-        <script src="../../../_static/main.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -47,7 +44,7 @@
             <a href="../../../index.html" class="icon icon-home"> RIME
           </a>
               <div class="version">
-                0.20.4
+                0.19.7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -57,26 +54,12 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../changelogs.html">Release Notes</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/index.html">RIME overview</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Administering the RI Platform</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/index.html">Administering the RI Platform</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Installing the RI Platform</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Data science with the RI Platform</span></p>
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../get_started.html">Get Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../how_to_guides.html">How-To Guides</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../reference.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../python-sdk.html">Python SDK</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../tabular.html">Tabular Configuration</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="../tabular.html#rime-configuration">RIME Configuration</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="stress_testing.html">AI Stress Testing</a></li>
@@ -95,10 +78,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../cv.html">CV Configuration</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanation.html">Explanation</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other Guides</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">RIME in-depth reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelogs.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/index.html">For Administrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../local_trial/index.html">Local Trial</a></li>
 </ul>
 
         </div>
@@ -194,7 +180,7 @@ predictions are specified for multi-class models.</p>
 <p>List of categorical features in data. If provided, these should be ALL the categorical features. If <code class="docutils literal notranslate"><span class="pre">null</span></code>, RIME will automatically determine whether a column is categorical or not. By default it is <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">protected_features</span></code>: list or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
-<p>List of protected features in data. If the <code class="docutils literal notranslate"><span class="pre">Bias</span> <span class="pre">and</span> <span class="pre">Fairness</span></code> category is added to <code class="docutils literal notranslate"><span class="pre">categories</span></code> in the test config (see <a class="reference internal" href="tests.html"><span class="doc std std-doc">TestSuiteConfig()</span></a>, and <code class="docutils literal notranslate"><span class="pre">protected_features</span></code> are included, a set of bias and fairness tests will be run over the protected features.</p>
+<p>List of protected features in data. If the <code class="docutils literal notranslate"><span class="pre">Bias</span> <span class="pre">And</span> <span class="pre">Fairness</span></code> category is added to <code class="docutils literal notranslate"><span class="pre">categories</span></code> in the test config (see <a class="reference internal" href="tests.html"><span class="doc std std-doc">TestSuiteConfig()</span></a>, and <code class="docutils literal notranslate"><span class="pre">protected_features</span></code> are included - a set of bias and fairness tests will be run over the protected features.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">features_not_in_model</span></code>: list or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
 <p>List of features in the dataset that are not used by the model. Specifying this will ensure that only relevant tests are run on these features.</p>
@@ -430,51 +416,6 @@ Only one of <code class="docutils literal notranslate"><span class="pre">loader_
 </li>
 </ul>
 </section>
-<section id="intersections-template">
-<h3>Intersections Template<a class="headerlink" href="#intersections-template" title="Permalink to this heading"></a></h3>
-<p>Specifies a custom group based on a specified intersection of features. Subset performance tests run over the specified intersection.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="p">{</span>
-    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;ref_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;eval_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;ref_pred_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;eval_pred_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;Column label&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;feature1&quot;</span><span class="p">,</span> <span class="s2">&quot;feature2&quot;</span><span class="p">,</span> <span class="s2">&quot;feature3&quot;</span><span class="p">],</span>
-	        <span class="s2">&quot;intersections&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;feature1&quot;</span><span class="p">,</span> <span class="s2">&quot;feature2&quot;</span><span class="p">,</span> <span class="s2">&quot;feature3&quot;</span><span class="p">]},</span> <span class="p">{</span><span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;feature3&quot;</span><span class="p">,</span> <span class="s2">&quot;feature4&quot;</span><span class="p">]}]</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</section>
-<section id="id6">
-<h3>Arguments<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
-<ul>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">ref_path</span></code></strong>: string, <em><strong>required</strong></em></p>
-<p>Path to reference data file.</p>
-</li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">eval_path</span></code></strong>: string, <em><strong>required</strong></em></p>
-<p>Path to evaluation data file.</p>
-</li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">ref_pred_path</span></code></strong>: string, <em><strong>required</strong></em></p>
-<p>Path to a CSV or Parquet file containing the predictions on the reference dataset. This is how
-predictions are specified for multi-class models.</p>
-</li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">eval_pred_path</span></code></strong>: string, <em><strong>required</strong></em></p>
-<p>Path to a CSV or Parquet file containing the predictions on the evaluation dataset. This is how
-predictions are specified for multi-class models.</p>
-</li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">label_col</span></code></strong>: string, <em><strong>required</strong></em></p>
-<p>Name of column in data that corresponds to the labels.</p>
-</li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">protected_features</span></code></strong>: array, <em><strong>required</strong></em></p>
-<p>List of protected features in data. If the <code class="docutils literal notranslate"><span class="pre">Bias</span> <span class="pre">And</span> <span class="pre">Fairness</span></code> category is added to <code class="docutils literal notranslate"><span class="pre">categories</span></code> in the test config (see <a class="reference internal" href="tests.html"><span class="doc std std-doc">TestSuiteConfig()</span></a>, and <code class="docutils literal notranslate"><span class="pre">protected_features</span></code> are included, a set of bias and fairness tests will be run over the protected features.</p>
-</li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">intersections</span></code></strong>: array, <em><strong>required</strong></em></p>
-<p>A list of arrays of features. The intersection of the sets of features specifies a custom group on which the performance tests are run.</p>
-</li>
-</ul>
-</section>
 <section id="delta-lake-single-data-info-template">
 <h3>Delta Lake Single Data Info Template<a class="headerlink" href="#delta-lake-single-data-info-template" title="Permalink to this heading"></a></h3>
 <p>NOTE: the Databricks secret access token (along with the “server_hostname” and “http_path”)
@@ -495,8 +436,8 @@ kicking off the run.</p>
 </pre></div>
 </div>
 </section>
-<section id="id7">
-<h3>Arguments<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<section id="id6">
+<h3>Arguments<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
 <ul>
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">server_hostname</span></code></strong>: string, <em><strong>required</strong></em></p>
 <p>Server hostname of the Databricks cluster. This should be specified as part of a Data Source.

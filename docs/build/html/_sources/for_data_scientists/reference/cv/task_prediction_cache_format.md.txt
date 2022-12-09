@@ -3,7 +3,7 @@ Prediction Cache Data Format
 
 ### Supported File Formats
 
-RIME CV supports the same file formats for the prediction cache as it does for the [input data](task_data_format), namely [JSON](https://www.json.org/json-en.html) (`.json`) and JSON lines (`.jsonl`) formats. Each prediction should be stored in its own dictionary in the json list or as a dictionary on its own line for JSONL files.
+RIME CV supports the same file formats for the prediction cache as it does for the [input data](task_data_format), namely [JSON](https://www.json.org/json-en.html) (`.json`) and [JSON lines](https://jsonlines.org/) (`.jsonl`) formats. Each prediction should be stored in its own dictionary in the json list or as a dictionary on its own line for JSONL files.
 
 To use a prediction cache for a given test run, it is currently required that a prediction be present for every data point in the corresponding input data. For example, if a dataset is of size `N`, line `i` in the prediction cache should contain the model output for input example `i` in the dataset for every `0 <= i < N`.
 

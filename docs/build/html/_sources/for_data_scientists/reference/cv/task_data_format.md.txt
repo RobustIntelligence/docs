@@ -3,7 +3,7 @@ Input Data Format
 
 ### Supported File Formats
 
-RIME CV currently supports both [JSON](https://www.json.org/json-en.html) (`.json`) and JSON lines (`.jsonl`) formats, optionally compressed using [gzip](https://www.gnu.org/software/gzip/) (`.json.gz` or `.jsonl.gz`). For JSON lines files, RIME expects each line to be a dictionary representing a single data point. For standard JSON files, RIME expects the content to be a list of dictionaries. The structure of each dictionary is task-specific. See below for a detailed description of the expected data format for supported tasks.
+RIME CV currently supports both [JSON](https://www.json.org/json-en.html) (`.json`) and [JSON lines](https://jsonlines.org/) (`.jsonl`) formats, optionally compressed using [gzip](https://www.gnu.org/software/gzip/) (`.json.gz` or `.jsonl.gz`). For JSON lines files, RIME expects each line to be a dictionary representing a single data point. For standard JSON files, RIME expects the content to be a list of dictionaries. The structure of each dictionary is task-specific. See below for a detailed description of the expected data format for supported tasks.
 
 
 ### Expected Keys by Task

@@ -14,7 +14,7 @@ Configure the different RIME products to work with your model and data.
    :maxdepth: 1
 
    tabular/stress_testing.md
-   tabular/continuous_testing.rst
+   tabular/continuous_testing.md
 
 Fine-tune the specifications for your inputs to RIME.
 

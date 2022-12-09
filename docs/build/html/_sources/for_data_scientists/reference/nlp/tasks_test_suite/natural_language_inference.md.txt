@@ -8,10 +8,9 @@ Below is the default configuration for all Natural Language Inference tests. A c
   "categories": [],
   "run_default": null,
   "custom_tests": null,
-  "dynamic_configs": {},
   "numeric_outlier": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -22,7 +21,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
   },
   "unseen_categorical": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -30,7 +29,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
   },
   "unseen_domain": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -38,7 +37,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
   },
   "unseen_email": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -46,7 +45,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
   },
   "unseen_url": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -54,7 +53,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
   },
   "rare_categories": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -76,7 +75,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
   "req_characters": {
     "column_specific_params": {},
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -84,7 +83,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
   },
   "inconsistencies": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -96,7 +95,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
   },
   "capitalization": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -104,7 +103,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
   },
   "empty_string": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -112,16 +111,250 @@ Below is the default configuration for all Natural Language Inference tests. A c
   },
   "embedding_anomalies": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
     },
     "distance_quantile": 0.995
   },
+  "feat_subset_auc": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_accuracy": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_f1": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_macro_f1": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_precision": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_macro_precision": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_fpr": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_recall": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_macro_recall": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_pred_variance_pos": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_pred_variance_neg": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_rmse": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_mae": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_mape": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_rank_correlation": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_ndcg": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_mrr": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_multiclass_acc": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_multiclass_auc": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_auc": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_accuracy": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_f1": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_macro_f1": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_precision": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_macro_precision": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_fpr": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_recall": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_macro_recall": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_pred_variance_pos": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_pred_variance_neg": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_pred_variance_all": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_rmse": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_mae": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_mape": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_rank_correlation": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_ndcg": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_mrr": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_multiclass_acc": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_multiclass_auc": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
   "correlation_feat_drift": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "correlation_drift_thresholds": [
       0.3,
       0.5,
@@ -133,7 +366,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
   },
   "correlation_label_drift": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "correlation_drift_thresholds": [
       0.3,
       0.5,
@@ -143,7 +376,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
   },
   "mutual_information_feat_drift": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "min_mutual_information": 0.1,
     "mutual_information_thresholds": [
       0.1,
@@ -155,7 +388,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
   },
   "mutual_information_label_drift": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "mutual_information_thresholds": [
       0.1,
       0.2,
@@ -163,10 +396,11 @@ Below is the default configuration for all Natural Language Inference tests. A c
     ]
   },
   "categorical_label_drift": {
-    "run": false,
+    "run": true,
     "drift_statistic": "Population Stability Index",
     "params": {
-      "psi_thresholds": [
+      "run": true,
+      "distance_thresholds": [
         0.2,
         0.4,
         0.6
@@ -174,10 +408,11 @@ Below is the default configuration for all Natural Language Inference tests. A c
     }
   },
   "multiclass_pred_label_drift": {
-    "run": false,
+    "run": true,
     "drift_statistic": "Population Stability Index",
     "params": {
-      "psi_thresholds": [
+      "run": true,
+      "distance_thresholds": [
         0.2,
         0.4,
         0.6
@@ -185,36 +420,41 @@ Below is the default configuration for all Natural Language Inference tests. A c
     }
   },
   "regression_label_drift": {
-    "run": false,
-    "drift_statistic": "Population Stability Index",
-    "params": {
-      "psi_thresholds": [
-        0.2,
-        0.4,
-        0.6
-      ],
-      "num_bins": 100
-    }
+    "run": true,
+    "p_value_threshold": 0.05,
+    "ks_stat_thresholds": [
+      0.1,
+      0.33,
+      0.67
+    ]
   },
   "categorical_drift": {
     "exclude_columns": [],
-    "run": false,
-    "min_sample_size": 100,
+    "run": true,
+    "drift_scaling_factor": 0.005,
     "performance_change_thresholds": null,
-    "max_sample_size": null,
     "drift_statistic": "Population Stability Index",
     "params": {
+      "run": true,
+      "drift_scaling_factor": 0.005,
+      "performance_change_thresholds": null,
+      "min_sample_size": 100,
+      "max_sample_size": null,
       "distance_threshold": 0.2
     },
     "ignore_nans": true
   },
   "continuous_drift": {
     "exclude_columns": [],
-    "run": false,
-    "min_sample_size": 100,
+    "run": true,
+    "drift_scaling_factor": 0.005,
     "performance_change_thresholds": null,
     "drift_statistic": "Population Stability Index",
     "params": {
+      "run": true,
+      "drift_scaling_factor": 0.005,
+      "performance_change_thresholds": null,
+      "min_sample_size": 100,
       "min_num_quantiles": 1000,
       "distance_threshold": 0.2,
       "num_bins": 100
@@ -222,7 +462,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
     "ignore_nans": true
   },
   "prediction_drift": {
-    "run": false,
+    "run": true,
     "drift_statistic": "Population Stability Index",
     "params": {
       "run": true,
@@ -237,34 +477,42 @@ Below is the default configuration for all Natural Language Inference tests. A c
     }
   },
   "embedding_drift": {
-    "run": false,
-    "min_sample_size": 100,
+    "exclude_columns": [],
+    "run": true,
+    "drift_scaling_factor": 0.005,
     "performance_change_thresholds": null,
     "drift_statistic": "euclidean_distance",
     "params": {
+      "run": true,
+      "drift_scaling_factor": 0.005,
+      "performance_change_thresholds": null,
+      "min_sample_size": 100,
       "distance_threshold": 0.1,
       "normalize": true
     }
   },
+  "overall_metrics": {
+    "run": true,
+    "metrics_specific_thresholds": {}
+  },
   "avg_confidence": {
     "run": true,
     "severity_thresholds": [
-      0.05,
-      0.1,
-      0.2
+      0.03,
+      0.08,
+      0.13
     ]
   },
   "atc": {
     "run": true,
     "severity_thresholds": [
-      0.05,
-      0.1,
-      0.2
+      0.03,
+      0.08,
+      0.13
     ]
   },
   "calibration_comparison": {
     "run": true,
-    "num_bins": 10,
     "severity_level_thresholds": [
       0.02,
       0.06,
@@ -284,7 +532,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
   "metadata_tests": null,
   "global_target_text_keys": null,
   "unseen_unigram_abnormal_input": {
-    "run": false,
+    "run": true,
     "severity_thresholds": [
       0.0,
       0.0002,
@@ -302,7 +550,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
     "p_value_threshold": 0.0005
   },
   "empty_string_abnormal_input": {
-    "run": false,
+    "run": true,
     "severity_thresholds": [
       0.0,
       0.0002,
@@ -319,7 +567,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
     }
   },
   "char_dist_drift": {
-    "run": false,
+    "run": true,
     "drift_metrics": [
       {
         "distance_metric": "Population Stability Index",
@@ -342,7 +590,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
     }
   },
   "unigrams_drift": {
-    "run": false,
+    "run": true,
     "drift_metrics": [
       {
         "distance_metric": "Population Stability Index",
@@ -365,7 +613,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
     }
   },
   "bigrams_drift": {
-    "run": false,
+    "run": true,
     "drift_metrics": [
       {
         "distance_metric": "Population Stability Index",
@@ -388,7 +636,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
     }
   },
   "invisible_chars_attack": {
-    "run": false,
+    "run": true,
     "sample_size": 5,
     "target_text_keys": null,
     "severity_thresholds": [
@@ -409,7 +657,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
     "max_str_len": 2000
   },
   "deletion_chars_attack": {
-    "run": false,
+    "run": true,
     "sample_size": 5,
     "target_text_keys": null,
     "severity_thresholds": [
@@ -430,7 +678,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
     "max_str_len": 2000
   },
   "intentional_homoglyph_attack": {
-    "run": false,
+    "run": true,
     "sample_size": 5,
     "target_text_keys": null,
     "severity_thresholds": [
@@ -451,7 +699,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
     "max_str_len": 2000
   },
   "confusable_homoglyph_attack": {
-    "run": false,
+    "run": true,
     "sample_size": 5,
     "target_text_keys": null,
     "severity_thresholds": [
@@ -472,7 +720,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
     "max_str_len": 2000
   },
   "universal_triggers_attack": {
-    "run": false,
+    "run": true,
     "sample_size": 3,
     "target_text_keys": null,
     "batch_size": 10,
@@ -618,7 +866,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
     "attack_params": null
   },
   "synonym_swap_attack": {
-    "run": false,
+    "run": true,
     "sample_size": 200,
     "target_text_keys": null,
     "severity_thresholds": [
@@ -627,10 +875,14 @@ Below is the default configuration for all Natural Language Inference tests. A c
       0.3
     ],
     "max_str_len": 2000,
-    "attack_params": null
+    "attack_params": {
+      "aug_min": 1,
+      "aug_max": null,
+      "aug_p": 0.05
+    }
   },
   "lm_word_substitution_attack": {
-    "run": false,
+    "run": true,
     "sample_size": 200,
     "target_text_keys": null,
     "severity_thresholds": [
@@ -647,7 +899,7 @@ Below is the default configuration for all Natural Language Inference tests. A c
     }
   },
   "lm_word_insertion_attack": {
-    "run": false,
+    "run": true,
     "sample_size": 200,
     "target_text_keys": null,
     "severity_thresholds": [
@@ -756,14 +1008,6 @@ Below is the default configuration for all Natural Language Inference tests. A c
       0.3
     ],
     "max_str_len": 2000
-  },
-  "exact_match_label_flipping": {
-    "run": false,
-    "severity_thresholds": [
-      0.0,
-      0.001,
-      0.005
-    ]
   }
 }
 ```
