@@ -82,15 +82,6 @@ html_theme = "sphinx_rtd_theme"
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 
-html_css_files = [
-    'https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css',
-]
-
-html_js_files = [
-    'https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js',
-    'main.js',
-]
-
 html_theme_options = {
     'includehidden': False,
     'display_version': True,
@@ -113,9 +104,6 @@ def setup(app):
 # -- Shared Substitutions ----------------------------------------------------
 
 # See https://myst-parser.readthedocs.io/en/latest/syitax/optional.html#syntax-substitutions
-
-# TECHNICAL PUBLICATIONS NOTE: Did you refactor the directory structure in any way? Check
-# that these paths are still valid or it will cause hard to debug problems later in life.
 
 tabular_ui_redirect = (
     "After this finishes running, you should be able to see the results in "
@@ -144,7 +132,7 @@ cv_config_note = (
 
 cli_note = (
     "For additional command line options, please see the [CLI Reference]"
-    "(/getstarted/local_trial/reference/cli.md)."
+    "(/local_trial/reference/cli.md)."
 )
 
 rime_library_setup_note = (
@@ -155,7 +143,7 @@ rime_library_setup_note = (
 nlp_setup_extra_note = (
     "Please ensure that the extra RIME NLP dependencies have been installed "
     "from the `nlp_requirements.txt` file from [installation]"
-    "(/getstarted/local_trial/get_started/installation.md).\nIf you run into a "
+    "(/local_trial/get_started/installation.md).\nIf you run into a "
     "`ModuleNotFoundError` at any point during this walkthrough, it is likely "
     "that you need to install the RIME NLP Extras!\n"
     "```bash\npip install -r nlp_requirements.txt\n```"
@@ -164,7 +152,7 @@ nlp_setup_extra_note = (
 cv_setup_extra_note = (
     "Please ensure that the extra RIME CV dependencies have been installed "
     "from the `cv_requirements.txt` file from [installation]"
-    "(/getstarted/local_trial/get_started/installation.md).\nIf you run into a "
+    "(/local_trial/get_started/installation.md).\nIf you run into a "
     "`ModuleNotFoundError` at any point during this walkthrough, it is likely "
     "that you need to install the RIME CV Extras!\n"
     "```bash\npip install -r cv_requirements.txt\n```"
@@ -172,8 +160,18 @@ cv_setup_extra_note = (
 
 fw_realtime_overview = (
     "1. Run AI Stress Testing\n"
-    "2. Setup a Firewall Client in a Jupyter Notebook\n"
-    "3. Monitor Events\n"
+    "2. Review and Download Auto-Configured AI Firewall Rules\n"
+    "3. Setup a Firewall Client in a Jupyter Notebook\n"
+    "4. Monitor Events\n"
+)
+
+fw_rules_review = (
+    "AI Firewall Realtime is configured from a JSON configuration file (`rules.json`).\n"
+    "This configuration is auto-generated based on the model and datasets that you provided\n"
+    "to run AI Stress Testing.\n To view and download the JSON configuration file, click on "
+    "\"Protect your model\".\n\n**At this step, copy the Firewall ID and download the "
+    "`rules.json` files --- you will need them for later steps in this walkthrough.**\n\n"
+    "Once downloaded, place `rules.json` in your `rime_trial/` folder"
 )
 
 fw_code_example = (
@@ -223,19 +221,19 @@ stress_test_bio = (
     "model, designed to detect a specific vulnerability. At Robust "
     "Intelligence, we are constantly researching new vulnerabilities "
     "to test.\n\nFor a full list of available stress tests, see our "
-    "[Test Bank](/getstarted/explanation/summary_tests.md)."
+    "[Test Bank](/for_data_scientists/explanation.rst)."
 )
 
 troubleshooting_local_installation_redirect = (
     "If you run into issues, please refer to our "
-    "[Troubleshooting](/getstarted/local_trial/how_to_guides/troubleshooting/installation.md) "
+    "[Troubleshooting](/local_trial/how_to_guides/troubleshooting/installation.md) "
     "page for help! Additionally, your RI representative will be happy to assist "
     "--- feel free to reach out!"
 )
 
 troubleshooting_python_package_redirect = (
     "If you run into issues, please refer to our "
-    "[Troubleshooting](/getstarted/local_trial/how_to_guides/troubleshooting/python_package.md) "
+    "[Troubleshooting](/local_trial/how_to_guides/troubleshooting/python_package.md) "
     "page for help! Additionally, your RI representative will be happy to assist "
     "--- feel free to reach out!"
 )
@@ -246,8 +244,6 @@ troubleshooting_python_sdk_redirect = (
     "page for help! Additionally, your RI representative will be happy to assist "
     "--- feel free to reach out!"
 )
-
-# TODO comment out all of these snippets that are not actually used anywhere
 
 troubleshooting_admin_installation_redirect = (
     "If you run into issues, please refer to our "
@@ -264,9 +260,7 @@ fw_how_to_intro = (
 )
 
 fw_how_to_deploy_step = (
-    "Next, click on \"Deploy AI Firewall\" and fill out the details. **Note that "
-    "the Local Trial does not support configurable data sources --- for 'Data "
-    " Source', simple select 'S3 Bucket' and leave the defaults.**<br /> The step is "
+    "Next, click on \"Deploy AI Firewall\" and fill out the details. The step is "
     "the same as step 3 in the Firewall Continuous Tests tutorial. The AI "
     "Firewall you create can be used to monitor (Continuous Tests) or protect "
     "(Realtime Events) your model."
@@ -277,21 +271,6 @@ custom_tests_intro = (
     "do so. If you run into any difficulties, please contact your Robust Intelligence "
     "support engineer and they will assist you.\n\n First, you must define a custom test "
     "in a Python file. "
-)
-
-ct_open_firewall_page = (
-    "In the web client, click on the \"Default Project\" and then toggle to the "
-    "\"AI Firewall\" icon on the left. You should then see the following page."
-)
-
-ct_configure_steps_local_trial = (
-    "Click on \"Configure AI Firewall\" and fill out the details. The \"Name\""
-    "field can be a name of your choice. The \"Associated AI Stress Test\" "
-    "field should correspond to the AI Stress Testing run that you just "
-    "completed. The \"Bin Size\" field should be \"1 Day\". **Note that the "
-    "Local Trial does not support configurable data sources --- for "
-    "'Data Source', simple select 'S3 Bucket' and leave the defaults.** Then "
-    "copy the **\"Firewall ID\"** and click \"Done\"."
 )
 
 myst_substitutions = {
@@ -306,6 +285,7 @@ myst_substitutions = {
     "nlp_setup_extra_note": nlp_setup_extra_note,
     "cv_setup_extra_note": cv_setup_extra_note,
     "fw_realtime_overview": fw_realtime_overview,
+    "fw_rules_review": fw_rules_review,
     "fw_code_example": fw_code_example,
     "fw_notebook_setup": fw_notebook_setup,
     "sdk_client_setup": sdk_client_setup,
@@ -316,7 +296,5 @@ myst_substitutions = {
     "troubleshooting_python_sdk_redirect": troubleshooting_python_sdk_redirect,
     "troubleshooting_admin_installation_redirect": troubleshooting_admin_installation_redirect,
     "fw_how_to_intro": fw_how_to_intro,
-    "fw_how_to_deploy_step": fw_how_to_deploy_step,
-    "ct_open_firewall_page": ct_open_firewall_page,
-    "ct_configure_steps_local_trial": ct_configure_steps_local_trial
+    "fw_how_to_deploy_step": fw_how_to_deploy_step
 }

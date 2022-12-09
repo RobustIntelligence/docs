@@ -12,7 +12,6 @@ To run RIME on NLP data, execute the RIME CLI using the `rime-engine run-nlp` co
   "model_task": "Task Name",                    (REQUIRED)
   "data_profiling_info": {...},
   "tests_config_path": "path/to/tests/config",
-  "tests_config": {...},
   "prediction_info": {...},
   "random_seed": null,
 }
@@ -34,7 +33,7 @@ To run RIME on NLP data, execute the RIME CLI using the `rime-engine run-nlp` co
 
 - **`model_task`**: string, ***required***
 
-    Specification of the model task. Currently, the supported values are `"Text Classification"`, `"Named Entity Recognition"`, and `"Natural Language Inference"`.
+    Specification of the model task. Currently, the supported values are `"Text Classification"` and `"Named Entity Recognition"`.
 
 - `data_profiling_info`: DataProfilingInfo, *default* = `DataProfilingInfo()`
 
@@ -46,15 +45,7 @@ To run RIME on NLP data, execute the RIME CLI using the `rime-engine run-nlp` co
 
 - `tests_config_path`: string or `null`, *default* = `null`
 
-    Path to a TestSuiteConfig JSON file. If both `tests_config_path` and `test_config` are `null` RIME will use the default [TestSuiteConfig()](test_suite.rst) for the specified model task.  
-   
-   NOTE: Only one of `tests_config_path` OR `test_config` should be specified.
-
-- `tests_config`: TestSuiteConfig or `null`, *default* = `null`
-
-    Specification of which tests to run and what test parameters to use. If both `tests_config_path` and `tests_config` are `null` RIME will use the default [TestSuiteConfig()](test_suite.rst).  
-    
-    NOTE: Only one of `tests_config_path` OR `tests_config` should be specified.
+    Path to a TestSuiteConfig JSON file. If path is `null` RIME will use the default [TestSuiteConfig](test_suite) for the specified model task.
 
 - `prediction_info`: PredictionInfo or `null`, *default* = `null`
 

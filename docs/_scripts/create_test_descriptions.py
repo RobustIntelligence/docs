@@ -53,7 +53,7 @@ def nlp_main():
     output_dir = TEST_BANK_DIR / "nlp"
     output_dir.mkdir(exist_ok=True, parents=True)
     # TODO: Add other tasks.
-    tasks = [Task.CLASSIFICATION, Task.NER, Task.NLI]
+    tasks = [Task.CLASSIFICATION, Task.NER]
     for task in tasks:
         task_descriptions = get_nlp_descriptions(task)
         update_header(task_descriptions, task)

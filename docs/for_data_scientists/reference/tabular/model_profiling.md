@@ -17,6 +17,7 @@ This configuration should be specified within the [AI Stress Testing Configurati
        "feature_imp_column": "featureImportance",
        "feature_name_column": "featureName"
     },
+    "num_calib_bins": 10,
     "impact_metric": null,
     "drift_impact_metric": null,
     "metric_configs": {...}
@@ -45,15 +46,15 @@ This configuration should be specified within the [AI Stress Testing Configurati
   - `feature_name_column`: str
     
     Name of the column in this csv that corresponds to the feature name.
+- `num_calib_bins`: int, *default* = 10
+
+  The number of bins to use when computing the calibration curve for a binary classification model.
 - `impact_metric`: `MetricName` or `null`, *default* = `null`
 
   The metric to use when computing model impact for abnormal input and transformation tests.
 - `drift_impact_metric`: `MetricName` or `null`, *default* = `null`
 
   The metric to use when computing model impact for drift tests.
-- `impact_label_threshold`: `int`, *default* = `0.8`
-
-  When the fraction of labeled rows in the evaluation data falls below this threshold, Average Prediction is used for impact_metric and drift_impact_metric.
 - `metric_configs`: mapping or `null`, *default* = `null`
 
   The parameters to configure each metric used during testing. For instance, to configure NDCG to accumulate only to a specific rank `k=50`, specify `{"normalized_discounted_cumulative_gain": {"k": 50}}`.

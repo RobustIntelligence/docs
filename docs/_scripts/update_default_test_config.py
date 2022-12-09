@@ -4,8 +4,6 @@ import re
 from pathlib import Path
 from typing import Type
 
-from rime.core.cli.output_schema import TestingType
-from rime.core.metric import Metric
 from rime.core.test_suite_config import TestSuiteConfig
 from rime.images.schema.test_suite import (
     ClassificationTestSuiteConfig as ImageClassificationTestSuiteConfig,
@@ -22,16 +20,8 @@ def dump_config(path: Path, config_cls: Type[TestSuiteConfig]) -> None:
     s = path.open("r").read()
     pattern = re.compile("```(python|json)\n[^`]*```")
     match = pattern.search(s)
-    config = config_cls.from_config_dict({}, TestingType.STRESS)
-    config_dict = config.to_dict()
-    if "testing_type" in config_dict:
-        del config_dict["testing_type"]
-    for test_config in config_dict.values():
-        if isinstance(test_config, dict) and isinstance(
-            test_config.get("metric", None), Metric
-        ):
-            del test_config["metric"]  # cannot json encode objects
-    config_s = json.dumps(config_dict, indent=2)
+    config = config_cls()
+    config_s = json.dumps(config.to_dict(), indent=2)
     formatted_s = f"```{match.groups()[0]}\n{config_s}\n```"
     updated_doc = s[: match.start()] + formatted_s + s[match.end() :]
     with path.open("w") as f:
@@ -51,7 +41,6 @@ if __name__ == "__main__":
     config_map = {
         directory / "named_entity_recognition.md": NERDModelTestSuiteConfig,
         directory / "text_classification.md": ClassificationTestSuiteConfig,
-        directory / "natural_language_inference.md": ClassificationTestSuiteConfig,
     }
 
     for path, config_class in config_map.items():

@@ -1,17 +1,12 @@
-Manual Continuous Tests Configuration
+AI Firewall Continuous Tests
 =============================
 
-Configuration of manual RIME AI Firewall Continuous Tests is done through a JSON configuration file that you pass as an argument to the RIME CLI.
+Configuration of RIME AI Firewall Continuous Tests is done through a JSON configuration file that you pass as an argument to the RIME CLI.
 
+Note: This is for the production version of Firewall Continuous Tests, where it is assumed you have already created a
+Firewall and are uploading the latest production data to it. 
 
-The configuration can take on different forms, offering a tradeoff between simplicity and flexibility. In the **file path**-based approach,
-you may choose to specify a small number of file paths referencing the data and predictions file. This option works well for manual
-CT runs. Alternatively in the **data info**-based approach, you can choose to specify `eval_data_info` directly and specify one of 
-many [data sources](data_source.md). This allows you to specify `eval_data_info` from scratch - allowing you to modify all arguments,
-including `pred_col`, `label_col`, `timestamp_col`, and more. 
-
-
-### File Path-based Continuous Test Template
+### Template
 ```python
 {
   "eval_path": ...,                       (REQUIRED)
@@ -45,22 +40,3 @@ including `pred_col`, `label_col`, `timestamp_col`, and more.
   argument when running stress testing, you should also specify this when running 
   continuous testing. Otherwise predictions are assumed to be stored under the same
   `pred_col` specified when running stress testing.
-
-
-### Data Info-based Continuous Test Template
-```python
-{
-  "eval_data_info": {           (REQUIRED)
-    "type": ...,
-    ...
-  },
-}
-```
-
-### Arguments
-
-- **`eval_data_info`**: SingleDataInfo, ***required***
-
-    Configuration for the datasources to use for the evaluation set. 
-    For a reference on how to configure a datasource, see the [Single Data Info section of Data Configuration](data_source.md#single-data-info-templates).
-    

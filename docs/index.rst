@@ -3,72 +3,42 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to the RI Platform!
+Welcome to RIME!
 ================================
 
-The Robust Intelligence (RI) Platform enables comprehensive testing of data and model performance at the pre-development and post-development stages of the model life cycle. Users
-already familiar with the RI Platform who want to know what's new in the most recent release can find details in the **Release Notes**.
+RIME enables comprehensive testing of data and model performance in the crucial pre-development and post-development stages of the life cycle.
+
+The RIME documentation is broken up into four sections.
+First, we have a **Getting Started** section allowing newcomers to easily get started, covering installation and simple tutorials.
+Next, we have **How-To Guides**, demonstrating how to use RIME to solve specific problems.
+After that, we have a **Reference** section covering our SDK and APIs, along with detailed information about how to configure RIME.
+Finally, we have an **Explanation** section which explains key RIME concepts.
 
 .. toctree::
    :maxdepth: 1
-
-   /changelogs.rst
-
-The RI Platform documentation covers several broad topic areas. If you're new to the RI Platform or want to familiarize yourself with core concepts of 
-machine learning, **Getting Started** provides an overview, as well as a comprehensive walkthrough of a local trial of the RI Platform.
-
-.. toctree ::
-   :maxdepth: 2
-   :caption: Getting Started
-
-   /getstarted/index.rst
-
-The **Administering the RI Platform** section discusses tasks related to the maintenance and administration of an RI Platform instance, including user account management,
-role assignments, authentication systems, and API access.
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Administering the RI Platform
-
-   /for_admins/index.rst
-
-RI Platform instances are available as cloud installations, either fully managed by Robust Intelligence or directly managed by you. The RI Platform can also be installed
-as a stand-alone, self-hosted application. The installation process is discussed in **Installing the RI Platform**.
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Installing the RI Platform
-
-   /installation/index.rst
-
-The **Data science with the RI Platform** section discusses actively using the RI Platform to evaluate data sets and models. Configuring alerts, setting up integrations,
-and running tests on uploaded models are all discussed here.
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Data science with the RI Platform
+   :caption: User Guide
 
    /for_data_scientists/get_started.rst
    /for_data_scientists/how_to_guides.rst
    /for_data_scientists/reference.rst
+   /for_data_scientists/explanation.rst
 
-.. TODO actually make the security section
-   The **RIME Security** section discusses RIME's approach to authentication, authorization, encryption, and audit functionality.
+For other inquiries, please refer to the sections below.
 
-   .. toctree::
-      :maxdepth: 1
-      :caption: Security
-
-      /security/index.rst
-
-The **Reference** section contains in-depth details about the Python SDK, including detailed JSON templates to configure 
-stress testing for the RI Platform.
+Differences between RIME releases are catalogued in the **Changelogs** section.
+Installation guides for administrators are available in the **For Administrators** section. 
+Documentation for our local trial experience is available in the **RIME Local Trial** section.
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Reference
+   :maxdepth: 1
+   :caption: Other Guides
 
-   /reference/index.rst
+   /changelogs.rst
+   /for_admins/index.rst
+   /local_trial/index.rst
 
-.. TODO fold in rime API once it's not one giant page
-   /reference/rimeapi.md
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   /python_library/index.rst
