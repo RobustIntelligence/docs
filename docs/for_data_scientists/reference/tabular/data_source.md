@@ -68,7 +68,7 @@ NOTE: for AI Continuous Testing, predictions are required. Either `pred_col` mus
     List of categorical features in data. If provided, these should be ALL the categorical features. If `null`, RIME will automatically determine whether a column is categorical or not. By default it is `null`.
 - `protected_features`: list or null, *default* = `null`
 
-    List of protected features in data. If the `Bias and Fairness` category is added to `categories` in the test config (see [TestSuiteConfig()](tests.md), and `protected_features` are included, a set of bias and fairness tests will be run over the protected features.
+    List of protected features in data. If the `Bias And Fairness` category is added to `categories` in the test config (see [TestSuiteConfig()](tests.md), and `protected_features` are included - a set of bias and fairness tests will be run over the protected features.
 - `features_not_in_model`: list or null, *default* = `null`
 
     List of features in the dataset that are not used by the model. Specifying this will ensure that only relevant tests are run on these features.
@@ -127,6 +127,7 @@ NOTE: for AI Continuous Testing, predictions are required. Either `pred_col` mus
 
     Path to single data info struct (see below).
 
+
 ### Single Data Info Templates
 
 Note that these single data info structs can be used to specify both the `ref_data_info` as well as `eval_data_info`
@@ -136,6 +137,7 @@ Note that *all* single data info structs also take in a set of tabular parameter
 specify properties of their data. These parameters include fields such as `label_col`, `pred_col`, `nrows`, `protected_features`,
 and more. The full list is detailed below. Note that for AI Continuous Testing, predictions are required. 
 Either `pred_col` must be specified or `pred_path` must be specified.
+
 
 #### General Tabular Parameters for Single Data Info
 ```python
@@ -214,6 +216,7 @@ Either `pred_col` must be specified or `pred_path` must be specified.
     - `cols`: list
   
         List of column names corresponding to the embedding. For example, suppose each data row is represented by columns `age`, `is_member`, `query_0`, `query_1`, `query_2`, etc., where each column "`query_\d`" is a dimension of a sentence embedding extracted from a user query. Specifying `"embeddings": [{"name": "user_query", "cols": ["query_0", "query_1", "query_2", ...]}]`  (i.e., specifying each column contained by the embedding) would direct the RI Platform to treat these columns as a single dense vector-valued embedding feature.
+
 
 #### File-based Single Data Info Template
 
@@ -300,60 +303,11 @@ NOTE: this can only be specified as part of a Continuous Testing config, not off
 
     See Tabular Parameters above.
 
-#### Intersections Template
-
-Specifies a custom group based on a specified intersection of features. Subset performance tests run over the specified intersection.
-
-```python
-{
-    {
-    "data_info": {
-        "ref_path": "path",
-        "eval_path": "path",
-        "ref_pred_path": "path",
-        "eval_pred_path": "path",
-        "label_col": "Column label",
-        "protected_features": ["feature1", "feature2", "feature3"],
-	        "intersections": [{"features": ["feature1", "feature2", "feature3"]}, {"features": ["feature3", "feature4"]}]
-}
-```
-
-#### Arguments
-
-- **`ref_path`**: string, ***required***
-
-    Path to reference data file.
-
-- **`eval_path`**: string, ***required***
-
-    Path to evaluation data file.
-
-- **`ref_pred_path`**: string, ***required***
-
-    Path to a CSV or Parquet file containing the predictions on the reference dataset. This is how
-    predictions are specified for multi-class models.
-
-- **`eval_pred_path`**: string, ***required***
-
-    Path to a CSV or Parquet file containing the predictions on the evaluation dataset. This is how
-    predictions are specified for multi-class models.
-
-- **`label_col`**: string, ***required***
-
-    Name of column in data that corresponds to the labels.
-
-- **`protected_features`**: array, ***required***
-
-    List of protected features in data. If the `Bias And Fairness` category is added to `categories` in the test config (see [TestSuiteConfig()](tests.md), and `protected_features` are included, a set of bias and fairness tests will be run over the protected features.
-
-- **`intersections`**: array, ***required***
-
-    A list of arrays of features. The intersection of the sets of features specifies a custom group on which the performance tests are run.
 
 #### Delta Lake Single Data Info Template
 
 NOTE: the Databricks secret access token (along with the "server_hostname" and "http_path")
-are specified as part of [Data Sources Configuration](/for_admins/data-sources.md).
+are specified as part of [Data Sources Configuration](/for_admins/how_to_guides/data-sources.md).
 If you are launching a manual Stress Test run or Continuous Test run,
 do not fill in the server_hostname or http_path fields; those fields + the secret token
 will automatically be inserted if you specify the corresponding data source name when 

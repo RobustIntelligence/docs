@@ -498,26 +498,6 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "min_sample_size": 20,
     "performance_change_thresholds": null
-  },
-  "add_rain": {
-    "run": false,
-    "sample_size": 200,
-    "severity_thresholds": [
-      0.1,
-      0.2,
-      0.3
-    ],
-    "alpha": 0.5
-  },
-  "add_snow": {
-    "run": false,
-    "sample_size": 200,
-    "severity_thresholds": [
-      0.1,
-      0.2,
-      0.3
-    ],
-    "alpha": 0.5
   }
 }
 ```

@@ -5,10 +5,10 @@ Release Notes
 
 New updates and improvements to RIME.
 
+
 .. toctree::
    :maxdepth: 1
 
-   changelogs/v20.md
    changelogs/v19.md
    changelogs/v18.md
    changelogs/v17.md

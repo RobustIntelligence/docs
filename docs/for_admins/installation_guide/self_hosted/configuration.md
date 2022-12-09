@@ -1,0 +1,141 @@
+# Infrastructure Configuration
+
+Before executing the deployment, we need to populate some values. Some are secrets (e.g., product license), whereas others are infrastructure-related (i.e., Terraform variables).
+
+## Secrets
+
+### `secrets.json`
+
+We use AWS Secrets Manager to store sensitive information used during cluster creation:
+```json
+{
+  "admin_username": "",
+  "admin_password": "",
+  "datadog-api-key": "",
+  "docker-logins": [
+    {
+      "docker-server": "",
+      "docker-username": "",
+      "docker-password": "",
+      "docker-email": ""
+    }
+  ],
+  "oauth_client_id": "",
+  "oauth_client_secret": "",
+  "oauth_well_known_url": "",
+  "rime_jwt": "",
+  "rime-user": "",
+  "smtp_email": "",
+  "smtp_password": "",
+  "smtp_server": "",
+  "smtp_port": ""
+}
+```
+
+Your Robust Intelligence team will assist you in populating these values for your deployment. Brief descriptions of each value are provided below:
+- `admin_username`: email address for the RI Platform administrator
+- `admin_password`: one-time password for the RI Platform administrator
+- `datadog-api-key`: API key for DataDog logging services (optional)
+- `docker-logins`: credentials for pulling Docker images
+- `oauth_client_id`: OIDC client ID for integrated authentication (optional)
+- `oauth_client_secret`: OIDC client secret for integrated authentication (optional)
+- `oauth_well_known_url`: OIDC issuer URL for integrated authentication (optional)
+- `rime_jwt`: product license (will be issued by RI support team)
+- `rime-user`: email address for RI support user
+- `smtp_email`: sender address for SMTP (optional)
+- `smtp_password`: password for SMTP sender address (optional)
+- `smtp_server`: address for SMTP server (optional)
+- `smtp_port`: port for SMTP server (optional)
+
+## Terraform
+
+The RI Platform Terraform configuration relies on two files:
+- `main.tf`: the primary configuration for the cluster
+- `backend.tf`: the secondary configuration for managing backups of the Terraform state
+
+A full reference of all configurable Terraform variables can be found [here](/for_admins/installation_guide/self_hosted/terraform_variables.md).
+
+### `main.tf`
+Your Robust Intelligence team will assist you in populating these values for your deployment; however, defaults are listed below for reference.
+```terraform
+provider "aws" {
+  region = ""
+}
+
+module "rime" {
+  source = "https://github.com/RobustIntelligence/terraform/archive/refs/tags/<VERSION>.tar.gz"
+
+  cluster_name    = "rime"
+  cluster_version = "1.20"
+  create_eks      = true
+  k8s_namespaces = [
+    {
+      namespace = "default"
+      primary   = "true"
+    }
+  ]
+
+  rime_version                    = ""
+  rime_docker_model_testing_image = ""
+  rime_secrets_name               = "rime-secrets"
+  docker_registry                 = ""
+
+  helm_values_output_dir      = "rime_cluster_values/"
+  rime_repository             = "https://robustintelligence.github.io/helm/"
+  create_managed_helm_release = true
+  resource_name_suffix        = "rime"
+
+  use_file_upload_service     = true
+  use_blob_store              = true
+  install_cluster_autoscaler  = true
+  install_datadog             = true
+  install_velero              = true
+
+  install_external_dns = true
+  dns_config = {
+    create_route53 = true
+    rime_domain    = ""
+    acm_domain     = ""
+  }
+
+  image_registry_config = {
+    enable                       = true
+    allow_external_custom_images = true
+    repository_prefix            = ""
+  }
+
+  s3_authorized_bucket_path_arns = [
+    "arn:aws:s3:::<bucket-name>/*"
+  ]
+
+  vpc_id             = ""
+  private_subnet_ids = []
+  public_subnet_ids  = []
+
+  model_testing_worker_group_min_size       = 1
+  model_testing_worker_group_max_size       = 10
+  model_testing_worker_group_instance_types = ["t2.xlarge"]
+
+  map_users = [
+    {
+      userarn  = "arn:aws:iam::<account-number>:user/eng",
+      username = "eng",
+      groups   = ["system:masters"]
+    }
+  ]
+}
+```
+
+A detailed reference of the "Managed Images" configuration (`image_registry_config`) can be found [here](/for_admins/installation_guide/self_hosted/managed_images.md).
+
+### `backend.tf`
+```terraform
+terraform {
+  backend "s3" {
+    region  = ""
+    bucket  = ""
+    key     = "rime/state-main.tfstate"
+    encrypt = true
+  }
+}
+```

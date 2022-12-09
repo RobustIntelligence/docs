@@ -14,9 +14,7 @@ This configuration should be specified within the [AI Stress Testing Configurati
   "subset_profiling_config": {
     "num_subsets": 10,
     "min_frq": 0.01,
-    "confidence_level": 0.95,
-    "subset_summary_metric": "accuracy",
-    "num_feats_for_subset_summary": 3
+    "confidence_level": 0.95
   }
 }
 ```
@@ -36,11 +34,3 @@ This configuration should be specified within the [AI Stress Testing Configurati
 - `confidence_level`: float, *default* = `0.95`
 
   For certain model performance metrics, confidence intervals are computed for the performance over each subset. This parameter allows you to set the confidence level used to determine the confidence interval.
-
-- `subset_summary_metric`: Optional[str], *default* = `null`
-
-  The subset performance degradation summary metric is calculated by taking the difference between the worst subset degradation and the overall degradation of the configured metric. 
-
-- `num_feats_for_subset_summary`: int, *default* = `3`
-
-  The number of features over which the subset performance degradation summary metric is aggregated. Features with higher importance are selected first. 

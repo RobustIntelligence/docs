@@ -2,7 +2,7 @@
 
 This walkthrough will cover how to test your NLP model's robustness to adversarial attacks.
 To run the demo, navigate to the <a target="_blank" rel="noopener"
-href="https://colab.research.google.com/drive/1UeAxSq4zkxEiJ3FOcAeyi6lXrP8dOeHB">Adversarial NLP Colab Notebook</a> and follow the instructions or reference the tutorial below.
+href="https://colab.research.google.com/drive/1AtTf5ylUuoy71RlCFFmlq181SWK9m-sB">Adversarial NLP Colab Notebook</a> and follow the instructions or reference the tutorial below.
 
 ## Adversarial NLP Walkthrough
 

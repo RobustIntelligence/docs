@@ -68,7 +68,7 @@ Within a project, from the stress test view, you can click on the "Promote Model
 After toggling to activate scheduled CT, you must choose where you want your data to come from.
 The current supported options are Databricks DeltaLake, the Data Collector, or your own custom loader.
 
-Delta Lake connections can be set up following the instructions in the [data sources setup guide](../../../for_admins/data-sources.md)
+Delta Lake connections can be set up following the instructions in the [data sources setup guide](/for_admins/how_to_guides/data-sources.md)
 You must then specify a table and timestamp column.
 
 <img src="../../../_static/fw_deltalake.png">

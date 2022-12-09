@@ -1,0 +1,17 @@
+How-To Guides
+================================
+
+These tutorials will guide you through how to get started with using the RIME Python Library, using the `IEEE-CIS Fraud Detection dataset <https://www.kaggle.com/c/ieee-fraud-detection>`__, which is available in the trial bundle.
+
+For access to the Python library and the trial bundle, please be sure to complete `Installation <../python_library/get_started/installation.html>`__ first!
+
+.. toctree::
+   :maxdepth: 2
+
+   /python_library/how_to_guides/rime_data_model_setup.md
+   /python_library/how_to_guides/rime_stress_tests.md
+   /python_library/how_to_guides/rime_adversarial.md
+   /python_library/how_to_guides/rime_subset_performance.md
+   /python_library/how_to_guides/rime_model_performance.md
+
+For walkthroughs using NLP or CV modalities, please contact your Robust Intelligence support engineer!

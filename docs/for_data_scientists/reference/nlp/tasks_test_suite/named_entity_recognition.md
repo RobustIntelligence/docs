@@ -8,10 +8,9 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
   "categories": [],
   "run_default": null,
   "custom_tests": null,
-  "dynamic_configs": {},
   "numeric_outlier": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -22,7 +21,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
   },
   "unseen_categorical": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -30,7 +29,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
   },
   "unseen_domain": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -38,7 +37,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
   },
   "unseen_email": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -46,7 +45,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
   },
   "unseen_url": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -54,7 +53,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
   },
   "rare_categories": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -76,7 +75,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
   "req_characters": {
     "column_specific_params": {},
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -84,7 +83,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
   },
   "inconsistencies": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -96,7 +95,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
   },
   "capitalization": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -104,7 +103,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
   },
   "empty_string": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
       "min_num_samples": 1
@@ -112,16 +111,250 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
   },
   "embedding_anomalies": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     },
     "distance_quantile": 0.995
   },
+  "feat_subset_auc": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_accuracy": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_f1": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_macro_f1": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_precision": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_macro_precision": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_fpr": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_recall": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_macro_recall": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_pred_variance_pos": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_pred_variance_neg": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_rmse": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_mae": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_mape": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_rank_correlation": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_ndcg": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_mrr": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_multiclass_acc": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_multiclass_auc": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_auc": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_accuracy": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_f1": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_macro_f1": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_precision": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_macro_precision": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_fpr": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_recall": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_macro_recall": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_pred_variance_pos": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_pred_variance_neg": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_pred_variance_all": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_rmse": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_mae": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_mape": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_rank_correlation": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_ndcg": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_mrr": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_multiclass_acc": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "feat_subset_drift_multiclass_auc": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
   "correlation_feat_drift": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "correlation_drift_thresholds": [
       0.3,
       0.5,
@@ -133,7 +366,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
   },
   "correlation_label_drift": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "correlation_drift_thresholds": [
       0.3,
       0.5,
@@ -143,7 +376,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
   },
   "mutual_information_feat_drift": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "min_mutual_information": 0.1,
     "mutual_information_thresholds": [
       0.1,
@@ -155,7 +388,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
   },
   "mutual_information_label_drift": {
     "exclude_columns": [],
-    "run": false,
+    "run": true,
     "mutual_information_thresholds": [
       0.1,
       0.2,
@@ -163,10 +396,11 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
     ]
   },
   "categorical_label_drift": {
-    "run": false,
+    "run": true,
     "drift_statistic": "Population Stability Index",
     "params": {
-      "psi_thresholds": [
+      "run": true,
+      "distance_thresholds": [
         0.2,
         0.4,
         0.6
@@ -174,10 +408,11 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
     }
   },
   "multiclass_pred_label_drift": {
-    "run": false,
+    "run": true,
     "drift_statistic": "Population Stability Index",
     "params": {
-      "psi_thresholds": [
+      "run": true,
+      "distance_thresholds": [
         0.2,
         0.4,
         0.6
@@ -185,36 +420,41 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
     }
   },
   "regression_label_drift": {
-    "run": false,
-    "drift_statistic": "Population Stability Index",
-    "params": {
-      "psi_thresholds": [
-        0.2,
-        0.4,
-        0.6
-      ],
-      "num_bins": 100
-    }
+    "run": true,
+    "p_value_threshold": 0.05,
+    "ks_stat_thresholds": [
+      0.1,
+      0.33,
+      0.67
+    ]
   },
   "categorical_drift": {
     "exclude_columns": [],
-    "run": false,
-    "min_sample_size": 100,
+    "run": true,
+    "drift_scaling_factor": 0.005,
     "performance_change_thresholds": null,
-    "max_sample_size": null,
     "drift_statistic": "Population Stability Index",
     "params": {
+      "run": true,
+      "drift_scaling_factor": 0.005,
+      "performance_change_thresholds": null,
+      "min_sample_size": 100,
+      "max_sample_size": null,
       "distance_threshold": 0.2
     },
     "ignore_nans": true
   },
   "continuous_drift": {
     "exclude_columns": [],
-    "run": false,
-    "min_sample_size": 100,
+    "run": true,
+    "drift_scaling_factor": 0.005,
     "performance_change_thresholds": null,
     "drift_statistic": "Population Stability Index",
     "params": {
+      "run": true,
+      "drift_scaling_factor": 0.005,
+      "performance_change_thresholds": null,
+      "min_sample_size": 100,
       "min_num_quantiles": 1000,
       "distance_threshold": 0.2,
       "num_bins": 100
@@ -222,7 +462,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
     "ignore_nans": true
   },
   "prediction_drift": {
-    "run": false,
+    "run": true,
     "drift_statistic": "Population Stability Index",
     "params": {
       "run": true,
@@ -237,34 +477,42 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
     }
   },
   "embedding_drift": {
-    "run": false,
-    "min_sample_size": 100,
+    "exclude_columns": [],
+    "run": true,
+    "drift_scaling_factor": 0.005,
     "performance_change_thresholds": null,
     "drift_statistic": "euclidean_distance",
     "params": {
+      "run": true,
+      "drift_scaling_factor": 0.005,
+      "performance_change_thresholds": null,
+      "min_sample_size": 100,
       "distance_threshold": 0.1,
       "normalize": true
     }
   },
+  "overall_metrics": {
+    "run": true,
+    "metrics_specific_thresholds": {}
+  },
   "avg_confidence": {
     "run": true,
     "severity_thresholds": [
-      0.05,
-      0.1,
-      0.2
+      0.03,
+      0.08,
+      0.13
     ]
   },
   "atc": {
     "run": true,
     "severity_thresholds": [
-      0.05,
-      0.1,
-      0.2
+      0.03,
+      0.08,
+      0.13
     ]
   },
   "calibration_comparison": {
     "run": true,
-    "num_bins": 10,
     "severity_level_thresholds": [
       0.02,
       0.06,
@@ -272,7 +520,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
     ]
   },
   "label_imbalance": {
-    "run": false,
+    "run": true,
     "severity_thresholds": [
       0.6,
       0.75,
@@ -284,7 +532,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
   "metadata_tests": null,
   "global_target_text_keys": null,
   "unseen_unigram_abnormal_input": {
-    "run": false,
+    "run": true,
     "severity_thresholds": [
       0.0,
       0.0002,
@@ -302,7 +550,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
     "p_value_threshold": 0.0005
   },
   "empty_string_abnormal_input": {
-    "run": false,
+    "run": true,
     "severity_thresholds": [
       0.0,
       0.0002,
@@ -319,7 +567,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
     }
   },
   "char_dist_drift": {
-    "run": false,
+    "run": true,
     "drift_metrics": [
       {
         "distance_metric": "Population Stability Index",
@@ -342,7 +590,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
     }
   },
   "unigrams_drift": {
-    "run": false,
+    "run": true,
     "drift_metrics": [
       {
         "distance_metric": "Population Stability Index",
@@ -365,7 +613,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
     }
   },
   "bigrams_drift": {
-    "run": false,
+    "run": true,
     "drift_metrics": [
       {
         "distance_metric": "Population Stability Index",
@@ -490,8 +738,20 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
       0.13
     ]
   },
+  "subset_precision": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "subset_recall": {
+    "exclude_columns": [],
+    "run": true,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
   "entity_types_drift": {
-    "run": false,
+    "run": true,
     "drift_metrics": [
       {
         "distance_metric": "Population Stability Index",
@@ -514,7 +774,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
     }
   },
   "predicted_entity_types_drift": {
-    "run": false,
+    "run": true,
     "drift_metrics": [
       {
         "distance_metric": "Population Stability Index",
@@ -537,7 +797,7 @@ Below is the default configuration for all Named Entity Recognition tests. A cop
     }
   },
   "entity_lengths_drift": {
-    "run": false,
+    "run": true,
     "drift_metrics": [
       {
         "distance_metric": "Population Stability Index",
