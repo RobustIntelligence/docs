@@ -47,7 +47,7 @@
             <a href="../../../index.html" class="icon icon-home"> RIME
           </a>
               <div class="version">
-                0.20.4
+                0.21.0-rc.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -94,6 +94,9 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">RIME in-depth reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_guides/common_use_cases/adversarial_nlp.html">NLP Adversarial Robustness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firewall_continuous_tests.html">Manual Continuous Tests Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scheduled_ct_configuration.html">Scheduling Continuous Tests</a></li>
 </ul>
 
         </div>
@@ -143,7 +146,7 @@ file in the overall configuration file using the <code class="docutils literal n
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">global_abnormal_inputs_performance_change_config</span></code></strong>: Optional[mapping], <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
 <p>Parameters for measuring the impact of abnormal inputs on model performance (applies to all abnormal input tests). The different values of this mapping should be:</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">severity_thresholds</span></code>: List[float, float, float]</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">severity_thresholds</span></code>: List[float, float]</p>
 <p>Ascending list of three float thresholds, corresponding to the observed or simulated performance change which must be achieved in order for the test to return, respectively, Low, Medium, or High severity. This is a logical OR: if both types of performance change are measured, take the maximum of the two and return the severity corresponding to the highest threshold that was exceeded. If there are observed failing rows but the observed or simulated performance changes do not exceed any of the thresholds, return a Low severity.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">min_num_samples</span></code>: int</p>
@@ -154,7 +157,7 @@ file in the overall configuration file using the <code class="docutils literal n
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">global_transformation_performance_change_config</span></code></strong>: Optional[mapping], <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
 <p>Parameters for measuring the impact of transformation on model performance (applies to all transformation tests). The different values of this mapping should be:</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">severity_thresholds</span></code>: List[float, float, float]</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">severity_thresholds</span></code>: List[float, float]</p>
 <p>Ascending list of three float thresholds, corresponding to the observed or simulated performance change which must be achieved in order for the test to return, respectively, Low, Medium, or High severity. This is a logical OR: if both types of performance change are measured, take the maximum of the two and return the severity corresponding to the highest threshold that was exceeded. If there are observed failing rows but the observed or simulated performance changes do not exceed any of the thresholds, return a Low severity.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ignore_errors</span></code>: bool</p>
@@ -174,787 +177,885 @@ file in the overall configuration file using the <code class="docutils literal n
 <section id="default-configuration">
 <h2>Default configuration<a class="headerlink" href="#default-configuration" title="Permalink to this heading"></a></h2>
 <p>Below is the default configuration for all tests. A copy of this can also be found in your <code class="docutils literal notranslate"><span class="pre">rime_trial</span></code> bundle (inside the <code class="docutils literal notranslate"><span class="pre">examples/test_configs/default_test_config.json</span></code>).</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;categories&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;run_default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;custom_tests&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;dynamic_configs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;numeric_outlier&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_normal_prop&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.99</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;baseline_quantile&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;perturb_multiplier&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;unseen_categorical&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;unseen_domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;unseen_email&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;unseen_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;rare_categories&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;include_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_num_occurrences&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_pct_occurrences&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_ratio_rel_uniform&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.005</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;out_of_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;std_factor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;req_characters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;column_specific_params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;inconsistencies&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;freq_ratio_threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.02</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_correlation&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;max_pairwise_tests&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;max_unique_pairs_for_firewall&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;capitalization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;empty_string&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;embedding_anomalies&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;distance_quantile&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.995</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;correlation_feat_drift&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;correlation_drift_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.3</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.5</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.7</span><span class="w"></span>
-<span class="w">    </span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;p_value_threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_correlation&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;max_pairwise_tests&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;correlation_label_drift&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;correlation_drift_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.3</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.5</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.7</span><span class="w"></span>
-<span class="w">    </span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;p_value_threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;mutual_information_feat_drift&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_mutual_information&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;mutual_information_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.1</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.2</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.3</span><span class="w"></span>
-<span class="w">    </span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;max_pairwise_tests&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;mutual_information_label_drift&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;mutual_information_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.1</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.2</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.3</span><span class="w"></span>
-<span class="w">    </span><span class="p">]</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;categorical_label_drift&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;drift_statistic&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Population Stability Index&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;psi_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">        </span><span class="mf">0.2</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="mf">0.4</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="mf">0.6</span><span class="w"></span>
-<span class="w">      </span><span class="p">]</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;multiclass_pred_label_drift&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;drift_statistic&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Population Stability Index&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;psi_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">        </span><span class="mf">0.2</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="mf">0.4</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="mf">0.6</span><span class="w"></span>
-<span class="w">      </span><span class="p">]</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;regression_label_drift&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;drift_statistic&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Population Stability Index&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;psi_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">        </span><span class="mf">0.2</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="mf">0.4</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="mf">0.6</span><span class="w"></span>
-<span class="w">      </span><span class="p">],</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_bins&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;categorical_drift&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;max_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;drift_statistic&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Population Stability Index&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;distance_threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.2</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;ignore_nans&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;continuous_drift&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;drift_statistic&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Population Stability Index&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_quantiles&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;distance_threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_bins&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;ignore_nans&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;prediction_drift&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;drift_statistic&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Population Stability Index&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_quantiles&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;psi_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">        </span><span class="mf">0.2</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="mf">0.4</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="mf">0.6</span><span class="w"></span>
-<span class="w">      </span><span class="p">],</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_bins&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;embedding_drift&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;drift_statistic&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;euclidean_distance&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;distance_threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;normalize&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;avg_confidence&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.05</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.1</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.2</span><span class="w"></span>
-<span class="w">    </span><span class="p">]</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;atc&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.05</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.1</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.2</span><span class="w"></span>
-<span class="w">    </span><span class="p">]</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;calibration_comparison&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;num_bins&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;severity_level_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.02</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.06</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.1</span><span class="w"></span>
-<span class="w">    </span><span class="p">]</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;label_imbalance&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.6</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.75</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.9</span><span class="w"></span>
-<span class="w">    </span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;normalize&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;global_exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;global_abnormal_inputs_performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;global_transformation_performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;out_of_range_substitution&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;ignore_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;std_factor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;outlier_substitution&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;ignore_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_normal_prop&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.99</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;baseline_quantile&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;perturb_multiplier&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;int_feature_type_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;ignore_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;float_feature_type_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;ignore_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;str_feature_type_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;ignore_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;bool_feature_type_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;ignore_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;url_feature_type_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;ignore_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;domain_feature_type_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;ignore_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;email_feature_type_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;ignore_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;empty_string_substitution&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;ignore_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;req_characters_deletion&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;column_specific_params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;ignore_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;unseen_categorical_substitution&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;ignore_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;unseen_domain_substitution&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;ignore_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;unseen_email_substitution&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;ignore_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;unseen_url_substitution&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;ignore_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;null_substitution&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;ignore_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;capitalization_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;ignore_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;vulnerability&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;severity_level_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;search_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;sensitivity&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;severity_level_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;linf_constraint&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;multi_feat_vulnerability&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;severity_level_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;l0_constraint&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;search_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;multi_feat_sensitivity&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;severity_level_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;l0_constraint&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;linf_constraint&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;hopskipjump_attack&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.05</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.15</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.25</span><span class="w"></span>
-<span class="w">    </span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;attack_params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;targeted&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;norm&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;max_iter&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;max_eval&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;init_eval&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;init_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;int_feature_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;float_feature_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;str_feature_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;bool_feature_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;url_feature_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;domain_feature_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;email_feature_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;null_check&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;null_proportion&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;p_value_threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;row_null_proportion&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;drift_statistic&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Population Stability Index&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;psi_threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.2</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;required_features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;required_feats&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;allowed_feats&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;ordered&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;required_only&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;duplicate_rows&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;mi_decrease_feature_to_label&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.1</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.2</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.3</span><span class="w"></span>
-<span class="w">    </span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_mutual_information_requirement&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.2</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;high_mi_feature_to_label&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.7</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.8</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.9</span><span class="w"></span>
-<span class="w">    </span><span class="p">]</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;high_feature_correlation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.7</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.8</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.9</span><span class="w"></span>
-<span class="w">    </span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;max_pairwise_tests&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_num_samples&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;protected_feature_drift&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;max_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;drift_statistic&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Population Stability Index&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;distance_threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.2</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;ignore_nans&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;protected_proxies&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.2</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.3</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.4</span><span class="w"></span>
-<span class="w">    </span><span class="p">]</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;class_imbalance&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.9</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.93</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.96</span><span class="w"></span>
-<span class="w">    </span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;metric&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;equalized_odds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.1</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.2</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.3</span><span class="w"></span>
-<span class="w">    </span><span class="p">]</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;intersectional_group_fairness&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;group_fairness_avg_pred&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;group_fairness_avg_rank&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;demographic_parity&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.8</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.7</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.6</span><span class="w"></span>
-<span class="w">    </span><span class="p">]</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;demographic_parity_avg_pred&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.8</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.7</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.6</span><span class="w"></span>
-<span class="w">    </span><span class="p">]</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;demographic_parity_avg_rank&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.8</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.7</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.6</span><span class="w"></span>
-<span class="w">    </span><span class="p">]</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;chi_squared_independence&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;p_value_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.005</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.01</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.05</span><span class="w"></span>
-<span class="w">    </span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_subset_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;predict_protected_features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;accuracy_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.8</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.85</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.9</span><span class="w"></span>
-<span class="w">    </span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;non_protected_train_features&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;max_protected_feature_cardinality&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;max_categorical_train_feature_cardinality&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;ref_data_split&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.8</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;subset_sensitivity_pos_pred&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.1</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.2</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.3</span><span class="w"></span>
-<span class="w">    </span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;subset_sensitivity_avg_pred&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.1</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.2</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.3</span><span class="w"></span>
-<span class="w">    </span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;subset_sensitivity_avg_rank&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.1</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.2</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.3</span><span class="w"></span>
-<span class="w">    </span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;num_samples_to_simulate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;equal_opportunity&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;equal_opp_macro_recall&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;predictive_equality&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min_sample_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;performance_change_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;exact_match_label_flipping&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;exclude_columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;severity_thresholds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.0</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.001</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="mf">0.005</span><span class="w"></span>
-<span class="w">    </span><span class="p">]</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
+  &quot;categories&quot;: [],
+  &quot;run_default&quot;: null,
+  &quot;custom_tests&quot;: null,
+  &quot;dynamic_configs&quot;: {},
+  &quot;numeric_outlier&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;performance_change_config&quot;: {
+      &quot;severity_thresholds&quot;: null,
+      &quot;min_num_samples&quot;: 1
+    },
+    &quot;bound_multiplier&quot;: 2.0
+  },
+  &quot;unseen_categorical&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;performance_change_config&quot;: {
+      &quot;severity_thresholds&quot;: null,
+      &quot;min_num_samples&quot;: 1
+    }
+  },
+  &quot;rare_categories&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;performance_change_config&quot;: {
+      &quot;severity_thresholds&quot;: null,
+      &quot;min_num_samples&quot;: 1
+    },
+    &quot;include_columns&quot;: [],
+    &quot;min_num_occurrences&quot;: 0,
+    &quot;min_pct_occurrences&quot;: 0,
+    &quot;min_ratio_rel_uniform&quot;: 0.005
+  },
+  &quot;out_of_range&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;performance_change_config&quot;: {
+      &quot;severity_thresholds&quot;: null,
+      &quot;min_num_samples&quot;: 1
+    },
+    &quot;std_factor&quot;: 3
+  },
+  &quot;req_characters&quot;: {
+    &quot;column_specific_params&quot;: {},
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;performance_change_config&quot;: {
+      &quot;severity_thresholds&quot;: null,
+      &quot;min_num_samples&quot;: 1
+    }
+  },
+  &quot;inconsistencies&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;performance_change_config&quot;: {
+      &quot;severity_thresholds&quot;: null,
+      &quot;min_num_samples&quot;: 1
+    },
+    &quot;freq_ratio_threshold&quot;: 0.02,
+    &quot;min_correlation&quot;: 0.1,
+    &quot;max_pairwise_tests&quot;: 200,
+    &quot;max_unique_pairs_for_firewall&quot;: 15
+  },
+  &quot;capitalization&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;performance_change_config&quot;: {
+      &quot;severity_thresholds&quot;: null,
+      &quot;min_num_samples&quot;: 1
+    }
+  },
+  &quot;empty_string&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;performance_change_config&quot;: {
+      &quot;severity_thresholds&quot;: null,
+      &quot;min_num_samples&quot;: 1
+    }
+  },
+  &quot;embedding_anomalies&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;performance_change_config&quot;: {
+      &quot;severity_thresholds&quot;: null,
+      &quot;min_num_samples&quot;: 1
+    },
+    &quot;distance_quantile&quot;: 0.995
+  },
+  &quot;correlation_feat_drift&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;correlation_drift_thresholds&quot;: [
+      0.3,
+      0.7
+    ],
+    &quot;p_value_threshold&quot;: 0.05,
+    &quot;min_correlation&quot;: 0.1,
+    &quot;max_pairwise_tests&quot;: 200
+  },
+  &quot;correlation_label_drift&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;correlation_drift_thresholds&quot;: [
+      0.3,
+      0.7
+    ],
+    &quot;p_value_threshold&quot;: 0.05
+  },
+  &quot;mutual_information_feat_drift&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;min_mutual_information&quot;: 0.1,
+    &quot;mutual_information_thresholds&quot;: [
+      0.1,
+      0.3
+    ],
+    &quot;max_pairwise_tests&quot;: 200,
+    &quot;min_sample_size&quot;: 100
+  },
+  &quot;mutual_information_label_drift&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;mutual_information_thresholds&quot;: [
+      0.1,
+      0.3
+    ]
+  },
+  &quot;categorical_label_drift&quot;: {
+    &quot;run&quot;: false,
+    &quot;drift_statistic&quot;: &quot;Population Stability Index&quot;,
+    &quot;params&quot;: {
+      &quot;psi_thresholds&quot;: [
+        0.2,
+        0.6
+      ]
+    }
+  },
+  &quot;multiclass_pred_label_drift&quot;: {
+    &quot;run&quot;: false,
+    &quot;drift_statistic&quot;: &quot;Population Stability Index&quot;,
+    &quot;params&quot;: {
+      &quot;psi_thresholds&quot;: [
+        0.2,
+        0.6
+      ]
+    }
+  },
+  &quot;regression_label_drift&quot;: {
+    &quot;run&quot;: false,
+    &quot;drift_statistic&quot;: &quot;Population Stability Index&quot;,
+    &quot;params&quot;: {
+      &quot;psi_thresholds&quot;: [
+        0.2,
+        0.6
+      ],
+      &quot;num_bins&quot;: 100
+    }
+  },
+  &quot;categorical_drift&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;min_sample_size&quot;: 100,
+    &quot;performance_change_thresholds&quot;: null,
+    &quot;max_sample_size&quot;: null,
+    &quot;drift_statistic&quot;: &quot;Population Stability Index&quot;,
+    &quot;params&quot;: {
+      &quot;distance_threshold&quot;: 0.2
+    },
+    &quot;ignore_nans&quot;: true
+  },
+  &quot;continuous_drift&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;min_sample_size&quot;: 100,
+    &quot;performance_change_thresholds&quot;: null,
+    &quot;drift_statistic&quot;: &quot;Population Stability Index&quot;,
+    &quot;params&quot;: {
+      &quot;min_num_quantiles&quot;: 1000,
+      &quot;distance_threshold&quot;: 0.2,
+      &quot;num_bins&quot;: 100
+    },
+    &quot;ignore_nans&quot;: true
+  },
+  &quot;prediction_drift&quot;: {
+    &quot;run&quot;: false,
+    &quot;drift_statistic&quot;: &quot;Population Stability Index&quot;,
+    &quot;params&quot;: {
+      &quot;run&quot;: true,
+      &quot;min_sample_size&quot;: 100,
+      &quot;min_num_quantiles&quot;: 1000,
+      &quot;psi_thresholds&quot;: [
+        0.2,
+        0.6
+      ],
+      &quot;num_bins&quot;: 100
+    }
+  },
+  &quot;embedding_drift&quot;: {
+    &quot;run&quot;: false,
+    &quot;min_sample_size&quot;: 100,
+    &quot;performance_change_thresholds&quot;: null,
+    &quot;drift_statistic&quot;: &quot;euclidean_distance&quot;,
+    &quot;params&quot;: {
+      &quot;distance_threshold&quot;: 0.1,
+      &quot;normalize&quot;: true
+    }
+  },
+  &quot;avg_confidence&quot;: {
+    &quot;run&quot;: true,
+    &quot;severity_thresholds&quot;: [
+      0.05,
+      0.2
+    ]
+  },
+  &quot;atc&quot;: {
+    &quot;run&quot;: true,
+    &quot;severity_thresholds&quot;: [
+      0.05,
+      0.2
+    ]
+  },
+  &quot;calibration_comparison&quot;: {
+    &quot;run&quot;: true,
+    &quot;num_bins&quot;: 10,
+    &quot;severity_level_thresholds&quot;: [
+      0.02,
+      0.1
+    ]
+  },
+  &quot;label_imbalance&quot;: {
+    &quot;run&quot;: false,
+    &quot;severity_thresholds&quot;: [
+      0.6,
+      0.9
+    ],
+    &quot;normalize&quot;: true
+  },
+  &quot;global_exclude_columns&quot;: null,
+  &quot;global_abnormal_inputs_performance_change_config&quot;: null,
+  &quot;global_transformation_performance_change_config&quot;: null,
+  &quot;out_of_range_substitution&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;performance_change_config&quot;: {
+      &quot;ignore_errors&quot;: false,
+      &quot;severity_thresholds&quot;: null,
+      &quot;num_samples_to_simulate&quot;: 100
+    },
+    &quot;std_factor&quot;: 3
+  },
+  &quot;outlier_substitution&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: true,
+    &quot;performance_change_config&quot;: {
+      &quot;ignore_errors&quot;: false,
+      &quot;severity_thresholds&quot;: null,
+      &quot;num_samples_to_simulate&quot;: 100
+    },
+    &quot;bound_multiplier&quot;: 2.0
+  },
+  &quot;feature_type_change&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: true,
+    &quot;performance_change_config&quot;: {
+      &quot;ignore_errors&quot;: false,
+      &quot;severity_thresholds&quot;: null,
+      &quot;num_samples_to_simulate&quot;: 100
+    }
+  },
+  &quot;empty_string_substitution&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: true,
+    &quot;performance_change_config&quot;: {
+      &quot;ignore_errors&quot;: false,
+      &quot;severity_thresholds&quot;: null,
+      &quot;num_samples_to_simulate&quot;: 100
+    }
+  },
+  &quot;req_characters_deletion&quot;: {
+    &quot;column_specific_params&quot;: {},
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: true,
+    &quot;performance_change_config&quot;: {
+      &quot;ignore_errors&quot;: false,
+      &quot;severity_thresholds&quot;: null,
+      &quot;num_samples_to_simulate&quot;: 100
+    }
+  },
+  &quot;unseen_categorical_substitution&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: true,
+    &quot;performance_change_config&quot;: {
+      &quot;ignore_errors&quot;: false,
+      &quot;severity_thresholds&quot;: null,
+      &quot;num_samples_to_simulate&quot;: 100
+    }
+  },
+  &quot;null_substitution&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: true,
+    &quot;performance_change_config&quot;: {
+      &quot;ignore_errors&quot;: false,
+      &quot;severity_thresholds&quot;: null,
+      &quot;num_samples_to_simulate&quot;: 100
+    }
+  },
+  &quot;capitalization_change&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: true,
+    &quot;performance_change_config&quot;: {
+      &quot;ignore_errors&quot;: false,
+      &quot;severity_thresholds&quot;: null,
+      &quot;num_samples_to_simulate&quot;: 100
+    }
+  },
+  &quot;text_upper_case&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000
+  },
+  &quot;text_lower_case&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000
+  },
+  &quot;text_remove_special_chars&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000
+  },
+  &quot;text_ascii&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000
+  },
+  &quot;text_char_substitution_attack&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000,
+    &quot;attack_params&quot;: {
+      &quot;min_char&quot;: 2,
+      &quot;aug_char_max&quot;: 1,
+      &quot;aug_char_min&quot;: 1,
+      &quot;aug_char_p&quot;: 0.1,
+      &quot;aug_word_min&quot;: 1,
+      &quot;aug_word_max&quot;: null,
+      &quot;aug_word_p&quot;: 0.05
+    }
+  },
+  &quot;text_char_deletion_attack&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000,
+    &quot;attack_params&quot;: {
+      &quot;min_char&quot;: 2,
+      &quot;aug_char_max&quot;: 1,
+      &quot;aug_char_min&quot;: 1,
+      &quot;aug_char_p&quot;: 0.1,
+      &quot;aug_word_min&quot;: 1,
+      &quot;aug_word_max&quot;: null,
+      &quot;aug_word_p&quot;: 0.05
+    }
+  },
+  &quot;text_char_insertion_attack&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000,
+    &quot;attack_params&quot;: {
+      &quot;min_char&quot;: 2,
+      &quot;aug_char_max&quot;: 1,
+      &quot;aug_char_min&quot;: 1,
+      &quot;aug_char_p&quot;: 0.1,
+      &quot;aug_word_min&quot;: 1,
+      &quot;aug_word_max&quot;: null,
+      &quot;aug_word_p&quot;: 0.05
+    }
+  },
+  &quot;text_char_swap_attack&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000,
+    &quot;attack_params&quot;: {
+      &quot;min_char&quot;: 2,
+      &quot;aug_char_max&quot;: 1,
+      &quot;aug_char_min&quot;: 1,
+      &quot;aug_char_p&quot;: 0.1,
+      &quot;aug_word_min&quot;: 1,
+      &quot;aug_word_max&quot;: null,
+      &quot;aug_word_p&quot;: 0.05
+    }
+  },
+  &quot;text_keyboard_aug_attack&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000,
+    &quot;attack_params&quot;: {
+      &quot;min_char&quot;: 2,
+      &quot;aug_char_max&quot;: 1,
+      &quot;aug_char_min&quot;: 1,
+      &quot;aug_char_p&quot;: 0.1,
+      &quot;aug_word_min&quot;: 1,
+      &quot;aug_word_max&quot;: null,
+      &quot;aug_word_p&quot;: 0.05
+    }
+  },
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+=======
+  &quot;text_upper_case&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.2,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000
+  },
+  &quot;text_lower_case&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.2,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000
+  },
+  &quot;text_remove_special_chars&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.2,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000
+  },
+  &quot;text_ascii&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.2,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000
+  },
+  &quot;text_char_substitution_attack&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.2,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000,
+    &quot;attack_params&quot;: {
+      &quot;min_char&quot;: 2,
+      &quot;aug_char_max&quot;: 1,
+      &quot;aug_char_min&quot;: 1,
+      &quot;aug_char_p&quot;: 0.1,
+      &quot;aug_word_min&quot;: 1,
+      &quot;aug_word_max&quot;: null,
+      &quot;aug_word_p&quot;: 0.05
+    }
+  },
+  &quot;text_char_deletion_attack&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.2,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000,
+    &quot;attack_params&quot;: {
+      &quot;min_char&quot;: 2,
+      &quot;aug_char_max&quot;: 1,
+      &quot;aug_char_min&quot;: 1,
+      &quot;aug_char_p&quot;: 0.1,
+      &quot;aug_word_min&quot;: 1,
+      &quot;aug_word_max&quot;: null,
+      &quot;aug_word_p&quot;: 0.05
+    }
+  },
+  &quot;text_char_insertion_attack&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.2,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000,
+    &quot;attack_params&quot;: {
+      &quot;min_char&quot;: 2,
+      &quot;aug_char_max&quot;: 1,
+      &quot;aug_char_min&quot;: 1,
+      &quot;aug_char_p&quot;: 0.1,
+      &quot;aug_word_min&quot;: 1,
+      &quot;aug_word_max&quot;: null,
+      &quot;aug_word_p&quot;: 0.05
+    }
+  },
+  &quot;text_char_swap_attack&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.2,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000,
+    &quot;attack_params&quot;: {
+      &quot;min_char&quot;: 2,
+      &quot;aug_char_max&quot;: 1,
+      &quot;aug_char_min&quot;: 1,
+      &quot;aug_char_p&quot;: 0.1,
+      &quot;aug_word_min&quot;: 1,
+      &quot;aug_word_max&quot;: null,
+      &quot;aug_word_p&quot;: 0.05
+    }
+  },
+  &quot;text_keyboard_aug_attack&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.2,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000,
+    &quot;attack_params&quot;: {
+      &quot;min_char&quot;: 2,
+      &quot;aug_char_max&quot;: 1,
+      &quot;aug_char_min&quot;: 1,
+      &quot;aug_char_p&quot;: 0.1,
+      &quot;aug_word_min&quot;: 1,
+      &quot;aug_word_max&quot;: null,
+      &quot;aug_word_p&quot;: 0.05
+    }
+  },
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; master
+  &quot;text_common_misspelling_attack&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000,
+    &quot;attack_params&quot;: null
+  },
+  &quot;text_ocr_error_attack&quot;: {
+    &quot;run&quot;: true,
+    &quot;sample_size&quot;: 20,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.3
+    ],
+    &quot;max_str_len&quot;: 2000,
+    &quot;attack_params&quot;: null
+  },
+  &quot;vulnerability&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;severity_level_thresholds&quot;: null,
+    &quot;sample_size&quot;: 10,
+    &quot;search_count&quot;: 10
+  },
+  &quot;sensitivity&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: true,
+    &quot;severity_level_thresholds&quot;: null,
+    &quot;linf_constraint&quot;: 0.01,
+    &quot;sample_size&quot;: 10
+  },
+  &quot;multi_feat_vulnerability&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;severity_level_thresholds&quot;: null,
+    &quot;l0_constraint&quot;: 3,
+    &quot;sample_size&quot;: 10,
+    &quot;search_count&quot;: 10
+  },
+  &quot;multi_feat_sensitivity&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: true,
+    &quot;severity_level_thresholds&quot;: null,
+    &quot;l0_constraint&quot;: 3,
+    &quot;sample_size&quot;: 10,
+    &quot;linf_constraint&quot;: 0.01
+  },
+  &quot;hopskipjump_attack&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;severity_thresholds&quot;: [
+      0.05,
+      0.25
+    ],
+    &quot;sample_size&quot;: 10,
+    &quot;attack_params&quot;: {
+      &quot;targeted&quot;: false,
+      &quot;norm&quot;: 2,
+      &quot;max_iter&quot;: 50,
+      &quot;max_eval&quot;: 1000,
+      &quot;init_eval&quot;: 100,
+      &quot;init_size&quot;: 100
+    }
+  },
+  &quot;feature_type_check&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;performance_change_config&quot;: {
+      &quot;severity_thresholds&quot;: null,
+      &quot;min_num_samples&quot;: 1
+    }
+  },
+  &quot;null_check&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;performance_change_config&quot;: {
+      &quot;severity_thresholds&quot;: null,
+      &quot;min_num_samples&quot;: 1
+    }
+  },
+  &quot;null_proportion&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;min_sample_size&quot;: 100,
+    &quot;performance_change_thresholds&quot;: null,
+    &quot;p_value_threshold&quot;: 0.05
+  },
+  &quot;row_null_proportion&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;min_sample_size&quot;: 100,
+    &quot;performance_change_thresholds&quot;: null,
+    &quot;drift_statistic&quot;: &quot;Population Stability Index&quot;,
+    &quot;params&quot;: {
+      &quot;psi_threshold&quot;: 0.2
+    }
+  },
+  &quot;required_features&quot;: {
+    &quot;run&quot;: false,
+    &quot;required_feats&quot;: null,
+    &quot;allowed_feats&quot;: null,
+    &quot;ordered&quot;: false,
+    &quot;required_only&quot;: false
+  },
+  &quot;duplicate_rows&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false
+  },
+  &quot;mi_decrease_feature_to_label&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;severity_thresholds&quot;: [
+      0.1,
+      0.3
+    ],
+    &quot;min_mutual_information_requirement&quot;: 0.2
+  },
+  &quot;high_mi_feature_to_label&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;severity_thresholds&quot;: [
+      0.7,
+      0.9
+    ]
+  },
+  &quot;high_feature_correlation&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;severity_thresholds&quot;: [
+      0.7,
+      0.9
+    ],
+    &quot;max_pairwise_tests&quot;: 200,
+    &quot;min_num_samples&quot;: 100
+  },
+  &quot;protected_feature_drift&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;min_sample_size&quot;: 100,
+    &quot;performance_change_thresholds&quot;: null,
+    &quot;max_sample_size&quot;: null,
+    &quot;drift_statistic&quot;: &quot;Population Stability Index&quot;,
+    &quot;params&quot;: {
+      &quot;distance_threshold&quot;: 0.2
+    },
+    &quot;ignore_nans&quot;: true
+  },
+  &quot;protected_proxies&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;severity_thresholds&quot;: [
+      0.2,
+      0.4
+    ]
+  },
+  &quot;class_imbalance&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;min_sample_size&quot;: 20,
+    &quot;performance_change_thresholds&quot;: [
+      0.9,
+      0.96
+    ]
+  },
+  &quot;equalized_odds&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;min_sample_size&quot;: 20,
+    &quot;performance_change_thresholds&quot;: [
+      0.1,
+      0.3
+    ]
+  },
+  &quot;intersectional_group_fairness&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;min_sample_size&quot;: 20,
+    &quot;performance_change_thresholds&quot;: null
+  },
+  &quot;group_fairness_avg_pred&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;min_sample_size&quot;: 20,
+    &quot;performance_change_thresholds&quot;: null
+  },
+  &quot;group_fairness_avg_rank&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;min_sample_size&quot;: 20,
+    &quot;performance_change_thresholds&quot;: null
+  },
+  &quot;demographic_parity&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;min_sample_size&quot;: 20,
+    &quot;performance_change_thresholds&quot;: [
+      0.8,
+      0.6
+    ]
+  },
+  &quot;demographic_parity_avg_pred&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;min_sample_size&quot;: 20,
+    &quot;performance_change_thresholds&quot;: [
+      0.8,
+      0.6
+    ]
+  },
+  &quot;demographic_parity_avg_rank&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;min_sample_size&quot;: 20,
+    &quot;performance_change_thresholds&quot;: [
+      0.8,
+      0.6
+    ]
+  },
+  &quot;chi_squared_independence&quot;: {
+    &quot;run&quot;: false,
+    &quot;p_value_thresholds&quot;: [
+      0.005,
+      0.05
+    ],
+    &quot;min_sample_size&quot;: 100,
+    &quot;min_subset_sample_size&quot;: 20
+  },
+  &quot;predict_protected_features&quot;: {
+    &quot;run&quot;: false,
+    &quot;accuracy_thresholds&quot;: [
+      0.8,
+      0.9
+    ],
+    &quot;min_sample_size&quot;: 100,
+    &quot;non_protected_train_features&quot;: null,
+    &quot;max_protected_feature_cardinality&quot;: 100,
+    &quot;max_categorical_train_feature_cardinality&quot;: 100,
+    &quot;ref_data_split&quot;: 0.8
+  },
+  &quot;subset_sensitivity_pos_pred&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;performance_thresholds&quot;: [
+      0.1,
+      0.3
+    ],
+    &quot;min_sample_size&quot;: 20,
+    &quot;num_samples_to_simulate&quot;: 100
+  },
+  &quot;subset_sensitivity_avg_pred&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;performance_thresholds&quot;: [
+      0.1,
+      0.3
+    ],
+    &quot;min_sample_size&quot;: 20,
+    &quot;num_samples_to_simulate&quot;: 100
+  },
+  &quot;subset_sensitivity_avg_rank&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;performance_thresholds&quot;: [
+      0.1,
+      0.3
+    ],
+    &quot;min_sample_size&quot;: 20,
+    &quot;num_samples_to_simulate&quot;: 100
+  },
+  &quot;equal_opportunity&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;min_sample_size&quot;: 20,
+    &quot;performance_change_thresholds&quot;: null
+  },
+  &quot;equal_opp_macro_recall&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;min_sample_size&quot;: 20,
+    &quot;performance_change_thresholds&quot;: null
+  },
+  &quot;predictive_equality&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;min_sample_size&quot;: 20,
+    &quot;performance_change_thresholds&quot;: null
+  },
+  &quot;exact_match_label_flipping&quot;: {
+    &quot;exclude_columns&quot;: [],
+    &quot;run&quot;: false,
+    &quot;severity_thresholds&quot;: [
+      0.0,
+      0.005
+    ]
+  }
+}
 </pre></div>
 </div>
 </section>
