@@ -8,7 +8,8 @@
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -21,8 +22,8 @@
         <script src="../../../../_static/sphinx_highlight.js"></script>
         <script src="../../../../_static/clipboard.min.js"></script>
         <script src="../../../../_static/copybutton.js"></script>
-        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
         <script src="../../../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
@@ -47,7 +48,7 @@
             <a href="../../../../index.html" class="icon icon-home"> RIME
           </a>
               <div class="version">
-                0.20.4
+                0.20.13
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -62,34 +63,60 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">RIME overview</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#the-ri-platform">The RI Platform</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#why-use-the-ri-platform">Why use the RI Platform?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#key-features">Key Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#key-machine-learning-tasks-covered">Key Machine Learning Tasks Covered</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#ri-platform-deployment-patterns">RI Platform Deployment Patterns</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../summary_tests.html">Summary Tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#ri-platform-consolidated-test-database">RI Platform consolidated test database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#tabular">Tabular</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#nlp">NLP</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../../../index.html#cv">CV</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../../unstructured_test_categories.html">Summary Tests</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Image Classification Tests</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#abnormal-inputs">Abnormal Inputs</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#drift">Drift</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#subset-performance">Subset Performance</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#data-cleanliness">Data Cleanliness</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#transformations">Transformations</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#model-performance">Model Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">The RI Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#why-use-the-ri-platform">Why use the RI Platform?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#key-features">Key Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#key-machine-learning-tasks-covered">Key Machine Learning Tasks Covered</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#ri-platform-deployment-patterns">RI Platform Deployment Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../summary_tests.html">Summary Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#ri-platform-consolidated-test-database">RI Platform consolidated test database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#tabular">Tabular</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#nlp">NLP</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html#cv">CV</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../unstructured_test_categories.html">Summary Tests</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Image Classification Tests</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subset-performance">Subset Performance</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subset-macro-f1">Subset Macro F1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-macro-precision">Subset Macro Precision</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-macro-recall">Subset Macro Recall</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-multiclass-accuracy">Subset Multiclass Accuracy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-multiclass-auc">Subset Multiclass AUC</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-positive-prediction-rate">Subset Positive Prediction Rate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-average-confidence">Subset Average Confidence</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="object_detection_tests.html">Object Detection Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transformations">Transformations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaussian-blur">Gaussian Blur</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#color-jitter">Color Jitter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaussian-noise">Gaussian Noise</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vertical-flip">Vertical Flip</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#horizontal-flip">Horizontal Flip</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#randomize-pixels-with-mask">Randomize Pixels With Mask</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#contrast-increase">Contrast Increase</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#contrast-decrease">Contrast Decrease</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#add-rain">Add Rain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#add-snow">Add Snow</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#compliance">Compliance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#rime-local-trial">RIME local trial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-performance">Model Performance</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#average-confidence">Average Confidence</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#average-thresholded-confidence">Average Thresholded Confidence</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#calibration-comparison">Calibration Comparison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#average-prediction">Average Prediction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#macro-f1">Macro F1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#macro-precision">Macro Precision</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#macro-recall">Macro Recall</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#multiclass-accuracy">Multiclass Accuracy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#multiclass-auc">Multiclass AUC</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#positive-prediction-rate">Positive Prediction Rate</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="object_detection_tests.html">Object Detection Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#rime-local-trial">RIME local trial</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Administering the RI Platform</span></p>
 <ul>
@@ -123,9 +150,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../../index.html" class="icon icon-home"></a></li>
-          <li class="breadcrumb-item"><a href="../../../index.html">RIME overview</a></li>
-      <li class="breadcrumb-item active">Image Classification Tests</li>
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">The RI Platform</a> &raquo;</li>
+      <li>Image Classification Tests</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../../_sources/getstarted/explanation/tests/cv/image_classification_tests.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -137,104 +164,6 @@
              
   <section id="image-classification-tests">
 <h1>Image Classification Tests<a class="headerlink" href="#image-classification-tests" title="Permalink to this heading"></a></h1>
-<section id="abnormal-inputs">
-<h2>Abnormal Inputs<a class="headerlink" href="#abnormal-inputs" title="Permalink to this heading"></a></h2>
-<section id="numeric-outliers">
-<h3>Numeric Outliers<a class="headerlink" href="#numeric-outliers" title="Permalink to this heading"></a></h3>
-<p>This test measures the number of failing rows in your data with outliers and their impact on the model. Outliers are values which may not necessarily be outside of an allowed range for a feature, but are extreme values that are unusual and may be indicative of abnormality. The model impact is the difference in model performance between passing and failing rows with outliers. If labels are not provided, prediction change is used instead of model performance change.</p><p><b>Why it matters:</b> Outliers can be a sign of corrupted or otherwise erroneous data, and can degrade model performance if used in the training data, or lead to unexpected behaviour if input at inference time.</p><p><b>Configuration:</b> By default this test is run over each numeric feature that is neither unique nor ascending.</p><p><b>Example:</b> Suppose there is a feature <span>age</span> for which in the reference set the values <span>103</span> and <span>114</span> each appear once but every other value (with substantial sample size) is contained within the range <span>[0, 97]</span>. Then we would infer a lower outlier threshold of <span>0</span> and an upper outlier threshold of <span>97</span>. This test raises a warning if we observe any values in the evaluation set outside these thresholds or if model performance decreases on observed datapoints with outliers.</p>
-</section>
-<section id="unseen-categorical">
-<h3>Unseen Categorical<a class="headerlink" href="#unseen-categorical" title="Permalink to this heading"></a></h3>
-<p>This test measures the number of failing rows in your data with unseen categorical values and their impact on the model. The model impact is the difference in model performance between passing and failing rows with unseen categorical values. If labels are not provided, prediction change is used instead of model performance change.</p><p><b>Why it matters:</b> Unseen categorical values are a common failure point in machine learning systems; since these models are trained over a reference set, they may yield uninterpretable or undefined behavior when interacting with an unseen categorical value. In addition, such errors may expose gaps or errors in data collection.</p><p><b>Configuration:</b> By default, this test runs over all categorical features.</p><p><b>Example:</b> Say that the feature <span>Animal</span> contains the values <span>['Cat', 'Dog']</span> from the reference set. This test raises a warning if we observe any unseen values in the evaluation set such as <span>'Mouse'</span> that causes a significant change in model performance. If labels/predictions are provided in the run, then a severity would be raised if the Average Prediction changed by 0.03. If labels/predictions were not provided but <span>'Mouse'</span> appeared in 3% of the evaluation dataset, an severity would be raised due to the significant increase in presence of an unseen feature.</p>
-</section>
-<section id="unseen-domain">
-<h3>Unseen Domain<a class="headerlink" href="#unseen-domain" title="Permalink to this heading"></a></h3>
-<p>This test measures the number of failing rows in your data with unseen domain values and their impact on the model. The model impact is the difference in model performance between passing and failing rows with unseen domain values. If labels are not provided, prediction change is used instead of model performance change.</p><p><b>Why it matters:</b> Unseen categorical values are a common failure point in machine learning systems; since these models are trained over a reference set, they may yield uninterpretable or undefined behavior when interacting with an unseen categorical value. In addition, such errors may expose gaps or errors in data collection.</p><p><b>Configuration:</b> By default, this test runs over all features inferred to contain domains.</p><p><b>Example:</b> Say that the feature <span>WebDomain</span> contains the values <span>['gmail.com', 'hotmail.com']</span> from the reference set. This test raises a warning if we observe any unseen values in the evaluation set such as <span>'xyzabc.com'</span> that causes a significant change in model performance. If labels/predictions are provided in the run, then a severity issue would be raised if the Average Prediction changed by 0.03. If labels/predictions were not provided but <span>'xyzabc.com'</span> appeared in 3% of the evaluation dataset, an severity issue would be raised due to the significant increase in presence of an unseen feature.</p>
-</section>
-<section id="unseen-email">
-<h3>Unseen Email<a class="headerlink" href="#unseen-email" title="Permalink to this heading"></a></h3>
-<p>This test measures the number of failing rows in your data with unseen email values and their impact on the model. The model impact is the difference in model performance between passing and failing rows with unseen email values. If labels are not provided, prediction change is used instead of model performance change.</p><p><b>Why it matters:</b> Unseen categorical values are a common failure point in machine learning systems; since these models are trained over a reference set, they may yield uninterpretable or undefined behavior when interacting with an unseen categorical value. In addition, such errors may expose gaps or errors in data collection.</p><p><b>Configuration:</b> By default, this test runs over all features inferred to contain emails.</p><p><b>Example:</b> Say that the feature <span>Email</span> contains the values <span>['user1@gmail.com', 'user2@yahoo.com']</span> from the reference set. This test raises a warning if we observe any unseen values in the evaluation set such as <span>'xyz@xyzabc.com'</span> that causes a significant change in model performance. If labels/predictions are provided in the run, then a severity issue would be raised if the Average Prediction changed by 0.03. If labels/predictions were not provided but <span>'xyz@xyzabc.com'</span> appeared in 3% of the evaluation dataset, a severity issue would be raised due to the significant increase in presence of an unseen feature.</p>
-</section>
-<section id="unseen-url">
-<h3>Unseen URL<a class="headerlink" href="#unseen-url" title="Permalink to this heading"></a></h3>
-<p>This test measures the number of failing rows in your data with unseen URL values and their impact on the model. The model impact is the difference in model performance between passing and failing rows with unseen URL values. If labels are not provided, prediction change is used instead of model performance change.</p><p><b>Why it matters:</b> Unseen categorical values are a common failure point in machine learning systems; since these models are trained over a reference set, they may yield uninterpretable or undefined behavior when interacting with an unseen categorical value. In addition, such errors may expose gaps or errors in data collection.</p><p><b>Configuration:</b> By default, this test runs over all features inferred to contain URLs.</p><p><b>Example:</b> Say that the feature <span>WebURL</span> contains the values <span>['http://google.com', 'http://yahoo.com']</span> from the reference set. This test raises a warning if we observe any unseen values in the evaluation set such as <span>'http://xyzabc.com'</span> that causes a significant change in model performance. If labels/predictions are provided in the run, then a severity issue would be raised if the Average Prediction changed by 0.03. If labels/predictions were not provided but <span>'xyzabc.com'</span> appeared in 3% of the evaluation dataset, an severity issue would be raised due to the significant increase in presence of an unseen feature.</p>
-</section>
-<section id="rare-categories">
-<h3>Rare Categories<a class="headerlink" href="#rare-categories" title="Permalink to this heading"></a></h3>
-<p>This test measures the severity of passing to the model data points whose features contain rarely observed categories (relative to the reference set). The severity is a function of the impact of these values on the model, as well as the presence of these values in the data. The model impact is the difference in model performance between passing and failing rows with rarely observed categorical values. If labels are not provided, prediction change is used instead of model performance change. The number of failing rows refers to the number of times rarely observed categorical values are observed in the evaluation set.</p><p><b>Why it matters:</b> Rare categories are a common failure point in machine learning systems because less data often means worse performance. In addition, this may expose gaps or errors in data collection.</p><p><b>Configuration:</b> By default, this test runs over all categorical features. A category is considered rare if it occurs fewer than <span>min_num_occurrences</span> times, or if it occurs less than <span>min_pct_occurrences</span> of the time. If neither of these values are specified, the rate of appearance below which a category is considered rare is <span>min_ratio_rel_uniform</span> divided by the number of classes.</p><p><b>Example:</b> Say that the feature <span>AgeGroup</span> takes on the value <span>0-18</span> twice while taking on the value <span>35-55</span> a total of <span>98</span> times. If the <span>min_num_occurences</span> is <span>5</span> and the <span>min_pct_occurrences</span> is <span>0.03</span> then the test will flag the value <span>0-18</span> as a rare category.</p>
-</section>
-<section id="out-of-range">
-<h3>Out of Range<a class="headerlink" href="#out-of-range" title="Permalink to this heading"></a></h3>
-<p>This test measures the number of failing rows in your data with values outside the inferred range of allowed values and their impact on the model. The model impact is the difference in model performance between passing and failing rows with values outside the inferred range of allowed values. If labels are not provided, prediction change is used instead of model performance change.</p><p><b>Why it matters:</b> In production, the model may encounter corrupted or manipulated out of range values. It is important that the model is robust to such extremities.</p><p><b>Configuration:</b> By default, this test runs over all numeric features.</p><p><b>Example:</b> In the reference set, the <span>Age</span> feature has a range of <span>[0, 121]</span>. This test raises a warning if we observe values outside of this range in the evaluation set (eg. <span>150, 200</span>) or if model performance decreases on observed datapoints outside of this range.</p>
-</section>
-<section id="required-characters">
-<h3>Required Characters<a class="headerlink" href="#required-characters" title="Permalink to this heading"></a></h3>
-<p>This test measures the number of failing rows in your data with strings without any required characters and their impact on the model. The model impact is the difference in model performance between passing and failing rows with strings without any required characters. If labels are not provided, prediction change is used instead of model performance change.</p><p><b>Why it matters:</b> A feature may require specific characters. However, errors in the data pipeline may allow invalid data points that lack these required characters to pass. Failing to catch such errors may lead to noisier training data or noisier predictions during inference, which can degrade model metrics.</p><p><b>Configuration:</b> By default, this test runs over all string features that are inferred to have required characters.</p><p><b>Example:</b> Say that the feature <span>email</span> requires the character <span>@</span>. This test raises a warning if we observe any values in the evaluation set where the character is missing.</p>
-</section>
-<section id="inconsistencies">
-<h3>Inconsistencies<a class="headerlink" href="#inconsistencies" title="Permalink to this heading"></a></h3>
-<p>This test measures the severity of passing to the model data points whose values are inconsistent (as inferred from the reference set). The severity is a function of the impact of these values on the model, as well as the presence of these values in the data. The model impact is the difference in model performance between passing and failing rows with data containing inconsistent feature values. If labels are not provided, prediction change is used instead of model performance change. The number of failing rows refers to the number of times data containing inconsistent feature values are observed in the evaluation set.</p><p><b>Why it matters:</b> Inconsistent values might be the result of malicious actors manipulating the data or errors in the data pipeline. Thus, it is important to be aware of inconsistent values to identify sources of manipulations or errors.</p><p><b>Configuration:</b> By default, this test runs on pairs of categorical features whose correlations exceed some minimum threshold. The default threshold for the frequency ratio below which values are considered to be inconsistent is <span>0.02</span>.</p><p><b>Example:</b> Suppose we have a feature <span>country</span> that takes on value <span>"US"</span> with frequency <span>0.5</span>, and a feature <span>time_zone</span> that takes on value <span>"Central European Time"</span> with frequency <span>0.2</span>. Then if these values appear together with frequency less than <span>0.5 * 0.2 * 0.02 = 0.002 </span>, in the reference set, rows in which these values do appear together are inconsistencies.</p>
-</section>
-<section id="capitalization">
-<h3>Capitalization<a class="headerlink" href="#capitalization" title="Permalink to this heading"></a></h3>
-<p>This test measures the number of failing rows in your data with different types of capitalization and their impact on the model. The model impact is the difference in model performance between passing and failing rows with different types of capitalization. If labels are not provided, prediction change is used instead of model performance change.</p><p><b>Why it matters:</b> In production, models can come across the same value with different capitalizations, making it important to explicitly check that your model is invariant to such differences.</p><p><b>Configuration:</b> By default, this test runs over all categorical features.</p><p><b>Example:</b> Suppose we had a column that corresponded to country code. For a specific row, let's say the observed value in the reference set was <span>USA</span>. This test raises a warning if we observe a similar value in the evaluation set with case changes, e.g. <span>uSa</span> or if model performance decreases on observed datapoints with case changes.</p>
-</section>
-<section id="empty-string">
-<h3>Empty String<a class="headerlink" href="#empty-string" title="Permalink to this heading"></a></h3>
-<p>This test measures the number of failing rows in your data with empty string values instead of null values and their impact on the model. The model impact is the difference in model performance between passing and failing rows with empty string values instead of null values. If labels are not provided, prediction change is used instead of model performance change.</p><p><b>Why it matters:</b> In production, the model may encounter corrupted or manipulated string values. Null values and empty strings are often expected to be treated the same, but the model might not treat them that way. It is important that the model is robust to such extremities.</p><p><b>Configuration:</b> By default, this test runs over all string features with null values.</p><p><b>Example:</b> In the reference set, the <span>Name</span> feature contains nulls. This test raises a warning if we observe any empty string in the <span>Name</span> feature or if these values decrease model performance.</p>
-</section>
-<section id="embedding-anomalies">
-<h3>Embedding Anomalies<a class="headerlink" href="#embedding-anomalies" title="Permalink to this heading"></a></h3>
-<p>This test measures the number of failing rows in your data with anomalous embeddings and their impact on the model. The model impact is the difference in model performance between passing and failing rows with anomalous embeddings. If labels are not provided, prediction change is used instead of model performance change.</p><p><b>Why it matters:</b> In production, the presence of anomalous embeddings can indicate breaks in upstream data pipelines, poor model generalization, or other issues.</p><p><b>Configuration:</b> By default, this test runs over all configured embeddings.</p><p><b>Example:</b> Say that the 'user_id' embedding is two-dimensional and has a mean at the origin and a covariance matrix of [[1, 0], [0, 1]] in the reference set. This test will flag any embeddings in the test set that are distant from the reference distribution using the Mahalanobis distance.</p>
-</section>
-</section>
-<section id="drift">
-<h2>Drift<a class="headerlink" href="#drift" title="Permalink to this heading"></a></h2>
-<section id="correlation-drift-feature-to-feature">
-<h3>Correlation Drift (Feature-to-Feature)<a class="headerlink" href="#correlation-drift-feature-to-feature" title="Permalink to this heading"></a></h3>
-<p>This test measures the severity of feature-feature correlation drift from the reference to the evaluation set for a given pair of features. The severity is a function of the correlation drift in the data. The key detail is the difference in correlation scores between the reference and evaluation sets, along with an associated p-value. Correlation is a measure of the linear relationship between two numeric columns (feature-feature) so this test checks for significant changes in this relationship between each feature-feature in the reference and evaluation sets. To compute the p-value, we use Fisher's z-transformation to convert the distribution of sample correlations to a normal distribution, and then we run a standard two-sample test on two normal distributions.</p><p><b>Why it matters:</b> Correlation drift between training and inference can be caused by a variety of factors, including a change in the data generation process or a change in the underlying processing stage. A big shift in these dependencies could indicate shifting datasets and degradation in model performance, signaling the need for relabeling and retraining.</p><p><b>Configuration:</b> By default, this test runs over all pairs of features in the dataset.</p><p><b>Example:</b> Suppose that the correlation between <span>country</span> and <span>state</span> is 0.5 in the reference set but 0.7 in the evaluation set, and the p-value is 0.03. Then the large difference in scores indicates that the dependency between the two features has drifted. If our difference threshold was 0.2, and p-value threshold was 0.05, then the test would fail.</p>
-</section>
-<section id="correlation-drift-feature-to-label">
-<h3>Correlation Drift (Feature-to-Label)<a class="headerlink" href="#correlation-drift-feature-to-label" title="Permalink to this heading"></a></h3>
-<p>This test measures the severity of feature-label correlation drift from the reference to the evaluation set for a given pair of a feature and label. The severity is a function of the correlation drift in the data. The key detail is the difference in correlation scores between the reference and evaluation sets, along with an associated p-value. Correlation is a measure of the linear relationship between two numeric columns (feature-label) so this test checks for significant changes in this relationship between each feature-label in the reference and evaluation sets. To compute the p-value, we use Fisher's z-transformation to convert the distribution of sample correlations to a normal distribution, and then we run a standard two-sample test on two normal distributions.</p><p><b>Why it matters:</b> Correlation drift between training and inference can be caused by a variety of factors, including a change in the data generation process or a change in the underlying processing stage. A big shift in these dependencies could indicate shifting datasets and degradation in model performance, signaling the need for relabeling and retraining.</p><p><b>Configuration:</b> By default, this test runs over all pairs of features and labels in the dataset.</p><p><b>Example:</b> Suppose that the correlation between <span>LotArea</span> and <span>SalePrice</span> is 0.4 in the reference set but 0.8 in the evaluation set, and the p-value is 0.15. Then the large difference in scores indicates that the impact of the feature on the label has drifted. If our difference threshold was 0.2, and p-value threshold was 0.05, then the test would fail.</p>
-</section>
-<section id="mutual-information-drift-feature-to-feature">
-<h3>Mutual Information Drift (Feature-to-Feature)<a class="headerlink" href="#mutual-information-drift-feature-to-feature" title="Permalink to this heading"></a></h3>
-<p>This test measures the severity of feature mutual information drift from the reference to the evaluation set for a given pair of features. The severity is a function of the mutual information drift in the data. The key detail is the difference in mutual information scores between the reference and evaluation sets. Mutual information is a measure of how dependent two features are, so this checks for significant changes in dependence between pairs of features in the reference and evaluation sets.</p><p><b>Why it matters:</b> Mutual information drift between training and inference can be caused by a variety of factors, including a change in the data generation process or a change in the underlying processing stage. A big shift in these dependencies could indicate shifting datasets and degradation in model performance, signaling the need for relabeling and retraining.</p><p><b>Configuration:</b> By default, this test runs over all pairs of features in the dataset.</p><p><b>Example:</b> Suppose that the mutual information between <span>country</span> and <span>state</span> is 0.5 in the reference set but 0.7 in the evaluation set. Then the large difference in scores indicates that the dependency between the two features has drifted. If our difference threshold was 0.2 then the test would fail.</p>
-</section>
-<section id="mutual-information-drift-feature-to-label">
-<h3>Mutual Information Drift (Feature-to-Label)<a class="headerlink" href="#mutual-information-drift-feature-to-label" title="Permalink to this heading"></a></h3>
-<p>This test measures the severity of feature mutual information drift from the reference to the evaluation set for a given pair of features. The severity is a function of the mutual information drift in the data. The key detail is the difference in mutual information scores between the reference and evaluation sets. Mutual information is a measure of how dependent two features are, so this checks for significant changes in dependence between pairs of features in the reference and evaluation sets.</p><p><b>Why it matters:</b> Mutual information drift between training and inference can be caused by a variety of factors, including a change in the data generation process or a change in the underlying processing stage. A big shift in these dependencies could indicate shifting datasets and degradation in model performance, signaling the need for relabeling and retraining.</p><p><b>Configuration:</b> By default, this test runs over all pairs of features in the dataset.</p><p><b>Example:</b> Suppose that the mutual information between <span>country</span> and <span>state</span> is 0.5 in the reference set but 0.7 in the evaluation set. Then the large difference in scores indicates that the dependency between the two features has drifted. If our difference threshold was 0.2 then the test would fail.</p>
-</section>
-<section id="label-drift-categorical">
-<h3>Label Drift (Categorical)<a class="headerlink" href="#label-drift-categorical" title="Permalink to this heading"></a></h3>
-<p>This test checks that the difference in label distribution between the reference and evaluation sets is small, using PSI test. The key detail displayed is the PSI statistic which is a measure of how different the frequencies of the column in the reference and evaluation sets are.</p><p><b>Why it matters:</b> Label distribution shift between reference and test can indicate that the underlying data distribution has changed significantly enough to modify model decisions. This may mean that the model needs to be retrained to adjust to the new data environment. In addition, significant label distribution shift may indicate that upstream decision-making modules (e.g. thresholds) may need to be updated.</p><p><b>Configuration:</b> This test is run by default whenever both the reference and evaluation sets have associated labels.</p><p><b>Example:</b> Suppose that the observed frequencies of the label column is [100, 200] in the reference set but [25, 150] in the test set. Then the PSI would be 0.201. If our PSI threshold was 0.1 then the test would fail.</p>
-</section>
-<section id="predicted-label-drift">
-<h3>Predicted Label Drift<a class="headerlink" href="#predicted-label-drift" title="Permalink to this heading"></a></h3>
-<p>This test checks that the difference in predicted label distribution between the reference and evaluation sets is small, using PSI test. The key detail displayed is the PSI statistic which is a measure of how different the frequencies of the column in the reference and evaluation sets are.</p><p><b>Why it matters:</b> Predicted Label distribution shift between reference and test can indicate that the underlying data distribution has changed significantly enough to modify model decisions. This may mean that the model needs to be retrained to adjust to the new data environment. In addition, significant predicted label distribution shift may indicate that upstream decision-making modules (e.g. thresholds) may need to be updated.</p><p><b>Configuration:</b> This test is run by default whenever the model or predictions is provided.</p><p><b>Example:</b> Suppose that the observed frequencies of the predicted label column is [100, 200] in the reference set but [25, 150] in the test set. Then the PSI would be 0.201. If our PSI threshold was 0.1 then the test would fail.</p>
-</section>
-<section id="label-drift-regression">
-<h3>Label Drift (Regression)<a class="headerlink" href="#label-drift-regression" title="Permalink to this heading"></a></h3>
-<p>This test checks that the difference in label distribution between the reference and evaluation sets is small, using the PSI test. The key detail displayed is the KS statistic which is a measure of how different the labels in the reference and evaluation sets are. Concretely, the KS statistic is the maximum difference of the empirical CDF's of the two label columns.</p><p><b>Why it matters:</b> Label distribution shift between reference and test can indicate that the underlying data distribution has changed significantly enough to modify model decisions. This may mean that the model needs to be retrained to adjust to the new data environment. In addition, significant label distribution shift may indicate that upstream decision-making modules (e.g. thresholds) may need to be updated.</p><p><b>Configuration:</b> This test is run by default whenever both the reference and evaluation sets have associated labels.</p><p><b>Example:</b> Suppose that the distribution of labels changes between the reference and evaluation sets such that PSI these two samples is <span>0.2</span>. If the PSI threshold is <span>0.1</span>, then this test would raise a warning.</p>
-</section>
-<section id="categorical-feature-drift">
-<h3>Categorical Feature Drift<a class="headerlink" href="#categorical-feature-drift" title="Permalink to this heading"></a></h3>
-<p>This test measures the severity of passing to the model data points that have categorical features which have drifted from the distribution observed in the reference set. The severity is a function of the impact on the model, as well as the presence of drift in the data. The model impact measures how much model performance changes due to drift in the given feature. The key detail displayed is the PSI test statistic, which is a measure of how statistically significant the difference between the frequencies of categorical values in the reference and evaluation sets is.</p><p><b>Why it matters:</b> Distribution drift in categorical features between training and inference can be caused by a variety of factors, including a change in the data generation process or a change in the preprocessing pipeline. A big shift in categorical features towards categorical subsets that your model performs poorly in could indicate a degradation in model performance and signal the need for relabeling and retraining. </p><p><b>Configuration:</b> By default, this test runs over all categorical columns with sufficiently many samples. </p><p><b>Example:</b> Suppose that the observed frequencies of the <span>isLoggedIn</span> feature is [100, 200] in the reference set but [25, 150] in the test set. Then the PSI would be 0.201. If our PSI threshold was 0.1 then the test would fail.</p>
-</section>
-<section id="numeric-feature-drift">
-<h3>Numeric Feature Drift<a class="headerlink" href="#numeric-feature-drift" title="Permalink to this heading"></a></h3>
-<p>This test measures the severity of passing to the model data points that have numeric features that have drifted from the distribution observed in the reference set. The severity is a function of the impact on the model, as well as the presence of drift in the data. The model impact measures how much model performance changes due to drift in the given feature. The key detail is the Population Stability Index statistic. The Population Stability Index (PSI) is a measure of how different two distributions are. Given two distributions P and Q, it is computed as the sum of the KL Divergence between P and Q and the (reverse) KL Divergence between Q and P. Thus, PSI is symmetric.</p><p><b>Why it matters:</b> Distribution shift between training and inference can cause degradation in model performance. If the shift is sufficiently large, retraining the model on newer data may be necessary.</p><p><b>Configuration:</b> By default, this test runs over all numeric columns with sufficiently many samples and stored quantiles in each of the reference and evaluation sets.</p><p><b>Example:</b> Suppose that the distribution of a feature <span>Age</span> changes between the reference and evaluation sets such that the Population Stability Index between these two samples is <span>0.2</span>. If the distance threshold is set to <span>0.1</span>, this test would raise a warning.</p>
-</section>
-<section id="prediction-drift">
-<h3>Prediction Drift<a class="headerlink" href="#prediction-drift" title="Permalink to this heading"></a></h3>
-<p>This test checks that the difference in the prediction distribution between the reference and evaluation sets is small, using Population Stability Index. The key detail displayed is the PSI which is a measure of how different the prediction distributions in the reference and evaluation sets are.</p><p><b>Why it matters:</b> Prediction distribution shift between reference and test can indicate that the underlying data distribution has changed significantly enough to modify model decisions. This may mean that the model needs to be retrained to adjust to the new data environment. In addition, significant prediction distribution drift may indicate that upstream decision-making modules (e.g. thresholds) may need to be updated.</p><p><b>Configuration:</b> This test is run by default whenever both the reference and evaluation sets have associated predictions. Different thresholds are associated with different severities.</p><p><b>Example:</b> Suppose that the PSI between the prediction distributions in the reference and evaluation sets is 0.201. Then if the PSI thresholds are (0.1, 0.2, 0.3), the test would fail with medium severity.</p>
-</section>
-<section id="embedding-drift">
-<h3>Embedding Drift<a class="headerlink" href="#embedding-drift" title="Permalink to this heading"></a></h3>
-<p>This test measures the severity of passing to the model data points associated with embeddings that have drifted from the distribution observed in the reference set. The severity is a function of the impact on the model, as well as the presence of drift in the data. The model impact measures how much model performance changes due to drift in the given feature. The key detail is the Euclidean Distance statistic. The Euclidean Distance is defined as the square root of the sum of the squared differences between two vectors X and Y. The normalized version of this metric first divides each vector by its L2 norm. This test takes the normalized Euclidean distance between the centroids of the ref and eval data sets.</p><p><b>Why it matters:</b> Distribution shift between training and inference can cause degradation in model performance. If the shift is sufficiently large, retraining the model on newer data may be necessary.</p><p><b>Configuration:</b> By default, this test runs over all specified embeddings with sufficiently many samples in each of the reference and evaluation sets.</p><p><b>Example:</b> Suppose that the distribution of an embedding <span>User</span> changes between the reference and evaluation sets such that the Euclidean Distance between these two samples is <span>0.3</span>. If the distance threshold is set to <span>0.1</span>, this test would raise a warning.</p>
-</section>
-</section>
 <section id="subset-performance">
 <h2>Subset Performance<a class="headerlink" href="#subset-performance" title="Permalink to this heading"></a></h2>
 <section id="subset-macro-f1">
@@ -259,18 +188,9 @@
 </section>
 <section id="subset-positive-prediction-rate">
 <h3>Subset Positive Prediction Rate<a class="headerlink" href="#subset-positive-prediction-rate" title="Permalink to this heading"></a></h3>
-<p>Default long description for subset batch runner.</p>
 </section>
 <section id="subset-average-confidence">
 <h3>Subset Average Confidence<a class="headerlink" href="#subset-average-confidence" title="Permalink to this heading"></a></h3>
-<p>Default long description for subset batch runner.</p>
-</section>
-</section>
-<section id="data-cleanliness">
-<h2>Data Cleanliness<a class="headerlink" href="#data-cleanliness" title="Permalink to this heading"></a></h2>
-<section id="label-imbalance">
-<h3>Label Imbalance<a class="headerlink" href="#label-imbalance" title="Permalink to this heading"></a></h3>
-<p>This test checks that no labels have exceedingly high frequency.</p><p><b>Why it matters:</b> Label imbalance in the training data can introduce bias into the model and possibly result in poor predictive performance on examples from the minority classes.</p><p><b>Configuration:</b> This test runs only on classification tasks.</p><p><b>Example:</b> Suppose we had a binary classification task. We can configure this test to check that neither label <span>0</span> nor <span>1</span> has frequency above a certain threshold.</p>
 </section>
 </section>
 <section id="transformations">
@@ -324,7 +244,7 @@
 </section>
 <section id="average-thresholded-confidence">
 <h3>Average Thresholded Confidence<a class="headerlink" href="#average-thresholded-confidence" title="Permalink to this heading"></a></h3>
-<p>This test checks the average thresholded confidence (ATC) of the model predictions between the reference and evaluation sets to see if the metric has experienced significant degradation. ATC is a method for estimating accuracy of unlabeled examples taken from <a href="https://arxiv.org/abs/2201.04234">this paper</a>. The threshold is first computed on the reference set: we pick a confidence threshold such that the percentage of datapoints whose max predicted probability is less than the threshold is around equal to the error rate of the model (here, it is 1-accuracy) on the reference set. Then, we apply this threshold in the evaluation set: the predicted accuracy is then equal to the percentage of datapoints with max predicted probability greater than this threshold.</p><p><b>Why it matters:</b> During production, factors like distribution shift may cause model performance to decrease significantly. Since oftentimes labels are not available in a production setting, this metric can serve as a useful proxy for model performance.</p><p><b>Configuration:</b> By default, this test runs if predictions/labels are specified in the reference set and predictions are specified in the eval set (no labels required).</p><p><b>Example:</b> Assume that on the reference set the model obtained <span>0.85</span> accuracy but on the evaluation set, we find that only 55 percent of datapoints have max predicted probability greater than our threshold. Then our predicted accuracy is 0.55 and this test raises a warning.</p>
+<p>This test checks the average thresholded confidence (ATC) of the model predictions between the reference and evaluation sets to see if the metric has experienced significant degradation. ATC is a method for estimating accuracy of unlabeled examples taken from <a href="https://arxiv.org/abs/2201.04234">this paper</a>. The threshold is first computed on the reference set: we pick a confidence threshold such that the percentage of datapoints whose max predicted probability is less than the threshold is around equal to the error rate of the model (here, it is 1-accuracy) on the reference set. Then, we apply this threshold in the evaluation set: the predicted accuracy is then equal to the percentage of datapoints with max predicted probability greater than this threshold.</p><p><b>Why it matters:</b> During production, factors like distribution shift may cause model performance to decrease significantly. Since oftentimes labels are not available in a production setting, this metric can serve as a useful proxy for model performance.</p><p><b>Configuration:</b> By default, this test runs if predictions/labels are specified in the reference set and predictions are specified in the eval set (no labels required).</p><p><b>Example:</b> Assume that on the reference set the model obtained <span>0.85</span> accuracy but on the evaluation set, we find that only 55 percent of datapoints have max predicted probability greater than our threshold. Then our predicted accuracy is <span>0.55</span> and this test raises a warning.</p>
 </section>
 <section id="calibration-comparison">
 <h3>Calibration Comparison<a class="headerlink" href="#calibration-comparison" title="Permalink to this heading"></a></h3>

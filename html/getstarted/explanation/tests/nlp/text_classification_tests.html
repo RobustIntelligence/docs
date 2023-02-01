@@ -8,7 +8,8 @@
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -21,8 +22,8 @@
         <script src="../../../../_static/sphinx_highlight.js"></script>
         <script src="../../../../_static/clipboard.min.js"></script>
         <script src="../../../../_static/copybutton.js"></script>
-        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
         <script src="../../../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
@@ -47,7 +48,7 @@
             <a href="../../../../index.html" class="icon icon-home"> RIME
           </a>
               <div class="version">
-                0.20.4
+                0.20.13
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -62,38 +63,135 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">RIME overview</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#the-ri-platform">The RI Platform</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#why-use-the-ri-platform">Why use the RI Platform?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#key-features">Key Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#key-machine-learning-tasks-covered">Key Machine Learning Tasks Covered</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#ri-platform-deployment-patterns">RI Platform Deployment Patterns</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../summary_tests.html">Summary Tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#ri-platform-consolidated-test-database">RI Platform consolidated test database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#tabular">Tabular</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../../../index.html#nlp">NLP</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../../unstructured_test_categories.html">Summary Tests</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Text Classification Tests</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#adversarial">Adversarial</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abnormal-inputs">Abnormal Inputs</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#drift">Drift</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#subset-performance">Subset Performance</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#data-cleanliness">Data Cleanliness</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#transformations">Transformations</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#model-performance">Model Performance</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#subset-performance-degradation">Subset Performance Degradation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#data-poisoning-detection">Data Poisoning Detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">The RI Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#why-use-the-ri-platform">Why use the RI Platform?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#key-features">Key Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#key-machine-learning-tasks-covered">Key Machine Learning Tasks Covered</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#ri-platform-deployment-patterns">RI Platform Deployment Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../summary_tests.html">Summary Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#ri-platform-consolidated-test-database">RI Platform consolidated test database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#tabular">Tabular</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html#nlp">NLP</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../unstructured_test_categories.html">Summary Tests</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Text Classification Tests</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#adversarial">Adversarial</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#invisible-character-attack">Invisible Character Attack</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#deletion-control-character-attack">Deletion Control Character Attack</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#intentional-homoglyph-attack">Intentional Homoglyph Attack</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#confusable-homoglyph-attack">Confusable Homoglyph Attack</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#character-substitution">Character Substitution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#character-deletion">Character Deletion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#character-insertion">Character Insertion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#character-swap">Character Swap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#keyboard-augmentation">Keyboard Augmentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#common-misspellings">Common Misspellings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ocr-error-simulation">OCR Error Simulation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#synonym-swap">Synonym Swap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#contextual-word-swap">Contextual Word Swap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#contextual-word-insertion">Contextual Word Insertion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#universal-prefix-attack">Universal Prefix Attack</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="natural_language_inference_tests.html">Natural Language Inference Tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="named_entity_recognition_tests.html">Named Entity Recognition Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#abnormal-inputs">Abnormal Inputs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#numeric-outliers">Numeric Outliers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unseen-categorical">Unseen Categorical</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unseen-domain">Unseen Domain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unseen-email">Unseen Email</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unseen-url">Unseen URL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rare-categories">Rare Categories</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#out-of-range">Out of Range</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#required-characters">Required Characters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#inconsistencies">Inconsistencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#capitalization">Capitalization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#empty-string">Empty String</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#embedding-anomalies">Embedding Anomalies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unseen-unigram">Unseen Unigram</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#empty-text-string">Empty Text String</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#cv">CV</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#compliance">Compliance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../index.html#rime-local-trial">RIME local trial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#drift">Drift</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#correlation-drift-feature-to-feature">Correlation Drift (Feature-to-Feature)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#correlation-drift-feature-to-label">Correlation Drift (Feature-to-Label)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mutual-information-drift-feature-to-feature">Mutual Information Drift (Feature-to-Feature)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mutual-information-drift-feature-to-label">Mutual Information Drift (Feature-to-Label)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#label-drift-categorical">Label Drift (Categorical)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#predicted-label-drift">Predicted Label Drift</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#label-drift-regression">Label Drift (Regression)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#categorical-feature-drift">Categorical Feature Drift</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#numeric-feature-drift">Numeric Feature Drift</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#prediction-drift">Prediction Drift</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#embedding-drift">Embedding Drift</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#character-distribution">Character Distribution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unigrams-distribution">Unigrams Distribution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bigrams-distribution">Bigrams Distribution</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#subset-performance">Subset Performance</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subset-macro-f1">Subset Macro F1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-macro-precision">Subset Macro Precision</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-macro-recall">Subset Macro Recall</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-multiclass-accuracy">Subset Multiclass Accuracy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-multiclass-auc">Subset Multiclass AUC</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-positive-prediction-rate">Subset Positive Prediction Rate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-average-confidence">Subset Average Confidence</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#data-cleanliness">Data Cleanliness</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#label-imbalance">Label Imbalance</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#transformations">Transformations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#upper-case-text">Upper-Case Text</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lower-case-text">Lower-Case Text</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#remove-special-characters">Remove Special Characters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#replace-masculine-with-feminine-pronouns">Replace Masculine with Feminine Pronouns</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#replace-feminine-with-masculine-pronouns">Replace Feminine with Masculine Pronouns</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#replace-feminine-with-masculine-names">Replace Feminine with Masculine Names</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#replace-masculine-with-feminine-names">Replace Masculine with Feminine Names</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unicode-to-ascii">Unicode to ASCII</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Character Substitution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">Character Deletion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">Character Insertion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">Character Swap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">Keyboard Augmentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">Common Misspellings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">OCR Error Simulation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#model-performance">Model Performance</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#average-confidence">Average Confidence</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#average-thresholded-confidence">Average Thresholded Confidence</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#calibration-comparison">Calibration Comparison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#average-prediction">Average Prediction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#macro-f1">Macro F1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#macro-precision">Macro Precision</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#macro-recall">Macro Recall</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#multiclass-accuracy">Multiclass Accuracy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#multiclass-auc">Multiclass AUC</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#positive-prediction-rate">Positive Prediction Rate</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#subset-performance-degradation">Subset Performance Degradation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subset-drift-average-prediction">Subset Drift Average Prediction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-drift-macro-f1">Subset Drift Macro F1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-drift-macro-precision">Subset Drift Macro Precision</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-drift-macro-recall">Subset Drift Macro Recall</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-drift-multiclass-accuracy">Subset Drift Multiclass Accuracy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-drift-multiclass-auc">Subset Drift Multiclass AUC</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#data-poisoning-detection">Data Poisoning Detection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#label-flipping-detection-exact-match">Label Flipping Detection (Exact Match)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="natural_language_inference_tests.html">Natural Language Inference Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="named_entity_recognition_tests.html">Named Entity Recognition Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#cv">CV</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#rime-local-trial">RIME local trial</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Administering the RI Platform</span></p>
 <ul>
@@ -127,9 +225,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../../index.html" class="icon icon-home"></a></li>
-          <li class="breadcrumb-item"><a href="../../../index.html">RIME overview</a></li>
-      <li class="breadcrumb-item active">Text Classification Tests</li>
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">The RI Platform</a> &raquo;</li>
+      <li>Text Classification Tests</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../../_sources/getstarted/explanation/tests/nlp/text_classification_tests.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -299,7 +397,7 @@
 </section>
 <section id="numeric-feature-drift">
 <h3>Numeric Feature Drift<a class="headerlink" href="#numeric-feature-drift" title="Permalink to this heading"></a></h3>
-<p>This test measures the severity of passing to the model data points that have numeric features that have drifted from the distribution observed in the reference set. The severity is a function of the impact on the model, as well as the presence of drift in the data. The model impact measures how much model performance changes due to drift in the given feature. The key detail is the Population Stability Index statistic. The Population Stability Index (PSI) is a measure of how different two distributions are. Given two distributions P and Q, it is computed as the sum of the KL Divergence between P and Q and the (reverse) KL Divergence between Q and P. Thus, PSI is symmetric.</p><p><b>Why it matters:</b> Distribution shift between training and inference can cause degradation in model performance. If the shift is sufficiently large, retraining the model on newer data may be necessary.</p><p><b>Configuration:</b> By default, this test runs over all numeric columns with sufficiently many samples and stored quantiles in each of the reference and evaluation sets.</p><p><b>Example:</b> Suppose that the distribution of a feature <span>Age</span> changes between the reference and evaluation sets such that the Population Stability Index between these two samples is <span>0.2</span>. If the distance threshold is set to <span>0.1</span>, this test would raise a warning.</p>
+<p>This test measures the severity of passing to the model data points that have numeric features that have drifted from the distribution observed in the reference set. The severity is a function of the impact on the model, as well as the presence of drift in the data. The model impact measures how much model performance changes due to drift in the given feature. The key detail is the Population Stability Index statistic. The Population Stability Index (PSI) is a measure of how different two distributions are. The PSI of the distributions P and Q is the sum of the KL Divergence between P and Q and the KL Divergence between Q and P. PSI is symmetric.</p><p><b>Why it matters:</b> Distribution shift between training and inference can cause degradation in model performance. If the shift is sufficiently large, retraining the model on newer data may be necessary.</p><p><b>Configuration:</b> By default, this test runs over all numeric columns with sufficiently many samples and stored quantiles in each of the reference and evaluation sets.</p><p><b>Example:</b> Suppose that the distribution of a feature <span>Age</span> changes between the reference and evaluation sets such that the Population Stability Index between these two samples is <span>0.2</span>. If the distance threshold is set to <span>0.1</span>, this test would raise a warning.</p>
 </section>
 <section id="prediction-drift">
 <h3>Prediction Drift<a class="headerlink" href="#prediction-drift" title="Permalink to this heading"></a></h3>
@@ -346,11 +444,9 @@
 </section>
 <section id="subset-positive-prediction-rate">
 <h3>Subset Positive Prediction Rate<a class="headerlink" href="#subset-positive-prediction-rate" title="Permalink to this heading"></a></h3>
-<p>Default long description for subset batch runner.</p>
 </section>
 <section id="subset-average-confidence">
 <h3>Subset Average Confidence<a class="headerlink" href="#subset-average-confidence" title="Permalink to this heading"></a></h3>
-<p>Default long description for subset batch runner.</p>
 </section>
 </section>
 <section id="data-cleanliness">
@@ -431,7 +527,7 @@
 </section>
 <section id="average-thresholded-confidence">
 <h3>Average Thresholded Confidence<a class="headerlink" href="#average-thresholded-confidence" title="Permalink to this heading"></a></h3>
-<p>This test checks the average thresholded confidence (ATC) of the model predictions between the reference and evaluation sets to see if the metric has experienced significant degradation. ATC is a method for estimating accuracy of unlabeled examples taken from <a href="https://arxiv.org/abs/2201.04234">this paper</a>. The threshold is first computed on the reference set: we pick a confidence threshold such that the percentage of datapoints whose max predicted probability is less than the threshold is around equal to the error rate of the model (here, it is 1-accuracy) on the reference set. Then, we apply this threshold in the evaluation set: the predicted accuracy is then equal to the percentage of datapoints with max predicted probability greater than this threshold.</p><p><b>Why it matters:</b> During production, factors like distribution shift may cause model performance to decrease significantly. Since oftentimes labels are not available in a production setting, this metric can serve as a useful proxy for model performance.</p><p><b>Configuration:</b> By default, this test runs if predictions/labels are specified in the reference set and predictions are specified in the eval set (no labels required).</p><p><b>Example:</b> Assume that on the reference set the model obtained <span>0.85</span> accuracy but on the evaluation set, we find that only 55 percent of datapoints have max predicted probability greater than our threshold. Then our predicted accuracy is 0.55 and this test raises a warning.</p>
+<p>This test checks the average thresholded confidence (ATC) of the model predictions between the reference and evaluation sets to see if the metric has experienced significant degradation. ATC is a method for estimating accuracy of unlabeled examples taken from <a href="https://arxiv.org/abs/2201.04234">this paper</a>. The threshold is first computed on the reference set: we pick a confidence threshold such that the percentage of datapoints whose max predicted probability is less than the threshold is around equal to the error rate of the model (here, it is 1-accuracy) on the reference set. Then, we apply this threshold in the evaluation set: the predicted accuracy is then equal to the percentage of datapoints with max predicted probability greater than this threshold.</p><p><b>Why it matters:</b> During production, factors like distribution shift may cause model performance to decrease significantly. Since oftentimes labels are not available in a production setting, this metric can serve as a useful proxy for model performance.</p><p><b>Configuration:</b> By default, this test runs if predictions/labels are specified in the reference set and predictions are specified in the eval set (no labels required).</p><p><b>Example:</b> Assume that on the reference set the model obtained <span>0.85</span> accuracy but on the evaluation set, we find that only 55 percent of datapoints have max predicted probability greater than our threshold. Then our predicted accuracy is <span>0.55</span> and this test raises a warning.</p>
 </section>
 <section id="calibration-comparison">
 <h3>Calibration Comparison<a class="headerlink" href="#calibration-comparison" title="Permalink to this heading"></a></h3>
@@ -470,7 +566,27 @@
 <h2>Subset Performance Degradation<a class="headerlink" href="#subset-performance-degradation" title="Permalink to this heading"></a></h2>
 <section id="subset-drift-average-prediction">
 <h3>Subset Drift Average Prediction<a class="headerlink" href="#subset-drift-average-prediction" title="Permalink to this heading"></a></h3>
-<p>Default long description for subset batch runner.</p>
+<p>This test checks whether the model performs equally well across a given subset of rows as it does across the whole dataset. The key detail displays the performance difference between the lowest performing subset and the overall population. The test first splits the dataset into various subsets depending on the quantiles of a given feature column. If the feature is categorical, the data is split based on the feature values. We then test whether the average prediction of model predictions within a specific subset is significantly different than the model prediction average prediction over the entire population. </p><p><b>Why it matters:</b> Having different average prediction between different subgroups is an important indicator of performance bias; in general, bias is an important phenomenon in machine learning and not only contains implications for fairness and ethics, but also indicates failures in adequate feature representation and spurious correlation. </p><p><b>Configuration:</b> By default, average prediction is computed over all predictions/labels. </p><p><b>Example:</b> Suppose we had data with 2 features: <span>[[0.4, 0.2], [0.5, 0.3], [0.7, 0.5], [0.6, 0.7], [0.8, 0.7]]</span>, model predictions <span>[0.3, 0.4, 0.8, 0.8, 0.9]</span>, and labels <span>[0.5, 0.5, 1.5, 1.5, 1.5]</span>. Then, the average prediction over the feature subset (0.0, 0.5] for the first feature would be 0.35, compared to the overall metric of 0.83.</p>
+</section>
+<section id="subset-drift-macro-f1">
+<h3>Subset Drift Macro F1<a class="headerlink" href="#subset-drift-macro-f1" title="Permalink to this heading"></a></h3>
+<p>F1 is a holistic measure of both precision and recall. When transitioning to the multiclass setting we can use macro F1 which computes the F1 of each class and averages them. This test checks whether the model performs equally well across a given subset of rows as it does across the whole dataset. The key detail displays the performance difference between the lowest performing subset and the overall population. The test first splits the dataset into various subsets depending on the quantiles of a given feature column. If the feature is categorical, the data is split based on the feature values. We then test whether the macro F1 of model predictions within a specific subset is significantly lower than the model prediction macro F1 over the entire population. </p><p><b>Why it matters:</b> Having different macro F1 between different subgroups is an important indicator of performance bias; in general, bias is an important phenomenon in machine learning and not only contains implications for fairness and ethics, but also indicates failures in adequate feature representation and spurious correlation. </p><p><b>Configuration:</b> By default, macro F1 is computed over all predictions/labels. Note that the predicted label is the label with the largest predicted probability.</p><p><b>Example:</b> Suppose we are differentiating between cats, bears, and dogs. Assume that across the data points where <span>height=2</span> the predictions are <span>[0.9, 0.1, 0], [0.1, 0.9, 0], [0.2, 0.1, 0.7]</span> and the labels are <span>[1, 0, 0], [1, 0, 0], [0, 0, 1]</span> (where the first index corresponds to cat, the second corresponds to bear, and the third corresponds to dog). Then the macro F1 across this subset is <span>0.78</span>. If the overall macro F1 across all subsets is <span>0.9</span> then this test raises a warning.</p>
+</section>
+<section id="subset-drift-macro-precision">
+<h3>Subset Drift Macro Precision<a class="headerlink" href="#subset-drift-macro-precision" title="Permalink to this heading"></a></h3>
+<p>The precision test is also popularly referred to as positive predictive parity in fairness literature. When transitioning to the multiclass setting, we can compute macro precision which computes the precisions of each class individually and then averages them.This test checks whether the model performs equally well across a given subset of rows as it does across the whole dataset. The key detail displays the performance difference between the lowest performing subset and the overall population. The test first splits the dataset into various subsets depending on the quantiles of a given feature column. If the feature is categorical, the data is split based on the feature values. We then test whether the Macro Precision of model predictions within a specific subset is significantly lower than the model prediction Macro Precision over the entire population. </p><p><b>Why it matters:</b> Having different macro precision (e.g. false discovery rates) between different subgroups is an important indicator of performance bias; in general, bias is an important phenomenon in machine learning and not only contains implications for fairness and ethics, but also indicates failures in adequate feature representation and spurious correlation. Unlike demographic parity, this test permits assuming different base label rates but flags differing mistake rates between different subgroups. Note that positive predictive parity does not necessarily indicate equal opportunity or predictive equality: as a hypothetical example, imagine that a loan qualification classifier flags 100 entries for group A and 100 entries for group B, each with a precision of 100%, but there are 100 actual qualified entries in group A and 9000 in group B. This would indicate disparities in opportunities given to each subgroup.</p><p><b>Configuration:</b> By default, Macro Precision is computed over all predictions/labels. Note that the predicted label is the label with the greatest predicted probability.</p><p><b>Example:</b> Suppose we are differentiating between cats, bears, and dogs. Assume that across the data points where <span>height=2</span> the predictions are <span>[0.9, 0.1, 0], [0.1, 0.9, 0], [0.2, 0.1, 0.7]</span> and the labels are <span>[1, 0, 0], [1, 0, 0], [0, 0, 1]</span> (where the first index corresponds to cat, the second corresponds to bear, and the third corresponds to dog). Then the Macro Precision across this subset is <span>0.67</span>. If the overall Macro Precision across all subsets is <span>0.9</span> then this test raises a warning.</p>
+</section>
+<section id="subset-drift-macro-recall">
+<h3>Subset Drift Macro Recall<a class="headerlink" href="#subset-drift-macro-recall" title="Permalink to this heading"></a></h3>
+<p>The recall test is more popularly referred to as equal opportunity or false negative error rate balance in fairness literature. When transitioning to the multiclass setting we can use macro recall which computes the recall of each individual class and then averages these numbers.This test checks whether the model performs equally well across a given subset of rows as it does across the whole dataset. The key detail displays the performance difference between the lowest performing subset and the overall population. The test first splits the dataset into various subsets depending on the quantiles of a given feature column. If the feature is categorical, the data is split based on the feature values. We then test whether the Macro Recall of model predictions within a specific subset is significantly lower than the model prediction Macro Recall over the entire population. </p><p><b>Why it matters:</b> Having different true positive rates (e.g. equal opportunity) between different subgroups is an important indicator of performance bias; in general, bias is an important phenomenon in machine learning and not only contains implications for fairness and ethics, but also indicates failures in adequate feature representation and spurious correlation. Unlike demographic parity, this test permits assuming different base label rates but flags differing mistake rates between different subgroups. An intuitive example is when the label indicates a positive attribute: if predicting whether to interview a given candidate, make sure that out of qualified candidates, the rate at which the model predicts an interview is similar to group A and B. </p><p><b>Configuration:</b> By default, Macro Recall is computed over all predictions/labels. Note that the predicted label is the label with the largest predicted class probability.</p><p><b>Example:</b> Suppose we are differentiating between cats, bears, and dogs. Assume that across the data points where <span>height=2</span> the predictions are <span>[0.9, 0.1, 0], [0.1, 0.9, 0], [0.2, 0.1, 0.7]</span> and the labels are <span>[1, 0, 0], [1, 0, 0], [0, 0, 1]</span> (where the first index corresponds to cat, the second corresponds to bear, and the third corresponds to dog). Then the Macro Recall across this subset is <span>0.67</span>. If the overall Macro Recall across all subsets is <span>0.9</span> then this test raises a warning.</p>
+</section>
+<section id="subset-drift-multiclass-accuracy">
+<h3>Subset Drift Multiclass Accuracy<a class="headerlink" href="#subset-drift-multiclass-accuracy" title="Permalink to this heading"></a></h3>
+<p>This test checks whether the model performs equally well across a given subset of rows as it does across the whole dataset. The key detail displays the performance difference between the lowest performing subset and the overall population. The test first splits the dataset into various subsets depending on the quantiles of a given feature column. If the feature is categorical, the data is split based on the feature values. We then test whether the accuracy of model predictions within a specific subset is significantly lower than the model prediction accuracy over the entire population. </p><p><b>Why it matters:</b> Having different accuracy between different subgroups is an important indicator of performance bias; in general, bias is an important phenomenon in machine learning and not only contains implications for fairness and ethics, but also indicates failures in adequate feature representation and spurious correlation. Accuracy can be thought of as a 'weaker' metric of model bias compared to measuring false positive rate (predictive equality) or false negative rate (equal opportunity). This is because we can have similar accuracy between group A and group B; yet group A actually has higher false positive rate, while group B has higher false negative rate (e.g. we reject qualified applicants in group A but accept non-qualified applicants in group B). Nevertheless, accuracy is a standard metric used during evaluation and should be considered as part of performance bias testing.</p><p><b>Configuration:</b> By default, accuracy is computed over all predictions/labels. Note we round predictions to 0/1 to compute accuracy.</p><p><b>Example:</b> Suppose we had data with 2 features: <span>[['cat', 0.2], ['dog', 0.3], ['cat', 0.5], ['dog', 0.7], ['cat', 0.7], ['dog', 0.2]]</span>, model predictions <span>[0.3, 0.51, 0.7, 0.49, 0.9, 0.58]</span>, and labels <span>[1, 0, 1, 0, 0, 1]</span>. Then, the accuracy over the feature subset value 'cat' would be 0.33, compared to the overall metric of 0.5.</p>
+</section>
+<section id="subset-drift-multiclass-auc">
+<h3>Subset Drift Multiclass AUC<a class="headerlink" href="#subset-drift-multiclass-auc" title="Permalink to this heading"></a></h3>
+<p>In the multiclass setting, we compute one vs. one area under the curve (AUC), which computes the AUC between every pairwise combination of classes. This test checks whether the model performs equally well across a given subset of rows as it does across the whole dataset. The key detail displays the performance difference between the lowest performing subset and the overall population. The test first splits the dataset into various subsets depending on the quantiles of a given feature column. If the feature is categorical, the data is split based on the feature values. We then test whether the Area Under Curve (AUC) of model predictions within a specific subset is significantly lower than the model prediction Area Under Curve (AUC) over the entire population. </p><p><b>Why it matters:</b> Having different AUC between different subgroups is an important indicator of performance bias; in general, bias is an important phenomenon in machine learning and not only contains implications for fairness and ethics, but also indicates failures in adequate feature representation and spurious correlation. </p><p><b>Configuration:</b> By default, AUC is computed over all predictions/labels. Note that we compute AUC of the Receiver Operating Characteristic (ROC) curve.</p><p><b>Example:</b> Suppose we are differentiating between cats, bears, and dogs. Assume that across the data points where <span>height=2</span> the predictions are <span>[0.9, 0.1, 0], [0.1, 0.9, 0], [0.2, 0.1, 0.7]</span> and the labels are <span>[1, 0, 0], [1, 0, 0], [0, 0, 1]</span> (where the first index corresponds to cat, the second corresponds to bear, and the third corresponds to dog). Then the AUC (one vs. one) across this subset is <span>0.75</span>. If the overall AUC (one vs. one) across all subsets is <span>0.9</span> then this test raises a warning.</p>
 </section>
 </section>
 <section id="data-poisoning-detection">
