@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SSO configuration &mdash; RIME  documentation</title>
@@ -44,14 +44,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> RIME
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            RIME
           </a>
               <div class="version">
-                0.20.4
+                0.20.15
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -73,6 +77,11 @@
 <li class="toctree-l2"><a class="reference internal" href="userauthn.html">Native user authentication</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">SSO configuration</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#configuring-sso">Configuring SSO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#identity-provider-setup">Identity Provider Setup</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#azure-active-directory">Azure Active Directory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#okta">Okta</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="api-authentication.html">API access tokens</a></li>
@@ -115,7 +124,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Administering the RI Platform</a></li>
       <li class="breadcrumb-item active">SSO configuration</li>
       <li class="wy-breadcrumbs-aside">
@@ -160,11 +169,28 @@ Platform instance.</p>
 <li><p>In <em>Issuer URL</em>, type the URL of the OIDC issuer.</p></li>
 <li><p>Click <em>Save</em>.</p></li>
 </ol>
-<p>The RI Platform instance is now configured to use SSO authentication.
-Add <code class="docutils literal notranslate"><span class="pre">https://rime.&lt;domain&gt;/v1/auth/oidc/callback</span></code> as a callback URL for the
-OIDC provider. When this URL is not valid, attempting to log in results in a
-403 Forbidden HTTP status code.</p>
-<img src="../_static/sso_configuration.png"></section>
+<p>The RI Platform instance is now configured to use SSO authentication.</p>
+</section>
+<section id="identity-provider-setup">
+<h2>Identity Provider Setup<a class="headerlink" href="#identity-provider-setup" title="Permalink to this heading"></a></h2>
+<p>RIME supports all OIDC providers. The following sections provide specific instructions for individual OIDC providers.</p>
+<p>Add <code class="docutils literal notranslate"><span class="pre">https://rime.&lt;domain&gt;/v1/auth/oidc/callback</span></code> as a callback URL for the OIDC provider.
+When this URL is not valid, attempting to log in results in a 403 Forbidden HTTP status code.</p>
+<p>When a signout URL is necessary, use <code class="docutils literal notranslate"><span class="pre">https://rime.&lt;domain&gt;/sign-out</span></code>.</p>
+<section id="azure-active-directory">
+<h3>Azure Active Directory<a class="headerlink" href="#azure-active-directory" title="Permalink to this heading"></a></h3>
+<p>Register a new application with a <strong>Web</strong> platform configuration using the callback and signout URLs above.</p>
+<p>The Issuer URL for RIME takes the form <code class="docutils literal notranslate"><span class="pre">https://login.microsoftonline.com/{tenant}/v2.0</span></code>.</p>
+<p>For more information, see the <a class="reference external" href="https://learn.microsoft.com/en-us/azure/active-directory/develop/v2-protocols-oidc#find-your-apps-openid-configuration-document-uri">Azure AD documentation</a>.</p>
+</section>
+<section id="okta">
+<h3>Okta<a class="headerlink" href="#okta" title="Permalink to this heading"></a></h3>
+<p>Create a new App Integration using the <strong>OIDC - OpenID Connect</strong> sign-in method and <strong>Web Application</strong> type. Use the callback and signout URLs described above.</p>
+<p>After creating the application, retrieve the Client ID and secret from the application overview page.</p>
+<p>The Issuer URL for RIME takes the form <code class="docutils literal notranslate"><span class="pre">https://&lt;organization&gt;.okta.com</span></code>.</p>
+<p>For more information, see the <a class="reference external" href="https://help.okta.com/en-us/Content/Topics/Apps/Apps_App_Integration_Wizard_OIDC.htm">Okta documentation</a>.</p>
+</section>
+</section>
 </section>
 
 

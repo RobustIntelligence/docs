@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Natural Language Inference Tests &mdash; RIME  documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -22,8 +21,8 @@
         <script src="../../../../_static/sphinx_highlight.js"></script>
         <script src="../../../../_static/clipboard.min.js"></script>
         <script src="../../../../_static/copybutton.js"></script>
+        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
         <script src="../../../../_static/main.js"></script>
-        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
@@ -45,14 +44,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../../index.html" class="icon icon-home"> RIME
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            RIME
           </a>
               <div class="version">
-                0.20.13
+                0.20.15
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -63,135 +66,37 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../../index.html">The RI Platform</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../index.html#why-use-the-ri-platform">Why use the RI Platform?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../index.html#key-features">Key Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../index.html#key-machine-learning-tasks-covered">Key Machine Learning Tasks Covered</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../index.html#ri-platform-deployment-patterns">RI Platform Deployment Patterns</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../summary_tests.html">Summary Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../index.html#ri-platform-consolidated-test-database">RI Platform consolidated test database</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../index.html#tabular">Tabular</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html#nlp">NLP</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../unstructured_test_categories.html">Summary Tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="text_classification_tests.html">Text Classification Tests</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Natural Language Inference Tests</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#adversarial">Adversarial</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#invisible-character-attack">Invisible Character Attack</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#deletion-control-character-attack">Deletion Control Character Attack</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#intentional-homoglyph-attack">Intentional Homoglyph Attack</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#confusable-homoglyph-attack">Confusable Homoglyph Attack</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#character-substitution">Character Substitution</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#character-deletion">Character Deletion</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#character-insertion">Character Insertion</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#character-swap">Character Swap</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#keyboard-augmentation">Keyboard Augmentation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#common-misspellings">Common Misspellings</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#ocr-error-simulation">OCR Error Simulation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#synonym-swap">Synonym Swap</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#contextual-word-swap">Contextual Word Swap</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#contextual-word-insertion">Contextual Word Insertion</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#universal-prefix-attack">Universal Prefix Attack</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">RIME overview</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#the-ri-platform">The RI Platform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#why-use-the-ri-platform">Why use the RI Platform?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#key-features">Key Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#key-machine-learning-tasks-covered">Key Machine Learning Tasks Covered</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#ri-platform-deployment-patterns">RI Platform Deployment Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../summary_tests.html">Summary Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#ri-platform-consolidated-test-database">RI Platform consolidated test database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#tabular">Tabular</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../index.html#nlp">NLP</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../unstructured_test_categories.html">Summary Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="text_classification_tests.html">Text Classification Tests</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Natural Language Inference Tests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#adversarial">Adversarial</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abnormal-inputs">Abnormal Inputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drift">Drift</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-performance">Subset Performance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#data-cleanliness">Data Cleanliness</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#transformations">Transformations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model-performance">Model Performance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-performance-degradation">Subset Performance Degradation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#data-poisoning-detection">Data Poisoning Detection</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#abnormal-inputs">Abnormal Inputs</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#numeric-outliers">Numeric Outliers</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#unseen-categorical">Unseen Categorical</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#unseen-domain">Unseen Domain</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#unseen-email">Unseen Email</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#unseen-url">Unseen URL</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#rare-categories">Rare Categories</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#out-of-range">Out of Range</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#required-characters">Required Characters</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#inconsistencies">Inconsistencies</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#capitalization">Capitalization</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#empty-string">Empty String</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embedding-anomalies">Embedding Anomalies</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#unseen-unigram">Unseen Unigram</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#empty-text-string">Empty Text String</a></li>
+<li class="toctree-l3"><a class="reference internal" href="named_entity_recognition_tests.html">Named Entity Recognition Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#drift">Drift</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#correlation-drift-feature-to-feature">Correlation Drift (Feature-to-Feature)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#correlation-drift-feature-to-label">Correlation Drift (Feature-to-Label)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#mutual-information-drift-feature-to-feature">Mutual Information Drift (Feature-to-Feature)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#mutual-information-drift-feature-to-label">Mutual Information Drift (Feature-to-Label)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#label-drift-categorical">Label Drift (Categorical)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#predicted-label-drift">Predicted Label Drift</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#label-drift-regression">Label Drift (Regression)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#categorical-feature-drift">Categorical Feature Drift</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#numeric-feature-drift">Numeric Feature Drift</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#prediction-drift">Prediction Drift</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#embedding-drift">Embedding Drift</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#character-distribution">Character Distribution</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#unigrams-distribution">Unigrams Distribution</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#bigrams-distribution">Bigrams Distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#cv">CV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../index.html#rime-local-trial">RIME local trial</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#subset-performance">Subset Performance</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#subset-macro-f1">Subset Macro F1</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#subset-macro-precision">Subset Macro Precision</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#subset-macro-recall">Subset Macro Recall</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#subset-multiclass-accuracy">Subset Multiclass Accuracy</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#subset-multiclass-auc">Subset Multiclass AUC</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#subset-positive-prediction-rate">Subset Positive Prediction Rate</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#subset-average-confidence">Subset Average Confidence</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#data-cleanliness">Data Cleanliness</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#label-imbalance">Label Imbalance</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#transformations">Transformations</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#upper-case-text">Upper-Case Text</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lower-case-text">Lower-Case Text</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#remove-special-characters">Remove Special Characters</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#replace-masculine-with-feminine-pronouns">Replace Masculine with Feminine Pronouns</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#replace-feminine-with-masculine-pronouns">Replace Feminine with Masculine Pronouns</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#replace-feminine-with-masculine-names">Replace Feminine with Masculine Names</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#replace-masculine-with-feminine-names">Replace Masculine with Feminine Names</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#unicode-to-ascii">Unicode to ASCII</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id1">Character Substitution</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id2">Character Deletion</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id3">Character Insertion</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id4">Character Swap</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id5">Keyboard Augmentation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">Common Misspellings</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id7">OCR Error Simulation</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#model-performance">Model Performance</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#average-confidence">Average Confidence</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#average-thresholded-confidence">Average Thresholded Confidence</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#calibration-comparison">Calibration Comparison</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#average-prediction">Average Prediction</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#macro-f1">Macro F1</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#macro-precision">Macro Precision</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#macro-recall">Macro Recall</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#multiclass-accuracy">Multiclass Accuracy</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#multiclass-auc">Multiclass AUC</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#positive-prediction-rate">Positive Prediction Rate</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#subset-performance-degradation">Subset Performance Degradation</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#subset-drift-average-prediction">Subset Drift Average Prediction</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#subset-drift-macro-f1">Subset Drift Macro F1</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#subset-drift-macro-precision">Subset Drift Macro Precision</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#subset-drift-macro-recall">Subset Drift Macro Recall</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#subset-drift-multiclass-accuracy">Subset Drift Multiclass Accuracy</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#subset-drift-multiclass-auc">Subset Drift Multiclass AUC</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#data-poisoning-detection">Data Poisoning Detection</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#label-flipping-detection-exact-match">Label Flipping Detection (Exact Match)</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="named_entity_recognition_tests.html">Named Entity Recognition Tests</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../../../index.html#cv">CV</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../index.html#rime-local-trial">RIME local trial</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Administering the RI Platform</span></p>
 <ul>
@@ -225,9 +130,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../../index.html">The RI Platform</a> &raquo;</li>
-      <li>Natural Language Inference Tests</li>
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">RIME overview</a></li>
+      <li class="breadcrumb-item active">Natural Language Inference Tests</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../../_sources/getstarted/explanation/tests/nlp/natural_language_inference_tests.md.txt" rel="nofollow"> View page source</a>
       </li>

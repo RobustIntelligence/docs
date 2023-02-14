@@ -1,4 +1,4 @@
-# Monitoring Your Model with AI Firewall
+# Monitoring Your Model with AI Firewall Continuous Tests
 
 This guide will cover how to configure the AI Firewall to continuously monitor your model in production.
 
@@ -17,11 +17,11 @@ rime-engine run-stress-tests --config-path examples/fraud_firewall/stress_testin
 
 ### 2. Configure a Firewall in the Web Client
 
-In the web client, click on the "Default Project" and navigate to the "AI Firewall" tab on the left <img src="../../../_static/ui/AIFirewallShield.svg" />. You should see the following page.
+{{ ct_open_firewall_page }}
 
 <img src="../../../_static/ui/Firewall_Page.png" />
 
-Click on "Configure AI Firewall" and fill out the details. The "Name" field can be a name of your choice. The "AI Stress Test" field should be "Fraud Detection" (this refers to the AI Stress Testing run that we just ran). Finally, the "Bin Size" field should be "1 Day". Once you've filled everything out, **copy the "Firewall ID"** (you will need this later to upload data and predictions to monitor) and click "Done".
+{{ ct_configure_steps_local_trial }}
 
 <img src="../../../_static/ui/Firewall_Deploy.png" />
 
@@ -56,7 +56,7 @@ This guide will cover how to run AI Firewall Continuous Tests on your own model 
 
 ### Collect Data in the Correct Format
 
-Data formatting requirements are very similar to those for AI Stress Tests (see [Input Data Format](/for_data_scientists/reference/tabular/task_data_format.md)); however, **for continuous tests, timestamp information is also needed.**
+Data formatting requirements are very similar to those for AI Stress Tests (see [Input Data Format](../../../for_data_scientists/reference/tabular/task_data_format.md)); however, **for continuous tests, timestamp information is also needed.**
 
 For AI Firewall Continuous Tests, RI requires two datasets: a reference dataset and an (incremental) evaluation dataset. The latter must supply a datetime column so that it can be sliced into batches appropriately. Bin-sized slices of the evaluation dataset will be compared to the reference dataset during continuous testing.
 
@@ -66,7 +66,7 @@ Datasets must be passed in as a `.csv` or `.parquet` file, where each column is 
 
 With your data ready, you can now create a configuration file.
 
-For a detailed reference on what the configuration should look like, see [Continuous Tests Configuration](/for_data_scientists/reference/tabular/firewall_continuous_tests.md).
+For a detailed reference on what the configuration should look like, see [Continuous Tests Configuration](../../../for_data_scientists/reference/tabular/firewall_continuous_tests.md).
 
 ### Run the CLI
 

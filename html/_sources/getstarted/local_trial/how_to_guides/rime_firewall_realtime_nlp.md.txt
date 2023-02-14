@@ -6,13 +6,13 @@ In this walkthrough, we will be using the <a target="_blank" rel="noopener" href
 
 ## Overview
 
-AI Firewall Realtime can be easily instantiated from an existing AI Stress Testing Run. You can also view a simulation of real-time events by running [AI Firewall Continuous Tests](rime_ai_firewall_continuous_tests_nlp.md).
+Instantiate an AI Realtime Firewall from an existing AI Stress Testing run. You can also view a simulation of real-time events by running [AI Continuous Tests](rime_ai_firewall_continuous_tests.md).
 
 {{ fw_realtime_overview }}
 
 ## 1. Run AI Stress Testing
 
-The first step in setting up AI Firewall Realtime is running AI Stress Testing and configuring an AI Firewall for a given project. These steps are very similar to steps 1-3 of [AI Firewall Continuous Tests](rime_ai_firewall_continuous_tests_nlp.md).
+The first step in setting up AI Realtime Firewall is running AI Stress Testing and configuring an AI Firewall for a given project. These steps are very similar to steps 1-3 of [AI Continuous Tests](rime_ai_firewall_continuous_tests_nlp.md).
 
 ```
 rime-engine run-nlp --config-path nlp_examples/classification/arxiv/stress_tests_config_no_model.json
@@ -24,13 +24,7 @@ rime-engine run-nlp --config-path nlp_examples/classification/arxiv/stress_tests
 
 <img src="../../../_static/ui/FirewallConfig_nlp.png" />
 
-## 2. Review and Download Auto-Configured AI Firewall Rules
-
-{{ fw_rules_review }}
-
-<img src="../../../_static/ui/FirewallConfig_Rules_nlp.png" />
-
-## 3. Setup a Firewall Client in a Jupyter Notebook
+## 2. Set up a Firewall client in a Jupyter notebook
 
 {{ fw_notebook_setup }}
 
@@ -50,7 +44,7 @@ RIME_PATH = os.path.abspath('.')
 
 Now we are ready to run the Firewall in a real-time setting!
 
-### Running the AI Firewall Realtime with Sample Datapoints
+### Running the AI Realtime Firewall with Sample Datapoints
 
 Let's first import the Firewall Realtime package:
 ```python
@@ -71,7 +65,6 @@ upload_client = FirewallUploader.from_url(
 fw_client = FirewallClient.from_cli_args(firewall_url)
 firewall = NLPFirewall.from_components(
     firewall_id=firewall_id,
-    json_file="rules.json",
     task=Task.CLASSIFICATION,
     upload_client=upload_client,
     firewall_client=fw_client
@@ -80,7 +73,7 @@ firewall = NLPFirewall.from_components(
 
 Your Firewall ID can be found by clicking the Settings toggle in the right-hand side of the Firewall homepage.
 
-## 4. Monitor Events
+## 3. Monitor Events
 
 Finally, let's try to pass in a sample datapoint!
 ```python

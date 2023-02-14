@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Deploying Your RI Platform Cluster &mdash; RIME  documentation</title>
@@ -44,14 +44,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> RIME
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
           </a>
               <div class="version">
-                0.20.4
+                0.20.15
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -114,7 +118,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Installation Guide</a></li>
       <li class="breadcrumb-item active">Deploying Your RI Platform Cluster</li>
       <li class="wy-breadcrumbs-aside">
@@ -137,28 +141,28 @@
 <li><p>Open a terminal session on a box containing the installation tools.</p></li>
 <li><p>Verify that your Terraform configuration files (<code class="docutils literal notranslate"><span class="pre">main.tf</span></code> and <code class="docutils literal notranslate"><span class="pre">backend.tf</span></code>) are present in your working directory.</p></li>
 <li><p>Authenticate your AWS CLI.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>aws sts get-caller-identity <span class="c1"># verify you&#39;re in the right account</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>aws<span class="w"> </span>sts<span class="w"> </span>get-caller-identity<span class="w"> </span><span class="c1"># verify you&#39;re in the right account</span>
 </pre></div>
 </div>
 </li>
 <li><p>Add the Robust Intelligence Helm repository (or your private registry, if configured).</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>helm repo add robustintelligence https://robustintelligence.github.io/helm --force-update
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>robustintelligence<span class="w"> </span>https://robustintelligence.github.io/helm<span class="w"> </span>--force-update
 </pre></div>
 </div>
 </li>
 <li><p>Initialize your Terraform environment.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>terraform init
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>terraform<span class="w"> </span>init
 </pre></div>
 </div>
 </li>
 <li><p>Verify your Terraform plan (recommended).</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>terraform plan -out <span class="s2">&quot;rime.plan&quot;</span> <span class="p">|</span> tee <span class="s2">&quot;rime-plan.txt&quot;</span>
-less rime-plan.txt <span class="c1"># proof-read the changes</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>terraform<span class="w"> </span>plan<span class="w"> </span>-out<span class="w"> </span><span class="s2">&quot;rime.plan&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span><span class="s2">&quot;rime-plan.txt&quot;</span>
+less<span class="w"> </span>rime-plan.txt<span class="w"> </span><span class="c1"># proof-read the changes</span>
 </pre></div>
 </div>
 </li>
 <li><p><strong>Terraform apply!</strong> (This step can take up to ~30 minutes.)</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>terraform apply <span class="s2">&quot;rime.plan&quot;</span> <span class="c1"># if you skipped #6, you can omit the &quot;rime.plan&quot;</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>terraform<span class="w"> </span>apply<span class="w"> </span><span class="s2">&quot;rime.plan&quot;</span><span class="w"> </span><span class="c1"># if you skipped #6, you can omit the &quot;rime.plan&quot;</span>
 </pre></div>
 </div>
 </li>
@@ -180,12 +184,12 @@ less rime-plan.txt <span class="c1"># proof-read the changes</span>
 <h3>Kubernetes Services<a class="headerlink" href="#kubernetes-services" title="Permalink to this heading"></a></h3>
 <ol class="arabic">
 <li><p>Point your local <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> to the new cluster.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>aws eks --region us-west-2 update-kubeconfig --name &lt;cluster-name&gt;
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>aws<span class="w"> </span>eks<span class="w"> </span>--region<span class="w"> </span>us-west-2<span class="w"> </span>update-kubeconfig<span class="w"> </span>--name<span class="w"> </span>&lt;cluster-name&gt;
 </pre></div>
 </div>
 </li>
 <li><p>Inspect the running pods.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>kubectl get pods -n &lt;rime-namespace&gt;
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>&lt;rime-namespace&gt;
 </pre></div>
 </div>
 <p>Your output should look something like this:</p>
@@ -199,13 +203,13 @@ less rime-plan.txt <span class="c1"># proof-read the changes</span>
 </li>
 <li><p>Verify you can access the web client at your <code class="docutils literal notranslate"><span class="pre">rime</span></code> sub-domain. This domain is the value you configured during DNS setup and will be of the form (<code class="docutils literal notranslate"><span class="pre">rime.&lt;DOMAIN&gt;.com</span></code>).</p></li>
 <li><p>cURL your version endpoint and verify that metadata is successfully returned:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>curl --location --request GET rime.&lt;DOMAIN&gt;.com/v1/rime-info
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>--location<span class="w"> </span>--request<span class="w"> </span>GET<span class="w"> </span>rime.&lt;DOMAIN&gt;.com/v1/rime-info
 </pre></div>
 </div>
 </li>
-<li><p>Verify you can make an API token in the web client using this <span class="xref myst">guide</span>.</p></li>
+<li><p>Verify you can make an API token in the web client using this <a class="reference internal" href="../../for_admins/api-authentication.html"><span class="doc std std-doc">guide</span></a>.</p></li>
 <li><p>Test your Python SDK connection using the API token you made:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip install rime-sdk
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>rime-sdk
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rime_client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;rime.&lt;DOMAIN&gt;.com&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;API_TOKEN&gt;&quot;</span><span class="p">)</span>
@@ -223,13 +227,13 @@ less rime-plan.txt <span class="c1"># proof-read the changes</span>
 If your cluster has been successfully deployed (and you opted in via <code class="docutils literal notranslate"><span class="pre">install_velero</span> <span class="pre">=</span> <span class="pre">true</span></code>), you can configure backups using the steps below.</p>
 <ol class="arabic">
 <li><p>Download Velero.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>curl -fsSL -o velero-v1.6.3-linux-amd64.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.6.3/velero-v1.6.3-linux-amd64.tar.gz
-tar -xvf velero-v1.6.3-linux-amd64.tar.gz
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-fsSL<span class="w"> </span>-o<span class="w"> </span>velero-v1.6.3-linux-amd64.tar.gz<span class="w"> </span>https://github.com/vmware-tanzu/velero/releases/download/v1.6.3/velero-v1.6.3-linux-amd64.tar.gz
+tar<span class="w"> </span>-xvf<span class="w"> </span>velero-v1.6.3-linux-amd64.tar.gz
 </pre></div>
 </div>
 </li>
 <li><p>Ensure that your backups are scheduled properly.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./velero schedule get -n rime-extras
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./velero<span class="w"> </span>schedule<span class="w"> </span>get<span class="w"> </span>-n<span class="w"> </span>rime-extras
 </pre></div>
 </div>
 </li>

@@ -20,16 +20,18 @@ The lists below are meant to provide a working understanding of what is needed f
 - Kubernetes CLI 1.20 or above ([install](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html))
 
 ## Resources
+Note that these are approximations, and actual resource requirements may vary based on your use case(s).
 - VPC x 1
   - Private Subnet x 2 (recommended at least 50 IP addresses per subnet)
   - Public Subnet x 2 (recommended at least 10 IP addresses per subnet)
 - S3 bucket x 3 (can add more as needed)
-- EC2 instances x 4 (can scale up as needed)
-  - 3 for **control plane** services
-    - recommended at least 8 GiB RAM
+- EC2 instances x 5* (can scale up as needed)
+  - 4 for **control plane** services
+    - recommended at least 16 GiB RAM (e.g., `t3.xlarge`) in an Autoscaling Group
   - 1 for **data plane** services
-    - recommended at least 16 GiB RAM
+    - recommended at least 16 GiB RAM (e.g., `t3.xlarge`) in an Autoscaling Group
 - 2 Network Load Balancers
+  - (NOTE: these are auto-provisioned by the Ingress services)
 - 2 SSL Certificates
 - 2 Domains
   - 1 with a `rime` sub-domain
