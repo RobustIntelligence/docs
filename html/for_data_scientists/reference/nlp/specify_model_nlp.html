@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Specify an NLP Model &mdash; RIME  documentation</title>
@@ -41,14 +41,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> RIME
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            RIME
           </a>
               <div class="version">
                 0.19.7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -103,7 +107,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../reference.html">Reference</a></li>
           <li class="breadcrumb-item"><a href="../nlp.html">NLP Configuration</a></li>
       <li class="breadcrumb-item active">Specify an NLP Model</li>
@@ -196,7 +200,7 @@
 <p>Implement the <code class="docutils literal notranslate"><span class="pre">predict_dict</span></code> function. This should look something like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Text Classification Example</span>
 <span class="k">def</span> <span class="nf">predict_dict</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Return the predicted class probabilities.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the predicted class probabilities.&quot;&quot;&quot;</span>
     <span class="n">txt</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span>
     <span class="n">preprocessed</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
     <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenize</span><span class="p">(</span><span class="n">preprocessed</span><span class="p">)</span>
@@ -205,7 +209,7 @@
 
 <span class="c1"># Natural Language Inference Example</span>
 <span class="k">def</span> <span class="nf">predict_dict</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Return the predicted class probabilities.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the predicted class probabilities.&quot;&quot;&quot;</span>
     <span class="n">preprocessed_text</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">])</span>
     <span class="n">preprocessed_text_pair</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;text_pair&#39;</span><span class="p">])</span>
     <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenize</span><span class="p">(</span><span class="n">preprocessed_text</span><span class="p">,</span> <span class="n">preprocessed_text_pair</span><span class="p">)</span>
@@ -214,7 +218,7 @@
     
 <span class="c1"># Named Entity Recognition Example</span>
 <span class="k">def</span> <span class="nf">predict_dict</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Return the predicted entities.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the predicted entities.&quot;&quot;&quot;</span>
     <span class="n">txt</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span>
     <span class="n">preprocessed</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
     <span class="n">results</span> <span class="o">=</span> <span class="n">ner</span><span class="p">(</span><span class="n">preprocessed</span><span class="p">)</span>

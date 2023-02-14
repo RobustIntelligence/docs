@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Custom Metrics &mdash; RIME  documentation</title>
@@ -41,14 +41,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> RIME
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            RIME
           </a>
               <div class="version">
                 0.19.7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -103,7 +107,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../how_to_guides.html">How-To Guides</a></li>
       <li class="breadcrumb-item active">Custom Metrics</li>
       <li class="wy-breadcrumbs-aside">
@@ -131,7 +135,7 @@ and the interface this function is expected to expose is below:</p>
     <span class="n">preds_index</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">],</span>
     <span class="n">query_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Return a custom metric.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a custom metric.</span>
 <span class="sd">    Args:</span>
 <span class="sd">        df: Optional pd.DataFrame of data, will be the full data.</span>
 <span class="sd">        labels: Optional pd.Series of labels, if exists will have the same length</span>
@@ -154,9 +158,9 @@ The function should return <code class="docutils literal notranslate"><span clas
 each datapoint and any profiled attributes. For tabular data, the dataframe will be the raw features.</p>
 <p>After defining this function, you then need to specify it in the CLIConfig. The place to specify it is
 in the <code class="docutils literal notranslate"><span class="pre">model_profiling_info</span></code> section. Specifically, it should look like:</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nt">&quot;model_profiling_info&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;custom_metrics&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;NAME_OF_METRIC&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;path/to/file.py&quot;</span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nt">&quot;model_profiling_info&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;custom_metrics&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;NAME_OF_METRIC&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;path/to/file.py&quot;</span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
 </pre></div>
 </div>
 <p>Replace <code class="docutils literal notranslate"><span class="pre">NAME_OF_METRIC</span></code> with the name of the metric (this is how it will show up in the UI). Replace <code class="docutils literal notranslate"><span class="pre">path/to/file.py</span></code>

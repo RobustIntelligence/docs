@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tabular Custom Abnormal Inputs Test &mdash; RIME  documentation</title>
@@ -41,14 +41,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> RIME
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            RIME
           </a>
               <div class="version">
                 0.19.7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -108,7 +112,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../how_to_guides.html">How-To Guides</a></li>
           <li class="breadcrumb-item"><a href="custom_tests.html">Custom Tests</a></li>
       <li class="breadcrumb-item active">Tabular Custom Abnormal Inputs Test</li>
@@ -143,7 +147,7 @@ Your implementation can also take in additional arguments that you pass in throu
 
 
 <span class="k">class</span> <span class="nc">CustomAbnormalInputsBatchRunner</span><span class="p">(</span><span class="n">AbstractCustomAbnormalInputsBatchRunner</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This is a simple example custom abnormal inputs test.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This is a simple example custom abnormal inputs test.</span>
 
 <span class="sd">    This example custom abnormal inputs test returns true for all rows in the eval set</span>
 <span class="sd">    whose numerical value for any column is outside the range of the reference set</span>
@@ -156,7 +160,7 @@ Your implementation can also take in additional arguments that you pass in throu
     <span class="k">def</span> <span class="nf">abnormal_inputs_criteria</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span> <span class="n">ref_set</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">eval_set</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Return booleans `pd.Series` with same length as `eval_set`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return booleans `pd.Series` with same length as `eval_set`.&quot;&quot;&quot;</span>
         <span class="c1"># get columns with only numerical values</span>
         <span class="n">column_flags</span> <span class="o">=</span> <span class="n">ref_set</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
             <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">notnull</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
@@ -173,7 +177,7 @@ Your implementation can also take in additional arguments that you pass in throu
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">batch_test_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Return name of test.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return name of test.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;Simple Custom Outside Range&quot;</span>
 
 
@@ -204,7 +208,7 @@ Your arguments should avoid name collisions with the keys in the <code class="do
 
 
 <span class="k">class</span> <span class="nc">CustomAbnormalInputsBatchRunner</span><span class="p">(</span><span class="n">AbstractCustomAbnormalInputsBatchRunner</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This is an advanced example custom abnormal inputs test.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This is an advanced example custom abnormal inputs test.</span>
 
 <span class="sd">    This example custom abnormal inputs test runs a batch of tests where each test</span>
 <span class="sd">    checks the evaluation data for numerical values that are outside the range of the</span>
@@ -217,21 +221,21 @@ Your arguments should avoid name collisions with the keys in the <code class="do
     <span class="k">def</span> <span class="nf">abnormal_inputs_criteria</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span> <span class="n">ref_set</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">eval_set</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">column</span><span class="p">:</span> <span class="nb">str</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Return booleans `pd.Series` with same length as `eval_set`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return booleans `pd.Series` with same length as `eval_set`.&quot;&quot;&quot;</span>
         <span class="n">min_val</span> <span class="o">=</span> <span class="n">ref_set</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
         <span class="n">max_val</span> <span class="o">=</span> <span class="n">ref_set</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">eval_set</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">min_val</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">eval_set</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">max_val</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">batch_test_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Return name of test.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return name of test.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;Advanced Custom Outside Range&quot;</span>
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">get_batch_args</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span> <span class="n">ref_set</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">eval_set</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Return a list of kwargs to pass to each test.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a list of kwargs to pass to each test.</span>
 
 <span class="sd">        The `column_names` key is required and expects a list of column names that this</span>
 <span class="sd">        test uses. All other kwargs are passed to `abnormal_inputs_criteria`.</span>
@@ -247,7 +251,7 @@ Your arguments should avoid name collisions with the keys in the <code class="do
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Return one sentence description of the test.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return one sentence description of the test.&quot;&quot;&quot;</span>
         <span class="n">description</span> <span class="o">=</span> <span class="p">(</span>
             <span class="s2">&quot;This test checks that the numeric features of the data points of the eval &quot;</span>
             <span class="s2">&quot;set are in the range of the numeric features of the data points of the &quot;</span>

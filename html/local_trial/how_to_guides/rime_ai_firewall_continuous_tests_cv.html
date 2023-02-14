@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Monitoring Your Model with AI Firewall &mdash; RIME  documentation</title>
@@ -41,14 +41,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> RIME
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
           </a>
               <div class="version">
                 0.19.7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -97,7 +101,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Local Trial</a></li>
           <li class="breadcrumb-item"><a href="../how_to_guides.html">How-To Guides</a></li>
       <li class="breadcrumb-item active">Monitoring Your Model with AI Firewall</li>
@@ -118,7 +122,7 @@
 <h2>CV Setup<a class="headerlink" href="#cv-setup" title="Permalink to this heading"></a></h2>
 <p>Please ensure that the extra RIME CV dependencies have been installed from the <code class="docutils literal notranslate"><span class="pre">cv_requirements.txt</span></code> file from <a class="reference internal" href="../get_started/installation.html"><span class="doc std std-doc">installation</span></a>.
 If you run into a <code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code> at any point during this walkthrough, it is likely that you need to install the RIME CV Extras!</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install -r cv_requirements.txt
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>cv_requirements.txt
 </pre></div>
 </div>
 </section>
@@ -128,7 +132,7 @@ If you run into a <code class="docutils literal notranslate"><span class="pre">M
 <section id="run-ai-stress-testing">
 <h3>1. Run AI Stress Testing<a class="headerlink" href="#run-ai-stress-testing" title="Permalink to this heading"></a></h3>
 <p>Kick off a Stress Testing run (the reference dataset and model from this run will be used for firewall continuous tests).</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine run-images --config-path images_examples/classification/awa2/stress_test_config.json
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-images<span class="w"> </span>--config-path<span class="w"> </span>images_examples/classification/awa2/stress_test_config.json
 </pre></div>
 </div>
 </section>
@@ -143,7 +147,7 @@ If you run into a <code class="docutils literal notranslate"><span class="pre">M
 <h3>3. Run Continuous Tests on Incremental Data<a class="headerlink" href="#run-continuous-tests-on-incremental-data" title="Permalink to this heading"></a></h3>
 <p>We can now upload data and predictions and run AI Firewall Continuous Tests. The following command uses data from March 1, 2022 to March 13, 2022.</p>
 <p>NOTE: If you forgot to record the firewall ID in the previous step, you can find it by clicking the <img src="../../_static/ui/GearIcon.svg" /> on the right.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine run-firewall-images --config-path images_examples/classification/awa2/firewall_config.json --firewall-id <span class="nv">$FIREWALL_ID</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-firewall-images<span class="w"> </span>--config-path<span class="w"> </span>images_examples/classification/awa2/firewall_config.json<span class="w"> </span>--firewall-id<span class="w"> </span><span class="nv">$FIREWALL_ID</span>
 </pre></div>
 </div>
 <p>After this finishes running, you should be able to see the results in the web client,
@@ -172,7 +176,7 @@ where they will be uploaded to the Default Project.</p>
 <h4>AI Firewall Continuous Tests<a class="headerlink" href="#ai-firewall-continuous-tests" title="Permalink to this heading"></a></h4>
 <p>You will need to have configured a firewall in the web client beforehand to get a Firewall ID. Please refer to the sections above for instructions.</p>
 <p>Once complete, you can run the CLI like so:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine run-firewall-images --firewall-id <span class="nv">$FIREWALL_ID</span> --config-path &lt;PATH-TO-CONFIGURATION&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-firewall-images<span class="w"> </span>--firewall-id<span class="w"> </span><span class="nv">$FIREWALL_ID</span><span class="w"> </span>--config-path<span class="w"> </span>&lt;PATH-TO-CONFIGURATION&gt;
 </pre></div>
 </div>
 <p>After this finishes running, you should be able to see the results in the web client,
