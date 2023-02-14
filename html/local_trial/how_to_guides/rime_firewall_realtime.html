@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Protecting Your Model with AI Firewall &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Monitoring Your Model with AI Firewall" href="rime_ai_firewall_continuous_tests.html" />
+    <link rel="prev" title="Validating Your Model with AI Stress Testing" href="rime_ai_stress_testing.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                0.18.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/reference.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/explanation.html">Explanation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../changelogs.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/index.html">For Administrators</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Local Trial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../get_started.html">Get Started</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../how_to_guides.html">How-To Guides</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../how_to_guides.html#tabular">Tabular</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="rime_ai_stress_testing.html">Validating Your Model with AI Stress Testing</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Protecting Your Model with AI Firewall</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rime_ai_firewall_continuous_tests.html">Monitoring Your Model with AI Firewall</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../how_to_guides.html#nlp">NLP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../how_to_guides.html#cv">CV</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Reference</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Local Trial</a></li>
+          <li class="breadcrumb-item"><a href="../how_to_guides.html">How-To Guides</a></li>
+      <li class="breadcrumb-item active">Protecting Your Model with AI Firewall</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/local_trial/how_to_guides/rime_firewall_realtime.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="protecting-your-model-with-ai-firewall">
+<h1>Protecting Your Model with AI Firewall<a class="headerlink" href="#protecting-your-model-with-ai-firewall" title="Permalink to this heading"></a></h1>
+<p>This guide will cover how to configure the AI Firewall to protect your model from “bad” input data in near-real time.</p>
+<p>Similar to the AI Firewall Continuous Tests, AI Firewall for Realtime Events is automatically trained from an AI Stress Testing run.</p>
+<p>In this walkthrough, we will be using the <a target="_blank" rel="noopener" href="https://www.kaggle.com/c/ieee-fraud-detection">IEEE-CIS Fraud Detection</a> dataset, which is available in the <code class="docutils literal notranslate"><span class="pre">rime_trial/</span></code> bundle provided during installation.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<p>AI Firewall Realtime can be easily instantiated from an existing AI Stress Testing Run. You can also view a simulation of real-time events by running <a class="reference internal" href="rime_ai_firewall_continuous_tests.html"><span class="doc std std-doc">AI Firewall Continuous Tests</span></a>.</p>
+<ol class="arabic simple">
+<li><p>Run AI Stress Testing</p></li>
+<li><p>Review and Download Auto-Configured AI Firewall Rules</p></li>
+<li><p>Setup a Firewall Client in a Jupyter Notebook</p></li>
+<li><p>Monitor Events</p></li>
+</ol>
+</section>
+<section id="run-ai-stress-testing">
+<h2>1. Run AI Stress Testing<a class="headerlink" href="#run-ai-stress-testing" title="Permalink to this heading"></a></h2>
+<p>The first step in setting up AI Firewall Realtime is running AI Stress Testing and configuring an AI Firewall for a given project. These steps are very similar to steps 1-3 of <a class="reference internal" href="rime_ai_firewall_continuous_tests.html"><span class="doc std std-doc">AI Firewall Continuous Tests</span></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rime</span><span class="o">-</span><span class="n">engine</span> <span class="n">run</span><span class="o">-</span><span class="n">stress</span><span class="o">-</span><span class="n">tests</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">path</span> <span class="n">examples</span><span class="o">/</span><span class="n">fraud</span><span class="o">/</span><span class="n">stress_tests_with_model</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<img src="../../_static/ui/FirewallConfig0.png" />
+<p>Next, click on “Deploy AI Firewall” and fill out the details. The step is the same as step 3 in the Firewall Continuous Tests tutorial. The AI Firewall you create can be used to monitor (Continuous Tests) or protect (Realtime Events) your model.</p>
+<img src="../../_static/ui/FirewallConfig.png" />
+</section>
+<section id="review-and-download-auto-configured-ai-firewall-rules">
+<h2>2. Review and Download Auto-Configured AI Firewall Rules<a class="headerlink" href="#review-and-download-auto-configured-ai-firewall-rules" title="Permalink to this heading"></a></h2>
+<p>AI Firewall Realtime is configured from a JSON configuration file (<code class="docutils literal notranslate"><span class="pre">rules.json</span></code>).
+This configuration is auto-generated based on the model and datasets that you provided
+to run AI Stress Testing.
+To view and download the JSON configuration file, click on “Protect your model”.</p>
+<p><strong>At this step, copy the Firewall ID and download the <code class="docutils literal notranslate"><span class="pre">rules.json</span></code> files — you will need them for later steps in this walkthrough.</strong></p>
+<p>Once downloaded, place <code class="docutils literal notranslate"><span class="pre">rules.json</span></code> in your <code class="docutils literal notranslate"><span class="pre">rime_trial/</span></code> folder</p>
+<img src="../../_static/ui/FirewallConfig_Rules.png" />
+</section>
+<section id="setup-a-firewall-client-in-a-jupyter-notebook">
+<h2>3. Setup a Firewall Client in a Jupyter Notebook<a class="headerlink" href="#setup-a-firewall-client-in-a-jupyter-notebook" title="Permalink to this heading"></a></h2>
+<p>Within the tutorial directory, we’ll want to open up a Jupyter notebook.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">notebook</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">ipykernel</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">ipykernel</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="n">rime</span><span class="o">-</span><span class="n">venv</span>
+<span class="n">jupyter</span> <span class="n">notebook</span>
+</pre></div>
+</div>
+<p>When creating a new notebook, be sure to use the <code class="docutils literal notranslate"><span class="pre">rime-venv</span></code> kernel as opposed
+to the default <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">3</span></code> kernel!</p>
+<section id="load-example-dataset-and-model">
+<h3>Load Example Dataset and Model<a class="headerlink" href="#load-example-dataset-and-model" title="Permalink to this heading"></a></h3>
+<p>Let’s add some helper preprocessing code to the notebook. Remember to make sure that you create the notebook in your <code class="docutils literal notranslate"><span class="pre">rime_trial</span></code> folder!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">catboost</span> <span class="k">as</span> <span class="nn">catb</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">RIME_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">catb</span><span class="o">.</span><span class="n">CatBoostClassifier</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">RIME_PATH</span> <span class="o">+</span> <span class="s2">&quot;/examples/fraud/fraud.catb&quot;</span><span class="p">))</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">RIME_PATH</span> <span class="o">+</span> <span class="s2">&quot;/examples/fraud/null_impute.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">null_impute</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Null impute categoricals.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">col_name</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">col_name</span><span class="p">])</span> <span class="ow">and</span> <span class="n">col_name</span> <span class="ow">in</span> <span class="n">null_impute</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">x</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">null_impute</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p>We now define the inference function (<code class="docutils literal notranslate"><span class="pre">predict_dict</span></code>):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># We now define our interface.</span>
+<span class="k">def</span> <span class="nf">predict_dict</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Predict dict function.&quot;&quot;&quot;</span>
+    <span class="n">new_x</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">new_x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">new_x</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">new_x</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Now we are ready to run the Firewall in a real-time setting!</p>
+</section>
+<section id="running-the-ai-firewall-realtime-with-sample-datapoints">
+<h3>Running the AI Firewall Realtime with Sample Datapoints<a class="headerlink" href="#running-the-ai-firewall-realtime-with-sample-datapoints" title="Permalink to this heading"></a></h3>
+<p>Let’s first import the Firewall Realtime package:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime.tabular.firewall.base</span> <span class="kn">import</span> <span class="n">TabularFirewall</span>
+<span class="kn">from</span> <span class="nn">rime.tabular.firewall.uploader</span> <span class="kn">import</span> <span class="n">FirewallUploader</span>
+<span class="kn">from</span> <span class="nn">rime.core.client.firewall_client</span> <span class="kn">import</span> <span class="n">FirewallClient</span>
+<span class="kn">from</span> <span class="nn">rime.tabular</span> <span class="kn">import</span> <span class="n">ModelTask</span>
+</pre></div>
+</div>
+<p>Let’s then instantiate a firewall object:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">firewall_id</span> <span class="o">=</span> <span class="s2">&quot;$YOUR_FIREWALL_ID&quot;</span>
+<span class="n">firewall_url</span> <span class="o">=</span> <span class="s2">&quot;localhost:5002&quot;</span>
+<span class="n">upload_client</span> <span class="o">=</span> <span class="n">FirewallUploader</span><span class="o">.</span><span class="n">from_url</span><span class="p">(</span>
+    <span class="n">firewall_id</span><span class="p">,</span>
+    <span class="n">firewall_url</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">fw_client</span> <span class="o">=</span> <span class="n">FirewallClient</span><span class="o">.</span><span class="n">from_cli_args</span><span class="p">(</span><span class="n">firewall_url</span><span class="p">)</span>
+<span class="n">firewall</span> <span class="o">=</span> <span class="n">TabularFirewall</span><span class="o">.</span><span class="n">from_components</span><span class="p">(</span>
+    <span class="n">firewall_id</span><span class="o">=</span><span class="n">firewall_id</span><span class="p">,</span>
+    <span class="n">json_file</span><span class="o">=</span><span class="s2">&quot;rules.json&quot;</span><span class="p">,</span>
+    <span class="n">predict_dict</span><span class="o">=</span><span class="n">predict_dict</span><span class="p">,</span>
+    <span class="n">model_task</span><span class="o">=</span><span class="n">ModelTask</span><span class="o">.</span><span class="n">BINARY_CLASSIFICATION</span><span class="p">,</span>
+    <span class="n">upload_client</span><span class="o">=</span><span class="n">upload_client</span><span class="p">,</span>
+    <span class="n">firewall_client</span><span class="o">=</span><span class="n">fw_client</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Your Firewall ID can be found by clicking the Settings toggle in the right-hand side of the Firewall homepage.</p>
+</section>
+</section>
+<section id="monitor-events">
+<h2>4. Monitor Events<a class="headerlink" href="#monitor-events" title="Permalink to this heading"></a></h2>
+<p>Finally, let’s try to pass in a sample datapoint!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">test_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;examples/fraud/val.csv&#39;</span><span class="p">)</span>
+<span class="n">label_col</span> <span class="o">=</span> <span class="s2">&quot;isFraud&quot;</span>
+<span class="n">test_df</span> <span class="o">=</span> <span class="n">test_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">label_col</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">datapoint</span> <span class="o">=</span> <span class="n">test_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The firewall surfaces a graph of “flagged” events. Datapoints that do not raise errors will not be logged in the UI.
+For this specific datapoint, let’s introduce a data corruption:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">datapoint</span><span class="p">[</span><span class="s1">&#39;Count_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100000</span>
+</pre></div>
+</div>
+<p>Now let’s run the firewall over this datapoint.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">firewall_response</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">validate_single_and_upload</span><span class="p">(</span><span class="n">datapoint</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you take a look at <code class="docutils literal notranslate"><span class="pre">firewall_response.summary.action</span></code> you’ll find that the Firewall has <code class="docutils literal notranslate"><span class="pre">flagged</span></code> the datapoint.</p>
+<p>Once you have deployed your firewall, and input data are starting to roll in, the AI Firewall will evaluate each and every data point, and output a decision: <code class="docutils literal notranslate"><span class="pre">flag</span></code>, <code class="docutils literal notranslate"><span class="pre">pass</span></code>, <code class="docutils literal notranslate"><span class="pre">impute</span></code>, or <code class="docutils literal notranslate"><span class="pre">block</span></code> based on the rules criteria.</p>
+<p>NOTE: Only non-passing datapoints will be shown in the UI. That way, you are only alerted on problematic datapoints.</p>
+<section id="configuring-firewall-behavior">
+<h3>Configuring Firewall Behavior<a class="headerlink" href="#configuring-firewall-behavior" title="Permalink to this heading"></a></h3>
+<p>By default, the AI Firewall will “flag” a problematic datapoint, unless it is determined that the datapoint could raise errors (in which case it will “block”). This behavior is configurable.</p>
+<p>Below, we will use the <code class="docutils literal notranslate"><span class="pre">rime</span></code> Python Library to enable “block” behavior for the “Numeric Outliers” rule.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime.tabular.schema</span> <span class="kn">import</span> <span class="n">FirewallAction</span>
+<span class="kn">from</span> <span class="nn">rime.tabular.data_tests.schema.type</span> <span class="kn">import</span> <span class="n">DataTestType</span>
+<span class="n">firewall</span><span class="o">.</span><span class="n">set_flagged_action_for_rule</span><span class="p">(</span><span class="n">DataTestType</span><span class="o">.</span><span class="n">NUM_OUTLIER</span><span class="p">,</span> <span class="n">FirewallAction</span><span class="o">.</span><span class="n">BLOCK</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can then test this with the current datapoint.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">datapoint</span> <span class="o">=</span> <span class="n">datapoint</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="k">del</span> <span class="n">datapoint</span><span class="p">[</span><span class="s2">&quot;addr1&quot;</span><span class="p">]</span>
+<span class="n">firewall</span><span class="o">.</span><span class="n">validate_single_and_upload</span><span class="p">(</span><span class="n">datapoint</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you navigate back to the “Realtime Events” tab on AI Firewall, you will see a new datapoint that has been blocked by the Firewall.</p>
+<p>For more information on configuring the Firewall, check out the <a class="reference internal" href="../reference/firewall.html"><span class="doc std std-doc">AI Firewall Reference</span></a>.</p>
+</section>
+<section id="troubleshooting">
+<h3>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading"></a></h3>
+<p>If you run into issues, please refer to our <a class="reference internal" href="troubleshooting/python_package.html"><span class="doc std std-doc">Troubleshooting</span></a> page for help! Additionally, your RI representative will be happy to assist — feel free to reach out!</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rime_ai_stress_testing.html" class="btn btn-neutral float-left" title="Validating Your Model with AI Stress Testing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rime_ai_firewall_continuous_tests.html" class="btn btn-neutral float-right" title="Monitoring Your Model with AI Firewall" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

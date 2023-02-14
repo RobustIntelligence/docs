@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Validating Your Model with AI Stress Testing &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Protecting Your Model with AI Firewall" href="rime_firewall_realtime_nlp.html" />
+    <link rel="prev" title="Monitoring Your Model with AI Firewall" href="rime_ai_firewall_continuous_tests.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                0.18.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/reference.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/explanation.html">Explanation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../changelogs.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/index.html">For Administrators</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Local Trial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../get_started.html">Get Started</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../how_to_guides.html">How-To Guides</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../how_to_guides.html#tabular">Tabular</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../how_to_guides.html#nlp">NLP</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Validating Your Model with AI Stress Testing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rime_firewall_realtime_nlp.html">Protecting Your Model with AI Firewall</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rime_ai_firewall_continuous_tests_nlp.html">Monitoring Your Model with AI Firewall</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../how_to_guides.html#cv">CV</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html">Reference</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Local Trial</a></li>
+          <li class="breadcrumb-item"><a href="../how_to_guides.html">How-To Guides</a></li>
+      <li class="breadcrumb-item active">Validating Your Model with AI Stress Testing</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/local_trial/how_to_guides/rime_ai_stress_testing_nlp.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="validating-your-model-with-ai-stress-testing">
+<h1>Validating Your Model with AI Stress Testing<a class="headerlink" href="#validating-your-model-with-ai-stress-testing" title="Permalink to this heading"></a></h1>
+<p>This tutorial will guide you through validating NLP models with AI Stress Testing.</p>
+<p>All examples are available in the <code class="docutils literal notranslate"><span class="pre">rime_trial/</span></code> bundle provided during installation.</p>
+<p>An <strong>AI Stress Test</strong> is a statistical evaluation of a machine learning model, designed to detect a specific vulnerability. At Robust Intelligence, we are constantly researching new vulnerabilities to test.</p>
+<p>For a full list of available stress tests, see our <a class="reference internal" href="../../for_data_scientists/explanation.html"><span class="doc std std-doc">Test Bank</span></a>.</p>
+<section id="nlp-setup">
+<h2>NLP Setup<a class="headerlink" href="#nlp-setup" title="Permalink to this heading"></a></h2>
+<p>Please ensure that the extra RIME NLP dependencies have been installed from the <code class="docutils literal notranslate"><span class="pre">nlp_requirements.txt</span></code> file from <a class="reference internal" href="../get_started/installation.html"><span class="doc std std-doc">installation</span></a>.
+If you run into a <code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code> at any point during this walkthrough, it is likely that you need to install the RIME NLP Extras!</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>nlp_requirements.txt
+</pre></div>
+</div>
+</section>
+<section id="running-stress-testing-on-a-text-classification-example">
+<h2>Running Stress Testing on a Text Classification Example<a class="headerlink" href="#running-stress-testing-on-a-text-classification-example" title="Permalink to this heading"></a></h2>
+<p>This example uses a DistilBERT emotion recognition model trained on a slightly modified version of the <a target="_blank" rel="noopener" href="https://github.com/dair-ai/emotion_dataset">CARER Emotion Recognition Dataset</a>, which relies on a couple of additional dependencies.</p>
+<p>To install, please run the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>nlp_examples/trial_model_requirements.txt
+</pre></div>
+</div>
+<p>To kick off a run of AI Stress Testing using a model and datasets:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-nlp<span class="w"> </span>--config-path<span class="w"> </span>nlp_examples/classification/emotion_recognition/stress_tests_config.json
+</pre></div>
+</div>
+<p><strong>NOTE:</strong> if the above command throws a <code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code>, it is likely that you forgot to install the NLP Extras (<a class="reference internal" href="#nlp-setup"><span class="std std-doc">see setup above</span></a>).</p>
+<p>After this finishes running, you should be able to see the results in the web client,
+where they will be uploaded to the Default Project.</p>
+<p>If you explore the test config in <code class="docutils literal notranslate"><span class="pre">nlp_examples/classification/emotion_recognition/stress_tests_config.json</span></code> you’ll see that we’ve configured a few parameters to specify the data, model, and other task-specific information.</p>
+<p>For a full reference on the configuration file see the <a class="reference internal" href="../../for_data_scientists/reference/nlp/stress_testing.html"><span class="doc std std-doc">NLP Configuration Reference</span></a>.</p>
+</section>
+<section id="running-stress-testing-on-a-text-classification-example-with-metadata">
+<h2>Running Stress Testing on a Text Classification Example with Metadata<a class="headerlink" href="#running-stress-testing-on-a-text-classification-example-with-metadata" title="Permalink to this heading"></a></h2>
+<p>In this tutorial, we will cover adding custom metadata to your test run.</p>
+<p>This example uses a RoBERTa based model trained on tweets and finetuned for sentiment analysis. The dataset used in this example is data scraped from Twitter to analyze how travelers expressed feelings about airlines.</p>
+<p>The data includes several attributes alongside <code class="docutils literal notranslate"><span class="pre">text</span></code> and <code class="docutils literal notranslate"><span class="pre">label</span></code> that RI will also run automated tests on:</p>
+<ul class="simple">
+<li><p>Custom numeric metadata: <code class="docutils literal notranslate"><span class="pre">Retweet_count</span></code></p></li>
+<li><p>Custom categorical metadata: <code class="docutils literal notranslate"><span class="pre">Reason</span></code>, <code class="docutils literal notranslate"><span class="pre">Airline</span></code>, <code class="docutils literal notranslate"><span class="pre">Location</span></code></p></li>
+</ul>
+<p>These attributes exist for each datapoint in the <code class="docutils literal notranslate"><span class="pre">meta</span></code> dict, as key-value pairs. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;@USAirways You have no idea how upset and frustrated I am right now. I&#39;ll be sure to follow through with never flying with you again.&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;meta&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;Reason&quot;</span><span class="p">:</span> <span class="s2">&quot;Can&#39;t Tell&quot;</span><span class="p">,</span> <span class="s2">&quot;Airline&quot;</span><span class="p">:</span> <span class="s2">&quot;US Airways&quot;</span><span class="p">,</span> <span class="s2">&quot;Location&quot;</span><span class="p">:</span> <span class="s2">&quot;Saratoga Springs&quot;</span><span class="p">,</span> <span class="s2">&quot;Retweet_count&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>To kick off a run of AI Stress Testing using a model, datasets, and custom metadata:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-nlp<span class="w"> </span>--config-path<span class="w"> </span>nlp_examples/classification/sentiment_analysis/stress_tests_config_with_metadata.json
+</pre></div>
+</div>
+<p>If you poke around in <code class="docutils literal notranslate"><span class="pre">stress_tests_config_with_metadata.json</span></code> you’ll see that we’ve added <code class="docutils literal notranslate"><span class="pre">custom_numeric_metadata</span></code> and <code class="docutils literal notranslate"><span class="pre">custom_categorical_metadata</span></code> to <code class="docutils literal notranslate"><span class="pre">data_profiling_info</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Sentiment Analysis (Twitter Airline)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;model_task&quot;</span><span class="p">:</span> <span class="s2">&quot;Text Classification&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="o">...</span> <span class="p">},</span>
+    <span class="s2">&quot;model_info&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="o">...</span> <span class="p">},</span>
+    <span class="s2">&quot;prediction_info&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="o">...</span> <span class="p">},</span>
+    <span class="s2">&quot;data_profiling_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;class_names&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;negative&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;neutral&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;positive&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;custom_numeric_metadata&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;Retweet_count&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;custom_categorical_metadata&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;Reason&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Airline&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Location&quot;</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;random_seed&quot;</span><span class="p">:</span> <span class="mi">42</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For a full reference on the data profile file see the <a class="reference internal" href="../../for_data_scientists/reference/nlp/data_profiling.html"><span class="doc std std-doc">Data Profiling Configuration</span></a>.</p>
+</section>
+<section id="running-stress-testing-on-a-named-entity-recognition-example">
+<h2>Running Stress Testing on a Named Entity Recognition Example<a class="headerlink" href="#running-stress-testing-on-a-named-entity-recognition-example" title="Permalink to this heading"></a></h2>
+<p>This examples uses the <a target="_blank" rel="noopener" href="https://huggingface.co/dslim/bert-base-NER">bert-base-NER</a> model from Hugging Face.</p>
+<p>To kick off a run of AI Stress Testing using the <code class="docutils literal notranslate"><span class="pre">bert-base-NER</span></code> model:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-nlp<span class="w"> </span>--config-path<span class="w"> </span>nlp_examples/ner/conll/stress_tests_config.json
+</pre></div>
+</div>
+<p>If you poke around in <code class="docutils literal notranslate"><span class="pre">nlp_examples/ner/conll/stress_tests_config.json</span></code> you’ll see that we’ve changed the <code class="docutils literal notranslate"><span class="pre">model_task</span></code> to <code class="docutils literal notranslate"><span class="pre">Named</span> <span class="pre">Entity</span> <span class="pre">Recognition</span></code>, along with a couple of other parameters.</p>
+<p>For a full reference on the configuration file see the <a class="reference internal" href="../../for_data_scientists/reference/nlp/stress_testing.html"><span class="doc std std-doc">NLP Configuration Reference</span></a>.</p>
+</section>
+<hr class="docutils" />
+<section id="running-stress-testing-on-your-own-model-and-datasets">
+<h2>Running Stress Testing on Your Own Model and Datasets<a class="headerlink" href="#running-stress-testing-on-your-own-model-and-datasets" title="Permalink to this heading"></a></h2>
+<section id="define-a-python-model-file">
+<h3>Define a Python Model File<a class="headerlink" href="#define-a-python-model-file" title="Permalink to this heading"></a></h3>
+<p>Please refer to <a class="reference internal" href="../../for_data_scientists/reference/nlp/specify_model_nlp.html"><span class="doc std std-doc">How to Create an NLP Model FIle</span></a> for step-by-step instructions on creating a model interface for RI.</p>
+</section>
+<section id="gather-datasets">
+<h3>Gather Datasets<a class="headerlink" href="#gather-datasets" title="Permalink to this heading"></a></h3>
+<section id="prepare-input-data">
+<h4>1. Prepare Input Data<a class="headerlink" href="#prepare-input-data" title="Permalink to this heading"></a></h4>
+<p>For a detailed specification of data formatting, see <a class="reference internal" href="../../for_data_scientists/reference/nlp/task_data_format.html"><span class="doc std std-doc">Input Data Format</span></a></p>
+</section>
+<section id="specify-prediction-logs-recommended">
+<h4>2. Specify Prediction Logs (Recommended)<a class="headerlink" href="#specify-prediction-logs-recommended" title="Permalink to this heading"></a></h4>
+<p>Because model inference is usually the most time-consuming part of the testing framework, we recommend specifying cached prediction logs using the <a class="reference internal" href="../../for_data_scientists/reference/nlp/prediction_info.html"><span class="doc std std-doc">prediction_info</span></a> argument of the runtime config.</p>
+<p>In the classification example above, we specified model predictions separately in the files <code class="docutils literal notranslate"><span class="pre">nlp_examples/classification/emotion_recognition/data/{train|val}_preds.json</span></code>.</p>
+<p>An example prediction can be viewed from this file by running the following command from your terminal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="n">nlp_examples</span><span class="o">/</span><span class="n">classification</span><span class="o">/</span><span class="n">emotion_recognition</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">test_preds</span><span class="o">.</span><span class="n">json</span> <span class="o">|</span> <span class="n">jq</span> <span class="s1">&#39;.[0]&#39;</span>
+</pre></div>
+</div>
+<p>RI supports predictions stored in compressed <code class="docutils literal notranslate"><span class="pre">.json</span></code> or <code class="docutils literal notranslate"><span class="pre">.jsonl</span></code> format and accepts predictions added within the datafile itself (by adding the “probabilities” key to each data sample).</p>
+<p>However, if you do not wish to create a prediction log beforehand, RI can call your model during a test run and infer its performance using a subsample of the provided datasets. See <code class="docutils literal notranslate"><span class="pre">nlp_examples/classification/emotion_recognition/stress_tests_config_no_preds.json</span></code> for an example.</p>
+</section>
+</section>
+<section id="create-configuration">
+<h3>Create Configuration<a class="headerlink" href="#create-configuration" title="Permalink to this heading"></a></h3>
+<p>With your data and model ready, you can now create a configuration file. Examples of these can be found in the <code class="docutils literal notranslate"><span class="pre">rime_trial/</span></code> bundle (the ones used for these examples are under <code class="docutils literal notranslate"><span class="pre">nlp_examples/</span></code>).</p>
+<p>For a detailed reference on what the configuration should look like, see <a class="reference internal" href="../../for_data_scientists/reference/nlp/stress_testing.html"><span class="doc std std-doc">AI Stress Testing Configuration Reference</span></a>.</p>
+</section>
+<section id="run-the-cli">
+<h3>Run the CLI<a class="headerlink" href="#run-the-cli" title="Permalink to this heading"></a></h3>
+<p>To kick off a run of AI Stress Testing using your configuration file, simply replace the <code class="docutils literal notranslate"><span class="pre">--config-path</span></code> argument below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-nlp<span class="w"> </span>--config-path<span class="w"> </span>&lt;PATH-TO-CONFIGURATION&gt;
+</pre></div>
+</div>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading"></a></h2>
+<p>Congratulations! You’ve successfully used RI to test out the various NLP models.</p>
+<p>Once again, we strongly recommended that you run RI using a cached predictions file, similar to the one provided in the first part of this tutorial. This will greatly improve both the RI runtime and the test suite result quality.</p>
+<p>Model inference tends to be the most computationally expensive part of each RI run, especially for large transformer models. While access to the model is still required for some tests due to design constraints (e.g., the use of randomness, iterative attacks, etc.), providing a prediction file can help RI avoid redundant computation so each run is fast and focused.</p>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading"></a></h2>
+<p>If you run into issues, please refer to our <a class="reference internal" href="troubleshooting/python_package.html"><span class="doc std std-doc">Troubleshooting</span></a> page for help! Additionally, your RI representative will be happy to assist — feel free to reach out!</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rime_ai_firewall_continuous_tests.html" class="btn btn-neutral float-left" title="Monitoring Your Model with AI Firewall" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rime_firewall_realtime_nlp.html" class="btn btn-neutral float-right" title="Protecting Your Model with AI Firewall" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

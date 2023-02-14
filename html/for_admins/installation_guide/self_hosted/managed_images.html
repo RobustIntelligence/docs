@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Managed Images &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<link href="../../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../../index.html">
+        <img src="../../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                0.18.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_data_scientists/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_data_scientists/reference.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_data_scientists/explanation.html">Explanation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelogs.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">For Administrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../local_trial/index.html">Local Trial</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Managed Images</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/for_admins/installation_guide/self_hosted/managed_images.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="managed-images">
+<h1>Managed Images<a class="headerlink" href="#managed-images" title="Permalink to this heading"></a></h1>
+<p>Managed Images is a feature of the RI Platform that allows you to easily containerize a model’s dependencies — programmatically (e.g., via the Python SDK) specify your model’s dependencies and easily swap between Docker images as you run different models!</p>
+<p>Currently Managed Images operates via <a class="reference external" href="https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html">AWS ECR</a>.</p>
+<p><em>NOTE</em>: as of version 0.13.0, the Managed Images feature is enabled by default in our Terraform module.</p>
+<p>Configuration for this feature is handled via the <code class="docutils literal notranslate"><span class="pre">image_registry_config</span></code> of the <code class="docutils literal notranslate"><span class="pre">rime</span></code> Terraform module:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="s2">&quot;rime&quot;</span> <span class="p">{</span>
+  <span class="o">...</span>
+  <span class="n">image_registry_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">enable</span>                       <span class="o">=</span> <span class="n">true</span>
+    <span class="n">allow_external_custom_images</span> <span class="o">=</span> <span class="n">true</span>
+    <span class="n">repository_prefix</span>            <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+  <span class="p">}</span>
+  <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="repository-prefix">
+<h2><code class="docutils literal notranslate"><span class="pre">repository_prefix</span></code><a class="headerlink" href="#repository-prefix" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">repository_prefix</span></code> is a string that labels your managed image repositories within ECR.</p>
+<p>The RI Platform will operate <strong>only</strong> on repositories beginning with this <code class="docutils literal notranslate"><span class="pre">repository_prefix</span></code>.</p>
+</section>
+<section id="permissions-for-the-managed-image-registry">
+<h2>Permissions for the Managed Image Registry<a class="headerlink" href="#permissions-for-the-managed-image-registry" title="Permalink to this heading"></a></h2>
+<p>Permissions for Managed Images can be applied automatically by an admin when applying our Terraform module.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ecr</span><span class="p">:</span><span class="n">CreateRepository</span>
+<span class="n">ecr</span><span class="p">:</span><span class="n">DeleteRepository</span>
+<span class="n">ecr</span><span class="p">:</span><span class="n">DescribeImages</span>
+<span class="n">ecr</span><span class="p">:</span><span class="n">PutLifecyclePolicy</span>
+<span class="n">ecr</span><span class="p">:</span><span class="n">ListImages</span>
+</pre></div>
+</div>
+<p>These permissions allow the registry server to create and modify repositories with the given <code class="docutils literal notranslate"><span class="pre">repository_prefix</span></code>. Additionally, it requires <code class="docutils literal notranslate"><span class="pre">ecr:GetAuthorizationToken</span></code> for all resources in order to authorize itself.</p>
+<p>Jobs executed by the registry server use the following permissions to build new images:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ecr</span><span class="p">:</span><span class="n">BatchGetImage</span>
+<span class="n">ecr</span><span class="p">:</span><span class="n">BatchCheckLayerAvailability</span>
+<span class="n">ecr</span><span class="p">:</span><span class="n">CompleteLayerUpload</span>
+<span class="n">ecr</span><span class="p">:</span><span class="n">GetDownloadUrlForLayer</span>
+<span class="n">ecr</span><span class="p">:</span><span class="n">InitiateLayerUpload</span>
+<span class="n">ecr</span><span class="p">:</span><span class="n">PutImage</span>
+<span class="n">ecr</span><span class="p">:</span><span class="n">UploadLayerPart</span>
+</pre></div>
+</div>
+<p>These permissions allow these jobs to pull and push new images to the repositories created with prefix <code class="docutils literal notranslate"><span class="pre">repository_prefix</span></code>. These jobs also require <code class="docutils literal notranslate"><span class="pre">ecr:GetAuthorizationToken</span></code> for all resources in order to authorize themeselves.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

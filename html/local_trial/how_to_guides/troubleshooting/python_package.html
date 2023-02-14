@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Debugging the Python Package &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Reference" href="../../reference.html" />
+    <link rel="prev" title="Debugging the Installation" href="installation.html" />
+<link href="../../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../../index.html">
+        <img src="../../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                0.18.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_data_scientists/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_data_scientists/reference.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_data_scientists/explanation.html">Explanation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../changelogs.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/index.html">For Administrators</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Local Trial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../get_started.html">Get Started</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../how_to_guides.html">How-To Guides</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../how_to_guides.html#tabular">Tabular</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../how_to_guides.html#nlp">NLP</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../how_to_guides.html#cv">CV</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../rime_ai_stress_testing_cv.html">Validating Your Model with AI Stress Testing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../rime_firewall_realtime_cv.html">Protecting Your Model with AI Firewall</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../rime_ai_firewall_continuous_tests_cv.html">Monitoring Your Model with AI Firewall</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../how_to_guides.html#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference.html">Reference</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Local Trial</a></li>
+          <li class="breadcrumb-item"><a href="../../how_to_guides.html">How-To Guides</a></li>
+      <li class="breadcrumb-item active">Debugging the Python Package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/local_trial/how_to_guides/troubleshooting/python_package.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="debugging-the-python-package">
+<h1>Debugging the Python Package<a class="headerlink" href="#debugging-the-python-package" title="Permalink to this heading"></a></h1>
+<ol class="arabic">
+<li><p><strong>I’m seeing “Missing option” errors with my <code class="docutils literal notranslate"><span class="pre">rime-engine</span></code> CLI commands! How do I resolve them?</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rime</span><span class="o">-</span><span class="n">engine</span> <span class="n">run</span><span class="o">-</span><span class="n">stress</span><span class="o">-</span><span class="n">tests</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">path</span> <span class="n">examples</span><span class="o">/</span><span class="n">income</span><span class="o">/</span><span class="n">stress_tests_model</span><span class="o">.</span><span class="n">json</span>
+
+<span class="n">Error</span><span class="p">:</span> <span class="n">Missing</span> <span class="n">option</span> <span class="s1">&#39;--upload-endpoint&#39;</span><span class="o">.</span>
+
+<span class="o">..</span>
+</pre></div>
+</div>
+<p>The commands in the <code class="docutils literal notranslate"><span class="pre">rime-engine</span></code> CLI <a class="reference internal" href="../../how_to_guides.html"><span class="doc std std-doc">How-To Guides</span></a> use <strong>environment variables</strong> to keep the commands short and readable.</p>
+<p>Be sure to set these up in your terminal session before running any commands:</p>
+<p><strong>Local</strong></p>
+<p>NOTE: Disabling TLS is recommended <em>for local uploads only</em>!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">RIME_UPLOAD_URL</span><span class="o">=</span><span class="n">localhost</span><span class="p">:</span><span class="mi">5001</span>
+<span class="n">export</span> <span class="n">RIME_FIREWALL_URL</span><span class="o">=</span><span class="n">localhost</span><span class="p">:</span><span class="mi">5002</span>
+<span class="n">export</span> <span class="n">RIME_DISABLE_TLS</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p><strong>Managed Cloud</strong></p>
+<p>Be sure to replace <code class="docutils literal notranslate"><span class="pre">&lt;YOUR_ORG_NAME&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;YOUR_API_KEY</span></code> with the specific values for your RI Managed Cloud instance!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">RIME_UPLOAD_URL</span><span class="o">=</span><span class="n">rime</span><span class="o">.&lt;</span><span class="n">YOUR_ORG_NAME</span><span class="o">&gt;.</span><span class="n">rime</span><span class="o">.</span><span class="n">dev</span>
+<span class="n">export</span> <span class="n">RIME_FIREWALL_URL</span><span class="o">=</span><span class="n">rime</span><span class="o">.&lt;</span><span class="n">YOUR_ORG_NAME</span><span class="o">&gt;.</span><span class="n">rime</span><span class="o">.</span><span class="n">dev</span>
+<span class="n">export</span> <span class="n">RIME_API_KEY</span><span class="o">=&lt;</span><span class="n">YOUR_API_KEY</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Alternatively, missing options can be provided in the command itself, as flags (e.g., <code class="docutils literal notranslate"><span class="pre">--upload-endpoint</span></code> below):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rime</span><span class="o">-</span><span class="n">engine</span> <span class="n">run</span><span class="o">-</span><span class="n">stress</span><span class="o">-</span><span class="n">tests</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">path</span> <span class="n">examples</span><span class="o">/</span><span class="n">income</span><span class="o">/</span><span class="n">stress_tests_model</span><span class="o">.</span><span class="n">json</span> <span class="o">--</span><span class="n">upload</span><span class="o">-</span><span class="n">endpoint</span> <span class="o">&lt;</span><span class="n">YOUR_UPLOAD_ENDPOINT</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Mappings of environment variables to their option names can be found by running <code class="docutils literal notranslate"><span class="pre">--help</span></code> for the chosen command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rime</span><span class="o">-</span><span class="n">engine</span> <span class="n">run</span><span class="o">-</span><span class="n">stress</span><span class="o">-</span><span class="n">tests</span> <span class="o">--</span><span class="n">help</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>I’m seeing <code class="docutils literal notranslate"><span class="pre">ModuleNotFound</span></code> errors in the console. How do I resolve them?</strong></p>
+<p>These errors likely result from not having the extras installed for your use case.</p>
+<p>Make sure you are inside of the <code class="docutils literal notranslate"><span class="pre">rime_trial/</span></code> directory using your <code class="docutils literal notranslate"><span class="pre">rime-venv</span></code> virtual environment before proceeding.</p>
+<p>(If not already run during installation) Run the following to generate the necessary requirements lists:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>rime_helper.py<span class="w"> </span>generate-rime-requirements<span class="w"> </span>--token-file<span class="w"> </span><span class="nv">$PATH_TO_TOKEN_TXT_FILE</span>
+</pre></div>
+</div>
+<p>For Natural Language Processing (NLP) use cases (i.e., text data):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>nlp_requirements.txt
+</pre></div>
+</div>
+<p>For Computer Vision (CV) use cases (i.e., image data):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>cv_requirements.txt
+</pre></div>
+</div>
+</li>
+<li><p><strong>I’m seeing <code class="docutils literal notranslate"><span class="pre">grpc.FutureTimeoutError</span></code>(s) when trying to upload stress tests. How do I resolve them?</strong></p>
+<p>This error can be due to DNS resolution across operating systems and protocols (IPv4 vs. IPv6).</p>
+<p>If that is the case, running the following in your terminal session can resolve the issue:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">GRPC_DNS_RESOLVER</span><span class="o">=</span>native
+</pre></div>
+</div>
+<p>Otherwise, make sure your machine has access to the endpoint(s) in question (e.g., by enabling VPN).</p>
+</li>
+</ol>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Debugging the Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../reference.html" class="btn btn-neutral float-right" title="Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
