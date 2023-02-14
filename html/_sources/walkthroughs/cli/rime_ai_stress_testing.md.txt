@@ -1,0 +1,119 @@
+# AI Stress Testing
+
+This tutorial will guide you through how to get started with RIME by running AI
+Stress Testing on a model trained over a slightly modified version of the <a
+target="_blank" rel="noopener"
+href="https://www.kaggle.com/uciml/adult-census-income">Adult Census Income</a>
+dataset.
+
+### Running Stress Testing on the Income Example
+
+#### Stress Testing with a Model and Dataset
+
+For the basic example, we will run AI Stress Testing with a model. If you do
+not want to run RIME with the model, and instead want to run in a different
+mode (e.g. using prediction logs instead), see the end of this document for
+different workflows.
+
+To kick off a run of AI Stress Testing:
+
+```bash
+rime-engine run-stress-tests --config-path examples/income/stress_tests_model.json
+```
+{{ tabular_ui_redirect }}
+
+{{ cli_note }}
+
+#### Stress Testing with Prediction Logs
+
+Similar to the above steps, except the CLI command to run RIME with just
+prediction logs is:
+
+```bash
+rime-engine run-stress-tests --config-path examples/income/stress_tests_prediction_logs.json
+```
+
+Note that the command is exactly the same EXCEPT for the `--config-path` provided.
+
+#### Stress Testing with Compliance
+
+This will run a specific suite of tests geared towards bias/fairness. Similar to the above 
+steps - to kick off a Compliance only run:
+
+```bash
+rime-engine run-stress-tests --config-path examples/income/stress_tests_compliance.json
+```
+
+The command is exactly the same, but inside the config file the `categories` list contains
+`Compliance` and `data_info` contains `protected_features`. The tests will be run over these
+features.
+
+
+### Running Stress Testing on your own Model and Datasets
+
+This guide will cover how to run AI Stress Testing on your own data and model.
+
+#### Define a Python Model File in the Correct Format
+
+A model is not required for AI Stress Testing, but providing one will produce
+better results. RIME expects models to be provided in a specific format; see
+[How to Create a Python Model File](specify_model.md) for step-by-step
+instructions.
+
+#### Collect Data in the Correct Format
+
+For AI Stress Testing, RIME expects that you will upload two datasets: a
+reference dataset (typically the training data) and an evaluation dataset
+(typically the validation, testing, or other data).  Currently RIME expects
+each dataset to be passed in as a csv or parquet file where each column is a separate
+feature.
+
+You can optionally provide labels for each datapoint. These should be passed in
+as a column in both datasets. Providing labels allows RIME to surface model
+performance metrics across our tests.
+
+NOTE: in the multi-class classification scenario, each label should be a
+nonnegative integer `i` where the corresponding prediction for label `i` should
+be found in the `ith` dimenson of the prediction vector.
+
+You can optionally provide predictions for each datapoint. If the model task is
+multi-class classification, they must be specified in a separate csv or parquet file as a
+dataframe where the `ith` column represents the predicted probabilities for the
+`ith` class/label. For all other model tasks, they should be provided as a
+column in both datasets. In the absence of a model, providing predictions will
+produce better results.
+
+
+#### Create Configuration
+
+With your data and model ready, you can now create a configuration file for AI
+Stress Testing. For a detailed reference on what the configuration should look
+like, see [AI Stress Testing Configuration
+Reference](/configuration/tabular/stress_testing.md).
+
+#### Run the CLI
+
+You can run the CLI, pointing it to the configuration file created in the above
+step, with:
+
+```bash
+rime-engine run-stress-tests --config-path <PATH-TO-CONFIGURATION>
+```
+{{ tabular_ui_redirect }}
+
+#### Caching Test Results for Future Uploading
+
+In some cases, you may want to cache the test results - if you need to restart the server, then you will be able to
+upload the results without needing to rerun stress testing. To do this, specify a `--save-path` when running stress testing:
+```bash
+rime-engine run-stress-tests --config-path <PATH-TO-CONFIGURATION> --save-path <SAVE-PATH>
+```
+
+This will cache results in a directory specified in `--save-path`. To directly re-upload the results, just do:
+
+```bash
+rime-engine upload --save-path <SAVE-PATH>
+```
+
+### Troubleshooting
+{{ troubleshooting_note }}

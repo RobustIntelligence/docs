@@ -1,0 +1,101 @@
+# Querying RIME Results
+
+Besides viewing RIME results in the web application, you may use our SDK to retrieve 
+data that can be programmatically parsed.
+This functionality is very helpful for incorporating RIME into your production
+model/data pipelines.
+For instance, if you are interested in the results of a specific feature, test, or
+statistic, you can fetch stress testing results from the RIME backend and
+write code to make decisions (e.g. whether to deploy the model) based on the results.
+
+*Note: `get_test_run_result` and `get_test_cases_result` will not work properly on test runs uploaded on versions of RIME <0.14.0*
+
+{{ sdk_client_setup }}
+
+## Start a Job and Wait Until It Finishes
+
+Each AI Stress Testing job produces one set of results.
+These results are only available once that job has succeeded.
+The following code shows you how to wait until the job has finished.
+
+```Python
+# Start a stress test with a toy configuration.
+config = {
+  "run_name": "Titanic", 
+  "data_info": { 
+    "label_col": "Survived", 
+    "ref_path": "s3://rime-datasets/titanic/titanic_example.csv", "eval_path": "s3://rime-datasets/titanic/titanic_example.csv" 
+  }, 
+  "model_info": {
+    "path": "s3://rime-models/titanic_s3_test/titanic_example_model.py"
+  }
+}
+job = rime_client.start_stress_test(config=config)
+
+# Wait until the job has finished while printing helpful progress information.
+# If you do not want any information to be printed, omit the `verbose` argument.
+# Ensure the status is `SUCCEEDED` before getting the results.
+status_dict = job.get_status(verbose=True, wait_until_finish=True)
+status = status_dict["status"]
+assert status == "SUCCEEDED"
+```
+
+## Get the Results
+
+To retrieve metadata and summary metrics for the test run result, use `RIMEStressTestJob.get_test_run_result()`.
+This method returns a Pandas dataframe with a single row.
+The columns are not guaranteed to be returned in sorted order, but the number of columns and their names are consistent across test runs.
+Note that this will raise a `ValueError` if the job does not have status `'SUCCEEDED'`.
+
+```Python
+test_run_df = job.get_test_run_result()
+
+# Show the columns of the dataframe and their types.
+print(test_run_df.dtypes)
+```
+
+To retrieve all the raw test cases, use `RIMEStressTestJob.get_test_cases_result()`. This returns a Pandas
+dataframe with rows for each RIME test case.
+It includes test case metadata such as the features and test types (e.g. Must be Int, Unseen Categorical) as well as result metrics such as severity or status.
+```Python
+test_cases_df = job.get_test_cases_result()
+
+# Show the columns of the dataframe and their types.
+print(test_cases_df.dtypes)
+
+# Dump the test cases to a CSV.
+test_cases_df.to_csv("path_to_csv.csv")
+```
+
+## Build Queries
+
+Once you have the dataframe of results, you can build programmatic queries on top of it.
+This code snippet iterates through all the rows and gets the counts of passing tests,
+failing tests, etc. for the `Subset AUC` test, then makes a decision based on
+whether a majority of the test cases for the `Subset AUC` test are passing.
+
+```Python
+df = job.get_test_cases_result()
+
+# Get the counts of passing/failing test cases for the `Subset AUC` test.
+# Unless at least half the test cases are high severity, deploy the model.
+selected = df[df["test_batch_type"] == "subset_auc"]
+if selected["severity"].value_counts()["HIGH"] >= len(selected) / 2:
+    print("RIME \"Subset AUC\" failed with HIGH severity on a majority of test cases.")
+else:
+    print("Deploying the model...")
+    # ...
+```
+
+## Pinning to a Specific Version
+
+You can pin the results to a specific semantic version of RIME so that your
+query code does not break when you upgrade your version of the RIME SDK.
+You can add an optional key-word argument specifying the version of results to be used.
+The latest version is returned by default.
+Beware that column names and statistics returned may change between versions.
+
+```Python
+# Get the results for RIME v0.13.0.
+job.get_test_run_result(version="0.13.0")
+```

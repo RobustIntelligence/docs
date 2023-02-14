@@ -1,0 +1,87 @@
+Specify a Model
+==========================
+
+RIME expects models to be passed in as Python files that expose one of the following functions:
+
+- `predict_dict`: the input is a single row in dictionary form (e.g. `x = {'Age': 15,
+  'Animal': 'Cat', ...}`). For binary classification and regression, the output should
+  be a float prediction - for binary classification it should be between 0 and 1,
+  for regression it can be unbounded. The function signature should look like:
+  `predict_dict(x: dict) ->
+  float`. For multi-class classification the output
+  should be a numpy array where the ith dimension represents the predicted
+  probability for the ith class. The function signature
+  changes slightly to look like: `predict_dict(x: dict) -> np.ndarray`.
+- `predict_df`: the input is a Pandas DataFrame. If the model task is multi-class
+  classification, the output should be a NumPy array of floats of shape `(len(df),
+  num_classes)`. For all other model tasks, the output
+  should be a NumPy array of floats of shape `(len(df),)`.
+In either case, the function signature should look like: `predict_df(df: pd.DataFrame)
+  -> np.ndarray`
+
+    NOTE: for binary classification the return type should be a single float per row which represents the probability for the positive class. It should not be an array of probabilities for each class. E.g. `predict_df` should return `[0.7, 0.1, ...]` NOT `[[0.3, 0.7], [0.9, 0.1], ...]`.
+
+
+The following shows how to set up the Python interface RIME expects for a model that can be called via loading a model binary. For instructions on how to integrate with other model types (e.g. exposed via an online API) see [Integrations](/reference/integrations.md).
+
+### Step 1: Specify model path
+Put your model binary, and any other relevant model artifacts, in the same folder as this file.
+Create a constant for the path to this binary:
+
+```
+from pathlib import Path
+
+cur_dir = Path(__file__).absolute().parent
+
+MODEL_NAME = 'TODO: change this to model name'
+MODEL_PATH = cur_dir / MODEL_NAME
+```
+
+### Step 2: Retrieve custom code
+If custom code is needed to perform preprocessing on the data (or to call your API), we need to make sure it is loaded into the environment. If this code is able to be installed as a Python package, see the `Custom Requirements` section.
+
+If your code is NOT a Python package (and is instead a Python file or folder) then please put all relevant files in the same directory as this file, and add the following snippet to the Python file:
+```
+import sys
+sys.path.append(str(cur_dir))
+```
+
+### Step 3: Access the model
+
+As an example, if you used the Python `pickle` module to save your model this would look like:
+```
+import pickle
+with open(MODEL_PATH, 'rb') as f:
+    model = pickle.load(f)
+```
+
+### Step 4: Import / implement preprocessing function
+
+If the model you are using expects inputs of a different schema than the datasets you've provided, or of a different type than `dict`/`Pandas.DataFrame`, you will need to load/define all custom preprocessing. If your model can take in the raw data directly then you can skip this step! Getting the preprocessing functionality could look like:
+```
+from custom_package import preprocessing
+```
+or
+```
+def preprocessing(x: dict) -> ModelInputType:
+    # TODO: implement preprocessing logic.
+```
+
+### Step 5: Implement a predict function
+Implement either the `predict_dict` function or the `predict_df` function. This should look something like:
+
+(NOTE: whichever you choose to implement, it must match one of the function names and signatures below.)
+```
+# In multi-class case, the return type is np.ndarray
+def predict_dict(x: dict) -> float:
+    single_input = preprocessing(x)
+    model_output = model.predict_proba(single_input)
+    return model_output[0][1]
+```
+OR
+```
+def predict_df(df: pd.DataFrame) -> np.ndarray:
+    array_input = preprocessing(df)
+    model_output = model.predict_proba(array_input)
+    return model_output[:, 1]
+```

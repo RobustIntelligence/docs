@@ -1,0 +1,54 @@
+AI Firewall Continuous Tests Trial
+=============================
+
+To give you a sense of the capabilities of Firewall Continuous Tests without making you upload multiple datasets, we've created a trial-specific command that will allow you to simulate firewall continuous tests in one go.
+Configuration of RIME AI Firewall Continuous Tests Trial is done through a JSON configuration file that you pass as an argument to the RIME CLI.
+
+### Template
+```python
+{
+  "run_name": "Run Name",                       (REQUIRED)
+  "data_info": {...},                           (REQUIRED)
+  "continuous_info": {
+    "timestamp_col": ...,                       (REQUIRED)
+    "bin_size": ...,                            (REQUIRED)
+  },
+  "model_task": "Binary Classification",
+  "tests_config_path": "path/to/tests/config"
+}
+```
+
+### Arguments
+
+- **`run_name`**: string, ***required***
+
+    The name under which your run will appear in the UI.
+
+- **`data_info`**: DataInfo, ***required***
+
+    Configuration for the datasources to use. For a reference on how to
+    configure a datasource, see [Data Configuration](data_source.md).
+
+- **`continuous_info`**: ContinuousInfo, ***required***
+    - **`timestamp_col`**: string, ***required***
+
+      Name of column in data that corresponds to timestamps. The timestamp should
+      be specified as "YYYY-MM-DD" if it is a date or ""YYYY-MM-DD HH:TT:SS"
+      if it is a date and time where YYYY is the year as a four digit number, MM
+      is the month as a two digit number, DD is the day as a two digit number, HH
+      is the hour as a two digit number, TT is the minute as a two digit number
+      and SS is the second as a two digit number.
+    - **`bin_size`**: string, ***required***
+
+      The bin size for each firewall continuous tests run. Current accepted
+      values are `"day"` and `"hour"`.
+
+- `model_task`: string, *default* = `"Binary Classification"`
+
+    Specification of the model task. Current accepted values are `"Binary
+    Classification"`, `"Multi-class Classification"`, `"Regression"`, and `"Ranking"`.
+
+- `tests_config_path`: string or `null`, *default* = `null`
+
+    Path to a TestSuiteConfig JSON file. If path is `null` RIME will use the
+    default [TestSuiteConfig()](tests.md).

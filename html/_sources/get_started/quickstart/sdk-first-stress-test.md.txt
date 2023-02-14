@@ -1,0 +1,129 @@
+# Stress Testing with the RIME Python SDK 
+
+Let's begin by stress testing a binary classification model using the RIME Python SDK! This example uses a modified version of the <a href="https://www.kaggle.com/datasets/uciml/adult-census-income" target="_blank">Adult Census Income Dataset</a> from Kaggle that we've publicized in our <a href="https://github.com/RobustIntelligence/ri-public-examples" target="_blank">RI Public Examples</a> repository.
+
+Before beginning, make sure that you've installed the RIME Python SDK. Installation instructions below:
+- [RIME Cloud](../installation/cloud/installation.md#install-the-rime-python-package-optional)
+- [RIME Enterprise](../installation/enterprise/installation/sdk.md)
+
+The Python SDK is designed for easy use in your existing development environments, so feel free to run this example from a Jupyter notebook or Python interpreter.
+
+To proceed, you will need the following information:
+1. `BACKEND_URL`: Your cluster's backend URL.
+    - This will be of the form `"rime-backend.<YOUR_ORG_NAME>.rime.dev"`.
+2. `API_TOKEN`: An API token connected to your cluster.
+    - Instructions for getting an API token can be found in the [API Authentication Guide](../../../reference/api-authentication.md).
+3. The Adult Census Income dataset and sample model ( <a href="https://github.com/RobustIntelligence/ri-public-examples" target="_blank">link here</a> )
+    - `wget https://raw.githubusercontent.com/RobustIntelligence/ri-public-examples/master/tabular/income.zip`
+
+Here is the example in full --- we will be going through each section throughout this tutorial:
+```python
+from pathlib import Path
+from rime_sdk import RIMEClient, RIMEStressTestJob, RIMEProject, RIMEFirewall
+
+# set these before beginning!
+BACKEND_URL = "rime-backend.<YOUR_ORG_NAME>.rime.dev"
+API_TOKEN = "<YOUR_API_TOKEN>"
+
+# connect to your cluster
+rime_client = RIMEClient(BACKEND_URL, API_TOKEN)
+
+# REPLACE THESE PATHS WITH YOUR LOCAL PATHS TO THE INCOME DATA!
+model_path = rime_client.upload_model_directory(Path("<PATH_TO_INCOME_MODEL_FOLDER>")) + "/model.py"
+ref_path = rime_client.upload_dataset_file(Path("<PATH_TO_INCOME_REF_WITH_PREDS_CSV>"))
+eval_path = rime_client.upload_dataset_file(Path("<PATH_TO_INCOME_EVAL_WITH_PREDS_CSV>"))
+
+# configure the stress test
+config = {
+    "run_name": "Income (with Model)",
+    "data_info": {
+        "label_col": "income",
+        "pred_col": "pred",
+        "ref_path": ref_path,
+        "eval_path": eval_path
+    },
+    "model_info": {
+        "path": model_path
+    }
+}
+
+# run the test!
+job = rime_client.start_stress_test(test_run_config=config)
+
+# check status until completion (1-2 mins)
+job.get_status(verbose=True, wait_until_finish=True)
+```
+
+## 1. Establish Connection
+```python
+from pathlib import Path
+from rime_sdk import RIMEClient, RIMEStressTestJob, RIMEProject, RIMEFirewall
+
+# set these before beginning!
+BACKEND_URL = "rime-backend.<YOUR_ORG_NAME>.rime.dev"
+API_TOKEN = "<YOUR_API_TOKEN>"
+```
+
+With our constants assigned, we can establish the connection to our RIME cluster:
+```python
+# connect to your cluster
+rime_client = RIMEClient(BACKEND_URL, API_TOKEN)
+```
+
+## 2. Select Model and Datasets
+
+RIME stress testing can be run with as little as two datasets (reference and evaluation); however, the more information we provide, the richer the analysis will be. In this example, we'll be providing datasets, labels, predictions, and the model itself.
+
+RIME clusters read data and models from S3 buckets. Using the SDK, we can upload our local model and data files directly. Alternatively, if your data is already in S3, you can replace these commands with assignments the appropriate S3 filepaths. 
+
+**Enter your local filepaths in the commands below to upload your data to the RIME cluster!**
+```python
+# REPLACE THESE PATHS WITH YOUR LOCAL PATHS TO THE INCOME DATA!
+model_path = rime_client.upload_model_directory(Path("<PATH_TO_INCOME_MODEL_FOLDER>")) + "/model.py"
+ref_path = rime_client.upload_dataset_file(Path("<PATH_TO_INCOME_REF_WITH_PREDS_CSV>"))
+eval_path = rime_client.upload_dataset_file(Path("<PATH_TO_INCOME_EVAL_WITH_PREDS_CSV>"))
+```
+
+## 3. Configuration
+
+Once we've identified our model and datasets, all that's left is to define the configuration for our stress test. We will begin simply, specifying only the basics; however, as we fine tune our analysis, we can enrich this configuration.
+```python
+# configure the stress test
+config = {
+    "run_name": "Income (with Model)",
+    "data_info": {
+        "label_col": "income",
+        "pred_col": "pred",
+        "ref_path": ref_path,
+        "eval_path": eval_path
+    },
+    "model_info": {
+        "path": model_path
+    }
+}
+```
+{{ tabular_config_note }}
+
+## 4. Run the Tests!
+You are now free to run the tests! The command below will continuously poll for the status of the test until completion; to run the test asynchronously, you can disable `wait_until_finish`.
+```python
+# run the test!
+job = rime_client.start_stress_test(test_run_config=config)
+
+# check status until completion (1-2 mins)
+job.get_status(verbose=True, wait_until_finish=True)
+```
+
+RIME organizes work into projects. Your environment is seeded with one initially, called "Default Project", which was used automatically for this example.
+
+![](../../_static/ui/ProjectsDefaultProject.png)
+
+Once the command completes, you should be able to see the test run in the Default Project (see table below for URL). 
+
+![](../../_static/ui/TestRunsIncomeExample.png)
+
+From there, you can open the test run "Income (With Model)" and start exploring the results! 
+
+![](../../_static/ui/TestsIncomeExample.png)
+
+For a full reference to the web client, please refer to our [UI Documentation](../../rime/product-details/ui/tabular).

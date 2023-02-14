@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RIME Subset Performance &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="RIME Model Performance" href="rime_model_performance.html" />
+    <link rel="prev" title="RIME Adversarial" href="rime_adversarial.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                0.16.14
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../rime/product-overview.html">Product Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rime/product-details.html">Product Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/quickstart.html">Running Your First AI Stress Test</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Walkthroughs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../python-sdk.html">Python SDK</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../python-library.html">Python Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="rime_data_model_setup.html">Data and Model Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rime_stress_tests.html">AI Stress Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rime_adversarial.html">RIME Adversarial</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">RIME Subset Performance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-rime-library-to-analyze-model-performance">Using RIME Library to Analyze Model Performance</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#running-feature-subset-tests">Running Feature Subset Tests</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analyzing-model-performance">Analyzing Model Performance</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#improving-model-performance-results-overweighting">Improving Model Performance Results: Overweighting</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#training-the-initial-model">Training the Initial Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#comparing-improvements">Comparing Improvements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rime_model_performance.html">RIME Model Performance</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Configuring RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/tabular.html">Tabular Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/nlp.html">NLP Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/cv.html">CV Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api-authentication.html">API Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-library.html">Python Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/cli.html">CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/integrations.html">Integrations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../python-library.html">Python Library</a></li>
+      <li class="breadcrumb-item active">RIME Subset Performance</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/walkthroughs/python-library/rime_model_behavior.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="rime-subset-performance">
+<h1>RIME Subset Performance<a class="headerlink" href="#rime-subset-performance" title="Permalink to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<p>This tutorial will guide you through getting started on RIME Library’s Subset Performance in your Jupyter notebooks. For more granular information, see
+the RIME Subset Performance Jupyter notebook included in the trial bundle.</p>
+<p>Be sure to complete the initial setup described in <a class="reference internal" href="rime_data_model_setup.html"><span class="doc std std-doc">RIME Data and Model Setup</span></a> before proceeding.</p>
+</section>
+<section id="using-rime-library-to-analyze-model-performance">
+<h2>Using RIME Library to Analyze Model Performance<a class="headerlink" href="#using-rime-library-to-analyze-model-performance" title="Permalink to this heading"></a></h2>
+<section id="running-feature-subset-tests">
+<h3>Running Feature Subset Tests<a class="headerlink" href="#running-feature-subset-tests" title="Permalink to this heading"></a></h3>
+<p>These tests allow you to observe differences in model performance across various subsets of your features–excellent for detecting potential bias.</p>
+<p>In the example below, we illustrate how model accuracy varies across different subsets of the <code class="docutils literal notranslate"><span class="pre">DeviceType</span></code> categorical feature.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime.tabular.tests</span> <span class="kn">import</span> <span class="n">FeatureSubsetTest</span>
+<span class="kn">from</span> <span class="nn">rime.tabular.metric</span> <span class="kn">import</span> <span class="n">MetricName</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">FeatureSubsetTest</span><span class="p">(</span><span class="s2">&quot;DeviceType&quot;</span><span class="p">,</span> <span class="n">MetricName</span><span class="o">.</span><span class="n">ACCURACY</span><span class="p">)</span>
+<span class="n">test</span><span class="o">.</span><span class="n">run_notebook</span><span class="p">(</span><span class="n">container</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the <code class="docutils literal notranslate"><span class="pre">subsets_info</span></code> dictionary, each key is a subset of the feature tested on: <code class="docutils literal notranslate"><span class="pre">desktop</span></code>, <code class="docutils literal notranslate"><span class="pre">mobile</span></code>, and <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>It contains information about the metric performance (<code class="docutils literal notranslate"><span class="pre">perf</span></code>), confidence intervals (<code class="docutils literal notranslate"><span class="pre">margin_error</span></code>),
+performance difference from the entire feature (<code class="docutils literal notranslate"><span class="pre">diff</span></code>), positivity rate (<code class="docutils literal notranslate"><span class="pre">pos_rate</span></code>),
+and other information regarding the indices and size of the subset in the feature.</p>
+<p>This test reveals that the model underperforms with respect to accuracy for inputs in the <code class="docutils literal notranslate"><span class="pre">mobile</span></code> category!</p>
+<p><strong>Output</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="n">test</span> <span class="n">raised</span> <span class="n">a</span> <span class="n">warning</span> <span class="p">(</span><span class="k">with</span> <span class="n">severity</span> <span class="n">level</span> <span class="n">Medium</span><span class="p">)</span> <span class="n">because</span> <span class="mi">2</span> <span class="n">subset</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">performed</span> <span class="n">significantly</span> <span class="n">worse</span> <span class="n">than</span> <span class="n">the</span> <span class="n">overall</span> <span class="n">population</span><span class="o">.</span> <span class="n">When</span> <span class="n">evaluating</span> <span class="n">subsets</span> <span class="n">of</span> <span class="n">the</span> <span class="n">feature</span> <span class="n">DeviceType</span> <span class="n">we</span> <span class="n">find</span> <span class="n">the</span> <span class="n">Accuracy</span> <span class="n">of</span> <span class="n">some</span> <span class="n">subset</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">to</span> <span class="n">be</span> <span class="n">below</span> <span class="n">the</span> <span class="n">overall</span> <span class="n">score</span> <span class="n">of</span> <span class="mf">0.97</span> <span class="n">by</span> <span class="n">more</span> <span class="n">than</span> <span class="n">the</span> <span class="n">threshold</span> <span class="n">of</span> <span class="mf">0.001</span><span class="o">.</span>
+<span class="p">{</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;FAIL&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;severity&#39;</span><span class="p">:</span> <span class="s1">&#39;Medium&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;metric&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">MetricName</span><span class="o">.</span><span class="n">ACCURACY</span><span class="p">:</span> <span class="s1">&#39;accuracy&#39;</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s1">&#39;severity_level_thresholds&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
+  <span class="s1">&#39;perf_change_threshold&#39;</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
+  <span class="s1">&#39;col_name&#39;</span><span class="p">:</span> <span class="s1">&#39;DeviceType&#39;</span><span class="p">},</span>
+ <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;DeviceType&#39;</span><span class="p">],</span>
+ <span class="s1">&#39;num_failing&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+ <span class="s1">&#39;overall_perf&#39;</span><span class="p">:</span> <span class="mf">0.9692</span><span class="p">,</span>
+ <span class="s1">&#39;sample_size&#39;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
+ <span class="s1">&#39;subsets_metric_dict&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;overall_perf&#39;</span><span class="p">:</span> <span class="mf">0.9692</span><span class="p">,</span>
+  <span class="s1">&#39;subsets_info&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;desktop&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;desktop&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;len_df&#39;</span><span class="p">:</span> <span class="mi">1504</span><span class="p">,</span>
+    <span class="s1">&#39;criterion&#39;</span><span class="p">:</span> <span class="s1">&#39;desktop&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;perf&#39;</span><span class="p">:</span> <span class="mf">0.9461436170212766</span><span class="p">,</span>
+    <span class="s1">&#39;margin_error&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s1">&#39;diff&#39;</span><span class="p">:</span> <span class="mf">0.023056382978723367</span><span class="p">,</span>
+    <span class="s1">&#39;pos_rate&#39;</span><span class="p">:</span> <span class="mf">0.06648936170212766</span><span class="p">,</span>
+    <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">1504</span><span class="p">},</span>
+   <span class="s1">&#39;mobile&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;mobile&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;len_df&#39;</span><span class="p">:</span> <span class="mi">947</span><span class="p">,</span>
+    <span class="s1">&#39;criterion&#39;</span><span class="p">:</span> <span class="s1">&#39;mobile&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;perf&#39;</span><span class="p">:</span> <span class="mf">0.9292502639915523</span><span class="p">,</span>
+    <span class="s1">&#39;margin_error&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s1">&#39;diff&#39;</span><span class="p">:</span> <span class="mf">0.039949736008447645</span><span class="p">,</span>
+    <span class="s1">&#39;pos_rate&#39;</span><span class="p">:</span> <span class="mf">0.11298838437170011</span><span class="p">,</span>
+    <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">947</span><span class="p">},</span>
+   <span class="s1">&#39;None&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;len_df&#39;</span><span class="p">:</span> <span class="mi">7549</span><span class="p">,</span>
+    <span class="s1">&#39;criterion&#39;</span><span class="p">:</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;perf&#39;</span><span class="p">:</span> <span class="mf">0.9788051397536097</span><span class="p">,</span>
+    <span class="s1">&#39;margin_error&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s1">&#39;diff&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.00960513975360977</span><span class="p">,</span>
+    <span class="s1">&#39;pos_rate&#39;</span><span class="p">:</span> <span class="mf">0.021592263876010067</span><span class="p">,</span>
+    <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">7549</span><span class="p">}}},</span>
+ <span class="s1">&#39;worst_subset&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;mobile&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;len_df&#39;</span><span class="p">:</span> <span class="mi">947</span><span class="p">,</span>
+  <span class="s1">&#39;criterion&#39;</span><span class="p">:</span> <span class="s1">&#39;mobile&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;perf&#39;</span><span class="p">:</span> <span class="mf">0.9292502639915523</span><span class="p">,</span>
+  <span class="s1">&#39;margin_error&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="s1">&#39;diff&#39;</span><span class="p">:</span> <span class="mf">0.039949736008447645</span><span class="p">,</span>
+  <span class="s1">&#39;pos_rate&#39;</span><span class="p">:</span> <span class="mf">0.11298838437170011</span><span class="p">,</span>
+  <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">947</span><span class="p">}}</span>
+</pre></div>
+</div>
+</section>
+<section id="analyzing-model-performance">
+<h3>Analyzing Model Performance<a class="headerlink" href="#analyzing-model-performance" title="Permalink to this heading"></a></h3>
+<section id="overall-analysis">
+<h4>Overall Analysis<a class="headerlink" href="#overall-analysis" title="Permalink to this heading"></a></h4>
+<p>When RunContainers are created, RIME profiles the model’s performance with respect
+to its features and feature subsets. We can obtain all that information very easily
+through built-in functions.</p>
+<p>To obtain the overall performance metrics for the model, we can use <code class="docutils literal notranslate"><span class="pre">get_overall_metrics</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime.tabular.performance.error_analysis</span> <span class="kn">import</span> <span class="n">get_overall_metrics</span>
+
+<span class="n">get_overall_metrics</span><span class="p">(</span><span class="n">test_data_container</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The output of the function, below, summarizes the performance of the model.</p>
+<p><strong>Output</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;AUC&#39;</span><span class="p">:</span> <span class="mf">0.8414549128567822</span><span class="p">,</span>
+ <span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="mf">0.9689</span><span class="p">,</span>
+ <span class="s1">&#39;F1&#39;</span><span class="p">:</span> <span class="mf">0.3253796095444686</span><span class="p">,</span>
+ <span class="s1">&#39;Positive Prediction Rate&#39;</span><span class="p">:</span> <span class="mf">0.0091</span><span class="p">,</span>
+ <span class="s1">&#39;Average Prediction Rate&#39;</span><span class="p">:</span> <span class="mf">0.032736195484349216</span><span class="p">,</span>
+ <span class="s1">&#39;Precision&#39;</span><span class="p">:</span> <span class="mf">0.8241758241758241</span><span class="p">,</span>
+ <span class="s1">&#39;False Positive Rate&#39;</span><span class="p">:</span> <span class="mf">0.0016614745586708203</span><span class="p">,</span>
+ <span class="s1">&#39;False Negative Rate&#39;</span><span class="p">:</span> <span class="mf">0.7972972972972973</span><span class="p">,</span>
+ <span class="s1">&#39;Recall&#39;</span><span class="p">:</span> <span class="mf">0.20270270270270271</span><span class="p">,</span>
+ <span class="s1">&#39;Prediction Variance&#39;</span><span class="p">:</span> <span class="mf">0.006616262494399436</span><span class="p">,</span>
+ <span class="s1">&#39;Prediction Variance (Negative Labels)&#39;</span><span class="p">:</span> <span class="mf">0.0018064451286080943</span><span class="p">,</span>
+ <span class="s1">&#39;Prediction Variance (Positive Labels)&#39;</span><span class="p">:</span> <span class="mf">0.08650783856199104</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Another tool in error analysis lets us see the model’s biggest misses.
+Let’s inspect the model’s worst false positives and false negatives:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime.tabular.performance</span> <span class="kn">import</span> <span class="n">get_biggest_errors</span>
+<span class="n">fp</span><span class="p">,</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">get_biggest_errors</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">model_wrapper</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here is the model’s worst <strong>false positive</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">worst_fp_idx</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+<span class="n">worst_fp_example</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">worst_fp_idx</span><span class="p">,:]</span>
+<span class="n">worst_fp_pred</span> <span class="o">=</span> <span class="n">model_wrapper</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">worst_fp_example</span><span class="p">)</span>
+<span class="n">worst_fp_label</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="n">worst_fp_idx</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WORST FALSE POSITIVE:</span><span class="se">\n</span><span class="si">{}</span><span class="se">\n\n</span><span class="s2">Label: </span><span class="si">{}</span><span class="s2">, Predicted Value: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">worst_fp_example</span><span class="p">,</span> <span class="n">worst_fp_label</span><span class="p">,</span> <span class="n">worst_fp_pred</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><strong>Output</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WORST</span> <span class="n">FALSE</span> <span class="n">POSITIVE</span><span class="p">:</span>
+<span class="n">Timestamp</span>                    <span class="mf">3036316.0</span>
+<span class="n">Product_type</span>                         <span class="n">C</span>
+<span class="n">Card_company</span>                      <span class="n">visa</span>
+<span class="n">Card_type</span>                       <span class="n">credit</span>
+<span class="n">Purchaser_email_domain</span>       <span class="n">gmail</span><span class="o">.</span><span class="n">com</span>
+<span class="n">Recipient_email_domain</span>       <span class="n">gmail</span><span class="o">.</span><span class="n">com</span>
+<span class="n">Device_operating_system</span>            <span class="n">NaN</span>
+<span class="n">Browser_version</span>            <span class="n">chrome</span> <span class="mf">63.0</span>
+<span class="n">Resolution</span>                         <span class="n">NaN</span>
+<span class="n">DeviceInfo</span>                     <span class="n">Windows</span>
+<span class="n">DeviceType</span>                     <span class="n">desktop</span>
+<span class="n">TransactionAmt</span>                  <span class="mf">81.037</span>
+<span class="n">TransactionID</span>                <span class="mf">3135204.0</span>
+<span class="n">addr1</span>                              <span class="n">NaN</span>
+<span class="n">addr2</span>                              <span class="n">NaN</span>
+<span class="n">card1</span>                           <span class="mf">2256.0</span>
+<span class="n">card2</span>                            <span class="mf">545.0</span>
+<span class="n">card3</span>                            <span class="mf">185.0</span>
+<span class="n">card5</span>                            <span class="mf">226.0</span>
+<span class="n">dist1</span>                              <span class="n">NaN</span>
+<span class="n">dist2</span>                             <span class="mf">17.0</span>
+<span class="n">Count_1</span>                           <span class="mf">37.0</span>
+<span class="n">Count_2</span>                           <span class="mf">47.0</span>
+<span class="n">Count_3</span>                            <span class="mf">0.0</span>
+<span class="n">Count_4</span>                           <span class="mf">13.0</span>
+<span class="n">Count_5</span>                            <span class="mf">0.0</span>
+<span class="n">Count_6</span>                           <span class="mf">13.0</span>
+<span class="n">Count_7</span>                           <span class="mf">13.0</span>
+<span class="n">Count_8</span>                           <span class="mf">28.0</span>
+<span class="n">Count_9</span>                            <span class="mf">0.0</span>
+<span class="n">Name</span><span class="p">:</span> <span class="mi">6466</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">object</span>
+
+<span class="n">Label</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Predicted</span> <span class="n">Value</span><span class="p">:</span> <span class="mf">0.8809023171385614</span>
+</pre></div>
+</div>
+<p>Here is the model’s worst <strong>false negative</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">worst_fn_idx</span> <span class="o">=</span> <span class="n">fn</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()</span>
+<span class="n">worst_fn_example</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">worst_fn_idx</span><span class="p">,:]</span>
+<span class="n">worst_fn_pred</span> <span class="o">=</span> <span class="n">model_wrapper</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">worst_fn_example</span><span class="p">)</span>
+<span class="n">worst_fn_label</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="n">worst_fn_idx</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WORST FALSE NEGATIVE:</span><span class="se">\n</span><span class="si">{}</span><span class="se">\n\n</span><span class="s2">Label: </span><span class="si">{}</span><span class="s2">, Predicted Value: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">worst_fn_example</span><span class="p">,</span> <span class="n">worst_fn_label</span><span class="p">,</span> <span class="n">worst_fn_pred</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><strong>Output</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WORST</span> <span class="n">FALSE</span> <span class="n">NEGATIVE</span><span class="p">:</span>
+<span class="n">Timestamp</span>                     <span class="mf">12761407.0</span>
+<span class="n">Product_type</span>                           <span class="n">W</span>
+<span class="n">Card_company</span>                        <span class="n">visa</span>
+<span class="n">Card_type</span>                          <span class="n">debit</span>
+<span class="n">Purchaser_email_domain</span>     <span class="n">anonymous</span><span class="o">.</span><span class="n">com</span>
+<span class="n">Recipient_email_domain</span>               <span class="n">NaN</span>
+<span class="n">Device_operating_system</span>              <span class="n">NaN</span>
+<span class="n">Browser_version</span>                      <span class="n">NaN</span>
+<span class="n">Resolution</span>                           <span class="n">NaN</span>
+<span class="n">DeviceInfo</span>                           <span class="n">NaN</span>
+<span class="n">DeviceType</span>                           <span class="n">NaN</span>
+<span class="n">TransactionAmt</span>                    <span class="mf">1795.8</span>
+<span class="n">TransactionID</span>                  <span class="mf">3476245.0</span>
+<span class="n">addr1</span>                              <span class="mf">184.0</span>
+<span class="n">addr2</span>                               <span class="mf">87.0</span>
+<span class="n">card1</span>                             <span class="mf">4436.0</span>
+<span class="n">card2</span>                              <span class="mf">174.0</span>
+<span class="n">card3</span>                              <span class="mf">150.0</span>
+<span class="n">card5</span>                              <span class="mf">226.0</span>
+<span class="n">dist1</span>                                <span class="n">NaN</span>
+<span class="n">dist2</span>                                <span class="n">NaN</span>
+<span class="n">Count_1</span>                              <span class="mf">1.0</span>
+<span class="n">Count_2</span>                              <span class="mf">1.0</span>
+<span class="n">Count_3</span>                              <span class="mf">0.0</span>
+<span class="n">Count_4</span>                              <span class="mf">0.0</span>
+<span class="n">Count_5</span>                              <span class="mf">1.0</span>
+<span class="n">Count_6</span>                              <span class="mf">1.0</span>
+<span class="n">Count_7</span>                              <span class="mf">0.0</span>
+<span class="n">Count_8</span>                              <span class="mf">0.0</span>
+<span class="n">Count_9</span>                              <span class="mf">1.0</span>
+<span class="n">Name</span><span class="p">:</span> <span class="mi">9385</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">object</span>
+
+<span class="n">Label</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Predicted</span> <span class="n">Value</span><span class="p">:</span> <span class="mf">0.00330668052035523</span>
+</pre></div>
+</div>
+</section>
+<section id="granular-analysis">
+<h4>Granular Analysis<a class="headerlink" href="#granular-analysis" title="Permalink to this heading"></a></h4>
+<p>For more subset specific analysis, we can run the <code class="docutils literal notranslate"><span class="pre">get_worst_overall_subset</span></code> function
+which returns a dictionary of the worst performing subsets for each feature.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime.tabular.performance.error_analysis</span> <span class="kn">import</span> <span class="n">get_worst_overall_subset</span>
+
+<span class="n">worst_subsets</span> <span class="o">=</span> <span class="n">get_worst_overall_subset</span><span class="p">(</span><span class="n">test_data_container</span><span class="p">)</span>
+<span class="n">worst_subsets</span>
+</pre></div>
+</div>
+<p><strong>Output</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;Timestamp&#39;</span><span class="p">:</span> <span class="s1">&#39;[88174.0, 2049200.4]&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Product_type&#39;</span><span class="p">:</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Card_company&#39;</span><span class="p">:</span> <span class="s1">&#39;discover&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Card_type&#39;</span><span class="p">:</span> <span class="s1">&#39;credit&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Purchaser_email_domain&#39;</span><span class="p">:</span> <span class="s1">&#39;yahoo.com&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Recipient_email_domain&#39;</span><span class="p">:</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Device_operating_system&#39;</span><span class="p">:</span> <span class="s1">&#39;Windows 7&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Browser_version&#39;</span><span class="p">:</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Resolution&#39;</span><span class="p">:</span> <span class="s1">&#39;1366x768&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;DeviceInfo&#39;</span><span class="p">:</span> <span class="s1">&#39;Trident/7.0&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;DeviceType&#39;</span><span class="p">:</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;TransactionAmt&#39;</span><span class="p">:</span> <span class="s1">&#39;(160.702, 3967.81]&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;TransactionID&#39;</span><span class="p">:</span> <span class="s1">&#39;[2987101.0, 3088593.2]&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;addr1&#39;</span><span class="p">:</span> <span class="s1">&#39;[100.0, 204.0]&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;addr2&#39;</span><span class="p">:</span> <span class="s1">&#39;[13.0, 87.0]&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;card1&#39;</span><span class="p">:</span> <span class="s1">&#39;(15111.0, 18375.0]&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;card2&#39;</span><span class="p">:</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;card3&#39;</span><span class="p">:</span> <span class="s1">&#39;[100.0, 150.0]&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;card5&#39;</span><span class="p">:</span> <span class="s1">&#39;(226.0, 237.0]&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;dist1&#39;</span><span class="p">:</span> <span class="s1">&#39;(8.0, 23.0]&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;dist2&#39;</span><span class="p">:</span> <span class="s1">&#39;(49.0, 218.0]&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Count_1&#39;</span><span class="p">:</span> <span class="s1">&#39;(2.0, 3.0]&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Count_2&#39;</span><span class="p">:</span> <span class="s1">&#39;[0.0, 1.0]&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Count_3&#39;</span><span class="p">:</span> <span class="s1">&#39;0.0&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Count_4&#39;</span><span class="p">:</span> <span class="s1">&#39;[0.0, 1.0]&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Count_5&#39;</span><span class="p">:</span> <span class="s1">&#39;(1.0, 295.0]&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Count_6&#39;</span><span class="p">:</span> <span class="s1">&#39;[0.0, 1.0]&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Count_7&#39;</span><span class="p">:</span> <span class="s1">&#39;[0.0, 2252.0]&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Count_8&#39;</span><span class="p">:</span> <span class="s1">&#39;[0.0, 1.0]&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Count_9&#39;</span><span class="p">:</span> <span class="s1">&#39;(1.0, 2.0]&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Finally, if more granular analysis is desired, you can pass in the metrics to analyze and
+determine the worst subsets for only those metrics.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime.tabular.performance.error_analysis</span> <span class="kn">import</span> <span class="n">get_worst_subsets_for_metrics</span>
+
+<span class="n">worst_subsets_for_metrics</span> <span class="o">=</span> <span class="n">get_worst_subsets_for_metrics</span><span class="p">(</span><span class="n">test_data_container</span><span class="p">,</span> <span class="p">[</span><span class="n">MetricName</span><span class="o">.</span><span class="n">ACCURACY</span><span class="p">])</span>
+<span class="n">worst_subsets_for_metrics</span>
+</pre></div>
+</div>
+<p><strong>Output</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;Timestamp&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;(4613225.0, 7431097.6]&#39;</span><span class="p">,</span> <span class="mf">0.9592137592137592</span><span class="p">)},</span>
+ <span class="s1">&#39;Product_type&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="mf">0.9145516074450084</span><span class="p">)},</span>
+ <span class="s1">&#39;Card_company&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;discover&#39;</span><span class="p">,</span> <span class="mf">0.9351851851851852</span><span class="p">)},</span>
+ <span class="s1">&#39;Card_type&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;credit&#39;</span><span class="p">,</span> <span class="mf">0.935572042171027</span><span class="p">)},</span>
+ <span class="s1">&#39;Purchaser_email_domain&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;hotmail.com&#39;</span><span class="p">,</span> <span class="mf">0.9482758620689655</span><span class="p">)},</span>
+ <span class="s1">&#39;Recipient_email_domain&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;hotmail.com&#39;</span><span class="p">,</span> <span class="mf">0.9267782426778243</span><span class="p">)},</span>
+ <span class="s1">&#39;Device_operating_system&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;Windows 7&#39;</span><span class="p">,</span> <span class="mf">0.9557522123893806</span><span class="p">)},</span>
+ <span class="s1">&#39;Browser_version&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;chrome 63.0&#39;</span><span class="p">,</span> <span class="mf">0.9411764705882353</span><span class="p">)},</span>
+ <span class="s1">&#39;Resolution&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;1366x768&#39;</span><span class="p">,</span> <span class="mf">0.9212598425196851</span><span class="p">)},</span>
+ <span class="s1">&#39;DeviceInfo&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;Windows&#39;</span><span class="p">,</span> <span class="mf">0.9404205607476636</span><span class="p">)},</span>
+ <span class="s1">&#39;DeviceType&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;mobile&#39;</span><span class="p">,</span> <span class="mf">0.928194297782471</span><span class="p">)},</span>
+ <span class="s1">&#39;TransactionAmt&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;(160.702, 3967.81]&#39;</span><span class="p">,</span> <span class="mf">0.9518134715025907</span><span class="p">)},</span>
+ <span class="s1">&#39;TransactionID&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;(3188929.0, 3288174.2]&#39;</span><span class="p">,</span> <span class="mf">0.9592137592137592</span><span class="p">)},</span>
+ <span class="s1">&#39;addr1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="mf">0.9163732394366197</span><span class="p">)},</span>
+ <span class="s1">&#39;addr2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;(87.0, 96.0]&#39;</span><span class="p">,</span> <span class="mf">0.9090909090909091</span><span class="p">)},</span>
+ <span class="s1">&#39;card1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;[1015.0, 4966.0]&#39;</span><span class="p">,</span> <span class="mf">0.9608717186726102</span><span class="p">)},</span>
+ <span class="s1">&#39;card2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="mf">0.9310344827586207</span><span class="p">)},</span>
+ <span class="s1">&#39;card3&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;(150.0, 229.0]&#39;</span><span class="p">,</span> <span class="mf">0.9123152709359605</span><span class="p">)},</span>
+ <span class="s1">&#39;card5&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;[100.0, 166.0]&#39;</span><span class="p">,</span> <span class="mf">0.9624597783339293</span><span class="p">)},</span>
+ <span class="s1">&#39;dist1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="mf">0.9625273063350698</span><span class="p">)},</span>
+ <span class="s1">&#39;dist2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;(49.0, 218.0]&#39;</span><span class="p">,</span> <span class="mf">0.903448275862069</span><span class="p">)},</span>
+ <span class="s1">&#39;Count_1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;(3.0, 4682.0]&#39;</span><span class="p">,</span> <span class="mf">0.955108359133127</span><span class="p">)},</span>
+ <span class="s1">&#39;Count_2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;(4.0, 5690.0]&#39;</span><span class="p">,</span> <span class="mf">0.9553398058252427</span><span class="p">)},</span>
+ <span class="s1">&#39;Count_3&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;0.0&#39;</span><span class="p">,</span> <span class="mf">0.9688095476882961</span><span class="p">)},</span>
+ <span class="s1">&#39;Count_4&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;(1.0, 2250.0]&#39;</span><span class="p">,</span> <span class="mf">0.8878718535469108</span><span class="p">)},</span>
+ <span class="s1">&#39;Count_5&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;[0.0, 1.0]&#39;</span><span class="p">,</span> <span class="mf">0.9642601004064069</span><span class="p">)},</span>
+ <span class="s1">&#39;Count_6&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;(1.0, 2.0]&#39;</span><span class="p">,</span> <span class="mf">0.9646324549237171</span><span class="p">)},</span>
+ <span class="s1">&#39;Count_7&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;[0.0, 2252.0]&#39;</span><span class="p">,</span> <span class="mf">0.9688968896889689</span><span class="p">)},</span>
+ <span class="s1">&#39;Count_8&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;(1.0, 3328.0]&#39;</span><span class="p">,</span> <span class="mf">0.8951747088186356</span><span class="p">)},</span>
+ <span class="s1">&#39;Count_9&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;[0.0, 1.0]&#39;</span><span class="p">,</span> <span class="mf">0.9666098323387325</span><span class="p">)}}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="improving-model-performance-results-overweighting">
+<h2>Improving Model Performance Results: Overweighting<a class="headerlink" href="#improving-model-performance-results-overweighting" title="Permalink to this heading"></a></h2>
+<p>After using RIME to identify weaknesses of your model, it’s time to improve your model’s
+performance. One method of doing this is to increase the training weights of underperforming
+subsets. Let’s try to increase the performance of subset <code class="docutils literal notranslate"><span class="pre">C</span></code> in the feature
+<code class="docutils literal notranslate"><span class="pre">Product_type</span></code>, which only has an accuracy of ~91%.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">worst_subsets_for_metrics</span><span class="p">[</span><span class="s2">&quot;Product_type&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Output</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="mf">0.9145516074450084</span><span class="p">)}</span>
+</pre></div>
+</div>
+<section id="training-the-initial-model">
+<h3>Training the Initial Model<a class="headerlink" href="#training-the-initial-model" title="Permalink to this heading"></a></h3>
+<p>We can proceed in the regular way to train the model.</p>
+<p>First, we preprocess our train and test data for our model</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_pre</span> <span class="o">=</span> <span class="n">preprocess_df</span><span class="p">(</span><span class="n">train_df</span><span class="p">)</span>
+<span class="n">train_preds</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">train_pre</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">COL</span> <span class="o">=</span> <span class="s1">&#39;Product_type&#39;</span>
+<span class="n">VAL</span> <span class="o">=</span> <span class="s1">&#39;C&#39;</span>
+<span class="n">train_df_full</span> <span class="o">=</span> <span class="n">train_df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">train_df_full</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_labels</span>
+<span class="n">train_df_full</span><span class="p">[</span><span class="s1">&#39;preds&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_preds</span>
+</pre></div>
+</div>
+<p>And then, we adjust the subset sample weights and retrain</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sample_weights</span> <span class="o">=</span> <span class="p">(</span><span class="n">train_pre</span><span class="p">[</span><span class="n">COL</span><span class="p">]</span> <span class="o">==</span> <span class="n">VAL</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">categorical_features_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">train_pre</span><span class="o">.</span><span class="n">dtypes</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">new_model</span> <span class="o">=</span> <span class="n">catb</span><span class="o">.</span><span class="n">CatBoostClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">new_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_pre</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weights</span><span class="p">,</span> <span class="n">cat_features</span><span class="o">=</span><span class="n">categorical_features_indices</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="comparing-improvements">
+<h3>Comparing Improvements<a class="headerlink" href="#comparing-improvements" title="Permalink to this heading"></a></h3>
+<p>We can define a new predict_dict function and create a new container to calculate updated metrics.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">predict_dict_new_model</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Predict dict function.&quot;&quot;&quot;</span>
+    <span class="n">new_x</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">new_x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">new_x</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">new_model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">new_x</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">new_data_container</span> <span class="o">=</span> <span class="n">DataContainer</span><span class="o">.</span><span class="n">from_df</span><span class="p">(</span><span class="n">train_df</span><span class="p">,</span> <span class="n">model_task</span><span class="o">=</span><span class="n">ModelTask</span><span class="o">.</span><span class="n">BINARY_CLASSIFICATION</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">train_labels</span><span class="p">)</span>
+<span class="n">test_data_container</span> <span class="o">=</span> <span class="n">DataContainer</span><span class="o">.</span><span class="n">from_df</span><span class="p">(</span><span class="n">test_df</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">test_labels</span><span class="p">,</span> <span class="n">model_task</span><span class="o">=</span><span class="n">ModelTask</span><span class="o">.</span><span class="n">BINARY_CLASSIFICATION</span><span class="p">,</span> <span class="n">ref_data_container</span><span class="o">=</span><span class="n">data_container</span><span class="p">)</span>
+<span class="n">new_container</span> <span class="o">=</span> <span class="n">TabularRunContainer</span><span class="o">.</span><span class="n">from_predict_dict_function</span><span class="p">(</span><span class="n">new_data_container</span><span class="p">,</span> <span class="n">test_data_container</span><span class="p">,</span> <span class="n">predict_dict_new_model</span><span class="p">,</span> <span class="n">ModelTask</span><span class="o">.</span><span class="n">BINARY_CLASSIFICATION</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Calculating overall metrics, despite our rather simple adjustment, the accuracy increases to ~96%:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">new_worst_subsets_for_metrics</span> <span class="o">=</span> <span class="n">get_worst_subsets_for_metrics</span><span class="p">(</span><span class="n">new_data_container</span><span class="p">,</span> <span class="p">[</span><span class="n">MetricName</span><span class="o">.</span><span class="n">ACCURACY</span><span class="p">])</span>
+<span class="n">new_worst_subsets_for_metrics</span><span class="p">[</span><span class="s2">&quot;Product_type&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Output</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="mf">0.9650974025974026</span><span class="p">)}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rime_adversarial.html" class="btn btn-neutral float-left" title="RIME Adversarial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rime_model_performance.html" class="btn btn-neutral float-right" title="RIME Model Performance" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

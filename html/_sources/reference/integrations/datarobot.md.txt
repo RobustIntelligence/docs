@@ -1,0 +1,75 @@
+# DataRobot
+
+In order to connect RIME to a deployed DataRobot model, you can copy the below Python snippet into a Python model. Then go through that snippet and replace all the TODOs with neccessary credentials/endpoints.
+
+Once that is done, you can specify that model file when [configuring your model source](/configuration/tabular/model_source.md).
+
+```python
+"""Template for how you can use RIME for a model hosted on DataRobot.
+
+We expect this file to contain a `predict_dict` function that takes in a mapping from
+feature name to feature value. This corresponds to one row in the dataset. This
+method should return a score between 0 and 1.
+
+
+This specific file implements this assuming that 1) your model is hosted
+on DataRobot, and 2), that your machine is authenticated with Google Cloud,
+and 3) that you have the requests library installed.
+
+"""
+
+import requests
+import json
+import time
+
+
+# Step 1: Define endpoint variables.
+API_URL = 'TODO: API url'
+API_KEY = 'TODO: API key'
+DEPLOYMENT_ID = '602ab322ae91f1246dff3910'
+
+
+MAX_PREDICTION_FILE_SIZE_BYTES = 52428800  # 50 MB
+
+
+# Step 2: Implement the below function that should be applied to a row of data
+# (in dictionary form), including any requisite preprocessing logic.
+# By default, we assume that after preprocessing, the input is then sent to the
+# model endpoint, but feel free to edit/add/remove
+# functions as you wish.
+
+def custom_preprocessing(x: dict):
+    # TODO: fill out preprocessing logic
+    return x
+
+
+def predict_dict(x: dict) -> float:
+    x = custom_preprocessing(x)
+    data = json.dumps([x])
+    headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer {}'.format(API_KEY),
+    }
+
+    url = API_URL.format(deployment_id=DEPLOYMENT_ID)
+
+    # Make API request for predictions
+    success = False
+    while not success:
+        predictions_response = requests.post(
+            url,
+            data=data,
+            headers=headers,
+        )
+        # Make sure we are not running into a 429 (too many requests) error
+        if predictions_response.status_code == 429:
+            time.sleep(int(predictions_response.headers['Retry-After']))
+        else:
+            success = True
+    # Get response data
+    res = predictions_response.json()['data']
+    # Get the first prediction for the case where label == 1
+    # NOTE: this is only for binary classification
+    return [v for v in res[0]['predictionValues'] if v['label'] == 1][0]['value']
+
+```

@@ -1,0 +1,110 @@
+# Running AI Stress Testing on the Fraud Example with RIME SDK
+
+This tutorial will guide you through how to get started with RIME SDK by
+running AI Stress Testing on a model trained over a slightly modified version
+of the <a target="_blank" rel="noopener"
+href="https://www.kaggle.com/c/ieee-fraud-detection">IEEE-CIS Fraud
+Detection</a> dataset.
+
+Before you begin, make sure:
+- You have completed the installation
+- You are in the Python environment with the RIME Python SDK installed
+- You have [downloaded](https://www.dropbox.com/s/bv0epg6fbkts62j/ri-public-examples.tar.gz?dl=0) the example datasets and configuration files
+
+### Setup
+
+The RIME SDK reads data and model from AWS S3. To begin using the RIME
+SDK, please first upload the `fraud` folder (found inside zip file downloaded
+above) to an S3 bucket that you have access to.
+
+### Running Stress Testing on the Fraud Example
+
+For the basic example, we will run AI Stress Testing with a model. If you do
+not want to run RIME with the model, and instead want to run in a different
+mode (e.g. using prediction logs instead), see the end of this document for
+different workflows. The model provided in the examples folder is a Catboost
+model and we will need to install extra dependencies (in order to call that
+model). To do this, please run:
+
+```bash
+pip install -r workshop_requirements.txt
+```
+
+{{ sdk_client_setup }}
+
+Next, start python and run the following:
+
+```python
+import json
+
+project = rime_client.create_project("FooBar's Test Project", "DESCRIPTION")
+
+# Load the configuration file
+f = open("examples/fraud/stress_tests_with_model.json")
+config = json.load(f)
+# TODO: update the S3 path below with the actual bucket name
+config["data_info"]["ref_path"] = "s3://path/to/examples/fraud/train.csv"
+config["data_info"]["eval_path"] = "s3://path/to/examples/fraud/val.csv"
+config["model_info"]["path"] = "s3://path/to/examples/fraud/model.py"
+config["tests_config_path"] = "s3://path/to/examples/fraud/test_config.json"
+
+# Start the tests
+job = rime_client.start_stress_test(test_run_config=config, project_id=project.project_id)
+job.get_status(poll_rate_sec=1.0, verbose=True, wait_until_finish=True)
+```
+
+This will start running the tests and wait for them to finish. Once they
+finish, you will be able to see the results through the RIME interface on your
+web browser.
+
+### Stress Testing with Prediction Logs
+Similar to the above steps, but instead the command you will want to run is:
+
+```
+# Load the configuration file
+f = open("examples/fraud/stress_tests_no_model.json")
+config = json.load(f)
+config["data_info"]["ref_path"] = "s3://path/to/examples/fraud/train_with_preds.csv"
+config["data_info"]["eval_path"] = "s3://path/to/examples/fraud/val_with_preds.csv"
+
+# Start the tests
+job = rime_client.start_stress_test(test_run_config=config, project_id=project.project_id)
+job.get_status(poll_rate_sec=1.0, verbose=True, wait_until_finish=True)
+```
+
+Note that the command is exactly the same EXCEPT for loading and modifying the
+config.
+
+### Stress Testing with Data Only
+Similar to the above steps, but instead the command you will want to run is:
+
+```
+# Load the configuration file
+f = open("examples/fraud/stress_tests_data_only.json")
+config = json.load(f)
+config["data_info"]["ref_path"] = "s3://path/to/examples/fraud/train.csv"
+config["data_info"]["eval_path"] = "s3://path/to/examples/fraud/val.csv"
+
+# Start the tests
+job = rime_client.start_stress_test(test_run_config=config, project_id=project.project_id)
+job.get_status(poll_rate_sec=1.0, verbose=True, wait_until_finish=True)
+```
+
+Note that the command is exactly the same EXCEPT for loading and modifying the
+config.
+
+### Stress Testing for RIME NLP
+
+To specify an NLP run, add `data_type="nlp"` to the call to `start_stress_test()`. For example:
+
+```
+# Load the configuration file
+f = open("nlp_examples/classification/emotion_recognition/stress_tests_config.json")
+config = json.load(f)
+config["data_info"]["ref_path"] = "s3://path/to/nlp_examples/fraud/emotion_recognition/data/train.json"
+config["data_info"]["eval_path"] = "s3://path/to/nlp_examples/fraud/emotion_recognition/data/test.json"
+
+# Start the tests
+job = rime_client.start_stress_test(test_run_config=config, project_id=project.project_id, data_type="nlp")
+job.get_status(poll_rate_sec=1.0, verbose=True, wait_until_finish=True)
+```

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Stress Testing &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="AI Firewall Continuous Tests" href="rime_ai_firewall_continuous_tests.html" />
+    <link rel="prev" title="CLI" href="../cli.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                0.16.14
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../rime/product-overview.html">Product Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rime/product-details.html">Product Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/quickstart.html">Running Your First AI Stress Test</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Walkthroughs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../python-sdk.html">Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python-library.html">Python Library</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../cli.html">CLI</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../cli.html#tabular">Tabular</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">AI Stress Testing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#running-stress-testing-on-the-income-example">Running Stress Testing on the Income Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#running-stress-testing-on-your-own-model-and-datasets">Running Stress Testing on your own Model and Datasets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="rime_ai_firewall_continuous_tests.html">AI Firewall Continuous Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="specify_model.html">Specify a Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rime_firewall_realtime.html">Deploy AI Firewall Realtime</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli.html#nlp">NLP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli.html#computer-vision">Computer Vision</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Configuring RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/tabular.html">Tabular Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/nlp.html">NLP Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/cv.html">CV Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api-authentication.html">API Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-library.html">Python Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/cli.html">CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/integrations.html">Integrations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../cli.html">CLI</a></li>
+      <li class="breadcrumb-item active">AI Stress Testing</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/walkthroughs/cli/rime_ai_stress_testing.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ai-stress-testing">
+<h1>AI Stress Testing<a class="headerlink" href="#ai-stress-testing" title="Permalink to this heading"></a></h1>
+<p>This tutorial will guide you through how to get started with RIME by running AI
+Stress Testing on a model trained over a slightly modified version of the <a
+target="_blank" rel="noopener"
+href="https://www.kaggle.com/uciml/adult-census-income">Adult Census Income</a>
+dataset.</p>
+<section id="running-stress-testing-on-the-income-example">
+<h2>Running Stress Testing on the Income Example<a class="headerlink" href="#running-stress-testing-on-the-income-example" title="Permalink to this heading"></a></h2>
+<section id="stress-testing-with-a-model-and-dataset">
+<h3>Stress Testing with a Model and Dataset<a class="headerlink" href="#stress-testing-with-a-model-and-dataset" title="Permalink to this heading"></a></h3>
+<p>For the basic example, we will run AI Stress Testing with a model. If you do
+not want to run RIME with the model, and instead want to run in a different
+mode (e.g. using prediction logs instead), see the end of this document for
+different workflows.</p>
+<p>To kick off a run of AI Stress Testing:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-stress-tests<span class="w"> </span>--config-path<span class="w"> </span>examples/income/stress_tests_model.json
+</pre></div>
+</div>
+<p>After this finishes running, you should be able to see the results in the web client,
+where they will be uploaded to the Default Project. For a full guide to what you are seeing,
+please see our <a class="reference internal" href="../../rime/product-details/ui/tabular.html"><span class="doc std std-doc">UI Documentation</span></a>.</p>
+<p>For additional command line options, please see the <a class="reference internal" href="../../reference/cli.html"><span class="doc std std-doc">CLI Reference</span></a>.</p>
+</section>
+<section id="stress-testing-with-prediction-logs">
+<h3>Stress Testing with Prediction Logs<a class="headerlink" href="#stress-testing-with-prediction-logs" title="Permalink to this heading"></a></h3>
+<p>Similar to the above steps, except the CLI command to run RIME with just
+prediction logs is:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-stress-tests<span class="w"> </span>--config-path<span class="w"> </span>examples/income/stress_tests_prediction_logs.json
+</pre></div>
+</div>
+<p>Note that the command is exactly the same EXCEPT for the <code class="docutils literal notranslate"><span class="pre">--config-path</span></code> provided.</p>
+</section>
+<section id="stress-testing-with-compliance">
+<h3>Stress Testing with Compliance<a class="headerlink" href="#stress-testing-with-compliance" title="Permalink to this heading"></a></h3>
+<p>This will run a specific suite of tests geared towards bias/fairness. Similar to the above
+steps - to kick off a Compliance only run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-stress-tests<span class="w"> </span>--config-path<span class="w"> </span>examples/income/stress_tests_compliance.json
+</pre></div>
+</div>
+<p>The command is exactly the same, but inside the config file the <code class="docutils literal notranslate"><span class="pre">categories</span></code> list contains
+<code class="docutils literal notranslate"><span class="pre">Compliance</span></code> and <code class="docutils literal notranslate"><span class="pre">data_info</span></code> contains <code class="docutils literal notranslate"><span class="pre">protected_features</span></code>. The tests will be run over these
+features.</p>
+</section>
+</section>
+<section id="running-stress-testing-on-your-own-model-and-datasets">
+<h2>Running Stress Testing on your own Model and Datasets<a class="headerlink" href="#running-stress-testing-on-your-own-model-and-datasets" title="Permalink to this heading"></a></h2>
+<p>This guide will cover how to run AI Stress Testing on your own data and model.</p>
+<section id="define-a-python-model-file-in-the-correct-format">
+<h3>Define a Python Model File in the Correct Format<a class="headerlink" href="#define-a-python-model-file-in-the-correct-format" title="Permalink to this heading"></a></h3>
+<p>A model is not required for AI Stress Testing, but providing one will produce
+better results. RIME expects models to be provided in a specific format; see
+<a class="reference internal" href="specify_model.html"><span class="doc std std-doc">How to Create a Python Model File</span></a> for step-by-step
+instructions.</p>
+</section>
+<section id="collect-data-in-the-correct-format">
+<h3>Collect Data in the Correct Format<a class="headerlink" href="#collect-data-in-the-correct-format" title="Permalink to this heading"></a></h3>
+<p>For AI Stress Testing, RIME expects that you will upload two datasets: a
+reference dataset (typically the training data) and an evaluation dataset
+(typically the validation, testing, or other data).  Currently RIME expects
+each dataset to be passed in as a csv or parquet file where each column is a separate
+feature.</p>
+<p>You can optionally provide labels for each datapoint. These should be passed in
+as a column in both datasets. Providing labels allows RIME to surface model
+performance metrics across our tests.</p>
+<p>NOTE: in the multi-class classification scenario, each label should be a
+nonnegative integer <code class="docutils literal notranslate"><span class="pre">i</span></code> where the corresponding prediction for label <code class="docutils literal notranslate"><span class="pre">i</span></code> should
+be found in the <code class="docutils literal notranslate"><span class="pre">ith</span></code> dimenson of the prediction vector.</p>
+<p>You can optionally provide predictions for each datapoint. If the model task is
+multi-class classification, they must be specified in a separate csv or parquet file as a
+dataframe where the <code class="docutils literal notranslate"><span class="pre">ith</span></code> column represents the predicted probabilities for the
+<code class="docutils literal notranslate"><span class="pre">ith</span></code> class/label. For all other model tasks, they should be provided as a
+column in both datasets. In the absence of a model, providing predictions will
+produce better results.</p>
+</section>
+<section id="create-configuration">
+<h3>Create Configuration<a class="headerlink" href="#create-configuration" title="Permalink to this heading"></a></h3>
+<p>With your data and model ready, you can now create a configuration file for AI
+Stress Testing. For a detailed reference on what the configuration should look
+like, see <a class="reference internal" href="../../configuration/tabular/stress_testing.html"><span class="doc std std-doc">AI Stress Testing Configuration
+Reference</span></a>.</p>
+</section>
+<section id="run-the-cli">
+<h3>Run the CLI<a class="headerlink" href="#run-the-cli" title="Permalink to this heading"></a></h3>
+<p>You can run the CLI, pointing it to the configuration file created in the above
+step, with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-stress-tests<span class="w"> </span>--config-path<span class="w"> </span>&lt;PATH-TO-CONFIGURATION&gt;
+</pre></div>
+</div>
+<p>After this finishes running, you should be able to see the results in the web client,
+where they will be uploaded to the Default Project. For a full guide to what you are seeing,
+please see our <a class="reference internal" href="../../rime/product-details/ui/tabular.html"><span class="doc std std-doc">UI Documentation</span></a>.</p>
+</section>
+<section id="caching-test-results-for-future-uploading">
+<h3>Caching Test Results for Future Uploading<a class="headerlink" href="#caching-test-results-for-future-uploading" title="Permalink to this heading"></a></h3>
+<p>In some cases, you may want to cache the test results - if you need to restart the server, then you will be able to
+upload the results without needing to rerun stress testing. To do this, specify a <code class="docutils literal notranslate"><span class="pre">--save-path</span></code> when running stress testing:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-stress-tests<span class="w"> </span>--config-path<span class="w"> </span>&lt;PATH-TO-CONFIGURATION&gt;<span class="w"> </span>--save-path<span class="w"> </span>&lt;SAVE-PATH&gt;
+</pre></div>
+</div>
+<p>This will cache results in a directory specified in <code class="docutils literal notranslate"><span class="pre">--save-path</span></code>. To directly re-upload the results, just do:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>upload<span class="w"> </span>--save-path<span class="w"> </span>&lt;SAVE-PATH&gt;
+</pre></div>
+</div>
+</section>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading"></a></h2>
+<p>If you run into errors running this walkthrough, please reference the <a class="reference internal" href="../../reference/troubleshooting.html#rime-python-package"><span class="std std-ref">RIME Python Package</span></a> section of our FAQ. Additionally, your RI representative will be happy to assist–feel free to reach out!</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../cli.html" class="btn btn-neutral float-left" title="CLI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rime_ai_firewall_continuous_tests.html" class="btn btn-neutral float-right" title="AI Firewall Continuous Tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deployment &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../../_static/clipboard.min.js"></script>
+        <script src="../../../../_static/copybutton.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Terraform Module Variables" href="terraform_values.html" />
+    <link rel="prev" title="Values" href="values.html" />
+<link href="../../../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../../../index.html">
+        <img src="../../../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                0.16.14
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rime/product-overview.html">Product Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rime/product-details.html">Product Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../installation.html">Installation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#rime-cloud">RIME Cloud</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../installation.html#rime-enterprise">RIME Enterprise</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../installation.html">RIME Enterprise VPC Installation</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="setup.html">Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="values.html">Values</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Deployment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="terraform_values.html">Terraform Module Variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sdk.html">Installing the RIME SDK</a></li>
+<li class="toctree-l4"><a class="reference internal" href="update.html">Update</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="setup.html">Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#rime-enterprise-local">RIME Enterprise (Local)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Running Your First AI Stress Test</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Walkthroughs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../walkthroughs/python-sdk.html">Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../walkthroughs/python-library.html">Python Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../walkthroughs/cli.html">CLI</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Configuring RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../configuration/tabular.html">Tabular Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../configuration/nlp.html">NLP Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../configuration/cv.html">CV Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/api-authentication.html">API Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/python-sdk.html">Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/python-library.html">Python Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/cli.html">CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/integrations.html">Integrations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../installation.html">Installation</a></li>
+          <li class="breadcrumb-item"><a href="../installation.html">RIME Enterprise VPC Installation</a></li>
+      <li class="breadcrumb-item active">Deployment</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/get_started/installation/enterprise/installation/deployment.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="deployment">
+<h1>Deployment<a class="headerlink" href="#deployment" title="Permalink to this heading"></a></h1>
+<p>You have two options regarding where to deploy RIME, deploying to a new Kubernetes cluster (recommended) or deploying to an existing Kuberneter cluster. If you pass in <code class="docutils literal notranslate"><span class="pre">create_eks</span> <span class="pre">=</span> <span class="pre">false</span></code> to the RIME module, you must already have a provisioned eks cluster corresponding to <code class="docutils literal notranslate"><span class="pre">cluster_name</span></code>.</p>
+<section id="deploy-rime">
+<h2>Deploy RIME<a class="headerlink" href="#deploy-rime" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Login to your gcloud account with access to the RIME helm charts/terraform module using <code class="docutils literal notranslate"><span class="pre">gcloud</span> <span class="pre">auth</span> <span class="pre">application-default</span> <span class="pre">login</span></code></p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">helm</span> <span class="pre">plugin</span> <span class="pre">install</span> <span class="pre">https://github.com/hayorov/helm-gcs.git</span></code> and <code class="docutils literal notranslate"><span class="pre">helm</span> <span class="pre">plugin</span> <span class="pre">update</span> <span class="pre">gcs</span></code> to add the gcs helm plugin</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">helm</span> <span class="pre">repo</span> <span class="pre">add</span> <span class="pre">rime</span> <span class="pre">gs://rime-backend-helm-repository</span></code> to add the rime repository</p>
+<ol class="arabic simple">
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">helm</span> <span class="pre">repo</span> <span class="pre">update</span></code> to update any rime charts</p></li>
+</ol>
+</li>
+<li><p>In your terraform setup, add a <code class="docutils literal notranslate"><span class="pre">backend.tf</span></code> file if not already present, config:</p></li>
+</ol>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="nb">terraform</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kr">backend</span><span class="w"> </span><span class="nv">&quot;s3&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">region</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;region&gt;&quot;</span>
+<span class="w">    </span><span class="na">bucket</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;bucket-name&gt;&quot;</span>
+<span class="w">    </span><span class="na">key</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;statefile key&gt;&quot; #ie: &quot;rime/state-main.tfstate&quot;</span>
+<span class="w">    </span><span class="na">encrypt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">true</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Add a <code class="docutils literal notranslate"><span class="pre">main.tf</span></code> file with the RIME module and configure it according to the values in the terraform values section. Make sure to update version in source. Here is an example setup:</p></li>
+</ol>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">provider</span><span class="w"> </span><span class="nv">&quot;aws&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="na">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;region&gt;&quot;</span>
+<span class="p">}</span>
+
+<span class="kr">module</span><span class="w"> </span><span class="nv">&quot;rime&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;gcs::https://storage.googleapis.com/storage/v1/rime-tf-modules/&lt;version&gt;/rime-module.tgz&quot;</span>
+
+<span class="w">  </span><span class="na">cluster_name</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;cluster_name&gt;&quot;</span>
+<span class="w">  </span><span class="na">create_managed_helm_release</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">true</span>
+<span class="w">  </span><span class="na">helm_values_output_dir</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;output dir for helm values file&gt;&quot;</span>
+<span class="w">  </span><span class="na">install_cluster_autoscaler</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="no">true</span>
+<span class="w">  </span><span class="na">install_external_dns</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="no">true</span>
+<span class="w">  </span><span class="na">install_datadog</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="no">true</span>
+<span class="w">  </span><span class="na">install_velero</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="no">true</span>
+<span class="w">  </span><span class="na">k8s_namespaces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="na">namespace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;default&quot;</span>
+<span class="w">      </span><span class="na">primary</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;true&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="w">  </span><span class="na">resource_name_suffix</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;suffix&gt;&quot; #string to append to your resources&quot;</span>
+<span class="w">  </span><span class="na">rime_docker_model_testing_image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;model-testing-image&gt;&quot;</span>
+<span class="w">  </span><span class="na">rime_repository</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;gs://rime-backend-helm-repository&quot;</span>
+<span class="w">  </span><span class="na">rime_version</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;rime-version&gt;&quot;</span>
+<span class="w">  </span><span class="na">s3_authorized_bucket_path_arns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;arn:aws:s3:::&lt;bucket-name&gt;/*&quot;</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="w">  </span><span class="nb">dns_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">create_route53</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">false</span><span class="c1"> #if you are providing your own dns records, set to false</span>
+<span class="w">    </span><span class="na">rime_domain</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;domain&gt;&quot;</span>
+<span class="w">    </span><span class="na">acm_domain</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;acm domain&gt;&quot;</span><span class="c1"> #if your acm cert base domain is different from the rime domain</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="na">private_subnet_ids</span><span class="w">                  </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;private &lt;vpc subnets&gt;&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="na">public_subnet_ids</span><span class="w">                   </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;public &lt;vpc subnets&gt;&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="na">create_eks</span><span class="w">                          </span><span class="o">=</span><span class="w"> </span><span class="no">true</span>
+<span class="w">  </span><span class="na">vpc_id</span><span class="w">                              </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;vpc_id&gt;&quot;</span>
+<span class="w">  </span><span class="na">cluster_version</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;1.20&quot;</span>
+<span class="w">  </span><span class="na">model_testing_worker_group_min_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>
+<span class="w">  </span><span class="na">model_testing_worker_group_max_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span>
+<span class="w">  </span><span class="na">model_testing_worker_group_instance_types</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;t2.xlarge&quot;</span><span class="p">]</span><span class="c1"> # recommended 16GB node or larger instance if needed</span>
+<span class="w">  </span><span class="na">map_users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="na">userarn</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;arn:aws:iam::&lt;account-number&gt;:user/eng&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;eng&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="na">groups</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;system:masters&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">init</span></code> and then <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">apply</span></code>. This may take a while (up to 30 minutes)</p></li>
+</ol>
+</section>
+<section id="set-load-balancer-alpn-policy">
+<h2>Set Load Balancer ALPN Policy<a class="headerlink" href="#set-load-balancer-alpn-policy" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Find the load balancer used by the <code class="docutils literal notranslate"><span class="pre">rime-kong-proxy</span></code> with <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">svc</span> <span class="pre">rime-kong-proxy</span></code>.</p></li>
+<li><p>Locate the Load Balancer in your AWS console.</p></li>
+<li><p>In Listeners section, select <code class="docutils literal notranslate"><span class="pre">TLS:</span> <span class="pre">443</span></code> listener and edit the ALPN policy to <code class="docutils literal notranslate"><span class="pre">HTTP2Preferred</span></code>.</p></li>
+</ol>
+</section>
+<section id="test-your-installation">
+<h2>Test your installation<a class="headerlink" href="#test-your-installation" title="Permalink to this heading"></a></h2>
+<ol class="arabic">
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">aws</span> <span class="pre">eks</span> <span class="pre">--region</span> <span class="pre">us-west-2</span> <span class="pre">update-kubeconfig</span> <span class="pre">--name</span> <span class="pre">&lt;cluster-name&gt;</span></code> then <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">pods</span> <span class="pre">-n</span> <span class="pre">&lt;primary</span> <span class="pre">namespace&gt;</span></code>. Your output should look something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rime</span><span class="o">-</span><span class="n">frontend</span><span class="o">-</span><span class="n">cd6c89884</span><span class="o">-</span><span class="mi">8</span><span class="n">ljrl</span>               <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>          <span class="mi">5</span><span class="n">m26s</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+</li>
+<li><p>Go to rime.&lt;domain&gt; and verify that you are able to access the RIME webapp after logging into okta.</p></li>
+<li><p>Run the SDK and verify that you are able to run the following code snippets:</p></li>
+<li><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rime_client</span> <span class="o">=</span> <span class="n">RIMEClient</span><span class="p">(</span><span class="s2">&quot;&lt;domain&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;api-key&quot;</span><span class="p">)</span>
+<span class="n">project</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span><span class="s2">&quot;&lt;project name&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;Insert your description&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Go to the webapp and verify that a project was created. If everything succeeded you are ready for testing! See SDK docs to see everything you can do with RIME.</p></li>
+</ol>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>If you get an okta bad request, ensure that the redirect url has been added to your okta app.</p></li>
+<li><p>If you are getting timeouts in the SDK, ensure that you are connected to VPN.</p></li>
+<li><p>If the webapp is marked as insecure, verify that you have an ACM SSL/TLS cert for your webapp.</p></li>
+<li><p>On older operating systems, you may need to run <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">GRPC_DNS_RESOLVER=native</span></code> in the shell. Otherwise requests may hang due to ipv4 vs ipv6 issues.</p></li>
+</ol>
+</section>
+<section id="backups">
+<h2>Backups<a class="headerlink" href="#backups" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>To let RIME backup your DB, set <code class="docutils literal notranslate"><span class="pre">install_velero</span></code> to true in the above terraform module.</p></li>
+<li><p>If you are using velero for backups, install the velero cli and verify that our backups are running.</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="c1"># Download Velero.</span>
+ <span class="n">curl</span> <span class="o">-</span><span class="n">fsSL</span> <span class="o">-</span><span class="n">o</span> <span class="n">velero</span><span class="o">-</span><span class="n">v1</span><span class="mf">.6.3</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">amd64</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">vmware</span><span class="o">-</span><span class="n">tanzu</span><span class="o">/</span><span class="n">velero</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">v1</span><span class="mf">.6.3</span><span class="o">/</span><span class="n">velero</span><span class="o">-</span><span class="n">v1</span><span class="mf">.6.3</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">amd64</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+ <span class="c1"># Unzip.</span>
+ <span class="n">tar</span> <span class="o">-</span><span class="n">xvf</span> <span class="n">velero</span><span class="o">-</span><span class="n">v1</span><span class="mf">.6.3</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">amd64</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+ <span class="c1"># Ensure that velero backups are scheduled properly.</span>
+ <span class="o">./</span><span class="n">velero</span> <span class="n">schedule</span> <span class="n">get</span> <span class="o">-</span><span class="n">n</span> <span class="n">rime</span><span class="o">-</span><span class="n">extras</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="values.html" class="btn btn-neutral float-left" title="Values" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="terraform_values.html" class="btn btn-neutral float-right" title="Terraform Module Variables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Stress Tests &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="RIME Adversarial" href="rime_adversarial.html" />
+    <link rel="prev" title="Data and Model Setup" href="rime_data_model_setup.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                0.16.14
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../rime/product-overview.html">Product Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rime/product-details.html">Product Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/quickstart.html">Running Your First AI Stress Test</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Walkthroughs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../python-sdk.html">Python SDK</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../python-library.html">Python Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="rime_data_model_setup.html">Data and Model Setup</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">AI Stress Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rime_adversarial.html">RIME Adversarial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rime_model_behavior.html">RIME Subset Performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rime_model_performance.html">RIME Model Performance</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Configuring RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/tabular.html">Tabular Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/nlp.html">NLP Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/cv.html">CV Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api-authentication.html">API Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-library.html">Python Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/cli.html">CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/integrations.html">Integrations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../python-library.html">Python Library</a></li>
+      <li class="breadcrumb-item active">AI Stress Tests</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/walkthroughs/python-library/rime_stress_tests.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ai-stress-tests">
+<h1>AI Stress Tests<a class="headerlink" href="#ai-stress-tests" title="Permalink to this heading"></a></h1>
+<p>Be sure to complete the initial setup described in <a class="reference internal" href="rime_data_model_setup.html"><span class="doc std std-doc">RIME Data and Model Setup</span></a> before proceeding.</p>
+<p>All tests should expose a <code class="docutils literal notranslate"><span class="pre">run_notebook</span></code> function, which is a specially designed function to return outputs in a notebook-friendly manner.
+The return type is a dictionary with a few standard keys. The common ones are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">status</span></code>: Will be one of <code class="docutils literal notranslate"><span class="pre">PASS</span></code>, <code class="docutils literal notranslate"><span class="pre">FAIL</span></code>, or <code class="docutils literal notranslate"><span class="pre">SKIP</span></code> and denotes the status of the test.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">severity</span></code>: Will be one of <code class="docutils literal notranslate"><span class="pre">High</span></code>, <code class="docutils literal notranslate"><span class="pre">Medium</span></code>, <code class="docutils literal notranslate"><span class="pre">Low</span></code>, or <code class="docutils literal notranslate"><span class="pre">None</span></code> and denotes the severity of the failure of the test (will be <code class="docutils literal notranslate"><span class="pre">None</span></code> if test did not fail).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">params</span></code>: A dictionary of all the parameters of the test.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">columns</span></code>: A list of column names that this test was run over.</p></li>
+</ul>
+<p>Each test may also have their own specific outputs as well, but the above are the common ones that will be present in all!</p>
+<p>Running unseen categorical test:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime.tabular.tests</span> <span class="kn">import</span> <span class="n">UnseenCategoricalTest</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">UnseenCategoricalTest</span><span class="p">(</span><span class="n">col_name</span><span class="o">=</span><span class="s2">&quot;Device_operating_system&quot;</span><span class="p">)</span>
+<span class="n">test</span><span class="o">.</span><span class="n">run_notebook</span><span class="p">(</span><span class="n">container</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><b>Output</b>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="n">test</span> <span class="n">raised</span> <span class="n">a</span> <span class="n">warning</span> <span class="p">(</span><span class="k">with</span> <span class="n">severity</span> <span class="n">level</span> <span class="n">Low</span><span class="p">)</span> <span class="n">because</span> <span class="n">the</span> <span class="n">model</span> <span class="n">impact</span> <span class="ow">is</span> <span class="mi">0</span><span class="o">/</span><span class="mi">10</span> <span class="ow">and</span> <span class="n">we</span> <span class="n">found</span> <span class="mi">9</span> <span class="n">failing</span> <span class="n">rows</span><span class="o">.</span>
+<span class="p">{</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;FAIL&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;severity&#39;</span><span class="p">:</span> <span class="s1">&#39;Low&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;model_impact_config&#39;</span><span class="p">:</span> <span class="n">ModelImpactConfig</span><span class="p">(</span><span class="n">num_perturbation_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">perturbed_factor</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">prediction_factor</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">metric_factor</span><span class="o">=</span><span class="mf">0.002</span><span class="p">,</span> <span class="n">failing_rows_threshold</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
+  <span class="s1">&#39;col_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Device_operating_system&#39;</span><span class="p">},</span>
+ <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Device_operating_system&#39;</span><span class="p">],</span>
+ <span class="s1">&#39;unseen_value_counts&#39;</span><span class="p">:</span> <span class="n">Mac</span> <span class="n">OS</span> <span class="n">X</span> <span class="mi">10_11_4</span>    <span class="mi">2</span>
+ <span class="n">Mac</span> <span class="n">OS</span> <span class="n">X</span> <span class="mf">10.9</span>       <span class="mi">2</span>
+ <span class="n">Mac</span> <span class="n">OS</span> <span class="n">X</span> <span class="mi">10_12_2</span>    <span class="mi">1</span>
+ <span class="n">Mac</span> <span class="n">OS</span> <span class="n">X</span> <span class="mi">10_12_1</span>    <span class="mi">1</span>
+ <span class="n">Mac</span> <span class="n">OS</span> <span class="n">X</span> <span class="mf">10.6</span>       <span class="mi">1</span>
+ <span class="n">Windows</span>             <span class="mi">1</span>
+ <span class="n">Mac</span> <span class="n">OS</span> <span class="n">X</span> <span class="mf">10.10</span>      <span class="mi">1</span>
+ <span class="n">Name</span><span class="p">:</span> <span class="n">Device_operating_system</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span><span class="p">,</span>
+ <span class="s1">&#39;model_impacts&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Model Impact&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Observed&#39;</span><span class="p">,</span> <span class="s1">&#39;Adversarial&#39;</span><span class="p">,</span> <span class="s1">&#39;Overall&#39;</span><span class="p">],</span>
+  <span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;N/A&#39;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;0/10&#39;</span><span class="p">],</span>
+  <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Too few failing rows to estimate model impact.&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;Difference between original model performance over sampled rows (Accuracy=0.970) and performance over adversarial rows with unseen categoricals (Accuracy=0.970).&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;Combination of the above&#39;</span><span class="p">]},</span>
+ <span class="s1">&#39;failing_rows&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">158</span><span class="p">,</span> <span class="mi">1330</span><span class="p">,</span> <span class="mi">1807</span><span class="p">,</span> <span class="mi">2429</span><span class="p">,</span> <span class="mi">2831</span><span class="p">,</span> <span class="mi">4380</span><span class="p">,</span> <span class="mi">4727</span><span class="p">,</span> <span class="mi">7494</span><span class="p">,</span> <span class="mi">9317</span><span class="p">],</span>
+ <span class="s1">&#39;num_failing_rows&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Running duplicate rows test:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime.tabular.tests</span> <span class="kn">import</span> <span class="n">DuplicateRowsTest</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">DuplicateRowsTest</span><span class="p">()</span>
+<span class="n">test</span><span class="o">.</span><span class="n">run_notebook</span><span class="p">(</span><span class="n">container</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><b>Output</b>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="n">test</span> <span class="n">passed</span> <span class="n">because</span> <span class="n">there</span> <span class="n">are</span> <span class="mi">0</span> <span class="n">duplicate</span> <span class="n">row</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">evaluation</span> <span class="n">data</span><span class="o">.</span>
+<span class="p">{</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;PASS&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;severity&#39;</span><span class="p">:</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Failing Rows&#39;</span><span class="p">:</span> <span class="s1">&#39;0 (0.00%)&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;col_names&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;severity_thresholds&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)},</span>
+ <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+</pre></div>
+</div>
+<p>Running outliers test on a numeric feature column:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime.tabular.tests</span> <span class="kn">import</span> <span class="n">NonParametricOutliersTest</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">NonParametricOutliersTest</span><span class="p">(</span><span class="s2">&quot;TransactionAmt&quot;</span><span class="p">)</span>
+<span class="n">test</span><span class="o">.</span><span class="n">run_notebook</span><span class="p">(</span><span class="n">container</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><b>Output</b>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="n">test</span> <span class="n">raised</span> <span class="n">a</span> <span class="n">warning</span> <span class="p">(</span><span class="k">with</span> <span class="n">severity</span> <span class="n">level</span> <span class="n">Low</span><span class="p">)</span> <span class="n">because</span> <span class="n">the</span> <span class="n">model</span> <span class="n">impact</span> <span class="ow">is</span> <span class="mi">0</span><span class="o">/</span><span class="mi">10</span> <span class="ow">and</span> <span class="n">we</span> <span class="n">found</span> <span class="mi">2</span> <span class="n">failing</span> <span class="n">rows</span><span class="o">.</span>
+<span class="p">{</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;FAIL&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;severity&#39;</span><span class="p">:</span> <span class="s1">&#39;Low&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;model_impact_config&#39;</span><span class="p">:</span> <span class="n">ModelImpactConfig</span><span class="p">(</span><span class="n">num_perturbation_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">perturbed_factor</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">prediction_factor</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">metric_factor</span><span class="o">=</span><span class="mf">0.002</span><span class="p">,</span> <span class="n">failing_rows_threshold</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
+  <span class="s1">&#39;col_name&#39;</span><span class="p">:</span> <span class="s1">&#39;TransactionAmt&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;min_normal_prop&#39;</span><span class="p">:</span> <span class="mf">0.99</span><span class="p">,</span>
+  <span class="s1">&#39;baseline_quantile&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">},</span>
+ <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;TransactionAmt&#39;</span><span class="p">],</span>
+ <span class="s1">&#39;lower_threshold&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">30.1300916166291</span><span class="p">,</span>
+ <span class="s1">&#39;upper_threshold&#39;</span><span class="p">:</span> <span class="mf">4396.228995809948</span><span class="p">,</span>
+ <span class="s1">&#39;model_impacts&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Model Impact&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Observed&#39;</span><span class="p">,</span> <span class="s1">&#39;Adversarial&#39;</span><span class="p">,</span> <span class="s1">&#39;Overall&#39;</span><span class="p">],</span>
+  <span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;N/A&#39;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;0/10&#39;</span><span class="p">],</span>
+  <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Too few failing rows to estimate model impact.&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;Difference between original model performance over sampled rows (Accuracy=0.960) and performance over adversarial rows with numeric outliers (Accuracy=0.960).&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;Combination of the above&#39;</span><span class="p">]},</span>
+ <span class="s1">&#39;failing_rows&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3302</span><span class="p">,</span> <span class="mi">8373</span><span class="p">],</span>
+ <span class="s1">&#39;num_failing_rows&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Running single-feature change test.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime.tabular.tests</span> <span class="kn">import</span> <span class="n">VulnerabilityTest</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">VulnerabilityTest</span><span class="p">(</span><span class="s2">&quot;DeviceInfo&quot;</span><span class="p">)</span>
+<span class="n">test</span><span class="o">.</span><span class="n">run_notebook</span><span class="p">(</span><span class="n">container</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><b>Output</b></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="n">test</span> <span class="n">passed</span> <span class="n">because</span> <span class="n">the</span> <span class="n">average</span> <span class="n">change</span> <span class="ow">in</span> <span class="n">prediction</span> <span class="n">caused</span> <span class="n">by</span> <span class="n">an</span> <span class="n">unbounded</span> <span class="n">manipulation</span> <span class="n">of</span> <span class="n">the</span> <span class="n">feature</span> <span class="n">DeviceInfo</span> <span class="n">over</span> <span class="n">a</span> <span class="n">sample</span> <span class="n">of</span> <span class="mi">10</span> <span class="n">rows</span> <span class="n">was</span> <span class="mf">0.00555</span><span class="p">,</span> <span class="n">which</span> <span class="ow">is</span> <span class="n">below</span> <span class="n">the</span> <span class="n">warning</span> <span class="n">threshold</span> <span class="n">of</span> <span class="mf">0.01</span><span class="o">.</span>
+<span class="p">{</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;PASS&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;severity&#39;</span><span class="p">:</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Average Prediction Change&#39;</span><span class="p">:</span> <span class="mf">0.0055514594454474705</span><span class="p">,</span>
+ <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;severity_level_thresholds&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
+  <span class="s1">&#39;col_names&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;DeviceInfo&#39;</span><span class="p">],</span>
+  <span class="s1">&#39;l0_constraint&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s1">&#39;linf_constraint&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="s1">&#39;sample_size&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+  <span class="s1">&#39;search_count&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+  <span class="s1">&#39;use_tqdm&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+  <span class="s1">&#39;label_range&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+  <span class="s1">&#39;scaled_min_impact_threshold&#39;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">},</span>
+ <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;DeviceInfo&#39;</span><span class="p">],</span>
+ <span class="s1">&#39;sample_inds&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3344</span><span class="p">,</span> <span class="mi">1712</span><span class="p">,</span> <span class="mi">4970</span><span class="p">,</span> <span class="mi">4480</span><span class="p">,</span> <span class="mi">1498</span><span class="p">,</span> <span class="mi">1581</span><span class="p">,</span> <span class="mi">3531</span><span class="p">,</span> <span class="mi">473</span><span class="p">,</span> <span class="mi">9554</span><span class="p">,</span> <span class="mi">2929</span><span class="p">],</span>
+ <span class="s1">&#39;avg_score_change&#39;</span><span class="p">:</span> <span class="mf">0.0055514594454474705</span><span class="p">,</span>
+ <span class="s1">&#39;normalized_avg_score_change&#39;</span><span class="p">:</span> <span class="mf">0.0055514594454474705</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Running feature subset test.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime.tabular.tests</span> <span class="kn">import</span> <span class="n">FeatureSubsetTest</span>
+<span class="kn">from</span> <span class="nn">rime.tabular.metric</span> <span class="kn">import</span> <span class="n">MetricName</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">FeatureSubsetTest</span><span class="p">(</span><span class="s2">&quot;DeviceType&quot;</span><span class="p">,</span> <span class="n">MetricName</span><span class="o">.</span><span class="n">ACCURACY</span><span class="p">)</span>
+<span class="n">test</span><span class="o">.</span><span class="n">run_notebook</span><span class="p">(</span><span class="n">container</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><b>Output</b></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="n">test</span> <span class="n">raised</span> <span class="n">a</span> <span class="n">warning</span> <span class="p">(</span><span class="k">with</span> <span class="n">severity</span> <span class="n">level</span> <span class="n">Medium</span><span class="p">)</span> <span class="n">because</span> <span class="mi">2</span> <span class="n">subset</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">performed</span> <span class="n">significantly</span> <span class="n">worse</span> <span class="n">than</span> <span class="n">the</span> <span class="n">overall</span> <span class="n">population</span><span class="o">.</span> <span class="n">When</span> <span class="n">evaluating</span> <span class="n">subsets</span> <span class="n">of</span> <span class="n">the</span> <span class="n">feature</span> <span class="n">DeviceType</span> <span class="n">we</span> <span class="n">find</span> <span class="n">the</span> <span class="n">Accuracy</span> <span class="n">of</span> <span class="n">some</span> <span class="n">subset</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">to</span> <span class="n">be</span> <span class="n">below</span> <span class="n">the</span> <span class="n">overall</span> <span class="n">score</span> <span class="n">of</span> <span class="mf">0.97</span> <span class="n">by</span> <span class="n">more</span> <span class="n">than</span> <span class="n">the</span> <span class="n">threshold</span> <span class="n">of</span> <span class="mf">0.001</span><span class="o">.</span>
+<span class="p">{</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;FAIL&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;severity&#39;</span><span class="p">:</span> <span class="s1">&#39;Medium&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;metric&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">MetricName</span><span class="o">.</span><span class="n">ACCURACY</span><span class="p">:</span> <span class="s1">&#39;accuracy&#39;</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s1">&#39;severity_level_thresholds&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
+  <span class="s1">&#39;perf_change_threshold&#39;</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
+  <span class="s1">&#39;col_name&#39;</span><span class="p">:</span> <span class="s1">&#39;DeviceType&#39;</span><span class="p">},</span>
+ <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;DeviceType&#39;</span><span class="p">],</span>
+ <span class="s1">&#39;num_failing&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+ <span class="s1">&#39;overall_perf&#39;</span><span class="p">:</span> <span class="mf">0.9692</span><span class="p">,</span>
+ <span class="s1">&#39;sample_size&#39;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
+ <span class="s1">&#39;subsets_metric_dict&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;overall_perf&#39;</span><span class="p">:</span> <span class="mf">0.9692</span><span class="p">,</span>
+  <span class="s1">&#39;subsets_info&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;desktop&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;desktop&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;len_df&#39;</span><span class="p">:</span> <span class="mi">1504</span><span class="p">,</span>
+    <span class="s1">&#39;criterion&#39;</span><span class="p">:</span> <span class="s1">&#39;desktop&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;perf&#39;</span><span class="p">:</span> <span class="mf">0.9461436170212766</span><span class="p">,</span>
+    <span class="s1">&#39;margin_error&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s1">&#39;diff&#39;</span><span class="p">:</span> <span class="mf">0.023056382978723367</span><span class="p">,</span>
+    <span class="s1">&#39;pos_rate&#39;</span><span class="p">:</span> <span class="mf">0.06648936170212766</span><span class="p">,</span>
+    <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">1504</span><span class="p">},</span>
+   <span class="s1">&#39;mobile&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;mobile&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;len_df&#39;</span><span class="p">:</span> <span class="mi">947</span><span class="p">,</span>
+    <span class="s1">&#39;criterion&#39;</span><span class="p">:</span> <span class="s1">&#39;mobile&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;perf&#39;</span><span class="p">:</span> <span class="mf">0.9292502639915523</span><span class="p">,</span>
+    <span class="s1">&#39;margin_error&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s1">&#39;diff&#39;</span><span class="p">:</span> <span class="mf">0.039949736008447645</span><span class="p">,</span>
+    <span class="s1">&#39;pos_rate&#39;</span><span class="p">:</span> <span class="mf">0.11298838437170011</span><span class="p">,</span>
+    <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">947</span><span class="p">},</span>
+   <span class="s1">&#39;None&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;len_df&#39;</span><span class="p">:</span> <span class="mi">7549</span><span class="p">,</span>
+    <span class="s1">&#39;criterion&#39;</span><span class="p">:</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;perf&#39;</span><span class="p">:</span> <span class="mf">0.9788051397536097</span><span class="p">,</span>
+    <span class="s1">&#39;margin_error&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s1">&#39;diff&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.00960513975360977</span><span class="p">,</span>
+    <span class="s1">&#39;pos_rate&#39;</span><span class="p">:</span> <span class="mf">0.021592263876010067</span><span class="p">,</span>
+    <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">7549</span><span class="p">}}},</span>
+ <span class="s1">&#39;worst_subset&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;mobile&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;len_df&#39;</span><span class="p">:</span> <span class="mi">947</span><span class="p">,</span>
+  <span class="s1">&#39;criterion&#39;</span><span class="p">:</span> <span class="s1">&#39;mobile&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;perf&#39;</span><span class="p">:</span> <span class="mf">0.9292502639915523</span><span class="p">,</span>
+  <span class="s1">&#39;margin_error&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="s1">&#39;diff&#39;</span><span class="p">:</span> <span class="mf">0.039949736008447645</span><span class="p">,</span>
+  <span class="s1">&#39;pos_rate&#39;</span><span class="p">:</span> <span class="mf">0.11298838437170011</span><span class="p">,</span>
+  <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">947</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>That’s it!</p>
+<p><strong>NOTE</strong>: It’s important to point out that while we loaded a pretrained model for convenience, the RIME Library can be used at any point during the prototyping workflow, whether that’s during initial data exploration, or model training and iteration.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rime_data_model_setup.html" class="btn btn-neutral float-left" title="Data and Model Setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rime_adversarial.html" class="btn btn-neutral float-right" title="RIME Adversarial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

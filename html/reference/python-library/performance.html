@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RIME Model Performance &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="RIME AI Firewall" href="ai_firewall.html" />
+    <link rel="prev" title="RIME Adversarial" href="adversarial.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                0.16.14
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../rime/product-overview.html">Product Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rime/product-details.html">Product Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/quickstart.html">Running Your First AI Stress Test</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Walkthroughs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../walkthroughs/python-sdk.html">Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../walkthroughs/python-library.html">Python Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../walkthroughs/cli.html">CLI</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Configuring RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/tabular.html">Tabular Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/nlp.html">NLP Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/cv.html">CV Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../api-authentication.html">API Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python-sdk.html">Python SDK</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../python-library.html">Python Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="setup.html">Tabular Data/Model Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#module-rime.nlp">NLP Data/Model Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html">RIME Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adversarial.html">RIME Adversarial</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">RIME Model Performance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rime.tabular.performance.get_biggest_errors"><code class="docutils literal notranslate"><span class="pre">get_biggest_errors()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime.tabular.performance.preprocess_df"><code class="docutils literal notranslate"><span class="pre">preprocess_df()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime.tabular.performance.single_model_active_learning"><code class="docutils literal notranslate"><span class="pre">single_model_active_learning()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime.tabular.performance.two_model_active_learning"><code class="docutils literal notranslate"><span class="pre">two_model_active_learning()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ai_firewall.html">RIME AI Firewall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rime_metric.html">RIME Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integrations.html">Integrations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../python-library.html">Python Library</a></li>
+      <li class="breadcrumb-item active">RIME Model Performance</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/reference/python-library/performance.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="rime-model-performance">
+<h1>RIME Model Performance<a class="headerlink" href="#rime-model-performance" title="Permalink to this heading"></a></h1>
+<p>Documentation for aspects of the rime.tabular package that relate to model performance improvements.</p>
+<span class="target" id="module-rime.tabular.performance"></span><p>Utilities related to model performance improvement.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="rime.tabular.performance.get_biggest_errors">
+<span class="sig-prename descclassname"><span class="pre">rime.tabular.performance.</span></span><span class="sig-name descname"><span class="pre">get_biggest_errors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TabularBlackBoxModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decision_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Series</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#rime.tabular.performance.get_biggest_errors" title="Permalink to this definition"></a></dt>
+<dd><p>Return the biggest errors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – dataframe to make predictions over.</p></li>
+<li><p><strong>model</strong> – model to use to make predictions.</p></li>
+<li><p><strong>labels</strong> – labels for data.</p></li>
+<li><p><strong>n</strong> – number of worst datapoints to return.</p></li>
+<li><p><strong>decision_threshold</strong> – decision threshold of the model. Only relevant for</p></li>
+<li><p><strong>classification.</strong> (<em>binary</em>) – </p></li>
+<li><p><strong>preds</strong> – predictions produced by the model. If specified, will
+use these predictions instead of calling the model. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of sorted Pandas series for largest errors. There are currently 3
+situations:
+1) Binary classification: Returns a list [x, y] where x is the false
+positives sorted by worst false positive rate and y is the false negatives
+sorted by worst false negative rate.
+2) Multi-class classification case returns: [a] where a is the data sorted by
+cross entropy loss.
+3) Regression case returns: [b] where b is the data sorted by L1 loss.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rime.tabular.performance.preprocess_df">
+<span class="sig-prename descclassname"><span class="pre">rime.tabular.performance.</span></span><span class="sig-name descname"><span class="pre">preprocess_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns_to_ignore</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impute_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#rime.tabular.performance.preprocess_df" title="Permalink to this definition"></a></dt>
+<dd><p>Preprocess dataframe.</p>
+<dl class="simple">
+<dt>Functionality includes:</dt><dd><ul class="simple">
+<li><p>Mapping categorical values to numeric based on value_counts</p></li>
+<li><p>Impute nulls based on a reasonable strategy (detect if numeric or obj)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – dataframe to be preprocessed.</p></li>
+<li><p><strong>columns_to_ignore</strong> – These columns will be ignored and not preprocessed. If
+None will not ignore any columns. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A preprocessed dataframe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rime.tabular.performance.single_model_active_learning">
+<span class="sig-prename descclassname"><span class="pre">rime.tabular.performance.</span></span><span class="sig-name descname"><span class="pre">single_model_active_learning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TabularBlackBoxModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uncertainty_overweight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decision_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#rime.tabular.performance.single_model_active_learning" title="Permalink to this definition"></a></dt>
+<dd><p>Select points to label by looking at a single model.</p>
+<p>Selects points weighted on how uncertain the model is about them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – dataframe of points to consider sampling.</p></li>
+<li><p><strong>model</strong> – current iteration of model.</p></li>
+<li><p><strong>n</strong> – number of datapoints to sample.</p></li>
+<li><p><strong>uncertainty_overweight</strong> – factor to scale up probability of sampling points
+the model is uncertain about. Defaults to 1 (standard overweight).</p></li>
+<li><p><strong>decision_threshold</strong> – decision threshold of the model. Defaults to .5.</p></li>
+<li><p><strong>seed</strong> – Used to seed for any randomness. If set to None,
+then seed is not specified. Defaults to 0.</p></li>
+<li><p><strong>preds</strong> – predictions produced by the model. If specified, will
+use these predictions instead of calling the model. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Indices of points to label.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rime.tabular.performance.two_model_active_learning">
+<span class="sig-prename descclassname"><span class="pre">rime.tabular.performance.</span></span><span class="sig-name descname"><span class="pre">two_model_active_learning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TabularBlackBoxModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TabularBlackBoxModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disagreement_overweight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uncertainty_overweight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decision_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preds1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preds2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#rime.tabular.performance.two_model_active_learning" title="Permalink to this definition"></a></dt>
+<dd><p>Select points to label based on looking at two models.</p>
+<p>Selects points based on a combination of how uncertain the models are about them
+and how much the models disagree about them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – dataframe of points to consider sampling.</p></li>
+<li><p><strong>model1</strong> – an iteration of the model.</p></li>
+<li><p><strong>model2</strong> – a separate iteration of the model.</p></li>
+<li><p><strong>n</strong> – number of datapoints to sample.</p></li>
+<li><p><strong>disagreement_overweight</strong> – factor to scale up probability of sampling points
+the models disagree on about. Defaults to 1 (standard overweight).</p></li>
+<li><p><strong>uncertainty_overweight</strong> – factor to scale up probability of sampling points
+the models are uncertain about. Defaults to 1 (standard overweight).</p></li>
+<li><p><strong>decision_threshold</strong> – decision threshold of the models. Defaults to .5. Only
+used in binary classification setting.</p></li>
+<li><p><strong>seed</strong> – Used to seed for any randomness. If set to None,
+then seed is not specified. Defaults to 0.</p></li>
+<li><p><strong>preds1</strong> – predictions produced by the first model. If specified, will
+use these predictions instead of calling the model. Defaults to None.</p></li>
+<li><p><strong>preds2</strong> – predictions produced by the second model. If specified, will
+use these predictions instead of calling the model. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Indices of points to label.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="adversarial.html" class="btn btn-neutral float-left" title="RIME Adversarial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ai_firewall.html" class="btn btn-neutral float-right" title="RIME AI Firewall" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

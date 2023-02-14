@@ -1,0 +1,54 @@
+# Run AI Stress Testing on Your Own Model and Datasets
+
+This guide will cover how to run AI Stress Testing on your own model and datasets.
+
+### Define a Python model file in the correct format
+
+A model is not required for AI Stress Testing, but providing one will produce
+better results. RIME expects models to be provided in a specific format; see
+[How to Create a Python Model File](../cli/specify_model.md) for
+step-by-step instructions.
+
+### Collect data in the correct format
+
+For AI Stress Testing, RIME expects that you will upload two datasets: a
+reference dataset (typically the training data) and an evaluation dataset
+(typically the validation, testing, or other data). Currently RIME expects each
+dataset to be passed in as a csv or parquet file where each column is a separate
+feature.
+
+You can optionally provide labels for each datapoint. These should be passed in
+as a column in both datasets. Providing labels allows RIME to surface model
+performance metrics across our tests.
+
+NOTE: In the multi-class classification scenario, each label should be a
+nonnegative integer `i` where the corresponding prediction for label `i` should
+be found in the `ith` dimenson of the prediction vector.
+
+### Create configuration
+
+With your data and model ready, you can now create a configuration file for AI
+Stress Testing. For a detailed reference on what the configuration should look
+like, see [AI Stress Testing Configuration
+Reference](/configuration/tabular/stress_testing.md).
+
+### Run AI Stress Testing with the RIME SDK
+
+{{ sdk_client_setup }}
+
+To run AI Stress Testing, run the following:
+```python
+import json
+
+# Load the configuration file
+f = open("PATH/TO/CONFIGURATION")
+config = json.load(f)
+
+# Start the tests
+job = rime_client.start_stress_test(test_run_config=config, project_id=YOUR_PROJECT_ID_HERE)
+job.get_status(poll_rate_sec=1.0, verbose=True, wait_until_finish=True)
+```
+
+After this finishes running, you should be able to see the results through the
+RIME interface on your browser. For a guide on what you are seeing, please see
+our [UI Documentation](/rime/product-details/ui).

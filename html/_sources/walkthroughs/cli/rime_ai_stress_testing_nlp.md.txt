@@ -1,0 +1,98 @@
+# AI Stress Testing
+
+This tutorial will get you started using the RIME NLP CLI to stress test a Text
+Classification model using the <a target="_blank" rel="noopener" href="https://github.com/dair-ai/emotion_dataset">
+CARER Emotion Recognition Dataset</a>.
+
+## Setup
+{{ nlp_setup_extra_note }} 
+
+### Running Stress Testing on the Text Classification Example
+
+In this tutorial, we will cover pre-production testing of a DistilBERT emotion recognition model using
+the RIME NLP automated test suite.
+
+The example NLP models provided for this tutorial rely on a couple additional
+dependencies. To install, please run the following command:
+
+```bash
+pip install -r nlp_examples/trial_model_requirements.txt
+```
+
+Then, to kick off an NLP Test run, execute the following command in your local terminal:
+
+```bash
+rime-engine run-nlp --config-path nlp_examples/classification/emotion_recognition/stress_tests_config.json
+```
+
+**NOTE:** if the above command throws a `ModuleNotFoundError`, it is likely that you forgot to install the RIME NLP Extras ([see setup above](#setup)).
+
+{{ nlp_ui_redirect }}
+
+If you explore the test config in `nlp_examples/classification/emotion_recognition/stress_tests_config.json` you'll see that we've configured a few parameters to specify the data, model, and other task-specific information.
+{{ nlp_config_note }}
+
+### Running Stress Testing on a Text Classification Example with Metadata
+
+In this tutorial, we will cover adding custom metadata to your test run. This tutorial uses a RoBERTa based model trained on tweets and finetuned for sentiment analysis. The dataset used in this example is data scraped from Twitter to analyze how travelers expressed feelings about airlines. 
+
+The data includes several attributes alongside `text` and `label` that RIME will also run automated tests on:
+- Custom numeric metadata: `Retweet_count`
+- Custom categorical metadata: `Reason`, `Airline`, `Location`
+
+These attributes exist for each datapoint in the `meta` dict, as key-value pairs. For example:
+```
+{"text": "@USAirways You have no idea how upset and frustrated I am right now. I'll be sure to follow through with never flying with you again.", "label": 0, "meta": {"Reason": "Can't Tell", "Airline": "US Airways", "Location": "Saratoga Springs", "Retweet_count": 0}}
+```
+
+Kicking off a test run on the Sentiment Analysis (Twitter Airline) example is super simple — all we need to do is update the `--config-path` argument:
+
+```bash
+rime-engine run-nlp --config-path nlp_examples/classification/sentiment_analysis/stress_tests_config_with_metadata.json
+```
+
+If you poke around in `stress_tests_config_with_metadata.json` you'll see that we've added `custom_numeric_metadata` and `custom_categorical_metadata` to `data_profiling_info`. For a full reference on the data profile file see the [Data Profile config document](/configuration/nlp/data_profiling.md).
+
+
+### Running Stress Testing on the NER Example
+
+Kicking off a test run on the Named Entity Recognition (NER) example is super simple — all we need to do is update the `--config-path` argument:
+
+```bash
+rime-engine run-nlp --config-path nlp_examples/ner/conll/stress_tests_config.json
+```
+
+If you poke around in `nlp_examples/ner/conll/stress_tests_config.json` you'll see that we've changed the `model_task` to `Named Entity Recognition`, along with a couple other parameters.
+{{ nlp_config_note }}
+
+### Running Stress Testing on your own Model and Datasets
+
+To run RIME using your own data and model, please consult the [NLP Data Guide](/configuration/nlp/task_data_format.md) guide for the expected data format and [How to Create an NLP Model File](specify_model_nlp.md) for step-by-step instructions on how to connect your model to the testing framework.
+
+Because model inference is usually the most time-consuming part of the testing framework, we recommend specifying cached prediction logs using the [prediction_info](/configuration/nlp/prediction_info) argument of the runtime config.
+
+In the classification example above, we ran RIME using model predictions saved in the files `nlp_examples/classification/emotion_recognition/data/{train|val}_preds.json`.  An example prediction can be viewed from this file by running the following command from your terminal:
+
+```
+cat nlp_examples/classification/emotion_recognition/data/test_preds.json | jq '.[0]'
+```
+
+RIME also supports predictions stored in compressed JSON or JSONL format and accepts predictions added within the datafile itself (by adding the "probabilities" key to each data sample).
+
+However, if you do not wish to create a prediction log beforehand, RIME can call your model during a test run and infer its performance using a subsample of the provided datasets. The following command initiates a run similar to the text classification run above, except the specified config doesn't point to any predictions files.
+
+
+```bash
+rime-engine run-nlp --config-path nlp_examples/classification/emotion_recognition/stress_tests_config_no_preds.json
+```
+
+Note that the command is exactly the same EXCEPT for the `--config-path` provided. Comparing this runtime config with the previous one, you can see that this file omits the `"prediction_info"` section of the previous config.
+
+### Conclusion
+
+Congratulations! You've successfully used RIME to test out the various NLP models.
+
+Once again, we strongly recommended that you run RIME using a cached predictions file, similar to the one provided in the first part of this tutorial. This will greatly improve both the RIME runtime and the test suite result quality. Model inference tends to be the most computationally expensive part of each RIME run, especially for large transformer models. While access to the model is still required for some tests due to design constraints (e.g., the use of randomness, iterative attacks, etc.), providing a prediction file can help RIME avoid redundant computation so each run is fast and focused.
+
+### Troubleshooting
+{{ troubleshooting_note }}

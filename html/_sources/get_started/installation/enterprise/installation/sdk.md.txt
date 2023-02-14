@@ -1,0 +1,33 @@
+# Installing the RIME SDK 
+
+RIME consists of (1) a Kubernetes cluster deployed on your company's cloud provider and (2) a python SDK from which users can kickoff tests. This section focuses on (2), assuming (1) has already been completed by your cloud admin. For the instructions on (1), please refer to [RIME Cluster Installation](../installation.md).
+
+## Prerequisites
+
+- Python 3.7 or above
+- RIME cluster URL (Received from your RIME admin)
+- Ensure that you have VPN access to your cloud provider
+
+## Install the Python SDK
+
+Installation is simple:
+
+```bash
+pip install rime-sdk
+```
+
+## Test Connection 
+
+Run the code snippet below to test your SDK connection:
+```python
+from rime_sdk import RIMEClient
+
+rime_client = RIMEClient("YOUR_RIME_CLUSTER_URL", "api-key")
+```
+If there are no errors, that means you are ready to kickoff some tests!
+
+If you see the following error, the provided RIME cluster URL is not correct:
+```
+ValueError: Could not connect to server at address `YOUR_RIME_CLUSTER_URL`
+```
+ Please double check that the cluster URL is correct. If you are still seeing issues, please contact RI support via our Slack channel.

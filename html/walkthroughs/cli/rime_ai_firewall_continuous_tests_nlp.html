@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Firewall Continuous Tests &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Specify an NLP Model" href="specify_model_nlp.html" />
+    <link rel="prev" title="AI Stress Testing" href="rime_ai_stress_testing_nlp.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                0.16.14
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../rime/product-overview.html">Product Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rime/product-details.html">Product Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/quickstart.html">Running Your First AI Stress Test</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Walkthroughs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../python-sdk.html">Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python-library.html">Python Library</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../cli.html">CLI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../cli.html#tabular">Tabular</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../cli.html#nlp">NLP</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="rime_ai_stress_testing_nlp.html">AI Stress Testing</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">AI Firewall Continuous Tests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#setup">Setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ai-firewall-continuous-tests-vs-ai-firewall-continuous-tests-trial">AI Firewall Continuous Tests vs. AI Firewall Continuous Tests Trial</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#running-firewall-continuous-tests-on-the-arxiv-example">Running Firewall Continuous Tests on the ArXiv Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#running-firewall-continuous-tests-on-your-own-data-and-model">Running Firewall Continuous Tests on your own Data and Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="specify_model_nlp.html">Specify an NLP Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rime_firewall_realtime_nlp.html">Deploy AI Firewall Realtime</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli.html#computer-vision">Computer Vision</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Configuring RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/tabular.html">Tabular Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/nlp.html">NLP Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/cv.html">CV Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api-authentication.html">API Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-library.html">Python Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/cli.html">CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/integrations.html">Integrations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../cli.html">CLI</a></li>
+      <li class="breadcrumb-item active">AI Firewall Continuous Tests</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/walkthroughs/cli/rime_ai_firewall_continuous_tests_nlp.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ai-firewall-continuous-tests">
+<h1>AI Firewall Continuous Tests<a class="headerlink" href="#ai-firewall-continuous-tests" title="Permalink to this heading"></a></h1>
+<p>This tutorial will guide you through how to get started with RIME by running AI
+Firewall Continuous Tests on a text classification model trained on (a slightly modified version of) the
+<a target="_blank" rel="noopener"
+href="https://www.kaggle.com/Cornell-University/arxiv">arXiv
+</a> dataset to categorize academic papers.</p>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this heading"></a></h2>
+<section id="nlp-extras">
+<h3>NLP Extras<a class="headerlink" href="#nlp-extras" title="Permalink to this heading"></a></h3>
+<p>Please ensure that the extra RIME NLP dependencies have been installed from the <code class="docutils literal notranslate"><span class="pre">nlp_requirements.txt</span></code> file from <a class="reference internal" href="../../get_started/installation.html"><span class="doc std std-doc">installation</span></a>.
+If you run into a <code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code> at any point during this walkthrough, it is likely that you need to install the RIME NLP Extras!</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>nlp_requirements.txt
+</pre></div>
+</div>
+</section>
+</section>
+<section id="ai-firewall-continuous-tests-vs-ai-firewall-continuous-tests-trial">
+<h2>AI Firewall Continuous Tests vs. AI Firewall Continuous Tests Trial<a class="headerlink" href="#ai-firewall-continuous-tests-vs-ai-firewall-continuous-tests-trial" title="Permalink to this heading"></a></h2>
+<p>We offer two workflows for firewall monitoring. In the primary workflow (“RIME Firewall Continuous Tests”), the user selects their desired stress test run (corresponding to the model being deployed into production) from the UI to create a firewall. From there the user periodically uploads incoming production data to RIME.</p>
+<p>We also offer a simpler trial workflow (“RIME Firewall Continuous Tests Trial”) to demonstrate firewall capabilities without requiring the user to upload a stress test run or create a firewall. This tutorial will provide examples for both workflows.</p>
+</section>
+<section id="running-firewall-continuous-tests-on-the-arxiv-example">
+<h2>Running Firewall Continuous Tests on the ArXiv Example<a class="headerlink" href="#running-firewall-continuous-tests-on-the-arxiv-example" title="Permalink to this heading"></a></h2>
+<section id="running-ai-firewall-continuous-tests-trial">
+<h3>Running AI Firewall Continuous Tests Trial<a class="headerlink" href="#running-ai-firewall-continuous-tests-trial" title="Permalink to this heading"></a></h3>
+<p>To kick off a run of RIME Firewall Continuous Tests Trial:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-firewall-nlp-trial<span class="w"> </span>--config-path<span class="w"> </span>nlp_examples/classification/arxiv/firewall_trial_config.json
+</pre></div>
+</div>
+<p>After this finishes running, you should be able to see the results in the web client,
+where they will be uploaded to the Default Project. For a full guide to what you are seeing,
+please see our <a class="reference internal" href="../../rime/product-details/ui/nlp.html"><span class="doc std std-doc">UI Documentation</span></a>.</p>
+</section>
+<section id="running-ai-firewall-continuous-tests">
+<h3>Running AI Firewall Continuous Tests<a class="headerlink" href="#running-ai-firewall-continuous-tests" title="Permalink to this heading"></a></h3>
+<p>To kick off a run of RIME Firewall Continuous Tests:</p>
+<ol class="arabic">
+<li><p>Kick off a Stress Testing run (the reference dataset and model from this run will be used for firewall continuous tests).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-nlp<span class="w"> </span>--config-path<span class="w"> </span>nlp_examples/classification/arxiv/stress_tests_config_no_model.json
+</pre></div>
+</div>
+</li>
+<li><p>Go to the RIME web client, click on the “Default Project” and navigate to the “AI Firewall” tab on the left <img src="../../_static/ui/AIFirewallShield.svg" />. You should see the following page.
+<img src="../../_static/ui/Firewall_Page.png" /></p></li>
+<li><p>Click on “Configure AI Firewall” and fill out the details. The “Name” field can be a name of your choice. The “AI Stress Test” field should be “”ArXiv Topic Classification” (this refers to the AI Stress Testing run that we just ran). Finally, the “Bin Size” field should be “1 Day”. Once you’ve filled everything out, you should record the “Firewall ID” (you will need this later to upload data and predictions to monitor) and click “Done”.
+<img src="../../_static/nlp_ui/Firewall_Deploy.png" /></p></li>
+<li><p>Using the Firewall ID we just generated, we can now upload data and predictions and run AI Firewall Continuous Tests. If you forgot to record the firewall ID in the previous step, you can find it by clicking the <img src="../../_static/ui/GearIcon.svg" /> on the right.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-firewall-nlp<span class="w"> </span>--config-path<span class="w"> </span>nlp_examples/classification/arxiv/firewall_config.json<span class="w"> </span>--firewall-id<span class="w"> </span>&lt;FIREWALL-ID&gt;
+</pre></div>
+</div>
+</li>
+<li><p>Once this is done you can check the RIME interface and see that we’ve uploaded data from June 18, 2007 to June 25, 2007. To upload data for the next week, open the <code class="docutils literal notranslate"><span class="pre">nlp_examples/classification/arxiv/firewall_config.json</span></code> file and update the data paths to be:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+ <span class="s2">&quot;eval_path&quot;</span><span class="p">:</span> <span class="s2">&quot;nlp_examples/classification/arxiv/data/val_2.json.gz&quot;</span><span class="p">,</span>
+ <span class="s2">&quot;eval_pred_path&quot;</span><span class="p">:</span> <span class="s2">&quot;nlp_examples/classification/arxiv/data/val_preds_2.json.gz&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>Repeat the command from step 4 to upload the new data.</p></li>
+<li><p>Repeat step 6 for data files <code class="docutils literal notranslate"><span class="pre">val_3.json.gz</span></code>/<code class="docutils literal notranslate"><span class="pre">val_3_preds.json.gz</span></code> through <code class="docutils literal notranslate"><span class="pre">val_9.json.gz</span></code>/<code class="docutils literal notranslate"><span class="pre">val_9_preds.json.gz</span></code></p></li>
+</ol>
+<p>After this finishes running, you should be able to see the results in the web client,
+where they will be uploaded to the Default Project. For a full guide to what you are seeing,
+please see our <a class="reference internal" href="../../rime/product-details/ui/nlp.html"><span class="doc std std-doc">UI Documentation</span></a>.</p>
+</section>
+</section>
+<section id="running-firewall-continuous-tests-on-your-own-data-and-model">
+<h2>Running Firewall Continuous Tests on your own Data and Model<a class="headerlink" href="#running-firewall-continuous-tests-on-your-own-data-and-model" title="Permalink to this heading"></a></h2>
+<p>This guide will cover how to run AI Firewall Continuous Tests on your own data and
+model.</p>
+<section id="collect-data-in-the-correct-format">
+<h3>Collect Data in the Correct Format<a class="headerlink" href="#collect-data-in-the-correct-format" title="Permalink to this heading"></a></h3>
+<p>For AI Firewall Continuous Tests, RIME expects one reference dataset and evaluation datasets.
+For the Trial Version only a single evaluation dataset is needed.
+The evaluation datasets REQUIRE a timestamp attribute
+and will be split into slices based on that attribute. RIME will run tests
+comparing each slice to the reference dataset.</p>
+<p>AI Firewall Continuous Tests REQUIRES predictions for each datapoint. These should be
+passed in as an attribute in all datasets.</p>
+</section>
+<section id="create-configuration">
+<h3>Create configuration<a class="headerlink" href="#create-configuration" title="Permalink to this heading"></a></h3>
+<p>With your data ready, you can now create a configuration file for AI Firewall
+Continuous Tests. For a detailed reference on what the configurations should look like,
+see <a class="reference internal" href="../../configuration/nlp/firewall_continuous_tests_trial.html"><span class="doc std std-doc">AI Firewall Continuous Tests Trial Configuration
+Reference</span></a> and <a class="reference internal" href="../../configuration/nlp/firewall_continuous_tests.html"><span class="doc std std-doc">AI Firewall Continuous Tests Configuration Reference</span></a>.</p>
+</section>
+<section id="run-the-cli">
+<h3>Run the CLI<a class="headerlink" href="#run-the-cli" title="Permalink to this heading"></a></h3>
+<p>You can run the AI Firewall Continuous Tests Trial through the CLI, pointing it to the configuration file created in the above
+step, with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-firewall-nlp-trial<span class="w"> </span>--config-path<span class="w"> </span>&lt;PATH-TO-CONFIGURATION&gt;
+</pre></div>
+</div>
+<p>For AI Firewall Continuous Tests, you will need to obtain a Firewall ID. Please see the
+example above for detailed instructions on how to do so. You can then run the CLI,
+pointing it to your Firewall ID and the configuration file created in the above
+step, with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-firewall-nlp<span class="w"> </span>--firewall-id<span class="w"> </span>&lt;FIREWALL-ID&gt;<span class="w"> </span>--config-path<span class="w"> </span>&lt;PATH-TO-CONFIGURATION&gt;
+</pre></div>
+</div>
+<p>After this finishes running, you should be able to see the results in the web client,
+where they will be uploaded to the Default Project. For a full guide to what you are seeing,
+please see our <a class="reference internal" href="../../rime/product-details/ui/nlp.html"><span class="doc std std-doc">UI Documentation</span></a>.</p>
+<p>For additional command line options, please see the <a class="reference internal" href="../../reference/cli.html"><span class="doc std std-doc">CLI Reference</span></a>.</p>
+</section>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading"></a></h2>
+<p>If you run into errors running this walkthrough, please reference the <a class="reference internal" href="../../reference/troubleshooting.html#rime-python-package"><span class="std std-ref">RIME Python Package</span></a> section of our FAQ. Additionally, your RI representative will be happy to assist–feel free to reach out!</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rime_ai_stress_testing_nlp.html" class="btn btn-neutral float-left" title="AI Stress Testing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="specify_model_nlp.html" class="btn btn-neutral float-right" title="Specify an NLP Model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

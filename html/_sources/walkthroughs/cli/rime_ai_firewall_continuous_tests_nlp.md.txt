@@ -1,0 +1,104 @@
+# AI Firewall Continuous Tests
+
+This tutorial will guide you through how to get started with RIME by running AI
+Firewall Continuous Tests on a text classification model trained on (a slightly modified version of) the
+<a target="_blank" rel="noopener"
+href="https://www.kaggle.com/Cornell-University/arxiv">arXiv
+</a> dataset to categorize academic papers.
+
+### Setup
+#### NLP Extras
+{{ nlp_setup_extra_note }} 
+
+### AI Firewall Continuous Tests vs. AI Firewall Continuous Tests Trial
+{{ fw_vs_fw_trial_note }}
+
+### Running Firewall Continuous Tests on the ArXiv Example
+
+#### Running AI Firewall Continuous Tests Trial
+
+To kick off a run of RIME Firewall Continuous Tests Trial:
+
+```bash
+rime-engine run-firewall-nlp-trial --config-path nlp_examples/classification/arxiv/firewall_trial_config.json
+```
+
+{{ nlp_ui_redirect }}
+
+#### Running AI Firewall Continuous Tests
+
+To kick off a run of RIME Firewall Continuous Tests:
+
+1. Kick off a Stress Testing run (the reference dataset and model from this run will be used for firewall continuous tests).
+
+    ```bash
+    rime-engine run-nlp --config-path nlp_examples/classification/arxiv/stress_tests_config_no_model.json
+    ```
+2. Go to the RIME web client, click on the "Default Project" and navigate to the "AI Firewall" tab on the left <img src="../../_static/ui/AIFirewallShield.svg" />. You should see the following page.
+   <img src="../../_static/ui/Firewall_Page.png" />
+3. Click on "Configure AI Firewall" and fill out the details. The "Name" field can be a name of your choice. The "AI Stress Test" field should be ""ArXiv Topic Classification" (this refers to the AI Stress Testing run that we just ran). Finally, the "Bin Size" field should be "1 Day". Once you've filled everything out, you should record the "Firewall ID" (you will need this later to upload data and predictions to monitor) and click "Done".
+   <img src="../../_static/nlp_ui/Firewall_Deploy.png" />
+4. Using the Firewall ID we just generated, we can now upload data and predictions and run AI Firewall Continuous Tests. If you forgot to record the firewall ID in the previous step, you can find it by clicking the <img src="../../_static/ui/GearIcon.svg" /> on the right.
+
+    ```bash
+    rime-engine run-firewall-nlp --config-path nlp_examples/classification/arxiv/firewall_config.json --firewall-id <FIREWALL-ID>
+    ```
+
+5. Once this is done you can check the RIME interface and see that we've uploaded data from June 18, 2007 to June 25, 2007. To upload data for the next week, open the `nlp_examples/classification/arxiv/firewall_config.json` file and update the data paths to be:
+    ```python
+   {
+     "eval_path": "nlp_examples/classification/arxiv/data/val_2.json.gz",
+     "eval_pred_path": "nlp_examples/classification/arxiv/data/val_preds_2.json.gz"
+   }
+    ```
+6. Repeat the command from step 4 to upload the new data.
+7. Repeat step 6 for data files `val_3.json.gz`/`val_3_preds.json.gz` through `val_9.json.gz`/`val_9_preds.json.gz`
+
+{{ nlp_ui_redirect }}
+
+### Running Firewall Continuous Tests on your own Data and Model
+
+This guide will cover how to run AI Firewall Continuous Tests on your own data and
+model.
+
+#### Collect Data in the Correct Format
+
+For AI Firewall Continuous Tests, RIME expects one reference dataset and evaluation datasets.
+For the Trial Version only a single evaluation dataset is needed.
+The evaluation datasets REQUIRE a timestamp attribute
+and will be split into slices based on that attribute. RIME will run tests
+comparing each slice to the reference dataset.
+
+AI Firewall Continuous Tests REQUIRES predictions for each datapoint. These should be
+passed in as an attribute in all datasets.
+
+#### Create configuration
+
+With your data ready, you can now create a configuration file for AI Firewall
+Continuous Tests. For a detailed reference on what the configurations should look like,
+see [AI Firewall Continuous Tests Trial Configuration
+Reference](/configuration/nlp/firewall_continuous_tests_trial) and [AI Firewall Continuous Tests Configuration Reference](/configuration/nlp/firewall_continuous_tests).
+
+#### Run the CLI
+
+You can run the AI Firewall Continuous Tests Trial through the CLI, pointing it to the configuration file created in the above
+step, with:
+
+```bash
+rime-engine run-firewall-nlp-trial --config-path <PATH-TO-CONFIGURATION>
+```
+
+For AI Firewall Continuous Tests, you will need to obtain a Firewall ID. Please see the
+example above for detailed instructions on how to do so. You can then run the CLI,
+pointing it to your Firewall ID and the configuration file created in the above
+step, with:
+
+```bash
+rime-engine run-firewall-nlp --firewall-id <FIREWALL-ID> --config-path <PATH-TO-CONFIGURATION>
+```
+{{ nlp_ui_redirect }}
+
+{{ cli_note }}
+
+### Troubleshooting
+{{ troubleshooting_note }} 

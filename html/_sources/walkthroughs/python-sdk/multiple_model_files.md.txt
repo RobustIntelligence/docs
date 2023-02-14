@@ -1,0 +1,58 @@
+# Run AI Stress Testing on Models with Multiple Files
+
+The first step to running a stress test on a model is defining a python file to wrap
+your model as defined in our section in Lite:
+[How To/Specify A Model](../cli/specify_model.md).
+This model wrapper file imports all additional assets required for the model and
+defines a `predict_dict` or `predict_df` function.
+
+When uploading the model files and the model wrapper `model.py` to S3, you must
+structure the bucket with the wrapper at the root of the base path and all other
+model files within that base directory according to how you referenced them
+locally.  For instance, in the following bucket
+
+```
+s3://examples/models
+│
+└───model_1
+│   │   model.py
+│   │   model.pkl
+│   │
+│   └───assets
+│       │   preprocessor.py
+│       │   aux_file.dat
+│       │   ...
+│   
+└───model_2
+|   │   model.py
+|   │   model.sav
+|   |   ...
+|
+└───common
+    │   preprocessor.py
+    |   ...
+```
+
+if you use `s3://examples/models/model_1/model.py` in your test
+configuration's model path, the test runner will copy all files from its base
+`s3://examples/models/model_1/` to a local folder. The `model.py` can thus refer
+to assets within `cur_dir`; e.g in your `model.py` you refer to the `model.pkl` file
+as follows
+
+```
+from pathlib import Path
+
+cur_dir = Path(__file__).absolute().parent
+
+MODEL_NAME = 'model.pkl'
+MODEL_PATH = cur_dir / MODEL_NAME
+```
+
+This allows you to write your wrapper file relative to the directory it lives within
+and then upload that entire directory to the appropriate location in your S3 bucket.
+
+However, any files that are required outside of this base path must be referred to
+with an absolute s3 path within `model.py`. For instance if you want to use
+`s3://examples/models/common/preprocessor.py` in your `model.py`, you must use that
+full s3 path in order to refer to that library because it is not within the base path
+`s3://examples/models/model_1` of your model wrapper.

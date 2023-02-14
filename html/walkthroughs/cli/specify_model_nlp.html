@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Specify an NLP Model &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Deploy AI Firewall Realtime" href="rime_firewall_realtime_nlp.html" />
+    <link rel="prev" title="AI Firewall Continuous Tests" href="rime_ai_firewall_continuous_tests_nlp.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                0.16.14
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../rime/product-overview.html">Product Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rime/product-details.html">Product Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/quickstart.html">Running Your First AI Stress Test</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Walkthroughs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../python-sdk.html">Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python-library.html">Python Library</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../cli.html">CLI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../cli.html#tabular">Tabular</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../cli.html#nlp">NLP</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="rime_ai_stress_testing_nlp.html">AI Stress Testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rime_ai_firewall_continuous_tests_nlp.html">AI Firewall Continuous Tests</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Specify an NLP Model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-specify-model-path">Step 1: Specify model path</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-2-retrieve-custom-code">Step 2: Retrieve custom code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-3-access-the-model">Step 3: Access the model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-4-import-implement-preprocessing-function">Step 4: Import / implement preprocessing function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-5-implement-a-predict-function">Step 5: Implement a predict function</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="rime_firewall_realtime_nlp.html">Deploy AI Firewall Realtime</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli.html#computer-vision">Computer Vision</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Configuring RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/tabular.html">Tabular Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/nlp.html">NLP Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/cv.html">CV Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api-authentication.html">API Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-library.html">Python Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/cli.html">CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/integrations.html">Integrations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../cli.html">CLI</a></li>
+      <li class="breadcrumb-item active">Specify an NLP Model</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/walkthroughs/cli/specify_model_nlp.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="specify-an-nlp-model">
+<h1>Specify an NLP Model<a class="headerlink" href="#specify-an-nlp-model" title="Permalink to this heading"></a></h1>
+<p>Similar to the tabular use case, RIME expects NLP models to be specified as Python files that expose the following function:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">predict_dict(x:</span> <span class="pre">dict)</span> <span class="pre">-&gt;</span> <span class="pre">dict</span></code>: the input <code class="docutils literal notranslate"><span class="pre">x</span></code> is a single example or data point in dictionary form (e.g. <code class="docutils literal notranslate"><span class="pre">{'text':</span> <span class="pre">'Hello,</span> <span class="pre">world!',</span> <span class="pre">...}</span></code>). The output of the function should be a python dictionary whose format depends on the NLP Task. The following key-value pairs are expected within the output dictionary for each task:</p>
+<ul>
+<li><p>Text Classification: the ‘probabilities’ key specifies the probabililty distribution over the label classes, e.g., <code class="docutils literal notranslate"><span class="pre">{'probabilities':</span> <span class="pre">[0.11,</span> <span class="pre">0.84,</span> <span class="pre">0.05,</span> <span class="pre">...]}</span></code></p></li>
+<li><p>Named Entity Recognition: the ‘predicted_entities’ keys specifies the entities predicted to be in the string. This value should be a list of dictionaries, with each dictionary corresponding to an entity. Each entity dictionary should have a ‘type’ key (specifying the type the entity is predicted to be) as well as a ‘mentions’ key which contains all the mentions predicted to refer to this entity. Each mention itself a dictionary with two keys: a ‘start_offset’ key and a ‘end offset’ key, which are both integers referring to the start and end of the mention in question. An example of this is: <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;predicted_entities&quot;:</span> <span class="pre">[</span> <span class="pre">{</span>&#160;&#160; <span class="pre">&quot;type&quot;:</span> <span class="pre">&quot;LOC&quot;,</span>&#160;&#160; <span class="pre">&quot;mentions&quot;:</span> <span class="pre">[</span>&#160;&#160;&#160;&#160; <span class="pre">{</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">&quot;start_offset&quot;:</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">&quot;end_offset&quot;:</span> <span class="pre">6</span>&#160;&#160;&#160;&#160; <span class="pre">}</span>&#160;&#160; <span class="pre">]</span> <span class="pre">}</span> <span class="pre">]</span> <span class="pre">}</span></code></p></li>
+</ul>
+</li>
+</ul>
+<p>The following steps outline how to implement the Python interface expected by RIME. This is done by loading a model binary from disk. For instructions on how to integrate with other model types (e.g. exposed via an online API) see <a class="reference internal" href="../../reference/integrations.html"><span class="doc std std-doc">Integrations</span></a>.</p>
+<section id="step-1-specify-model-path">
+<h2>Step 1: Specify model path<a class="headerlink" href="#step-1-specify-model-path" title="Permalink to this heading"></a></h2>
+<p>Create an empty folder. From inside this folder, create a a new python file. This will contain the <code class="docutils literal notranslate"><span class="pre">predict_dict()</span></code> function that will serve as the interface between RIME and your model. Place the saved model weights and any other requisite model artifacts in the same folder as the file.</p>
+<p>In the new python file, create a constant for the path to this binary storying the model weights:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">cur_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span>
+
+<span class="n">MODEL_NAME</span> <span class="o">=</span> <span class="s1">&#39;TODO: change this to the model file name&#39;</span>
+<span class="n">MODEL_PATH</span> <span class="o">=</span> <span class="n">cur_dir</span> <span class="o">/</span> <span class="n">MODEL_NAME</span>
+</pre></div>
+</div>
+</section>
+<section id="step-2-retrieve-custom-code">
+<h2>Step 2: Retrieve custom code<a class="headerlink" href="#step-2-retrieve-custom-code" title="Permalink to this heading"></a></h2>
+<p>If custom code is needed to perform data preprocessing (or to call your API), we need to make sure it is loaded into the runtime environment. If this code is already available as a Python package, see the <code class="docutils literal notranslate"><span class="pre">Custom</span> <span class="pre">Requirements</span></code> section.</p>
+<p>If your code is NOT a Python package (and is instead a Python file or folder) then please put all relevant files in the same directory you created in <a class="reference internal" href="#step-1-specify-model-path"><span class="std std-doc">Step 1</span></a>, and add the following snippet to the Python file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cur_dir</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="step-3-access-the-model">
+<h2>Step 3: Access the model<a class="headerlink" href="#step-3-access-the-model" title="Permalink to this heading"></a></h2>
+<p>As an example, if you used pytorch to save your model parameters, you might load the model as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">MODEL_PATH</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="step-4-import-implement-preprocessing-function">
+<h2>Step 4: Import / implement preprocessing function<a class="headerlink" href="#step-4-import-implement-preprocessing-function" title="Permalink to this heading"></a></h2>
+<p>If the model you are using expects inputs other than a raw string, you will need to load/define all custom tokenization or preprocessing functions. Getting the preprocessing functionality could look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">custom_package</span> <span class="kn">import</span> <span class="n">preprocess</span><span class="p">,</span> <span class="n">tokenize</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="n">txt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">clean_txt</span> <span class="o">=</span> <span class="n">txt</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">clean_txt</span>
+
+<span class="k">def</span> <span class="nf">tokenize</span><span class="p">(</span><span class="n">txt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">txt</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">tokens</span>
+
+</pre></div>
+</div>
+</section>
+<section id="step-5-implement-a-predict-function">
+<h2>Step 5: Implement a predict function<a class="headerlink" href="#step-5-implement-a-predict-function" title="Permalink to this heading"></a></h2>
+<p>Implement the <code class="docutils literal notranslate"><span class="pre">predict_dict</span></code> function. This should look something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Text Classification Example</span>
+<span class="k">def</span> <span class="nf">predict_dict</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the predicted class probabilities.&quot;&quot;&quot;</span>
+    <span class="n">txt</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span>
+    <span class="n">preprocessed</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenize</span><span class="p">(</span><span class="n">preprocessed</span><span class="p">)</span>
+    <span class="n">probabilities</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;probabilities&quot;</span><span class="p">:</span> <span class="n">probabilities</span><span class="p">}</span>
+    
+<span class="c1"># Named Entity Recognition Example</span>
+<span class="k">def</span> <span class="nf">predict_dict</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the predicted class probabilities.&quot;&quot;&quot;</span>
+    <span class="n">txt</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span>
+    <span class="n">preprocessed</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">ner</span><span class="p">(</span><span class="n">preprocessed</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">ner_results</span><span class="p">:</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;entity_group&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;mentions&#39;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span><span class="s1">&#39;start_offset&#39;</span><span class="p">:</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">],</span> <span class="s1">&#39;end_offset&#39;</span><span class="p">:</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">],</span> <span class="p">}</span>
+                <span class="p">],</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;predicted_entities&#39;</span><span class="p">:</span> <span class="n">results</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rime_ai_firewall_continuous_tests_nlp.html" class="btn btn-neutral float-left" title="AI Firewall Continuous Tests" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rime_firewall_realtime_nlp.html" class="btn btn-neutral float-right" title="Deploy AI Firewall Realtime" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

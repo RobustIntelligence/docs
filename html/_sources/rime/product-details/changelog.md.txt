@@ -1,0 +1,34 @@
+# RIME v16 Changelog
+
+## New RIME Modalities
+
+- **Object Detection (CV)** - RIME now fully supports the object detection use case across both Stress Testing and Firewall.
+- **Adversarial Attacks (NLP)** - In the NLP input format, new tests measure NLP models' robustness to adversarial attacks.
+- **Compliance (Tabular)** - There is a new run mode for tabular data (binary classification) with a suite of unique Fairness and Bias tests that measure a model’s production readiness across these metrics. These tests can assist in measuring compliance with various ML model regulations.
+
+## AI Stress Testing
+
+- **Category Level Summary Metrics** - New category level summary metrics are surfaced in the RIME UI. These metrics can summarize overall model robustness across each category and is especially useful in model comparisons.
+- **Model Comparison Refresh** - The model comparison functionality has been refreshed with usability improvements. These are numerous and include things like linking directly to test details, adding category level summary metrics, and including test descriptions.
+- **Test Failure Criteria** - There have been several changes to how we measure test failure. For one we have revamped our severity thresholds to make them less sensitive in general. This ensures that only the most impactful failures are surfaced. We have also changed how we aggregate test case severities (average of test cases rather than the max). Finally, we have added confidence intervals to various tests to ensure that failures are statistically significant and not just the result of sampling limitations.
+
+## AI Firewall
+
+- **Firewall Model Impacts** - We now incorporate the notion of “Model Impacts” into the configurations of AI Firewall. By default, Firewall actions are configured by the model impacts of the stress testing run of the model that is promoted into production.
+- **NLP + CV Firewall** - AI Firewall support was added for all unstructured data formats in this release. AI Firewall now exists in parity across Tabular, NLP, and CV use cases.
+
+## RIME Platform Changes
+
+- **User management** - We have introduced the concept of users in RIME. Users can be either an admin or a standard user. Admins can invite other users within their organization to their RIME workspace. This is only available for RIME Cloud trial customers.
+- **API Token Management** - Using API Token, admins can control which user has access to RIME services
+- **Onboarding** **& Help** - We have included onboarding assets, such as sample example notebooks, UI walkthroughs, RIME documentation, and RIME demo videos, to enable users to get familiarized with RIME workflows quickly.
+- **Submit Feedback -** We now allow users to submit product feedback, feature requests, and enhancements right from within the product.
+- **Test Completion Notifications -** Users can now configure alerts via Slack notification or Email to notify when RIME Stress Test Runs and Firewall Runs complete.
+
+## API Enhancements & Integrations
+
+- **Querying Results -** Stress Test Run results now include general model performance metrics.
+- **Link to Results -** Ability to get a link to the RIME UI for Stress Test results and Firewall results
+- **An integration with MFlow** - unlocks the true power of AI Stress Testing when experimenting with many models. With the RIME SDK you are able to query for RIME metrics and include them in your ML Flow experiments.
+- **An integration with Airflow** - Airflow allows you to schedule RIME test runs and programmatically kick-off RIME and query for test results.
+- **An integration with Hugging Face** - we now support an API that downloads Huggingface models by providing the Huggingface Model's URI.

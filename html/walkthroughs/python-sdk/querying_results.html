@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Querying RIME Results &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Run AI Stress Testing on Your Own Model and Datasets" href="run_ai_stress_testing.html" />
+    <link rel="prev" title="Create and Manage Projects" href="projects.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                0.16.14
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../rime/product-overview.html">Product Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rime/product-details.html">Product Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../get_started/quickstart.html">Running Your First AI Stress Test</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Walkthroughs</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../python-sdk.html">Python SDK</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../python-sdk.html#running-rime">Running RIME</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="rime_ai_stress_testing_with_sdk.html">Running AI Stress Testing on the Fraud Example with RIME SDK</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rime_firewall_with_sdk.html">Running AI Firewall on the Fraud Example with the RIME SDK</a></li>
+<li class="toctree-l3"><a class="reference internal" href="projects.html">Create and Manage Projects</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Querying RIME Results</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#start-a-job-and-wait-until-it-finishes">Start a Job and Wait Until It Finishes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-the-results">Get the Results</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build-queries">Build Queries</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pinning-to-a-specific-version">Pinning to a Specific Version</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="run_ai_stress_testing.html">Run AI Stress Testing on Your Own Model and Datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiple_model_files.html">Run AI Stress Testing on Models with Multiple Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../python-sdk.html#customizations">Customizations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python-sdk.html#utilities">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../python-library.html">Python Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Configuring RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/tabular.html">Tabular Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/nlp.html">NLP Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration/cv.html">CV Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api-authentication.html">API Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-library.html">Python Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/cli.html">CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/integrations.html">Integrations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../python-sdk.html">Python SDK</a></li>
+      <li class="breadcrumb-item active">Querying RIME Results</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/walkthroughs/python-sdk/querying_results.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="querying-rime-results">
+<h1>Querying RIME Results<a class="headerlink" href="#querying-rime-results" title="Permalink to this heading"></a></h1>
+<p>Besides viewing RIME results in the web application, you may use our SDK to retrieve
+data that can be programmatically parsed.
+This functionality is very helpful for incorporating RIME into your production
+model/data pipelines.
+For instance, if you are interested in the results of a specific feature, test, or
+statistic, you can fetch stress testing results from the RIME backend and
+write code to make decisions (e.g. whether to deploy the model) based on the results.</p>
+<p><em>Note: <code class="docutils literal notranslate"><span class="pre">get_test_run_result</span></code> and <code class="docutils literal notranslate"><span class="pre">get_test_cases_result</span></code> will not work properly on test runs uploaded on versions of RIME &lt;0.14.0</em></p>
+<p>To begin, initialize the <code class="docutils literal notranslate"><span class="pre">RIMEClient</span></code> and point it to the location of your RIME backend.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">RIMEClient</span>
+
+<span class="n">rime_client</span> <span class="o">=</span> <span class="n">RIMEClient</span><span class="p">(</span><span class="s2">&quot;rime-backend.&lt;YOUR_ORG_NAME&gt;.rime.dev&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;YOUR_API_TOKEN&gt;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="start-a-job-and-wait-until-it-finishes">
+<h2>Start a Job and Wait Until It Finishes<a class="headerlink" href="#start-a-job-and-wait-until-it-finishes" title="Permalink to this heading"></a></h2>
+<p>Each AI Stress Testing job produces one set of results.
+These results are only available once that job has succeeded.
+The following code shows you how to wait until the job has finished.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Start a stress test with a toy configuration.</span>
+<span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Titanic&quot;</span><span class="p">,</span> 
+  <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span> 
+    <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;Survived&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;ref_path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://rime-datasets/titanic/titanic_example.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;eval_path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://rime-datasets/titanic/titanic_example.csv&quot;</span> 
+  <span class="p">},</span> 
+  <span class="s2">&quot;model_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://rime-models/titanic_s3_test/titanic_example_model.py&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+
+<span class="c1"># Wait until the job has finished while printing helpful progress information.</span>
+<span class="c1"># If you do not want any information to be printed, omit the `verbose` argument.</span>
+<span class="c1"># Ensure the status is `SUCCEEDED` before getting the results.</span>
+<span class="n">status_dict</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">status_dict</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span>
+<span class="k">assert</span> <span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;SUCCEEDED&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="get-the-results">
+<h2>Get the Results<a class="headerlink" href="#get-the-results" title="Permalink to this heading"></a></h2>
+<p>To retrieve metadata and summary metrics for the test run result, use <code class="docutils literal notranslate"><span class="pre">RIMEStressTestJob.get_test_run_result()</span></code>.
+This method returns a Pandas dataframe with a single row.
+The columns are not guaranteed to be returned in sorted order, but the number of columns and their names are consistent across test runs.
+Note that this will raise a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if the job does not have status <code class="docutils literal notranslate"><span class="pre">'SUCCEEDED'</span></code>.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">test_run_df</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">get_test_run_result</span><span class="p">()</span>
+
+<span class="c1"># Show the columns of the dataframe and their types.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">test_run_df</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To retrieve all the raw test cases, use <code class="docutils literal notranslate"><span class="pre">RIMEStressTestJob.get_test_cases_result()</span></code>. This returns a Pandas
+dataframe with rows for each RIME test case.
+It includes test case metadata such as the features and test types (e.g. Must be Int, Unseen Categorical) as well as result metrics such as severity or status.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">test_cases_df</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">get_test_cases_result</span><span class="p">()</span>
+
+<span class="c1"># Show the columns of the dataframe and their types.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">test_cases_df</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+
+<span class="c1"># Dump the test cases to a CSV.</span>
+<span class="n">test_cases_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;path_to_csv.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="build-queries">
+<h2>Build Queries<a class="headerlink" href="#build-queries" title="Permalink to this heading"></a></h2>
+<p>Once you have the dataframe of results, you can build programmatic queries on top of it.
+This code snippet iterates through all the rows and gets the counts of passing tests,
+failing tests, etc. for the <code class="docutils literal notranslate"><span class="pre">Subset</span> <span class="pre">AUC</span></code> test, then makes a decision based on
+whether a majority of the test cases for the <code class="docutils literal notranslate"><span class="pre">Subset</span> <span class="pre">AUC</span></code> test are passing.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">get_test_cases_result</span><span class="p">()</span>
+
+<span class="c1"># Get the counts of passing/failing test cases for the `Subset AUC` test.</span>
+<span class="c1"># Unless at least half the test cases are high severity, deploy the model.</span>
+<span class="n">selected</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;test_batch_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;subset_auc&quot;</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">selected</span><span class="p">[</span><span class="s2">&quot;severity&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[</span><span class="s2">&quot;HIGH&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">selected</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RIME </span><span class="se">\&quot;</span><span class="s2">Subset AUC</span><span class="se">\&quot;</span><span class="s2"> failed with HIGH severity on a majority of test cases.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Deploying the model...&quot;</span><span class="p">)</span>
+    <span class="c1"># ...</span>
+</pre></div>
+</div>
+</section>
+<section id="pinning-to-a-specific-version">
+<h2>Pinning to a Specific Version<a class="headerlink" href="#pinning-to-a-specific-version" title="Permalink to this heading"></a></h2>
+<p>You can pin the results to a specific semantic version of RIME so that your
+query code does not break when you upgrade your version of the RIME SDK.
+You can add an optional key-word argument specifying the version of results to be used.
+The latest version is returned by default.
+Beware that column names and statistics returned may change between versions.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the results for RIME v0.13.0.</span>
+<span class="n">job</span><span class="o">.</span><span class="n">get_test_run_result</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;0.13.0&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="projects.html" class="btn btn-neutral float-left" title="Create and Manage Projects" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="run_ai_stress_testing.html" class="btn btn-neutral float-right" title="Run AI Stress Testing on Your Own Model and Datasets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

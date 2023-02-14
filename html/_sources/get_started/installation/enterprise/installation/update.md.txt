@@ -1,0 +1,20 @@
+# Update
+
+Currently, updating RIME is a manual process (we will add more automated updates very soon!). Here's how you can update the various pieces of RIME.
+
+## SDK update
+Updating the SDK is very easy, simply run:
+```
+pip install rime_sdk --upgrade
+```
+
+## Cluster image update
+- Update `version` in terraform.
+- Run `terraform apply` to apply changes to your cluster. You will also need to `helm update` if you are not using terraform managed helm release.
+- After a few minutes your RIME images should all be updated.
+
+## Cluster update
+- Update your terraform module version (change the source of the module to the appropriate version).
+- Run `helm repo update`.
+- Run a `terraform get -update` and `terraform apply`.
+- Once the apply finishes, your cluster should be updated!

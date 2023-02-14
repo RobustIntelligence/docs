@@ -1,0 +1,42 @@
+# MLFlow
+
+RIME integrates with MLFlow Tracking. This integration unlocks the true power of 
+AI Stress Testing when experimenting with many models. 
+
+With the RIME SDK you are able to query for RIME metrics and include them in your 
+MLFlow experiments. You can see in the below code snippet. To get a better understanding
+of the integration, take a look at the 
+<a href="https://www.loom.com/share/0b265c7e30604bd696063b215514d3e7" target="_blank">MFlow Demo Video.</a>
+ 
+
+```python
+import pandas as pd
+import mlflow
+from rime_sdk import RIMEClient, RIMEStressTestJob, RIMEProject, RIMEFirewall
+
+# Set these before beginning!
+BACKEND_URL = "rime-backend.<YOUR_ORG_NAME>.rime.dev"
+API_KEY = "<YOUR_API_KEY>"
+
+# Connect to your cluster
+rime_client = RIMEClient(BACKEND_URL, API_KEY)
+
+# Run the test!
+stress_test = rime_client.start_stress_test(test_run_config=config)
+
+# Query the results 
+test_run_result = stress_test.get_test_run_result()
+test_cases_result = stress_test.get_test_cases_result()
+
+# Preparing the results to log
+test_run_metrics = test_run_result.columns
+test_cases_result.to_csv("test_cases_results.csv")
+
+# Log experiment results to MFlow
+with mlflow.start_run():
+    for metric in test_run_metrics:
+        mlflow.log_metric(column, test_run_result[column][0])
+    mlflow.log_artifact("test_cases_results.csv")
+mlflow.end_run()
+```
+

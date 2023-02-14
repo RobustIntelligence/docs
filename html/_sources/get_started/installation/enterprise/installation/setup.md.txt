@@ -1,0 +1,75 @@
+# Dependencies 
+
+## DevOps Tools 
+
+Before installing RIME on your cluster, check that you have the following dev tools installed on a server you'd like to use to install RIME to your cluster.
+
+- Terraform v1.0.2 or above ([install](https://learn.hashicorp.com/tutorials/terraform/install-cli))
+- Helm 3.6.1 or above ([install](https://helm.sh/docs/intro/install/))
+- AWS CLI 2.2.29 or above ([install](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html))
+    - Setup your AWS config & credentials. 
+    - Test that awscli works e.g. by trying to list your S3 buckets:
+        ```bash
+        aws s3api list-buckets
+        ```
+- Kubernetes CLI 1.20 or above ([install](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html))
+- Install kubectl plugins `ctx` and `ns` ([install](https://github.com/ahmetb/kubectx#kubectl-plugins-macos-and-linux))
+- Install gcloud utils ([install](https://formulae.brew.sh/cask/google-cloud-sdk))
+
+## AWS IAM Roles
+
+To successfully deploy RIME to your AWS, your AWS account should have the `Administrator` IAM role. Please make sure you are granted this role prior to deployment.
+
+## Python SDK
+
+Below are the python dependencies for the packages used in the RIME Enterprise installation.
+
+### RIME SDK
+`rime-sdk`
+```
+click==8.0.1
+deprecated>=1.0.0,<2.0.0
+grpcio==1.44.0
+grpcio-tools==1.44.0
+mypy-protobuf==3.0
+numpy
+pandas>=1.1.0
+requests>=2.0.0
+schema
+semver>=2.10.0,<3.0.0
+simplejson
+tqdm
+```
+
+### Full List of Dependencies
+NOTE: the full list of dependencies was generated using the `pip freeze` command, so the versions here are the default used by pip at the time of the latest release and are not strict requirements.
+
+```
+certifi==2021.10.8
+charset-normalizer==2.0.12
+click==8.0.1
+contextlib2==21.6.0
+Deprecated==1.2.13
+grpcio==1.44.0
+grpcio-tools==1.44.0
+idna==3.3
+importlib-metadata==4.11.3
+mypy-protobuf==3.0.0
+numpy==1.21.6
+pandas==1.3.5
+protobuf==3.20.1
+python-dateutil==2.8.2
+pytz==2022.1
+requests==2.27.1
+rime-sdk==0.0.0
+schema==0.7.5
+semver==2.13.0
+simplejson==3.17.6
+six==1.16.0
+tqdm==4.64.0
+types-protobuf==3.19.20
+typing_extensions==4.2.0
+urllib3==1.26.9
+wrapt==1.14.1
+zipp==3.8.0
+```

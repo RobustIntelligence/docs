@@ -1,0 +1,68 @@
+# Product Overview
+
+## What is RIME?
+
+The Robust Intelligence Model Engine (RIME) secures your machine learning pipeline so you can focus on building better ML models for your business needs.
+
+RIME operates at two stages of the ML lifecycle.
+
+Prior to model deployment, **AI Stress Testing** validates the robustness and performance of your data and model through a series of deliberate unit tests.
+Once in production, **AI Firewall** protects your model from critical errors in real-time. It stops aberrant data from entering your AI system and alerts on data drift and performance degradation.
+
+<img src="../_static/rime.png">
+
+## Why use RIME?
+In modern engineering organizations, data scientists and machine learning engineers typically spend the majority of their effort on the development stage of the model life cycle, which encompasses data ingestion and cleaning, feature extraction, and model training. During this stage, models are primarily evaluated based on their accuracy on some clean held-out test set.
+
+While such a metric might be sufficient for understanding model performance in controlled development environments, deploying models into production introduces a whole new set of challenges and failure modes that are often overlooked. Once a model is deployed, data scientists no longer have complete control over how a model is instantiated, how data is passed into the model, nor any oversight over pipelines to which the model belongs. Even when the model is used correctly, distributional shifts in live data may silently degrade model performance.
+
+## Key Features
+RIME addresses these risks with two core products:
+
+### AI Stress Testing
+AI Stress Testing is a set of tests that measure the robustness of your ML deployment by computing an aggregate severity score across all tests. The severity score is a measure of the magnitude of the identified failure mode specific to each test. It is a combination of the impact the failure has on model performance (**Performance Change** or **Prediction Change**) and the prevalence of the failure mode in the reference set (**Abnormal Inputs** or **Drift Statistic**). By running hundreds of these unit tests and simulations across both your model and associated reference and evaluation datasets, RIME identifies implicit assumptions and failure modes of the ML deployment.
+
+AI Stress Testing allows you to test your data and model before deployment. We recommend providing a model and labels when running AI Stress Testing to leverage the platform's full potential; however, it is not required. You can run RIME in various modes.
+
+- **Model**: Providing access to the model allows for testing the model behavior under different circumstances. In these tests, we perturb model inputs, provide them to the model, and examine the model behavior to uncover its vulnerabilities.
+- **Predictions**: Providing predictions for the data can speed up RIME and allows us to test your model even if you don't provide a model interface. We use sophisticated statistical algorithms to run most of same tests as when we have direct model access to uncover vulnerabilities within your model and approximate the impact of each vulnerability. If you provide neither a model nor predictions, RIME will still run data quality and data distribution shift tests.
+- **Labels**: Providing labels allows for testing model performance under different circumstances. If you do not provide labels, RIME will still run data quality tests, data distribution tests, and prediction distribution tests (if possible).
+
+### AI Firewall
+AI Firewall protects your model from bad predictions post-deployment. Firewall operates across two levels of abstraction. At the data point level, Firewall can flag aberrant or problematic data points in realtime. This happens in realtime and the AI Firewall is automatically configured from the results of stress testing. The end result is that the user gets a custom AI Firewall that protects against the unique forms of model failure to which  a given model is susceptible. The second level of abstraction across which firewall operates is at the batch level. We call this view Continuous Testing. You can track summary metrics of your ML deployment over time. As suggested by the name, this view uses the same Stress Testing framework applied continually across time. The advantage of this is that it allows you to easily delve into the underlying drivers of aberrant model behavior. Thus, you know not only that something is going wrong, but you are able to immediately understand why it’s going wrong, drastically shortening the resolution process.
+
+AI Firewall has two different modes for production usage.
+- **Realtime**: Firewall can be deployed with a single line of code directly in the inference pipeline of your ML model, wherein it logs, analyzes, and/or acts upon (flag, block, impute) aberrant data points in realtime. This mode works across both of the abstraction levels mentioned before.
+- **Continuous Testing**: Firewall can also be deployed to passively log and analyze predictions by uploading prediction logs after model inference. This mode works across both modalities as well, but real time data point flagging and blocking will not be enabled.
+
+## Key Machine Learning Tasks Covered
+### Tabular
+- Binary Classification
+- Multiclass Classification
+- Regression
+- Learning to Rank
+
+### Natural Language Processing (NLP)
+- Text Classification
+- Named Entity Recognition
+
+### Computer Vision (CV)
+- Image Classification
+- Object Detection
+
+## RIME Cloud vs RIME Enterprise
+We offer two variations of RIME tailored to different deployment use cases.
+
+**Both RIME Cloud and RIME Enterprise support all key product features.** Here are their key differences:
+
+<!-- TODO high-level architectural diagrams to distinguish product versions -->
+
+|                          | RIME Cloud                                                                                          | RIME Enterprise             |
+|--------------------------|-----------------------------------------------------------------------------------------------------|-----------------------------|
+| **License Options**      | Trial or Production                                                                                 | Production                  |
+| **Installation**         | K8s cluster in RI VPC                                                                               | K8s cluster in Customer VPC |
+| **Data Location**        | RI S3 buckets by default <br /> Customer S3 possible                                                | Customer S3/GCP bucket      |
+| **Test Result Location** | RI S3 buckets                                                                                       | Customer S3 buckets         |
+| **Trial Limitations**    | 14 Day License<br /> 5 Projects <br /> 15 Tests run per 24 hours <br /> 5GB Data Limit per Test Run | N/A                         |
+
+For trial evaluations, a lightweight local installation is also supported.

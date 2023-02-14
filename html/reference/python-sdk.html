@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python SDK &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Python Library" href="python-library.html" />
+    <link rel="prev" title="API Authentication" href="api-authentication.html" />
+<link href="../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../index.html">
+        <img src="../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                0.16.14
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../rime/product-overview.html">Product Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rime/product-details.html">Product Details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/quickstart.html">Running Your First AI Stress Test</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Walkthroughs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../walkthroughs/python-sdk.html">Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../walkthroughs/python-library.html">Python Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../walkthroughs/cli.html">CLI</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Configuring RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/tabular.html">Tabular Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/nlp.html">NLP Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/cv.html">CV Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="api-authentication.html">API Authentication</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Python SDK</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#rimeclient">RIMEClient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rimestresstestjob">RIMEStressTestJob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rimeproject">RIMEProject</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rimefirewall">RIMEFirewall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rimeimagebuilder">RIMEImageBuilder</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.RIMEFirewall"><code class="docutils literal notranslate"><span class="pre">RIMEFirewall</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEFirewall.backend"><code class="docutils literal notranslate"><span class="pre">RIMEFirewall.backend</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEFirewall.firewall_id"><code class="docutils literal notranslate"><span class="pre">RIMEFirewall.firewall_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEFirewall.update_firewall_stress_test_run"><code class="docutils literal notranslate"><span class="pre">RIMEFirewall.update_firewall_stress_test_run()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEFirewall.get_link"><code class="docutils literal notranslate"><span class="pre">RIMEFirewall.get_link()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEFirewall.run_firewall_incremental_data"><code class="docutils literal notranslate"><span class="pre">RIMEFirewall.run_firewall_incremental_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.RIMEClient"><code class="docutils literal notranslate"><span class="pre">RIMEClient</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEClient.create_project"><code class="docutils literal notranslate"><span class="pre">RIMEClient.create_project()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEClient.create_managed_image"><code class="docutils literal notranslate"><span class="pre">RIMEClient.create_managed_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEClient.pip_requirement"><code class="docutils literal notranslate"><span class="pre">RIMEClient.pip_requirement()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEClient.pip_library_filter"><code class="docutils literal notranslate"><span class="pre">RIMEClient.pip_library_filter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEClient.list_managed_images"><code class="docutils literal notranslate"><span class="pre">RIMEClient.list_managed_images()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEClient.list_projects"><code class="docutils literal notranslate"><span class="pre">RIMEClient.list_projects()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEClient.start_stress_test"><code class="docutils literal notranslate"><span class="pre">RIMEClient.start_stress_test()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEClient.list_stress_test_jobs"><code class="docutils literal notranslate"><span class="pre">RIMEClient.list_stress_test_jobs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEClient.create_firewall"><code class="docutils literal notranslate"><span class="pre">RIMEClient.create_firewall()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEClient.get_firewall"><code class="docutils literal notranslate"><span class="pre">RIMEClient.get_firewall()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEClient.get_firewall_for_project"><code class="docutils literal notranslate"><span class="pre">RIMEClient.get_firewall_for_project()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEClient.start_firewall_from_reference"><code class="docutils literal notranslate"><span class="pre">RIMEClient.start_firewall_from_reference()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEClient.upload_dataset_file"><code class="docutils literal notranslate"><span class="pre">RIMEClient.upload_dataset_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEClient.upload_model_directory"><code class="docutils literal notranslate"><span class="pre">RIMEClient.upload_model_directory()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.RIMEImageBuilder"><code class="docutils literal notranslate"><span class="pre">RIMEImageBuilder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEImageBuilder.get_status"><code class="docutils literal notranslate"><span class="pre">RIMEImageBuilder.get_status()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.RIMEStressTestJob"><code class="docutils literal notranslate"><span class="pre">RIMEStressTestJob</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEStressTestJob.get_link"><code class="docutils literal notranslate"><span class="pre">RIMEStressTestJob.get_link()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEStressTestJob.get_status"><code class="docutils literal notranslate"><span class="pre">RIMEStressTestJob.get_status()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEStressTestJob.get_test_cases_result"><code class="docutils literal notranslate"><span class="pre">RIMEStressTestJob.get_test_cases_result()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEStressTestJob.get_test_run_result"><code class="docutils literal notranslate"><span class="pre">RIMEStressTestJob.get_test_run_result()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.RIMEProject"><code class="docutils literal notranslate"><span class="pre">RIMEProject</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEProject.project_id"><code class="docutils literal notranslate"><span class="pre">RIMEProject.project_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEProject.name"><code class="docutils literal notranslate"><span class="pre">RIMEProject.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime_sdk.RIMEProject.description"><code class="docutils literal notranslate"><span class="pre">RIMEProject.description</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python-library.html">Python Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="integrations.html">Integrations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Python SDK</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/python-sdk.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="python-sdk">
+<span id="rime-sdk"></span><h1>Python SDK<a class="headerlink" href="#python-sdk" title="Permalink to this heading"></a></h1>
+<p>The RIME SDK provides an interface to RIME backend services for starting and viewing the progress of RIME stress test jobs.
+There are four objects available in the <cite>rime_sdk</cite> package:</p>
+<section id="rimeclient">
+<h2>RIMEClient<a class="headerlink" href="#rimeclient" title="Permalink to this heading"></a></h2>
+<p>The <cite>RIMEClient</cite> provides an interface to RIME’s backend services for creating projects,
+and querying the backend for current stress test jobs.</p>
+<p><a class="reference internal" href="#rime_sdk.RIMEClient" title="rime_sdk.RIMEClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">rime_sdk.RIMEClient</span></code></a></p>
+</section>
+<section id="rimestresstestjob">
+<h2>RIMEStressTestJob<a class="headerlink" href="#rimestresstestjob" title="Permalink to this heading"></a></h2>
+<p>This object provides an interface for continuous tests the status of a stress test job in the RIME backend.</p>
+<p><a class="reference internal" href="#rime_sdk.RIMEStressTestJob" title="rime_sdk.RIMEStressTestJob"><code class="xref py py-class docutils literal notranslate"><span class="pre">rime_sdk.RIMEStressTestJob</span></code></a></p>
+</section>
+<section id="rimeproject">
+<h2>RIMEProject<a class="headerlink" href="#rimeproject" title="Permalink to this heading"></a></h2>
+<p>This object describes a project in the RIME backend.</p>
+<p><a class="reference internal" href="#rime_sdk.RIMEProject" title="rime_sdk.RIMEProject"><code class="xref py py-class docutils literal notranslate"><span class="pre">rime_sdk.RIMEProject</span></code></a></p>
+</section>
+<section id="rimefirewall">
+<h2>RIMEFirewall<a class="headerlink" href="#rimefirewall" title="Permalink to this heading"></a></h2>
+<p>This object describes a RIMEFirewall in the RIME Backend</p>
+<p><a class="reference internal" href="#rime_sdk.RIMEFirewall" title="rime_sdk.RIMEFirewall"><code class="xref py py-class docutils literal notranslate"><span class="pre">rime_sdk.RIMEFirewall</span></code></a></p>
+</section>
+<section id="rimeimagebuilder">
+<h2>RIMEImageBuilder<a class="headerlink" href="#rimeimagebuilder" title="Permalink to this heading"></a></h2>
+<p>An interface to a RIME image builder</p>
+<p><a class="reference internal" href="#rime_sdk.RIMEImageBuilder" title="rime_sdk.RIMEImageBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">rime_sdk.RIMEImageBuilder</span></code></a></p>
+<span class="target" id="module-rime_sdk"></span><p>Python package providing access to RIME’s backend sevices.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="rime_sdk.RIMEFirewall">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rime_sdk.</span></span><span class="sig-name descname"><span class="pre">RIMEFirewall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RIMEBackend</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">firewall_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rime_sdk.RIMEFirewall" title="Permalink to this definition"></a></dt>
+<dd><p>RIMEFirewall object wrapper with helpful methods for working with RIME Firewall.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rime_sdk.RIMEFirewall.backend">
+<span class="sig-name descname"><span class="pre">backend</span></span><a class="headerlink" href="#rime_sdk.RIMEFirewall.backend" title="Permalink to this definition"></a></dt>
+<dd><p>RIMEBackend
+The RIME backend used to query about the status of the job.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rime_sdk.RIMEFirewall.firewall_id">
+<span class="sig-name descname"><span class="pre">firewall_id</span></span><a class="headerlink" href="#rime_sdk.RIMEFirewall.firewall_id" title="Permalink to this definition"></a></dt>
+<dd><p>str
+How to refer to the FW in the backend.
+Use this attribute to specify the Firewall for tasks in the backend.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEFirewall.update_firewall_stress_test_run">
+<span class="sig-name descname"><span class="pre">update_firewall_stress_test_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stress_test_run_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">UpdateFirewallResponse</span></span></span><a class="headerlink" href="#rime_sdk.RIMEFirewall.update_firewall_stress_test_run" title="Permalink to this definition"></a></dt>
+<dd><p>Update firewall with stress test run id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>stress_test_run_id</strong> – Stress Test Run Id to configure new firewall</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the provided status_filters array has invalid values.
+    If the request to the ModelTest service failed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEFirewall.get_link">
+<span class="sig-name descname"><span class="pre">get_link</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.RIMEFirewall.get_link" title="Permalink to this definition"></a></dt>
+<dd><p>Get the web app URL to the firewall.</p>
+<p>This link directs to your organization’s deployment of RIME.
+You can view more detailed information about the firewall
+in the web app, including helpful visualizations, key insights on your
+model’s performance, and explanations of test results for each batch.</p>
+<p>Note: this is a string that should be copy-pasted into a browser.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEFirewall.run_firewall_incremental_data">
+<span class="sig-name descname"><span class="pre">run_firewall_incremental_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_run_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disable_firewall_events</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">CustomImage</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rime_managed_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ram_request_megabytes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_request_millicores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.RIMEStressTestJob" title="rime_sdk.stress_test_job.RIMEStressTestJob"><span class="pre">RIMEStressTestJob</span></a></span></span><a class="headerlink" href="#rime_sdk.RIMEFirewall.run_firewall_incremental_data" title="Permalink to this definition"></a></dt>
+<dd><p>Start a RIME model firewall test on the backend’s ModelTesting service.</p>
+<p>This allows you to run Firewall Test job on the RIME
+backend. This will run firewall on a batch of tabular data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test_run_config</strong> – dict
+Configuration for the test to be run, which specifies paths to
+the model and datasets to used for the test.</p></li>
+<li><p><strong>custom_image</strong> – Optional[CustomImage]
+Specification of a customized container image to use running the model
+test. The image must have all dependencies required by your model.
+The image must specify a name for the image and optional a pull secret
+(of type CustomImage.PullSecret) with the name of the kubernetes pull
+secret used to access the given image.</p></li>
+<li><p><strong>rime_managed_image</strong> – Optional[str]
+Name of a managed image to use when running the model test.
+The image must have all dependencies required by your model. To create
+new managed images with your desired dependencies, use the client’s
+<code class="docutils literal notranslate"><span class="pre">create_managed_image()</span></code> method.</p></li>
+<li><p><strong>ram_request_megabytes</strong> – int
+Megabytes of RAM requested for the stress test job. If none
+specified, will default to 4000MB. The limit is 2x the megabytes
+requested.</p></li>
+<li><p><strong>cpu_request_millicores</strong> – int
+Millicores of CPU requested for the stress test job. If none
+specified, will default to 1500mi. The limit is 2x the millicores
+requested.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">RIMEStressTestJob</span></code> providing information about the model stress test
+job.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the request to the ModelTest service failed.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># This example will likely not work for you because it requires permissions</span>
+<span class="c1"># to a specific S3 bucket. This demonstrates how you might specify such a</span>
+<span class="c1"># configuration.</span>
+<span class="n">incremental_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;eval_path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://rime-datasets/</span>
+       <span class="n">fraud_continuous_testing</span><span class="o">/</span><span class="n">eval_2021_04_30_to_2021_05_01</span><span class="o">.</span><span class="n">csv</span><span class="s2">&quot;,</span>
+    <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span>
+<span class="p">}</span>
+<span class="c1"># Run the job using the specified config and the default Docker image in</span>
+<span class="c1"># the RIME backend. Use the RIME Managed Image &quot;tensorflow115&quot;.</span>
+<span class="c1"># This assumes you have already created the Managed Image and waited for it</span>
+<span class="c1"># to be ready.</span>
+<span class="n">firewall</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">get_firewall</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+<span class="n">job</span> <span class="o">=</span>
+    <span class="n">firewall</span><span class="o">.</span><span class="n">run_firewall_incremental_data</span><span class="p">(</span>
+        <span class="n">test_run_config</span><span class="o">=</span><span class="n">incremental_config</span><span class="p">,</span>
+        <span class="n">rime_managed_image</span><span class="o">=</span><span class="s2">&quot;tensorflow115&quot;</span><span class="p">,</span>
+        <span class="n">ram_request_megabytes</span><span class="o">=</span><span class="mi">8000</span><span class="p">,</span>
+        <span class="n">cpu_request_millicores</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rime_sdk.RIMEClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rime_sdk.</span></span><span class="sig-name descname"><span class="pre">RIMEClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disable_tls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rime_sdk.RIMEClient" title="Permalink to this definition"></a></dt>
+<dd><p>The <cite>RIMEClient</cite> provides an interface to RIME’s backend        services for creating projects, starting stress test jobs,        and querying the backend for current stress test jobs.</p>
+<p>To initialize the RIMEClient, provide the address of your RIME instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>domain</strong> – str
+The base domain/address of the RIME service.</p></li>
+<li><p><strong>api_key</strong> – str
+The api key providing authentication to RIME services.</p></li>
+<li><p><strong>channel_timeout</strong> – float
+The amount of time in seconds to wait for channels to become ready
+when opening connections to gRPC servers.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If a connection cannot be made to a backend service within <cite>timeout</cite>.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rime_client</span> <span class="o">=</span> <span class="n">RIMEClient</span><span class="p">(</span><span class="s2">&quot;my_vpc.rime.com&quot;</span><span class="p">,</span> <span class="s2">&quot;api-key&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEClient.create_project">
+<span class="sig-name descname"><span class="pre">create_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.RIMEProject" title="rime_sdk.client.RIMEProject"><span class="pre">RIMEProject</span></a></span></span><a class="headerlink" href="#rime_sdk.RIMEClient.create_project" title="Permalink to this definition"></a></dt>
+<dd><p>Create a new RIME project in RIME’s backend.</p>
+<p>Projects allow you to organize stress test runs as you see fit.
+A natural way to organize stress test runs is to create a project for each
+specific ML task, such as predicting whether a transaction is fradulent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – str
+Name of the new project.</p></li>
+<li><p><strong>description</strong> – str
+Description of the new project.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">RIMEProject</span></code> that describes the created project.
+Its <code class="docutils literal notranslate"><span class="pre">project_id</span></code> attribute can be used in <code class="docutils literal notranslate"><span class="pre">start_stress_test()</span></code>
+and <code class="docutils literal notranslate"><span class="pre">list_stress_test_jobs()</span></code>.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the request to the Upload service failed.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEClient.create_managed_image">
+<span class="sig-name descname"><span class="pre">create_managed_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requirements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">PipRequirement</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.RIMEImageBuilder" title="rime_sdk.image_builder.RIMEImageBuilder"><span class="pre">RIMEImageBuilder</span></a></span></span><a class="headerlink" href="#rime_sdk.RIMEClient.create_managed_image" title="Permalink to this definition"></a></dt>
+<dd><p>Create a new managed Docker image with the desired        PIP requirements to run RIME on.</p>
+<p>These managed Docker images are managed by the RIME backend and will
+automatically be upgraded when you update your version of RIME.
+Note: Images take a few minutes to be built.</p>
+<p>This method returns an object that can be used to track the progress of the
+image building job. The new custom image is only available for use in a stress
+test once it has status <code class="docutils literal notranslate"><span class="pre">READY</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – str
+The (unique) name of the new managed image. This acts as the unique
+identifier of the managed image. The call will fail if an image with
+the specified name already exists.</p></li>
+<li><p><strong>requirements</strong> – List[ManagedImage.PipRequirement]
+List of additional pip requirements to be installed on the managed
+image. A <code class="docutils literal notranslate"><span class="pre">ManagedImage.PipRequirement</span></code> can be created with the helper
+method <code class="docutils literal notranslate"><span class="pre">RIMEClient.pip_requirement</span></code>.
+The first argument is the name of the library (e.g. <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> or
+<code class="docutils literal notranslate"><span class="pre">xgboost</span></code>) and the second argument is a valid pip
+<a class="reference external" href="https://www.python.org/dev/peps/pep-0440/#version-specifiers">version specifier</a>
+(e.g. <code class="docutils literal notranslate"><span class="pre">&gt;=0.1.2</span></code> or <code class="docutils literal notranslate"><span class="pre">==1.0.2</span></code>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">RIMEImageBuilder</span></code> object that provides an interface for monitoring
+the job in the backend.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the request to the ImageRegistry service failed.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">requirements</span> <span class="o">=</span> <span class="p">[</span>
+     <span class="c1"># Fix the version of `xgboost` to `1.0.2`.</span>
+     <span class="n">rime_client</span><span class="o">.</span><span class="n">pip_requirement</span><span class="p">(</span><span class="s2">&quot;xgboost&quot;</span><span class="p">,</span> <span class="s2">&quot;==1.0.2&quot;</span><span class="p">),</span>
+     <span class="c1"># We do not care about the installed version of `tensorflow`.</span>
+     <span class="n">rime_client</span><span class="o">.</span><span class="n">pip_requirement</span><span class="p">(</span><span class="s2">&quot;tensorflow&quot;</span><span class="p">)</span>
+ <span class="p">]</span>
+
+<span class="c1"># Start a new image building job</span>
+<span class="n">builder_job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_managed_image</span><span class="p">(</span><span class="s2">&quot;xgboost102_tensorflow&quot;</span><span class="p">,</span>
+<span class="n">requirements</span><span class="p">)</span>
+
+<span class="c1"># Wait until the job has finished and print out status information.</span>
+<span class="c1"># Once this prints out the `READY` status, your image is available for</span>
+<span class="c1"># use in stress tests.</span>
+<span class="n">builder_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEClient.pip_requirement">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pip_requirement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version_specifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PipRequirement</span></span></span><a class="headerlink" href="#rime_sdk.RIMEClient.pip_requirement" title="Permalink to this definition"></a></dt>
+<dd><p>Construct a PipRequirement object for use in <code class="docutils literal notranslate"><span class="pre">create_managed_image()</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEClient.pip_library_filter">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pip_library_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PipLibraryFilter</span></span></span><a class="headerlink" href="#rime_sdk.RIMEClient.pip_library_filter" title="Permalink to this definition"></a></dt>
+<dd><p>Construct a PipLibraryFilter object for use in <code class="docutils literal notranslate"><span class="pre">list_managed_images()</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEClient.list_managed_images">
+<span class="sig-name descname"><span class="pre">list_managed_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pip_library_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">PipLibraryFilter</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#rime_sdk.RIMEClient.list_managed_images" title="Permalink to this definition"></a></dt>
+<dd><p>List all the managed Docker images.</p>
+<p>This is where the true power of the managed images feature lies.
+You can search for images with specific pip libraries installed so that you
+do not have to create a new managed image every time you need to run a
+stress test.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pip_library_filters</strong> – Optional[List[ListImagesRequest.PipLibraryFilter]]
+Optional list of pip libraries to filter by.
+Construct each ListImagesRequest.PipLibraryFilter object with the
+<code class="docutils literal notranslate"><span class="pre">pip_library_filter</span></code> convenience method.</p></li>
+<li><p><strong>page_token</strong> – str = “”
+This identifies to the page of results to retrieve, and used for
+paginating the API results. To get access to the next page of results,
+use the second value in the tuple returned by the previous call.
+Leave empty to retrieve the first page of results. used for paginating
+the API results.</p></li>
+<li><p><strong>page_size</strong> – int = 100
+This is the limit on the size of the page of results.
+The default value is to return at most 100 managed images.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">Tuple[List[Dict],</span> <span class="pre">str]</span></code> of the list of managed images as
+dicts and the next page token.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the request to the ImageRegistry service failed or the list of
+    pip library filters is improperly specified.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filter for an image with catboost1.0.3 and tensorflow installed.</span>
+<span class="n">filters</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">rime_client</span><span class="o">.</span><span class="n">pip_library_filter</span><span class="p">(</span><span class="s2">&quot;catboost&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0.3&quot;</span><span class="p">),</span>
+    <span class="n">rime_client</span><span class="o">.</span><span class="n">pip_library_filter</span><span class="p">(</span><span class="s2">&quot;tensorflow&quot;</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="c1"># Query for the images.</span>
+<span class="n">images</span><span class="p">,</span> <span class="n">next_page_token</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">list_managed_images</span><span class="p">(</span>
+    <span class="n">pip_library_filters</span><span class="o">=</span><span class="n">filters</span><span class="p">)</span>
+
+<span class="c1"># List comprehension to get all the names of the images.</span>
+<span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">images</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEClient.list_projects">
+<span class="sig-name descname"><span class="pre">list_projects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">page_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#rime_sdk.RIMEProject" title="rime_sdk.client.RIMEProject"><span class="pre">RIMEProject</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#rime_sdk.RIMEClient.list_projects" title="Permalink to this definition"></a></dt>
+<dd><p>List projects in a paginated form.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>page_token</strong> – str = “”
+This identifies to the page of results to retrieve, and used for
+paginating the API results. To get access to the next page of results,
+use the second value in the tuple returned by the previous call.
+Leave empty to retrieve the first page of results. used for paginating
+the API results.</p></li>
+<li><p><strong>page_size</strong> – int = 200
+This is the limit on the size of the page of results.
+The default value is to return at most 200 projects.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">Tuple[List[RIMEProject],</span> <span class="pre">str]</span></code> of the list of projects and
+the next page token.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the request to the ProjectManager service fails.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Query for 100 projects.</span>
+<span class="n">projects</span><span class="p">,</span> <span class="n">next_page_token</span><span class="p">,</span> <span class="n">number</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">list_projects</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEClient.start_stress_test">
+<span class="sig-name descname"><span class="pre">start_stress_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_run_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">CustomImage</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rime_managed_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ram_request_megabytes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_request_millicores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'tabular'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.RIMEStressTestJob" title="rime_sdk.stress_test_job.RIMEStressTestJob"><span class="pre">RIMEStressTestJob</span></a></span></span><a class="headerlink" href="#rime_sdk.RIMEClient.start_stress_test" title="Permalink to this definition"></a></dt>
+<dd><p>Start a RIME model stress test on the backend’s ModelTesting service.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test_run_config</strong> – dict
+Configuration for the test to be run, which specifies paths to
+the model and datasets to used for the test.</p></li>
+<li><p><strong>project_id</strong> – Optional[str]
+Identifier for the project where the resulting test run will be stored.
+If not specified, the results will be stored in the default project.</p></li>
+<li><p><strong>custom_image</strong> – Optional[CustomImage]
+Specification of a customized container image to use running the model
+test. The image must have all dependencies required by your model.
+The image must specify a name for the image and optional a pull secret
+(of type CustomImage.PullSecret) with the name of the kubernetes pull
+secret used to access the given image.</p></li>
+<li><p><strong>rime_managed_image</strong> – Optional[str]
+Name of a managed image to use when running the model test.
+The image must have all dependencies required by your model. To create
+new managed images with your desired dependencies, use the client’s
+<cite>create_managed_image()</cite> method.</p></li>
+<li><p><strong>ram_request_megabytes</strong> – int
+Megabytes of RAM requested for the stress test job.
+The limit is 2x the megabytes requested.</p></li>
+<li><p><strong>cpu_request_millicores</strong> – int
+Millicores of CPU requested for the stress test job.
+The limit is 2x the millicores requested.</p></li>
+<li><p><strong>data_type</strong> – str
+Type of data this firewall test is to be run on. Should be one of
+<cite>tabular</cite>, <cite>nlp</cite>, <cite>images</cite>. Defaults to <cite>tabular</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A RIMEStressTestJob providing information about the model stress test job.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the request to the ModelTest service failed.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>This example will likely not work for you because it requires permissions
+to a specific S3 bucket. This demonstrates how you might specify such a
+configuration.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Titanic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;Survived&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ref_path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://rime-datasets/titanic/titanic_example.csv&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;eval_path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://rime-datasets/titanic/titanic_example.csv&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;model_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://rime-models/titanic_s3_test/titanic_example_model.py&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Run the job using the specified config and the default Docker image in the
+RIME backend. Store the results under project ID <code class="docutils literal notranslate"><span class="pre">foo</span></code>. Use the RIME Managed
+Image <code class="docutils literal notranslate"><span class="pre">tensorflow115</span></code>. This assumes you have already created the Managed
+Image and waited for it to be ready.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">start_stress_test_job</span><span class="p">(</span>
+ <span class="n">test_run_config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span>
+ <span class="n">rime_managed_image</span><span class="o">=</span><span class="s2">&quot;tensorflow115&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEClient.list_stress_test_jobs">
+<span class="sig-name descname"><span class="pre">list_stress_test_jobs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#rime_sdk.RIMEStressTestJob" title="rime_sdk.stress_test_job.RIMEStressTestJob"><span class="pre">RIMEStressTestJob</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#rime_sdk.RIMEClient.list_stress_test_jobs" title="Permalink to this definition"></a></dt>
+<dd><p>Query the backend for a list of jobs filtered by status and project ID.</p>
+<p>This is a good way to recover <cite>RIMEStressTestJob</cite> objects.
+Note that this only returns jobs from the last two days, because the
+time-to-live of job objects in the backend is set at two days.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>status_filters</strong> – Optional[List[str]] = None
+Filter for selecting jobs by a union of statuses.
+The following list enumerates all acceptable values.
+[‘pending’, ‘running’, ‘failing’, ‘succeeded’]
+If omitted, jobs will not be filtered by status.</p></li>
+<li><p><strong>project_id</strong> – Optional[str] = None
+Filter for selecting jobs by project ID.
+If omitted, jobs from all projects will be returned.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of <code class="docutils literal notranslate"><span class="pre">RIMEStressTestJob</span></code> objects.
+These are not guaranteed to be in any sorted order.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the provided status_filters array has invalid values.
+    If the request to the ModelTest service failed.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get all running and succeeded jobs for project &#39;foo&#39;</span>
+<span class="n">jobs</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">list_stress_test_jobs</span><span class="p">(</span>
+    <span class="n">status_filters</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;JOB_STATUS_PENDING&#39;</span><span class="p">,</span> <span class="s1">&#39;JOB_STATUS_SUCCEEDED&#39;</span><span class="p">],</span>
+    <span class="n">project_id</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEClient.create_firewall">
+<span class="sig-name descname"><span class="pre">create_firewall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_size_seconds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_run_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.RIMEFirewall" title="rime_sdk.firewall.RIMEFirewall"><span class="pre">RIMEFirewall</span></a></span></span><a class="headerlink" href="#rime_sdk.RIMEClient.create_firewall" title="Permalink to this definition"></a></dt>
+<dd><p>Create a Firewall for a given project.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – str
+FW name.</p></li>
+<li><p><strong>bin_size_seconds</strong> – int
+Bin size in seconds. Only supports daily or hourly.</p></li>
+<li><p><strong>test_run_id</strong> – str
+ID of the stress test run that firewall will be based on.</p></li>
+<li><p><strong>project_id</strong> – str
+ID of the project this FW belongs to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">RIMEFirewall</span></code> object.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the provided status_filters array has invalid values.
+    If the request to the ModelTest service failed.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create FW based on foo stress test in bar project.</span>
+<span class="n">firewall</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_firewall</span><span class="p">(</span>
+    <span class="s2">&quot;firewall name&quot;</span><span class="p">,</span> <span class="mi">86400</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEClient.get_firewall">
+<span class="sig-name descname"><span class="pre">get_firewall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">firewall_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.RIMEFirewall" title="rime_sdk.firewall.RIMEFirewall"><span class="pre">RIMEFirewall</span></a></span></span><a class="headerlink" href="#rime_sdk.RIMEClient.get_firewall" title="Permalink to this definition"></a></dt>
+<dd><p>Get a firewall if it exists.</p>
+<p>Query the backend for a <cite>RIMEFirewall</cite> which can be used to perform Firewall
+operations. If the FW you are trying to fetch does not exist,
+this will error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>firewall_id</strong> – ID of the FW instance to fetch.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a <code class="docutils literal notranslate"><span class="pre">RIMEFirewall</span></code> Object</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the FW Instance does not exist.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get FW foo if it exists.</span>
+<span class="n">firewall</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">get_firewall</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEClient.get_firewall_for_project">
+<span class="sig-name descname"><span class="pre">get_firewall_for_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.RIMEFirewall" title="rime_sdk.firewall.RIMEFirewall"><span class="pre">RIMEFirewall</span></a></span></span><a class="headerlink" href="#rime_sdk.RIMEClient.get_firewall_for_project" title="Permalink to this definition"></a></dt>
+<dd><p>Get the active fw for a project if it exists.</p>
+<p>Query the backend for an active <cite>RIMEFirewall</cite> in a specified project which
+can be used to perform Firewall operations. If there is no active
+Firewall for the project, this call will error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>project_id</strong> – ID of the project which contains a Firewall.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">RIMEFirewall</span></code> object.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the Firewall does not exist.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get FW in foo-project if it exists.</span>
+<span class="n">firewall</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">get_firewall_for_project</span><span class="p">(</span><span class="s2">&quot;foo-project&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEClient.start_firewall_from_reference">
+<span class="sig-name descname"><span class="pre">start_firewall_from_reference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_run_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disable_firewall_events</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">CustomImage</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rime_managed_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ram_request_megabytes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_request_millicores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'tabular'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.RIMEStressTestJob" title="rime_sdk.stress_test_job.RIMEStressTestJob"><span class="pre">RIMEStressTestJob</span></a></span></span><a class="headerlink" href="#rime_sdk.RIMEClient.start_firewall_from_reference" title="Permalink to this definition"></a></dt>
+<dd><p>Start a RIME Firewall from reference on the backend’s        ModelTesting service.</p>
+<p>This allows you to start an AI Firewall job on the RIME backend. This
+will run a stress test, create a firewall, and then run firewall
+tests on your dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test_run_config</strong> – dict
+Configuration for the test to be run, which specifies paths to
+the model and datasets to used for the test.</p></li>
+<li><p><strong>project_id</strong> – Optional[str]
+Identifier for the project where the resulting test run will be stored.
+If not specified, the results will be stored in the default project.</p></li>
+<li><p><strong>custom_image</strong> – Optional[CustomImage]
+Specification of a customized container image to use running the model
+test. The image must have all dependencies required by your model.
+The image must specify a name for the image and optional a pull secret
+(of type CustomImage.PullSecret) with the name of the kubernetes pull
+secret used to access the given image.</p></li>
+<li><p><strong>rime_managed_image</strong> – Optional[str]
+Name of a managed image to use when running the model test.
+The image must have all dependencies required by your model. To create
+new managed images with your desired dependencies, use the client’s
+<code class="docutils literal notranslate"><span class="pre">create_managed_image()</span></code> method.</p></li>
+<li><p><strong>ram_request_megabytes</strong> – int
+Megabytes of RAM requested for the stress test job. If none
+specified, will default to 4000MB. The limit is 2x the megabytes
+requested.</p></li>
+<li><p><strong>cpu_request_millicores</strong> – int
+Millicores of CPU requested for the stress test job. If none
+specified, will default to 1500mi. The limit is 2x the millicores
+requested.</p></li>
+<li><p><strong>data_type</strong> – str
+Type of data this firewall test is to be run on. Should be one of
+<cite>tabular</cite>, <cite>nlp</cite>, <cite>images</cite>. Defaults to <cite>tabular</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">RIMEStressTestJob</span></code> providing information about the model stress test
+job.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the request to the ModelTest service failed.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># This example will likely not work for you because it requires</span>
+<span class="c1"># permissions to a specific S3 bucket.</span>
+<span class="c1"># This demonstrates how you might specify such a configuration.</span>
+<span class="n">config_from_reference</span> <span class="o">=</span> <span class="p">{</span>
+<span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Five Day Fraud Detection&quot;</span><span class="p">,</span>
+<span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;is_fraud&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="s2">&quot;is_fraud_preds&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ref_path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://rime-datasets/fraud_continuous_testing/ref.csv&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;eval_path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://rime-datasets/fraud_continuous_testing/</span>
+                  <span class="n">eval_2021_04_01_to_2021_04_06</span><span class="o">.</span><span class="n">csv</span><span class="s2">&quot;</span>
+<span class="p">},</span>
+<span class="s2">&quot;monitoring_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bin_size&quot;</span><span class="p">:</span> <span class="s2">&quot;day&quot;</span>
+<span class="p">},</span>
+<span class="p">}</span>
+<span class="c1"># Run the job using the specified config and the default Docker image in</span>
+<span class="c1"># the RIME backend.vStore the results under project ID ``foo``</span>
+<span class="c1"># Use the RIME Managed Image ``tensorflow115``.</span>
+<span class="c1"># This assumes you have already created the Managed Image and waited for</span>
+<span class="c1"># it to be ready.</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">start_firewall_from_reference</span><span class="p">(</span>
+    <span class="n">test_run_config</span><span class="o">=</span><span class="n">config_from_reference</span><span class="p">,</span>
+    <span class="n">project_id</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span>
+    <span class="n">rime_managed_image</span><span class="o">=</span><span class="s2">&quot;tensorflow115&quot;</span><span class="p">,</span>
+    <span class="n">ram_request_megabytes</span><span class="o">=</span><span class="mi">8000</span><span class="p">,</span>
+    <span class="n">cpu_request_millicores</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEClient.upload_dataset_file">
+<span class="sig-name descname"><span class="pre">upload_dataset_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.RIMEClient.upload_dataset_file" title="Permalink to this definition"></a></dt>
+<dd><p>Upload a dataset file to make it accessible to RIME’s backend.</p>
+<p>The uploaded file is stored with RIME’s backend in a blob store
+using its file name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> – Union[Path, str]
+Path to the file to be uploaded to RIME’s blob store.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A reference to the uploaded file’s location in the blob store. This
+reference can be used to refer to that object when writing RIME configs.
+Please store this reference for future access to the file.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – If the path <code class="docutils literal notranslate"><span class="pre">file_path</span></code> does not exist.</p></li>
+<li><p><strong>IOError</strong> – If <code class="docutils literal notranslate"><span class="pre">file_path</span></code> is not a file.</p></li>
+<li><p><strong>ValueError</strong> – If there was an error in obtaining a blobstore location from the
+    RIME backend or in uploading <code class="docutils literal notranslate"><span class="pre">file_path</span></code> to RIME’s blob store.
+    In the scenario the file fails to upload, the incomplete file will
+    NOT automatically be deleted.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEClient.upload_model_directory">
+<span class="sig-name descname"><span class="pre">upload_model_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upload_hidden</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.RIMEClient.upload_model_directory" title="Permalink to this definition"></a></dt>
+<dd><p>Upload a model directory to make it accessible to RIME’s backend.</p>
+<p>The uploaded directory is stored within RIME’s backend in a blob store.
+All files contained within <code class="docutils literal notranslate"><span class="pre">dir_path</span></code> and its subdirectories are uploaded
+according to their relative paths within <code class="docutils literal notranslate"><span class="pre">dir_path</span></code>. However, if
+upload_hidden is False, all hidden files and subdirectories beginning with
+a ‘.’ are not uploaded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dir_path</strong> – Union[Path, str]
+Path to the directory to be uploaded to RIME’s blob store.</p></li>
+<li><p><strong>upload_hidden</strong> – bool = False
+Whether or not to upload hidden files or subdirectories
+(ie. those beginning with a ‘.’).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A reference to the uploaded directory’s location in the blob store. This
+reference can be used to refer to that object when writing RIME configs.
+Please store this reference for future access to the directory.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – If the directory <code class="docutils literal notranslate"><span class="pre">dir_path</span></code> does not exist.</p></li>
+<li><p><strong>IOError</strong> – If <code class="docutils literal notranslate"><span class="pre">dir_path</span></code> is not a directory or contains no files.</p></li>
+<li><p><strong>ValueError</strong> – If there was an error in obtaining a blobstore location from the
+    RIME backend or in uploading <code class="docutils literal notranslate"><span class="pre">dir_path</span></code> to RIME’s blob store.
+    In the scenario the directory fails to upload, files will NOT
+    automatically be deleted.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rime_sdk.RIMEImageBuilder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rime_sdk.</span></span><span class="sig-name descname"><span class="pre">RIMEImageBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RIMEBackend</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requirements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">PipRequirement</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rime_sdk.RIMEImageBuilder" title="Permalink to this definition"></a></dt>
+<dd><p>An interface to a RIME image builder.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEImageBuilder.get_status">
+<span class="sig-name descname"><span class="pre">get_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_until_finish</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poll_rate_sec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="headerlink" href="#rime_sdk.RIMEImageBuilder.get_status" title="Permalink to this definition"></a></dt>
+<dd><p>Query the ImageRegistry service for the image’s build status.</p>
+<p>This query includes an option to wait until the image build is finished.
+It will either have succeeded or failed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>verbose</strong> – bool
+whether or not to print diagnostic information such as logs.</p></li>
+<li><p><strong>wait_until_finish</strong> – bool
+whether or not to block until the image is READY or FAILED.</p></li>
+<li><p><strong>poll_rate_sec</strong> – float
+the frequency with which to poll the image’s build status.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary representing the image’s state.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rime_sdk.RIMEStressTestJob">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rime_sdk.</span></span><span class="sig-name descname"><span class="pre">RIMEStressTestJob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RIMEBackend</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rime_sdk.RIMEStressTestJob" title="Permalink to this definition"></a></dt>
+<dd><p>An interface to a RIME stress testing job.</p>
+<p>This object provides an interface for monitoring the status of a stress test
+job in the RIME backend.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEStressTestJob.get_link">
+<span class="sig-name descname"><span class="pre">get_link</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.RIMEStressTestJob.get_link" title="Permalink to this definition"></a></dt>
+<dd><p>Get the web app URL for a successful stress test job.</p>
+<p>This link directs to your organization’s deployment of RIME.
+You can view more detailed information about the results of your stress test        in the web app, including helpful visualiziations, key insights, and        explanations of test results.</p>
+<p>Note: this is a string that should be copy-pasted into a browser.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEStressTestJob.get_status">
+<span class="sig-name descname"><span class="pre">get_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_until_finish</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poll_rate_sec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="headerlink" href="#rime_sdk.RIMEStressTestJob.get_status" title="Permalink to this definition"></a></dt>
+<dd><p>Query the ModelTest service for the job’s status.</p>
+<p>This includes flags for blocking until the job is complete and printing
+information to <code class="docutils literal notranslate"><span class="pre">stdout</span></code>. This method can help with monitoring the
+progress of stress test jobs, because it prints out helpful information
+such as running time and the progress of the test run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>verbose</strong> – bool
+whether or not to print diagnostic information such as logs.
+If this flag is enabled and the job has failed,
+the logs of the testing engine will be dumped
+to <code class="docutils literal notranslate"><span class="pre">stdout</span></code> to help with debuggability.
+Note that these logs have no strict form and will be subject to
+significant change in future versions.</p></li>
+<li><p><strong>wait_until_finish</strong> – bool
+whether or not to block until the job has succeeded or failed.
+If <cite>verbose</cite> is enabled too, information about the job including
+running time and progress will be printed to <code class="docutils literal notranslate"><span class="pre">stdout</span></code> every
+<code class="docutils literal notranslate"><span class="pre">poll_rate_sec</span></code>.</p></li>
+<li><p><strong>poll_rate_sec</strong> – float
+the frequency with which to poll the job’s status. Units are in seconds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>A dictionary representing the job’s state.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="s2">&quot;start_time_secs&quot;</span><span class="p">:</span> <span class="n">int64</span>
+<span class="s2">&quot;running_time_secs&quot;</span><span class="p">:</span> <span class="n">double</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Block until this job is finished and dump monitoring info to stdout.</span>
+<span class="n">job_status</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEStressTestJob.get_test_cases_result">
+<span class="sig-name descname"><span class="pre">get_test_cases_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#rime_sdk.RIMEStressTestJob.get_test_cases_result" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve all the test cases for a completed stress test run in a dataframe.</p>
+<p>This gives you the ability to perform granular queries on test cases.
+For example, if you only care about subset performance tests and want to see
+the results on each feature, you can fetch all the test cases in a dataframe,
+then query on that dataframe by test type. This only works on stress test jobs
+that have succeeded.</p>
+<p>Note: this will not work for test runs run on RIME versions &lt;0.14.0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>version</strong> – Optional[str] = None
+Semantic version of the results to be returned.
+This allows users to pin the version of the results, which is helpful
+if you write any code on top of RIME data. If you upgrade the SDK and
+do not pin the version in your code, it may break because the output
+not guaranteed to be stable across versions.
+The latest output will be returned by default.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> object containing the test case results.
+Here is a selected list of columns in the output:
+1. <code class="docutils literal notranslate"><span class="pre">test_run_id</span></code>: ID of the parent test run.
+2. <code class="docutils literal notranslate"><span class="pre">features</span></code>: List of features that the test case ran on.
+3. <code class="docutils literal notranslate"><span class="pre">test_batch_type</span></code>: Type of test that was run (e.g. Subset AUC,                Must be Int, etc.).
+4. <code class="docutils literal notranslate"><span class="pre">status</span></code>: Status of the test case (e.g. Pass, Fail, Skip, etc.).
+5. <code class="docutils literal notranslate"><span class="pre">severity</span></code>: Metric that denotes the severity of the failure of                the test.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wait until the job has finished, since this method only works on</span>
+<span class="c1"># SUCCEEDED jobs.</span>
+<span class="n">job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Dump the test cases in dataframe ``df``.</span>
+<span class="c1"># Pin the version to RIME version 0.14.0.</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">get_test_cases_result</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;0.14.0&quot;</span><span class="p">)</span>
+<span class="c1"># Print out the column names and types.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.RIMEStressTestJob.get_test_run_result">
+<span class="sig-name descname"><span class="pre">get_test_run_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#rime_sdk.RIMEStressTestJob.get_test_run_result" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve high level summary information for a complete stress test run in a        single-row dataframe.</p>
+<p>This dataframe includes information such as model metrics on the reference and        evalulation datasets, overall RIME results such as severity across tests,        and high level metadata such as the project ID and model task.</p>
+<p>By concatenating these rows together, this allows you to build a table of test
+run results for sake of comparison. This only works on stress test jobs that
+have succeeded.</p>
+<p>Note: this does not work on &lt;0.14.0 RIME test runs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>version</strong> – Optional[str] = None`
+Semantic version of the results to be returned.
+This allows users to pin the version of the results, which is helpful
+if you write any code on top of RIME data. If you upgrade the SDK and
+do not pin the version in your code, it may break because the output
+not guaranteed to be stable across versions.
+The latest output will be returned by default.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <cite>pandas.DataFrame</cite> object containing the test run result.
+There are a lot of columns, so it is worth viewing them with the <cite>.columns</cite>
+method to see what they are. Generally, these columns have information
+about the model and datasets as well as summary statistics like the number
+of failing test cases or number of high severity test cases.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wait until the job has finished, since this method only works on</span>
+<span class="c1"># succeeded jobs.</span>
+<span class="n">job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Dump the test cases in dataframe ``df``.</span>
+<span class="c1"># Pin the version to RIME version 0.14.0.</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">get_test_run_result</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s2">&quot;0.14.0&quot;</span><span class="p">)</span>
+<span class="c1"># Print out the column names and types.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rime_sdk.RIMEProject">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rime_sdk.</span></span><span class="sig-name descname"><span class="pre">RIMEProject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rime_sdk.RIMEProject" title="Permalink to this definition"></a></dt>
+<dd><p>This object describes a project in the RIME backend.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rime_sdk.RIMEProject.project_id">
+<span class="sig-name descname"><span class="pre">project_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#rime_sdk.RIMEProject.project_id" title="Permalink to this definition"></a></dt>
+<dd><p>How to refer to the project in the backend.</p>
+<p>Use this attribute to specify the project for the backend in
+<code class="docutils literal notranslate"><span class="pre">start_stress_`test_job()</span></code> and <code class="docutils literal notranslate"><span class="pre">list_stress_test_jobs()</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rime_sdk.RIMEProject.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#rime_sdk.RIMEProject.name" title="Permalink to this definition"></a></dt>
+<dd><p>Name of the project.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rime_sdk.RIMEProject.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#rime_sdk.RIMEProject.description" title="Permalink to this definition"></a></dt>
+<dd><p>Description of the project</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="api-authentication.html" class="btn btn-neutral float-left" title="API Authentication" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="python-library.html" class="btn btn-neutral float-right" title="Python Library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

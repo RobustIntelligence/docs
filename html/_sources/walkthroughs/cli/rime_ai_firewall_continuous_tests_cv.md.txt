@@ -1,0 +1,85 @@
+# AI Firewall Continuous Tests
+
+This tutorial will guide you through how to get started with RIME by running AI
+Firewall Continuous Tests on an image classification model using the <a target="_blank" rel="noopener" href="https://cvml.ist.ac.at/AwA2/">
+Animals with Attributes 2 Dataset</a>. 
+
+### Setup
+#### CV Extras
+{{ cv_setup_extra_note }}
+
+### AI Firewall Continuous Tests vs. AI Firewall Continuous Tests Trial
+{{ fw_vs_fw_trial_note }}
+
+### Running Firewall Continuous Tests on the Image Classification Example
+
+#### Running AI Firewall Continuous Tests Trial
+
+To kick off a run of RIME Firewall Continuous Tests Trial:
+
+```bash
+rime-engine run-firewall-images-trial --config-path images_examples/classification/awa2/firewall_trial_config.json
+```
+
+{{ tabular_ui_redirect }}
+
+{{ cli_note }}
+
+#### Running AI Firewall Continuous Tests
+
+To kick off a run of RIME Firewall Continuous Tests:
+
+1. Kick off a Stress Testing run (the reference dataset and model from this run will be used for firewall continuous tests).
+    ```bash
+    rime-engine run-images --config-path images_examples/classification/awa2/stress_test_config.json
+   ```
+2. Go to the RIME web client, click on the "Default Project" and navigate to the "AI Firewall" tab on the left <img src="../../_static/ui/AIFirewallShield.svg" />. You should see the following page.
+   <img src="../../_static/ui/Firewall_Page.png" />
+3. Click on "Configure AI Firewall" and fill out the details. The "Name" field can be a name of your choice. The "AI Stress Test" field should be "Image Classification" (this refers to the AI Stress Testing run that we just ran). Finally, the "Bin Size" field should be "1 Day". Once you've filled everything out, you should record the "Firewall ID" (you will need this later to upload data and predictions to monitor) and click "Done".
+   <img src="../../_static/nlp_ui/Firewall_Deploy.png" />
+4. Using the Firewall ID we just generated, we can now upload data and predictions and run AI Firewall Continuous Tests.
+    ```bash
+    rime-engine run-firewall-images --config-path images_examples/classification/awa2/firewall_config.json --firewall-id <FIREWALL-ID>
+    ```
+
+{{ tabular_ui_redirect }}
+
+{{ cli_note }}
+
+### Running Firewall Continuous Tests on the Object Detection Example
+
+#### Running AI Firewall Continuous Tests Trial
+
+To kick off a run of RIME Firewall Continuous Tests Trial:
+
+```bash
+rime-engine run-firewall-images-trial --config-path images_examples/detection/voc/firewall_trial_config.json
+```
+
+{{ tabular_ui_redirect }}
+
+{{ cli_note }}
+
+#### Running AI Firewall Continuous Tests
+
+To kick off a run of RIME Firewall Continuous Tests:
+
+1. Kick off a Stress Testing run (the reference dataset and model from this run will be used for firewall continuous tests).
+    ```bash
+    rime-engine run-images --config-path images_examples/detection/voc/stress_test_config.json
+   ```
+2. Go to the RIME web client, click on the "Default Project" and navigate to the "AI Firewall" tab on the left <img src="../../_static/ui/AIFirewallShield.svg" />. You should see the following page.
+   <img src="../../_static/ui/Firewall_Page.png" />
+3. Click on "Configure AI Firewall" and fill out the details. The "Name" field can be a name of your choice. The "AI Stress Test" field should be "Object Detection" (this refers to the AI Stress Testing run that we just ran). Finally, the "Bin Size" field should be "1 Day". Once you've filled everything out, you should record the "Firewall ID" (you will need this later to upload data and predictions to monitor) and click "Done".
+   <img src="../../_static/nlp_ui/Firewall_Deploy.png" />
+4. Using the Firewall ID we just generated, we can now upload data and predictions and run AI Firewall Continuous Tests.
+    ```bash
+    rime-engine run-firewall-images --config-path images_examples/detection/voc/firewall_config.json --firewall-id <FIREWALL-ID>
+    ```
+
+{{ tabular_ui_redirect }}
+
+{{ cli_note }}
+
+### Troubleshooting
+{{ troubleshooting_note }}

@@ -1,0 +1,175 @@
+# AI Stress Tests
+
+{{ rime_library_setup_note }}
+
+All tests should expose a `run_notebook` function, which is a specially designed function to return outputs in a notebook-friendly manner.
+The return type is a dictionary with a few standard keys. The common ones are:
+
+- `status`: Will be one of `PASS`, `FAIL`, or `SKIP` and denotes the status of the test.
+- `severity`: Will be one of `High`, `Medium`, `Low`, or `None` and denotes the severity of the failure of the test (will be `None` if test did not fail).
+- `params`: A dictionary of all the parameters of the test.
+- `columns`: A list of column names that this test was run over.
+
+Each test may also have their own specific outputs as well, but the above are the common ones that will be present in all!
+
+Running unseen categorical test:
+```python
+from rime.tabular.tests import UnseenCategoricalTest
+test = UnseenCategoricalTest(col_name="Device_operating_system")
+test.run_notebook(container)
+```
+<b>Output</b>:
+```
+This test raised a warning (with severity level Low) because the model impact is 0/10 and we found 9 failing rows.
+{'status': 'FAIL',
+ 'severity': 'Low',
+ 'params': {'model_impact_config': ModelImpactConfig(num_perturbation_samples=100, perturbed_factor=2.0, prediction_factor=0.005, metric_factor=0.002, failing_rows_threshold=10),
+  'col_name': 'Device_operating_system'},
+ 'columns': ['Device_operating_system'],
+ 'unseen_value_counts': Mac OS X 10_11_4    2
+ Mac OS X 10.9       2
+ Mac OS X 10_12_2    1
+ Mac OS X 10_12_1    1
+ Mac OS X 10.6       1
+ Windows             1
+ Mac OS X 10.10      1
+ Name: Device_operating_system, dtype: int64,
+ 'model_impacts': {'Model Impact': ['Observed', 'Adversarial', 'Overall'],
+  'Value': ['N/A', 0.0, '0/10'],
+  'Description': ['Too few failing rows to estimate model impact.',
+   'Difference between original model performance over sampled rows (Accuracy=0.970) and performance over adversarial rows with unseen categoricals (Accuracy=0.970).',
+   'Combination of the above']},
+ 'failing_rows': [158, 1330, 1807, 2429, 2831, 4380, 4727, 7494, 9317],
+ 'num_failing_rows': 9}
+```
+
+
+Running duplicate rows test:
+```python
+from rime.tabular.tests import DuplicateRowsTest
+test = DuplicateRowsTest()
+test.run_notebook(container)
+```
+<b>Output</b>:
+```
+This test passed because there are 0 duplicate row(s) in the evaluation data.
+{'status': 'PASS',
+ 'severity': 'None',
+ 'Failing Rows': '0 (0.00%)',
+ 'params': {'col_names': None, 'severity_thresholds': (0.01, 0.05)},
+ 'columns': []}
+```
+
+Running outliers test on a numeric feature column:
+```python
+from rime.tabular.tests import NonParametricOutliersTest
+test = NonParametricOutliersTest("TransactionAmt")
+test.run_notebook(container)
+```
+<b>Output</b>:
+```
+This test raised a warning (with severity level Low) because the model impact is 0/10 and we found 2 failing rows.
+{'status': 'FAIL',
+ 'severity': 'Low',
+ 'params': {'model_impact_config': ModelImpactConfig(num_perturbation_samples=100, perturbed_factor=2.0, prediction_factor=0.005, metric_factor=0.002, failing_rows_threshold=10),
+  'col_name': 'TransactionAmt',
+  'min_normal_prop': 0.99,
+  'baseline_quantile': 0.1},
+ 'columns': ['TransactionAmt'],
+ 'lower_threshold': -30.1300916166291,
+ 'upper_threshold': 4396.228995809948,
+ 'model_impacts': {'Model Impact': ['Observed', 'Adversarial', 'Overall'],
+  'Value': ['N/A', 0.0, '0/10'],
+  'Description': ['Too few failing rows to estimate model impact.',
+   'Difference between original model performance over sampled rows (Accuracy=0.960) and performance over adversarial rows with numeric outliers (Accuracy=0.960).',
+   'Combination of the above']},
+ 'failing_rows': [3302, 8373],
+ 'num_failing_rows': 2}
+```
+
+
+Running single-feature change test.
+```python
+from rime.tabular.tests import VulnerabilityTest
+test = VulnerabilityTest("DeviceInfo")
+test.run_notebook(container)
+```
+<b>Output</b>
+```
+This test passed because the average change in prediction caused by an unbounded manipulation of the feature DeviceInfo over a sample of 10 rows was 0.00555, which is below the warning threshold of 0.01.
+{'status': 'PASS',
+ 'severity': 'None',
+ 'Average Prediction Change': 0.0055514594454474705,
+ 'params': {'severity_level_thresholds': (0.01, 0.05, 0.1),
+  'col_names': ['DeviceInfo'],
+  'l0_constraint': 1,
+  'linf_constraint': None,
+  'sample_size': 10,
+  'search_count': 10,
+  'use_tqdm': False,
+  'label_range': (0.0, 1.0),
+  'scaled_min_impact_threshold': 0.01},
+ 'columns': ['DeviceInfo'],
+ 'sample_inds': [3344, 1712, 4970, 4480, 1498, 1581, 3531, 473, 9554, 2929],
+ 'avg_score_change': 0.0055514594454474705,
+ 'normalized_avg_score_change': 0.0055514594454474705}
+```
+
+Running feature subset test.
+```python
+from rime.tabular.tests import FeatureSubsetTest
+from rime.tabular.metric import MetricName
+test = FeatureSubsetTest("DeviceType", MetricName.ACCURACY)
+test.run_notebook(container)
+```
+<b>Output</b>
+```
+This test raised a warning (with severity level Medium) because 2 subset(s) performed significantly worse than the overall population. When evaluating subsets of the feature DeviceType we find the Accuracy of some subset(s) to be below the overall score of 0.97 by more than the threshold of 0.001.
+{'status': 'FAIL',
+ 'severity': 'Medium',
+ 'params': {'metric': <MetricName.ACCURACY: 'accuracy'>,
+  'severity_level_thresholds': (0.001, 0.02, 0.1),
+  'perf_change_threshold': 0.001,
+  'col_name': 'DeviceType'},
+ 'columns': ['DeviceType'],
+ 'num_failing': 2,
+ 'overall_perf': 0.9692,
+ 'sample_size': 10000,
+ 'subsets_metric_dict': {'overall_perf': 0.9692,
+  'subsets_info': {'desktop': {'name': 'desktop',
+    'len_df': 1504,
+    'criterion': 'desktop',
+    'perf': 0.9461436170212766,
+    'margin_error': None,
+    'diff': 0.023056382978723367,
+    'pos_rate': 0.06648936170212766,
+    'size': 1504},
+   'mobile': {'name': 'mobile',
+    'len_df': 947,
+    'criterion': 'mobile',
+    'perf': 0.9292502639915523,
+    'margin_error': None,
+    'diff': 0.039949736008447645,
+    'pos_rate': 0.11298838437170011,
+    'size': 947},
+   'None': {'name': 'None',
+    'len_df': 7549,
+    'criterion': 'None',
+    'perf': 0.9788051397536097,
+    'margin_error': None,
+    'diff': -0.00960513975360977,
+    'pos_rate': 0.021592263876010067,
+    'size': 7549}}},
+ 'worst_subset': {'name': 'mobile',
+  'len_df': 947,
+  'criterion': 'mobile',
+  'perf': 0.9292502639915523,
+  'margin_error': None,
+  'diff': 0.039949736008447645,
+  'pos_rate': 0.11298838437170011,
+  'size': 947}}
+```
+
+That's it!
+
+**NOTE**: It's important to point out that while we loaded a pretrained model for convenience, the RIME Library can be used at any point during the prototyping workflow, whether that's during initial data exploration, or model training and iteration.
