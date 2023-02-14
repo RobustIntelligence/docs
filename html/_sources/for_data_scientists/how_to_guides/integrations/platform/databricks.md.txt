@@ -8,7 +8,7 @@ An example supported runtime is `10.4 LTS ML`. If you see a '`ModuleNotFoundErro
 incompatible runtime, and certain components of the walkthrough won't function as expected.
 
 
-First, download the [Databricks + MLflow Walkthrough Notebook here](https://drive.google.com/file/d/1WpUw70Fo4pbRrEMs4YsSfPdyMJfqGD9m). If you try to open it locally, you'll see instructions on how to **import the notebook** to your Databricks workspace. 
+First, download the [Databricks + MLflow Walkthrough Notebook here](https://drive.google.com/file/d/1c4bx1kkAWkb-vTRS7V7s007GlMs2UCS6/view?usp=sharing). If you try to open it locally, you'll see instructions on how to **import the notebook** to your Databricks workspace. 
 
 ![HTML Import Instructions](../../../../_static/integrations/databricks/databricks_import_notebook_instructions.png)
 Specifically:

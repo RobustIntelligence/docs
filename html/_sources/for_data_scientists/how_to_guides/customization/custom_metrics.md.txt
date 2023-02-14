@@ -6,9 +6,13 @@ the function used to calculate the custom metric. This function should be named 
 and the interface this function is expected to expose is below:
 
 ```python
+"""Custom metric definition."""
 from typing import Optional
+
 import numpy as np
 import pandas as pd
+
+
 def custom_metric_func(
     df: Optional[pd.DataFrame],
     labels: Optional[pd.Series],

@@ -22,6 +22,7 @@ An example of a custom test file is below:
 
 ```python
 """Custom test batch runner."""
+
 from typing import List, Tuple
 
 from rime.core.schema import (
@@ -38,18 +39,17 @@ from rime.tabular.data_tests.schema.result import DataTestBatchResult, DataTestO
 from rime.tabular.profiler.run_containers import TabularRunContainer
 
 
-# Signature should not be changed.
 class CustomTest(BaseTest):
     def __init__(self, delta: int = 0):
         """Initialize with a delta between n_rows ref and eval."""
         super().__init__()
         self.delta = delta
 
-    # Signature should not be changed.
     def run(self, run_container: TabularRunContainer) -> Tuple[TestOutput, dict]:
-        ref_data_size = len(run_container.ref_data.df)
-        eval_data_size = len(run_container.eval_data.df)
-        if ref_data_size > eval_data_size + self.delta:
+        if (
+            len(run_container.ref_data.df)
+            > len(run_container.eval_data.df) + self.delta
+        ):
             status = Status.WARNING
             severity = ImportanceLevel.HIGH
         else:
@@ -61,23 +61,19 @@ class CustomTest(BaseTest):
         return test_output, {}
 
 
-# Signature should not be changed.
 class CustomBatchRunner(DataTestBatchRunner):
     """TestBatchRunner for the CustomTest."""
 
-    # Signature should not be changed.
     @classmethod
     def _from_config(
-        cls, run_container: TabularRunContainer,  config: CustomConfig, category: str
+        cls, run_container: TabularRunContainer, config: CustomConfig, category: str
     ) -> "DataTestBatchRunner":
         if config.params is None:
             delta = 0
         else:
             delta = config.params["delta"]
-        tests = [CustomTest(delta=delta)]
-        return cls(tests, category)
+        return cls([CustomTest(delta=delta)], category)
 
-    # Signature should not be changed.
     def _outputs_to_batch_res(
         self,
         run_container: TabularRunContainer,
@@ -87,18 +83,13 @@ class CustomBatchRunner(DataTestBatchRunner):
         return_extra_infos: bool,
     ) -> TestBatchResult:
         long_description_tabs = [
-            {"title": "Description", "contents": self.long_description},
-            {"title": "Why it Matters", "contents": "Explain why this test matters."},
-            {
-                "title": "Configuration", 
-                "contents": "Explain how this test is configured."
-            },
-            {
-                "title": "Example", 
-                "contents": "Include an example of how this test works."
-            },
+            {"title": "Description", "contents": "This is a custom test"},
+            {"title": "Why it Matters", "contents": "This matters for customizability"},
+            {"title": "Configuration", "contents": "This has a simple configuration"},
+            {"title": "Example", "contents": "This by itself is an example"},
         ]
         return DataTestBatchResult(
+            self.id,
             self.type,
             self.description,
             long_description_tabs,
@@ -112,19 +103,16 @@ class CustomBatchRunner(DataTestBatchRunner):
             show_in_test_comparisons=False,
         )
 
-    # Signature should not be changed.
     @property
     def description(self) -> str:
         return "This is custom test"
 
-    # Signature should not be changed.
     @property
     def long_description(self) -> str:
         return "This is a long description of a custom test."
 
-    # Signature should not be changed.
     @property
     def type(self) -> str:
-        return "Example Custom Test"
+        return "customer custom test"
 
 ```
