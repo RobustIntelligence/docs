@@ -1,4 +1,4 @@
-# Monitoring Your Model with AI Firewall
+# Monitoring Your Model with AI Firewall Continuous Tests
 
 This guide will cover how to configure the AI Firewall to continuously monitor your model in production.
 
@@ -21,11 +21,11 @@ rime-engine run-nlp --config-path nlp_examples/classification/arxiv/stress_tests
 
 ### 2. Configure a Firewall in the Web Client
 
-In the RI web client, click on the "Default Project" and navigate to the "AI Firewall" tab on the left <img src="../../../_static/ui/AIFirewallShield.svg" />. You should see the following page.
+{{ ct_open_firewall_page }}
 
 <img src="../../../_static/ui/Firewall_Page.png" />
 
-Click on "Configure AI Firewall" and fill out the details. The "Name" field can be a name of your choice. The "AI Stress Test" field should be "ArXiv Topic Classification" (this refers to the AI Stress Testing run that we just ran). Finally, the "Bin Size" field should be "1 Day". Once you've filled everything out, **copy the "Firewall ID"** (you will need this later to upload data and predictions to monitor) and click "Done".
+{{ ct_configure_steps_local_trial }}
 
 <img src="../../../_static/nlp_ui/Firewall_Deploy.png" />
 
@@ -44,13 +44,13 @@ To simulate an incremental data load from the next week, simply update the confi
 ```python
 {
  "eval_path": "nlp_examples/classification/arxiv/data/val_2.json.gz",
- "eval_pred_path": "nlp_examples/classification/arxiv/data/val_preds_2.jsonl.gz"
+ "eval_pred_path": "nlp_examples/classification/arxiv/data/preds.val_2.jsonl.gz"
 }
 ```
 
 You can then re-run the `run-firewall-nlp` command to upload the next batch of data.
 
-To upload data for the remaining 7 weeks in our examples, simply repeat this process for data files `val_3.json.gz`/`val_3_preds.json.gz` through `val_9.json.gz`/`val_9_preds.json.gz`
+To upload data for the remaining 7 weeks in our examples, simply repeat this process for data files `val_3.json.gz`/`preds.val_3.jsonl.gz` through `val_9.json.gz`/`preds.val_9.jsonl.gz`
 
 {{ cli_note }}
 
