@@ -1,0 +1,11 @@
+# API Authentication 
+
+* In order to authenticate and use the RIME API (Python SDK), users can generate 
+an API token from the "API Access Tokens" page under "Workspace Settings". You can 
+see how in the below image.
+* Each cluster can have up to a maximum of 50 API tokens at one time. 
+* The API token will expire 270 days after creation. 
+
+<img src="../../_static/api-access-tokens.png">
+
+

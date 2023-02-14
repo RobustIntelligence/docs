@@ -1,0 +1,110 @@
+# Deployment
+
+You have two options regarding where to deploy RIME, deploying to a new Kubernetes cluster (recommended) or deploying to an existing Kuberneter cluster. If you pass in `create_eks = false` to the RIME module, you must already have a provisioned eks cluster corresponding to `cluster_name`.
+
+## Deploy RIME
+1. Login to your gcloud account with access to the RIME helm charts/terraform module using `gcloud auth application-default login`
+2. Run `helm plugin install https://github.com/hayorov/helm-gcs.git` and `helm plugin update gcs` to add the gcs helm plugin
+3. Run `helm repo add rime gs://rime-backend-helm-repository` to add the rime repository
+   1. Run `helm repo update` to update any rime charts
+4. In your terraform setup, add a `backend.tf` file if not already present, config:
+```terraform
+terraform {
+  backend "s3" {
+    region  = "<region>"
+    bucket  = "<bucket-name>"
+    key     = "<statefile key>" #ie: "rime/state-main.tfstate"
+    encrypt = true
+  }
+}
+```
+5. Add a `main.tf` file with the RIME module and configure it according to the values in the terraform values section. Make sure to update version in source. Here is an example setup:
+```terraform
+provider "aws" {
+   region = "<region>"
+}
+
+module "rime" {
+  source = "gcs::https://storage.googleapis.com/storage/v1/rime-tf-modules/<version>/rime-module.tgz"
+
+  cluster_name                = "<cluster_name>"
+  create_managed_helm_release = true
+  helm_values_output_dir      = "<output dir for helm values file>"
+  install_cluster_autoscaler  = true
+  install_external_dns        = true
+  install_datadog             = true
+  install_velero              = true
+  k8s_namespaces = [
+    {
+      namespace = "default"
+      primary   = "true"
+    }
+  ]
+  resource_name_suffix            = "<suffix>" #string to append to your resources"
+  rime_docker_model_testing_image = "<model-testing-image>"
+  rime_repository = "gs://rime-backend-helm-repository"
+  rime_version    = "<rime-version>"
+  s3_authorized_bucket_path_arns = [
+    "arn:aws:s3:::<bucket-name>/*"
+  ]
+  dns_config = {
+    create_route53 = false #if you are providing your own dns records, set to false
+    rime_domain    = "<domain>"
+    acm_domain     = "<acm domain>" #if your acm cert base domain is different from the rime domain
+  }
+
+  private_subnet_ids                  = ["private <vpc subnets>"]
+  public_subnet_ids                   = ["public <vpc subnets>"]
+  create_eks                          = true
+  vpc_id                              = "<vpc_id>"
+  cluster_version                     = "1.20"
+  model_testing_worker_group_min_size = 1
+  model_testing_worker_group_max_size = 10
+  model_testing_worker_group_instance_types = ["t2.xlarge"] # recommended 16GB node or larger instance if needed
+  map_users = [
+    {
+      userarn  = "arn:aws:iam::<account-number>:user/eng",
+      username = "eng",
+      groups   = ["system:masters"]
+    }
+  ]
+}
+```
+6. Run `terraform init` and then `terraform apply`. This may take a while (up to 30 minutes)
+
+## Set Load Balancer ALPN Policy
+1. Find the load balancer used by the `rime-kong-proxy` with `kubectl get svc rime-kong-proxy`.
+2. Locate the Load Balancer in your AWS console.
+3. In Listeners section, select `TLS: 443` listener and edit the ALPN policy to `HTTP2Preferred`.
+
+## Test your installation
+1. Run `aws eks --region us-west-2 update-kubeconfig --name <cluster-name>` then `kubectl get pods -n <primary namespace>`. Your output should look something like this:
+   ```
+   rime-frontend-cd6c89884-8ljrl               1/1     Running   0          5m26s
+   ...
+   ```
+2. Go to rime.\<domain> and verify that you are able to access the RIME webapp after logging into okta.
+3. Run the SDK and verify that you are able to run the following code snippets:
+4. ```
+   rime_client = Client("<domain>", "api-key")
+   project = rime_client.create_project("<project name>", "Insert your description")
+5. Go to the webapp and verify that a project was created. If everything succeeded you are ready for testing! See SDK docs to see everything you can do with RIME.
+
+## Troubleshooting
+1. If you get an okta bad request, ensure that the redirect url has been added to your okta app.
+2. If you are getting timeouts in the SDK, ensure that you are connected to VPN.
+3. If the webapp is marked as insecure, verify that you have an ACM SSL/TLS cert for your webapp.
+4. On older operating systems, you may need to run `export GRPC_DNS_RESOLVER=native` in the shell. Otherwise requests may hang due to ipv4 vs ipv6 issues.  
+
+## Backups
+
+1. To let RIME backup your DB, set `install_velero` to true in the above terraform module.
+2. If you are using velero for backups, install the velero cli and verify that our backups are running.
+```
+ # Download Velero.
+ curl -fsSL -o velero-v1.6.3-linux-amd64.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.6.3/velero-v1.6.3-linux-amd64.tar.gz
+ # Unzip.
+ tar -xvf velero-v1.6.3-linux-amd64.tar.gz
+ # Ensure that velero backups are scheduled properly.
+ ./velero schedule get -n rime-extras
+```

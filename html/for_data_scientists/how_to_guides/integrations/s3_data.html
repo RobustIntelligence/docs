@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>s3 &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Hugging Face Datasets" href="huggingface_data.html" />
+    <link rel="prev" title="Data Integrations" href="../data_integrations.html" />
+<link href="../../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../../index.html">
+        <img src="../../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                0.17.5
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../get_started.html">Get Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../how_to_guides.html">How-To Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/api-authentication.html">API Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/compare_test_runs.html">Comparing Two Test Runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/compliance.html">Compliance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/projects.html">Create and Manage Projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/upload_data.html">Uploading Data to RIME</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/querying_results.html">Querying RIME Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../platform_integrations.html">Platform Integrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model_integrations.html">Model Integrations</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../data_integrations.html">Data Integrations</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">s3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="huggingface_data.html">Hugging Face Datasets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../alerting/setup_alerts.html">Alerts and Notifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../alerting/test_run_progress.html">Test Run Progress</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../customization/custom_metrics.html">Custom Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../customization/custom_tests.html">Custom Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../customization/custom_docker.html">Run RIME on Managed Docker Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/sdk.html">Debugging the Python SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/rime_data_format_check.html">RIME Data Format Check</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../explanation.html">Explanation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelogs.html">Changelogs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/index.html">For Administrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../local_trial/index.html">RIME Local Trial</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../how_to_guides.html">How-To Guides</a></li>
+          <li class="breadcrumb-item"><a href="../data_integrations.html">Data Integrations</a></li>
+      <li class="breadcrumb-item active">s3</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/for_data_scientists/how_to_guides/integrations/s3_data.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="s3">
+<h1>s3<a class="headerlink" href="#s3" title="Permalink to this heading"></a></h1>
+<p>It is common to store data in s3. RIME supports loading data directly from s3 so you do not have to copy the file locally.</p>
+<p>Follow all of the instructions in the generic <a class="reference internal" href="../../reference/tabular/data_source.html"><span class="doc std std-doc">Data Configuration</span></a> guide, except the path to the data should no longer be a local path but instead an s3 storage path in the format of <code class="docutils literal notranslate"><span class="pre">s3://{bucket_name}/{object_key}</span></code>. Note that <code class="docutils literal notranslate"><span class="pre">bucket_name</span></code> and <code class="docutils literal notranslate"><span class="pre">object_key</span></code> should be replaced so they reference the desired csv or parquet file.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ref_path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://my-bucket/my-file.csv&quot;</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../data_integrations.html" class="btn btn-neutral float-left" title="Data Integrations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="huggingface_data.html" class="btn btn-neutral float-right" title="Hugging Face Datasets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

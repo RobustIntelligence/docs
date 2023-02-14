@@ -1,0 +1,119 @@
+<style>
+#warning-box {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  background-color:#f2dede;
+  border-color:#ebccd1;
+}
+
+#alert-yellow {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  background-color:#fcf8e3;
+  border-color:#faebcc;
+}
+
+#alert-blue {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  background-color:#e3e7fc;
+  border-color:#cddcfa;
+}
+
+#alert-turquoise {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  background-color:#e3f4fc;
+  border-color:#ccf2fa;
+}
+
+#turquoise-header {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  border-color:#3b808a;
+  color:#3b808a;
+}
+
+#yellow-header {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  border-color:#8a6d3b;
+  color:#8a6d3b;
+}
+
+#blue-header {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  border-color:#3B588A;
+  color:#3B588A;
+}
+</style>
+
+# RIME Cloud Installation
+The cloud installation consists of two parts:
+1. The Web Client
+    - No installation needed --- your RI representative will provide your access details.
+2. The Python SDK
+    - This is a programmatic interface to the managed K8s cluster.
+
+## Access the Web Client
+Your RIME web client will be made available at a URL with the following form:
+`https://rime.<YOUR_ORG_NAME>.rime.dev/`
+
+### Admin User Setup
+Initially, a team member from your organization will be designated as the admin user for their RIME cluster.
+
+This user will receive an email from Robust Intelligence with steps for setting up their account.
+
+### Adding Other Members
+Once the admin user's account is configured, they will be able to grant access to other users via the *Workspace Settings*.
+
+More detailed instructions can be found in the [User Management Guide](/for_admins/how_to_guides/users.md).
+
+An admin can also set up SSO to use an external Identity Provider. More detailed instructions for configuration can be found in the [SSO Configuration Guide](/for_admins/how_to_guides/sso.md)
+
+Users can login via basic authN service or SSO. Admin operations need to be performed via basic authN login.
+
+## Install the Python SDK
+Cloud installations utilize the [RIME Python SDK](/for_data_scientists/reference/python-sdk.rst) for programmatic integration with your existing ML pipeline!
+
+Installation is simple:
+```bash
+pip install rime-sdk
+```
+
+### Create an API Token
+An API token is needed to access the Python SDK. These can be created in the web client via the *Workspace Settings*.
+
+More detailed instructions can be found in the [API Authentication Guide](/for_admins/how_to_guides/api-authentication.md).
+
+### Test Connection
+
+Run the code snippet below to test your SDK connection:
+```python
+from rime_sdk import Client
+
+rime_client = Client("rime.<YOUR_ORG_NAME>.rime.dev", "<RIME_API_TOKEN>")
+```
+If there are no errors, that means you are ready to kickoff some tests!

@@ -5,7 +5,7 @@ Similar to the tabular use case, RIME expects CV models to be specified as Pytho
 
 - `predict_dict(x: dict) -> dict`: the input `x` is a single data point in dictionary form (e.g. `{'image_path': 'data/moo.png', ...}`). The output of the function should be a python dictionary whose format depends on the CV Task. The following key-value pairs are expected within the output dictionary for each task:
 
-    - Image Classification: the 'probabilities' key specifies the probability distribution over the label classes, e.g., `{'probabilities': [0.11, 0.84, 0.05, ...]}`
+    - Image Classification: the 'probabilities' key specifies the probabililty distribution over the label classes, e.g., `{'probabilities': [0.11, 0.84, 0.05, ...]}`
     - Object Detection: the 'predicted_bounding_boxes' key specifies the bounding boxes predicted to be in the image. This value should be a list of dictionaries, with each dictionary corresponding to a predicted bounding box. Each predicted bounding box dictionary should have a 'probabilities' key (specifying a list of predicted probabilities for each class) and the following keys to specify the box location: 'x_min', 'x_max', 'y_min', 'y_max' (where the value for each key is a numeric). An example of this is: `{
     "predicted_bounding_boxes": [
       {
@@ -25,7 +25,7 @@ The following steps outline how to implement the Python interface expected by RI
 
 ### Step 1: Specify model path
 
-Create an empty folder. From inside this folder, create a new python file. This will contain the `predict_dict()` function that will serve as the interface between RIME and your model. Place the saved model weights and any other requisite model artifacts in the same folder as the file.
+Create an empty folder. From inside this folder, create a a new python file. This will contain the `predict_dict()` function that will serve as the interface between RIME and your model. Place the saved model weights and any other requisite model artifacts in the same folder as the file.
 
 In the new python file, create a constant for the path to this binary storying the model weights:
 

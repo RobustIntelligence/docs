@@ -1,6 +1,9 @@
-# NLP Generic Custom Tests
+# NLP Custom Tests
 
-{{ custom_tests_intro }}
+With RIME, it is easy to specify custom tests.
+The below steps walk through how to do so. If you run into any difficulties, please contact your Robust Intelligence support engineer and they will assist you.
+
+First, you must define a custom test in a Python file. 
 This Python file should expose a class named CustomBatchRunner, which should inherit from the TestBatchRunner interface that RIME defines.
 After inheriting from this class you will need to implement 6 methods:
 1. `_from_config`: this is a class method that takes in a RunContainer and a config and returns the CustomBatchRunner initialized with a list of TestCases (see below for information on what a test is).
@@ -8,6 +11,7 @@ After inheriting from this class you will need to implement 6 methods:
 3. `description`: a property with a description of the test, only used in the UI.
 4. `long_description`: a property with a long description of the test, only used in the UI.
 5. `type`: a property with the type of the test, only used in the UI.
+6. `category`: a property with the name of the category of the test, only used in the UI.
 
 As mentioned above, this CustomBatchRunner will contain multiple TestCases.
 These are a collection of test cases that will be aggregated inside the overall batch runner. 
@@ -15,7 +19,7 @@ As an example of this, if you write a specific test that you want to apply to ea
 
 The test cases that you define should inherit from the BaseTest class that RIME defines.
 After inheriting from this class you will need to implement one method:
-1. `run`: this method takes in a UnstructuredRunContainer and returns a TestOutput (the result of the test) and a dictionary of extra info (that can be used when aggregating test results in the BatchRunner)
+1. `run`: this method takes in a UnstructuredRunContainer and returns a TestOuput (the result of the test) and a dictionary of extra info (that can be used when aggregating test results in the BatchRunner)
 
 An example of a custom test file is below:
 
@@ -90,5 +94,9 @@ class CustomBatchRunner(TestBatchRunner):
     @property
     def type(self) -> str:
         return "customer custom test"
+
+    @property
+    def category(self) -> TestCategory:
+        return "no real category"
 
 ```

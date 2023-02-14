@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Improving Model Performance &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="API Reference" href="../reference.html" />
+    <link rel="prev" title="Analyzing Subset Performance" href="rime_subset_performance.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                0.17.5
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/reference.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/explanation.html">Explanation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../changelogs.html">Changelogs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/index.html">For Administrators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../local_trial/index.html">RIME Local Trial</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">RIME Python Library</a></li>
+          <li class="breadcrumb-item"><a href="../how_to_guides.html">How-To Guides</a></li>
+      <li class="breadcrumb-item active">Improving Model Performance</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/python_library/how_to_guides/rime_model_performance.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="improving-model-performance">
+<h1>Improving Model Performance<a class="headerlink" href="#improving-model-performance" title="Permalink to this heading"></a></h1>
+<p>Be sure to complete the initial setup described in <a class="reference internal" href="rime_data_model_setup.html"><span class="doc std std-doc">RIME Data and Model Setup</span></a> before proceeding.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<p>This tutorial will guide you through various ways to use RIME to improve model performance. For more information, please see <a class="reference internal" href="../reference/performance.html"><span class="doc std std-doc">the corresponding reference</span></a>.</p>
+</section>
+<section id="preprocessing">
+<h2>Preprocessing<a class="headerlink" href="#preprocessing" title="Permalink to this heading"></a></h2>
+<p>The RIME Python Library offers standard preprocessing methods to automatically handle tasks like mapping categorical values to numbers or imputing null values.</p>
+<p>To use preprocessing, simply import it and wrap your existing DataFrame:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime.tabular.performance</span> <span class="kn">import</span> <span class="n">preprocess_df</span>
+<span class="n">preprocessed_df</span> <span class="o">=</span> <span class="n">preprocess_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="active-learning">
+<h2>Active Learning<a class="headerlink" href="#active-learning" title="Permalink to this heading"></a></h2>
+<p>RIME also contains some functionality for “active learning”.</p>
+<p>Concretely, RIME can take in an unlabeled dataset and model(s) and suggest points that would be high value to label.</p>
+<p>To use this functionality, let’s first import the relevant functions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime.tabular.performance</span> <span class="kn">import</span> <span class="n">single_model_active_learning</span><span class="p">,</span> <span class="n">two_model_active_learning</span>
+</pre></div>
+</div>
+<p>We can then get N points that would be high value to label:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">indices_to_label</span> <span class="o">=</span> <span class="n">single_model_active_learning</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">model_wrapper</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will give us the indices of the original dataframe that are high value to label.</p>
+<p>We also expose some functionality to do this utilizing two models. This can be useful if you have two versions of a model (either trained over the same dataset or different slices). If we have a second container (<code class="docutils literal notranslate"><span class="pre">container_2</span></code>) we can then do:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_wrapper_2</span> <span class="o">=</span> <span class="n">container_2</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">base_model</span>
+<span class="n">indices_to_label</span> <span class="o">=</span> <span class="n">two_model_active_learning</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">model_wrapper</span><span class="p">,</span> <span class="n">model_wrapper_2</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This, like the previous function, will return some indices that are high value to label.</p>
+<p>Note that for both these algorithms there is some randomness involved, and if you want to get deterministic results make sure to pass the <code class="docutils literal notranslate"><span class="pre">seed</span></code> parameter.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rime_subset_performance.html" class="btn btn-neutral float-left" title="Analyzing Subset Performance" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../reference.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

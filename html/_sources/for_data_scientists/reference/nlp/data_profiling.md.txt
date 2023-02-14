@@ -20,14 +20,14 @@ so all these parameters are optional.
 
 - `class_names`: List[str] or `null`, *default* = `null`
 
-    For the `"Text Classification"` and `"Natural Language Inference"` model tasks only. Specify a list of class names corresponding to each integer class label for readability. The index of each name in the provided list should correspond with the class's index in the model's output 'probabilities' vector as well as the integer label in the data.
+    For the `"Text Classification"` model task only. Specify a list of class names corresponding to each integer class label for readability. The index of each name in the provided list should correspond with the class's index in the model's output 'probabilities' vector as well as the integer label in the data.
 
 
-- `ngram_filter_stop_words`: bool, *default* = `False`
+- `ngram_filter_stop_words`: bool, *default* = False
 
     Whether to filter stop words for N-Gram drift and abnormal inputs tests.
 
-- `ngram_filter_punctuation`: bool, *default* = `False`
+- `ngram_filter_punctuation`: bool, *default* = False
 
     Whether to filter all unicode punctuation for N-Gram drift and abnormal inputs tests.
 

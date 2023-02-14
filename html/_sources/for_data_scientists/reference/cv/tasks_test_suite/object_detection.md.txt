@@ -13,7 +13,7 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     },
     "min_normal_prop": 0.99,
     "baseline_quantile": 0.1,
@@ -24,7 +24,7 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     }
   },
   "unseen_domain": {
@@ -32,7 +32,7 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     }
   },
   "unseen_email": {
@@ -40,7 +40,7 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     }
   },
   "unseen_url": {
@@ -48,7 +48,7 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     }
   },
   "rare_categories": {
@@ -56,7 +56,7 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     },
     "include_columns": [],
     "min_num_occurrences": 0,
@@ -68,7 +68,7 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     },
     "std_factor": 3
   },
@@ -77,7 +77,7 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     }
   },
   "float_feature_type": {
@@ -85,7 +85,7 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     }
   },
   "str_feature_type": {
@@ -93,7 +93,7 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     }
   },
   "bool_feature_type": {
@@ -101,7 +101,7 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     }
   },
   "url_feature_type": {
@@ -109,7 +109,7 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     }
   },
   "domain_feature_type": {
@@ -117,7 +117,7 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     }
   },
   "email_feature_type": {
@@ -125,7 +125,7 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     }
   },
   "req_characters": {
@@ -134,7 +134,7 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     }
   },
   "inconsistencies": {
@@ -142,7 +142,7 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     },
     "freq_ratio_threshold": 0.02,
     "min_correlation": 0.1,
@@ -154,7 +154,7 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     }
   },
   "empty_string": {
@@ -162,7 +162,7 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "performance_change_config": {
       "severity_thresholds": null,
-      "min_num_samples": 1
+      "min_num_samples": 10
     }
   },
   "feat_subset_auc": {
@@ -411,7 +411,7 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "min_occurrences": 0,
     "model_impact_config": {
       "ignore_observed_performance": false,
-      "min_num_samples": 1,
+      "min_num_samples": 10,
       "severity_thresholds": [
         0.01,
         0.05,
@@ -498,26 +498,6 @@ Below is the default configuration for all Object Detection tests. A copy of thi
     "run": true,
     "min_sample_size": 20,
     "performance_change_thresholds": null
-  },
-  "add_rain": {
-    "run": false,
-    "sample_size": 200,
-    "severity_thresholds": [
-      0.1,
-      0.2,
-      0.3
-    ],
-    "alpha": 0.5
-  },
-  "add_snow": {
-    "run": false,
-    "sample_size": 200,
-    "severity_thresholds": [
-      0.1,
-      0.2,
-      0.3
-    ],
-    "alpha": 0.5
   }
 }
 ```

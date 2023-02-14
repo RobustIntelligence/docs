@@ -1,0 +1,245 @@
+<style>
+#warning-box {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  background-color:#f2dede;
+  border-color:#ebccd1;
+}
+
+#alert-yellow {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  background-color:#fcf8e3;
+  border-color:#faebcc;
+}
+
+#alert-blue {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  background-color:#e3e7fc;
+  border-color:#cddcfa;
+}
+
+#alert-turquoise {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  background-color:#e3f4fc;
+  border-color:#ccf2fa;
+}
+
+#turquoise-header {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  border-color:#3b808a;
+  color:#3b808a;
+}
+
+#yellow-header {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  border-color:#8a6d3b;
+  color:#8a6d3b;
+}
+
+#blue-header {
+  font-size:16px;
+  padding:15px;
+  margin-bottom:27px;
+  border:1px solid transparent;
+  border-radius:4px;
+  border-color:#3B588A;
+  color:#3B588A;
+}
+</style>
+
+# Installation
+The RIME Local Trial installation consists of two parts:
+1. The Docker containers
+    - These create the infrastructure necessary to process and display test results.
+2. The Python package
+    - This contains the `rime-engine` command-line interface (CLI) and Python libraries used to run tests on your models and data.
+
+## Pre-requisites
+Before beginning, please ensure you have the following:
+- The following system requirements:
+    - at least 4 GB RAM
+    - at least 12 GB free disk space
+    - 3.7 ≤ `python` ≤ 3.9
+    - one of the following package managers
+        - `pip`
+        - `conda`
+- [Docker](https://docs.docker.com/engine/install/) >= 20.10.0
+    - **Linux Users:** You will also need to follow these [post installation instructions](https://docs.docker.com/engine/install/linux-postinstall/) to use Docker without root access.
+- [Docker Compose](https://docs.docker.com/compose/install/) >= 1.29.0
+- The `rime_trial` bundle ( {{ '[download here](https://storage.googleapis.com/rime-trial-zips/rime-trial-{}.tar.gz)'.format(env.config.version) }} )
+- A `token.txt` file (will be provided by your RI representative)
+
+## Install the Docker Containers
+### Set Up Your Environment
+To avoid interfering with your other projects' dependencies, we will create a new Python virtual environment for RIME.
+
+1. Download ( {{'[link here](https://storage.googleapis.com/rime-trial-zips/rime-trial-{}.tar.gz)'.format(env.config.version)}} )
+   and extract ({{ '`tar -xzf rime-trial-{}.tar.gz`'.format(env.config.version) }}) the `rime_trial` bundle.
+2. Place the `token.txt` file inside of `rime_trial/`.
+3. Step into `rime_trial/` --- this will be our working directory throughout the installation.
+4. Select a virtual environment manager (currently either `pip` or Conda) and follow the appropriate instructions below.
+    <p id="alert-turquoise">
+    <b>Pip Installation</b>
+    </p>
+
+    1. Create a new [python virtual
+    environment](https://docs.python.org/3/library/venv.html).
+        ```
+        python -m venv rime-venv
+        ```
+    2. Activate the virtual environment.
+       <p id="turquoise-header">
+       <b>macOS & Linux</b>
+       </p>
+
+       ```bash
+       source rime-venv/bin/activate
+       ```
+
+       <p id="blue-header">
+       <b>Windows</b>
+       </p>
+
+       ```powershell
+       .\rime-venv\Scripts\activate
+       ```
+    3. Update pip and install required Python packages from
+        `trial_requirements.txt`.
+        ```
+        pip install --upgrade pip
+        pip install -r trial_requirements.txt
+        ```
+
+    <p id="alert-blue">
+    <b>Conda Installation</b>
+    </p>
+
+    1. Create a new [conda virtual
+    environment](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html).
+    Replace `$PYTHON_VERSION_YOU_WISH_TO_USE` with the version of Python that you
+    wish to use (e.g., `3.8`).
+        ```
+        conda create --name rime-venv python=$PYTHON_VERSION_YOU_WISH_TO_USE
+        ```
+    2. Activate the virtual environment.
+        ```
+        conda activate rime-venv
+        ```
+    5. Update pip and install required Python packages from
+        `trial_requirements.txt`.
+        ```
+        pip install --upgrade pip
+        pip install -r trial_requirements.txt
+        ```
+
+
+### Start RIME
+<p id="alert-yellow">
+<b>NOTE:</b> Running the start command will generate a Robust Intelligence
+license file and place it in a newly created .robustintelligence folder in your
+$HOME directory.
+</p>
+
+1. Run the rime-helper `start` command to start the RIME backend and frontend.
+    ```bash
+    python rime_helper.py start
+    ```
+2. Wait until you see the following message indicating that the backend and
+frontend have successfully started and that the UI can be viewed at
+[http://localhost:4000](http://localhost:4000).
+    ```bash
+    RIME is available at http://localhost:4000
+    ```
+3. (OPTIONAL) If you are running the Docker containers on a remote instance and would like to use
+**port forwarding** to view the UI on your local machine, we recommend using SSH tunneling:
+    ```bash
+    ssh -M -S rime-port-forwarding -fNT -L localhost:4000:localhost:4000 -L localhost:5555:localhost:5555 -L localhost:5001:localhost:5001 -L localhost:5002:localhost:5002 -L localhost:5004:localhost:5004 -L localhost:5012:localhost:5012 user@hostname
+    ```
+
+    To terminate the session, you can run the following:
+    ```bash
+    ssh -S rime-port-forwarding -O exit user@hostname
+    ```
+
+
+### Stop RIME
+<p id="warning-box">
+<b>WARNING:</b> The commands below will permanently delete existing RIME test runs.
+</p>
+
+To stop RIME, run the following. Note that this command will also delete existing RIME test runs.
+```bash
+python rime_helper.py stop
+```
+
+**To completely remove RIME, you can uninstall.**
+```bash
+python rime_helper.py uninstall
+```
+
+## Install the Python Package
+1. Install the `rime` Python package.
+    ```bash
+    pip install -r rime_requirements.txt
+    ```
+2. Configure environment variables for use in CLI commands:
+    <p id="turquoise-header">
+    <b>macOS & Linux</b>
+    </p>
+
+    ```bash
+    export RIME_UPLOAD_URL=localhost:5001
+    export RIME_FIREWALL_URL=localhost:5002
+    export RIME_DISABLE_TLS=True # Recommended for local uploads only!
+    ```
+
+    <p id="blue-header">
+    <b>Windows</b>
+    </p>
+
+    ```
+    $Env:RIME_UPLOAD_URL = 'localhost:5001'
+    $Env:RIME_FIREWALL_URL = 'localhost:5002'
+    $Env:RIME_DISABLE_TLS = 'True' # Recommended for local uploads only!
+    ```
+
+{{ troubleshooting_local_installation_redirect }}
+
+### Install the RIME NLP Dependencies (Optional)
+
+To use RIME with Natural Language Processing models, additional Python dependencies must be installed.
+
+```bash
+pip install -r nlp_requirements.txt
+```
+
+### Install the RIME CV Dependencies (Optional)
+
+To use RIME with Computer Vision models, additional Python dependencies must be installed.
+
+```bash
+pip install -r cv_requirements.txt
+```

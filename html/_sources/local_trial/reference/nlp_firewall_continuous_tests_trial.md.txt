@@ -1,0 +1,59 @@
+NLP AI Firewall Continuous Tests Trial
+=============================
+
+To give you a sense of the capabilities of Firewall Continuous Tests without making you upload multiple datasets, we've created a trial-specific command that will allow you to simulate firewall continuous tests in one go.
+Configuration of RIME AI Firewall Continuous Tests Trial is done through a JSON configuration file that you pass as an argument to the RIME CLI.
+
+
+### Template
+```python
+{
+  "run_name": "Run Name",                       (REQUIRED)
+  "data_info": {...},                           (REQUIRED)
+  "model_task": "Task Name",                    (REQUIRED)
+  "continuous_info": {                          (REQUIRED)
+    "bin_size": "day",                          (REQUIRED)
+  },
+  "prediction_info": {...}, 
+  "tests_config_path": "path/to/tests/config",
+  "random_seed": null,
+  "workspace_name": "Default",
+}
+```
+
+### Arguments
+
+- **`run_name`**: string, ***required***
+
+  The name under which your run will appear in the UI.
+
+- **`data_info`**: DataInfo, ***required***
+
+  Configuration for the data sources to use. For a reference on how to configure a datasource, see [Data Configuration](/for_data_scientists/reference/nlp/data_source.md).
+
+- **`model_task`**: string, ***required***
+
+  Specification of the model task. Currently, the supported values are `"Text Classification"` and `"Named Entity Recognition"`.
+
+- **`continuous_info`**: ContinuousInfo, ***required***
+    - **`bin_size`**: string, ***required***
+
+      The time period for each firewall continuous tests run. Current accepted
+      values are `"day"` and `"hour"`.
+
+- `prediction_info`: PredictionInfo or `null`, *default* = `null`
+
+  Specification of how to handle model predictions for this run. For Firewall Continuous Tests predictions MUST be provided, either as separate files (in which case those should be specified in `prediction_info`, or as part of the input data files. For a guide on how to specify this info, see [NLP Prediction Configuration](/for_data_scientists/reference/nlp/prediction_info.md).
+
+- `tests_config_path`: string or `null`, *default* = `null`
+
+    Path to a TestSuiteConfig JSON file. If path is `null` RIME will use the
+    default [TestSuiteConfig](/for_data_scientists/reference/nlp/test_suite).
+
+- `random_seed`: int or `null`, *default* = `null`
+
+  The random seed to use for the run.
+
+- `workspace_name`: string, *default* = `"Default"`
+
+  Workspace this run should be associated with.
