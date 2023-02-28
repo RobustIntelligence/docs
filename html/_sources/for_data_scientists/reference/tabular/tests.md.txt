@@ -22,7 +22,7 @@ This JSON file contains several global configuration options, which, if specifie
 - **`global_abnormal_inputs_performance_change_config`**: Optional[mapping], *default* = `null`
 
     Parameters for measuring the impact of abnormal inputs on model performance (applies to all abnormal input tests). The different values of this mapping should be:
-    - `severity_thresholds`: List[float, float, float]
+    - `severity_thresholds`: List[float, float]
       
       Ascending list of three float thresholds, corresponding to the observed or simulated performance change which must be achieved in order for the test to return, respectively, Low, Medium, or High severity. This is a logical OR: if both types of performance change are measured, take the maximum of the two and return the severity corresponding to the highest threshold that was exceeded. If there are observed failing rows but the observed or simulated performance changes do not exceed any of the thresholds, return a Low severity.
     - `min_num_samples`: int 
@@ -32,7 +32,7 @@ This JSON file contains several global configuration options, which, if specifie
 - **`global_transformation_performance_change_config`**: Optional[mapping], *default* = `null`
 
     Parameters for measuring the impact of transformation on model performance (applies to all transformation tests). The different values of this mapping should be:
-    - `severity_thresholds`: List[float, float, float]
+    - `severity_thresholds`: List[float, float]
 
       Ascending list of three float thresholds, corresponding to the observed or simulated performance change which must be achieved in order for the test to return, respectively, Low, Medium, or High severity. This is a logical OR: if both types of performance change are measured, take the maximum of the two and return the severity corresponding to the highest threshold that was exceeded. If there are observed failing rows but the observed or simulated performance changes do not exceed any of the thresholds, return a Low severity.
     - `ignore_errors`: bool
@@ -65,35 +65,9 @@ Below is the default configuration for all tests. A copy of this can also be fou
       "severity_thresholds": null,
       "min_num_samples": 1
     },
-    "min_normal_prop": 0.99,
-    "baseline_quantile": 0.1,
-    "perturb_multiplier": 1.0
+    "bound_multiplier": 2.0
   },
   "unseen_categorical": {
-    "exclude_columns": [],
-    "run": false,
-    "performance_change_config": {
-      "severity_thresholds": null,
-      "min_num_samples": 1
-    }
-  },
-  "unseen_domain": {
-    "exclude_columns": [],
-    "run": false,
-    "performance_change_config": {
-      "severity_thresholds": null,
-      "min_num_samples": 1
-    }
-  },
-  "unseen_email": {
-    "exclude_columns": [],
-    "run": false,
-    "performance_change_config": {
-      "severity_thresholds": null,
-      "min_num_samples": 1
-    }
-  },
-  "unseen_url": {
     "exclude_columns": [],
     "run": false,
     "performance_change_config": {
@@ -173,7 +147,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "run": false,
     "correlation_drift_thresholds": [
       0.3,
-      0.5,
       0.7
     ],
     "p_value_threshold": 0.05,
@@ -185,7 +158,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "run": false,
     "correlation_drift_thresholds": [
       0.3,
-      0.5,
       0.7
     ],
     "p_value_threshold": 0.05
@@ -196,7 +168,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "min_mutual_information": 0.1,
     "mutual_information_thresholds": [
       0.1,
-      0.2,
       0.3
     ],
     "max_pairwise_tests": 200,
@@ -207,7 +178,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "run": false,
     "mutual_information_thresholds": [
       0.1,
-      0.2,
       0.3
     ]
   },
@@ -217,7 +187,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "params": {
       "psi_thresholds": [
         0.2,
-        0.4,
         0.6
       ]
     }
@@ -228,7 +197,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "params": {
       "psi_thresholds": [
         0.2,
-        0.4,
         0.6
       ]
     }
@@ -239,36 +207,34 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "params": {
       "psi_thresholds": [
         0.2,
-        0.4,
         0.6
       ],
       "num_bins": 100
     }
   },
-  "categorical_drift": {
+  "feature_drift": {
     "exclude_columns": [],
     "run": false,
     "min_sample_size": 100,
     "performance_change_thresholds": null,
-    "max_sample_size": null,
-    "drift_statistic": "Population Stability Index",
-    "params": {
-      "distance_threshold": 0.2
-    },
-    "ignore_nans": true
-  },
-  "continuous_drift": {
-    "exclude_columns": [],
-    "run": false,
-    "min_sample_size": 100,
-    "performance_change_thresholds": null,
-    "drift_statistic": "Population Stability Index",
-    "params": {
+    "numeric_feature_params": {
+      "drift_statistic": "Population Stability Index",
       "min_num_quantiles": 1000,
-      "distance_threshold": 0.2,
-      "num_bins": 100
+      "num_bins": 100,
+      "psi_threshold": 0.2,
+      "kl_divergence_threshold": 0.1,
+      "js_divergence_threshold": 0.05,
+      "ks_test_p_value_threshold": 0.05,
+      "ks_test_min_sample_size": 100,
+      "ignore_nans": true
     },
-    "ignore_nans": true
+    "categorical_feature_params": {
+      "drift_statistic": "Population Stability Index",
+      "chi_squared_p_value_threshold": 0.05,
+      "psi_threshold": 0.2,
+      "max_sample_size": null,
+      "ignore_nans": true
+    }
   },
   "prediction_drift": {
     "run": false,
@@ -279,7 +245,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
       "min_num_quantiles": 1000,
       "psi_thresholds": [
         0.2,
-        0.4,
         0.6
       ],
       "num_bins": 100
@@ -299,7 +264,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "run": true,
     "severity_thresholds": [
       0.05,
-      0.1,
       0.2
     ]
   },
@@ -307,7 +271,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "run": true,
     "severity_thresholds": [
       0.05,
-      0.1,
       0.2
     ]
   },
@@ -316,7 +279,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "num_bins": 10,
     "severity_level_thresholds": [
       0.02,
-      0.06,
       0.1
     ]
   },
@@ -324,7 +286,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "run": false,
     "severity_thresholds": [
       0.6,
-      0.75,
       0.9
     ],
     "normalize": true
@@ -350,65 +311,9 @@ Below is the default configuration for all tests. A copy of this can also be fou
       "severity_thresholds": null,
       "num_samples_to_simulate": 100
     },
-    "min_normal_prop": 0.99,
-    "baseline_quantile": 0.1,
-    "perturb_multiplier": 1.0
+    "bound_multiplier": 2.0
   },
-  "int_feature_type_change": {
-    "exclude_columns": [],
-    "run": true,
-    "performance_change_config": {
-      "ignore_errors": false,
-      "severity_thresholds": null,
-      "num_samples_to_simulate": 100
-    }
-  },
-  "float_feature_type_change": {
-    "exclude_columns": [],
-    "run": true,
-    "performance_change_config": {
-      "ignore_errors": false,
-      "severity_thresholds": null,
-      "num_samples_to_simulate": 100
-    }
-  },
-  "str_feature_type_change": {
-    "exclude_columns": [],
-    "run": true,
-    "performance_change_config": {
-      "ignore_errors": false,
-      "severity_thresholds": null,
-      "num_samples_to_simulate": 100
-    }
-  },
-  "bool_feature_type_change": {
-    "exclude_columns": [],
-    "run": true,
-    "performance_change_config": {
-      "ignore_errors": false,
-      "severity_thresholds": null,
-      "num_samples_to_simulate": 100
-    }
-  },
-  "url_feature_type_change": {
-    "exclude_columns": [],
-    "run": true,
-    "performance_change_config": {
-      "ignore_errors": false,
-      "severity_thresholds": null,
-      "num_samples_to_simulate": 100
-    }
-  },
-  "domain_feature_type_change": {
-    "exclude_columns": [],
-    "run": true,
-    "performance_change_config": {
-      "ignore_errors": false,
-      "severity_thresholds": null,
-      "num_samples_to_simulate": 100
-    }
-  },
-  "email_feature_type_change": {
+  "feature_type_change": {
     "exclude_columns": [],
     "run": true,
     "performance_change_config": {
@@ -445,33 +350,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
       "num_samples_to_simulate": 100
     }
   },
-  "unseen_domain_substitution": {
-    "exclude_columns": [],
-    "run": true,
-    "performance_change_config": {
-      "ignore_errors": false,
-      "severity_thresholds": null,
-      "num_samples_to_simulate": 100
-    }
-  },
-  "unseen_email_substitution": {
-    "exclude_columns": [],
-    "run": true,
-    "performance_change_config": {
-      "ignore_errors": false,
-      "severity_thresholds": null,
-      "num_samples_to_simulate": 100
-    }
-  },
-  "unseen_url_substitution": {
-    "exclude_columns": [],
-    "run": true,
-    "performance_change_config": {
-      "ignore_errors": false,
-      "severity_thresholds": null,
-      "num_samples_to_simulate": 100
-    }
-  },
   "null_substitution": {
     "exclude_columns": [],
     "run": true,
@@ -489,6 +367,248 @@ Below is the default configuration for all tests. A copy of this can also be fou
       "severity_thresholds": null,
       "num_samples_to_simulate": 100
     }
+  },
+  "text_upper_case": {
+    "run": true,
+    "sample_size": 20,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ],
+    "max_str_len": 2000
+  },
+  "text_lower_case": {
+    "run": true,
+    "sample_size": 20,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ],
+    "max_str_len": 2000
+  },
+  "text_remove_special_chars": {
+    "run": true,
+    "sample_size": 20,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ],
+    "max_str_len": 2000
+  },
+  "text_ascii": {
+    "run": true,
+    "sample_size": 20,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ],
+    "max_str_len": 2000
+  },
+  "text_char_substitution_attack": {
+    "run": true,
+    "sample_size": 20,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ],
+    "max_str_len": 2000,
+    "attack_params": {
+      "min_char": 2,
+      "aug_char_max": 1,
+      "aug_char_min": 1,
+      "aug_char_p": 0.1,
+      "aug_word_min": 1,
+      "aug_word_max": null,
+      "aug_word_p": 0.05
+    }
+  },
+  "text_char_deletion_attack": {
+    "run": true,
+    "sample_size": 20,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ],
+    "max_str_len": 2000,
+    "attack_params": {
+      "min_char": 2,
+      "aug_char_max": 1,
+      "aug_char_min": 1,
+      "aug_char_p": 0.1,
+      "aug_word_min": 1,
+      "aug_word_max": null,
+      "aug_word_p": 0.05
+    }
+  },
+  "text_char_insertion_attack": {
+    "run": true,
+    "sample_size": 20,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ],
+    "max_str_len": 2000,
+    "attack_params": {
+      "min_char": 2,
+      "aug_char_max": 1,
+      "aug_char_min": 1,
+      "aug_char_p": 0.1,
+      "aug_word_min": 1,
+      "aug_word_max": null,
+      "aug_word_p": 0.05
+    }
+  },
+  "text_char_swap_attack": {
+    "run": true,
+    "sample_size": 20,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ],
+    "max_str_len": 2000,
+    "attack_params": {
+      "min_char": 2,
+      "aug_char_max": 1,
+      "aug_char_min": 1,
+      "aug_char_p": 0.1,
+      "aug_word_min": 1,
+      "aug_word_max": null,
+      "aug_word_p": 0.05
+    }
+  },
+  "text_keyboard_aug_attack": {
+    "run": true,
+    "sample_size": 20,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ],
+    "max_str_len": 2000,
+    "attack_params": {
+      "min_char": 2,
+      "aug_char_max": 1,
+      "aug_char_min": 1,
+      "aug_char_p": 0.1,
+      "aug_word_min": 1,
+      "aug_word_max": null,
+      "aug_word_p": 0.05
+    }
+  },
+  "text_common_misspelling_attack": {
+    "run": true,
+    "sample_size": 20,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ],
+    "max_str_len": 2000,
+    "attack_params": null
+  },
+  "text_ocr_error_attack": {
+    "run": true,
+    "sample_size": 20,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ],
+    "max_str_len": 2000,
+    "attack_params": null
+  },
+  "gaussian_blur": {
+    "run": true,
+    "sample_size": 50,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ],
+    "kernel_size": [
+      19,
+      19
+    ],
+    "sigma": 5
+  },
+  "color_jitter": {
+    "run": true,
+    "sample_size": 50,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ],
+    "brightness": 0.1,
+    "contrast": 0.1,
+    "saturation": 0.1,
+    "hue": 0.1
+  },
+  "gaussian_noise": {
+    "run": true,
+    "sample_size": 50,
+    "severity_thresholds": [
+      0.01,
+      0.25
+    ],
+    "mean": 0,
+    "sigma": 0.03
+  },
+  "vertical_flip": {
+    "run": true,
+    "sample_size": 50,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ]
+  },
+  "horizontal_flip": {
+    "run": true,
+    "sample_size": 50,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ]
+  },
+  "randomize_pixels_with_mask": {
+    "run": true,
+    "sample_size": 50,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ],
+    "probability": 0.1
+  },
+  "contrast_increase": {
+    "run": true,
+    "sample_size": 50,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ],
+    "percent": 0.5
+  },
+  "contrast_decrease": {
+    "run": true,
+    "sample_size": 50,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ],
+    "percent": 0.5
+  },
+  "add_rain": {
+    "run": false,
+    "sample_size": 50,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ],
+    "alpha": 0.5
+  },
+  "add_snow": {
+    "run": false,
+    "sample_size": 50,
+    "severity_thresholds": [
+      0.1,
+      0.3
+    ],
+    "alpha": 0.5
   },
   "vulnerability": {
     "exclude_columns": [],
@@ -525,7 +645,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "run": false,
     "severity_thresholds": [
       0.05,
-      0.15,
       0.25
     ],
     "sample_size": 10,
@@ -538,55 +657,83 @@ Below is the default configuration for all tests. A copy of this can also be fou
       "init_size": 100
     }
   },
-  "int_feature_type": {
-    "exclude_columns": [],
-    "run": false,
-    "performance_change_config": {
-      "severity_thresholds": null,
-      "min_num_samples": 1
-    }
+  "text_invisible_chars_attack": {
+    "run": true,
+    "sample_size": 5,
+    "severity_thresholds": [
+      0.1,
+      0.5
+    ],
+    "attack_params": {
+      "target_score": 0.0,
+      "max_queries": 200,
+      "population_size": 15,
+      "max_unsuccessful_iters": 25,
+      "max_consecutive_unsuccessful": 3
+    },
+    "mutation_params": {
+      "aug_char_p": 0.01
+    },
+    "max_str_len": 2000
   },
-  "float_feature_type": {
-    "exclude_columns": [],
-    "run": false,
-    "performance_change_config": {
-      "severity_thresholds": null,
-      "min_num_samples": 1
-    }
+  "text_deletion_chars_attack": {
+    "run": true,
+    "sample_size": 5,
+    "severity_thresholds": [
+      0.1,
+      0.5
+    ],
+    "attack_params": {
+      "target_score": 0.0,
+      "max_queries": 200,
+      "population_size": 15,
+      "max_unsuccessful_iters": 25,
+      "max_consecutive_unsuccessful": 3
+    },
+    "mutation_params": {
+      "aug_char_p": 0.01
+    },
+    "max_str_len": 2000
   },
-  "str_feature_type": {
-    "exclude_columns": [],
-    "run": false,
-    "performance_change_config": {
-      "severity_thresholds": null,
-      "min_num_samples": 1
-    }
+  "text_intentional_homoglyph_attack": {
+    "run": true,
+    "sample_size": 5,
+    "severity_thresholds": [
+      0.1,
+      0.5
+    ],
+    "attack_params": {
+      "target_score": 0.0,
+      "max_queries": 200,
+      "population_size": 15,
+      "max_unsuccessful_iters": 25,
+      "max_consecutive_unsuccessful": 3
+    },
+    "mutation_params": {
+      "aug_char_p": 0.01
+    },
+    "max_str_len": 2000
   },
-  "bool_feature_type": {
-    "exclude_columns": [],
-    "run": false,
-    "performance_change_config": {
-      "severity_thresholds": null,
-      "min_num_samples": 1
-    }
+  "text_confusable_homoglyph_attack": {
+    "run": true,
+    "sample_size": 5,
+    "severity_thresholds": [
+      0.1,
+      0.5
+    ],
+    "attack_params": {
+      "target_score": 0.0,
+      "max_queries": 200,
+      "population_size": 15,
+      "max_unsuccessful_iters": 25,
+      "max_consecutive_unsuccessful": 3
+    },
+    "mutation_params": {
+      "aug_char_p": 0.01
+    },
+    "max_str_len": 2000
   },
-  "url_feature_type": {
-    "exclude_columns": [],
-    "run": false,
-    "performance_change_config": {
-      "severity_thresholds": null,
-      "min_num_samples": 1
-    }
-  },
-  "domain_feature_type": {
-    "exclude_columns": [],
-    "run": false,
-    "performance_change_config": {
-      "severity_thresholds": null,
-      "min_num_samples": 1
-    }
-  },
-  "email_feature_type": {
+  "feature_type_check": {
     "exclude_columns": [],
     "run": false,
     "performance_change_config": {
@@ -635,7 +782,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "run": false,
     "severity_thresholds": [
       0.1,
-      0.2,
       0.3
     ],
     "min_mutual_information_requirement": 0.2
@@ -645,7 +791,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "run": false,
     "severity_thresholds": [
       0.7,
-      0.8,
       0.9
     ]
   },
@@ -654,7 +799,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "run": false,
     "severity_thresholds": [
       0.7,
-      0.8,
       0.9
     ],
     "max_pairwise_tests": 200,
@@ -665,19 +809,30 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "run": false,
     "min_sample_size": 100,
     "performance_change_thresholds": null,
-    "max_sample_size": null,
-    "drift_statistic": "Population Stability Index",
-    "params": {
-      "distance_threshold": 0.2
+    "numeric_feature_params": {
+      "drift_statistic": "Population Stability Index",
+      "min_num_quantiles": 1000,
+      "num_bins": 100,
+      "psi_threshold": 0.2,
+      "kl_divergence_threshold": 0.1,
+      "js_divergence_threshold": 0.05,
+      "ks_test_p_value_threshold": 0.05,
+      "ks_test_min_sample_size": 100,
+      "ignore_nans": true
     },
-    "ignore_nans": true
+    "categorical_feature_params": {
+      "drift_statistic": "Population Stability Index",
+      "chi_squared_p_value_threshold": 0.05,
+      "psi_threshold": 0.2,
+      "max_sample_size": null,
+      "ignore_nans": true
+    }
   },
   "protected_proxies": {
     "exclude_columns": [],
     "run": false,
     "severity_thresholds": [
       0.2,
-      0.3,
       0.4
     ]
   },
@@ -687,10 +842,8 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "min_sample_size": 20,
     "performance_change_thresholds": [
       0.9,
-      0.93,
       0.96
-    ],
-    "metric": null
+    ]
   },
   "equalized_odds": {
     "exclude_columns": [],
@@ -698,7 +851,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "min_sample_size": 20,
     "performance_change_thresholds": [
       0.1,
-      0.2,
       0.3
     ]
   },
@@ -726,7 +878,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "min_sample_size": 20,
     "performance_change_thresholds": [
       0.8,
-      0.7,
       0.6
     ]
   },
@@ -736,7 +887,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "min_sample_size": 20,
     "performance_change_thresholds": [
       0.8,
-      0.7,
       0.6
     ]
   },
@@ -746,7 +896,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "min_sample_size": 20,
     "performance_change_thresholds": [
       0.8,
-      0.7,
       0.6
     ]
   },
@@ -754,7 +903,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "run": false,
     "p_value_thresholds": [
       0.005,
-      0.01,
       0.05
     ],
     "min_sample_size": 100,
@@ -764,7 +912,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "run": false,
     "accuracy_thresholds": [
       0.8,
-      0.85,
       0.9
     ],
     "min_sample_size": 100,
@@ -778,7 +925,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "run": false,
     "performance_thresholds": [
       0.1,
-      0.2,
       0.3
     ],
     "min_sample_size": 20,
@@ -789,7 +935,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "run": false,
     "performance_thresholds": [
       0.1,
-      0.2,
       0.3
     ],
     "min_sample_size": 20,
@@ -800,7 +945,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "run": false,
     "performance_thresholds": [
       0.1,
-      0.2,
       0.3
     ],
     "min_sample_size": 20,
@@ -829,7 +973,6 @@ Below is the default configuration for all tests. A copy of this can also be fou
     "run": false,
     "severity_thresholds": [
       0.0,
-      0.001,
       0.005
     ]
   }

@@ -1,6 +1,8 @@
 # Infrastructure Configuration
 
-Before executing the deployment, we need to populate some values. Some are secrets (e.g., product license), whereas others are infrastructure-related (i.e., Terraform variables).
+The target system for the deployment has to have values specified for a set of variables.
+Some of these values are secrets, such as your individual product license, while other
+values are required by infrastructure components, such as Terraform variables.
 
 ## Secrets
 
@@ -33,8 +35,8 @@ We use AWS Secrets Manager to store sensitive information used during cluster cr
 ```
 
 Your Robust Intelligence team will assist you in populating these values for your deployment. Brief descriptions of each value are provided below:
-- `admin_username`: email address for the RI Platform administrator
-- `admin_password`: one-time password for the RI Platform administrator
+- `admin_username`: email address for the RIME administrator
+- `admin_password`: one-time password for the RIME administrator
 - `datadog-api-key`: API key for DataDog logging services (optional)
 - `docker-logins`: credentials for pulling Docker images
 - `oauth_client_id`: OIDC client ID for integrated authentication (optional)
@@ -49,7 +51,7 @@ Your Robust Intelligence team will assist you in populating these values for you
 
 ## Terraform
 
-The RI Platform Terraform configuration relies on two files:
+The RIME Terraform configuration relies on two files:
 - `main.tf`: the primary configuration for the cluster
 - `backend.tf`: the secondary configuration for managing backups of the Terraform state
 
@@ -126,7 +128,7 @@ module "rime" {
 }
 ```
 
-A detailed reference of the "Managed Images" configuration (`image_registry_config`) can be found [here](/installation/self_hosted/managed_images.md).
+A detailed reference of the "Managed Images" configuration (`image_registry_config`) can be found [here](managed_images.md).
 
 ### `backend.tf`
 ```terraform

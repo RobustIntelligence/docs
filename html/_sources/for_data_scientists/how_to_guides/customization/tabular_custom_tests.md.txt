@@ -46,7 +46,7 @@ class CustomTest(BaseTest):
         self.delta = delta
 
     # Signature should not be changed.
-    def run(self, run_container: TabularRunContainer) -> Tuple[TestOutput, dict]:
+    def run(self, run_container: TabularRunContainer, silent_errors: bool = False) -> Tuple[TestOutput, dict]:
         ref_data_size = len(run_container.ref_data.df)
         eval_data_size = len(run_container.eval_data.df)
         if ref_data_size > eval_data_size + self.delta:

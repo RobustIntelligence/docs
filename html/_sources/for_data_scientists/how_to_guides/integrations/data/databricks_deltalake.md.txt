@@ -1,28 +1,25 @@
-# Databricks Deltalake
+# Databricks Delta Lake
 
-RIME now supports loading data directly from Databricks Deltalake directly, 
-so you do not have to copy the file locally or to s3. You can configure
-[Databricks Deltalake using the UI.](/for_admins/how_to_guides/data-sources.md)
+RIME supports loading data directly from Databricks Delta Lake. Configure
+Databricks Delta Lake as a data source [using the UI.](/for_admins/data-integrations.md)
 
-**In order to configure the Databricks Deltalake, you need to enter the following information -**
-1) Connection Details - Server Hostname, HTTP Path
-2) Databricks Access Tok
+The underlying Delta tables can be used as data sources to run stress tests and 
+continuous tests. Details are available in the [Data Source](/for_data_scientists/reference/tabular/data_source.md) configuration section.
 
+The [Scheduled CT Configuration page](/for_data_scientists/reference/tabular/scheduled_ct_configuration.md) discusses integrating Delta tables into a scheduled CT workflow.
 
-**In order to get the Databricks Deltalake connection details -** 
-1) Click compute icon in the sidebar. 
-2) Choose a cluster to connect to. 
-3) Navigate to Advanced Options. 
-4) Click on the JDBC/ODBC tab. 
-5) Copy the above connection details.
+## Prerequisites
 
+Confirm that you have access to the following information:
+* Connection details, including the server hostname and the HTTP path
+* Databricks [Personal Access Token](https://docs.databricks.com/dev-tools/auth.html#pat)
 
-After the data source is configured, you can use the underlying delta tables
-to run stress tests and continuous tests. More information for how to define 
-the configurations can be found in the 
-[Data Configuration page](/for_data_scientists/reference/tabular/data_source.md).
-Additionally, information about how to integrate the delta tables into your
-Scheduled CT workflow can be found in the [Scheduled CT Configuration page](/for_data_scientists/reference/tabular/scheduled_ct_configuration.md).
+### Retrieving connection details for Databricks Delta Lake
 
- 
- 
+1.  Log in to a Databricks Delta Lake instance. <!-- if we can find a specific DB DL doc page to link to, all the better -->
+2.  Click the compute icon in the sidebar and connect to a cluster.
+3.  In Advanced Options, click the *JDBC/ODBC* tab.
+    >   The connection details appear.
+
+Note the connection details for future use.
+

@@ -43,7 +43,7 @@ class CustomTest(BaseTest):
         super().__init__()
         self.delta = delta
 
-    def run(self, run_container: RunContainer) -> Tuple[TestOutput, dict]:
+    def run(self, run_container: RunContainer, silent_errors: bool = False) -> Tuple[TestOutput, dict]:
         ref_count = len(run_container.ref_data_container.data)
         eval_count = len(run_container.eval_data_container.data)
         if ref_count > eval_count + self.delta:
