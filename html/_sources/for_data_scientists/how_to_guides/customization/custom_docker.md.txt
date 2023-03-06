@@ -37,20 +37,12 @@ requirements = [
 ]
 ```
 
-To start the job that will build your custom image, use `rime_client.create_managed_image(name: str, requirements: List[ManagedImage.PipRequirement], image_type: Optional[ImageType])`.
+To start the job that will build your custom image, use `rime_client.create_managed_image(name: str, requirements: List[ManagedImage.PipRequirement])`.
 The return value will be a Python class that you can use to track the status of the image building job.
-
-Finally, you can specify the type of RIME managed image you want to use as a base for your custom image.
-There are 4 types of base images you can use depending on what sort of models you want to stress test:
-  * `ImageType.ALL`: includes all dependencies required to run RIME for any of our stress tests.
-  * `ImageType.IMAGES`: includes only the dependencies required to run RIME for image stress tests.
-  * `ImageType.NLP`: includes only the dependencies required to run RIME for nlp stress tests.
-  * `ImageType.TABULAR`: includes only the dependencies required to run RIME for tabular stress tests.
-By building your custom image for a particular type of stress test, you reduce your image's dependencies and total size.
 
 ```python
 # Start a new image building job
-builder_job = rime_client.create_managed_image("xgboost102_tensorflow", requirements, image_type=ImageType.TABULAR)
+builder_job = rime_client.create_managed_image("xgboost102_tensorflow", requirements)
 
 # Wait until the job has finished and print out status information.
 # Once this prints out the `READY` status, your image is available for use in stress tests.
@@ -77,7 +69,7 @@ You can add these apt requirements to your `create_managed_image` request with t
 For example:
 
 ```python
-builder_job = rime_client.create_managed_image("xgboost102_tensorflow", requirements, image_type=ImageType.TABULAR, package_requirements=apt_requirements)
+builder_job = rime_client.create_managed_image("xgboost102_tensorflow", requirements, package_requirements=apt_requirements)
 ```
 
 ### Start a Stress Test on a Managed Docker Image

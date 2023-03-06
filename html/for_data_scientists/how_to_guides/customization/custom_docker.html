@@ -52,7 +52,7 @@
             RIME
           </a>
               <div class="version">
-                2.0.0-beta.0
+                2.0.0-beta.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -148,7 +148,7 @@ If not given, the image type will default to use the most general ‘all’ imag
 <p>Say you have a Tabular model that requires <code class="docutils literal notranslate"><span class="pre">xgboost</span></code> at version <code class="docutils literal notranslate"><span class="pre">1.0.2</span></code> and <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> at a flexible version.
 You can call this image <code class="docutils literal notranslate"><span class="pre">&quot;xgboost102_tensorflow&quot;</span></code> as an alias to remember it later.</p>
 <p>To begin, initialize the <code class="docutils literal notranslate"><span class="pre">Client</span></code> and point it to the location of your RIME backend.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">ImageType</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
 
 <span class="n">rime_client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;rime.&lt;YOUR_ORG_NAME&gt;.rime.dev&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;YOUR_API_TOKEN&gt;&quot;</span><span class="p">)</span>
 </pre></div>
@@ -166,19 +166,10 @@ Omitting the version specifier is equivalent to not fixing the version.</p>
 <span class="p">]</span>
 </pre></div>
 </div>
-<p>To start the job that will build your custom image, use <code class="docutils literal notranslate"><span class="pre">rime_client.create_managed_image(name:</span> <span class="pre">str,</span> <span class="pre">requirements:</span> <span class="pre">List[ManagedImage.PipRequirement],</span> <span class="pre">image_type:</span> <span class="pre">Optional[ImageType])</span></code>.
+<p>To start the job that will build your custom image, use <code class="docutils literal notranslate"><span class="pre">rime_client.create_managed_image(name:</span> <span class="pre">str,</span> <span class="pre">requirements:</span> <span class="pre">List[ManagedImage.PipRequirement])</span></code>.
 The return value will be a Python class that you can use to track the status of the image building job.</p>
-<p>Finally, you can specify the type of RIME managed image you want to use as a base for your custom image.
-There are 4 types of base images you can use depending on what sort of models you want to stress test:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ImageType.ALL</span></code>: includes all dependencies required to run RIME for any of our stress tests.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ImageType.IMAGES</span></code>: includes only the dependencies required to run RIME for image stress tests.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ImageType.NLP</span></code>: includes only the dependencies required to run RIME for nlp stress tests.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ImageType.TABULAR</span></code>: includes only the dependencies required to run RIME for tabular stress tests.
-By building your custom image for a particular type of stress test, you reduce your image’s dependencies and total size.</p></li>
-</ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Start a new image building job</span>
-<span class="n">builder_job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_managed_image</span><span class="p">(</span><span class="s2">&quot;xgboost102_tensorflow&quot;</span><span class="p">,</span> <span class="n">requirements</span><span class="p">,</span> <span class="n">image_type</span><span class="o">=</span><span class="n">ImageType</span><span class="o">.</span><span class="n">TABULAR</span><span class="p">)</span>
+<span class="n">builder_job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_managed_image</span><span class="p">(</span><span class="s2">&quot;xgboost102_tensorflow&quot;</span><span class="p">,</span> <span class="n">requirements</span><span class="p">)</span>
 
 <span class="c1"># Wait until the job has finished and print out status information.</span>
 <span class="c1"># Once this prints out the `READY` status, your image is available for use in stress tests.</span>
@@ -201,7 +192,7 @@ Omitting the version specifier is equivalent to not fixing the version.</p>
 </div>
 <p>You can add these apt requirements to your <code class="docutils literal notranslate"><span class="pre">create_managed_image</span></code> request with the optional parameter <code class="docutils literal notranslate"><span class="pre">package_requirements</span></code>.
 For example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">builder_job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_managed_image</span><span class="p">(</span><span class="s2">&quot;xgboost102_tensorflow&quot;</span><span class="p">,</span> <span class="n">requirements</span><span class="p">,</span> <span class="n">image_type</span><span class="o">=</span><span class="n">ImageType</span><span class="o">.</span><span class="n">TABULAR</span><span class="p">,</span> <span class="n">package_requirements</span><span class="o">=</span><span class="n">apt_requirements</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">builder_job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_managed_image</span><span class="p">(</span><span class="s2">&quot;xgboost102_tensorflow&quot;</span><span class="p">,</span> <span class="n">requirements</span><span class="p">,</span> <span class="n">package_requirements</span><span class="o">=</span><span class="n">apt_requirements</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
