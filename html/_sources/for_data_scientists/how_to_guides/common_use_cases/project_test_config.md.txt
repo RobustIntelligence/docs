@@ -8,8 +8,12 @@ History* from the left navigation bar of the project settings page.
 
 ## Configuring a project from the project settings page
 
-The project settings page enables you to modify both the configuration for the project
-and the configuration for the model used by the project.
+The project settings page enables you to modify the following configuration aspects:
+
+* Project configuration
+* Configuration of the model used by the project
+* Configuration of the test runs for the model
+* Configuration of the actual tests run on the model
 
 1.  Sign in to a RIME instance.  
     >   The Workspaces page appears.
@@ -68,8 +72,9 @@ The selected projects are removed from the workspace.
 
 ## Sharing a project
 
-Share a project to enable other users to view the project. Users who can view the 
-project can send in 
+Share a project to enable other users to view the project. Users require edit-level
+access to a project in order to share the project. Details on access privileges are
+discussed in the section on [role-based access control](../../../for_admins/rbac.md). 
 
 1.  Sign in to a RIME instance.  
     >   The Workspaces page appears.
@@ -94,12 +99,38 @@ project can send in
     >   The project is available to the added user. To remove a user from the list, 
     >   click the trash icon next to the user.
 8. (Optional) From the *View Access* drop-down, select a sharing privilege level.
-    >   The sharing privilege levels are *Full Access*, *Edit Access*, *View Access*,
-    >    and *No Access (Private)*.
+    >   The sharing privilege levels are *Edit Access*, *View Access*, and 
+    >   *No Access (Private)*.
 9.  (Optional) Click *Copy Link* to copy a link to the project to the clipboard.
 10. Click *Save*.
 
 RIME updates the project sharing configuration.
+
+## Project publication
+
+Publishing a project makes that project visible from the [Workspace Overview](../../../getstarted/explanation/workspace-overview.md).
+Only the project owner can publish or unpublish the project.
+
+### Publishing a project
+
+1.  Sign in to a RIME instance.  
+    >   The Workspaces page appears.
+2.  Click a workspace.  
+    >   The Workspaces summary page appears.
+3.  Select a project.
+    >   You can filter or sort the list of projects in a workspace with the
+    >   *Sort* and *Filter* controls in the upper right. Click the glyph to the
+    >   right of the *Filter* control to switch between list and card display
+    >   for projects. Type a string in *Search Projects...* to display only
+    >   projects that match the string.
+
+    >   The project overview page appears.
+4.  In the top right, click *Share*.
+    >   The Project Sharing dialog appears.
+5.  Click the *Published to workspace* toggle.
+6. Click *Save*.
+
+RIME changes the project's publication status.
 
 ## Moving test runs between projects
 
@@ -142,10 +173,8 @@ The selected test runs move to the specified project.
     >   projects that match the string.
 
     >   The project overview page appears.
-4.  Click the gear at the upper right.
-    >   The Edit Continuous Tests and Firewall dialog box appears.
-5.  Click *Set up Alerts*.
-    >   The Alerts fields unfold.
+4.  Click *Alerts* next to the project name.
+    >   The Project Alerts dialog box appears.
 6.  Choose an alert delivery model.
     >   | Alert delivery | Configuration step                                             |
     >   |----------------|----------------------------------------------------------------|
@@ -153,14 +182,14 @@ The selected test runs move to the specified project.
     >   | Slack          | In *Webhook URL*, paste the Slack webhook URL and click *Add*. |
 
     [Slack documentation](https://api.slack.com/messaging/webhooks) provides details on generating a Slack webhook URL.
-7.  Click *Confirm*.
+7.  Click *Done*.
 
 Alerts are configured for this project.
 
 ## Configuring test category and sensitivity
 
-Project-level test configuration affects Continuous Tests, Stress Tests, and Offline
-Tests that run in that project.
+Project-level test configuration affects Stress Tests and Continuous Tests that run in
+that project.
 
 1.  Sign in to a RIME instance.  
     >   The Workspaces page appears.
@@ -179,7 +208,7 @@ Tests that run in that project.
 5.  Click the *Test Configuration* tab at the top.
 6.  The Test Configuration page opens at the Categories and Sensitivity pane.
 7.  Select a test type.
-    >   Both Continuous and Stress tests have the same configuration elements.
+    >   Both Stress and Continuous tests have the same configuration elements.
 8.  Select a set of tests.
     >   | Risk category | Test types |
     >   |---------------|------|

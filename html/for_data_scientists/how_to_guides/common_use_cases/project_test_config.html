@@ -81,6 +81,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#configuring-a-project-from-the-project-settings-page">Configuring a project from the project settings page</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#deleting-a-project">Deleting a project</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sharing-a-project">Sharing a project</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#project-publication">Project publication</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#moving-test-runs-between-projects">Moving test runs between projects</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#setting-up-project-alerts">Setting up project alerts</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#configuring-test-category-and-sensitivity">Configuring test category and sensitivity</a></li>
@@ -149,8 +150,13 @@ the tests within that project, as well as move test runs between existing projec
 History</em> from the left navigation bar of the project settings page.</p>
 <section id="configuring-a-project-from-the-project-settings-page">
 <h2>Configuring a project from the project settings page<a class="headerlink" href="#configuring-a-project-from-the-project-settings-page" title="Permalink to this heading"></a></h2>
-<p>The project settings page enables you to modify both the configuration for the project
-and the configuration for the model used by the project.</p>
+<p>The project settings page enables you to modify the following configuration aspects:</p>
+<ul class="simple">
+<li><p>Project configuration</p></li>
+<li><p>Configuration of the model used by the project</p></li>
+<li><p>Configuration of the test runs for the model</p></li>
+<li><p>Configuration of the actual tests run on the model</p></li>
+</ul>
 <ol class="arabic">
 <li><p>Sign in to a RIME instance.</p>
 <blockquote>
@@ -316,8 +322,9 @@ projects that match the string.</p>
 </section>
 <section id="sharing-a-project">
 <h2>Sharing a project<a class="headerlink" href="#sharing-a-project" title="Permalink to this heading"></a></h2>
-<p>Share a project to enable other users to view the project. Users who can view the
-project can send in</p>
+<p>Share a project to enable other users to view the project. Users require edit-level
+access to a project in order to share the project. Details on access privileges are
+discussed in the section on <a class="reference internal" href="../../../for_admins/rbac.html"><span class="doc std std-doc">role-based access control</span></a>.</p>
 <ol class="arabic">
 <li><p>Sign in to a RIME instance.</p>
 <blockquote>
@@ -362,14 +369,54 @@ click the trash icon next to the user.</p>
 </li>
 <li><p>(Optional) From the <em>View Access</em> drop-down, select a sharing privilege level.</p>
 <blockquote>
-<div><p>The sharing privilege levels are <em>Full Access</em>, <em>Edit Access</em>, <em>View Access</em>,
-and <em>No Access (Private)</em>.</p>
+<div><p>The sharing privilege levels are <em>Edit Access</em>, <em>View Access</em>, and
+<em>No Access (Private)</em>.</p>
 </div></blockquote>
 </li>
 <li><p>(Optional) Click <em>Copy Link</em> to copy a link to the project to the clipboard.</p></li>
 <li><p>Click <em>Save</em>.</p></li>
 </ol>
 <p>RIME updates the project sharing configuration.</p>
+</section>
+<section id="project-publication">
+<h2>Project publication<a class="headerlink" href="#project-publication" title="Permalink to this heading"></a></h2>
+<p>Publishing a project makes that project visible from the <a class="reference internal" href="../../../getstarted/explanation/workspace-overview.html"><span class="doc std std-doc">Workspace Overview</span></a>.
+Only the project owner can publish or unpublish the project.</p>
+<section id="publishing-a-project">
+<h3>Publishing a project<a class="headerlink" href="#publishing-a-project" title="Permalink to this heading"></a></h3>
+<ol class="arabic">
+<li><p>Sign in to a RIME instance.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click a workspace.</p>
+<blockquote>
+<div><p>The Workspaces summary page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Select a project.</p>
+<blockquote>
+<div><p>You can filter or sort the list of projects in a workspace with the
+<em>Sort</em> and <em>Filter</em> controls in the upper right. Click the glyph to the
+right of the <em>Filter</em> control to switch between list and card display
+for projects. Type a string in <em>Search Projects…</em> to display only
+projects that match the string.</p>
+</div></blockquote>
+<blockquote>
+<div><p>The project overview page appears.</p>
+</div></blockquote>
+</li>
+<li><p>In the top right, click <em>Share</em>.</p>
+<blockquote>
+<div><p>The Project Sharing dialog appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click the <em>Published to workspace</em> toggle.</p></li>
+<li><p>Click <em>Save</em>.</p></li>
+</ol>
+<p>RIME changes the project’s publication status.</p>
+</section>
 </section>
 <section id="moving-test-runs-between-projects">
 <h2>Moving test runs between projects<a class="headerlink" href="#moving-test-runs-between-projects" title="Permalink to this heading"></a></h2>
@@ -446,14 +493,9 @@ projects that match the string.</p>
 <div><p>The project overview page appears.</p>
 </div></blockquote>
 </li>
-<li><p>Click the gear at the upper right.</p>
+<li><p>Click <em>Alerts</em> next to the project name.</p>
 <blockquote>
-<div><p>The Edit Continuous Tests and Firewall dialog box appears.</p>
-</div></blockquote>
-</li>
-<li><p>Click <em>Set up Alerts</em>.</p>
-<blockquote>
-<div><p>The Alerts fields unfold.</p>
+<div><p>The Project Alerts dialog box appears.</p>
 </div></blockquote>
 </li>
 <li><p>Choose an alert delivery model.</p>
@@ -476,14 +518,14 @@ projects that match the string.</p>
 </div></blockquote>
 <p><a class="reference external" href="https://api.slack.com/messaging/webhooks">Slack documentation</a> provides details on generating a Slack webhook URL.</p>
 </li>
-<li><p>Click <em>Confirm</em>.</p></li>
+<li><p>Click <em>Done</em>.</p></li>
 </ol>
 <p>Alerts are configured for this project.</p>
 </section>
 <section id="configuring-test-category-and-sensitivity">
 <h2>Configuring test category and sensitivity<a class="headerlink" href="#configuring-test-category-and-sensitivity" title="Permalink to this heading"></a></h2>
-<p>Project-level test configuration affects Continuous Tests, Stress Tests, and Offline
-Tests that run in that project.</p>
+<p>Project-level test configuration affects Stress Tests and Continuous Tests that run in
+that project.</p>
 <ol class="arabic">
 <li><p>Sign in to a RIME instance.</p>
 <blockquote>
@@ -516,7 +558,7 @@ projects that match the string.</p>
 <li><p>The Test Configuration page opens at the Categories and Sensitivity pane.</p></li>
 <li><p>Select a test type.</p>
 <blockquote>
-<div><p>Both Continuous and Stress tests have the same configuration elements.</p>
+<div><p>Both Stress and Continuous tests have the same configuration elements.</p>
 </div></blockquote>
 </li>
 <li><p>Select a set of tests.</p>

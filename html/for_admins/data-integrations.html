@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Configuring data integrations &mdash; RIME  documentation</title>
+  <title>Configuring integrations &mdash; RIME  documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
@@ -90,15 +90,15 @@
 <li class="toctree-l2"><a class="reference internal" href="managingws.html">Managing Workspaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="agentmgmt.html">Managing agents</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mimgoverview.html">Managed Images</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Configuring data integrations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#supported-data-integrations">Supported data integrations</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configuring integrations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#supported-integrations">Supported integrations</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#configurable-through-the-rime-web-ui">Configurable through the RIME web UI</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#adding-a-data-integration-through-the-rime-web-ui">Adding a data integration through the RIME web UI</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#custom-data-integrations-in-the-python-sdk">Custom data integrations in the Python SDK</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#example-stress-test-with-a-custom-data-integration">Example stress test with a custom data integration</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#example-continuous-test-with-a-custom-data-integration">Example continuous test with a custom data integration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-integrations-in-the-python-sdk">Custom integrations in the Python SDK</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#example-stress-test-with-a-custom-integration">Example stress test with a custom integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example-continuous-test-with-a-custom-integration">Example continuous test with a custom integration</a></li>
 </ul>
 </li>
 </ul>
@@ -133,7 +133,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Administering the RI Platform</a></li>
-      <li class="breadcrumb-item active">Configuring data integrations</li>
+      <li class="breadcrumb-item active">Configuring integrations</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/for_admins/data-integrations.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -143,24 +143,29 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="configuring-data-integrations">
-<h1>Configuring data integrations<a class="headerlink" href="#configuring-data-integrations" title="Permalink to this heading"></a></h1>
-<p>Administrators can configure data integrations that a RIME instance can access.
-Sensitive information, such as access tokens, are stored in a secret manager
+  <section id="configuring-integrations">
+<h1>Configuring integrations<a class="headerlink" href="#configuring-integrations" title="Permalink to this heading"></a></h1>
+<p>Administrators can configure integrations for a RIME instance. Integrations can provide
+data or compute resources to RIME.</p>
+<p>Sensitive information, such as access tokens, are stored in a secret manager
 service built using <a class="reference external" href="https://developer.hashicorp.com/vault/docs/what-is-vault">Hashicorp Vault</a>.</p>
-<p>All configured data integrations can be managed from the <em>Integrations</em> tab in Workspace settings.</p>
-<section id="supported-data-integrations">
-<h2>Supported data integrations<a class="headerlink" href="#supported-data-integrations" title="Permalink to this heading"></a></h2>
-<p>RIME supports GCS, Databricks Deltalake, and Amazon S3 as data integrations.</p>
+<p>All configured integrations can be managed from the <em>Integrations</em> tab in Workspace settings.</p>
+<section id="supported-integrations">
+<h2>Supported integrations<a class="headerlink" href="#supported-integrations" title="Permalink to this heading"></a></h2>
+<p>RIME supports integrations with the following vendors:</p>
+<ul class="simple">
+<li><p>Google Cloud Storage</p></li>
+<li><p>Databricks Deltalake</p></li>
+<li><p>Amazon S3</p></li>
+</ul>
 <section id="configurable-through-the-rime-web-ui">
 <h3>Configurable through the RIME web UI<a class="headerlink" href="#configurable-through-the-rime-web-ui" title="Permalink to this heading"></a></h3>
-<p>The <a class="reference internal" href="../for_data_scientists/how_to_guides/integrations/data/databricks_deltalake.html"><span class="doc std std-doc">Databricks Deltalake</span></a> data integration can be configured directly from the web UI of a RIME instance.</p>
-<!-- ### Configurable at deploy time
-
-These integrations can only be configured when deploying a RIME instance:
-
-* Amazon S3 
-* Google Cloud Storage -->
+<p>The <a class="reference internal" href="../for_data_scientists/how_to_guides/integrations/data/databricks_deltalake.html"><span class="doc std std-doc">Databricks Deltalake</span></a> integration can be configured directly from the web UI of a RIME instance.</p>
+<p>These integrations can only be configured when deploying a RIME instance:</p>
+<ul class="simple">
+<li><p>Amazon S3</p></li>
+<li><p>Google Cloud Storage</p></li>
+</ul>
 </section>
 </section>
 <section id="adding-a-data-integration-through-the-rime-web-ui">
@@ -188,7 +193,7 @@ The Workspace Settings page appears.</p>
 <div><p>The Add Integration dialog box appears.</p>
 </div></blockquote>
 </li>
-<li><p>In <em>Name</em>, type a name for the data integration.</p></li>
+<li><p>In <em>Name</em>, type a name for the integration.</p></li>
 <li><p>From the <em>Integration Type</em> drop-down, choose a type.</p>
 <blockquote>
 <div><p>Supported types are S3, GCS, Databricks, and Custom.</p>
@@ -204,26 +209,18 @@ The Workspace Settings page appears.</p>
 </ul>
 </div></blockquote>
 </li>
-<li><p>(Adding a GCS integration) Type the following information in the corresponding fields.</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Name</p></li>
-<li><p>GCP Service Account email</p></li>
-<li><p>GCP Access Token</p></li>
-<li><p>GCS Bucket</p></li>
-</ul>
-</div></blockquote>
-</li>
-<li><p>(Adding an S3 integration) Type the following information in the corresponding fields.</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Name</p></li>
-<li><p>AWS access key ID</p></li>
-<li><p>AWS secret access key</p></li>
-<li><p>AWS role ARN</p></li>
-</ul>
-</div></blockquote>
-</li>
+</ol>
+<!-- 8.  (Adding a GCS integration) Type the following information in the corresponding fields.
+    >   *   Name
+    >   *   GCP Service Account email
+    >   *   GCP Access Token
+    >   *   GCS Bucket 
+9.  (Adding an S3 integration) Type the following information in the corresponding fields.
+    >   *   Name
+    >   *   AWS access key ID
+    >   *   AWS secret access key
+    >   *   AWS role ARN -->
+<ol class="arabic" start="10">
 <li><p>(Adding a Custom integration) Type a name for the integration in <em>Name</em>.</p></li>
 <li><p>(Adding a Custom integration) Type the configuration information for the custom integration as key/value pairs and select a sensitivity for each pair.</p>
 <blockquote>
@@ -243,19 +240,19 @@ The Workspace Settings page appears.</p>
 </li>
 <li><p>Click <em>Save Integration</em>.</p></li>
 </ol>
-<p>The new data integration is now available to the RI Platform.</p>
+<p>The new integration is now available to the RI Platform.</p>
 </section>
-<section id="custom-data-integrations-in-the-python-sdk">
-<h2>Custom data integrations in the Python SDK<a class="headerlink" href="#custom-data-integrations-in-the-python-sdk" title="Permalink to this heading"></a></h2>
-<p>RIME can load data from arbitrary sources defined in a Python file for use in a Firewall or stress test. To use a custom data integration, pass a custom data dictionary to either the <code class="docutils literal notranslate"><span class="pre">Client.start_stress_test()</span></code> or the <code class="docutils literal notranslate"><span class="pre">Firewall.start_continous_test()</span></code> functions. The custom data dictionary used for a continuous test must specify:</p>
+<section id="custom-integrations-in-the-python-sdk">
+<h2>Custom integrations in the Python SDK<a class="headerlink" href="#custom-integrations-in-the-python-sdk" title="Permalink to this heading"></a></h2>
+<p>RIME can load data from arbitrary sources defined in a Python file for use in a Firewall or stress test. To use a custom integration, pass a custom data dictionary to either the <code class="docutils literal notranslate"><span class="pre">Client.start_stress_test()</span></code> or the <code class="docutils literal notranslate"><span class="pre">Firewall.start_continous_test()</span></code> functions. The custom data dictionary used for a continuous test must specify:</p>
 <ul class="simple">
 <li><p>A file path to a Python file</p></li>
 <li><p>The name of a function in that Python file</p></li>
 <li><p>Arguments to that function, if any</p></li>
 </ul>
 <p>The Python file specified in the custom data dictionary must provide any required credentials for access to the filepath where the data is located. The output of the data loading function must be a Pandas dataframe.</p>
-<section id="example-stress-test-with-a-custom-data-integration">
-<h3>Example stress test with a custom data integration<a class="headerlink" href="#example-stress-test-with-a-custom-data-integration" title="Permalink to this heading"></a></h3>
+<section id="example-stress-test-with-a-custom-integration">
+<h3>Example stress test with a custom integration<a class="headerlink" href="#example-stress-test-with-a-custom-integration" title="Permalink to this heading"></a></h3>
 <p>The following code specifies a custom data dictionary and the Python SDK call that starts the stress test.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">custom_config</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Weather Predictor Test&quot;</span><span class="p">,</span>
@@ -312,8 +309,8 @@ def get_weather_data(start_time: int, end_time: int) -&gt; pd.DataFrame:
 </pre></div>
 </div>
 </section>
-<section id="example-continuous-test-with-a-custom-data-integration">
-<h3>Example continuous test with a custom data integration<a class="headerlink" href="#example-continuous-test-with-a-custom-data-integration" title="Permalink to this heading"></a></h3>
+<section id="example-continuous-test-with-a-custom-integration">
+<h3>Example continuous test with a custom integration<a class="headerlink" href="#example-continuous-test-with-a-custom-integration" title="Permalink to this heading"></a></h3>
 <p>Continuous tests rely on an established reference data source and do not need to specify one in the data dictionary. The contents of <code class="docutils literal notranslate"><span class="pre">custom_weather_loader.py</span></code> do not change, but the custom data dictionary is different.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">incremental_config</span><span class="o">.=</span> <span class="p">{</span>
 <span class="s2">&quot;eval_data_info&quot;</span><span class="p">:</span> <span class="p">{</span>

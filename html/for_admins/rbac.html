@@ -83,6 +83,8 @@
 <li class="toctree-l2"><a class="reference internal" href="users.html">Managing users</a></li>
 <li class="toctree-l2"><a class="reference internal" href="userroles.html">User account roles</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Role-based Access Control</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#project-level-roles">Project-level roles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-account-categories">User account categories</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#assigning-user-privileges">Assigning user privileges</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#granting-a-user-membership-in-a-workspace">Granting a user membership in a workspace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#removing-a-user-from-a-workspace">Removing a user from a workspace</a></li>
@@ -95,7 +97,7 @@
 <li class="toctree-l2"><a class="reference internal" href="managingws.html">Managing Workspaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="agentmgmt.html">Managing agents</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mimgoverview.html">Managed Images</a></li>
-<li class="toctree-l2"><a class="reference internal" href="data-integrations.html">Configuring data integrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-integrations.html">Configuring integrations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="audit-logs.html">Audit Logs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="smtp-configuration.html">Configuring SMTP for alerts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="troubleshooting/faq.html">FAQ</a></li>
@@ -141,6 +143,28 @@
 <p>Role-based Access Control (RBAC) restricts the actions that an authenticated
 user can perform on the RI Platform. These restrictions are mediated by user
 <a class="reference internal" href="userroles.html"><span class="doc std std-doc">roles</span></a>.</p>
+<section id="project-level-roles">
+<h2>Project-level roles<a class="headerlink" href="#project-level-roles" title="Permalink to this heading"></a></h2>
+<p>Users are assigned roles with respect to individual <a class="reference internal" href="../for_data_scientists/how_to_guides/common_use_cases/projects.html"><span class="doc std std-doc">projects</span></a> in a workspace.</p>
+<p>The user that creates a project is the <strong>Project Owner</strong>. Only the Project Owner can
+publish or unpublish a project. When a user account is removed from a workspace,
+ownership of projects owned by that account is inherited by the Workspace Administrator
+that deleted the user account.</p>
+<p>Users can have <strong>Edit Access</strong> to a project. This privilege level enables users to set
+project settings, configure tests, run tests, and share the project.</p>
+<p>Users with <strong>View Access</strong> can only view information about the project and can neither
+change settings nor execute any actions with respect to the project.</p>
+</section>
+<section id="user-account-categories">
+<h2>User account categories<a class="headerlink" href="#user-account-categories" title="Permalink to this heading"></a></h2>
+<p>Project access privileges can be assigned in three broad categories:</p>
+<p>Privileges granted to the <strong>All Users</strong> group affect all users with access to the workspace.</p>
+<p>Privileges granted to the <strong>VP users</strong> group affect all users with the VP role.</p>
+<p>Privileges granted to <strong>Workspace Administrators</strong> affect all users with administrative privileges over the workspace.</p>
+<p>Changes to privilege levels made in a narrower scope override privilege grants made at a broader scope.
+For example, when a workspace grants Edit Access to all VP Users, an administrator for that workspace can
+set an individual VP user account to View Access.</p>
+</section>
 <section id="assigning-user-privileges">
 <h2>Assigning user privileges<a class="headerlink" href="#assigning-user-privileges" title="Permalink to this heading"></a></h2>
 <ol class="arabic">

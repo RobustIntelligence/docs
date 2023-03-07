@@ -1,25 +1,30 @@
-# Configuring data integrations
+# Configuring integrations
 
-Administrators can configure data integrations that a RIME instance can access.
+Administrators can configure integrations for a RIME instance. Integrations can provide
+data or compute resources to RIME.
+
 Sensitive information, such as access tokens, are stored in a secret manager
 service built using [Hashicorp Vault](https://developer.hashicorp.com/vault/docs/what-is-vault).
 
-All configured data integrations can be managed from the *Integrations* tab in Workspace settings.
+All configured integrations can be managed from the *Integrations* tab in Workspace settings.
 
-## Supported data integrations
+## Supported integrations
 
-RIME supports GCS, Databricks Deltalake, and Amazon S3 as data integrations.
+RIME supports integrations with the following vendors:
+
+* Google Cloud Storage
+* Databricks Deltalake
+* Amazon S3
 
 ### Configurable through the RIME web UI
 
-The [Databricks Deltalake](/for_data_scientists/how_to_guides/integrations/data/databricks_deltalake.md) data integration can be configured directly from the web UI of a RIME instance.
-
-<!-- ### Configurable at deploy time
+The [Databricks Deltalake](/for_data_scientists/how_to_guides/integrations/data/databricks_deltalake.md) integration can be configured directly from the web UI of a RIME instance.
 
 These integrations can only be configured when deploying a RIME instance:
 
 * Amazon S3 
-* Google Cloud Storage -->
+* Google Cloud Storage
+
 ## Adding a data integration through the RIME web UI
 
 An administrator can add or modify a data integration that the RIME instance can use. 
@@ -33,7 +38,7 @@ An administrator can add or modify a data integration that the RIME instance can
     >   The Integrations configuration pane appears.
 4.  Click *Add Integration*.  
     >   The Add Integration dialog box appears.
-5.  In *Name*, type a name for the data integration.
+5.  In *Name*, type a name for the integration.
 6.  From the *Integration Type* drop-down, choose a type.
     >   Supported types are S3, GCS, Databricks, and Custom.
 7.  (Adding a Databricks integration) Type the following information in the corresponding fields.
@@ -41,16 +46,16 @@ An administrator can add or modify a data integration that the RIME instance can
     >   *   Server hostname
     >   *   HTTP Path
     >   *   Databricks Access Token
-8.  (Adding a GCS integration) Type the following information in the corresponding fields.
+<!-- 8.  (Adding a GCS integration) Type the following information in the corresponding fields.
     >   *   Name
     >   *   GCP Service Account email
     >   *   GCP Access Token
-    >   *   GCS Bucket
+    >   *   GCS Bucket 
 9.  (Adding an S3 integration) Type the following information in the corresponding fields.
     >   *   Name
     >   *   AWS access key ID
     >   *   AWS secret access key
-    >   *   AWS role ARN
+    >   *   AWS role ARN -->
 10. (Adding a Custom integration) Type a name for the integration in *Name*.
 11. (Adding a Custom integration) Type the configuration information for the custom integration as key/value pairs and select a sensitivity for each pair.
     >   Sensitivity levels are Not sensitive, Workspace level, and Members level.
@@ -61,11 +66,11 @@ An administrator can add or modify a data integration that the RIME instance can
     >   Sensitivity levels are Not sensitive, Workspace level, and Members level.
 11. Click *Save Integration*.
 
-The new data integration is now available to the RI Platform.
+The new integration is now available to the RI Platform.
 
-## Custom data integrations in the Python SDK
+## Custom integrations in the Python SDK
 
-RIME can load data from arbitrary sources defined in a Python file for use in a Firewall or stress test. To use a custom data integration, pass a custom data dictionary to either the `Client.start_stress_test()` or the `Firewall.start_continous_test()` functions. The custom data dictionary used for a continuous test must specify:
+RIME can load data from arbitrary sources defined in a Python file for use in a Firewall or stress test. To use a custom integration, pass a custom data dictionary to either the `Client.start_stress_test()` or the `Firewall.start_continous_test()` functions. The custom data dictionary used for a continuous test must specify:
 
 * A file path to a Python file
 * The name of a function in that Python file
@@ -73,7 +78,7 @@ RIME can load data from arbitrary sources defined in a Python file for use in a 
 
 The Python file specified in the custom data dictionary must provide any required credentials for access to the filepath where the data is located. The output of the data loading function must be a Pandas dataframe.
 
-### Example stress test with a custom data integration
+### Example stress test with a custom integration
 
 The following code specifies a custom data dictionary and the Python SDK call that starts the stress test.
 
@@ -134,7 +139,7 @@ def get_weather_data(start_time: int, end_time: int) -> pd.DataFrame:
     return master_df
 ```
 
-### Example continuous test with a custom data integration
+### Example continuous test with a custom integration
 
 Continuous tests rely on an established reference data source and do not need to specify one in the data dictionary. The contents of `custom_weather_loader.py` do not change, but the custom data dictionary is different.
 
