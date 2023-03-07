@@ -10,6 +10,7 @@
       <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -28,7 +29,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Debugging the Python SDK" href="../troubleshooting/sdk.html" />
-    <link rel="prev" title="NLP Generic Custom Tests" href="nlp_custom_tests.html" />
+    <link rel="prev" title="Custom Tests" href="custom_tests.html" />
 <link href="../../../_static/style.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -52,7 +53,7 @@
             RIME
           </a>
               <div class="version">
-                2.0.0-beta.2
+                2.0.0-beta.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -177,22 +178,22 @@ The return value will be a Python class that you can use to track the status of 
 </pre></div>
 </div>
 <p>As an experimental customization, we also now offer the ability to specify additional
-<a class="reference external" href="https://en.wikipedia.org/wiki/APT_(software)"><code class="docutils literal notranslate"><span class="pre">apt</span></code></a> packages that are required for your image.
-As with pip, we provide a helper method <code class="docutils literal notranslate"><span class="pre">apt_requirement(name:</span> <span class="pre">str,</span> <span class="pre">version_specifier:</span> <span class="pre">Optional[str])</span></code> to
-construct a list of apt requirements.
+<a class="reference external" href="https://dl.rockylinux.org/pub/rocky/8.7/AppStream/x86_64/os/Packages/"><code class="docutils literal notranslate"><span class="pre">linux</span></code></a> packages that are required for your image.
+As with pip, we provide a helper method <code class="docutils literal notranslate"><span class="pre">os_requirement(name:</span> <span class="pre">str,</span> <span class="pre">version_specifier:</span> <span class="pre">Optional[str])</span></code> to
+apply a list of operating system packages.
 The first argument is the name of the package (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;texlive&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;vim&quot;</span></code>) and the second optional argument is a valid version.
-Omitting the version specifier is equivalent to not fixing the version.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">apt_requirements</span> <span class="o">=</span> <span class="p">[</span>
-  <span class="c1"># Fix the version of `texlive` to `2021.20220204-1`.</span>
-  <span class="n">rime_client</span><span class="o">.</span><span class="n">apt_requirement</span><span class="p">(</span><span class="s2">&quot;texlive&quot;</span><span class="p">,</span> <span class="s2">&quot;=2021.20220204-1&quot;</span><span class="p">),</span>
+Omitting the version specifier is equivalent to taking the system default version.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">os_requirements</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="c1"># Fix the version of `texlive` to `20200406`.</span>
+  <span class="n">rime_client</span><span class="o">.</span><span class="n">os_requirement</span><span class="p">(</span><span class="s2">&quot;texlive&quot;</span><span class="p">,</span> <span class="s2">&quot;20200406&quot;</span><span class="p">),</span>
   <span class="c1"># We do not care about the installed version of `vim`.</span>
-  <span class="n">rime_client</span><span class="o">.</span><span class="n">apt_requirement</span><span class="p">(</span><span class="s2">&quot;vim&quot;</span><span class="p">)</span>
+  <span class="n">rime_client</span><span class="o">.</span><span class="n">os_requirement</span><span class="p">(</span><span class="s2">&quot;vim&quot;</span><span class="p">)</span>
 <span class="p">]</span>
 </pre></div>
 </div>
-<p>You can add these apt requirements to your <code class="docutils literal notranslate"><span class="pre">create_managed_image</span></code> request with the optional parameter <code class="docutils literal notranslate"><span class="pre">package_requirements</span></code>.
+<p>You can add these linux requirements to your <code class="docutils literal notranslate"><span class="pre">create_managed_image</span></code> request with the optional parameter <code class="docutils literal notranslate"><span class="pre">package_requirements</span></code>.
 For example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">builder_job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_managed_image</span><span class="p">(</span><span class="s2">&quot;xgboost102_tensorflow&quot;</span><span class="p">,</span> <span class="n">requirements</span><span class="p">,</span> <span class="n">package_requirements</span><span class="o">=</span><span class="n">apt_requirements</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">builder_job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_managed_image</span><span class="p">(</span><span class="s2">&quot;xgboost102_tensorflow&quot;</span><span class="p">,</span> <span class="n">requirements</span><span class="p">,</span> <span class="n">package_requirements</span><span class="o">=</span><span class="n">os_requirements</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -242,7 +243,7 @@ Here is a code snippet to get all the names of the images in the first page of t
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="nlp_custom_tests.html" class="btn btn-neutral float-left" title="NLP Generic Custom Tests" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="custom_tests.html" class="btn btn-neutral float-left" title="Custom Tests" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="../troubleshooting/sdk.html" class="btn btn-neutral float-right" title="Debugging the Python SDK" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

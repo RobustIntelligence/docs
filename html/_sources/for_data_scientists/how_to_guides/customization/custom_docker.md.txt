@@ -50,26 +50,26 @@ builder_job.get_status(verbose=True, wait_until_finish=True)
 ```
 
 As an experimental customization, we also now offer the ability to specify additional
-[`apt`](https://en.wikipedia.org/wiki/APT_(software)) packages that are required for your image.
-As with pip, we provide a helper method `apt_requirement(name: str, version_specifier: Optional[str])` to
-construct a list of apt requirements.
+[`linux`](https://dl.rockylinux.org/pub/rocky/8.7/AppStream/x86_64/os/Packages/) packages that are required for your image.
+As with pip, we provide a helper method `os_requirement(name: str, version_specifier: Optional[str])` to
+apply a list of operating system packages.
 The first argument is the name of the package (e.g. `"texlive"` or `"vim"`) and the second optional argument is a valid version.
-Omitting the version specifier is equivalent to not fixing the version.
+Omitting the version specifier is equivalent to taking the system default version.
 
 ```python
-apt_requirements = [
-  # Fix the version of `texlive` to `2021.20220204-1`.
-  rime_client.apt_requirement("texlive", "=2021.20220204-1"),
+os_requirements = [
+  # Fix the version of `texlive` to `20200406`.
+  rime_client.os_requirement("texlive", "20200406"),
   # We do not care about the installed version of `vim`.
-  rime_client.apt_requirement("vim")
+  rime_client.os_requirement("vim")
 ]
 ```
 
-You can add these apt requirements to your `create_managed_image` request with the optional parameter `package_requirements`.
+You can add these linux requirements to your `create_managed_image` request with the optional parameter `package_requirements`.
 For example:
 
 ```python
-builder_job = rime_client.create_managed_image("xgboost102_tensorflow", requirements, package_requirements=apt_requirements)
+builder_job = rime_client.create_managed_image("xgboost102_tensorflow", requirements, package_requirements=os_requirements)
 ```
 
 ### Start a Stress Test on a Managed Docker Image

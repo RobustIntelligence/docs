@@ -1,24 +1,34 @@
 # Tabular Custom Generic Tests
 
 {{ custom_tests_intro }}
-This Python file should expose a class named CustomBatchRunner, which should inherit from the DataTestBatchRunner interface that RIME defines.
-After inheriting from this class you will need to implement 6 methods:
-1. `_from_config`: this is a class method that takes in a TabularRunContainer and a config and returns the CustomBatchRunner initialized with a list of TestCases (see below for information on what a test is).
-2. `_outputs_to_batch_res`: this method is responsible for aggregating the results from the individual TestCases run into a TestBatch result.
-3. `description`: a property with a description of the test, only used in the UI.
-4. `long_description`: a property with a long description of the test, only used in the UI.
-5. `type`: a property with the type of the test, only used in the UI.
 
-As mentioned above, this CustomBatchRunner will contain multiple TestCases.
-These are a collection of test cases that will be aggregated inside the overall batch runner. 
-As an example of this, if you write a specific test that you want to apply to each column in the dataset, it would make sense to have the BatchRunner be initialized with a list of tests, one for each feature.
+This Python file must expose a class named `CustomBatchRunner` that inherits from the
+`DataTestBatchRunner` interface specified by RIME.
 
-The test cases that you define should inherit from the BaseTest class that RIME defines.
-After inheriting from this class you will need to implement one method:
-1. `run`: this method takes in a TabularRunContainer and returns a TestOutput (the result of the test) and a dictionary of extra info (that can be used when aggregating test results in the BatchRunner)
+Implement the following methods in the `CustomBatchRunner` class.
 
+* `_from_config`: Takes a `TabularRunContainer` object and a configuration. Returns an 
+    initialized instance of `CustomBatchRunner` with a list of `TestCase` objects. 
+    `TestCase` objects are discussed later in this section.
+* `_outputs_to_batch_res`: Aggregates the results from the individual `TestCases` into 
+    a `TestBatch` result.
+* `description`: A short description of the custom test to display in the web UI.
+* `long_description`: A long description of the custom test to display in the web UI.
+* `type`: Specifies the type of test. Only used for the web UI.
 
-An example of a custom test file is below:
+`TestCase` objects are collections of test cases that are aggregated inside the overall 
+batch runner. For example, a specific test that applies to each column in the dataset 
+would initialize `CustomBatchRunner` with one test for each feature.
+
+The test cases must inherit from the `BaseTest` class specified by RIME.
+Test cases must implement the following method.
+
+* `run`: Takes a `TabularRunContainer` object and returns a `TestOutput` object 
+    that contains the result of the test, along with a dictionary of additional 
+    information used to aggregate test results in the associated `CustomBatchRunner`
+    object.
+
+## Example test file
 
 ```python
 """Custom test batch runner."""

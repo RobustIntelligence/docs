@@ -10,6 +10,7 @@
       <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -27,8 +28,6 @@
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="NLP Generic Custom Tests" href="nlp_custom_tests.html" />
-    <link rel="prev" title="Tabular Custom Generic Tests" href="tabular_custom_tests.html" />
 <link href="../../../_static/style.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -52,7 +51,7 @@
             RIME
           </a>
               <div class="version">
-                2.0.0-beta.2
+                2.0.0-beta.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -70,27 +69,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../getstarted/index.html">RIME overview</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Data science with RIME</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../get_started.html">Get Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../basic_tasks.html">Basic tasks</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../../adv_tasks.html">Advanced concepts</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="../../adv_tasks.html#integrations-and-customization">Integrations and customization</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../platform_integrations.html">Platform Integrations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../model_integrations.html">Model Integrations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../data_integrations.html">Data Integrations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="custom_metrics.html">Custom Metrics</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="custom_tests.html">Custom Tests</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="tabular_custom_tests.html">Tabular Custom Generic Tests</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">Tabular Custom Abnormal Inputs Test</a></li>
-<li class="toctree-l4"><a class="reference internal" href="nlp_custom_tests.html">NLP Generic Custom Tests</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="custom_docker.html">Run RIME on Managed Docker Images</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../adv_tasks.html#troubleshooting">Troubleshooting</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../../adv_tasks.html">Advanced concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference.html">Reference</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
@@ -120,8 +102,6 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../../adv_tasks.html">Advanced concepts</a></li>
-          <li class="breadcrumb-item"><a href="custom_tests.html">Custom Tests</a></li>
       <li class="breadcrumb-item active">Tabular Custom Abnormal Inputs Test</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../_sources/for_data_scientists/how_to_guides/customization/tabular_custom_abnormal_inputs_tests.md.txt" rel="nofollow"> View page source</a>
@@ -134,16 +114,19 @@
              
   <section id="tabular-custom-abnormal-inputs-test">
 <h1>Tabular Custom Abnormal Inputs Test<a class="headerlink" href="#tabular-custom-abnormal-inputs-test" title="Permalink to this heading"></a></h1>
-<p>With RIME, it is easy to specify custom tests. The below steps walk through how to do so. If you run into any difficulties, please contact your Robust Intelligence support engineer and they will assist you.</p>
-<p>First, you must define a custom test in a Python file.</p>
-<p>This Python file should expose a class named <code class="docutils literal notranslate"><span class="pre">CustomAbnormalInputsBatchRunner</span></code>, which should inherit from the <code class="docutils literal notranslate"><span class="pre">AbstractCustomAbnormalInputsBatchRunner</span></code> interface that RIME defines.
-After inheriting from this class you will need to implement 2 methods:</p>
-<ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">batch_test_name</span></code>: this is a property that should be unique for each test.
-Name collisions with existing tests will cause errors.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">abnormal_inputs_criteria</span></code>: this is a class method that takes in your reference and evaluation dataframes and outputs a <code class="docutils literal notranslate"><span class="pre">pd.Series</span></code> object with boolean values, indicating for each row in the <code class="docutils literal notranslate"><span class="pre">evaluation_set</span></code> whether the input is abnormal.
-Your implementation can also take in additional arguments that you pass in through the <code class="docutils literal notranslate"><span class="pre">params</span></code> dictionary in your config.</p></li>
-</ol>
+<p>This sections discusses how to specify a custom test. Establish contact with a Robust Intelligence support engineer if you encounter any difficulty.</p>
+<p>First, define a custom test in a Python file.</p>
+<p>This Python file must expose a class named <code class="docutils literal notranslate"><span class="pre">CustomAbnormalInputsBatchRunner</span></code> that
+inherits from the <code class="docutils literal notranslate"><span class="pre">AbstractCustomAbnormalInputsBatchRunner</span></code> interface specified by
+RIME.</p>
+<p>Implement the following methods in the <code class="docutils literal notranslate"><span class="pre">CustomAbnormalInputsBatchRunner</span></code> class.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">batch_test_name</span></code>: A unique property for each test. Non-unique tests cause errors.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">abnormal_inputs_criteria</span></code>: Takes reference and evaluation dataframes and returns a
+<code class="docutils literal notranslate"><span class="pre">pd.Series</span></code> object with a Boolean values for each row in the evaluation set.
+The Boolean specifies whether the input is normal. The implementation can also take
+additional arguments through the <code class="docutils literal notranslate"><span class="pre">params</span></code> dictionary in the configuration.</p></li>
+</ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Simple custom abnormal inputs test example.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -190,20 +173,23 @@ Your implementation can also take in additional arguments that you pass in throu
 
 </pre></div>
 </div>
-<p>There are also several optional methods whose implementation you can override depending on your needs.</p>
-<ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">get_batch_args</span></code>: this is a class method that takes in your reference and evaluation dataframes and returns a list of key-word arguments to each run of your test.
-You should implement this logic if you want to run the same <code class="docutils literal notranslate"><span class="pre">abnormal_inputs_criteria</span></code> over several tests but with different arguments.
-<code class="docutils literal notranslate"><span class="pre">column_names</span></code> is a required key in each dictionary with corresponding value of a list of the column names that this test uses, and this value is used by RIME to help flag features for you.
-All other arguments are passed to your implementation of <code class="docutils literal notranslate"><span class="pre">abnormal_inputs_crtieria</span></code>.
-Your arguments should avoid name collisions with the keys in the <code class="docutils literal notranslate"><span class="pre">params</span></code> dictionary of your config.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">description</span></code>: this is a property that should return a short description of your test as a string.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">starter_string</span></code>: this is a property that should return a longer description of your test as a string.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">why_string</span></code>: this is a property that should return a string that explains why this test is useful.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">configuration_string</span></code>: this is a property that should return a string describing the configuration of the test.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">example_string</span></code>: this is a property that should return a string that gives an example of the use-case of this test.</p></li>
-</ol>
-<p>Each of the strings can be formatted with HTML. The <code class="docutils literal notranslate"><span class="pre">starter_string</span></code>, <code class="docutils literal notranslate"><span class="pre">why_string</span></code>, <code class="docutils literal notranslate"><span class="pre">configuration_string</span></code>, an <code class="docutils literal notranslate"><span class="pre">example_stirng</span></code> properties are displayed in the “ⓘ More” pop-up.</p>
+<p>The following optional methods can have their implementation overridden.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">get_batch_args</span></code>: Takes in reference and evaluation dataframes and returns a list of
+keyword arguments to each run of your test. Implement this logic to run the same
+abnormal input criteria over several tests with different arguments. <code class="docutils literal notranslate"><span class="pre">column_names</span></code>
+is a required key in each dictionary with the corresponding value of a list of the
+column names that this test uses. RIME uses this value to help flag features. All
+other arguments pass to the implementation of <code class="docutils literal notranslate"><span class="pre">abnormal_inputs_criteria</span></code>. The
+arguments must avoid name collisions with the keys in the <code class="docutils literal notranslate"><span class="pre">params</span></code> dictionary of
+the configuration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">description</span></code>: Returns a short description of the test as a string.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">starter_string</span></code>: Returns a longer description of the test as a string.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">why_string</span></code>: Returns a string that explains why this test is useful.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">configuration_string</span></code>: Returns a string describing the configuration of the test.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">example_string</span></code>: Returns a string that gives an example of the use-case of this test.</p></li>
+</ul>
+<p>Each of the strings can be formatted with HTML. The <code class="docutils literal notranslate"><span class="pre">starter_string</span></code>, <code class="docutils literal notranslate"><span class="pre">why_string</span></code>, <code class="docutils literal notranslate"><span class="pre">configuration_string</span></code>, and <code class="docutils literal notranslate"><span class="pre">example_stirng</span></code> properties are displayed in the “ⓘ More” pop-up.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Advanced custom abnormal inputs test example.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
@@ -272,10 +258,7 @@ Your arguments should avoid name collisions with the keys in the <code class="do
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="tabular_custom_tests.html" class="btn btn-neutral float-left" title="Tabular Custom Generic Tests" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="nlp_custom_tests.html" class="btn btn-neutral float-right" title="NLP Generic Custom Tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 
