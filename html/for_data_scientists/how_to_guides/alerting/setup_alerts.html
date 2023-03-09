@@ -152,33 +152,22 @@ can easily set them up.</p>
 <h2>Types of Notifications<a class="headerlink" href="#types-of-notifications" title="Permalink to this heading"></a></h2>
 <p>All the following types of notifications are configured at the Project level.
 You can opt into any subset.</p>
-<section id="monitoring-notifications">
-<h3>Monitoring Notifications<a class="headerlink" href="#monitoring-notifications" title="Permalink to this heading"></a></h3>
-<ul class="simple">
-<li><p>Preferred means of learning about model health over time.</p></li>
-<li><p>Triggered when a single bin (i.e. a day’s worth of data) of Continuous Testing completes and has failing Issues.</p>
-<ul>
-<li><p>Issues are key statistics that the RI Platform tracks over time, such as Abnormality Rate,
-Prediction Drift, or Average Test Severity.</p></li>
-<li><p>Issues are a proxy for model health, so you will only be alerted when your model is unhealthy.</p></li>
-</ul>
-</li>
-<li><p>Configurable by toggling Thresholds for each Issue.</p>
-<ul>
-<li><p>You can fine tune the thresholds or disable it entirely via the web app or the SDK.</p></li>
-</ul>
-</li>
-<li><p>Default thresholds are computed from the Stress Test used to create your AI Firewall.</p></li>
-<li><p>Will NOT be sent if there are no failing Issues.</p>
-<ul>
-<li><p>If you find a metric is too noisy and disable it, it will no longer count as “failing” and no
-notifications will be triggered unless other Issues fail.
-Disabling thresholds is a great way to avoid alert fatigue.</p></li>
-</ul>
-</li>
-<li><p>Show you at a glance what the high-level problems are with your model</p></li>
-</ul>
-</section>
+<!--
+### Monitoring Notifications
+* Preferred means of learning about model health over time.
+* Triggered when a single bin (i.e. a day's worth of data) of Continuous Testing completes and has failing Issues.
+  * Issues are key statistics that the RI Platform tracks over time, such as Abnormality Rate,
+    Prediction Drift, or Average Test Severity.
+  * Issues are a proxy for model health, so you will only be alerted when your model is unhealthy.
+* Configurable by toggling Thresholds for each Issue.
+  * You can fine tune the thresholds or disable it entirely via the web app or the SDK.
+* Default thresholds are computed from the Stress Test used to create your AI Firewall.
+* Will NOT be sent if there are no failing Issues.
+  * If you find a metric is too noisy and disable it, it will no longer count as "failing" and no
+    notifications will be triggered unless other Issues fail.
+    Disabling thresholds is a great way to avoid alert fatigue.
+* Show you at a glance what the high-level problems are with your model
+-->
 <section id="job-action-notifications">
 <h3>Job Action Notifications<a class="headerlink" href="#job-action-notifications" title="Permalink to this heading"></a></h3>
 <ul class="simple">
@@ -249,23 +238,10 @@ that you do not share that webhook publicly.</p></li>
 </section>
 <section id="how-to-configure-slack-notifications">
 <h3>How to Configure Slack Notifications<a class="headerlink" href="#how-to-configure-slack-notifications" title="Permalink to this heading"></a></h3>
-<ul class="simple">
+<ul>
 <li><p>Incoming webhooks are the preferred way to integrate Slack and the RI Platform.</p></li>
 <li><p>Create an Incoming Webhook Slack App using the instructions <a class="reference external" href="https://api.slack.com/messaging/webhooks">here</a>.</p></li>
 <li><p>Use the instructions for configuring webhooks above to add your created webhook to your project of choice.</p></li>
-</ul>
-</section>
-<section id="how-to-configure-monitoring-thresholds">
-<h3>How to Configure Monitoring Thresholds<a class="headerlink" href="#how-to-configure-monitoring-thresholds" title="Permalink to this heading"></a></h3>
-<ul class="simple">
-<li><p>Thresholds are important because they determine whether Monitoring notifications will be sent for particular Continuous
-Testing runs.</p></li>
-<li><p>You can manually tune and disable thresholds in the web app by navigating to the “Continuous Tests” page and clicking on the icon
-in the top left of the graph.
-Be sure to click “Save” so that your changes are reflected!</p></li>
-</ul>
-<img src="../../../_static/configure_thresholds_demo.png">
-<ul>
 <li><p>Thresholds can also be modified in the SDK.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">get_project</span><span class="p">(</span><span class="s2">&quot;&lt;your_project_id_here&quot;</span><span class="p">)</span>
 <span class="n">firewall</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">get_firewall</span><span class="p">()</span>

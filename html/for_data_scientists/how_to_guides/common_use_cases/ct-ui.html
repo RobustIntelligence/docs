@@ -80,13 +80,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../get_started.html#cluster-url">Cluster URL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../get_started.html#api-token">API token</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../get_started.html#install-the-rime-sdk">Install the RIME SDK</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../../get_started.html#try-a-tutorial-notebook">Try a tutorial notebook</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../../get_started.html#tabular-notebooks">Tabular Notebooks</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../get_started.html#nlp-notebooks">NLP Notebooks</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../get_started.html#cv-notebooks">CV Notebooks</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="../../get_started.html#custom-notebooks">Custom Notebooks</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="st-ui.html">Stress Tests</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">Continuous Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../get_started.html#try-a-tutorial-notebook">Try a tutorial notebook</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../get_started.html#set-up-a-new-test">Set up a new test</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="st-ui.html">Stress Tests</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Continuous Tests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#creating-a-new-continuous-test-from-the-sdk">Creating a new Continuous Test from the SDK</a></li>
 </ul>
 </li>
 </ul>
@@ -154,16 +152,20 @@ vulnerability.</p>
 <li><p>(When a suitable <a class="reference internal" href="projects.html"><span class="doc std std-doc">project</span></a> does not already exist) Create a project
 using the following <a class="reference internal" href="../../../python_library/python-sdk.html"><span class="doc std std-doc">SDK command</span></a>.</p>
 <blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">project</span> <span class="pre">=</span> <span class="pre">rime_client.create_project(</span></code>
-<code class="docutils literal notranslate"><span class="pre">name=&quot;foo&quot;,</span> <span class="pre">description=&quot;bar&quot;,</span> <span class="pre">model_task=&quot;Binary</span> <span class="pre">Classification&quot;</span></code>
-<code class="docutils literal notranslate"><span class="pre">)</span></code></p>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>project = rime_client.create_project(
+    name=&quot;foo&quot;, description=&quot;bar&quot;, model_task=&quot;Binary Classification&quot;`
+)
+</pre></div>
+</div>
 </div></blockquote>
 </li>
 <li><p>Register a reference dataset.</p>
 <blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">reference</span> <span class="pre">=</span> <span class="pre">rime_project.register_dataset(</span></code>
-<code class="docutils literal notranslate"><span class="pre">name=&quot;foo&quot;,data_config=dict</span></code>
-<code class="docutils literal notranslate"><span class="pre">)</span></code></p>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reference</span> <span class="o">=</span> <span class="n">rime_project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span> 
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span><span class="n">data_config</span><span class="o">=</span><span class="nb">dict</span> 
+<span class="p">)</span>
+</pre></div>
+</div>
 </div></blockquote>
 <blockquote>
 <div><p>The SDK returns the ID of the reference dataset.</p>
@@ -171,9 +173,11 @@ using the following <a class="reference internal" href="../../../python_library/
 </li>
 <li><p>Register an evaluation dataset.</p>
 <blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">evaluation</span> <span class="pre">=</span> <span class="pre">rime_project.register_dataset(</span></code>
-<code class="docutils literal notranslate"><span class="pre">name=&quot;bar&quot;,data_config=dict</span></code>
-<code class="docutils literal notranslate"><span class="pre">)</span></code></p>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">evaluation</span> <span class="o">=</span> <span class="n">rime_project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span><span class="n">data_config</span><span class="o">=</span><span class="nb">dict</span>
+<span class="p">)</span>
+</pre></div>
+</div>
 </div></blockquote>
 <blockquote>
 <div><p>The SDK returns the ID of the evaluation dataset.</p>
@@ -181,9 +185,11 @@ using the following <a class="reference internal" href="../../../python_library/
 </li>
 <li><p>Register a model.</p>
 <blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">rime_project.register_model(</span></code>
-<code class="docutils literal notranslate"><span class="pre">name=&quot;baz&quot;</span></code>
-<code class="docutils literal notranslate"><span class="pre">)</span></code></p>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">rime_project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;baz&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
 </div></blockquote>
 <blockquote>
 <div><p>The SDK returns the model ID.</p>
@@ -194,28 +200,34 @@ registered reference and evaluation datasets and the model, specifying a name an
 model task in addition to the IDs of the datasets and model registered earlier in
 this procedure.</p>
 <blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">config</span> <span class="pre">=</span> <span class="pre">{</span></code>
-<code class="docutils literal notranslate"><span class="pre">&quot;data_info&quot;:</span> <span class="pre">{&quot;ref_dataset_id&quot;:</span> <span class="pre">&quot;foo&quot;,</span> <span class="pre">&quot;eval_dataset_id&quot;:</span> <span class="pre">&quot;bar&quot;},</span></code>
-<code class="docutils literal notranslate"><span class="pre">&quot;model_id&quot;:</span> <span class="pre">model_uuid,</span></code>
-<code class="docutils literal notranslate"><span class="pre">&quot;run_name&quot;:</span> <span class="pre">&quot;My</span> <span class="pre">Stress</span> <span class="pre">Test</span> <span class="pre">Run&quot;,</span></code>
-<code class="docutils literal notranslate"><span class="pre">&quot;model_task&quot;:</span> <span class="pre">&quot;Binary</span> <span class="pre">Classification&quot;,</span></code>
-<code class="docutils literal notranslate"><span class="pre">}</span></code></p>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="s2">&quot;bar&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_uuid</span><span class="p">,</span>
+    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;My Stress Test Run&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;model_task&quot;</span><span class="p">:</span> <span class="s2">&quot;Binary Classification&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div></blockquote>
 </li>
 <li><p>Create a new Continous Test in the project.</p>
 <blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">project.create_firewall(</span></code>
-<code class="docutils literal notranslate"><span class="pre">model_id:&quot;model&quot;,</span> <span class="pre">ref_data_id:&quot;foo&quot;,bin_size:timedelta(hours=3)</span></code>
-<code class="docutils literal notranslate"><span class="pre">)</span></code></p>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">project</span><span class="o">.</span><span class="n">create_firewall</span><span class="p">(</span>
+    <span class="n">model_id</span><span class="p">:</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">ref_data_id</span><span class="p">:</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span><span class="n">bin_size</span><span class="p">:</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
 </div></blockquote>
 </li>
 <li><p>Issue the following command to start the Continuous Test, specifying the configuration
 created in the previous step and the unique ID of the project that contains the
 Continuous Test.</p>
 <blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">continuous_test</span> <span class="pre">=</span> <span class="pre">project.start_continuous_test(</span></code>
-<code class="docutils literal notranslate"><span class="pre">eval_data_id:=&quot;bar&quot;,</span> <span class="pre">override_existing_bins:False,</span></code>
-<code class="docutils literal notranslate"><span class="pre">)</span></code></p>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">continuous_test</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span>
+    <span class="n">eval_data_id</span><span class="o">:=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">override_existing_bins</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
 </div></blockquote>
 </li>
 </ol>

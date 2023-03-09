@@ -9,43 +9,55 @@ This procedure presumes a model is already [loaded](../../../python_library/how_
 
 1.  (When a suitable [project](projects.md) does not already exist) Create a project 
     using the following [SDK command](../../../python_library/python-sdk.rst).
-    >   `project = rime_client.create_project(`
-    >       `name="project", description="desc", model_task="Binary Classification"`
-    >   `)`
+    >   ```
+    >   project = rime_client.create_project(
+    >       name="project", description="desc", model_task="Binary Classification"
+    >   )
+    >   ```
 2.  Register a reference dataset.
-    >   `reference = rime_project.register_dataset(`
-    >       `name="foo",data_config=dict`
-    >   `)`
+    >   ```
+    >   reference = rime_project.register_dataset(
+    >       name="foo",data_config=dict
+    >   )
+    >   ```
 
     >   The SDK returns the ID of the reference dataset.
 3.  Register an evaluation dataset.
-    >   `reference = rime_project.register_dataset(`
-    >       `name="bar",data_config=dict`
-    >   `)`
+    >   ```
+    >   reference = rime_project.register_dataset(
+    >       name="bar",data_config=dict
+    >   )
+    >   ```
 
     >   The SDK returns the ID of the evaluation dataset.
 4.  Register a model.
-    >   `reference = rime_project.register_model(`
-    >       `name="baz"`
-    >   `)`
+    >   ```
+    >   reference = rime_project.register_model(
+    >       name="baz"
+    >   )
+    >   ```
 
     >   The SDK returns the model ID.
 5.  Create a [test run configuration](../../reference/tabular/tests.md) that uses the 
     registered reference and evaluation datasets and the model, specifying a name and
     model task in addition to the IDs of the datasets and model registered earlier in
     this procedure.
-    >   `config = {`
-    >       `"data_info": {"ref_dataset_id": "foo", "eval_dataset_id": "bar"},`
-    >       `"model_id": model_uuid,`
-    >       `"run_name": "My Stress Test Run",`
-    >       `"model_task": "Binary Classification",`
-    >   `}`
+    >   ```
+    >   config = {
+    >       "data_info": {"ref_dataset_id": "foo", "eval_dataset_id": "bar"},
+    >       "model_id": "model_uuid",
+    >       "run_name": "My Stress Test Run",
+    >       "model_task": "Binary Classification",
+    >   }
+    >   ```
 6.  Issue the following command to start the Stress Test, specifying the configuration
     created in the previous step and the unique ID of the project that contains the
     Stress Test.
-    >   `job = project.start_stress_test(`
-    >       `test_run_config=config, project_id="123-445-981"`
-    >   `)`
+    >   ```
+    >   job = project.start_stress_test(
+    >       test_run_config=config, project_id="123-445-981"
+    >   )
+    >   ```
 
 <!-- 
 s/training/reference
