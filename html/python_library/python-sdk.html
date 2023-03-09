@@ -139,7 +139,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.remove_email"><code class="docutils literal notranslate"><span class="pre">Project.remove_email()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.add_webhook"><code class="docutils literal notranslate"><span class="pre">Project.add_webhook()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.remove_webhook"><code class="docutils literal notranslate"><span class="pre">Project.remove_webhook()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.delete"><code class="docutils literal notranslate"><span class="pre">Project.delete()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.register_dataset"><code class="docutils literal notranslate"><span class="pre">Project.register_dataset()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.register_model"><code class="docutils literal notranslate"><span class="pre">Project.register_model()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.register_predictions"><code class="docutils literal notranslate"><span class="pre">Project.register_predictions()</span></code></a></li>
@@ -175,7 +174,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Firewall.get_model_id"><code class="docutils literal notranslate"><span class="pre">Firewall.get_model_id()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Firewall.get_scheduled_ct_info"><code class="docutils literal notranslate"><span class="pre">Firewall.get_scheduled_ct_info()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Firewall.is_scheduled_ct_enabled"><code class="docutils literal notranslate"><span class="pre">Firewall.is_scheduled_ct_enabled()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Firewall.delete_firewall"><code class="docutils literal notranslate"><span class="pre">Firewall.delete_firewall()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Firewall.list_monitors"><code class="docutils literal notranslate"><span class="pre">Firewall.list_monitors()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Firewall.start_continuous_test"><code class="docutils literal notranslate"><span class="pre">Firewall.start_continuous_test()</span></code></a></li>
 </ul>
@@ -321,16 +319,21 @@ ID of the Project to return.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Client.delete_project">
-<span class="sig-name descname"><span class="pre">delete_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.Client.delete_project" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">delete_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.Client.delete_project" title="Permalink to this definition"></a></dt>
 <dd><p>Delete a Project by ID.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>project_id</strong> – str
-ID of the Project to delete.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_id</strong> – str
+ID of the Project to delete.</p></li>
+<li><p><strong>force</strong> – Optional[bool] = False
+When set to True, the Project will be deleted immediately. By default,
+a confirmation is required.</p></li>
+</ul>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">delete_project</span><span class="p">(</span><span class="s2">&quot;123-456-789&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">delete_project</span><span class="p">(</span><span class="s2">&quot;123-456-789&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1122,8 +1125,15 @@ Firewall for the project, this call will return an error.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Project.delete_firewall">
-<span class="sig-name descname"><span class="pre">delete_firewall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.Project.delete_firewall" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">delete_firewall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.Project.delete_firewall" title="Permalink to this definition"></a></dt>
 <dd><p>Delete the Firewall for this Project if one exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>force</strong> – Optional[bool] = False
+When set to True, the Firewall will be deleted immediately. By default,
+a confirmation is required.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1195,18 +1205,6 @@ emails and webhooks added for that Notification type.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">notification_settings</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">remove_webhook</span><span class="p">(</span><span class="s2">&quot;&lt;webhook&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;Monitoring&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="rime_sdk.Project.delete">
-<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.Project.delete" title="Permalink to this definition"></a></dt>
-<dd><p>Delete this Project.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – This error is generated when the Project does not exist or when
-    the request to the Project service fails.</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1650,9 +1648,9 @@ the number of failing rows.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model_id</strong> – Optional[str]
-The ID of the model to use for the firewall.</p></li>
+The ID of the model to use for the Firewall.</p></li>
 <li><p><strong>ref_data_id</strong> – Optional[str]
-The ID of the reference data to use for the firewall.</p></li>
+The ID of the reference data to use for the Firewall.</p></li>
 <li><p><strong>scheduled_ct_eval_data_location</strong> – Optional[Dict]
 The location of the evaluation data for scheduled CT.</p></li>
 <li><p><strong>scheduled_ct_eval_prediction_location</strong> – Optional[Dict]
@@ -1719,12 +1717,6 @@ Specifies whether to disable continuous testing</p></li>
 <dt class="sig sig-object py" id="rime_sdk.Firewall.is_scheduled_ct_enabled">
 <span class="sig-name descname"><span class="pre">is_scheduled_ct_enabled</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#rime_sdk.Firewall.is_scheduled_ct_enabled" title="Permalink to this definition"></a></dt>
 <dd><p>Return whether scheduled continuous testing is enabled for this Firewall.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="rime_sdk.Firewall.delete_firewall">
-<span class="sig-name descname"><span class="pre">delete_firewall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.Firewall.delete_firewall" title="Permalink to this definition"></a></dt>
-<dd><p>Delete firewall.</p>
 </dd></dl>
 
 <dl class="py method">

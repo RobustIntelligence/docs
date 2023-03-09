@@ -147,80 +147,117 @@
 <h1>Stress Tests<a class="headerlink" href="#stress-tests" title="Permalink to this heading"></a></h1>
 <p>A stress test evaluates a machine learning model’s resilience with regards to a specific
 vulnerability.</p>
-<section id="creating-a-new-stress-test">
-<h2>Creating a new Stress Test<a class="headerlink" href="#creating-a-new-stress-test" title="Permalink to this heading"></a></h2>
+<section id="creating-a-new-stress-test-from-the-sdk">
+<h2>Creating a new Stress Test from the SDK<a class="headerlink" href="#creating-a-new-stress-test-from-the-sdk" title="Permalink to this heading"></a></h2>
+<p>This procedure presumes a model is already <a class="reference internal" href="../../../python_library/how_to_guides/rime_data_model_setup.html"><span class="doc std std-doc">loaded</span></a> into RIME and that all commands are issued in a Python environment.</p>
 <ol class="arabic">
-<li><p>Sign in to an RI Platform instance.</p>
+<li><p>(When a suitable <a class="reference internal" href="projects.html"><span class="doc std std-doc">project</span></a> does not already exist) Create a project
+using the following <a class="reference internal" href="../../../python_library/python-sdk.html"><span class="doc std std-doc">SDK command</span></a>.</p>
 <blockquote>
-<div><p>The Workspaces page appears.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">project</span> <span class="pre">=</span> <span class="pre">rime_client.create_project(</span></code>
+<code class="docutils literal notranslate"><span class="pre">name=&quot;project&quot;,</span> <span class="pre">description=&quot;desc&quot;,</span> <span class="pre">model_task=&quot;Binary</span> <span class="pre">Classification&quot;</span></code>
+<code class="docutils literal notranslate"><span class="pre">)</span></code></p>
 </div></blockquote>
 </li>
-<li><p>Select a workspace.</p>
+<li><p>Register a reference dataset.</p>
 <blockquote>
-<div><p>The workspace summary page appears, listing the projects in that workspace.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">reference</span> <span class="pre">=</span> <span class="pre">rime_project.register_dataset(</span></code>
+<code class="docutils literal notranslate"><span class="pre">name=&quot;foo&quot;,data_config=dict</span></code>
+<code class="docutils literal notranslate"><span class="pre">)</span></code></p>
+</div></blockquote>
+<blockquote>
+<div><p>The SDK returns the ID of the reference dataset.</p>
 </div></blockquote>
 </li>
-<li><p>Select a project.</p>
+<li><p>Register an evaluation dataset.</p>
 <blockquote>
-<div><p>The project summary page appears.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">reference</span> <span class="pre">=</span> <span class="pre">rime_project.register_dataset(</span></code>
+<code class="docutils literal notranslate"><span class="pre">name=&quot;bar&quot;,data_config=dict</span></code>
+<code class="docutils literal notranslate"><span class="pre">)</span></code></p>
+</div></blockquote>
+<blockquote>
+<div><p>The SDK returns the ID of the evaluation dataset.</p>
 </div></blockquote>
 </li>
-<li><p>From the left navigation bar, click <em>Stress Testing</em>.</p>
+<li><p>Register a model.</p>
 <blockquote>
-<div><p>The Stress Testing page appears.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">reference</span> <span class="pre">=</span> <span class="pre">rime_project.register_model(</span></code>
+<code class="docutils literal notranslate"><span class="pre">name=&quot;baz&quot;</span></code>
+<code class="docutils literal notranslate"><span class="pre">)</span></code></p>
+</div></blockquote>
+<blockquote>
+<div><p>The SDK returns the model ID.</p>
 </div></blockquote>
 </li>
-<li><p>Click <em>Create Stress Test</em>.</p>
+<li><p>Create a <a class="reference internal" href="../../reference/tabular/tests.html"><span class="doc std std-doc">test run configuration</span></a> that uses the
+registered reference and evaluation datasets and the model, specifying a name and
+model task in addition to the IDs of the datasets and model registered earlier in
+this procedure.</p>
 <blockquote>
-<div><p>The Stress Test wizard appears.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">config</span> <span class="pre">=</span> <span class="pre">{</span></code>
+<code class="docutils literal notranslate"><span class="pre">&quot;data_info&quot;:</span> <span class="pre">{&quot;ref_dataset_id&quot;:</span> <span class="pre">&quot;foo&quot;,</span> <span class="pre">&quot;eval_dataset_id&quot;:</span> <span class="pre">&quot;bar&quot;},</span></code>
+<code class="docutils literal notranslate"><span class="pre">&quot;model_id&quot;:</span> <span class="pre">model_uuid,</span></code>
+<code class="docutils literal notranslate"><span class="pre">&quot;run_name&quot;:</span> <span class="pre">&quot;My</span> <span class="pre">Stress</span> <span class="pre">Test</span> <span class="pre">Run&quot;,</span></code>
+<code class="docutils literal notranslate"><span class="pre">&quot;model_task&quot;:</span> <span class="pre">&quot;Binary</span> <span class="pre">Classification&quot;,</span></code>
+<code class="docutils literal notranslate"><span class="pre">}</span></code></p>
 </div></blockquote>
 </li>
-<li><p>From the <em>Test Configuration</em> drop-down, choose a configuration type.</p>
+<li><p>Issue the following command to start the Stress Test, specifying the configuration
+created in the previous step and the unique ID of the project that contains the
+Stress Test.</p>
 <blockquote>
-<div><table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>From Project Configuration</p></td>
-<td><p>Uses the project configuration for this stress test.</p></td>
-</tr>
-<tr class="row-odd"><td><p>Custom</p></td>
-<td><p>Enables you to specify a test configuration for this stress test.</p></td>
-</tr>
-</tbody>
-</table>
+<div><p><code class="docutils literal notranslate"><span class="pre">job</span> <span class="pre">=</span> <span class="pre">project.start_stress_test(</span></code>
+<code class="docutils literal notranslate"><span class="pre">test_run_config=config,</span> <span class="pre">project_id=&quot;123-445-981&quot;</span></code>
+<code class="docutils literal notranslate"><span class="pre">)</span></code></p>
 </div></blockquote>
 </li>
-<li><p>(When using Custom only) Select the types of risks to evaluate in this stress test.</p></li>
-<li><p>Click <em>Next</em>.</p></li>
-<li><p>Choose a model to test from the list of registered models or register a new model.</p></li>
-<li><p>(When using a registered model) Select the model from the <em>Select Model</em> drop-down.</p></li>
-<li><p>(When registering a new model) Choose whether to upload a model file or to add a model from an online registry.</p></li>
-<li><p>(When uploading a new model) Type a name and tags for the model.</p></li>
-<li><p>(When uploading a new model) Drag a <code class="docutils literal notranslate"><span class="pre">pkl</span></code> or <code class="docutils literal notranslate"><span class="pre">py</span></code> model file to the wizard or click <em>Select File</em> to browse the file system.</p></li>
-<li><p>(When registering a new model from a registry) Type the name of the registry, the URI or file path to the model in the registry, and the registry secret.</p></li>
-<li><p>Click <em>Next</em>.</p></li>
-<li><p>Choose whether to use a registered reference dataset, a dataset from a connection, or a manually uploaded dataset.</p></li>
-<li><p>(Using a registered reference dataset) Type the name of the registered dataset.</p></li>
-<li><p>(Using a reference dataset from a connection) Type a connection name, a table name, a timestamp column, and a label column</p></li>
-<li><p>(Using a reference dataset from a connection) (Optional) Activate the *Predictions (optional) toggle and enter a connection name, table name, optional timestamp column, and prediction column.</p></li>
-<li><p>(Uploading a reference dataset) Drag a dataset file to the wizard or click <em>Select File</em> to browse the file system.</p>
-<blockquote>
-<div><p>RIME accepts datasets in the <code class="docutils literal notranslate"><span class="pre">csv</span></code>, Parquet, <code class="docutils literal notranslate"><span class="pre">jsonl</span></code>, <code class="docutils literal notranslate"><span class="pre">jsonl.gz</span></code>, and <code class="docutils literal notranslate"><span class="pre">json.gz</span></code> formats.</p>
-</div></blockquote>
-</li>
-<li><p>(Uploading a reference dataset) (Optional) Activate the <em>Predictions (optional)</em> toggle and enter a name, label column name, and optional prediction column name, then drag a predictions file to the wizard or click <em>Select File</em> to browse the file system.</p>
-<blockquote>
-<div><p>RIME accepts datasets in the <code class="docutils literal notranslate"><span class="pre">csv</span></code>, Parquet, <code class="docutils literal notranslate"><span class="pre">jsonl</span></code>, <code class="docutils literal notranslate"><span class="pre">jsonl.gz</span></code>, and <code class="docutils literal notranslate"><span class="pre">json.gz</span></code> formats.</p>
-</div></blockquote>
-</li>
-<li><p>Click <em>Next</em>.</p></li>
 </ol>
-<p>The wizard closes and the new Stress Test begins initial processing.</p>
-</section>
+<!-- 
+s/training/reference
+create project if not already extant (but create project *does* have UI workflow, link to it)
+register a training dataset, eval dataset, model
+create a testrun config with training/eval/model
+- what is possible in a config
+- what are legal values for various config params (this should all be in sdk)
+sdk command to run_stress_test
+-->
+<!--
+1.  Sign in to an RI Platform instance.  
+    >   The Workspaces page appears.
+2.  Select a workspace.  
+    >   The workspace summary page appears, listing the projects in that workspace.
+3.  Select a project.  
+    >   The project summary page appears.
+4.  From the left navigation bar, click *Stress Testing*.
+    >   The Stress Testing page appears.
+5.  Click *Create Stress Test*.
+    >   The Stress Test wizard appears.
+6.  From the *Test Configuration* drop-down, choose a configuration type.
+    >   | Type | Description |
+    >   |------|-------------|
+    >   | From Project Configuration | Uses the project configuration for this stress test. |
+    >   | Custom | Enables you to specify a test configuration for this stress test. |
+7.  (When using Custom only) Select the types of risks to evaluate in this stress test.
+8.  Click *Next*.
+9.  Choose a model to test from the list of registered models or register a new model.
+10. (When using a registered model) Select the model from the *Select Model* drop-down.
+11. (When registering a new model) Choose whether to upload a model file or to add a model from an online registry.
+12. (When uploading a new model) Type a name and tags for the model.
+13. (When uploading a new model) Drag a `pkl` or `py` model file to the wizard or click *Select File* to browse the file system.
+14. (When registering a new model from a registry) Type the name of the registry, the URI or file path to the model in the registry, and the registry secret.
+15. Click *Next*.
+16. Choose whether to use a registered reference dataset, a dataset from a connection, or a manually uploaded dataset.
+17. (Using a registered reference dataset) Type the name of the registered dataset.
+18. (Using a reference dataset from a connection) Type a connection name, a table name, a timestamp column, and a label column
+19. (Using a reference dataset from a connection) (Optional) Activate the *Predictions (optional) toggle and enter a connection name, table name, optional timestamp column, and prediction column.
+20. (Uploading a reference dataset) Drag a dataset file to the wizard or click *Select File* to browse the file system.
+    >   RIME accepts datasets in the `csv`, Parquet, `jsonl`, `jsonl.gz`, and `json.gz` formats.
+21. (Uploading a reference dataset) (Optional) Activate the *Predictions (optional)* toggle and enter a name, label column name, and optional prediction column name, then drag a predictions file to the wizard or click *Select File* to browse the file system.
+    >   RIME accepts datasets in the `csv`, Parquet, `jsonl`, `jsonl.gz`, and `json.gz` formats.
+22. Click *Next*.
+
+The wizard closes and the new Stress Test begins initial processing.
+--></section>
 </section>
 
 

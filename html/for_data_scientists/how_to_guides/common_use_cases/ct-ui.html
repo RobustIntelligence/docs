@@ -147,93 +147,124 @@
 <h1>Continuous Tests<a class="headerlink" href="#continuous-tests" title="Permalink to this heading"></a></h1>
 <p>A continuous test evaluates a machine learning model’s resilience with regards to a specific
 vulnerability.</p>
-<section id="creating-a-new-continuous-test">
-<h2>Creating a new Continuous Test<a class="headerlink" href="#creating-a-new-continuous-test" title="Permalink to this heading"></a></h2>
+<section id="creating-a-new-continuous-test-from-the-sdk">
+<h2>Creating a new Continuous Test from the SDK<a class="headerlink" href="#creating-a-new-continuous-test-from-the-sdk" title="Permalink to this heading"></a></h2>
+<p>This procedure presumes a model is already <a class="reference internal" href="../../../python_library/how_to_guides/rime_data_model_setup.html"><span class="doc std std-doc">loaded</span></a> into RIME and that all commands are issued in a Python environment.</p>
 <ol class="arabic">
-<li><p>Sign in to an RI Platform instance.</p>
+<li><p>(When a suitable <a class="reference internal" href="projects.html"><span class="doc std std-doc">project</span></a> does not already exist) Create a project
+using the following <a class="reference internal" href="../../../python_library/python-sdk.html"><span class="doc std std-doc">SDK command</span></a>.</p>
 <blockquote>
-<div><p>The Workspaces page appears.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">project</span> <span class="pre">=</span> <span class="pre">rime_client.create_project(</span></code>
+<code class="docutils literal notranslate"><span class="pre">name=&quot;foo&quot;,</span> <span class="pre">description=&quot;bar&quot;,</span> <span class="pre">model_task=&quot;Binary</span> <span class="pre">Classification&quot;</span></code>
+<code class="docutils literal notranslate"><span class="pre">)</span></code></p>
 </div></blockquote>
 </li>
-<li><p>Select a workspace.</p>
+<li><p>Register a reference dataset.</p>
 <blockquote>
-<div><p>The workspace summary page appears, listing the projects in that workspace.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">reference</span> <span class="pre">=</span> <span class="pre">rime_project.register_dataset(</span></code>
+<code class="docutils literal notranslate"><span class="pre">name=&quot;foo&quot;,data_config=dict</span></code>
+<code class="docutils literal notranslate"><span class="pre">)</span></code></p>
+</div></blockquote>
+<blockquote>
+<div><p>The SDK returns the ID of the reference dataset.</p>
 </div></blockquote>
 </li>
-<li><p>Select a project.</p>
+<li><p>Register an evaluation dataset.</p>
 <blockquote>
-<div><p>The project summary page appears.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">evaluation</span> <span class="pre">=</span> <span class="pre">rime_project.register_dataset(</span></code>
+<code class="docutils literal notranslate"><span class="pre">name=&quot;bar&quot;,data_config=dict</span></code>
+<code class="docutils literal notranslate"><span class="pre">)</span></code></p>
+</div></blockquote>
+<blockquote>
+<div><p>The SDK returns the ID of the evaluation dataset.</p>
 </div></blockquote>
 </li>
-<li><p>In the left navigation bar, click <em>Continuous Testing</em>.</p>
+<li><p>Register a model.</p>
 <blockquote>
-<div><p>The Continous Testing Overview page appears.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">rime_project.register_model(</span></code>
+<code class="docutils literal notranslate"><span class="pre">name=&quot;baz&quot;</span></code>
+<code class="docutils literal notranslate"><span class="pre">)</span></code></p>
+</div></blockquote>
+<blockquote>
+<div><p>The SDK returns the model ID.</p>
 </div></blockquote>
 </li>
-<li><p>Click <em>Start Continuous Testing</em>.</p>
+<li><p>Create a <a class="reference internal" href="../../reference/tabular/tests.html"><span class="doc std std-doc">test run configuration</span></a> that uses the
+registered reference and evaluation datasets and the model, specifying a name and
+model task in addition to the IDs of the datasets and model registered earlier in
+this procedure.</p>
 <blockquote>
-<div><p>The Continuous Testing wizard appears.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">config</span> <span class="pre">=</span> <span class="pre">{</span></code>
+<code class="docutils literal notranslate"><span class="pre">&quot;data_info&quot;:</span> <span class="pre">{&quot;ref_dataset_id&quot;:</span> <span class="pre">&quot;foo&quot;,</span> <span class="pre">&quot;eval_dataset_id&quot;:</span> <span class="pre">&quot;bar&quot;},</span></code>
+<code class="docutils literal notranslate"><span class="pre">&quot;model_id&quot;:</span> <span class="pre">model_uuid,</span></code>
+<code class="docutils literal notranslate"><span class="pre">&quot;run_name&quot;:</span> <span class="pre">&quot;My</span> <span class="pre">Stress</span> <span class="pre">Test</span> <span class="pre">Run&quot;,</span></code>
+<code class="docutils literal notranslate"><span class="pre">&quot;model_task&quot;:</span> <span class="pre">&quot;Binary</span> <span class="pre">Classification&quot;,</span></code>
+<code class="docutils literal notranslate"><span class="pre">}</span></code></p>
 </div></blockquote>
 </li>
-<li><p>Select a set of tests.</p>
+<li><p>Create a new Continous Test in the project.</p>
 <blockquote>
-<div><table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Test category</p></th>
-<th class="head"><p>Test</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Operational risks</p></td>
-<td><p>Overall performance</p></td>
-</tr>
-<tr class="row-odd"><td><p></p></td>
-<td><p>Subset performance</p></td>
-</tr>
-<tr class="row-even"><td><p></p></td>
-<td><p>Drift (continuous testing focus)</p></td>
-</tr>
-<tr class="row-odd"><td><p></p></td>
-<td><p>Transformations (stress testing focus)</p></td>
-</tr>
-<tr class="row-even"><td><p></p></td>
-<td><p>Abnormal inputs (continuous testing focus)</p></td>
-</tr>
-<tr class="row-odd"><td><p>Security risks</p></td>
-<td><p>Adversarial</p></td>
-</tr>
-<tr class="row-even"><td><p>Fairness risks</p></td>
-<td><p>Compliance and fairness</p></td>
-</tr>
-</tbody>
-</table>
+<div><p><code class="docutils literal notranslate"><span class="pre">project.create_firewall(</span></code>
+<code class="docutils literal notranslate"><span class="pre">model_id:&quot;model&quot;,</span> <span class="pre">ref_data_id:&quot;foo&quot;,bin_size:timedelta(hours=3)</span></code>
+<code class="docutils literal notranslate"><span class="pre">)</span></code></p>
 </div></blockquote>
 </li>
-<li><p>Select an overall test sensitivity level.</p></li>
-<li><p>Choose a model to test from the list of registered models or register a new model.</p></li>
-<li><p>(When using a registered model) Select the model from the <em>Select Model</em> drop-down.</p></li>
-<li><p>(When registering a new model) Choose whether to upload a model file or to add a model from an online registry.</p></li>
-<li><p>(When uploading a new model) Type a name and tags for the model.</p></li>
-<li><p>(When uploading a new model) Drag a <code class="docutils literal notranslate"><span class="pre">pkl</span></code> or <code class="docutils literal notranslate"><span class="pre">py</span></code> model file to the wizard or click <em>Select File</em> to browse the file system.</p></li>
-<li><p>(When registering a new model from a registry) Type the name of the registry, the URI or file path to the model in the registry, and the registry secret.</p></li>
-<li><p>Click <em>Next</em>.</p></li>
-<li><p>Choose whether to use a registered reference dataset or a dataset from a connection.</p></li>
-<li><p>(Using a registered reference dataset) Type the name of the registered dataset.</p></li>
-<li><p>(Using a reference dataset from a connection) Type a connection name, a table name, a timestamp column, and a label column</p></li>
-<li><p>(Using a reference dataset from a connection) (Optional) Activate the <em>Predictions (optional)</em> toggle and enter a connection name, table name, optional timestamp column, and prediction column.</p></li>
-<li><p>Click <em>Next</em>.</p></li>
-<li><p>Select a bin size from the <em>Bin Size</em> drop-down.</p></li>
-<li><p>Select a type of reference window from the <em>Reference Window Type</em> drop-down.</p></li>
-<li><p>(When the reference window type is Rolling) Select number of bins for the rolling reference window.</p></li>
-<li><p>In <em>Data Source</em>, type the name of the evaluation dataset.</p></li>
-<li><p>In <em>Table Name</em>, type the name of a table in the evaluation dataset.</p></li>
-<li><p>(Optional) Choose a timestamp column in the specified table from the <em>Timestamp Column (optional)</em> drop-down.</p></li>
-<li><p>Type a column name in <em>Label Column</em>.</p></li>
-<li><p>(Optional) Activate the <em>Predictions (optional)</em> toggle and enter a connection name, table name, optional timestamp column name, and prediction column name.</p></li>
-<li><p>Click <em>Next</em>.</p></li>
+<li><p>Issue the following command to start the Continuous Test, specifying the configuration
+created in the previous step and the unique ID of the project that contains the
+Continuous Test.</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">continuous_test</span> <span class="pre">=</span> <span class="pre">project.start_continuous_test(</span></code>
+<code class="docutils literal notranslate"><span class="pre">eval_data_id:=&quot;bar&quot;,</span> <span class="pre">override_existing_bins:False,</span></code>
+<code class="docutils literal notranslate"><span class="pre">)</span></code></p>
+</div></blockquote>
+</li>
 </ol>
-<p>The wizard closes and the new Continuous Test begins initial processing.</p>
-</section>
+<!-- ## Creating a new Continuous Test
+
+1.  Sign in to an RI Platform instance.  
+    >   The Workspaces page appears.
+2.  Select a workspace.  
+    >   The workspace summary page appears, listing the projects in that workspace.
+3.  Select a project.  
+    >   The project summary page appears.
+4.  In the left navigation bar, click *Continuous Testing*.
+    >   The Continous Testing Overview page appears.
+5.  Click *Start Continuous Testing*.
+    >   The Continuous Testing wizard appears.
+6.  Select a set of tests.
+    >   | Test category | Test |
+    >   |---------------|------|
+    >   | Operational risks | Overall performance |
+    >   |   | Subset performance |
+    >   |   | Drift (continuous testing focus) |
+    >   |   | Transformations (stress testing focus) |
+    >   |   | Abnormal inputs (continuous testing focus) |
+    >   | Security risks | Adversarial |
+    >   | Fairness risks | Compliance and fairness |
+7.  Select an overall test sensitivity level.
+8.  Choose a model to test from the list of registered models or register a new model.
+9. (When using a registered model) Select the model from the *Select Model* drop-down.
+10. (When registering a new model) Choose whether to upload a model file or to add a model from an online registry.
+11. (When uploading a new model) Type a name and tags for the model.
+12. (When uploading a new model) Drag a `pkl` or `py` model file to the wizard or click *Select File* to browse the file system.
+13. (When registering a new model from a registry) Type the name of the registry, the URI or file path to the model in the registry, and the registry secret.
+14. Click *Next*.
+15. Choose whether to use a registered reference dataset or a dataset from a connection.
+16. (Using a registered reference dataset) Type the name of the registered dataset.
+17. (Using a reference dataset from a connection) Type a connection name, a table name, a timestamp column, and a label column
+18. (Using a reference dataset from a connection) (Optional) Activate the *Predictions (optional)* toggle and enter a connection name, table name, optional timestamp column, and prediction column.
+19. Click *Next*.
+20. Select a bin size from the *Bin Size* drop-down.
+21. Select a type of reference window from the *Reference Window Type* drop-down.
+22. (When the reference window type is Rolling) Select number of bins for the rolling reference window.
+23. In *Data Source*, type the name of the evaluation dataset.
+24. In *Table Name*, type the name of a table in the evaluation dataset.
+25. (Optional) Choose a timestamp column in the specified table from the *Timestamp Column (optional)* drop-down.
+26. Type a column name in *Label Column*.
+27. (Optional) Activate the *Predictions (optional)* toggle and enter a connection name, table name, optional timestamp column name, and prediction column name.
+28. Click *Next*.
+
+The wizard closes and the new Continuous Test begins initial processing. --></section>
 </section>
 
 

@@ -157,14 +157,14 @@ that RIME has permission to use.</p>
 <span class="n">rime_client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;rime.&lt;YOUR_ORG_NAME&gt;.rime.dev&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;YOUR_API_TOKEN&gt;&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Afterwards, data can easily be uploaded using the <code class="docutils literal notranslate"><span class="pre">upload_file(file_path,</span> <span class="pre">upload_path)</span></code> method.</p>
-<p>If the <code class="docutils literal notranslate"><span class="pre">upload_path</span></code> is not specified, the path will contain a random string as directory name.</p>
+<p>Afterwards, use the <code class="docutils literal notranslate"><span class="pre">upload_file(file_path,</span> <span class="pre">upload_path)</span></code> method to upload data.</p>
+<p>When the <code class="docutils literal notranslate"><span class="pre">upload_path</span></code> is not specified, the path contains a random string as directory name.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ref_path</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="s2">&quot;./titanic/datasets/train.csv&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ref_path:&quot;</span><span class="p">,</span> <span class="n">ref_path</span><span class="p">)</span>
 <span class="s2">&quot;ref_path: s3://rime-blob-c78976e9367daf-environment/files/84f82c37-0d8f-43af-8d05-76jknwefnjkm/data/train.csv&quot;</span>
 </pre></div>
 </div>
-<p>If the <code class="docutils literal notranslate"><span class="pre">upload_path</span></code> is  specified, the path will contain the <code class="docutils literal notranslate"><span class="pre">upload_path</span></code> string in place of the random string.</p>
+<p>When the <code class="docutils literal notranslate"><span class="pre">upload_path</span></code> is  specified, the path contains the <code class="docutils literal notranslate"><span class="pre">upload_path</span></code> string in place of the random string.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ref_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="s2">&quot;./titanic/datasets/train.csv&quot;</span><span class="p">,</span> <span class="n">upload_path</span><span class="o">=</span><span class="s2">&quot;rime_tests/titanic_tests&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ref_path:&quot;</span><span class="p">,</span> <span class="n">ref_path</span><span class="p">)</span>
 <span class="s2">&quot;ref_path: s3://rime-blob-c78976e9367daf-environment/files/rime_tests/titanic_tests/data/train.csv&quot;</span>
@@ -174,15 +174,15 @@ that RIME has permission to use.</p>
 <section id="uploading-model-directories">
 <h2>Uploading Model Directories<a class="headerlink" href="#uploading-model-directories" title="Permalink to this heading"></a></h2>
 <p>The model directory is a directory containing the <code class="docutils literal notranslate"><span class="pre">model.py</span></code> file and any
-extras (e.g.: pre-processing code, the pickle file) that the <code class="docutils literal notranslate"><span class="pre">model.py</span></code>  file depends on.</p>
+extras, such as pre-processing code or the pickle file, that the <code class="docutils literal notranslate"><span class="pre">model.py</span></code>  file depends on.</p>
 <p>Model directories can easily be uploaded using the <code class="docutils literal notranslate"><span class="pre">upload_directory(file_path,</span> <span class="pre">upload_hidden,</span> <span class="pre">upload_path)</span></code> method.</p>
-<p>If the <code class="docutils literal notranslate"><span class="pre">upload_path</span></code> is not specified, the path will contain a random string as directory name.</p>
+<p>When the <code class="docutils literal notranslate"><span class="pre">upload_path</span></code> is not specified, the path contains a random string as directory name.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_dir</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span><span class="n">dir_path</span><span class="o">=</span><span class="s2">&quot;./titanic/model&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;model_dir:&quot;</span><span class="p">,</span> <span class="n">model_dir</span><span class="p">)</span>
 <span class="s2">&quot;model_dir: s3://rime-blob-c78976e9367daf-environment/files/c83aa17d-709b-48b5-89ed-a9e4bad42f0b/model&quot;</span>
 </pre></div>
 </div>
-<p>If the <code class="docutils literal notranslate"><span class="pre">upload_path</span></code> is  specified, the path will contain the <code class="docutils literal notranslate"><span class="pre">upload_path</span></code> string in place of the random string.</p>
+<p>When the <code class="docutils literal notranslate"><span class="pre">upload_path</span></code> is  specified, the path contains the <code class="docutils literal notranslate"><span class="pre">upload_path</span></code> string in place of the random string.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_dir</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span><span class="n">dir_path</span><span class="o">=</span><span class="s2">&quot;./titanic/model&quot;</span><span class="p">,</span> <span class="n">upload_path</span><span class="o">=</span><span class="s2">&quot;rime_tests/titanic_tests&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ref_path:&quot;</span><span class="p">,</span> <span class="n">ref_path</span><span class="p">)</span>
 <span class="s2">&quot;model_dir: s3://rime-blob-c78976e9367daf-environment/files/rime_tests/titanic_tests/model&quot;</span>

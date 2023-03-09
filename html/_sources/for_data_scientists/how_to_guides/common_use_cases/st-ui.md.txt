@@ -3,8 +3,61 @@
 A stress test evaluates a machine learning model's resilience with regards to a specific
 vulnerability.
 
-## Creating a new Stress Test
+## Creating a new Stress Test from the SDK
 
+This procedure presumes a model is already [loaded](../../../python_library/how_to_guides/rime_data_model_setup.md) into RIME and that all commands are issued in a Python environment.
+
+1.  (When a suitable [project](projects.md) does not already exist) Create a project 
+    using the following [SDK command](../../../python_library/python-sdk.rst).
+    >   `project = rime_client.create_project(`
+    >       `name="project", description="desc", model_task="Binary Classification"`
+    >   `)`
+2.  Register a reference dataset.
+    >   `reference = rime_project.register_dataset(`
+    >       `name="foo",data_config=dict`
+    >   `)`
+
+    >   The SDK returns the ID of the reference dataset.
+3.  Register an evaluation dataset.
+    >   `reference = rime_project.register_dataset(`
+    >       `name="bar",data_config=dict`
+    >   `)`
+
+    >   The SDK returns the ID of the evaluation dataset.
+4.  Register a model.
+    >   `reference = rime_project.register_model(`
+    >       `name="baz"`
+    >   `)`
+
+    >   The SDK returns the model ID.
+5.  Create a [test run configuration](../../reference/tabular/tests.md) that uses the 
+    registered reference and evaluation datasets and the model, specifying a name and
+    model task in addition to the IDs of the datasets and model registered earlier in
+    this procedure.
+    >   `config = {`
+    >       `"data_info": {"ref_dataset_id": "foo", "eval_dataset_id": "bar"},`
+    >       `"model_id": model_uuid,`
+    >       `"run_name": "My Stress Test Run",`
+    >       `"model_task": "Binary Classification",`
+    >   `}`
+6.  Issue the following command to start the Stress Test, specifying the configuration
+    created in the previous step and the unique ID of the project that contains the
+    Stress Test.
+    >   `job = project.start_stress_test(`
+    >       `test_run_config=config, project_id="123-445-981"`
+    >   `)`
+
+<!-- 
+s/training/reference
+create project if not already extant (but create project *does* have UI workflow, link to it)
+register a training dataset, eval dataset, model
+create a testrun config with training/eval/model
+- what is possible in a config
+- what are legal values for various config params (this should all be in sdk)
+sdk command to run_stress_test
+-->
+
+<!--
 1.  Sign in to an RI Platform instance.  
     >   The Workspaces page appears.
 2.  Select a workspace.  
@@ -40,3 +93,4 @@ vulnerability.
 22. Click *Next*.
 
 The wizard closes and the new Stress Test begins initial processing.
+-->
