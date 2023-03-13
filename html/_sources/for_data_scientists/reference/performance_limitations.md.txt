@@ -1,0 +1,77 @@
+# Smart Feature Sampling and Performance Profiling
+
+## Smart Feature Sampling
+For large datasets, RIME can be optimized by running on a subset of features.
+This works by specifying the number of features to test on. RIME automatically calculates feature
+importances in both the with model case and without model case (as long as labels or predictions are provided),
+and runs its suite of tests across all of them.
+
+To set up smart feature sampling, specify the `num_feats_to_profile` option in `DataProfilingInfo`.
+The maximum number of features that RIME can be run on is 750.
+
+More information can be found in [DataProfilingInfo Configuration](data_profiling.md).
+
+## Performance Profiling
+
+RIME's analysis of datasets augments your data with additional profiles
+and relationships. The following tables show RIME's limits
+in reference to data in CSV format.
+
+Each feature/ row pair represents the total recommended number of rows to run RIME on, 
+assuming a memory ceiling. Memory scales roughly linearly, so calculating the maximum advisable rows to 
+run on for your features can be accomplished by taking a ratio with the closest feature count to that in the table.
+
+For ranking use cases, recommended row values should be roughly 80% of the values provided below.
+
+If your data is in parquet format, RIME supports 20% more rows than recommended below.
+<!-- TABLE_GENERATE_START -->
+<center><b>8GB Memory Ceiling Recommendations</b></center>
+
+| Feature Count  | Row Guidelines for Standard Production Resources |
+| ------------- | ------------- |
+| 25  | 13,000,000  |
+| 50  | 6,400,000  |
+| 75  | 4,200,000  |
+| 100  | 3,000,000  |
+| 200  | 1,600,000  |
+| 300  | 1,000,000  |
+| 400  | 750,000  |
+| 500  | 600,000  |
+| 750  | 175,000  |
+
+<!-- TABLE_GENERATE_END -->
+
+
+<!-- TABLE_GENERATE_START -->
+<center><b>16GB Memory Ceiling Recommendations</b></center>
+
+| Feature Count  | Row Guidelines for Standard Production Resources |
+| ------------- | ------------- |
+| 25  | 26,000,000  |
+| 50  | 12,800,000  |
+| 75  | 8,400,000  |
+| 100  | 6,000,000  |
+| 200  | 3,200,000  |
+| 300  | 2,000,000  |
+| 400  | 1,500,000  |
+| 500  | 1,200,000  |
+| 750  | 350,000  |
+
+<!-- TABLE_GENERATE_END -->
+
+<!-- TABLE_GENERATE_START -->
+<center><b>32GB Memory Ceiling Recommendations</b></center>
+
+| Feature Count  | Row Guidelines for Standard Production Resources |
+| ------------- | ------------- |
+| 25  | 50,000,000  |
+| 50  | 24,500,000  |
+| 75  | 16,200,000  |
+| 100  | 11,500,000  |
+| 200  | 6,100,000  |
+| 300  | 3,800,000  |
+| 400  | 2,800,000  |
+| 500  | 2,200,000  |
+| 750  | 650,000  |
+
+<!-- TABLE_GENERATE_END -->

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Monitoring Your Model with AI Firewall Continuous Tests &mdash; RIME  documentation</title>
+  <title>Monitoring Your Model with Continuous Tests &mdash; RIME  documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
@@ -53,7 +53,7 @@
             RIME
           </a>
               <div class="version">
-                2.0.0-beta.5
+                2.0.0-beta.8
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -78,7 +78,7 @@
 <li class="toctree-l3 current"><a class="reference internal" href="../how_to_guides.html#tabular">Tabular</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="rime_ai_stress_testing.html">Validating Your Model with AI Stress Testing</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rime_firewall_realtime.html">Protecting Your Model with AI Firewall</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">Monitoring Your Model with AI Firewall Continuous Tests</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Monitoring Your Model with Continuous Tests</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../how_to_guides.html#nlp">NLP</a></li>
@@ -93,7 +93,7 @@
 <li class="toctree-l3 current"><a class="reference internal" href="../how_to_guides.html#tabular">Tabular</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="rime_ai_stress_testing.html">Validating Your Model with AI Stress Testing</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rime_firewall_realtime.html">Protecting Your Model with AI Firewall</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">Monitoring Your Model with AI Firewall Continuous Tests</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Monitoring Your Model with Continuous Tests</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../how_to_guides.html#nlp">NLP</a></li>
@@ -149,7 +149,7 @@
           <li class="breadcrumb-item"><a href="../../modeltesting.html">RIME model testing</a></li>
           <li class="breadcrumb-item"><a href="../index.html">Installation</a></li>
           <li class="breadcrumb-item"><a href="../how_to_guides.html">How-To Guides</a></li>
-      <li class="breadcrumb-item active">Monitoring Your Model with AI Firewall Continuous Tests</li>
+      <li class="breadcrumb-item active">Monitoring Your Model with Continuous Tests</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../_sources/getstarted/local_trial/how_to_guides/rime_ai_firewall_continuous_tests.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -159,75 +159,22 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="monitoring-your-model-with-ai-firewall-continuous-tests">
-<h1>Monitoring Your Model with AI Firewall Continuous Tests<a class="headerlink" href="#monitoring-your-model-with-ai-firewall-continuous-tests" title="Permalink to this heading"></a></h1>
-<p>This guide will cover how to configure the AI Firewall to continuously monitor your model in production.</p>
-<p>We will be using the <a target="_blank" rel="noopener" href="https://www.kaggle.com/c/ieee-fraud-detection">IEEE-CIS Fraud Detection</a> dataset, which is available in the <code class="docutils literal notranslate"><span class="pre">rime_trial/</span></code> bundle provided during installation.</p>
-<hr class="docutils" />
-<section id="running-ai-firewall-continuous-tests">
-<h2>Running AI Firewall Continuous Tests<a class="headerlink" href="#running-ai-firewall-continuous-tests" title="Permalink to this heading"></a></h2>
-<section id="run-ai-stress-testing">
-<h3>1. Run AI Stress Testing<a class="headerlink" href="#run-ai-stress-testing" title="Permalink to this heading"></a></h3>
-<p>Kick off a run of AI Stress Testing (the reference dataset and model from this run will be used for the firewall).</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-stress-tests<span class="w"> </span>--config-path<span class="w"> </span>examples/fraud_firewall/stress_testing_config.json
-</pre></div>
-</div>
-</section>
-<section id="configure-a-firewall-in-the-web-client">
-<h3>2. Configure a Firewall in the Web Client<a class="headerlink" href="#configure-a-firewall-in-the-web-client" title="Permalink to this heading"></a></h3>
-<p>In the web client, click on the “Default Project” and then toggle to the “AI Firewall” icon on the left. You should then see the following page.</p>
-<img src="../../../_static/ui/Firewall_Page.png" />
-<p>Click on “Configure AI Firewall” and fill out the details. The “Name”field can be a name of your choice. The “Associated AI Stress Test” field should correspond to the AI Stress Testing run that you just completed. The “Bin Size” field should be “1 Day”. <strong>Note that the Local Trial does not support configurable data sources — for ‘Data Source’, simple select ‘S3 Bucket’ and leave the defaults.</strong> Then copy the <strong>“Firewall ID”</strong> and click “Done”.</p>
-<img src="../../../_static/ui/Firewall_Deploy.png" />
-</section>
-<section id="run-continuous-tests-on-incremental-data">
-<h3>3. Run Continuous Tests on Incremental Data<a class="headerlink" href="#run-continuous-tests-on-incremental-data" title="Permalink to this heading"></a></h3>
-<p>We can now upload data and predictions and run AI Firewall Continuous Tests. The following command runs firewall continuous tests on data and predictions from April 29th, 2021.</p>
-<p>NOTE: If you forgot to record the firewall ID in the previous step, you can find it by clicking the <img src="../../../_static/ui/GearIcon.svg" /> on the right.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-firewall<span class="w"> </span>--config-path<span class="w"> </span>examples/fraud_firewall/firewall_2021_04_29_to_2021_04_30_config.json<span class="w"> </span>--firewall-id<span class="w"> </span><span class="nv">$FIREWALL_ID</span>
-</pre></div>
-</div>
-<p>After this finishes running, the results display in the web client,
-where they will be uploaded to the Default Project.</p>
-<p>To simulate an incremental data load from the next day, you can run the same command with a different config.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-firewall<span class="w"> </span>--config-path<span class="w"> </span>examples/fraud_firewall/firewall_2021_04_30_to_2021_05_01_config.json<span class="w"> </span>--firewall-id<span class="w"> </span><span class="nv">$FIREWALL_ID</span>
-</pre></div>
-</div>
-<p>However, splitting the datasets into bin-sized batches is unnecessary — multiple bins (days in this case) can be uploaded together. They will be split automatically and firewall continuous tests will be run on each time period. For example, the following uploads data and predictions from April 1st, 2021 until April 29th, 2021.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-firewall<span class="w"> </span>--config-path<span class="w"> </span>examples/fraud_firewall/firewall_2021_04_01_to_2021_04_29_config.json<span class="w"> </span>--firewall-id<span class="w"> </span><span class="nv">$FIREWALL_ID</span>
-</pre></div>
-</div>
-<p>For additional command line options, see the <a class="reference internal" href="../reference/cli.html"><span class="doc std std-doc">CLI Reference</span></a>.</p>
-</section>
-</section>
-<hr class="docutils" />
+  <section id="monitoring-your-model-with-continuous-tests">
+<h1>Monitoring Your Model with Continuous Tests<a class="headerlink" href="#monitoring-your-model-with-continuous-tests" title="Permalink to this heading"></a></h1>
+<p>Continuous Tests in the RIME Local Trial are handled the same way as <a class="reference internal" href="../../../for_data_scientists/how_to_guides/common_use_cases/ct-ui.html"><span class="doc std std-doc">Continuous Tests</span></a> generally are.</p>
 <section id="using-your-own-model-and-datasets">
 <h2>Using Your Own Model and Datasets<a class="headerlink" href="#using-your-own-model-and-datasets" title="Permalink to this heading"></a></h2>
-<p>This guide will cover how to run AI Firewall Continuous Tests on your own model and datasets.</p>
+<p>This guide will cover how to run Continuous Tests on your own model and datasets.</p>
 <section id="collect-data-in-the-correct-format">
 <h3>Collect Data in the Correct Format<a class="headerlink" href="#collect-data-in-the-correct-format" title="Permalink to this heading"></a></h3>
-<p>Data formatting requirements are very similar to those for AI Stress Tests (see <a class="reference internal" href="../../../for_data_scientists/reference/tabular/task_data_format.html"><span class="doc std std-doc">Input Data Format</span></a>); however, <strong>for continuous tests, timestamp information is also needed.</strong></p>
+<p>Data formatting requirements are very similar to those for AI Stress Tests (see <span class="xref myst">Input Data Format</span>); however, <strong>for continuous tests, timestamp information is also needed.</strong></p>
 <p>For AI Firewall Continuous Tests, RI requires two datasets: a reference dataset and an (incremental) evaluation dataset. The latter must supply a datetime column so that it can be sliced into batches appropriately. Bin-sized slices of the evaluation dataset will be compared to the reference dataset during continuous testing.</p>
 <p>Datasets must be passed in as a <code class="docutils literal notranslate"><span class="pre">.csv</span></code> or <code class="docutils literal notranslate"><span class="pre">.parquet</span></code> file, where each column is a separate feature, and predictions must be present in both datasets.</p>
 </section>
 <section id="create-configuration">
 <h3>Create Configuration<a class="headerlink" href="#create-configuration" title="Permalink to this heading"></a></h3>
 <p>With your data ready, you can now create a configuration file.</p>
-<p>For a detailed reference on what the configuration should look like, see <a class="reference internal" href="../../../for_data_scientists/reference/tabular/firewall_continuous_tests.html"><span class="doc std std-doc">Continuous Tests Configuration</span></a>.</p>
-</section>
-<section id="run-the-cli">
-<h3>Run the CLI<a class="headerlink" href="#run-the-cli" title="Permalink to this heading"></a></h3>
-<section id="ai-firewall-continuous-tests">
-<h4>AI Firewall Continuous Tests<a class="headerlink" href="#ai-firewall-continuous-tests" title="Permalink to this heading"></a></h4>
-<p>You will need to have configured a firewall in the web client beforehand to get a Firewall ID. Please refer to the sections above for instructions.</p>
-<p>Once complete, you can run the CLI like so:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-firewall<span class="w"> </span>--firewall-id<span class="w"> </span>&lt;FIREWALL-ID&gt;<span class="w"> </span>--config-path<span class="w"> </span>&lt;PATH-TO-CONFIGURATION&gt;
-</pre></div>
-</div>
-<p>After this finishes running, the results display in the web client,
-where they will be uploaded to the Default Project.</p>
-<p>For additional command line options, see the <a class="reference internal" href="../reference/cli.html"><span class="doc std std-doc">CLI Reference</span></a>.</p>
-</section>
+<p>For a detailed reference on what the configuration should look like, see <span class="xref myst">Continuous Tests Configuration</span>.</p>
 </section>
 <section id="troubleshooting">
 <h3>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading"></a></h3>

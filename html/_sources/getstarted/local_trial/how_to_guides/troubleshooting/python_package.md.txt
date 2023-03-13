@@ -1,50 +1,6 @@
 # Debugging the Python Package
 
-1. **I'm seeing "Missing option" errors with my `rime-engine` CLI commands! How do I resolve them?**
-
-    ```
-    rime-engine run-stress-tests --config-path examples/income/stress_tests_model.json
-
-    Error: Missing option '--upload-endpoint'.
-
-    ..
-    ```
-
-    The commands in the `rime-engine` CLI [How-To Guides](../../how_to_guides.rst) use **environment variables** to keep the commands short and readable.
-
-    Be sure to set these up in your terminal session before running any commands:
-
-    **Local**
-
-    NOTE: Disabling TLS is recommended *for local uploads only*!
-
-    ```
-    export RIME_UPLOAD_URL=localhost:5001
-    export RIME_FIREWALL_URL=localhost:5002
-    export RIME_DISABLE_TLS=True
-    ```
-
-    **Managed Cloud**
-
-    Be sure to replace ``<YOUR_ORG_NAME>`` and ``<YOUR_API_KEY`` with the specific values for your RI Managed Cloud instance!
-
-    ```
-    export RIME_UPLOAD_URL=rime.<YOUR_ORG_NAME>.rime.dev
-    export RIME_FIREWALL_URL=rime.<YOUR_ORG_NAME>.rime.dev
-    export RIME_API_KEY=<YOUR_API_KEY>
-    ```
-
-    Alternatively, missing options can be provided in the command itself, as flags (e.g., `--upload-endpoint` below):
-    ```
-    rime-engine run-stress-tests --config-path examples/income/stress_tests_model.json --upload-endpoint <YOUR_UPLOAD_ENDPOINT>
-    ```
-
-    Mappings of environment variables to their option names can be found by running `--help` for the chosen command:
-    ```
-    rime-engine run-stress-tests --help
-    ```
-
-2. **I'm seeing `ModuleNotFound` errors in the console. How do I resolve them?**
+## I'm seeing `ModuleNotFound` errors in the console. How do I resolve them?
 
     These errors likely result from not having the extras installed for your use case.
 
@@ -65,7 +21,7 @@
     pip install -r cv_requirements.txt
     ```
 
-3. **I'm seeing `grpc.FutureTimeoutError`(s) when trying to upload stress tests. How do I resolve them?**
+## I'm seeing `grpc.FutureTimeoutError`(s) when trying to upload stress tests. How do I resolve them?
 
     This error can be due to DNS resolution across operating systems and protocols (IPv4 vs. IPv6).
 

@@ -53,7 +53,7 @@
             RIME
           </a>
               <div class="version">
-                2.0.0-beta.5
+                2.0.0-beta.8
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -163,65 +163,42 @@
              
   <section id="debugging-the-python-package">
 <h1>Debugging the Python Package<a class="headerlink" href="#debugging-the-python-package" title="Permalink to this heading"></a></h1>
-<ol class="arabic">
-<li><p><strong>I’m seeing “Missing option” errors with my <code class="docutils literal notranslate"><span class="pre">rime-engine</span></code> CLI commands! How do I resolve them?</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rime</span><span class="o">-</span><span class="n">engine</span> <span class="n">run</span><span class="o">-</span><span class="n">stress</span><span class="o">-</span><span class="n">tests</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">path</span> <span class="n">examples</span><span class="o">/</span><span class="n">income</span><span class="o">/</span><span class="n">stress_tests_model</span><span class="o">.</span><span class="n">json</span>
+<section id="i-m-seeing-modulenotfound-errors-in-the-console-how-do-i-resolve-them">
+<h2>I’m seeing <code class="docutils literal notranslate"><span class="pre">ModuleNotFound</span></code> errors in the console. How do I resolve them?<a class="headerlink" href="#i-m-seeing-modulenotfound-errors-in-the-console-how-do-i-resolve-them" title="Permalink to this heading"></a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>These errors likely result from not having the extras installed for your use case.
 
-<span class="n">Error</span><span class="p">:</span> <span class="n">Missing</span> <span class="n">option</span> <span class="s1">&#39;--upload-endpoint&#39;</span><span class="o">.</span>
+Make sure you are inside of the `rime_trial/` directory using your `rime-venv` virtual environment before proceeding.
 
-<span class="o">..</span>
+(If not already run during installation) Run the following to generate the necessary requirements lists:
+```bash
+python rime_helper.py generate-rime-requirements --token-file $PATH_TO_TOKEN_TXT_FILE
+```
+
+For Natural Language Processing (NLP) use cases (i.e., text data):
+```bash
+pip install -r nlp_requirements.txt
+```
+
+For Computer Vision (CV) use cases (i.e., image data):
+```bash
+pip install -r cv_requirements.txt
+```
 </pre></div>
 </div>
-<p>The commands in the <code class="docutils literal notranslate"><span class="pre">rime-engine</span></code> CLI <a class="reference internal" href="../../how_to_guides.html"><span class="doc std std-doc">How-To Guides</span></a> use <strong>environment variables</strong> to keep the commands short and readable.</p>
-<p>Be sure to set these up in your terminal session before running any commands:</p>
-<p><strong>Local</strong></p>
-<p>NOTE: Disabling TLS is recommended <em>for local uploads only</em>!</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">RIME_UPLOAD_URL</span><span class="o">=</span><span class="n">localhost</span><span class="p">:</span><span class="mi">5001</span>
-<span class="n">export</span> <span class="n">RIME_FIREWALL_URL</span><span class="o">=</span><span class="n">localhost</span><span class="p">:</span><span class="mi">5002</span>
-<span class="n">export</span> <span class="n">RIME_DISABLE_TLS</span><span class="o">=</span><span class="kc">True</span>
+</section>
+<section id="i-m-seeing-grpc-futuretimeouterror-s-when-trying-to-upload-stress-tests-how-do-i-resolve-them">
+<h2>I’m seeing <code class="docutils literal notranslate"><span class="pre">grpc.FutureTimeoutError</span></code>(s) when trying to upload stress tests. How do I resolve them?<a class="headerlink" href="#i-m-seeing-grpc-futuretimeouterror-s-when-trying-to-upload-stress-tests-how-do-i-resolve-them" title="Permalink to this heading"></a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>This error can be due to DNS resolution across operating systems and protocols (IPv4 vs. IPv6).
+
+If that is the case, running the following in your terminal session can resolve the issue:
+```bash
+export GRPC_DNS_RESOLVER=native
+```
+
+Otherwise, make sure your machine has access to the endpoint(s) in question (e.g., by enabling VPN).
 </pre></div>
 </div>
-<p><strong>Managed Cloud</strong></p>
-<p>Be sure to replace <code class="docutils literal notranslate"><span class="pre">&lt;YOUR_ORG_NAME&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;YOUR_API_KEY</span></code> with the specific values for your RI Managed Cloud instance!</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">RIME_UPLOAD_URL</span><span class="o">=</span><span class="n">rime</span><span class="o">.&lt;</span><span class="n">YOUR_ORG_NAME</span><span class="o">&gt;.</span><span class="n">rime</span><span class="o">.</span><span class="n">dev</span>
-<span class="n">export</span> <span class="n">RIME_FIREWALL_URL</span><span class="o">=</span><span class="n">rime</span><span class="o">.&lt;</span><span class="n">YOUR_ORG_NAME</span><span class="o">&gt;.</span><span class="n">rime</span><span class="o">.</span><span class="n">dev</span>
-<span class="n">export</span> <span class="n">RIME_API_KEY</span><span class="o">=&lt;</span><span class="n">YOUR_API_KEY</span><span class="o">&gt;</span>
-</pre></div>
-</div>
-<p>Alternatively, missing options can be provided in the command itself, as flags (e.g., <code class="docutils literal notranslate"><span class="pre">--upload-endpoint</span></code> below):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rime</span><span class="o">-</span><span class="n">engine</span> <span class="n">run</span><span class="o">-</span><span class="n">stress</span><span class="o">-</span><span class="n">tests</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">path</span> <span class="n">examples</span><span class="o">/</span><span class="n">income</span><span class="o">/</span><span class="n">stress_tests_model</span><span class="o">.</span><span class="n">json</span> <span class="o">--</span><span class="n">upload</span><span class="o">-</span><span class="n">endpoint</span> <span class="o">&lt;</span><span class="n">YOUR_UPLOAD_ENDPOINT</span><span class="o">&gt;</span>
-</pre></div>
-</div>
-<p>Mappings of environment variables to their option names can be found by running <code class="docutils literal notranslate"><span class="pre">--help</span></code> for the chosen command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rime</span><span class="o">-</span><span class="n">engine</span> <span class="n">run</span><span class="o">-</span><span class="n">stress</span><span class="o">-</span><span class="n">tests</span> <span class="o">--</span><span class="n">help</span>
-</pre></div>
-</div>
-</li>
-<li><p><strong>I’m seeing <code class="docutils literal notranslate"><span class="pre">ModuleNotFound</span></code> errors in the console. How do I resolve them?</strong></p>
-<p>These errors likely result from not having the extras installed for your use case.</p>
-<p>Make sure you are inside of the <code class="docutils literal notranslate"><span class="pre">rime_trial/</span></code> directory using your <code class="docutils literal notranslate"><span class="pre">rime-venv</span></code> virtual environment before proceeding.</p>
-<p>(If not already run during installation) Run the following to generate the necessary requirements lists:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>rime_helper.py<span class="w"> </span>generate-rime-requirements<span class="w"> </span>--token-file<span class="w"> </span><span class="nv">$PATH_TO_TOKEN_TXT_FILE</span>
-</pre></div>
-</div>
-<p>For Natural Language Processing (NLP) use cases (i.e., text data):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>nlp_requirements.txt
-</pre></div>
-</div>
-<p>For Computer Vision (CV) use cases (i.e., image data):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>cv_requirements.txt
-</pre></div>
-</div>
-</li>
-<li><p><strong>I’m seeing <code class="docutils literal notranslate"><span class="pre">grpc.FutureTimeoutError</span></code>(s) when trying to upload stress tests. How do I resolve them?</strong></p>
-<p>This error can be due to DNS resolution across operating systems and protocols (IPv4 vs. IPv6).</p>
-<p>If that is the case, running the following in your terminal session can resolve the issue:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">GRPC_DNS_RESOLVER</span><span class="o">=</span>native
-</pre></div>
-</div>
-<p>Otherwise, make sure your machine has access to the endpoint(s) in question (e.g., by enabling VPN).</p>
-</li>
-</ol>
+</section>
 </section>
 
 

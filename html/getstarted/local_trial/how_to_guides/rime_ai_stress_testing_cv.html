@@ -53,7 +53,7 @@
             RIME
           </a>
               <div class="version">
-                2.0.0-beta.5
+                2.0.0-beta.8
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -193,8 +193,7 @@ where they will be uploaded to the Default Project.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>For a full reference on the configuration file, see the <a class="reference internal" href="../../../for_data_scientists/reference/cv/stress_testing.html"><span class="doc std std-doc">CV Configuration Reference</span></a>.</p>
-<p>For additional command line options, see the <a class="reference internal" href="../reference/cli.html"><span class="doc std std-doc">CLI Reference</span></a>.</p>
+<p>For a full reference on the configuration file, see the <span class="xref myst">CV Configuration Reference</span>.</p>
 </section>
 <section id="running-stress-testing-on-an-object-detection-example">
 <h2>Running Stress Testing on an Object Detection Example<a class="headerlink" href="#running-stress-testing-on-an-object-detection-example" title="Permalink to this heading"></a></h2>
@@ -219,26 +218,24 @@ where they will be uploaded to the Default Project.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>For a full reference on the configuration file, see the <a class="reference internal" href="../../../for_data_scientists/reference/cv/stress_testing.html"><span class="doc std std-doc">CV Configuration Reference</span></a>.</p>
-<p>For additional command line options, see the <a class="reference internal" href="../reference/cli.html"><span class="doc std std-doc">CLI Reference</span></a>.</p>
+<p>For a full reference on the configuration file, see the <span class="xref myst">CV Configuration Reference</span>.</p>
 </section>
-<hr class="docutils" />
 <section id="running-stress-testing-on-your-own-model-and-datasets">
 <h2>Running Stress Testing on Your Own Model and Datasets<a class="headerlink" href="#running-stress-testing-on-your-own-model-and-datasets" title="Permalink to this heading"></a></h2>
 <section id="define-a-python-model-file">
 <h3>Define a Python Model File<a class="headerlink" href="#define-a-python-model-file" title="Permalink to this heading"></a></h3>
-<p>Please refer to <a class="reference internal" href="../../../for_data_scientists/reference/cv/specify_model_cv.html"><span class="doc std std-doc">How to Create a CV Model FIle</span></a> for step-by-step instructions on creating a model interface for RI.</p>
+<p>Refer to <span class="xref myst">How to Create a CV Model File</span> for step-by-step instructions on creating a model interface for RIME.</p>
 </section>
 <section id="gather-datasets">
 <h3>Gather Datasets<a class="headerlink" href="#gather-datasets" title="Permalink to this heading"></a></h3>
 <section id="prepare-input-data">
 <h4>1. Prepare Input Data<a class="headerlink" href="#prepare-input-data" title="Permalink to this heading"></a></h4>
-<p>For CV data, RI uses <code class="docutils literal notranslate"><span class="pre">.json</span></code> (or <code class="docutils literal notranslate"><span class="pre">.jsonl</span></code>) files containing metadata for each image. For a detailed specification of data formatting, see <a class="reference internal" href="../../../for_data_scientists/reference/cv/task_data_format.html"><span class="doc std std-doc">Input Data Format</span></a>.</p>
+<p>For Computer vision (CV) data, RIME uses <code class="docutils literal notranslate"><span class="pre">.json</span></code> (or <code class="docutils literal notranslate"><span class="pre">.jsonl</span></code>) files containing metadata for each image. For a detailed specification of data formatting, see <span class="xref myst">Input Data Format</span>.</p>
 </section>
 <section id="specify-prediction-logs-recommended">
 <h4>2. Specify Prediction Logs (Recommended)<a class="headerlink" href="#specify-prediction-logs-recommended" title="Permalink to this heading"></a></h4>
 <p>Because model inference is usually the most time-consuming part of the testing framework, we recommend specifying cached prediction logs.</p>
-<p>This can be done within the datafile itself (i.e., by adding a <code class="docutils literal notranslate"><span class="pre">&quot;probabilities&quot;</span></code> key to each data sample) or by <a class="reference internal" href="../../../for_data_scientists/reference/cv/prediction_info.html"><span class="doc std std-doc">specifying them in separate files</span></a>. The actual specification for prediction data is described in <a class="reference internal" href="../../../for_data_scientists/reference/cv/task_prediction_cache_format.html"><span class="doc std std-doc">Prediction Cache Data Format</span></a>.</p>
+<p>This can be done within the datafile itself (i.e., by adding a <code class="docutils literal notranslate"><span class="pre">&quot;probabilities&quot;</span></code> key to each data sample) or by <span class="xref myst">specifying them in separate files</span>. The actual specification for prediction data is described in <span class="xref myst">Prediction Cache Data Format</span>.</p>
 <p>In the image classification example above, we specified model predictions in the datafile itself (see <code class="docutils literal notranslate"><span class="pre">images_examples/classification/awa2/data/{train|test}_inputs_trial.json</span></code>).</p>
 <p>An example prediction (see the <code class="docutils literal notranslate"><span class="pre">&quot;probabilities&quot;</span></code> key) can be viewed from this file by running the following command from your terminal:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="n">images_examples</span><span class="o">/</span><span class="n">classification</span><span class="o">/</span><span class="n">awa2</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">train_inputs_trial</span><span class="o">.</span><span class="n">json</span> <span class="o">|</span> <span class="n">jq</span> <span class="s1">&#39;.[0]&#39;</span>
@@ -250,7 +247,7 @@ where they will be uploaded to the Default Project.</p>
 <section id="create-configuration">
 <h3>Create Configuration<a class="headerlink" href="#create-configuration" title="Permalink to this heading"></a></h3>
 <p>With your data and model ready, you can now create a configuration file. Examples of these can be found in the <code class="docutils literal notranslate"><span class="pre">rime_trial/</span></code> bundle (the ones used for these examples are under <code class="docutils literal notranslate"><span class="pre">images_examples/</span></code>).</p>
-<p>For a detailed reference on what the configuration should look like, see <a class="reference internal" href="../../../for_data_scientists/reference/cv/stress_testing.html"><span class="doc std std-doc">AI Stress Testing Configuration Reference</span></a>.</p>
+<p>For a detailed reference on what the configuration should look like, see <span class="xref myst">AI Stress Testing Configuration Reference</span>.</p>
 </section>
 </section>
 <section id="conclusion">

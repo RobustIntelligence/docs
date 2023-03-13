@@ -35,19 +35,15 @@ with your specific use case.
   - Private Subnet x 2 (recommended at least 50 IP addresses per subnet)
   - Public Subnet x 2 (recommended at least 10 IP addresses per subnet)
 - S3 bucket x 3 (can add more as needed)
-- EC2 instances x 5* (can scale up as needed)
-  - 4 for **control plane** services
-    - At least 16 GiB of RAM are recommended in an Autoscaling group. The `t3.xlarge`
-    size is suitable.
+- EC2 instances x 6* (recommended with auto-scaling for up to at least 20 instances)
+  - 5 for **control plane** services
+    - recommended at least 16 GiB RAM (such as the `t3.xlarge` template) in an Autoscaling Group (5 minimum, 5 desired, 10 maximum)
   - 1 for **data plane** services
-    - At least 16 GiB of RAM are recommended in an Autoscaling group. The `t3.xlarge`
-    size is suitable.
-- 2 Network Load Balancers
-  - (NOTE: these are auto-provisioned by the Ingress services)
-- 2 SSL Certificates
-- 2 Domains
-  - 1 with a `rime` sub-domain
-  - 1 with a `rime-backend` sub-domain
+    - recommended at least 32 GiB RAM (such as the `t3.2xlarge` template) in an Autoscaling Group (1 minimum, 1 desired, 10 maximum)
+- 1 Network Load Balancer*
+  - (NOTE: this is auto-provisioned by the Ingress LoadBalancer service)
+- 1 SSL Certificate
+- 1 Domain
 
 ## Permissions
 Robust Intelligence provides you with an updated list of specific IAM resources before deployment.

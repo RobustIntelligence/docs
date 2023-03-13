@@ -11,7 +11,7 @@ This procedure presumes a model is already [loaded](../../../python_library/how_
     using the following [SDK command](../../../python_library/python-sdk.rst).
     >   ```
     >   project = rime_client.create_project(
-    >       name="project", description="desc", model_task="Binary Classification"
+    >       name="project", description="desc", model_task='MODEL_TASK_BINARY_CLASSIFICATION'
     >   )
     >   ```
 2.  Register a reference dataset.
@@ -47,14 +47,13 @@ This procedure presumes a model is already [loaded](../../../python_library/how_
     >       "data_info": {"ref_dataset_id": "foo", "eval_dataset_id": "bar"},
     >       "model_id": "model_uuid",
     >       "run_name": "My Stress Test Run",
-    >       "model_task": "Binary Classification",
     >   }
     >   ```
 6.  Issue the following command to start the Stress Test, specifying the configuration
     created in the previous step and the unique ID of the project that contains the
     Stress Test.
     >   ```
-    >   job = project.start_stress_test(
+    >   job = client.start_stress_test(
     >       test_run_config=config, project_id="123-445-981"
     >   )
     >   ```

@@ -53,7 +53,7 @@
             RIME
           </a>
               <div class="version">
-                2.0.0-beta.5
+                2.0.0-beta.8
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -78,7 +78,7 @@
 <li class="toctree-l3 current"><a class="reference internal" href="../how_to_guides.html#tabular">Tabular</a><ul class="current">
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Validating Your Model with AI Stress Testing</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rime_firewall_realtime.html">Protecting Your Model with AI Firewall</a></li>
-<li class="toctree-l4"><a class="reference internal" href="rime_ai_firewall_continuous_tests.html">Monitoring Your Model with AI Firewall Continuous Tests</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rime_ai_firewall_continuous_tests.html">Monitoring Your Model with Continuous Tests</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../how_to_guides.html#nlp">NLP</a></li>
@@ -93,7 +93,7 @@
 <li class="toctree-l3 current"><a class="reference internal" href="../how_to_guides.html#tabular">Tabular</a><ul class="current">
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Validating Your Model with AI Stress Testing</a></li>
 <li class="toctree-l4"><a class="reference internal" href="rime_firewall_realtime.html">Protecting Your Model with AI Firewall</a></li>
-<li class="toctree-l4"><a class="reference internal" href="rime_ai_firewall_continuous_tests.html">Monitoring Your Model with AI Firewall Continuous Tests</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rime_ai_firewall_continuous_tests.html">Monitoring Your Model with Continuous Tests</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../how_to_guides.html#nlp">NLP</a></li>
@@ -176,7 +176,6 @@
 </div>
 <p>After this finishes running, the results display in the web client,
 where they will be uploaded to the Default Project.</p>
-<p>For additional command line options, see the <a class="reference internal" href="../reference/cli.html"><span class="doc std std-doc">CLI Reference</span></a>.</p>
 </section>
 <section id="stress-testing-with-prediction-logs">
 <h3>Stress Testing with Prediction Logs<a class="headerlink" href="#stress-testing-with-prediction-logs" title="Permalink to this heading"></a></h3>
@@ -209,18 +208,17 @@ where they will be uploaded to the Default Project.</p>
 </div>
 </section>
 </section>
-<hr class="docutils" />
 <section id="running-stress-testing-on-your-own-model-and-datasets">
 <h2>Running Stress Testing on Your Own Model and Datasets<a class="headerlink" href="#running-stress-testing-on-your-own-model-and-datasets" title="Permalink to this heading"></a></h2>
 <p>This guide will cover how to run AI Stress Testing on your own model and datasets.</p>
 <section id="define-a-python-model-file">
 <h3>Define a Python Model File<a class="headerlink" href="#define-a-python-model-file" title="Permalink to this heading"></a></h3>
 <p>A model is not required for AI Stress Testing, but providing one will produce better results.</p>
-<p>For step-by-step instructions, please see <a class="reference internal" href="../../../for_data_scientists/reference/tabular/specify_model.html"><span class="doc std std-doc">How to Create a Python Model File</span></a>.</p>
+<p>For step-by-step instructions, please see <span class="xref myst">How to Create a Python Model File</span>.</p>
 </section>
 <section id="gather-datasets">
 <h3>Gather Datasets<a class="headerlink" href="#gather-datasets" title="Permalink to this heading"></a></h3>
-<p>For a detailed specification of data formatting, see <a class="reference internal" href="../../../for_data_scientists/reference/tabular/task_data_format.html"><span class="doc std std-doc">Input Data Format</span></a>.</p>
+<p>For a detailed specification of data formatting, see <span class="xref myst">Input Data Format</span>.</p>
 <section id="split-the-data">
 <h4>1. Split the Data<a class="headerlink" href="#split-the-data" title="Permalink to this heading"></a></h4>
 <p>For AI Stress Testing, RI requires two datasets: a reference dataset (typically the training data) and an evaluation dataset (typically the validation, testing, or other data).
@@ -240,18 +238,8 @@ Currently RI expects each dataset to be passed in as a <code class="docutils lit
 <section id="create-configuration">
 <h3>Create Configuration<a class="headerlink" href="#create-configuration" title="Permalink to this heading"></a></h3>
 <p>With your data and model ready, you can now create a configuration file. Examples of these can be found in the <code class="docutils literal notranslate"><span class="pre">rime_trial/</span></code> bundle (the ones used for this example are under <code class="docutils literal notranslate"><span class="pre">examples/income/</span></code>).</p>
-<p>For a detailed reference on what the configuration should look like, see <a class="reference internal" href="../../../for_data_scientists/reference/tabular/stress_testing.html"><span class="doc std std-doc">AI Stress Testing Configuration Reference</span></a>.</p>
+<p>For a detailed reference on what the configuration should look like, see <span class="xref myst">AI Stress Testing Configuration Reference</span>.</p>
 </section>
-<section id="run-the-cli">
-<h3>Run the CLI<a class="headerlink" href="#run-the-cli" title="Permalink to this heading"></a></h3>
-<p>To start a run of AI Stress Testing using your configuration file, simply replace the <code class="docutils literal notranslate"><span class="pre">--config-path</span></code> argument below:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rime-engine<span class="w"> </span>run-stress-tests<span class="w"> </span>--config-path<span class="w"> </span>&lt;PATH-TO-CONFIGURATION&gt;
-</pre></div>
-</div>
-<p>After this finishes running, the results display in the web client,
-where they will be uploaded to the Default Project.</p>
-</section>
-<hr class="docutils" />
 <section id="troubleshooting">
 <h3>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading"></a></h3>
 <p>If you run into issues, please refer to our <a class="reference internal" href="troubleshooting/python_package.html"><span class="doc std std-doc">Troubleshooting</span></a> page for help! Additionally, your RI representative is able to assist.</p>
