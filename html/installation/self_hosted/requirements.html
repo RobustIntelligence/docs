@@ -51,7 +51,7 @@
             RIME
           </a>
               <div class="version">
-                0.20.15
+                0.20.19
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -169,32 +169,27 @@
 </ul>
 </li>
 <li><p>S3 bucket x 3 (can add more as needed)</p></li>
-<li><p>EC2 instances x 5* (can scale up as needed)</p>
+<li><p>EC2 instances x 6* (recommended with auto-scaling for up to at least 20 instances)</p>
 <ul>
-<li><p>4 for <strong>control plane</strong> services</p>
+<li><p>5 for <strong>control plane</strong> services</p>
 <ul>
-<li><p>recommended at least 16 GiB RAM (e.g., <code class="docutils literal notranslate"><span class="pre">t3.xlarge</span></code>) in an Autoscaling Group</p></li>
+<li><p>recommended at least 16 GiB RAM (such as the <code class="docutils literal notranslate"><span class="pre">t3.xlarge</span></code> template) in an Autoscaling Group (5 minimum, 5 desired, 10 maximum)</p></li>
 </ul>
 </li>
 <li><p>1 for <strong>data plane</strong> services</p>
 <ul>
-<li><p>recommended at least 16 GiB RAM (e.g., <code class="docutils literal notranslate"><span class="pre">t3.xlarge</span></code>) in an Autoscaling Group</p></li>
+<li><p>recommended at least 32 GiB RAM (such as the <code class="docutils literal notranslate"><span class="pre">t3.2xlarge</span></code> template) in an Autoscaling Group (1 minimum, 1 desired, 10 maximum)</p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p>2 Network Load Balancers</p>
+<li><p>1 Network Load Balancer*</p>
 <ul>
-<li><p>(NOTE: these are auto-provisioned by the Ingress services)</p></li>
+<li><p>(NOTE: this is auto-provisioned by the Ingress LoadBalancer service)</p></li>
 </ul>
 </li>
-<li><p>2 SSL Certificates</p></li>
-<li><p>2 Domains</p>
-<ul>
-<li><p>1 with a <code class="docutils literal notranslate"><span class="pre">rime</span></code> sub-domain</p></li>
-<li><p>1 with a <code class="docutils literal notranslate"><span class="pre">rime-backend</span></code> sub-domain</p></li>
-</ul>
-</li>
+<li><p>1 SSL Certificate</p></li>
+<li><p>1 Domain</p></li>
 </ul>
 </section>
 <section id="permissions">
