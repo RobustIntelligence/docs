@@ -322,43 +322,80 @@ see our <a class="reference internal" href="data_source.html#general-parameters-
 continuous testing configs on the Firewall. Additionally, the Delta Lake and Custom Loader
 types can be run in an offline setting as stress tests. To learn about how to specify the configs, please visit
 the <a class="reference internal" href="data_source.html"><span class="doc std std-doc">Configuration Page</span></a>.</p>
-<p>For Delta Lake configs specifically, you will need to specify a <code class="docutils literal notranslate"><span class="pre">data_source_name</span></code>
-when running a test. This is the name of the Delta Lake Data Source, which can be configured through the UI.</p>
+<p>For Delta Lake configs specifically, you will need to configure the Delta Lake <a class="reference internal" href="../../for_admins/data-integrations.html"><span class="doc std std-doc">integration</span></a>
+when running a test.</p>
 <p>For a continuous test, this might look like:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">delta_lake_incremental_config</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s2">&quot;eval_data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;delta_lake&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;start_time&quot;</span><span class="p">:</span> <span class="c1">#,</span>
-    <span class="s2">&quot;end_time&quot;</span><span class="p">:</span> <span class="c1">#,</span>
-    <span class="s2">&quot;time_col&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-<span class="n">firewall</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">delta_lake_incremental_config</span><span class="p">,</span> <span class="n">data_source_name</span><span class="o">=</span><span class="s2">&quot;data source&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">ref_config</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span>  <span class="p">{</span>
+            <span class="s2">&quot;delta_lake&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;hive_metastore.default.fraud_ref_data_and_labels&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;time_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;start_time&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">2023</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                <span class="s2">&quot;end_time&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">2024</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+    <span class="n">ref_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
+        <span class="s2">&quot;ref_dataset_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span>
+        <span class="n">ref_config</span><span class="p">,</span>
+        <span class="n">integration_id</span><span class="o">=</span><span class="n">INTEGRATION_ID</span><span class="p">,</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 <p>For a stress test, this might look like:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">delta_lake_config</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Delta Lake Run&quot;</span>
-  <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;split&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ref_data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;delta_lake&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;start_time&quot;</span><span class="p">:</span> <span class="c1">#,</span>
-      <span class="s2">&quot;end_time&quot;</span><span class="p">:</span> <span class="c1">#,</span>
-      <span class="s2">&quot;time_col&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;eval_data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;delta_lake&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;start_time&quot;</span><span class="p">:</span> <span class="c1">#,</span>
-      <span class="s2">&quot;end_time&quot;</span><span class="p">:</span> <span class="c1">#,</span>
-      <span class="s2">&quot;time_col&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-    <span class="p">},</span>
-  <span class="p">},</span>
-<span class="p">}</span>
-<span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="n">delta_lake_config</span><span class="p">,</span> <span class="n">data_source_name</span><span class="o">=</span><span class="s2">&quot;data source&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">ref_pred_config</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;delta_lake&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;hive_metastore.default.fraud_ref_preds&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;time_col&quot;</span><span class="p">:</span> <span class="s2">&quot;time&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;start_time&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">2023</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                <span class="s2">&quot;end_time&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">2024</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;pred_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="s2">&quot;preds&quot;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">project</span><span class="o">.</span><span class="n">register_predictions</span><span class="p">(</span>
+        <span class="n">dataset_id</span><span class="o">=</span><span class="n">ref_dataset_id</span><span class="p">,</span>
+        <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span>
+        <span class="n">pred_config</span><span class="o">=</span><span class="n">ref_pred_config</span><span class="p">,</span>
+        <span class="n">integration_id</span><span class="o">=</span><span class="n">INTEGRATION_ID</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">eval_data_location</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;integration_id&quot;</span><span class="p">:</span> <span class="n">INTEGRATION_ID</span><span class="p">,</span>
+        <span class="s2">&quot;location_args&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;delta_lake_location&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;hive_metastore.default.fraud_cur_inc_data_and_labels&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;time_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;location_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;is_fraud&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+    <span class="n">eval_preds_data_location</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;integration_id&quot;</span><span class="p">:</span> <span class="n">INTEGRATION_ID</span><span class="p">,</span>
+        <span class="s2">&quot;location_args&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;delta_lake_location&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;hive_metastore.default.fraud_cur_inc_preds&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;time_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;location_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="s2">&quot;is_fraud_preds&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+
 </pre></div>
 </div>
 </section>

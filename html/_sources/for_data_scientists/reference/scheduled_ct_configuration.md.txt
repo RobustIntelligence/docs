@@ -176,45 +176,82 @@ continuous testing configs on the Firewall. Additionally, the Delta Lake and Cus
 types can be run in an offline setting as stress tests. To learn about how to specify the configs, please visit
 the [Configuration Page](data_source.md).
 
-For Delta Lake configs specifically, you will need to specify a `data_source_name` 
-when running a test. This is the name of the Delta Lake Data Source, which can be configured through the UI.
+For Delta Lake configs specifically, you will need to configure the Delta Lake [integration](../../for_admins/data-integrations.md)
+when running a test. 
 
 For a continuous test, this might look like:
 ```python
-delta_lake_incremental_config = {
-  "eval_data_info": {
-    "type": "delta_lake",
-    "table_name": "",
-    "start_time": #,
-    "end_time": #,
-    "time_col": "",
-  }
-}
-firewall.start_continuous_test(delta_lake_incremental_config, data_source_name="data source")
+    ref_config = {
+        "connection_info":  {
+            "delta_lake": {
+                "table_name": "hive_metastore.default.fraud_ref_data_and_labels",
+                "time_col": "timestamp",
+                "start_time": datetime(year=2023, month=1, day=1),
+                "end_time": datetime(year=2024, month=1, day=1),
+            },
+        },
+        "data_params": {
+            "label_col": "label"
+        },
+    }
+    ref_dataset_id = project.register_dataset(
+        "ref_dataset_" + str(time.time()),
+        ref_config,
+        integration_id=INTEGRATION_ID,
+    )
 ```
 
 For a stress test, this might look like:
 
 ```python
-delta_lake_config = {
-  "run_name": "Delta Lake Run"
-  "data_info": {
-    "type": "split",
-    "ref_data_info": {
-      "type": "delta_lake",
-      "table_name": "",
-      "start_time": #,
-      "end_time": #,
-      "time_col": "",
-    },
-    "eval_data_info": {
-      "type": "delta_lake",
-      "table_name": "",
-      "start_time": #,
-      "end_time": #,
-      "time_col": "",
-    },
-  },
-}
-client.start_stress_test(delta_lake_config, data_source_name="data source")
+    ref_pred_config = {
+        "connection_info": {
+            "delta_lake": {
+                "table_name": "hive_metastore.default.fraud_ref_preds",
+                "time_col": "time",
+                "start_time": datetime(year=2023, month=1, day=1),
+                "end_time": datetime(year=2024, month=1, day=1),
+            }
+        },
+        "pred_params": {
+            "pred_col": "preds"
+        }
+    }
+    project.register_predictions(
+        dataset_id=ref_dataset_id,
+        model_id=model_id,
+        pred_config=ref_pred_config,
+        integration_id=INTEGRATION_ID,
+    )
+
+    eval_data_location = {
+        "integration_id": INTEGRATION_ID,
+        "location_args": {
+            "delta_lake_location": {
+                "table_name": "hive_metastore.default.fraud_cur_inc_data_and_labels",
+                "time_col": "timestamp",
+            },
+        },
+        "location_params": {
+            "data_params": {
+                "label_col": "is_fraud",
+                "timestamp_col": "timestamp",
+            },
+        },
+    }
+    eval_preds_data_location = {
+        "integration_id": INTEGRATION_ID,
+        "location_args": {
+            "delta_lake_location": {
+                "table_name": "hive_metastore.default.fraud_cur_inc_preds",
+                "time_col": "timestamp",
+            },
+        },
+        "location_params": {
+            "data_params": {
+                "pred_col": "is_fraud_preds",
+            },
+        },
+    }
+
 ```
