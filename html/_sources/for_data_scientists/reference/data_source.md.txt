@@ -2,29 +2,18 @@ Data Configuration
 ==================
 
 To configure a data source, specify a mapping in the main RIME JSON configuration file
-in the `data_info` argument.
+in the `data_params` argument.
 
-The `data_info` configuration can take on different forms, offering a tradeoff between 
-simplicity and flexibility. In the **default** approach, you may choose to specify the
-file paths to both the reference and evaluation datasets, along with supporting 
-arguments such as `pred_col`, `label_col`, and more. This is the easiest configuration 
-to get started with.
-
-In the **split** approach, you may choose to specify a separate "single" data info 
-struct for both the reference and evaluation datasets: `ref_data_info` and 
-`eval_data_info`. Both the reference and evaluation single data info structs can take on
-different configuration types, from a file-path based approach, to a custom data loader,
-to a Delta Lake table, to our data collector (for Continuous Testing only). This enables
-you to specify different data loaders for the reference and evaluation datasets. The 
-configuration templates for these approaches are detailed below.
+The `data_params` configuration can take on different forms, offering a tradeoff between 
+simplicity and flexibility.
 
 NOTE: Continuous Tests require a specified set of predictions. Either `pred_col` or both
 of `ref_pred_path` and `eval_pred_path` must have a value specified.
 
-### Default Data Info Template
+### Default Data Params Template
 ```python
 {
-    "data_info": {
+    "data_params": {
         "label_col": "Label",
         "pred_col": "Prediction",
         "timestamp_col": "Timestamp",
@@ -54,7 +43,7 @@ of `ref_pred_path` and `eval_pred_path` must have a value specified.
 }
 ```
 
-### Parameters for the `data_info` JSON object
+### Parameters for the `data_params` object
 
 #### General
 
@@ -107,14 +96,14 @@ of `ref_pred_path` and `eval_pred_path` must have a value specified.
 
 ### Split Data Info Template
 
-Split Data Info configurations use the SingleDataInfo struct, which is 
-discussed after this section.
+Split Data Info configurations use the unique ID strings for registered reference and
+evaluation datasets.
 
 ```python
 {
     "data_info": {
-        "ref_data_info": ...,
-        "eval_data_info": ...,
+        "ref_dataset_id": ...,
+        "eval_dataset_id": ...,
     },
     ...
 }
@@ -124,8 +113,8 @@ discussed after this section.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| ref_data_info | SingleDataInfo | Path to a SingleDataInfo struct |
-| eval_data_info | SingleDataInfo | Path to a SingleDataInfo struct |
+| ref_dataset_id | String | Unique identifier of a reference dataset. |
+| eval_dataset_id | String | Unique identifier of an evaluation dataset. |
 
 ### Single Data Info Templates
 
@@ -152,7 +141,7 @@ for either the `pred_col` or `pred_path` variables.
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | connection_info | ConnectionInfo | Path to a connection info struct. |
-| data_params | DataInfoParams |  | Path to a data info struct. |
+| data_params | DataInfoParams |  | Path to a data params struct. |
 
 #### Connection Info template
 
@@ -186,8 +175,7 @@ section.
 
 #### Data Collector Single Data Info Template
 
-NOTE: this can only be specified as part of a Continuous Testing config, not offline testing config. See the 
-[Continuous Tests Configuration](firewall_continuous_tests.md) for more details.
+This can only be specified as part of a Continuous Testing config, not offline testing config.
 
 ```python
 {
@@ -200,3 +188,52 @@ NOTE: this can only be specified as part of a Continuous Testing config, not off
     "data_params": {"label_col": "bar"},
 }
 ```
+#### Delta Lake Single Data Info Template
+
+Loads a Delta Lake table.
+
+```python
+{
+    "connection_info": {
+        "delta_lake_info": {
+            "table_name": "Table",
+            "start_time": "1970-01-01 00:00:01",
+            "end_time": "1970-01-01 00:00:02",
+            "time_col": "Updated",
+        }
+    },
+    "data_params": {"label_col": "bar"},
+}
+```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| table_name | String | The name of the Delta Lake table. |
+| start_time | int64 | The start time in seconds from the UNIX epoch. |
+| end_time | int64 | The end time in seconds from the UNIX epoch. |
+| time_col | string | The name of the column that contains the timestamp of the last update. |
+
+#### HuggingFace Single Data Info Template
+
+Specifies how to load a HuggingFace dataset.
+
+```python
+{
+    "connection_info": {
+        "hugging_face": {
+            "dataset_uri": "sst2",
+            "split_name": split_name,
+        }
+    },
+    "data_params": {
+        "label_col": "label",
+        "text_features": ["sentence"],
+        "sample": True, "nrows": 10
+    },
+}
+```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| dataset_uri | String | The unique identifier of the dataset. |
+| split_name | String | The name of a predefined subset of data. |
