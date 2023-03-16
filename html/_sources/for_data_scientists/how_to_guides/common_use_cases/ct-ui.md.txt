@@ -17,7 +17,7 @@ This procedure presumes a model is already [loaded](../../../python_library/how_
 2.  Register a reference dataset.
     >   ```
     >   reference = rime_project.register_dataset( 
-    >       name="foo",data_config=dict 
+    >       name="foo", data_config=dict 
     >   )
     >   ```
 
@@ -25,7 +25,7 @@ This procedure presumes a model is already [loaded](../../../python_library/how_
 3.  Register an evaluation dataset.
     >   ```
     >   evaluation = rime_project.register_dataset(
-    >       name="bar",data_config=dict
+    >       name="bar", data_config=dict
     >   )
     >   ```
 
@@ -38,6 +38,28 @@ This procedure presumes a model is already [loaded](../../../python_library/how_
     >   ```
 
     >   The SDK returns the model ID.
+5.  Register a prediction set.
+    >   ```
+    >   prediction = rime_project.register_predictions(
+    >   dataset_id=DATASET_ID,
+    >   model_id=MODEL_ID,
+    >   pred_config={
+    >       "connection_info": {
+    >           "delta_lake": {
+    >               # Unix timestamp equivalent to 02/08/2023
+    >               "start_time": 1675922943,
+    >               # Unix timestamp equivalent to 03/08/2023
+    >               "end_time": 1678342145,
+    >               "table_name": TABLE_NAME,
+    >               "time_col": TIME_COL,
+    >           },
+    >       },
+    >       "pred_params": {"pred_col": PREDS},
+    >   },
+    >   )
+    >   ```
+
+    >   The SDK returns the prediction set ID.
 6.  Create a new Continous Test in the project.
     >   ```
     >   project.create_firewall(

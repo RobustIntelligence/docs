@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Using the REST API &mdash; RIME  documentation</title>
+  <title>Using the RIME Platform REST API &mdash; RIME  documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
@@ -88,8 +88,16 @@
 <li class="toctree-l3"><a class="reference internal" href="adversarial_nlp.html">NLP Adversarial Robustness</a></li>
 <li class="toctree-l3"><a class="reference internal" href="updating_a_firewall.html">Notebook walkthrough: updating a Firewall</a></li>
 <li class="toctree-l3"><a class="reference internal" href="using_data_collector.html">Notebook walkthrough: using the Data Collector</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Using the REST API</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#rest-api-walkthrough-python">REST API Walkthrough (Python)</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Using the RIME Platform REST API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#establish-the-rime-client">Establish the RIME Client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-a-new-project">Create a New Project</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#optional-create-job-tracker">Optional: Create Job Tracker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-managed-image">Create Managed Image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#register-dataset">Register Dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#register-model">Register Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-test-run-configuration">Create Test Run Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#run-stress-test">Run Stress Test</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-test-run-results">Get Test Run Results</a></li>
 </ul>
 </li>
 </ul>
@@ -135,7 +143,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../basic_tasks.html">Basic tasks</a></li>
-      <li class="breadcrumb-item active">Using the REST API</li>
+      <li class="breadcrumb-item active">Using the RIME Platform REST API</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../_sources/for_data_scientists/how_to_guides/common_use_cases/rest_api.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -145,116 +153,225 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="using-the-rest-api">
-<h1>Using the REST API<a class="headerlink" href="#using-the-rest-api" title="Permalink to this heading"></a></h1>
-<p>This walkthrough will cover how to create a project, run a basic stress test, and get test case results using the REST API instead of the SDK. This walkthrough will cover using the REST API via Curl or Python, but you can use the API in any language.</p>
-<section id="rest-api-walkthrough-python">
-<h2>REST API Walkthrough (Python)<a class="headerlink" href="#rest-api-walkthrough-python" title="Permalink to this heading"></a></h2>
+  <section id="using-the-rime-platform-rest-api">
+<h1>Using the RIME Platform REST API<a class="headerlink" href="#using-the-rime-platform-rest-api" title="Permalink to this heading"></a></h1>
+<p>In this Notebook Walkthrough, we will walkthrough one of RIME’s core products using our REST API - AI Stress Testing.</p>
+<p>AI Stress Testing is used in the model development stage. Using AI Stress Testing you can test the developed model. RIME goes beyond simply optimizing for basic model performance like accuracy and automatically discovers the model’s weaknesses.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+</pre></div>
+</div>
+<section id="establish-the-rime-client">
+<h2>Establish the RIME Client<a class="headerlink" href="#establish-the-rime-client" title="Permalink to this heading"></a></h2>
+<p>To get started, provide the API credentials and the base domain/address of the RIME service. You can generate and copy an API token from the API Access Tokens Page under Workspace settings. For the domain/address of the RIME service, contact your admin.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">API_KEY</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># PASTE API_KEY </span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;rime-api-key&quot;</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">}</span>
 
-<span class="c1"># TODOS FOR YOUR STRESS TEST</span>
-<span class="c1"># Set equal to your reference, evaluation and model data paths.</span>
-<span class="n">REFERENCE_DATA_PATH</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># TODO: Specify</span>
-<span class="n">EVALUATION_DATA_PATH</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># TODO: Specify</span>
-<span class="n">MODEL_PATH</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># TODO: OPTIONAL</span>
-<span class="c1"># Set equal to your cluster url. e.g. &quot;https://rime.YOUR_CLUSTER.dev&quot;</span>
-<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># TODO: Specify</span>
-<span class="c1"># Set equal to an authorized api key for your cluster.</span>
-<span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># TODO: Specify</span>
-
-<span class="n">API_URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">CLUSTER_URL</span><span class="si">}</span><span class="s2">/v1&quot;</span>
-<span class="c1"># Used to authenticate REST requests to your cluster.</span>
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;rime-api-key&quot;</span><span class="p">:</span> <span class="n">API_TOKEN</span><span class="p">}</span>
-
-<span class="c1"># CREATE A PROJECT</span>
-<span class="n">PROJECT_NAME</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># TODO: Specify</span>
-<span class="n">PROJECT_DESCRIPTION</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># TODO: Specify</span>
-<span class="n">project_body</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">PROJECT_NAME</span><span class="p">,</span>
-    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">PROJECT_DESCRIPTION</span>
+<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># PASTE DOMAIN OF RIME SERVICE (eg: rime.example.rbst.io)</span>
+<span class="n">API_URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://</span><span class="si">{</span><span class="n">CLUSTER_URL</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="create-a-new-project">
+<h2>Create a New Project<a class="headerlink" href="#create-a-new-project" title="Permalink to this heading"></a></h2>
+<p>You can create Projects in RIME to organize your Test Runs. Each Project represents a
+workspace for a given machine learning task. It can contain multiple candidate models,
+but should only contain one promoted production model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Project for the Natural Language Inference model task.</span>
+<span class="n">req</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;NLP Example&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Example stress test on NLP data.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;model_task&quot;</span><span class="p">:</span> <span class="s2">&quot;MODEL_TASK_NATURAL_LANGUAGE_INFERENCE&quot;</span>
 <span class="p">}</span>
-<span class="c1"># Note: projects must have unique names otherwise this request will return an error.</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/projects&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">project_body</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span> <span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-<span class="n">projectId</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;project&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+<span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/v1/projects&quot;</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+    <span class="n">api_endpoint</span><span class="p">,</span>
+    <span class="n">json</span><span class="o">=</span><span class="n">req</span><span class="p">,</span>
+    <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">assert</span> <span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+<span class="c1"># Get the Project ID from the response. This will be needed to start a Stress Test.</span>
+<span class="n">project_id</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;project&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="optional-create-job-tracker">
+<h2>Optional: Create Job Tracker<a class="headerlink" href="#optional-create-job-tracker" title="Permalink to this heading"></a></h2>
+<p>Once a Stress Test request or Managed Image request has been sent, we have to wait until
+the Job completes before checking for results. The following helper functions track the
+status of a job by blocking until the Job has status “Succeeded”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Helper function for displaying Job Status.</span>
+<span class="k">def</span> <span class="nf">_add_padding</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">max_str_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="s2">&quot;JOB_STATUS_REQUESTED&quot;</span><span class="p">)</span>
+    <span class="n">padding_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_str_len</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">string</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="n">padding_len</span>
 
-<span class="c1"># CONFIGURING YOUR STRESS TEST:</span>
-<span class="n">stress_test_config</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;REST API example 1&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="s2">&quot;preds&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;ref_path&quot;</span><span class="p">:</span> <span class="n">REFERENCE_DATA_PATH</span><span class="p">,</span>
-        <span class="s2">&quot;eval_path&quot;</span><span class="p">:</span> <span class="n">EVALUATION_DATA_PATH</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;model_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">MODEL_PATH</span>
-    <span class="p">},</span>
-<span class="p">}</span>
+<span class="c1"># Helper function for periodically querying for Job status.</span>
+<span class="k">def</span> <span class="nf">track_job</span><span class="p">(</span><span class="n">job_id</span><span class="p">):</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/v1-beta/jobs/</span><span class="si">{</span><span class="n">job_id</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="n">job_status</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;job&quot;</span><span class="p">][</span><span class="s2">&quot;status&quot;</span><span class="p">]</span>
 
-<span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;testRunConfig&quot;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">stress_test_config</span><span class="p">),</span>
-    <span class="s2">&quot;projectId&quot;</span><span class="p">:</span> <span class="n">projectId</span>
-<span class="p">}</span>
-
-<span class="c1"># CREATING YOUR STRESS TEST</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/stress-tests&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-
-<span class="c1"># QUERYING RESULTS:</span>
-<span class="c1"># Get the job id from the previous response and wait for it to finish.</span>
-<span class="n">job_id</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;job&#39;</span><span class="p">][</span><span class="s1">&#39;jobId&#39;</span><span class="p">]</span>
-<span class="c1"># Get a job object with job metadata from the job id.</span>
-<span class="n">job_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/jobs/</span><span class="si">{</span><span class="n">job_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="n">job_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/jobs/</span><span class="si">{</span><span class="n">job_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">job_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span> <span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-    <span class="n">job_response_json</span> <span class="o">=</span> <span class="n">job_response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">job_response_json</span><span class="p">)</span>
-    <span class="c1"># Check status of whether job succeeded, failed, or is still running.</span>
-    <span class="n">job_status</span> <span class="o">=</span> <span class="n">job_response_json</span><span class="p">[</span><span class="s1">&#39;job&#39;</span><span class="p">][</span><span class="s1">&#39;status&#39;</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">job_status</span> <span class="o">==</span> <span class="s2">&quot;JOB_STATUS_SUCCEEDED&quot;</span><span class="p">:</span>
-        <span class="c1"># Get the test run id associated with the job.</span>
-        <span class="n">test_run_id_json</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/jobs/</span><span class="si">{</span><span class="n">job_id</span><span class="si">}</span><span class="s2">/test-run-id&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-        <span class="n">test_run_id</span> <span class="o">=</span> <span class="n">test_run_id_json</span><span class="p">[</span><span class="s2">&quot;testRunId&quot;</span><span class="p">]</span>
-        <span class="k">break</span>
-    <span class="k">elif</span> <span class="n">job_status</span> <span class="o">==</span> <span class="s2">&quot;JOB_STATUS_FAILED&quot;</span><span class="p">:</span>
-        <span class="c1"># Get logs of job failure.</span>
-        <span class="n">logs</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/logs/</span><span class="si">{</span><span class="n">job_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">logs</span><span class="o">.</span><span class="n">iter_lines</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># If job is not done, then try again after ten seconds.</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">job_status</span> <span class="o">!=</span> <span class="s2">&quot;JOB_STATUS_SUCCEEDED&quot;</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+        <span class="n">res_json</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="n">job_status</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;job&quot;</span><span class="p">][</span><span class="s2">&quot;status&quot;</span><span class="p">]</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Poll count: </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">.</span><span class="se">\t</span><span class="s2">Job status: </span><span class="si">{</span><span class="n">_add_padding</span><span class="p">(</span><span class="n">job_status</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">job_status</span> <span class="o">==</span> <span class="s2">&quot;JOB_STATUS_FAILED&quot;</span><span class="p">:</span>
+            <span class="n">logs_url</span> <span class="o">=</span> <span class="n">res_json</span><span class="p">[</span><span class="s2">&quot;job&quot;</span><span class="p">][</span><span class="s2">&quot;archivedJobLogs&quot;</span><span class="p">][</span><span class="s2">&quot;url&quot;</span><span class="p">][</span><span class="s2">&quot;url&quot;</span><span class="p">]</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test run failed. Job logs available at </span><span class="si">{</span><span class="n">logs_url</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
-<span class="c1"># LISTING TESTS RESULTS</span>
-<span class="n">all_test_cases</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="c1"># Due to pagination, the initial query should use the test_run_id, all subsequent ones </span>
-<span class="c1"># should use page_token.</span>
-<span class="n">page_token</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">res_json</span>
+</pre></div>
+</div>
+</section>
+<section id="create-managed-image">
+<h2>Create Managed Image<a class="headerlink" href="#create-managed-image" title="Permalink to this heading"></a></h2>
+<p>In order to run a Stress Test against a huggingface model, we have to create a Managed
+Image with the model’s pip requirements pre-installed. The following snippet checks if
+a huggingface Managed Image exists, and if not, creates one.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">managed_image_name</span> <span class="o">=</span> <span class="s2">&quot;huggingface_image&quot;</span>
+
+<span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/images/</span><span class="si">{</span><span class="n">managed_image_name</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="n">managed_image_exists</span> <span class="o">=</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">managed_image_exists</span><span class="p">:</span>
+    <span class="n">req</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">managed_image_name</span><span class="p">,</span>
+        <span class="s2">&quot;pip_requirements&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;transformers&quot;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;datasets&quot;</span><span class="p">},</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+    <span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/images&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="n">job_id</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;job&quot;</span><span class="p">][</span><span class="s2">&quot;jobId&quot;</span><span class="p">]</span>
+    
+    <span class="n">track_job</span><span class="p">(</span><span class="n">job_id</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># These are the URIs of the model that we want to Stress Test, and an associated dataset.</span>
+<span class="n">DATASET_URI</span> <span class="o">=</span> <span class="s2">&quot;rungalileo/snli&quot;</span>
+<span class="n">MODEL_URI</span> <span class="o">=</span> <span class="s2">&quot;cross-encoder/nli-MiniLM2-L6-H768&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="register-dataset">
+<h2>Register Dataset<a class="headerlink" href="#register-dataset" title="Permalink to this heading"></a></h2>
+<p>Now that we have the huggingface model URIs, we can register them and the dataset to RIME. Once they’re registed, we can refer to these resources using their RIME-generated ID’s.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+
+<span class="c1"># Register the huggingface dataset.</span>
+<span class="k">def</span> <span class="nf">register_dataset</span><span class="p">(</span><span class="n">dataset_uri</span><span class="p">,</span> <span class="n">split_name</span><span class="p">):</span>
+    <span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/v1/registry/dataset/</span><span class="si">{</span><span class="n">project_id</span><span class="p">[</span><span class="s1">&#39;uuid&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">req</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1"># Note: models and datasets need to have unique names.</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dataset_uri</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">split_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;hugging_face&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;dataset_uri&quot;</span><span class="p">:</span> <span class="n">dataset_uri</span><span class="p">,</span>
+                    <span class="s2">&quot;split_name&quot;</span><span class="p">:</span> <span class="n">split_name</span><span class="p">,</span>
+                    <span class="c1"># TODO: remove line below</span>
+                    <span class="s2">&quot;loading_params_json&quot;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({}),</span>
+                <span class="p">},</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;text_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;premise&quot;</span><span class="p">,</span> <span class="s2">&quot;hypothesis&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;class_names&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Contradiction&quot;</span><span class="p">,</span> <span class="s2">&quot;Neutral&quot;</span><span class="p">,</span> <span class="s2">&quot;Entailment&quot;</span><span class="p">],</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">req</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;datasetId&quot;</span><span class="p">]</span>
+
+
+<span class="n">ref_data_id</span> <span class="o">=</span> <span class="n">register_dataset</span><span class="p">(</span><span class="n">DATASET_URI</span><span class="p">,</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<span class="n">eval_data_id</span> <span class="o">=</span> <span class="n">register_dataset</span><span class="p">(</span><span class="n">DATASET_URI</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="register-model">
+<h2>Register Model<a class="headerlink" href="#register-model" title="Permalink to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/v1/registry/model/</span><span class="si">{</span><span class="n">project_id</span><span class="p">[</span><span class="s1">&#39;uuid&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">req</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Note: models and datasets need to have unique names.</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">MODEL_URI</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;model_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;hugging_face&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;model_uri&quot;</span><span class="p">:</span> <span class="n">MODEL_URI</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">req</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="n">model_id</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;modelId&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="create-test-run-configuration">
+<h2>Create Test Run Configuration<a class="headerlink" href="#create-test-run-configuration" title="Permalink to this heading"></a></h2>
+<p>Below is a sample configuration of how to setup and run a RIME Stress Test. The
+configuration includes important information, such as the IDs of the model, reference
+dataset, evaluation dataset and the name of a Managed Image to use (optional).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;NLP Stress Test&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span><span class="p">,</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="n">ref_data_id</span><span class="p">,</span>
+        <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="n">eval_data_id</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;run_time_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;custom_image&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;managed_image_name&quot;</span><span class="p">:</span> <span class="n">managed_image_name</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;test_suite_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;individual_tests_config&quot;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;global_exclude_columns&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]}),</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="run-stress-test">
+<h2>Run Stress Test<a class="headerlink" href="#run-stress-test" title="Permalink to this heading"></a></h2>
+<p>With a completed Test Run Configuration, we can now start a Stress Test and track its progress until the tests complete.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">req</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;test_run_config&quot;</span><span class="p">:</span> <span class="n">config</span><span class="p">}</span>
+<span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/v1/stress-tests/</span><span class="si">{</span><span class="n">project_id</span><span class="p">[</span><span class="s1">&#39;uuid&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">req</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="n">job_id</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;job&quot;</span><span class="p">][</span><span class="s2">&quot;jobId&quot;</span><span class="p">]</span>
+
+<span class="c1"># Track Stress Test Job Progress.</span>
+<span class="n">res_json</span> <span class="o">=</span> <span class="n">track_job</span><span class="p">(</span><span class="n">job_id</span><span class="p">)</span>
+
+<span class="c1"># Once a Stress Test Job has completed, get the Test Run ID to access results.</span>
+<span class="n">test_run_id</span> <span class="o">=</span> <span class="n">res_json</span><span class="p">[</span><span class="s2">&quot;job&quot;</span><span class="p">][</span><span class="s2">&quot;jobData&quot;</span><span class="p">][</span><span class="s2">&quot;stress&quot;</span><span class="p">][</span><span class="s2">&quot;testRunId&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="get-test-run-results">
+<h2>Get Test Run Results<a class="headerlink" href="#get-test-run-results" title="Permalink to this heading"></a></h2>
+<p>Once a Test Run completes, we can access the results of the Stress Test using the Test Run ID.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Print information about a completed Test Run.</span>
+<span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/v1/test-runs/</span><span class="si">{</span><span class="n">test_run_id</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;testRun&quot;</span><span class="p">])</span>
+
+<span class="c1"># List individual Test Cases from the Test Run.</span>
+<span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/v1/test-cases&quot;</span>
 <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;listTestCasesQuery.testRunId&quot;</span><span class="p">:</span> <span class="n">test_run_id</span><span class="p">}</span>
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="c1"># Make multiple calls, iterating through pages until all test cases are returned.</span>
-    <span class="k">if</span> <span class="n">page_token</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-        <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;page_token&quot;</span><span class="p">:</span> <span class="n">page_token</span><span class="p">}</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/test-cases&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span> <span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-    <span class="n">res_json</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-    <span class="n">all_test_cases</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">res_json</span><span class="p">[</span><span class="s1">&#39;testCases&#39;</span><span class="p">])</span>
-    <span class="n">page_token</span> <span class="o">=</span> <span class="n">res_json</span><span class="p">[</span><span class="s1">&#39;nextPageToken&#39;</span><span class="p">]</span>
-    <span class="c1"># If the previous response specifies that hasMore is false, we have gotten all the test cases.</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">res_json</span><span class="p">[</span><span class="s2">&quot;hasMore&quot;</span><span class="p">]:</span>
-        <span class="k">break</span>
-<span class="c1"># All the test cases. You can load this into a dataframe to better view or analyze the results on the UI.</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">all_test_cases</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;testCases&quot;</span><span class="p">])</span>
+
 </pre></div>
 </div>
 </section>

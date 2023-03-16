@@ -1,113 +1,235 @@
-# Using the REST API
+# Using the RIME Platform REST API
 
-This walkthrough will cover how to create a project, run a basic stress test, and get test case results using the REST API instead of the SDK. This walkthrough will cover using the REST API via Curl or Python, but you can use the API in any language.
+In this Notebook Walkthrough, we will walkthrough one of RIME's core products using our REST API - AI Stress Testing.
 
-## REST API Walkthrough (Python)
+AI Stress Testing is used in the model development stage. Using AI Stress Testing you can test the developed model. RIME goes beyond simply optimizing for basic model performance like accuracy and automatically discovers the model's weaknesses.
+
 
 ```python
 import json
-import time
 import requests
+import time
+import uuid
+from datetime import datetime
+from typing import List, Optional, Tuple
+```
 
-# TODOS FOR YOUR STRESS TEST
-# Set equal to your reference, evaluation and model data paths.
-REFERENCE_DATA_PATH = ""  # TODO: Specify
-EVALUATION_DATA_PATH = ""  # TODO: Specify
-MODEL_PATH = ""  # TODO: OPTIONAL
-# Set equal to your cluster url. e.g. "https://rime.YOUR_CLUSTER.dev"
-CLUSTER_URL = ""  # TODO: Specify
-# Set equal to an authorized api key for your cluster.
-API_TOKEN = ""  # TODO: Specify
+## Establish the RIME Client
 
-API_URL = f"{CLUSTER_URL}/v1"
-# Used to authenticate REST requests to your cluster.
-headers = {"rime-api-key": API_TOKEN}
+To get started, provide the API credentials and the base domain/address of the RIME service. You can generate and copy an API token from the API Access Tokens Page under Workspace settings. For the domain/address of the RIME service, contact your admin.
 
-# CREATE A PROJECT
-PROJECT_NAME = ""  # TODO: Specify
-PROJECT_DESCRIPTION = ""  # TODO: Specify
-project_body = {
-    "name": PROJECT_NAME,
-    "description": PROJECT_DESCRIPTION
+
+```python
+API_KEY = "" # PASTE API_KEY 
+headers = {"rime-api-key": API_KEY}
+
+CLUSTER_URL = "" # PASTE DOMAIN OF RIME SERVICE (eg: rime.example.rbst.io)
+API_URL = f"https://{CLUSTER_URL}"
+```
+
+## Create a New Project
+
+You can create Projects in RIME to organize your Test Runs. Each Project represents a
+workspace for a given machine learning task. It can contain multiple candidate models,
+but should only contain one promoted production model.
+
+```python
+# Create a Project for the Natural Language Inference model task.
+req = {
+    "name": "NLP Example",
+    "description": "Example stress test on NLP data.",
+    "model_task": "MODEL_TASK_NATURAL_LANGUAGE_INFERENCE"
 }
-# Note: projects must have unique names otherwise this request will return an error.
-res = requests.post(f"{API_URL}/projects", json=project_body, headers=headers)
-if res.status_code != 200 :
-    raise ValueError(res)
-projectId = res.json()["project"]["id"]
+api_endpoint = f"{API_URL}/v1/projects"
+res = requests.post(
+    api_endpoint,
+    json=req,
+    headers=headers,
+)
+assert res.status_code == 200
+# Get the Project ID from the response. This will be needed to start a Stress Test.
+project_id = res.json()["project"]["id"]
+```
 
-# CONFIGURING YOUR STRESS TEST:
-stress_test_config = {
-    "run_name": "REST API example 1",
-    "data_info": {
-        "pred_col": "preds",
-        "label_col": "label",
-        "ref_path": REFERENCE_DATA_PATH,
-        "eval_path": EVALUATION_DATA_PATH
-    },
-    "model_info": {
-        "path": MODEL_PATH
-    },
-}
+## Optional: Create Job Tracker
 
-body = {
-    "testRunConfig": json.dumps(stress_test_config),
-    "projectId": projectId
-}
+Once a Stress Test request or Managed Image request has been sent, we have to wait until
+the Job completes before checking for results. The following helper functions track the
+status of a job by blocking until the Job has status "Succeeded".
 
-# CREATING YOUR STRESS TEST
-res = requests.post(f"{API_URL}/stress-tests", json=body, headers=headers)
-if res.status_code != 200:
-    raise ValueError(res)
+```python
+# Helper function for displaying Job Status.
+def _add_padding(string: str) -> str:
+    max_str_len = len("JOB_STATUS_REQUESTED")
+    padding_len = max(max_str_len - len(string), 0)
+    return string + " " * padding_len
 
-# QUERYING RESULTS:
-# Get the job id from the previous response and wait for it to finish.
-job_id = res.json()['job']['jobId']
-# Get a job object with job metadata from the job id.
-job_response = requests.get(f"{API_URL}/jobs/{job_id}", headers=headers)
-while True:
-    job_response = requests.get(f"{API_URL}/jobs/{job_id}", headers=headers)
-    if job_response.status_code != 200 :
-        raise ValueError(res)
-    job_response_json = job_response.json()
-    print(job_response_json)
-    # Check status of whether job succeeded, failed, or is still running.
-    job_status = job_response_json['job']['status']
-    if job_status == "JOB_STATUS_SUCCEEDED":
-        # Get the test run id associated with the job.
-        test_run_id_json = requests.get(f"{API_URL}/jobs/{job_id}/test-run-id", headers=headers).json()
-        test_run_id = test_run_id_json["testRunId"]
-        break
-    elif job_status == "JOB_STATUS_FAILED":
-        # Get logs of job failure.
-        logs = requests.get(f"{API_URL}/logs/{job_id}", headers=headers, stream=True)
-        for line in logs.iter_lines():
-            if line:
-                print(line)
-        raise ValueError(line)
-    else:
-        # If job is not done, then try again after ten seconds.
+# Helper function for periodically querying for Job status.
+def track_job(job_id):
+    time.sleep(1)
+    api_endpoint = f"{API_URL}/v1-beta/jobs/{job_id}"
+    res = requests.get(api_endpoint, headers=headers)
+    job_status = res.json()["job"]["status"]
+
+    i = 0
+    while job_status != "JOB_STATUS_SUCCEEDED":
+        res = requests.get(api_endpoint, headers=headers)
+        res_json = res.json()
+        job_status = res.json()["job"]["status"]
+        i += 1
+        print(f"Poll count: {i}.\tJob status: {_add_padding(job_status)}", end="\r")
+        if job_status == "JOB_STATUS_FAILED":
+            logs_url = res_json["job"]["archivedJobLogs"]["url"]["url"]
+            raise ValueError(f"Test run failed. Job logs available at {logs_url}.")
         time.sleep(10)
 
-# LISTING TESTS RESULTS
-all_test_cases = []
-# Due to pagination, the initial query should use the test_run_id, all subsequent ones 
-# should use page_token.
-page_token = ""
+    return res_json
+```
+
+## Create Managed Image
+
+In order to run a Stress Test against a huggingface model, we have to create a Managed
+Image with the model's pip requirements pre-installed. The following snippet checks if
+a huggingface Managed Image exists, and if not, creates one.
+
+```python
+managed_image_name = "huggingface_image"
+
+api_endpoint = f"{API_URL}/images/{managed_image_name}"
+res = requests.get(api_endpoint, headers=headers)
+managed_image_exists = (res.status_code == 200)
+
+if not managed_image_exists:
+    req = {
+        "name": managed_image_name,
+        "pip_requirements": [
+            {"name": "transformers"},
+            {"name": "datasets"},
+        ],
+    }
+    api_endpoint = f"{API_URL}/images"
+    res = requests.post(api_endpoint, headers=headers)
+    job_id = res.json()["job"]["jobId"]
+    
+    track_job(job_id)
+```
+
+```python
+# These are the URIs of the model that we want to Stress Test, and an associated dataset.
+DATASET_URI = "rungalileo/snli"
+MODEL_URI = "cross-encoder/nli-MiniLM2-L6-H768"
+```
+
+## Register Dataset
+
+Now that we have the huggingface model URIs, we can register them and the dataset to RIME. Once they're registed, we can refer to these resources using their RIME-generated ID's.
+
+```python
+dt = str(datetime.now())
+
+# Register the huggingface dataset.
+def register_dataset(dataset_uri, split_name):
+    api_endpoint = f"{API_URL}/v1/registry/dataset/{project_id['uuid']}"
+    req = {
+        # Note: models and datasets need to have unique names.
+        "name": f"{dataset_uri}_{split_name}_{dt}",
+        "data_info": {
+            "connection_info": {
+                "hugging_face": {
+                    "dataset_uri": dataset_uri,
+                    "split_name": split_name,
+                    # TODO: remove line below
+                    "loading_params_json": json.dumps({}),
+                },
+            },
+            "data_params": {
+                "label_col": "label",
+                "text_features": ["premise", "hypothesis"],
+                "class_names": ["Contradiction", "Neutral", "Entailment"],
+            },
+        },
+    }
+    res = requests.post(api_endpoint, json=req, headers=headers)
+    return res.json()["datasetId"]
+
+
+ref_data_id = register_dataset(DATASET_URI, "train")
+eval_data_id = register_dataset(DATASET_URI, "test")
+```
+
+## Register Model
+
+```python
+api_endpoint = f"{API_URL}/v1/registry/model/{project_id['uuid']}"
+req = {
+    # Note: models and datasets need to have unique names.
+    "name": f"{MODEL_URI}_{dt}",
+    "model_info": {
+        "hugging_face": {
+            "model_uri": MODEL_URI,
+        },
+    },
+}
+res = requests.post(api_endpoint, json=req, headers=headers)
+model_id = res.json()["modelId"]
+```
+
+## Create Test Run Configuration
+
+Below is a sample configuration of how to setup and run a RIME Stress Test. The 
+configuration includes important information, such as the IDs of the model, reference 
+dataset, evaluation dataset and the name of a Managed Image to use (optional).
+
+```python
+config = {
+    "run_name": "NLP Stress Test",
+    "model_id": model_id,
+    "data_info": {
+        "ref_dataset_id": ref_data_id,
+        "eval_dataset_id": eval_data_id,
+    },
+    "run_time_info": {
+        "custom_image": {
+            "managed_image_name": managed_image_name,
+        },
+    },
+    "test_suite_config": {
+        "individual_tests_config": json.dumps({"global_exclude_columns": ["id"]}),
+    },
+}
+```
+
+## Run Stress Test
+
+With a completed Test Run Configuration, we can now start a Stress Test and track its progress until the tests complete.
+
+```python
+req = {"test_run_config": config}
+api_endpoint = f"{API_URL}/v1/stress-tests/{project_id['uuid']}"
+res = requests.post(api_endpoint, json=req, headers=headers)
+job_id = res.json()["job"]["jobId"]
+
+# Track Stress Test Job Progress.
+res_json = track_job(job_id)
+
+# Once a Stress Test Job has completed, get the Test Run ID to access results.
+test_run_id = res_json["job"]["jobData"]["stress"]["testRunId"]
+```
+
+## Get Test Run Results
+
+Once a Test Run completes, we can access the results of the Stress Test using the Test Run ID.
+
+```python
+# Print information about a completed Test Run.
+api_endpoint = f"{API_URL}/v1/test-runs/{test_run_id}"
+res = requests.get(api_endpoint, headers=headers)
+print(res.json()["testRun"])
+
+# List individual Test Cases from the Test Run.
+api_endpoint = f"{API_URL}/v1/test-cases"
 payload = {"listTestCasesQuery.testRunId": test_run_id}
-while True:
-    # Make multiple calls, iterating through pages until all test cases are returned.
-    if page_token != "":
-        payload = {"page_token": page_token}
-    res = requests.get(f"{API_URL}/test-cases", params=payload, headers=headers)
-    if res.status_code != 200 :
-        raise ValueError(res)
-    res_json = res.json()
-    all_test_cases.extend(res_json['testCases'])
-    page_token = res_json['nextPageToken']
-    # If the previous response specifies that hasMore is false, we have gotten all the test cases.
-    if not res_json["hasMore"]:
-        break
-# All the test cases. You can load this into a dataframe to better view or analyze the results on the UI.
-print(all_test_cases)
+res = requests.get(api_endpoint, headers=headers, params=payload)
+print(res.json()["testCases"])
+
 ```

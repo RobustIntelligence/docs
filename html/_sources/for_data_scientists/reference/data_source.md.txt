@@ -26,7 +26,7 @@ of `ref_pred_path` and `eval_pred_path` must have a value specified.
 {
     "data_info": {
         "label_col": "Label",
-        "pred_col": "Prediction",                   (WORKS FOR ALL TASKS EXCEPT MULTI-CLASS, REQUIRED FOR CONTINUOUS TESTING)
+        "pred_col": "Prediction",
         "timestamp_col": "Timestamp",
         "class_names": "Class1", "Class2", "Class3",
         "ranking_info":{
@@ -36,18 +36,19 @@ of `ref_pred_path` and `eval_pred_path` must have a value specified.
             "drop_query_id": True
         },
 
-        "ref_path": "path/to/ref.csv",              (REQUIRED)
-        "eval_path": "path/to/eval.csv",            (REQUIRED)
-        "ref_pred_path": "path/to/ref/preds.csv",   (ONLY SPECIFY FOR MULTI-CLASS, REQUIRED FOR CONTINUOUS TESTING)
-        "eval_pred_path": "path/to/eval/preds.csv", (ONLY SPECIFY FOR MULTI-CLASS, REQUIRED FOR CONTINUOUS TESTING)
         "nrows": null,
+        "nrows_per_time_bin": null,
+        "sample": False,
         "categorical_features": null,
         "protected_features": null,
         "features_not_in_model": null,
-        "feature_type_path": null,
-        "ranking_info": null,                        (REQUIRED FOR RANKING)
+        "text_features": null,
+        "image_features": null,
+        "features": null,
         "loading_kwargs": null,
-        "embeddings": null
+        "feature_type_path": null,
+        "pred_path": null,
+        "image_load_path": null
     },
     ...
 }
@@ -65,9 +66,9 @@ of `ref_pred_path` and `eval_pred_path` must have a value specified.
 | class_names | Repeated String | List of label class names. |
 | ranking_info | JSON object | Contains parameters used for the ranking model task. |
 | &nbsp;&nbsp;&nbsp; query_col | String | Name of column in dataset that contains the query IDs. |
-| &nbsp;&nbsp;&nbsp; nqueries | int64 | Number of queries to consider. Uses all queries when null. |
-| &nbsp;&nbsp;&nbsp; nrows_per_query | int64 | Number of rows to use per query. Uses all rows when null. |
-| &nbsp;&nbsp;&nbsp; drop_query_id | Boolean | Specifies whether to drop the query ID column from the dataset in order to prevent passing the query ID column to the model as a feature. |
+| &nbsp;&nbsp;&nbsp; nqueries | Optional int64 | Number of queries to consider. Uses all queries when null. |
+| &nbsp;&nbsp;&nbsp; nrows_per_query | Optional int64 | Number of rows to use per query. Uses all rows when null. |
+| &nbsp;&nbsp;&nbsp; drop_query_id | Optional Boolean | Specifies whether to drop the query ID column from the dataset in order to prevent passing the query ID column to the model as a feature. |
 
 <!-- hack to get around inability to indent within a cell -->
 
@@ -75,9 +76,9 @@ of `ref_pred_path` and `eval_pred_path` must have a value specified.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| nrows | int64 | Number of rows of data to load and test. Loads all rows when null. |
-| nrows_per_time_bin | int64 | Number of rows of data per time bin to load and test in CT. Loads all rows when null. |
-| sample | Boolean | Specifies whether to sample rows in the data. Default is True. |
+| nrows | Optional int64 | Number of rows of data to load and test. Loads all rows when null. |
+| nrows_per_time_bin | Optional int64 | Number of rows of data per time bin to load and test in CT. Loads all rows when null. |
+| sample | Optional Boolean | Specifies whether to sample rows in the data. Default is True. |
 
 #### Feature types and relations
 
@@ -87,78 +88,23 @@ of `ref_pred_path` and `eval_pred_path` must have a value specified.
 | protected_features | Repeated String | A list of features that are protected attributes. When the Bias and Fairness category is specified, these tests are only run over the listed features. |
 | features_not_in_model | Repeated String | A list of features not present in the model. |
 | text_features | Repeated String | A list of text features to run NLP tests over. |
-| image_features | Repeated string | A list of image features to run CV tests over. |
+| image_features | Repeated String | A list of image features to run CV tests over. |
 
-### Arguments
+#### Feature intersections
 
-- **`ref_path`**: string, ***required***
+| features | Repeated String | A list of features to run tabular tests over. |
 
-    Path to reference data file.
-- **`eval_path`**: string, ***required***
+#### External resources
 
-    Path to evaluation data file.
-- `label_col`: string or null, *default* = `null`
-
-    Name of column in data that corresponds to the labels.
-- `pred_col`: string or null, *default* = `null`
-
-    Name of column in data that corresponds to the predictions.
-- `ref_pred_path`: string or null, *default* = `null`
-
-    Path to a CSV or Parquet file containing the predictions on the reference dataset. This is how
-    predictions are specified for multi-class models.
-- `eval_pred_path`: string or null, *default* = `null`
-
-    Path to a CSV or Parquet file containing the predictions on the evaluation dataset. This is how
-    predictions are specified for multi-class models.
-- `nrows`: int or null, *default* = `null`
-
-    Number of rows of data to load and test. If `null`, will load all rows. By default it is `null`.
-- `categorical_features`: list or null, *default* = `null`
-
-    List of categorical features in data. If provided, these should be ALL the categorical features. If `null`, RIME will automatically determine whether a column is categorical or not. By default it is `null`.
-- `protected_features`: list or null, *default* = `null`
-
-    List of protected features in data. If the `Bias and Fairness` category is added to `categories` in the test config (see [TestSuiteConfig()](tabular/tests.md), and `protected_features` are included, a set of bias and fairness tests will be run over the protected features.
-- `features_not_in_model`: list or null, *default* = `null`
-
-    List of features in the dataset that are not used by the model. Specifying this will ensure that only relevant tests are run on these features.
-- `feature_type_path`: string, *default* = `null`
-
-    Path to a CSV file that specifies the data type of each feature. The file should have two columns: `FeatureName` and `FeatureType`. The possible values for `FeatureType` are `BoolCategoricalColumn`, `DomainColumn`, `EmailColumn`, `NumericCategoricalColumn`, `StringCategoricalColumn`, `UrlColumn`, `FloatColumn`, `IntegerColumn`.
-- `ranking_info`: mapping, *default* = `null`
-
-    Arguments to be used for Ranking tasks. If you are not running RIME on a Ranking task this value should be null. If you are running on a Ranking task, the following keys should be provided:
-    - `query_col`: string, *required*
-
-        Name of column in dataset that contains the query ids.
-    - `nqueries`: int or null, *default* = `null`
-
-        Number of queries to consider when running RIME. If `null`, will use all queries.
-    - `nrows_per_query`: int or null, *default* = `null`
-
-        Number of rows to use per query when running RIME. If `null`, will use all rows.
-    - `drop_query_id`: bool, *default* = True
-
-        Whether to drop the query ID column from the dataset to avoid passing as a feature to the model.
-- `loading_kwargs`: mapping, *default* = `null`
-
-    Keyword arguments to be passed to the `pandas` loading function (either `pd.read_CSV` or `pd.read_Parquet`, depending on your data format). NOTE: if you wish to specify `nrows`, this should NOT be done with these kwargs but rather with the `nrows` parameter above.
-
-- `embeddings`: list or `null`, *default* = `null`
-
-    A list of dictionaries corresponding to information for each embedding. The arguments for each dictionary are described below.
-
-    - `name`: string
-
-        Name of the embedding to be shown in the test run results.
-
-    - `cols`: list
-  
-        List of column names corresponding to the embedding. For example, suppose each data row is represented by columns `age`, `is_member`, `query_0`, `query_1`, `query_2`, etc., where each column "`query_\d`" is a dimension of a sentence embedding extracted from a user query. Specifying `"embeddings": [{"name": "user_query", "cols": ["query_0", "query_1", "query_2", ...]}]`  (i.e., specifying each column contained by the embedding) would direct the RI Platform to treat these columns as a single dense vector-valued embedding feature.
-
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| loading_kwargs | String | Keyword arguments passed to the pandas loading function. Do not specify `nrows` here. |
+| feature_type_path | String | Path to a CSV file that specifies the data type of each feature. The file must have two columns, `FeatureName` and `FeatureType`. |
+| pred_path | String | Path to a CSV file or Parquet file that contains predictions. |
+| image_load_path | String | Path to a CSV file that contains images to load for `image_features`. |
 
 ### Split Data Info Template
+
 ```python
 {
     "data_info": {
@@ -189,6 +135,7 @@ and more. The full list is detailed below. Note that for AI Continuous Testing, 
 Either `pred_col` must be specified or `pred_path` must be specified.
 
 #### General Parameters for Single Data Info
+
 ```python
 {
     "label_col": "Label",
