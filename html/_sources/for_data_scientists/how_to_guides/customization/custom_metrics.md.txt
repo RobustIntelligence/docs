@@ -1,7 +1,7 @@
 # Custom Metrics
 
 This feature is currently in beta and is subject to change in an upcoming release.
-In order to use the custom metrics functionality, you first need to create a python file that contains
+In order to use the custom metrics functionality, you first need to create a Python file that contains
 the function used to calculate the custom metric. This function should be named `custom_metric_func`,
 and the interface this function is expected to expose is below:
 
@@ -36,18 +36,17 @@ def custom_metric_func(
 The arguments passed to this function depend on the your configured data and task.
 The function should return `None` whenever the provided arguments are insufficent, such as when labels are required but not available.
 
-NOTE: for unstructured data (NLP/CV) the dataframe will contain information about user-defined metadata for
+NOTE: for unstructured data, the dataframe will contain information about user-defined metadata for
 each datapoint and any profiled attributes. For tabular data, the dataframe will be the raw features.
 
-After defining this function, you then need to specify it in the CLIConfig. The place to specify it is
-in the `model_profiling_info` section. Specifically, it should look like:
-
+After defining this function, you then need to specify it in the `model_profiling` section of the JSON configuration object.
+[Model Profiling](../../reference/model_profiling.md) discusses this object in more detail.
 
 ```json
-  "model_profiling_info": {
+  "model_profiling": {
     "custom_metrics": {"NAME_OF_METRIC": "path/to/file.py"}
   },
 ```
 
 Replace `NAME_OF_METRIC` with the name of the metric (this is how it will show up in the UI). Replace `path/to/file.py`
-with the path to the python file you created in the above step.
+with the path to the Python file you created in the above step.

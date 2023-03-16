@@ -53,7 +53,7 @@
             RIME
           </a>
               <div class="version">
-                2.0.0-beta.8
+                2.0.0-beta.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -177,36 +177,39 @@ While some types don’t require extra arguments, others do.</p>
 <h2>Templates for Data Location Types<a class="headerlink" href="#templates-for-data-location-types" title="Permalink to this heading"></a></h2>
 <section id="data-collector">
 <h3>Data Collector<a class="headerlink" href="#data-collector" title="Permalink to this heading"></a></h3>
-<p>Data Collector does not take a location_info argument, since the service is internal</p>
+<p>Data Collector does not take a location_info argument, since the service is internal.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_params_dict</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="c1"># Arguments for activating a CT</span>
 <span class="c1"># Schedule with the Data Collector</span>
 <span class="n">firewall</span><span class="o">.</span><span class="n">activate_ct_schedule</span><span class="p">(</span>
-    <span class="n">location_type</span><span class="o">=</span><span class="s2">&quot;&lt;YOUR_LOCATION_TYPE&gt;&quot;</span><span class="p">,</span> 
-    <span class="n">reference_set_window</span><span class="o">=</span><span class="n">reference_set_bin</span><span class="p">,</span> 
+  <span class="n">data_stream_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="delta-lake">
 <h3>Delta Lake<a class="headerlink" href="#delta-lake" title="Permalink to this heading"></a></h3>
-<p>Delta Lake requires a location_info argument, since the service is external. One
-of these arguments is a data source name. See our data source guide to configure authentication.
-You can also specify parameters like <code class="docutils literal notranslate"><span class="pre">pred_col</span></code>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">location_info</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s2">&quot;time_col&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="c1"># Name of the timestamp column in your delta lake table</span>
-  <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="c1"># Delta lake table name</span>
-  <span class="s2">&quot;data_source_name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span> <span class="c1"># Data Source name configured from UI</span>
-<span class="p">}</span>
-
-<span class="n">data_params_dict</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="c1"># Arguments for activating a CT</span>
-<span class="c1"># Schedule with Databricks Delta Lake</span>
-<span class="n">firewall</span><span class="o">.</span><span class="n">activate_ct_schedule</span><span class="p">(</span>
-    <span class="n">location_type</span><span class="o">=</span><span class="s2">&quot;delta_lake&quot;</span><span class="p">,</span> 
-    <span class="n">location_info</span><span class="o">=</span><span class="n">location_info_dict</span><span class="p">,</span> 
-    <span class="n">data_params</span><span class="o">=</span><span class="n">data_params_dict</span>
-<span class="p">)</span>
+<p>Delta Lake requires you to specify location details, since the service is external. See
+the section on <a class="reference internal" href="../../../for_admins/data-integrations.html"><span class="doc std std-doc">integrations</span></a> to configure
+Delta Lake.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+   <span class="n">firewall</span><span class="o">.</span><span class="n">activate_ct_scheduling</span><span class="p">(</span>
+        <span class="n">data_location</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;integration_id&quot;</span><span class="p">:</span> <span class="n">integration_id</span><span class="p">,</span>
+            <span class="s2">&quot;location_args&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;delta_lake_location&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;location_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;is_fraud&quot;</span><span class="p">,}},</span>
+        <span class="p">},</span>
+        <span class="n">prediction_location</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;integration_id&quot;</span><span class="p">:</span> <span class="n">integration_id</span><span class="p">,</span>
+            <span class="s2">&quot;location_args&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;delta_lake_location&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;location_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;pred_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="s2">&quot;is_fraud_preds&quot;</span><span class="p">},},</span>
+        <span class="p">},</span>
+        <span class="n">rolling_window_size</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -215,21 +218,31 @@ You can also specify parameters like <code class="docutils literal notranslate">
 <p>Our custom loader integration is designed to integrate with any location. This requires a <code class="docutils literal notranslate"><span class="pre">location_info</span></code> argument defining the path to load from,
 the function that does the loading, as well as any extra parameters. Your load function must accept parameters <code class="docutils literal notranslate"><span class="pre">start_time</span></code>, <code class="docutils literal notranslate"><span class="pre">end_time</span></code> as options.
 You will need to specify a data params dict with the <code class="docutils literal notranslate"><span class="pre">timestamp_col</span></code> parameter. You can also specify parameters like <code class="docutils literal notranslate"><span class="pre">pred_col</span></code>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">location_info</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s2">&quot;load_path&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="c1"># the path to the file where you define how to load in your data</span>
-  <span class="s2">&quot;load_func_name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="c1"># the function name in the file where you load your data. This must accept parameters start_time, end_time</span>
-  <span class="s2">&quot;loader_kwargs_json&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>  <span class="c1"># any additional parameters and values needed for your function</span>
-<span class="p">}</span>
-<span class="n">data_params_dict</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_params</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span> <span class="c1"># Required for custom loader</span>
 <span class="p">}</span>
 <span class="c1"># Arguments for activating a CT</span>
 <span class="c1"># Schedule with Custom Loader</span>
 <span class="n">firewall</span><span class="o">.</span><span class="n">activate_ct_schedule</span><span class="p">(</span>
-    <span class="n">location_type</span><span class="o">=</span><span class="s2">&quot;custom_loader&quot;</span><span class="p">,</span> 
-    <span class="n">location_info</span><span class="o">=</span><span class="n">location_info_dict</span><span class="p">,</span> 
-    <span class="n">data_params</span><span class="o">=</span><span class="n">data_params_dict</span>
-<span class="p">)</span>
+        <span class="n">data_location</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;integration_id&quot;</span><span class="p">:</span> <span class="n">integration_id</span><span class="p">,</span>
+            <span class="s2">&quot;location_args&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;custom_location&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;location_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;is_fraud&quot;</span><span class="p">,}},</span>
+          <span class="p">},</span>
+        <span class="p">}</span>
+        <span class="n">prediction_location</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;integration_id&quot;</span><span class="p">:</span> <span class="n">integration_id</span><span class="p">,</span>
+            <span class="s2">&quot;location_args&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;custom_location&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;location_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;pred_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="s2">&quot;is_fraud_preds&quot;</span><span class="p">},},</span>
+          <span class="p">},</span>
+        <span class="p">}</span>
+        <span class="n">rolling_window_size</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="p">)</span>
+
 </pre></div>
 </div>
 </section>
@@ -238,7 +251,7 @@ You will need to specify a data params dict with the <code class="docutils liter
 <h2>Templates for Configuring Data Params<a class="headerlink" href="#templates-for-configuring-data-params" title="Permalink to this heading"></a></h2>
 <p>The dictionary below outlines all the keys you can specify for data params. If these are
 not provided, the defaults are taken from the reference set. For more info about the types
-see our <span class="xref myst">General Tabular Parameters Section</span>.</p>
+see our <a class="reference internal" href="../../reference/data_source.html#general-parameters-for-single-data-info"><span class="std std-doc">General Tabular Parameters Section</span></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_params</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
   <span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>

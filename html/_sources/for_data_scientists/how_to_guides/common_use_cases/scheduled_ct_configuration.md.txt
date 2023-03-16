@@ -1,10 +1,11 @@
-Scheduling Continuous Tests
-=============================
+# Scheduling Continuous Tests
  
 Configuration of schedules for RIME AI Firewall Continuous Tests is done through the SDK or the UI.
 
 See [Scheduled CT How-To-Guide](../../how_to_guides/common_use_cases/scheduling_ct_runs.md) for some background.
-### Arguments
+
+## Arguments
+
 - **`location_type`**: string, ***required***
 
     Type of location that data is housed in. Can be "data_collector", "delta_lake" or "custom_loader".
@@ -28,64 +29,81 @@ See [Scheduled CT How-To-Guide](../../how_to_guides/common_use_cases/scheduling_
 ## Templates for Data Location Types
 
 ### Data Collector
-Data Collector does not take a location_info argument, since the service is internal
+
+Data Collector does not take a location_info argument, since the service is internal.
+
 ```python
 data_params_dict = {}
 # Arguments for activating a CT
 # Schedule with the Data Collector
 firewall.activate_ct_schedule(
-    location_type="<YOUR_LOCATION_TYPE>", 
-    reference_set_window=reference_set_bin, 
+  data_stream_id = 1;
 )
 ```
 
 ### Delta Lake
-Delta Lake requires a location_info argument, since the service is external. One 
-of these arguments is a data source name. See our data source guide to configure authentication.
-You can also specify parameters like `pred_col`.
-```python
-location_info = {
-  "time_col": "", # Name of the timestamp column in your delta lake table
-  "table_name": "", # Delta lake table name
-  "data_source_name": "" # Data Source name configured from UI
-}
+Delta Lake requires you to specify location details, since the service is external. See 
+the section on [integrations](../../../for_admins/data-integrations.md) to configure
+Delta Lake.
 
-data_params_dict = {}
-# Arguments for activating a CT
-# Schedule with Databricks Delta Lake
-firewall.activate_ct_schedule(
-    location_type="delta_lake", 
-    location_info=location_info_dict, 
-    data_params=data_params_dict
-)
+```python
+
+   firewall.activate_ct_scheduling(
+        data_location={
+            "integration_id": integration_id,
+            "location_args": {
+                "delta_lake_location": {
+            },
+            "location_params": {"data_params": {"label_col": "is_fraud",}},
+        },
+        prediction_location={
+            "integration_id": integration_id,
+            "location_args": {
+                "delta_lake_location": {
+            },
+            "location_params": {"pred_params": {"pred_col": "is_fraud_preds"},},
+        },
+        rolling_window_size=timedelta(hours=1),
+    )
 ```
 
 ### Custom Loader
+
 Our custom loader integration is designed to integrate with any location. This requires a `location_info` argument defining the path to load from,
 the function that does the loading, as well as any extra parameters. Your load function must accept parameters `start_time`, `end_time` as options.
 You will need to specify a data params dict with the `timestamp_col` parameter. You can also specify parameters like `pred_col`. 
 ```python
-location_info = {
-  "load_path": "", # the path to the file where you define how to load in your data
-  "load_func_name": "", # the function name in the file where you load your data. This must accept parameters start_time, end_time
-  "loader_kwargs_json": "",  # any additional parameters and values needed for your function
-}
-data_params_dict = {
+data_params = {
   "timestamp_col": "" # Required for custom loader
 }
 # Arguments for activating a CT
 # Schedule with Custom Loader
 firewall.activate_ct_schedule(
-    location_type="custom_loader", 
-    location_info=location_info_dict, 
-    data_params=data_params_dict
-)
+        data_location={
+            "integration_id": integration_id,
+            "location_args": {
+                "custom_location": {
+            },
+            "location_params": {"data_params": {"label_col": "is_fraud",}},
+          },
+        }
+        prediction_location={
+            "integration_id": integration_id,
+            "location_args": {
+                "custom_location": {
+            },
+            "location_params": {"pred_params": {"pred_col": "is_fraud_preds"},},
+          },
+        }
+        rolling_window_size=timedelta(hours=1),
+    )
+
 ```
 
 ## Templates for Configuring Data Params
 The dictionary below outlines all the keys you can specify for data params. If these are
 not provided, the defaults are taken from the reference set. For more info about the types
-see our [General Tabular Parameters Section](../../reference/tabular/data_source.md#general-tabular-parameters-for-single-data-info).
+see our [General Tabular Parameters Section](../../reference/data_source.md#general-parameters-for-single-data-info).
 ```python
 data_params = {
   "label_col": "",

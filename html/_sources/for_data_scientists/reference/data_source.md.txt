@@ -1,28 +1,43 @@
 Data Configuration
 ==================
 
-Configuring a data source can be done by specifying a mapping in the main RIME JSON configuration file, under the
-`data_info` argument.
+To configure a data source, specify a mapping in the main RIME JSON configuration file
+in the `data_info` argument.
 
-The `data_info` configuration can take on different forms, offering a tradeoff between simplicity and flexibility. In the **default** approach,
-you may choose to specify the file paths to both the reference and evaluation datasets, along with supporting arguments such as `pred_col`, 
-`label_col`, and more. This is the easiest configuration to get started with.
-In the **split** approach, you may choose to specify a separate "single" data info struct for both the reference and evaluation datasets:
-`ref_data_info` and `eval_data_info`. Both the reference and evaluation single data info structs can take on different configuration types, 
-from a file-path based approach, to a custom data loader, to a Delta Lake table, to our data collector (for Continuous Testing only). This allows
-you to specify different data loaders for the reference and evaluation datasets. The configuration
-templates for all of these data infos are also detailed below.
+The `data_info` configuration can take on different forms, offering a tradeoff between 
+simplicity and flexibility. In the **default** approach, you may choose to specify the
+file paths to both the reference and evaluation datasets, along with supporting 
+arguments such as `pred_col`, `label_col`, and more. This is the easiest configuration 
+to get started with.
 
-NOTE: for AI Continuous Testing, predictions are required. Either `pred_col` must be specified or `ref_pred_path` and `eval_pred_path` must be specified.
+In the **split** approach, you may choose to specify a separate "single" data info 
+struct for both the reference and evaluation datasets: `ref_data_info` and 
+`eval_data_info`. Both the reference and evaluation single data info structs can take on
+different configuration types, from a file-path based approach, to a custom data loader,
+to a Delta Lake table, to our data collector (for Continuous Testing only). This enables
+you to specify different data loaders for the reference and evaluation datasets. The 
+configuration templates for these approaches are detailed below.
+
+NOTE: Continuous Tests require a specified set of predictions. Either `pred_col` or both
+of `ref_pred_path` and `eval_pred_path` must have a value specified.
 
 ### Default Data Info Template
 ```python
 {
     "data_info": {
-        "ref_path": "path/to/ref.csv",              (REQUIRED)
-        "eval_path": "path/to/eval.csv",            (REQUIRED)
         "label_col": "Label",
         "pred_col": "Prediction",                   (WORKS FOR ALL TASKS EXCEPT MULTI-CLASS, REQUIRED FOR CONTINUOUS TESTING)
+        "timestamp_col": "Timestamp",
+        "class_names": "Class1", "Class2", "Class3",
+        "ranking_info":{
+            "query_col":"Query",
+            "nqueries": 4,
+            "nrows_per_query": 2,
+            "drop_query_id": True
+        },
+
+        "ref_path": "path/to/ref.csv",              (REQUIRED)
+        "eval_path": "path/to/eval.csv",            (REQUIRED)
         "ref_pred_path": "path/to/ref/preds.csv",   (ONLY SPECIFY FOR MULTI-CLASS, REQUIRED FOR CONTINUOUS TESTING)
         "eval_pred_path": "path/to/eval/preds.csv", (ONLY SPECIFY FOR MULTI-CLASS, REQUIRED FOR CONTINUOUS TESTING)
         "nrows": null,
@@ -37,6 +52,42 @@ NOTE: for AI Continuous Testing, predictions are required. Either `pred_col` mus
     ...
 }
 ```
+
+### Parameters for the `data_info` JSON object
+
+#### General
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| label_col | String | Naming of special columns. |
+| pred_col | String | Column to look at for predictions. |
+| timestamp_col | String | Column to look at for CT timestamp. |
+| class_names | Repeated String | List of label class names. |
+| ranking_info | JSON object | Contains parameters used for the ranking model task. |
+| &nbsp;&nbsp;&nbsp; query_col | String | Name of column in dataset that contains the query IDs. |
+| &nbsp;&nbsp;&nbsp; nqueries | int64 | Number of queries to consider. Uses all queries when null. |
+| &nbsp;&nbsp;&nbsp; nrows_per_query | int64 | Number of rows to use per query. Uses all rows when null. |
+| &nbsp;&nbsp;&nbsp; drop_query_id | Boolean | Specifies whether to drop the query ID column from the dataset in order to prevent passing the query ID column to the model as a feature. |
+
+<!-- hack to get around inability to indent within a cell -->
+
+#### Dataset sizing
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| nrows | int64 | Number of rows of data to load and test. Loads all rows when null. |
+| nrows_per_time_bin | int64 | Number of rows of data per time bin to load and test in CT. Loads all rows when null. |
+| sample | Boolean | Specifies whether to sample rows in the data. Default is True. |
+
+#### Feature types and relations
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| categorical_features | Repeated String | A list of categorical features. |
+| protected_features | Repeated String | A list of features that are protected attributes. When the Bias and Fairness category is specified, these tests are only run over the listed features. |
+| features_not_in_model | Repeated String | A list of features not present in the model. |
+| text_features | Repeated String | A list of text features to run NLP tests over. |
+| image_features | Repeated string | A list of image features to run CV tests over. |
 
 ### Arguments
 
@@ -68,7 +119,7 @@ NOTE: for AI Continuous Testing, predictions are required. Either `pred_col` mus
     List of categorical features in data. If provided, these should be ALL the categorical features. If `null`, RIME will automatically determine whether a column is categorical or not. By default it is `null`.
 - `protected_features`: list or null, *default* = `null`
 
-    List of protected features in data. If the `Bias and Fairness` category is added to `categories` in the test config (see [TestSuiteConfig()](tests.md), and `protected_features` are included, a set of bias and fairness tests will be run over the protected features.
+    List of protected features in data. If the `Bias and Fairness` category is added to `categories` in the test config (see [TestSuiteConfig()](tabular/tests.md), and `protected_features` are included, a set of bias and fairness tests will be run over the protected features.
 - `features_not_in_model`: list or null, *default* = `null`
 
     List of features in the dataset that are not used by the model. Specifying this will ensure that only relevant tests are run on these features.
@@ -177,7 +228,7 @@ Either `pred_col` must be specified or `pred_path` must be specified.
     List of categorical features in data. If provided, these should be ALL the categorical features. If `null`, RIME will automatically determine whether a column is categorical or not. By default it is `null`.
 - `protected_features`: list or null, *default* = `null`
 
-    List of protected features in data. If the `Bias And Fairness` category is added to `categories` in the test config (see [TestSuiteConfig()](tests.md), and `protected_features` are included - a set of bias and fairness tests will be run over the protected features.
+    List of protected features in data. If the `Bias And Fairness` category is added to `categories` in the test config (see [TestSuiteConfig()](tabular/tests.md), and `protected_features` are included - a set of bias and fairness tests will be run over the protected features.
 - `features_not_in_model`: list or null, *default* = `null`
 
     List of features in the dataset that are not used by the model. Specifying this will ensure that only relevant tests are run on these features.
@@ -344,7 +395,7 @@ Specifies a custom group based on a specified intersection of features. Subset p
 
 - **`protected_features`**: array, ***required***
 
-    List of protected features in data. If the `Bias And Fairness` category is added to `categories` in the test config (see [TestSuiteConfig()](tests.md), and `protected_features` are included, a set of bias and fairness tests will be run over the protected features.
+    List of protected features in data. If the `Bias And Fairness` category is added to `categories` in the test config (see [Tests Configuration](tabular/tests.md), and `protected_features` are included, a set of bias and fairness tests will be run over the protected features.
 
 - **`intersections`**: array, ***required***
 

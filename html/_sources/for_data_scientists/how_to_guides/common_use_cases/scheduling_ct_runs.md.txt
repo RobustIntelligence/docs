@@ -1,7 +1,7 @@
 # Scheduling Continuous Testing runs
 
 You can create and update the schedule for a Continuous Test from the SDK or the UI. For
-more configuration information, see the [Scheduled CT Configuration Page](/for_data_scientists/reference/tabular/scheduled_ct_configuration.md)
+more configuration information, see the [Scheduled CT Configuration Page](/for_data_scientists/how_to_guides/common_use_cases/scheduled_ct_configuration.md)
 
 ## Activating a schedule
 
@@ -13,14 +13,7 @@ You can set a schedule at the same time you [create a Continuous Test](ct-ui.md)
 schedule, specify a data source as well as any credentials required for access to the
 data source.
 
-```python
-project = rime_client.create_project("<NAME>", "<DESCRIPTION>")
-
-# Create a firewall with an active schedule. This will routinely read from
-# the data collector and run tests once every bin_size time period (eg. once a day, week, etc...).
-# No arguments are needed by the RIME Engine to access the data collector, since the service is internal
-project.create_firewall(model_id:"model", ref_data_id:"foo", bin_size:timedelta(hours=3))
-```
+Determine the IDs for the model and dataset in the [RIME Registry](../registries.md).
 
 Optionally, provide parameters to process this data, such as timestamp column names.
 
@@ -31,11 +24,11 @@ data_params_dict = {
 
 # Create a firewall with an active schedule.
 # The data loaded has a timestamp column defined above.
-firewall = project.create_firewall(name: "<NAME>", bin_size="<BIN_SIZE>", test_run_id=test_run_id, run_ct_schedule=True, location_type="data_collector", data_params=data_params_dict)
+firewall = project.create_firewall(model_id, ref_data_id, timedelta(days=2))
 ```
 
 Since each data location requires specific parameters for the RIME Engine to access and
-process the data, see the [Scheduled CT Configuration Page](/for_data_scientists/reference/tabular/scheduled_ct_configuration.md)
+process the data, see the [Scheduled CT Configuration Page](/for_data_scientists/how_to_guides/common_use_cases/scheduled_ct_configuration.md)
 for details about configurations for different use cases.
 
 ### Creating a schedule on an existing Continuous Test from the SDK
@@ -44,7 +37,7 @@ You can enable a schedule for an existing Continuous Test at any time.
 
 ```python
 # Get a Continuous Test from a project
-firewall = client.get_firewall_for_project("<YOUR_PROJECT_ID>")
+firewall = rime_client.get_firewall_for_project("foo-project")
 
 # Activate a schedule
 firewall.activate_ct_schedule(location_type="data_collector", reference_set_window=reference_set_bin, data_params=data_params_dict)
@@ -62,7 +55,7 @@ firewall.deactivate_ct_schedule()
 
 Choose an [integration](../../../for_admins/data-integrations.md) to use as a data 
 source. The current supported options are Databricks Delta Lake, the Data Collector, 
-or a [custom loader](../../../for_admins/customdloader.md).
+or a custom data loader.
 
 Specify a table and timestamp column.
 

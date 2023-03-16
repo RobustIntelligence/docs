@@ -53,7 +53,7 @@
             RIME
           </a>
               <div class="version">
-                2.0.0-beta.8
+                2.0.0-beta.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -103,7 +103,20 @@
 <li class="toctree-l2"><a class="reference internal" href="setup.html#module-rime.nlp">NLP Data/Model Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tests.html">RIME Tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="adversarial.html">RIME Adversarial</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">RIME AI Firewall</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">RIME AI Firewall</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rime.tabular.firewall.activate.TabularFirewall"><code class="docutils literal notranslate"><span class="pre">TabularFirewall</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rime.tabular.firewall.activate.TabularFirewall.from_components"><code class="docutils literal notranslate"><span class="pre">TabularFirewall.from_components()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime.tabular.firewall.activate.TabularFirewall.model_task"><code class="docutils literal notranslate"><span class="pre">TabularFirewall.model_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime.tabular.firewall.activate.TabularFirewall.add_rule"><code class="docutils literal notranslate"><span class="pre">TabularFirewall.add_rule()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime.tabular.firewall.activate.TabularFirewall.validate_batch"><code class="docutils literal notranslate"><span class="pre">TabularFirewall.validate_batch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime.tabular.firewall.activate.TabularFirewall.get_summary"><code class="docutils literal notranslate"><span class="pre">TabularFirewall.get_summary()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime.tabular.firewall.activate.TabularFirewall.validate_single"><code class="docutils literal notranslate"><span class="pre">TabularFirewall.validate_single()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime.tabular.firewall.activate.TabularFirewall.set_flagged_action_for_rule"><code class="docutils literal notranslate"><span class="pre">TabularFirewall.set_flagged_action_for_rule()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rime.tabular.firewall.activate.TabularFirewall.set_global_flagged_action"><code class="docutils literal notranslate"><span class="pre">TabularFirewall.set_global_flagged_action()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="rime_metric.html">RIME Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="performance.html">RIME Model Performance</a></li>
 </ul>
@@ -135,8 +148,146 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="rime-ai-firewall">
-<h1>RIME AI Firewall<a class="headerlink" href="#rime-ai-firewall" title="Permalink to this heading"></a></h1>
+  <section id="module-rime.tabular.firewall.activate">
+<span id="rime-ai-firewall"></span><h1>RIME AI Firewall<a class="headerlink" href="#module-rime.tabular.firewall.activate" title="Permalink to this heading"></a></h1>
+<p>Activation for firewall.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="rime.tabular.firewall.activate.TabularFirewall">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rime.tabular.firewall.activate.</span></span><span class="sig-name descname"><span class="pre">TabularFirewall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rules</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">BatchTabularFirewallRule</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">silent_errors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">BaseModel</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="setup.html#rime.tabular.ModelTask" title="rime.tabular.base.schema.ModelTask"><span class="pre">ModelTask</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rime.tabular.firewall.activate.TabularFirewall" title="Permalink to this definition"></a></dt>
+<dd><p>Base firewall class, initialized with a set of firewall rules.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rime.tabular.firewall.activate.TabularFirewall.from_components">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">firewall_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">firewall_client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FirewallClient</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime.tabular.firewall.activate.TabularFirewall" title="rime.tabular.firewall.base.TabularFirewall"><span class="pre">TabularFirewall</span></a></span></span><a class="headerlink" href="#rime.tabular.firewall.activate.TabularFirewall.from_components" title="Permalink to this definition"></a></dt>
+<dd><p>Create firewall from necessary information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>firewall_id</strong> (<em>str</em>) – The Firewall ID, obtained from AI Firewall
+configuration in the UI.</p></li>
+<li><p><strong>json_file_path</strong> (<em>str</em>) – The path to the JSON configuration file.</p></li>
+<li><p><strong>firewall_client</strong> (<em>rime.core.client.FirewallClient</em>) – A client used
+to fetch necessary information used to instantiate the firewall.</p></li>
+<li><p><strong>silent_errors</strong> (<em>bool</em>) – If True, then don’t raise an error on unexpected
+inputs. If False, then allow exceptions to be raised.</p></li>
+<li><p><strong>predict_dict</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – Model prediction function.</p></li>
+<li><p><strong>model_task</strong> (<a class="reference internal" href="setup.html#rime.tabular.ModelTask" title="rime.tabular.base.schema.ModelTask"><em>rime.tabular.base.schema.ModelTask</em></a>) – Enum
+representing model task.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.firewall.activate.TabularFirewall.model_task">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model_task</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="setup.html#rime.tabular.ModelTask" title="rime.tabular.base.schema.ModelTask"><span class="pre">ModelTask</span></a></em><a class="headerlink" href="#rime.tabular.firewall.activate.TabularFirewall.model_task" title="Permalink to this definition"></a></dt>
+<dd><p>Getter for model_task.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime.tabular.firewall.activate.TabularFirewall.add_rule">
+<span class="sig-name descname"><span class="pre">add_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_rule</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BatchTabularFirewallRule</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime.tabular.firewall.activate.TabularFirewall.add_rule" title="Permalink to this definition"></a></dt>
+<dd><p>Add a new validation rule to this firewall.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_rule</strong> (<em>BatchTabularFirewallRule</em>) – Firewall rule to append to the
+firewall.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime.tabular.firewall.activate.TabularFirewall.validate_batch">
+<span class="sig-name descname"><span class="pre">validate_batch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Series</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Series</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallelize_computation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_processes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">9</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">FirewallResponse</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#rime.tabular.firewall.activate.TabularFirewall.validate_batch" title="Permalink to this definition"></a></dt>
+<dd><p>Validate a batch of data against all firewall rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> (<em>pd.DataFrame</em>) – A batch of datapoints that firewall will process.</p></li>
+<li><p><strong>data_ids</strong> – (Optional[pd.Series]): Optional list of data id’s.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of FirewallResponse objects,
+one per datapoint.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[FirewallResponse]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime.tabular.firewall.activate.TabularFirewall.get_summary">
+<span class="sig-name descname"><span class="pre">get_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_rule_responses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">FirewallBatchRuleResponse</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">FirewallResponseSummary</span></span></span><a class="headerlink" href="#rime.tabular.firewall.activate.TabularFirewall.get_summary" title="Permalink to this definition"></a></dt>
+<dd><p>Get firewall summary for a given datapoint.</p>
+<p>This provides an aggregate action as well as total # warnings, given
+the rule responses after validating on a given datapoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rule_responses</strong> (<em>List</em><em>[</em><em>FirewallBatchRuleResponse</em><em>]</em>) – Set of rule responses
+obtained after <cite>validate_single</cite> on a given datapoint.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of FirewallBatchRuleResponse objects,
+each corresponding to the firewall response of a given rule
+to the provided datapoint.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[FirewallBatchRuleResponse]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime.tabular.firewall.activate.TabularFirewall.validate_single">
+<span class="sig-name descname"><span class="pre">validate_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datapoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">datetime</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">FirewallResponse</span></span></span><a class="headerlink" href="#rime.tabular.firewall.activate.TabularFirewall.validate_single" title="Permalink to this definition"></a></dt>
+<dd><p>Validate a single datapoint against all firewall rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datapoint</strong> (<em>dict</em>) – A given datapoint, in dictionary form.</p></li>
+<li><p><strong>data_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Optional data id.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A FirewallResponse object, containing summary
+info as well as a list of FirewallBatchRuleResponse objects.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>FirewallResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime.tabular.firewall.activate.TabularFirewall.set_flagged_action_for_rule">
+<span class="sig-name descname"><span class="pre">set_flagged_action_for_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataTestType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flagged_action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FirewallAction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime.tabular.firewall.activate.TabularFirewall.set_flagged_action_for_rule" title="Permalink to this definition"></a></dt>
+<dd><p>Set flagged action for firewall rule.</p>
+<p>This provides the ability to override the default action to take
+for a given firewall rule when a datapoint fails the rule. You may set the
+action to FirewallAction.FLAG, FirewallAction.IMPUTE, or FirewallAction.BLOCK,
+to flag, impute, or block the datapoint respectively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test_type</strong> (<em>DataTestType</em>) – DataTestType of the corresponding data test.</p></li>
+<li><p><strong>flagged_action</strong> (<em>FirewallAction</em>) – One of FirewallAction.FLAG,
+FirewallAction.IMPUTE, or FirewallAction.BLOCK</p></li>
+<li><p><strong>col_names</strong> (<em>Optional</em><em>[</em><em>List</em><em>]</em>) – If specified, the set of columns to configure
+the flagged_action over.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime.tabular.firewall.activate.TabularFirewall.set_global_flagged_action">
+<span class="sig-name descname"><span class="pre">set_global_flagged_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flagged_action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FirewallAction</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime.tabular.firewall.activate.TabularFirewall.set_global_flagged_action" title="Permalink to this definition"></a></dt>
+<dd><p>Set global flagged action for all firewall rules.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 

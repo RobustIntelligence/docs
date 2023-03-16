@@ -53,7 +53,7 @@
             RIME
           </a>
               <div class="version">
-                2.0.0-beta.8
+                2.0.0-beta.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -79,20 +79,25 @@
 <li class="toctree-l1"><a class="reference internal" href="../basic_tasks.html">Basic tasks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../adv_tasks.html">Advanced tasks</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="../reference.html#configuration">Configuration</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="../reference.html#rime-configuration">RIME Configuration</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="stress_testing.html">Stress Testing</a></li>
-<li class="toctree-l4"><a class="reference internal" href="continuous_testing.html">Continuous Tests</a></li>
-<li class="toctree-l4"><a class="reference internal" href="task_data_format.html">Input Data Format</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">Data Configuration</a></li>
-<li class="toctree-l4"><a class="reference internal" href="model_source.html">Model Configuration</a></li>
-<li class="toctree-l4"><a class="reference internal" href="specify_model.html">Specify a Model</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../reference.html#rime-configuration">RIME Configuration</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="stress_testing.html">Stress Testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="continuous_testing.html">Continuous Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="task_data_format.html">Input Data Format</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Data Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#default-data-info-template">Default Data Info Template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parameters-for-the-data-info-json-object">Parameters for the <code class="docutils literal notranslate"><span class="pre">data_info</span></code> JSON object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#arguments">Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#split-data-info-template">Split Data Info Template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#single-data-info-templates">Single Data Info Templates</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../reference.html#profiling-configuration">Profiling Configuration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../reference.html#tests-configuration">Tests Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model_source.html">Model Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="specify_model.html">Specify a Model</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html#profiling-configuration">Profiling Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html#test-configuration">Test Configuration</a></li>
 </ul>
 </li>
 </ul>
@@ -144,25 +149,39 @@
              
   <section id="data-configuration">
 <h1>Data Configuration<a class="headerlink" href="#data-configuration" title="Permalink to this heading"></a></h1>
-<p>Configuring a data source can be done by specifying a mapping in the main RIME JSON configuration file, under the
-<code class="docutils literal notranslate"><span class="pre">data_info</span></code> argument.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">data_info</span></code> configuration can take on different forms, offering a tradeoff between simplicity and flexibility. In the <strong>default</strong> approach,
-you may choose to specify the file paths to both the reference and evaluation datasets, along with supporting arguments such as <code class="docutils literal notranslate"><span class="pre">pred_col</span></code>,
-<code class="docutils literal notranslate"><span class="pre">label_col</span></code>, and more. This is the easiest configuration to get started with.
-In the <strong>split</strong> approach, you may choose to specify a separate “single” data info struct for both the reference and evaluation datasets:
-<code class="docutils literal notranslate"><span class="pre">ref_data_info</span></code> and <code class="docutils literal notranslate"><span class="pre">eval_data_info</span></code>. Both the reference and evaluation single data info structs can take on different configuration types,
-from a file-path based approach, to a custom data loader, to a Delta Lake table, to our data collector (for Continuous Testing only). This allows
-you to specify different data loaders for the reference and evaluation datasets. The configuration
-templates for all of these data infos are also detailed below.</p>
-<p>NOTE: for AI Continuous Testing, predictions are required. Either <code class="docutils literal notranslate"><span class="pre">pred_col</span></code> must be specified or <code class="docutils literal notranslate"><span class="pre">ref_pred_path</span></code> and <code class="docutils literal notranslate"><span class="pre">eval_pred_path</span></code> must be specified.</p>
+<p>To configure a data source, specify a mapping in the main RIME JSON configuration file
+in the <code class="docutils literal notranslate"><span class="pre">data_info</span></code> argument.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">data_info</span></code> configuration can take on different forms, offering a tradeoff between
+simplicity and flexibility. In the <strong>default</strong> approach, you may choose to specify the
+file paths to both the reference and evaluation datasets, along with supporting
+arguments such as <code class="docutils literal notranslate"><span class="pre">pred_col</span></code>, <code class="docutils literal notranslate"><span class="pre">label_col</span></code>, and more. This is the easiest configuration
+to get started with.</p>
+<p>In the <strong>split</strong> approach, you may choose to specify a separate “single” data info
+struct for both the reference and evaluation datasets: <code class="docutils literal notranslate"><span class="pre">ref_data_info</span></code> and
+<code class="docutils literal notranslate"><span class="pre">eval_data_info</span></code>. Both the reference and evaluation single data info structs can take on
+different configuration types, from a file-path based approach, to a custom data loader,
+to a Delta Lake table, to our data collector (for Continuous Testing only). This enables
+you to specify different data loaders for the reference and evaluation datasets. The
+configuration templates for these approaches are detailed below.</p>
+<p>NOTE: Continuous Tests require a specified set of predictions. Either <code class="docutils literal notranslate"><span class="pre">pred_col</span></code> or both
+of <code class="docutils literal notranslate"><span class="pre">ref_pred_path</span></code> and <code class="docutils literal notranslate"><span class="pre">eval_pred_path</span></code> must have a value specified.</p>
 <section id="default-data-info-template">
 <h2>Default Data Info Template<a class="headerlink" href="#default-data-info-template" title="Permalink to this heading"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;ref_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path/to/ref.csv&quot;</span><span class="p">,</span>              <span class="p">(</span><span class="n">REQUIRED</span><span class="p">)</span>
-        <span class="s2">&quot;eval_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path/to/eval.csv&quot;</span><span class="p">,</span>            <span class="p">(</span><span class="n">REQUIRED</span><span class="p">)</span>
         <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;Label&quot;</span><span class="p">,</span>
         <span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="s2">&quot;Prediction&quot;</span><span class="p">,</span>                   <span class="p">(</span><span class="n">WORKS</span> <span class="n">FOR</span> <span class="n">ALL</span> <span class="n">TASKS</span> <span class="n">EXCEPT</span> <span class="n">MULTI</span><span class="o">-</span><span class="n">CLASS</span><span class="p">,</span> <span class="n">REQUIRED</span> <span class="n">FOR</span> <span class="n">CONTINUOUS</span> <span class="n">TESTING</span><span class="p">)</span>
+        <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;Timestamp&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;class_names&quot;</span><span class="p">:</span> <span class="s2">&quot;Class1&quot;</span><span class="p">,</span> <span class="s2">&quot;Class2&quot;</span><span class="p">,</span> <span class="s2">&quot;Class3&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ranking_info&quot;</span><span class="p">:{</span>
+            <span class="s2">&quot;query_col&quot;</span><span class="p">:</span><span class="s2">&quot;Query&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;nqueries&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+            <span class="s2">&quot;nrows_per_query&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s2">&quot;drop_query_id&quot;</span><span class="p">:</span> <span class="kc">True</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;ref_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path/to/ref.csv&quot;</span><span class="p">,</span>              <span class="p">(</span><span class="n">REQUIRED</span><span class="p">)</span>
+        <span class="s2">&quot;eval_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path/to/eval.csv&quot;</span><span class="p">,</span>            <span class="p">(</span><span class="n">REQUIRED</span><span class="p">)</span>
         <span class="s2">&quot;ref_pred_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path/to/ref/preds.csv&quot;</span><span class="p">,</span>   <span class="p">(</span><span class="n">ONLY</span> <span class="n">SPECIFY</span> <span class="n">FOR</span> <span class="n">MULTI</span><span class="o">-</span><span class="n">CLASS</span><span class="p">,</span> <span class="n">REQUIRED</span> <span class="n">FOR</span> <span class="n">CONTINUOUS</span> <span class="n">TESTING</span><span class="p">)</span>
         <span class="s2">&quot;eval_pred_path&quot;</span><span class="p">:</span> <span class="s2">&quot;path/to/eval/preds.csv&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">ONLY</span> <span class="n">SPECIFY</span> <span class="n">FOR</span> <span class="n">MULTI</span><span class="o">-</span><span class="n">CLASS</span><span class="p">,</span> <span class="n">REQUIRED</span> <span class="n">FOR</span> <span class="n">CONTINUOUS</span> <span class="n">TESTING</span><span class="p">)</span>
         <span class="s2">&quot;nrows&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
@@ -178,6 +197,137 @@ templates for all of these data infos are also detailed below.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
+</section>
+<section id="parameters-for-the-data-info-json-object">
+<h2>Parameters for the <code class="docutils literal notranslate"><span class="pre">data_info</span></code> JSON object<a class="headerlink" href="#parameters-for-the-data-info-json-object" title="Permalink to this heading"></a></h2>
+<section id="general">
+<h3>General<a class="headerlink" href="#general" title="Permalink to this heading"></a></h3>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>label_col</td>
+<td>String</td>
+<td>Naming of special columns.</td>
+</tr>
+<tr>
+<td>pred_col</td>
+<td>String</td>
+<td>Column to look at for predictions.</td>
+</tr>
+<tr>
+<td>timestamp_col</td>
+<td>String</td>
+<td>Column to look at for CT timestamp.</td>
+</tr>
+<tr>
+<td>class_names</td>
+<td>Repeated String</td>
+<td>List of label class names.</td>
+</tr>
+<tr>
+<td>ranking_info</td>
+<td>JSON object</td>
+<td>Contains parameters used for the ranking model task.</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp; query_col</td>
+<td>String</td>
+<td>Name of column in dataset that contains the query IDs.</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp; nqueries</td>
+<td>int64</td>
+<td>Number of queries to consider. Uses all queries when null.</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp; nrows_per_query</td>
+<td>int64</td>
+<td>Number of rows to use per query. Uses all rows when null.</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp; drop_query_id</td>
+<td>Boolean</td>
+<td>Specifies whether to drop the query ID column from the dataset in order to prevent passing the query ID column to the model as a feature.</td>
+</tr>
+</tbody>
+</table>
+<!-- hack to get around inability to indent within a cell -->
+</section>
+<section id="dataset-sizing">
+<h3>Dataset sizing<a class="headerlink" href="#dataset-sizing" title="Permalink to this heading"></a></h3>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nrows</td>
+<td>int64</td>
+<td>Number of rows of data to load and test. Loads all rows when null.</td>
+</tr>
+<tr>
+<td>nrows_per_time_bin</td>
+<td>int64</td>
+<td>Number of rows of data per time bin to load and test in CT. Loads all rows when null.</td>
+</tr>
+<tr>
+<td>sample</td>
+<td>Boolean</td>
+<td>Specifies whether to sample rows in the data. Default is True.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="feature-types-and-relations">
+<h3>Feature types and relations<a class="headerlink" href="#feature-types-and-relations" title="Permalink to this heading"></a></h3>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>categorical_features</td>
+<td>Repeated String</td>
+<td>A list of categorical features.</td>
+</tr>
+<tr>
+<td>protected_features</td>
+<td>Repeated String</td>
+<td>A list of features that are protected attributes. When the Bias and Fairness category is specified, these tests are only run over the listed features.</td>
+</tr>
+<tr>
+<td>features_not_in_model</td>
+<td>Repeated String</td>
+<td>A list of features not present in the model.</td>
+</tr>
+<tr>
+<td>text_features</td>
+<td>Repeated String</td>
+<td>A list of text features to run NLP tests over.</td>
+</tr>
+<tr>
+<td>image_features</td>
+<td>Repeated string</td>
+<td>A list of image features to run CV tests over.</td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 <section id="arguments">
 <h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this heading"></a></h2>
@@ -209,7 +359,7 @@ predictions are specified for multi-class models.</p>
 <p>List of categorical features in data. If provided, these should be ALL the categorical features. If <code class="docutils literal notranslate"><span class="pre">null</span></code>, RIME will automatically determine whether a column is categorical or not. By default it is <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">protected_features</span></code>: list or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
-<p>List of protected features in data. If the <code class="docutils literal notranslate"><span class="pre">Bias</span> <span class="pre">and</span> <span class="pre">Fairness</span></code> category is added to <code class="docutils literal notranslate"><span class="pre">categories</span></code> in the test config (see <a class="reference internal" href="tests.html"><span class="doc std std-doc">TestSuiteConfig()</span></a>, and <code class="docutils literal notranslate"><span class="pre">protected_features</span></code> are included, a set of bias and fairness tests will be run over the protected features.</p>
+<p>List of protected features in data. If the <code class="docutils literal notranslate"><span class="pre">Bias</span> <span class="pre">and</span> <span class="pre">Fairness</span></code> category is added to <code class="docutils literal notranslate"><span class="pre">categories</span></code> in the test config (see <a class="reference internal" href="tabular/tests.html"><span class="doc std std-doc">TestSuiteConfig()</span></a>, and <code class="docutils literal notranslate"><span class="pre">protected_features</span></code> are included, a set of bias and fairness tests will be run over the protected features.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">features_not_in_model</span></code>: list or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
 <p>List of features in the dataset that are not used by the model. Specifying this will ensure that only relevant tests are run on these features.</p>
@@ -323,7 +473,7 @@ predictions are specified for multi-class models.</p>
 <p>List of categorical features in data. If provided, these should be ALL the categorical features. If <code class="docutils literal notranslate"><span class="pre">null</span></code>, RIME will automatically determine whether a column is categorical or not. By default it is <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">protected_features</span></code>: list or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
-<p>List of protected features in data. If the <code class="docutils literal notranslate"><span class="pre">Bias</span> <span class="pre">And</span> <span class="pre">Fairness</span></code> category is added to <code class="docutils literal notranslate"><span class="pre">categories</span></code> in the test config (see <a class="reference internal" href="tests.html"><span class="doc std std-doc">TestSuiteConfig()</span></a>, and <code class="docutils literal notranslate"><span class="pre">protected_features</span></code> are included - a set of bias and fairness tests will be run over the protected features.</p>
+<p>List of protected features in data. If the <code class="docutils literal notranslate"><span class="pre">Bias</span> <span class="pre">And</span> <span class="pre">Fairness</span></code> category is added to <code class="docutils literal notranslate"><span class="pre">categories</span></code> in the test config (see <a class="reference internal" href="tabular/tests.html"><span class="doc std std-doc">TestSuiteConfig()</span></a>, and <code class="docutils literal notranslate"><span class="pre">protected_features</span></code> are included - a set of bias and fairness tests will be run over the protected features.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">features_not_in_model</span></code>: list or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
 <p>List of features in the dataset that are not used by the model. Specifying this will ensure that only relevant tests are run on these features.</p>
@@ -483,7 +633,7 @@ predictions are specified for multi-class models.</p>
 <p>Name of column in data that corresponds to the labels.</p>
 </li>
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">protected_features</span></code></strong>: array, <em><strong>required</strong></em></p>
-<p>List of protected features in data. If the <code class="docutils literal notranslate"><span class="pre">Bias</span> <span class="pre">And</span> <span class="pre">Fairness</span></code> category is added to <code class="docutils literal notranslate"><span class="pre">categories</span></code> in the test config (see <a class="reference internal" href="tests.html"><span class="doc std std-doc">TestSuiteConfig()</span></a>, and <code class="docutils literal notranslate"><span class="pre">protected_features</span></code> are included, a set of bias and fairness tests will be run over the protected features.</p>
+<p>List of protected features in data. If the <code class="docutils literal notranslate"><span class="pre">Bias</span> <span class="pre">And</span> <span class="pre">Fairness</span></code> category is added to <code class="docutils literal notranslate"><span class="pre">categories</span></code> in the test config (see <a class="reference internal" href="tabular/tests.html"><span class="doc std std-doc">Tests Configuration</span></a>, and <code class="docutils literal notranslate"><span class="pre">protected_features</span></code> are included, a set of bias and fairness tests will be run over the protected features.</p>
 </li>
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">intersections</span></code></strong>: array, <em><strong>required</strong></em></p>
 <p>A list of arrays of features. The intersection of the sets of features specifies a custom group on which the performance tests are run.</p>

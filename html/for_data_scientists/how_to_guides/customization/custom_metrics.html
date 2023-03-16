@@ -53,7 +53,7 @@
             RIME
           </a>
               <div class="version">
-                2.0.0-beta.8
+                2.0.0-beta.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -141,7 +141,7 @@
   <section id="custom-metrics">
 <h1>Custom Metrics<a class="headerlink" href="#custom-metrics" title="Permalink to this heading"></a></h1>
 <p>This feature is currently in beta and is subject to change in an upcoming release.
-In order to use the custom metrics functionality, you first need to create a python file that contains
+In order to use the custom metrics functionality, you first need to create a Python file that contains
 the function used to calculate the custom metric. This function should be named <code class="docutils literal notranslate"><span class="pre">custom_metric_func</span></code>,
 and the interface this function is expected to expose is below:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
@@ -173,17 +173,17 @@ and the interface this function is expected to expose is below:</p>
 </div>
 <p>The arguments passed to this function depend on the your configured data and task.
 The function should return <code class="docutils literal notranslate"><span class="pre">None</span></code> whenever the provided arguments are insufficent, such as when labels are required but not available.</p>
-<p>NOTE: for unstructured data (NLP/CV) the dataframe will contain information about user-defined metadata for
+<p>NOTE: for unstructured data, the dataframe will contain information about user-defined metadata for
 each datapoint and any profiled attributes. For tabular data, the dataframe will be the raw features.</p>
-<p>After defining this function, you then need to specify it in the CLIConfig. The place to specify it is
-in the <code class="docutils literal notranslate"><span class="pre">model_profiling_info</span></code> section. Specifically, it should look like:</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nt">&quot;model_profiling_info&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<p>After defining this function, you then need to specify it in the <code class="docutils literal notranslate"><span class="pre">model_profiling</span></code> section of the JSON configuration object.
+<a class="reference internal" href="../../reference/model_profiling.html"><span class="doc std std-doc">Model Profiling</span></a> discusses this object in more detail.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nt">&quot;model_profiling&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;custom_metrics&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;NAME_OF_METRIC&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;path/to/file.py&quot;</span><span class="p">}</span>
 <span class="w">  </span><span class="p">},</span>
 </pre></div>
 </div>
 <p>Replace <code class="docutils literal notranslate"><span class="pre">NAME_OF_METRIC</span></code> with the name of the metric (this is how it will show up in the UI). Replace <code class="docutils literal notranslate"><span class="pre">path/to/file.py</span></code>
-with the path to the python file you created in the above step.</p>
+with the path to the Python file you created in the above step.</p>
 </section>
 
 

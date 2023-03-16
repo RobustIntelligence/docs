@@ -52,8 +52,6 @@ You can then re-run the `run-firewall-nlp` command to upload the next batch of d
 
 To upload data for the remaining 7 weeks in our examples, simply repeat this process for data files `val_3.json.gz`/`preds.val_3.jsonl.gz` through `val_9.json.gz`/`preds.val_9.jsonl.gz`
 
-{{ cli_note }}
-
 ---
 
 ## Using Your Own Model and Datasets
@@ -62,7 +60,7 @@ This guide will cover how to run AI Firewall Continuous Tests on your own model 
 
 ### Collect Data in the Correct Format
 
-Data formatting requirements are very similar to those for AI Stress Tests (see [Input Data Format](/for_data_scientists/reference/nlp/task_data_format.md)); however, **for continuous tests, timestamp information is also needed.**
+Data formatting requirements are very similar to those for AI Stress Tests (see [Input Data Format](/for_data_scientists/reference/task_data_format.md)); however, **for continuous tests, timestamp information is also needed.**
 
 For AI Firewall Continuous Tests, RI requires two datasets: a reference dataset and an (incremental) evaluation dataset. The latter must supply timestamps with each data point, using the key `"timestamp"`. This allows the data to be sliced into batches appropriately, each of which will be compared to the reference dataset during continuous testing.
 
@@ -72,7 +70,7 @@ Datasets must be passed in as `.json` or `.jsonl` files, optionally compressed v
 
 With your data ready, you can now create a configuration file.
 
-For a detailed reference on what the configuration should look like, see [Continuous Tests Configuration](/for_data_scientists/reference/nlp/firewall_continuous_tests.md).
+For a detailed reference on what the configuration should look like, see [Continuous Tests Configuration](/for_data_scientists/reference/firewall_continuous_tests.md).
 
 ### Run the CLI
 
@@ -86,8 +84,6 @@ rime-engine run-firewall-nlp --firewall-id $FIREWALL_ID --config-path <PATH-TO-C
 ```
 
 {{ nlp_ui_redirect }}
-
-{{ cli_note }}
 
 ### Troubleshooting
 

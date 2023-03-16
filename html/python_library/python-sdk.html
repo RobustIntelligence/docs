@@ -53,7 +53,7 @@
             RIME
           </a>
               <div class="version">
-                2.0.0-beta.8
+                2.0.0-beta.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -120,6 +120,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Client.upload_data_frame"><code class="docutils literal notranslate"><span class="pre">Client.upload_data_frame()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Client.upload_directory"><code class="docutils literal notranslate"><span class="pre">Client.upload_directory()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Client.list_uploaded_file_urls"><code class="docutils literal notranslate"><span class="pre">Client.list_uploaded_file_urls()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Client.delete_uploaded_file_url"><code class="docutils literal notranslate"><span class="pre">Client.delete_uploaded_file_url()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Client.get_job"><code class="docutils literal notranslate"><span class="pre">Client.get_job()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Client.start_file_scan"><code class="docutils literal notranslate"><span class="pre">Client.start_file_scan()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Client.list_file_scan_results"><code class="docutils literal notranslate"><span class="pre">Client.list_file_scan_results()</span></code></a></li>
@@ -149,7 +150,14 @@
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.list_datasets"><code class="docutils literal notranslate"><span class="pre">Project.list_datasets()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.list_models"><code class="docutils literal notranslate"><span class="pre">Project.list_models()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.get_data_collector"><code class="docutils literal notranslate"><span class="pre">Project.get_data_collector()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.get_general_access_permissions"><code class="docutils literal notranslate"><span class="pre">Project.get_general_access_permissions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.get_general_access_roles"><code class="docutils literal notranslate"><span class="pre">Project.get_general_access_roles()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.list_predictions"><code class="docutils literal notranslate"><span class="pre">Project.list_predictions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.get_dataset"><code class="docutils literal notranslate"><span class="pre">Project.get_dataset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.get_model"><code class="docutils literal notranslate"><span class="pre">Project.get_model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.get_predictions"><code class="docutils literal notranslate"><span class="pre">Project.get_predictions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.delete_dataset"><code class="docutils literal notranslate"><span class="pre">Project.delete_dataset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.delete_model"><code class="docutils literal notranslate"><span class="pre">Project.delete_model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.delete_predictions"><code class="docutils literal notranslate"><span class="pre">Project.delete_predictions()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#rime_sdk.Job"><code class="docutils literal notranslate"><span class="pre">Job</span></code></a><ul>
@@ -173,6 +181,9 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#rime_sdk.Firewall"><code class="docutils literal notranslate"><span class="pre">Firewall</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Firewall.update_firewall"><code class="docutils literal notranslate"><span class="pre">Firewall.update_firewall()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Firewall.activate_ct_scheduling"><code class="docutils literal notranslate"><span class="pre">Firewall.activate_ct_scheduling()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Firewall.update_location_info"><code class="docutils literal notranslate"><span class="pre">Firewall.update_location_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Firewall.deactivate_ct_scheduling"><code class="docutils literal notranslate"><span class="pre">Firewall.deactivate_ct_scheduling()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Firewall.get_link"><code class="docutils literal notranslate"><span class="pre">Firewall.get_link()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Firewall.get_bin_size"><code class="docutils literal notranslate"><span class="pre">Firewall.get_bin_size()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Firewall.get_ref_data_id"><code class="docutils literal notranslate"><span class="pre">Firewall.get_ref_data_id()</span></code></a></li>
@@ -265,7 +276,7 @@ Enable/disable SSL hostname verification.</p></li>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Client.create_project">
-<span class="sig-name descname"><span class="pre">create_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_case</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ethical_consideration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profiling_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">general_access_permission</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'None'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.Project" title="rime_sdk.project.Project"><span class="pre">Project</span></a></span></span><a class="headerlink" href="#rime_sdk.Client.create_project" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_case</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ethical_consideration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profiling_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">general_access_role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ACTOR_ROLE_NONE'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.Project" title="rime_sdk.project.Project"><span class="pre">Project</span></a></span></span><a class="headerlink" href="#rime_sdk.Client.create_project" title="Permalink to this definition"></a></dt>
 <dd><p>Create a new RIME Project.</p>
 <p>Projects enable you to organize Stress Test runs.
 A natural way to organize Stress Test runs is to create a Project for each
@@ -286,9 +297,9 @@ Description of ethical considerations for this Project.</p></li>
 <li><p><strong>profiling_config</strong> – Optional[dict]
 Configuration for the data and model profiling across all test
 runs.</p></li>
-<li><p><strong>general_access_permission</strong> – Optional[str],
-Project permission assigned to the workspace members.
-Possible Values: View, Edit, None.</p></li>
+<li><p><strong>general_access_role</strong> – Optional[str],
+Project roles assigned to the workspace members.
+Allowed Values: ACTOR_ROLE_USER, ACTOR_ROLE_VIEWER, ACTOR_ROLE_NONE.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -365,7 +376,7 @@ identifier of the Managed Image. The call fails when an image with
 the specified name already exists.</p></li>
 <li><p><strong>requirements</strong> – List[ManagedImagePipRequirement]
 List of additional pip requirements to be installed on the managed
-image. A <code class="docutils literal notranslate"><span class="pre">ManagedImage.PipRequirement</span></code> can be created with the helper
+image. A <code class="docutils literal notranslate"><span class="pre">ManagedImagePipRequirement</span></code> can be created with the helper
 method <code class="docutils literal notranslate"><span class="pre">Client.pip_requirement</span></code>.
 The first argument is the name of the library (e.g. <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> or
 <code class="docutils literal notranslate"><span class="pre">xgboost</span></code>) and the second argument is a valid pip
@@ -377,7 +388,7 @@ for the library.</p></li>
 [BETA] An optional List of additional operating system package
 requirements to install on the Managed Image. Currently only
 <cite>Rocky Linux</cite> package requirements are supported.
-Create a <code class="docutils literal notranslate"><span class="pre">ManagedImage.PackageRequirement</span></code> parameter with
+Create a <code class="docutils literal notranslate"><span class="pre">ManagedImagePackageRequirement</span></code> parameter with
 the <code class="docutils literal notranslate"><span class="pre">Client.os_requirement</span></code> helper method.
 The first argument is the name of the package (e.g. <code class="docutils literal notranslate"><span class="pre">texlive</span></code> or
 <code class="docutils literal notranslate"><span class="pre">vim</span></code>) and the second optional argument is a valid yum
@@ -599,7 +610,7 @@ a single Managed Image.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Client.start_stress_test">
-<span class="sig-name descname"><span class="pre">start_stress_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_run_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">exp_fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.Job" title="rime_sdk.job.Job"><span class="pre">Job</span></a></span></span><a class="headerlink" href="#rime_sdk.Client.start_stress_test" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">start_stress_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_run_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rime_managed_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">RuntimeinfoCustomImage</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">exp_fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.Job" title="rime_sdk.job.Job"><span class="pre">Job</span></a></span></span><a class="headerlink" href="#rime_sdk.Client.start_stress_test" title="Permalink to this definition"></a></dt>
 <dd><p>Start a Stress Testing run.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -610,6 +621,17 @@ locate the model and datasets to be used for the test.</p></li>
 <li><p><strong>project_id</strong> – str
 Identifier for the Project where the resulting test run will be stored.
 When not specified, stores the results in the default Project.</p></li>
+<li><p><strong>rime_managed_image</strong> – Optional[str]
+Name of a Managed Image to use when running the model test.
+The image must have all dependencies required by your model. To create
+new Managed Images with your desired dependencies, use the client’s
+<cite>create_managed_image()</cite> method.</p></li>
+<li><p><strong>custom_image</strong> – Optional[RuntimeinfoCustomImage]
+Specification of a customized container image to use running the model
+test. The image must have all dependencies required by your model.
+The image must specify a name for the image and optionally a pull secret
+(of type RuntimeinfoCustomImagePullSecret) with the name of the
+kubernetes pull secret used to access the given image.</p></li>
 <li><p><strong>exp_fields</strong> – Dict[str, object]
 [BETA] Fields for experimental features.</p></li>
 </ul>
@@ -928,6 +950,28 @@ Please store this reference for future access to the directory.</p>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># List all file URLs</span>
 <span class="n">urls</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">list_uploaded_file_urls</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.Client.delete_uploaded_file_url">
+<span class="sig-name descname"><span class="pre">delete_uploaded_file_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">upload_url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.Client.delete_uploaded_file_url" title="Permalink to this definition"></a></dt>
+<dd><p>Delete the file at the specified upload url in the RIME blob store.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>upload_url</strong> – str
+Url to the file to be deleted in the RIME blob store.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Delete a file URL returned by list_uploaded_file_urls</span>
+<span class="n">urls</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">list_uploaded_file_urls</span><span class="p">()</span>
+<span class="n">first_url</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">urls</span><span class="p">)</span>
+<span class="n">rime_client</span><span class="o">.</span><span class="n">delete_uploaded_file_url</span><span class="p">(</span><span class="n">first_url</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1582,17 +1626,188 @@ a new Data Collector.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rime_sdk.Project.get_general_access_permissions">
-<span class="sig-name descname"><span class="pre">get_general_access_permissions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">RimeActorRole</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#rime_sdk.Project.get_general_access_permissions" title="Permalink to this definition"></a></dt>
-<dd><p>Get the permissions of workspace members for the project.</p>
+<dt class="sig sig-object py" id="rime_sdk.Project.get_general_access_roles">
+<span class="sig-name descname"><span class="pre">get_general_access_roles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">RimeActorRole</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#rime_sdk.Project.get_general_access_roles" title="Permalink to this definition"></a></dt>
+<dd><p>Get the roles of workspace members for the project.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><dl class="simple">
 <dt>Dict[RimeActorRole, str]</dt><dd><p>Returns a map of Actor Roles for workspace and their
-permission for the project.</p>
+roles for the project.</p>
 </dd>
 </dl>
 </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.Project.list_predictions">
+<span class="sig-name descname"><span class="pre">list_predictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#rime_sdk.Project.list_predictions" title="Permalink to this definition"></a></dt>
+<dd><p>Return a list of predictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_id</strong> – Optional[str] = None
+The ID of the model to which the prediction sets belong.</p></li>
+<li><p><strong>dataset_id</strong> – Optional[str] = None
+The ID of the dataset to which the prediction sets belong.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Iterator of dictionaries: each dictionary represents a
+prediction.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Iterator[Dict]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – This error is generated when the request to the Registry
+    service fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.Project.get_dataset">
+<span class="sig-name descname"><span class="pre">get_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="headerlink" href="#rime_sdk.Project.get_dataset" title="Permalink to this definition"></a></dt>
+<dd><p>Return a registered dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset_id</strong> – Optional[str] = None,
+The ID of the dataset to retrieve.</p></li>
+<li><p><strong>dataset_name</strong> – Optional[str] = None,
+The name of the dataset to retrieve.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary representing the dataset.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – This error is generated when the request to the Registry
+    service fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.Project.get_model">
+<span class="sig-name descname"><span class="pre">get_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="headerlink" href="#rime_sdk.Project.get_model" title="Permalink to this definition"></a></dt>
+<dd><p>Return a registered model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_id</strong> – Optional[str] = None,
+The ID of the model to retrieve.</p></li>
+<li><p><strong>model_name</strong> – Optional[str] = None,
+The name of the model to retrieve.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary representing the model.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – This error is generated when the request to the Registry
+    service fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.Project.get_predictions">
+<span class="sig-name descname"><span class="pre">get_predictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="headerlink" href="#rime_sdk.Project.get_predictions" title="Permalink to this definition"></a></dt>
+<dd><p>Get predictions for a model and dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_id</strong> – str,
+The ID of the model used to generate the predictions.</p></li>
+<li><p><strong>dataset_id</strong> – str,
+The ID of the dataset used to generate the predictions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary representing the predictions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – This error is generated when the request to the Registry
+    service fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.Project.delete_dataset">
+<span class="sig-name descname"><span class="pre">delete_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.Project.delete_dataset" title="Permalink to this definition"></a></dt>
+<dd><p>Delete a dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dataset_id</strong> – str,
+The ID of the dataset to delete.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – This error is generated when the request to the Registry
+    service fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.Project.delete_model">
+<span class="sig-name descname"><span class="pre">delete_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.Project.delete_model" title="Permalink to this definition"></a></dt>
+<dd><p>Delete a model.</p>
+<p>The arguments are mutually exclusive: only one of them can be specified.
+:param model_id: str,</p>
+<blockquote>
+<div><p>The ID of the model to delete.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>model_name</strong> – str,
+The name of the model to delete.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – This error is generated when the request to the Registry
+    service fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.Project.delete_predictions">
+<span class="sig-name descname"><span class="pre">delete_predictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.Project.delete_predictions" title="Permalink to this definition"></a></dt>
+<dd><p>Delete predictions for a model and dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_id</strong> – str,
+The ID of the model used to generate the predictions.</p></li>
+<li><p><strong>dataset_id</strong> – str,
+The ID of the dataset used to generate the predictions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – This error is generated when the request to the Registry
+    service fails.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1910,6 +2125,49 @@ Specifies whether to disable continuous testing</p></li>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">fw</span><span class="o">.</span><span class="n">update_firewall</span><span class="p">(</span><span class="n">ref_data_id</span><span class="o">=</span><span class="s2">&quot;New reference data ID&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.Firewall.activate_ct_scheduling">
+<span class="sig-name descname"><span class="pre">activate_ct_scheduling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rolling_window_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">timedelta</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.Firewall.activate_ct_scheduling" title="Permalink to this definition"></a></dt>
+<dd><p>Activate scheduled CT.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_location</strong> – Dict
+The location of the evaluation data for scheduled CT.</p></li>
+<li><p><strong>prediction_location</strong> – Dict
+The location of the evaluation predictions for scheduled CT.</p></li>
+<li><p><strong>rolling_window_size</strong> – Optional[timedelta]
+If <cite>rolling_window_size</cite> is not <cite>None</cite>, it is used to determine
+the reference set for scheduled CT.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.Firewall.update_location_info">
+<span class="sig-name descname"><span class="pre">update_location_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.Firewall.update_location_info" title="Permalink to this definition"></a></dt>
+<dd><p>Update location info for scheduled CT.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_location</strong> – Optional[Dict]
+If <cite>data_location</cite> is not <cite>None</cite>, the Firewall will use this
+for scheduled CT.</p></li>
+<li><p><strong>prediction_location</strong> – Optional[Dict]
+If <cite>prediction_location</cite> is not <cite>None</cite>, the Firewall will use this
+for scheduled CT.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.Firewall.deactivate_ct_scheduling">
+<span class="sig-name descname"><span class="pre">deactivate_ct_scheduling</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.Firewall.deactivate_ct_scheduling" title="Permalink to this definition"></a></dt>
+<dd><p>Deactivate scheduled CT.</p>
 </dd></dl>
 
 <dl class="py method">

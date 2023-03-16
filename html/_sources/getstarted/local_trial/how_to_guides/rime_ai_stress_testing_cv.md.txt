@@ -66,19 +66,19 @@ If you explore the test config in `images_examples/detection/voc/stress_test_con
 
 ### Define a Python Model File
 
-Refer to [How to Create a CV Model File](/for_data_scientists/reference/cv/specify_model_cv.md) for step-by-step instructions on creating a model interface for RIME.
+Refer to [How to Create a CV Model File](/for_data_scientists/reference/specify_model.md) for step-by-step instructions on creating a model interface for RIME.
 
 ### Gather Datasets
 
 #### 1. Prepare Input Data
 
-For Computer vision (CV) data, RIME uses `.json` (or `.jsonl`) files containing metadata for each image. For a detailed specification of data formatting, see [Input Data Format](/for_data_scientists/reference/cv/task_data_format.md).
+For Computer vision (CV) data, RIME uses `.json` (or `.jsonl`) files containing metadata for each image. For a detailed specification of data formatting, see [Input Data Format](/for_data_scientists/reference/task_data_format.md).
 
 #### 2. Specify Prediction Logs (Recommended)
 
 Because model inference is usually the most time-consuming part of the testing framework, we recommend specifying cached prediction logs.
 
-This can be done within the datafile itself (i.e., by adding a `"probabilities"` key to each data sample) or by [specifying them in separate files](/for_data_scientists/reference/cv/prediction_info). The actual specification for prediction data is described in [Prediction Cache Data Format](/for_data_scientists/reference/cv/task_prediction_cache_format.md).
+This can be done within the datafile itself (i.e., by adding a `"probabilities"` key to each data sample) or by specifying them in separate files.
 
 In the image classification example above, we specified model predictions in the datafile itself (see `images_examples/classification/awa2/data/{train|test}_inputs_trial.json`).
 
@@ -93,7 +93,7 @@ However, if you do not wish to create a separate prediction log, RI can call you
 
 With your data and model ready, you can now create a configuration file. Examples of these can be found in the `rime_trial/` bundle (the ones used for these examples are under `images_examples/`).
 
-For a detailed reference on what the configuration should look like, see [AI Stress Testing Configuration Reference](/for_data_scientists/reference/cv/stress_testing.md).
+For a detailed reference on what the configuration should look like, see [AI Stress Testing Configuration Reference](/for_data_scientists/reference/stress_testing.md).
 
 ## Conclusion
 

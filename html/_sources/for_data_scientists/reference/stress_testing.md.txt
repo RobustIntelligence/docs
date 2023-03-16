@@ -2,21 +2,23 @@ Stress Testing
 ==========================
 
 Configuration of RIME Stress Testing is done through a JSON configuration
-file that you pass as an argument to the RIME CLI.
+file that you pass as an argument to the Python SDK.
 
 ### Template
 ```python
 {
-  "run_name": "Run Name",                       (REQUIRED)
-  "data_info": {...},                           (REQUIRED)
-  "model_info": {...},
-  "model_task": "Binary Classification",
-  "model_profiling_info": {...},
-  "data_profiling_info": {...},
-  "tests_config_path": "path/to/tests/config",
-  "tests_config": {...},
-  "subset_profiling_config": {...},
-  "random_seed": 0
+  "run_name": "Run Name", (REQUIRED)
+  "data_info": {
+      "ref_dataset_id": "my_ref_dataset_id", (REQUIRED)
+      "eval_dataset_id": "my_eval_dataset_id" (REQUIRED)
+  },
+  "model_id": "my_model_id", (REQUIRED)
+  "profiling_config": {
+      "model_profiling": {...},
+      "data_profiling": {...}
+  },
+  "test_suite_config": {...},
+  "run_time_info": {...}
 }
 ```
 
@@ -26,52 +28,42 @@ file that you pass as an argument to the RIME CLI.
 
     The name under which your run will appear in the UI.
 
-- **`data_info`**: DataInfo, ***required***
+- **`data_info`**: Dict[string, string], ***required***
 
-    Configuration for the datasources to use. For a reference on how to
-    configure a datasource, see [Data Configuration](data_source.md).
+   Specification of the `ref_dataset_id` and `eval_dataset_id` parameters, which determine the Reference and Evaluation Datasets to use, respectively. For documentation on how to register a Dataset and receive a Dataset ID, see [RIME Registries](../how_to_guides/registries.md)
 
-- `model_info`: ModelInfo or `null`,  *default* = `null`
+- **`model_id`**: string, ***required***
 
-    Configuration for the model to use. For a reference on how to configure a
-    model, see [Model Configuration](model_source.md). If you are not providing
+    Configuration for the Model to use. For a reference on how to configure a
+    model, see [RIME Registries](../how_to_guides/registries.md). If you are not providing
     a model, this should be `null`.
 
-- `model_task`: string, *default* = `"Binary Classification"`
+- **`model_task`**: string, *default* = `"Binary Classification"`
 
     Specification of the model task. Current accepted values are `"Binary
     Classification"`, `"Multi-class Classification"`, `"Regression"`, and `"Ranking"`.
 
-- `model_profiling_info`: ModelProfilingInfo, *default* = `ModelProfilingInfo()`
+- **`profiling_config`**: ProfilingConfig, *default* = `ProfilingConfig()`
 
-    Specification of how to profile the model. For a guide on how to specify
-    this info, see [Model Profiling Configuration](model_profiling.md).  
+    Specification of the configuration for profiling the model and data.
     NOTE: this argument is optional. If it is not specified default parameters
     will be used.
 
-- `data_profiling_info`: DataProfilingInfo, *default* = `DataProfilingInfo()`
+  - **`model_profiling`**: ModelProfilingInfo, *default* = `ModelProfilingInfo()`
 
-    Specification of how to profile the data. For a guide on how to specify
-    this info, see [Data Profiling Configuration](data_profiling.md).  
-    NOTE: this argument is optional. If it is not specified default parameters
-    will be used.
+      Optional. Specifies how to profile the model. [Model Profiling Configuration](model_profiling.md)
+      discusses how to configure model profiling. When this parameter is not specified, profiling uses 
+      default parameters.
 
-- `tests_config_path`: string or `null`, *default* = `null`
+  - **`data_profiling`**: DataProfilingInfo, *default* = `DataProfilingInfo()`
 
-    Path to a TestSuiteConfig JSON file. If both `tests_config_path` and `test_config` are `null` RIME will use the default [TestSuiteConfig()](tests.md).  
-    NOTE: Only one of `tests_config_path` OR `test_config` should be specified.
+      Optional. Specifies how to profile the data. [Data Profiling Configuration](model_profiling.md)
+      discusses how to configure data profiling. When this parameter is not specified, profiling uses 
+      default parameters.
+- **`test_suite_config`**: TestSuiteConfig, *default* = `TestSuiteConfig()`
 
-- `tests_config`: TestSuiteConfig or `null`, *default* = `null`
+Optional. Specifies which tests to run and what test parameters to use. [Test Suite Configuration](tabular/tests.md) discusses how to configure test settings.When this parameter is not specified, default tests run with default parameters.
 
-    Specification of which tests to run and what test parameters to use. If both `tests_config_path` and `tests_config` are `null` RIME will use the default [TestSuiteConfig()](tests.md).  
-    NOTE: Only one of `tests_config_path` OR `tests_config` should be specified.
+- **`run_time_info`**: RunTimeInfo, *default* = `RunTimeInfo()`
 
-- `subset_profiling_config`: SubsetProfilingConfig or `null`, *default* = `SubsetProfilingConfig()`
-
-    Specification of how to slice and profile subsets of the data. For a guide on how to
-    specify this, see [Subset Profiling Configuration](subset_profiling.md).
-
-- `random_seed`: int or `null`, *default* = `null`
-
-    Seed all random operations in a test run. A seeded test run should return identical results if executed multiple times.
-    If `random_seed` is not specified or `null` then there is no guarantee that two test runs executed from the same config will have identical results.
+  Specification of runtime-specific parameters associated with the Stress Test run. For more information, See [Run Time Information](TODO: paul make this a legit link). NOTE: this argument is optional. If it is not specified default parameters will be used.
