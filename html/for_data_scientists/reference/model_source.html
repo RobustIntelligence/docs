@@ -63,10 +63,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../changelogs.html">Release Notes</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../getstarted/product-overview.html">RIME and machine learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
@@ -146,12 +143,13 @@
   <section id="model-configuration">
 <h1>Model Configuration<a class="headerlink" href="#model-configuration" title="Permalink to this heading"></a></h1>
 <p>Configuring a model source can be done by specifying a mapping in the RIME JSON
-configuration file, under the <code class="docutils literal notranslate"><span class="pre">model_info</span></code> argument.</p>
+configuration file, under the <code class="docutils literal notranslate"><span class="pre">model_info</span></code> argument. <a class="reference internal" href="specify_model.html"><span class="doc std std-doc">Specify a Model</span></a>
+discusses how to create a Python model file.</p>
 <section id="template">
 <h2>Template<a class="headerlink" href="#template" title="Permalink to this heading"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="s2">&quot;model_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/model.py&quot;</span>        <span class="p">(</span><span class="n">REQUIRED</span><span class="p">)</span>
+        <span class="s2">&quot;model_path&quot;</span><span class="p">:</span> <span class="s2">&quot;$PATH&quot;</span><span class="p">;</span>
     <span class="p">}</span>
     <span class="o">...</span>
 <span class="p">}</span>
@@ -160,12 +158,43 @@ configuration file, under the <code class="docutils literal notranslate"><span c
 </section>
 <section id="arguments">
 <h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this heading"></a></h2>
-<ul>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">path</span></code></strong>: string, <em><strong>required</strong></em></p>
-<p>Path to Python model file. For instructions on how to create this Python
-model file, please see <a class="reference internal" href="specify_model.html"><span class="doc std std-doc">Specify a Model</span></a>.</p>
-</li>
-</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>model_path</td>
+<td>ModelPathInfo</td>
+<td>Path to the Python model file.</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp; path</td>
+<td>String</td>
+<td>Contains the actual path.</td>
+</tr>
+<tr>
+<td>hugging_face</td>
+<td>HuggingFaceModelInfo</td>
+<td>The URI to a HuggingFace model.</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp; model_uri</td>
+<td>String</td>
+<td>Contains the actual URI.</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp; kwargs</td>
+<td>String</td>
+<td>Arguments to pass to HuggingFace along with the URI.</td>
+</tr>
+</tbody>
+</table>
+<p>Specify exactly one of <code class="docutils literal notranslate"><span class="pre">model_path</span></code> or <code class="docutils literal notranslate"><span class="pre">hugging_face</span></code>.</p>
 </section>
 </section>
 

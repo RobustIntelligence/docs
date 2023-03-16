@@ -1,5 +1,4 @@
-Specify a Model
-==========================
+# Specify a Model
 
 RIME expects models to be passed in as Python files that expose one of the following functions:
 
@@ -21,10 +20,9 @@ In either case, the function signature should look like: `predict_df(df: pd.Data
 
     NOTE: for binary classification the return type should be a single float per row which represents the probability for the positive class. It should not be an array of probabilities for each class. E.g. `predict_df` should return `[0.7, 0.1, ...]` NOT `[[0.3, 0.7], [0.9, 0.1], ...]`.
 
-
 The following shows how to set up the Python interface RIME expects for a model that can be called via loading a model binary.
 
-### Step 1: Specify model path
+## Step 1: Specify model path
 Put your model binary, and any other relevant model artifacts, in the same folder as this file.
 Create a constant for the path to this binary:
 
@@ -37,7 +35,7 @@ MODEL_NAME = 'TODO: change this to model name'
 MODEL_PATH = cur_dir / MODEL_NAME
 ```
 
-### Step 2: Retrieve custom code
+## Step 2: Retrieve custom code
 If custom code is needed to perform preprocessing on the data (or to call your API), we need to make sure it is loaded into the environment. If this code is able to be installed as a Python package, see the `Custom Requirements` section.
 
 If your code is NOT a Python package (and is instead a Python file or folder) then please put all relevant files in the same directory as this file, and add the following snippet to the Python file:
@@ -46,7 +44,7 @@ import sys
 sys.path.append(str(cur_dir))
 ```
 
-### Step 3: Access the model
+## Step 3: Access the model
 
 As an example, if you used the Python `pickle` module to save your model this would look like:
 ```
@@ -55,7 +53,7 @@ with open(MODEL_PATH, 'rb') as f:
     model = pickle.load(f)
 ```
 
-### Step 4: Import / implement preprocessing function
+## Step 4: Import / implement preprocessing function
 
 If the model you are using expects inputs of a different schema than the datasets you've provided, or of a different type than `dict`/`Pandas.DataFrame`, you will need to load/define all custom preprocessing. If your model can take in the raw data directly then you can skip this step! Getting the preprocessing functionality could look like:
 ```
@@ -67,7 +65,7 @@ def preprocessing(x: dict) -> ModelInputType:
     # TODO: implement preprocessing logic.
 ```
 
-### Step 5: Implement a predict function
+## Step 5: Implement a predict function
 Implement either the `predict_dict` function or the `predict_df` function. This should look something like:
 
 (NOTE: whichever you choose to implement, it must match one of the function names and signatures below.)

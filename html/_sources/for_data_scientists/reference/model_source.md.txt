@@ -1,23 +1,27 @@
-Model Configuration
-===================
+# Model Configuration
 
 Configuring a model source can be done by specifying a mapping in the RIME JSON
-configuration file, under the `model_info` argument.
+configuration file, under the `model_info` argument. [Specify a Model](specify_model.md)
+discusses how to create a Python model file.
 
-
-### Template
+## Template
 ```python
 {
     "model_info": {
-        "path": "/path/to/model.py"        (REQUIRED)
+        "model_path": "$PATH";
     }
     ...
 }
 ```
 
-### Arguments
+## Arguments
 
-- **`path`**: string, ***required***
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| model_path | ModelPathInfo | Path to the Python model file.  |
+| &nbsp;&nbsp;&nbsp;&nbsp; path | String | Contains the actual path. |
+| hugging_face | HuggingFaceModelInfo | The URI to a HuggingFace model. |
+| &nbsp;&nbsp;&nbsp;&nbsp; model_uri | String | Contains the actual URI. |
+| &nbsp;&nbsp;&nbsp;&nbsp; kwargs | String | Arguments to pass to HuggingFace along with the URI. |
 
-    Path to Python model file. For instructions on how to create this Python
-    model file, please see [Specify a Model](specify_model.md).
+Specify exactly one of `model_path` or `hugging_face`.
