@@ -1,30 +1,98 @@
 # Model cards
 
-A model card is a summary of the capabilities, datasets, limitations, and training parameters for a given machine learning model. The RI Platform enables you to generate model cards that can be configured to show specific aspects of a given model.
+A model card is a summary of the capabilities, datasets, limitations, and training
+parameters for a given machine learning model. RIME enables you to generate
+model cards that can be configured to show specific aspects of a given model.
 
-## Generating model cards
+## Launching the Model Card Builder
 
-1.  Sign in to an RI Platform instance.  
+The Model Card Builder can be launched from several different places in the web UI of a
+RIME instance.
+
+### Launching the Model Card Builder from the Stress Test page
+
+1.  Sign in to a RIME instance.  
     >   The Workspaces page appears.
 2.  Select a workspace.  
     >   The workspace summary page appears, listing the projects in that workspace.
 3.  Select a project.  
     >   The project summary page appears.
-4.  Select the *Model Cards* icon from the left bar.
-    >   The model cards page appears.
-5.  Select a model from the drop-down and click *Create Model Card*.
-    >   The model card configuration page appears.
-6.  Type information into the following data fields.
-    >   Title and Subtitle
-    >   Company and Creator
-    >   Intended Use Case
-    >   Why is this model important?
-    >   Limitations
-    >   Input, Output, and Architecture
-    >   About Data Collection
-7.  Select toggles to define the content of the model card.
-    >   Choose severity levels for test categories. The model card shows the selected levels.
-8.  Click *Generate PDF*.
-    >   The RI Platform saves the selected changes and generates the PDF model card.
+4.  From the left navigation bar, click *Stress Testing*.
+    >   The Stress Testing page appears, listing individual test runs.
+5.  Click the *Model Card* page icon for a test run.
 
-The model card is saved to disk.
+The Model Card Builder launches.
+
+### Launching the Model Card Builder from the Project overview page
+
+This procedure launches the Model Card Builder from the [Project](projects.md) page for  
+a model in production.
+
+1.  Sign in to a RIME instance.  
+    >   The Workspaces page appears.
+2.  Select a workspace.  
+    >   The workspace summary page appears, listing the projects in that workspace.
+3.  Select a project.  
+    >   The project overview page appears.
+4.  At the bottom of the Production Model pane at the right, click *Go to Builder*.
+
+The Model Card Builder launches.
+
+### Launching the Model Card Builder from a test run page
+
+This procedure launches the Model Card Builder from a specific test run page.
+
+1.  Sign in to a RIME instance.  
+    >   The Workspaces page appears.
+2.  Select a workspace.  
+    >   The workspace summary page appears, listing the projects in that workspace.
+3.  Select a project.  
+    >   The project overview page appears.
+4.  From the left navigation bar, click *Stress Testing*.
+    >   The Stress Testing page appears, listing individual test runs.
+5.  Click a test run.
+    >   The summary page for that test run appears.
+6.  At the bottom of the Stress Test Information pane, click *Go to Builder*.
+
+The Model Card Builder launches.
+
+## Generating model cards with the Model Card Builder.
+
+This procedure presumes you have launched the Model Card Builder. To edit model and  
+business impact metadata, go to [Project Settings](project_test_config.md).  
+
+1.  Select severity toggles from the *Model Issue Severities* section of the left
+    column. 
+    >   The severity levels are Alert, Warning, and Passing.
+2.  Select a set of test type toggles to include in the model card.
+    >   The model card can include Stress Testing, Continuous Testing, or both.
+3.  (Stress Testing selected) Select a set of test categories in each risk category.  
+    >   The risk categories are Operational Risk, Security Risk, and Fairness Risk.  
+    >   The following results are related to security test and appear with additional  
+    >   test details in the model card:  
+    >   *Effect on model*  
+    >   *Possible intent*  
+    >   *Recommendations*  
+4.  (Continuous Testing selected) Select a set of test categories in each risk category.  
+    >   The risk categories are Operational Risk, Security Risk, and Fairness Risk.  
+    >   The following results are related to security tests and appear with additional  
+    >   test details in the model card:  
+    >   *Effect on model*  
+    >   *Possible intent*  
+    >   *Evidence*  
+    >   *Recommendations*  
+5.  Type information into the following data fields.
+    >   Title and Subtitle  
+    >   About Data Collection  
+6.  Choose an output format from the *Export to...* drop-down selector and click the  
+    *Export* button.
+    >   Export format options are JSON and PDF.
+
+The model card is saved to local storage in the selected format.
+
+<!-- ## Model card templates
+
+Model card templates save a set of model card configuration settings for future reuse.
+
+### Creating a new model card template
+-->

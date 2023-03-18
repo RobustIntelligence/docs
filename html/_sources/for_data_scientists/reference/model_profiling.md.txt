@@ -1,0 +1,44 @@
+# Model Profiling Configuration
+
+RIME profiles the model in order to determine the tests to run on the model. With large
+datasets, this profiling can take a long time. Configuration options to alter the
+behavior of the profiling can shorten processing time.
+
+By default, RIME attempts to infer optimal values for all of these options. Manually set
+these parameters only when RIME is not selecting appropriate values.  
+
+### Template
+
+Specify this configuration in the [AI Stress Testing Configuration](stress_testing.md) 
+JSON file, under the `model_profiling` parameter.
+
+```python
+{
+...,
+"model_profiling": {
+    "nrows_for_summary": 1,
+    "nrows_for_feature_importance": 2,
+    "metric_configs_json": '{"foo": "bar"}',
+    "impact_metric": "foo",
+    "impact_label_threshold": 0.5,
+    "drift_impact_metric": "foo",
+    "subset_summary_metric": "foo",
+    "num_feats_for_subset_summary": 8,
+    "threshold": 0.7
+    }
+}
+```
+
+### Arguments
+
+| Argument | Type | Description |
+|----------|------|-------------|
+| nrows_for_summary | int or `null` | Default is `null`. The number of rows to use for calculating summary metrics of model. Specifying a large number of rows can affect performance. |
+| nrows_for_feature_importance | int or `null` | Default is `null`. The number of rows to use when calculating feature importance of the model. Specifying a large number of rows can affect performance. This setting is ignored when feature importance is configured. |
+| metric_configs_json | mapping or `null` | Default is `null`. The parameters to configure each metric used during testing. For instance, to configure NDCG to accumulate only to a specific rank `k=50`, specify `{"normalized_discounted_cumulative_gain": {"k": 50}}`. |
+| impact_metric | `MetricName` or `null` | Default is `null`. The metric to use when computing model impact for abnormal input and transformation tests. |
+| impact_label_threshold | float | Default is 0.8. When the fraction of labeled rows in the evaluation data falls below this threshold, Average Prediction is used for impact_metric and drift_impact_metric. |
+| drift_impact_metric | `MetricName` or `null` | Default is `null`. The metric to use when computing model impact for drift tests. |
+| subset_summary_metric | String | Calculated by taking the difference between the worst subset degradation and the overall degradation of the configured metric. |
+| num_feats_for_subset_summary | Optional int64 | Number of features over which the subset performance degradation summary metric is aggregated. |
+| threshold | float or `null` | Default is `null`. Specifies the decision boundary threshold for a binary classification task. Values at least equal to the threshold are classified as 1. Values below the threshold are classified as 0. When not specified, binary classification tasks use a decision boundary of 0.5.

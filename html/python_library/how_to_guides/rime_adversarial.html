@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adversarial Attacks &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Analyzing Subset Performance" href="rime_subset_performance.html" />
+    <link rel="prev" title="AI Stress Tests" href="rime_stress_tests.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                2.0.0-rc.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/modeltesting.html">RIME model testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/basic_tasks.html">Setting up and testing with RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/adv_tasks.html">Customization, and troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/shostedinst.html">Self-Hosted</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SDK reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../how_to_guides.html">Python SDK tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="rime_data_model_setup.html">Data and Model Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rime_stress_tests.html">AI Stress Tests</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Adversarial Attacks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-an-adversarial-attack">Running an Adversarial Attack</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#improving-adversarial-robustness-with-attack-results">Improving Adversarial Robustness with Attack Results</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fetching-adversarial-training-examples">Fetching Adversarial Training Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#retraining-a-new-model">Retraining a New Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#comparing-improvements">Comparing Improvements</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#highlighted-extra-features">Highlighted Extra Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#validity-function">Validity Function</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rime_subset_performance.html">Analyzing Subset Performance</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference.html">API Test Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../how_to_guides.html">Python SDK tutorials</a></li>
+      <li class="breadcrumb-item active">Adversarial Attacks</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/python_library/how_to_guides/rime_adversarial.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="adversarial-attacks">
+<h1>Adversarial Attacks<a class="headerlink" href="#adversarial-attacks" title="Permalink to this heading"></a></h1>
+<p>Complete the initial setup described in <a class="reference internal" href="rime_data_model_setup.html"><span class="doc std std-doc">RIME Data and Model Setup</span></a> before proceeding.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<p>Besides offering a comprehensive suite of stress tests, the RIME Python Library also offers a wide suite of adversarial attacks for tabular data.</p>
+<p>An <strong>Adversarial Attack</strong> is a series of input perturbations designed to significantly alter model predictions.</p>
+<p>In this walkthrough, we will attempt to invert the predictions of the Binary Classification model we’ve been using for the <a class="reference external" href="https://www.kaggle.com/c/ieee-fraud-detection">IEEE-CIS Fraud Detection</a> example.</p>
+<p>For more information, check out the <a class="reference internal" href="../reference/adversarial.html"><span class="doc std std-doc">documentation</span></a> for different types of attacks and their parameters. Additionally, a pre-configured RIME Adversarial Jupyter notebook is included in the trial bundle.</p>
+</section>
+<section id="running-an-adversarial-attack">
+<h2>Running an Adversarial Attack<a class="headerlink" href="#running-an-adversarial-attack" title="Permalink to this heading"></a></h2>
+<p>We can access the components we need from the <code class="docutils literal notranslate"><span class="pre">container</span></code> as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">black_box_model</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">base_model</span>
+<span class="n">columns</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">data_profile</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">black_box_model</span></code> is our model wrapper, which we will be attacking. <code class="docutils literal notranslate"><span class="pre">columns</span></code> is our profile of the data, which allows our attacks to know how to manipulate data points in order to attack them.</p>
+<p>We now import the attack algorithm we want to use.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime.tabular.attacks.combination</span> <span class="kn">import</span> <span class="n">TabularCombinationAttack</span>
+</pre></div>
+</div>
+<p>Next, we initialize the attack algorithm with parameters of our choosing. For more information on each attack’s parameters, please reference the <a class="reference internal" href="../reference/adversarial.html"><span class="doc std std-doc">documentation</span></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">target_score</span> <span class="o">=</span> <span class="mf">.5</span>
+<span class="n">max_queries</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+<span class="n">attack</span> <span class="o">=</span> <span class="n">TabularCombinationAttack</span><span class="p">(</span><span class="n">black_box_model</span><span class="p">,</span> <span class="n">target_score</span><span class="p">,</span> <span class="n">max_queries</span><span class="p">,</span> <span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can now run the attack! In the example below, we loop over the first 10 rows, set a target label equal to the opposite of their true label, and then run the attack algorithm trying to push the score towards that label.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime.tabular.attacks.runner</span> <span class="kn">import</span> <span class="n">run_attack_loop</span>
+
+<span class="n">sample_size</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">attack_results</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">run_attack_loop</span><span class="p">(</span><span class="n">attack</span><span class="p">,</span> <span class="n">container</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally we can explore the results of the attack. Looking at one attack result, we can see the initial row and its score, the final attacked row and its score, as well as a list of features that were changed.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime.tabular.attacks.notebook</span> <span class="kn">import</span> <span class="n">parse_attack_result</span>
+
+<span class="n">attack_result</span> <span class="o">=</span> <span class="n">attack_results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">parse_attack_result</span><span class="p">(</span><span class="n">attack_result</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Output</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;initial_row&#39;</span><span class="p">:</span> <span class="n">Timestamp</span>                           <span class="mf">1726190.0</span>
+ <span class="n">Product_type</span>                                <span class="n">H</span>
+ <span class="n">Card_company</span>                             <span class="n">visa</span>
+ <span class="n">Card_type</span>                               <span class="n">debit</span>
+ <span class="n">Purchaser_email_domain</span>             <span class="n">icloud</span><span class="o">.</span><span class="n">com</span>
+ <span class="n">Recipient_email_domain</span>             <span class="n">icloud</span><span class="o">.</span><span class="n">com</span>
+ <span class="n">Device_operating_system</span>            <span class="n">iOS</span> <span class="mf">11.0.3</span>
+ <span class="n">Browser_version</span>            <span class="n">mobile</span> <span class="n">safari</span> <span class="mf">11.0</span>
+ <span class="n">Resolution</span>                          <span class="mi">2048</span><span class="n">x1536</span>
+ <span class="n">DeviceInfo</span>                         <span class="n">iOS</span> <span class="n">Device</span>
+ <span class="n">DeviceType</span>                             <span class="n">mobile</span>
+ <span class="n">TransactionAmt</span>                           <span class="mf">25.0</span>
+ <span class="n">TransactionID</span>                       <span class="mf">3067158.0</span>
+ <span class="n">addr1</span>                                   <span class="mf">264.0</span>
+ <span class="n">addr2</span>                                    <span class="mf">87.0</span>
+ <span class="n">card1</span>                                  <span class="mf">5066.0</span>
+ <span class="n">card2</span>                                   <span class="mf">302.0</span>
+ <span class="n">card3</span>                                   <span class="mf">150.0</span>
+ <span class="n">card5</span>                                   <span class="mf">226.0</span>
+ <span class="n">dist1</span>                                     <span class="n">NaN</span>
+ <span class="n">dist2</span>                                     <span class="n">NaN</span>
+ <span class="n">Count_1</span>                                   <span class="mf">1.0</span>
+ <span class="n">Count_2</span>                                   <span class="mf">1.0</span>
+ <span class="n">Count_3</span>                                   <span class="mf">0.0</span>
+ <span class="n">Count_4</span>                                   <span class="mf">1.0</span>
+ <span class="n">Count_5</span>                                   <span class="mf">0.0</span>
+ <span class="n">Count_6</span>                                   <span class="mf">1.0</span>
+ <span class="n">Count_7</span>                                   <span class="mf">0.0</span>
+ <span class="n">Count_8</span>                                   <span class="mf">1.0</span>
+ <span class="n">Count_9</span>                                   <span class="mf">0.0</span>
+ <span class="n">dtype</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span>
+ <span class="s1">&#39;initial_score&#39;</span><span class="p">:</span> <span class="mf">0.01294191171910275</span><span class="p">,</span>
+ <span class="s1">&#39;final_row&#39;</span><span class="p">:</span> <span class="n">Timestamp</span>                           <span class="mf">1726190.0</span>
+ <span class="n">Product_type</span>                                <span class="n">H</span>
+ <span class="n">Card_company</span>                             <span class="n">visa</span>
+ <span class="n">Card_type</span>                               <span class="n">debit</span>
+ <span class="n">Purchaser_email_domain</span>             <span class="n">icloud</span><span class="o">.</span><span class="n">com</span>
+ <span class="n">Recipient_email_domain</span>             <span class="n">icloud</span><span class="o">.</span><span class="n">com</span>
+ <span class="n">Device_operating_system</span>            <span class="n">iOS</span> <span class="mf">11.0.3</span>
+ <span class="n">Browser_version</span>            <span class="n">mobile</span> <span class="n">safari</span> <span class="mf">11.0</span>
+ <span class="n">Resolution</span>                          <span class="mi">2048</span><span class="n">x1536</span>
+ <span class="n">DeviceInfo</span>                         <span class="n">iOS</span> <span class="n">Device</span>
+ <span class="n">DeviceType</span>                             <span class="n">mobile</span>
+ <span class="n">TransactionAmt</span>                           <span class="mf">25.0</span>
+ <span class="n">TransactionID</span>                       <span class="mf">3067158.0</span>
+ <span class="n">addr1</span>                                   <span class="mf">264.0</span>
+ <span class="n">addr2</span>                                    <span class="mf">87.0</span>
+ <span class="n">card1</span>                                  <span class="mf">5066.0</span>
+ <span class="n">card2</span>                                   <span class="mf">302.0</span>
+ <span class="n">card3</span>                                   <span class="mf">150.0</span>
+ <span class="n">card5</span>                                   <span class="mf">226.0</span>
+ <span class="n">dist1</span>                                     <span class="n">NaN</span>
+ <span class="n">dist2</span>                                     <span class="n">NaN</span>
+ <span class="n">Count_1</span>                                <span class="mf">4161.0</span>
+ <span class="n">Count_2</span>                                   <span class="mf">1.0</span>
+ <span class="n">Count_3</span>                                   <span class="mf">0.0</span>
+ <span class="n">Count_4</span>                                   <span class="mf">1.0</span>
+ <span class="n">Count_5</span>                                   <span class="mf">0.0</span>
+ <span class="n">Count_6</span>                                   <span class="mf">1.0</span>
+ <span class="n">Count_7</span>                                   <span class="mf">0.0</span>
+ <span class="n">Count_8</span>                                   <span class="mf">1.0</span>
+ <span class="n">Count_9</span>                                   <span class="mf">0.0</span>
+ <span class="n">dtype</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span>
+ <span class="s1">&#39;final_score&#39;</span><span class="p">:</span> <span class="mf">0.6861326700487259</span><span class="p">,</span>
+ <span class="s1">&#39;changes&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;col&#39;</span><span class="p">:</span> <span class="s1">&#39;Count_1&#39;</span><span class="p">,</span> <span class="s1">&#39;initial_value&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;final_value&#39;</span><span class="p">:</span> <span class="mf">4161.0</span><span class="p">}]}</span>
+</pre></div>
+</div>
+</section>
+<section id="improving-adversarial-robustness-with-attack-results">
+<h2>Improving Adversarial Robustness with Attack Results<a class="headerlink" href="#improving-adversarial-robustness-with-attack-results" title="Permalink to this heading"></a></h2>
+<section id="fetching-adversarial-training-examples">
+<h3>Fetching Adversarial Training Examples<a class="headerlink" href="#fetching-adversarial-training-examples" title="Permalink to this heading"></a></h3>
+<p>The RIME Python Library provides additional training examples that can make your model more robust to adversarial attacks.</p>
+<p>After running our attack loop, we can get a dataframe of our attacks and their appropriate labels as training examples.
+We can then concatenate our new training examples to our old training examples in order to get a new training set for our model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime.tabular.attacks.notebook</span> <span class="kn">import</span> <span class="n">get_df_from_attack_results</span>
+
+<span class="n">additional_train_data</span> <span class="o">=</span> <span class="n">get_df_from_attack_results</span><span class="p">(</span><span class="n">attack_results</span><span class="p">)</span>
+<span class="n">additional_train_labels</span> <span class="o">=</span> <span class="n">train_labels</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">new_train_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">train_df</span><span class="p">,</span> <span class="n">additional_train_data</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">new_train_labels</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">train_labels</span><span class="p">,</span> <span class="n">additional_train_labels</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="retraining-a-new-model">
+<h3>Retraining a New Model<a class="headerlink" href="#retraining-a-new-model" title="Permalink to this heading"></a></h3>
+<p>Using the new training data, we can train a new model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">new_train_pre</span> <span class="o">=</span> <span class="n">preprocess_df</span><span class="p">(</span><span class="n">new_train_data</span><span class="p">)</span>
+
+<span class="n">categorical_features_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">new_train_pre</span><span class="o">.</span><span class="n">dtypes</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">new_model</span> <span class="o">=</span> <span class="n">catb</span><span class="o">.</span><span class="n">CatBoostClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">new_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">new_train_pre</span><span class="p">,</span> <span class="n">new_train_labels</span><span class="p">,</span> <span class="n">cat_features</span><span class="o">=</span><span class="n">categorical_features_indices</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Just as we did before, we can define prediction functions for our new model and create new RunContainers.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">predict_dict_new_model</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Predict dict function.&quot;&quot;&quot;</span>
+    <span class="n">new_x</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">new_x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">new_x</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">new_model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">new_x</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">new_data_container</span> <span class="o">=</span> <span class="n">DataContainer</span><span class="o">.</span><span class="n">from_df</span><span class="p">(</span><span class="n">new_train_data</span><span class="p">,</span> <span class="n">model_task</span><span class="o">=</span><span class="n">ModelTask</span><span class="o">.</span><span class="n">BINARY_CLASSIFICATION</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">new_train_labels</span><span class="p">)</span>
+<span class="n">test_data_container</span> <span class="o">=</span> <span class="n">DataContainer</span><span class="o">.</span><span class="n">from_df</span><span class="p">(</span><span class="n">test_df</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">test_labels</span><span class="p">,</span> <span class="n">model_task</span><span class="o">=</span><span class="n">ModelTask</span><span class="o">.</span><span class="n">BINARY_CLASSIFICATION</span><span class="p">,</span> <span class="n">ref_data</span><span class="o">=</span><span class="n">data_container</span><span class="p">)</span>
+<span class="n">new_container</span> <span class="o">=</span> <span class="n">TabularRunContainer</span><span class="o">.</span><span class="n">from_predict_dict_function</span><span class="p">(</span><span class="n">new_data_container</span><span class="p">,</span> <span class="n">test_data_container</span><span class="p">,</span> <span class="n">predict_dict_new_model</span><span class="p">,</span> <span class="n">ModelTask</span><span class="o">.</span><span class="n">BINARY_CLASSIFICATION</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="comparing-improvements">
+<h3>Comparing Improvements<a class="headerlink" href="#comparing-improvements" title="Permalink to this heading"></a></h3>
+<p>To see the improvements to robustness after training a new model with the provided data,
+we can compare the results of vulnerability tests.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime.tabular.tests</span> <span class="kn">import</span> <span class="n">VulnerabilityTest</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">VulnerabilityTest</span><span class="p">(</span><span class="s1">&#39;Count_1&#39;</span><span class="p">)</span>
+<span class="n">test</span><span class="o">.</span><span class="n">run_notebook</span><span class="p">(</span><span class="n">container</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">new_test</span> <span class="o">=</span> <span class="n">VulnerabilityTest</span><span class="p">(</span><span class="s1">&#39;Count_1&#39;</span><span class="p">)</span>
+<span class="n">new_test</span><span class="o">.</span><span class="n">run_notebook</span><span class="p">(</span><span class="n">new_container</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The corresponding outputs are below:</p>
+<p><strong>Original Output</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="n">test</span> <span class="n">raised</span> <span class="n">a</span> <span class="n">warning</span> <span class="p">(</span><span class="k">with</span> <span class="n">severity</span> <span class="n">level</span> <span class="n">Medium</span><span class="p">)</span> <span class="n">because</span> <span class="n">the</span> <span class="n">average</span> <span class="n">change</span> <span class="ow">in</span> <span class="n">prediction</span> <span class="n">caused</span> <span class="n">by</span> <span class="n">an</span> <span class="n">unbounded</span> <span class="n">manipulation</span> <span class="n">of</span> <span class="n">the</span> <span class="n">feature</span> <span class="n">Count_1</span> <span class="n">over</span> <span class="n">a</span> <span class="n">sample</span> <span class="n">of</span> <span class="mi">10</span> <span class="n">rows</span> <span class="n">was</span> <span class="mf">0.191</span><span class="p">,</span> <span class="n">which</span> <span class="ow">is</span> <span class="n">above</span> <span class="n">the</span> <span class="n">warning</span> <span class="n">threshold</span> <span class="n">of</span> <span class="mf">0.05</span><span class="o">.</span>
+<span class="p">{</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;FAIL&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;severity&#39;</span><span class="p">:</span> <span class="s1">&#39;Medium&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Average Prediction Change&#39;</span><span class="p">:</span> <span class="mf">0.190968872875789</span><span class="p">,</span>
+ <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;_id&#39;</span><span class="p">:</span> <span class="s1">&#39;72a49795-32db-540d-91b3-67ab6ef9eff5&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;severity_level_thresholds&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">),</span>
+  <span class="s1">&#39;col_names&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Count_1&#39;</span><span class="p">],</span>
+  <span class="s1">&#39;l0_constraint&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s1">&#39;linf_constraint&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="s1">&#39;sample_size&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+  <span class="s1">&#39;search_count&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+  <span class="s1">&#39;use_tqdm&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+  <span class="s1">&#39;label_range&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+  <span class="s1">&#39;scaled_min_impact_threshold&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">},</span>
+ <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Count_1&#39;</span><span class="p">],</span>
+ <span class="s1">&#39;sample_inds&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3344</span><span class="p">,</span> <span class="mi">1712</span><span class="p">,</span> <span class="mi">4970</span><span class="p">,</span> <span class="mi">4480</span><span class="p">,</span> <span class="mi">1498</span><span class="p">,</span> <span class="mi">1581</span><span class="p">,</span> <span class="mi">3531</span><span class="p">,</span> <span class="mi">473</span><span class="p">,</span> <span class="mi">9554</span><span class="p">,</span> <span class="mi">2929</span><span class="p">],</span>
+ <span class="s1">&#39;avg_score_change&#39;</span><span class="p">:</span> <span class="mf">0.190968872875789</span><span class="p">,</span>
+ <span class="s1">&#39;normalized_avg_score_change&#39;</span><span class="p">:</span> <span class="mf">0.190968872875789</span><span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Retrained Output</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="n">test</span> <span class="n">passed</span> <span class="n">because</span> <span class="n">the</span> <span class="n">average</span> <span class="n">change</span> <span class="ow">in</span> <span class="n">prediction</span> <span class="n">caused</span> <span class="n">by</span> <span class="n">an</span> <span class="n">unbounded</span> <span class="n">manipulation</span> <span class="n">of</span> <span class="n">the</span> <span class="n">feature</span> <span class="n">Count_1</span> <span class="n">over</span> <span class="n">a</span> <span class="n">sample</span> <span class="n">of</span> <span class="mi">10</span> <span class="n">rows</span> <span class="n">was</span> <span class="mf">0.026</span><span class="p">,</span> <span class="n">which</span> <span class="ow">is</span> <span class="n">below</span> <span class="n">the</span> <span class="n">warning</span> <span class="n">threshold</span> <span class="n">of</span> <span class="mf">0.05</span><span class="o">.</span>
+<span class="p">{</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;PASS&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;severity&#39;</span><span class="p">:</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Average Prediction Change&#39;</span><span class="p">:</span> <span class="mf">0.026220177655675303</span><span class="p">,</span>
+ <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;_id&#39;</span><span class="p">:</span> <span class="s1">&#39;72a49795-32db-540d-91b3-67ab6ef9eff5&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;severity_level_thresholds&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">),</span>
+  <span class="s1">&#39;col_names&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Count_1&#39;</span><span class="p">],</span>
+  <span class="s1">&#39;l0_constraint&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s1">&#39;linf_constraint&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="s1">&#39;sample_size&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+  <span class="s1">&#39;search_count&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+  <span class="s1">&#39;use_tqdm&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+  <span class="s1">&#39;label_range&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+  <span class="s1">&#39;scaled_min_impact_threshold&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">},</span>
+ <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Count_1&#39;</span><span class="p">],</span>
+ <span class="s1">&#39;sample_inds&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3344</span><span class="p">,</span> <span class="mi">1712</span><span class="p">,</span> <span class="mi">4970</span><span class="p">,</span> <span class="mi">4480</span><span class="p">,</span> <span class="mi">1498</span><span class="p">,</span> <span class="mi">1581</span><span class="p">,</span> <span class="mi">3531</span><span class="p">,</span> <span class="mi">473</span><span class="p">,</span> <span class="mi">9554</span><span class="p">,</span> <span class="mi">2929</span><span class="p">],</span>
+ <span class="s1">&#39;avg_score_change&#39;</span><span class="p">:</span> <span class="mf">0.026220177655675303</span><span class="p">,</span>
+ <span class="s1">&#39;normalized_avg_score_change&#39;</span><span class="p">:</span> <span class="mf">0.026220177655675303</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>As shown above, a test that failed previously with “Medium” severity now passes, displaying an increased robustness of the retrained model.</p>
+</section>
+</section>
+<section id="highlighted-extra-features">
+<h2>Highlighted Extra Features<a class="headerlink" href="#highlighted-extra-features" title="Permalink to this heading"></a></h2>
+<section id="validity-function">
+<h3>Validity Function<a class="headerlink" href="#validity-function" title="Permalink to this heading"></a></h3>
+<p>RIME attacks will try to use only perturbations that result in valid data, but often there can be higher-order constraints on validity that the attack will not pick up on its own. To enforce these types of constraints, you can implement a <code class="docutils literal notranslate"><span class="pre">validity_function()</span></code>.</p>
+<p>This function should take as input a dictionary representing a row of data (i.e. keys will be feature names, and values will be feature values) and return a boolean that indicates whether the point is “valid”.</p>
+<p>In our fraud example, we might need to enforce a constraint that the rows with value <code class="docutils literal notranslate"><span class="pre">american</span> <span class="pre">express</span></code> for the <code class="docutils literal notranslate"><span class="pre">Card_company</span></code> feature must have value <code class="docutils literal notranslate"><span class="pre">credit</span></code> for the <code class="docutils literal notranslate"><span class="pre">Card_type</span></code> feature. To encode this, we could use the validity function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">validity_function</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;Card_company&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;american express&#39;</span> <span class="ow">and</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;Card_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;credit&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>We can then pass this function to the attack using the <code class="docutils literal notranslate"><span class="pre">validity_function</span></code> keyword argument:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">attack</span> <span class="o">=</span> <span class="n">TabularCombinationAttack</span><span class="p">(</span><span class="n">black_box_model</span><span class="p">,</span> <span class="n">target_score</span><span class="p">,</span> <span class="n">max_queries</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">validity_function</span><span class="o">=</span><span class="n">validity_function</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rime_stress_tests.html" class="btn btn-neutral float-left" title="AI Stress Tests" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rime_subset_performance.html" class="btn btn-neutral float-right" title="Analyzing Subset Performance" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

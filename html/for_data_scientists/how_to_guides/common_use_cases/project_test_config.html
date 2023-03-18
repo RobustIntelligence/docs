@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project management operations &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="RIME Registries" href="../registries.html" />
+    <link rel="prev" title="Projects" href="projects.html" />
+<link href="../../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../../index.html">
+        <img src="../../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                2.0.0-rc.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/modeltesting.html">RIME model testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../get_started.html">Get Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../basic_tasks.html">Setting up and testing with RIME</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../basic_tasks.html#initial-setup">Initial setup</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="upload_data.html">Uploading Data to RIME</a></li>
+<li class="toctree-l3"><a class="reference internal" href="projects.html">Projects</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Project management operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configuring-a-project-from-the-project-settings-page">Configuring a project from the project settings page</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#deleting-a-project">Deleting a project</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sharing-a-project">Sharing a project</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#project-publication">Project publication</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setting-up-project-alerts">Setting up project alerts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configuring-test-category-and-sensitivity">Configuring test category and sensitivity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configuring-continuous-testing-data-sources-and-scheduling">Configuring Continuous Testing data sources and scheduling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configuring-individual-tests">Configuring individual tests</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configuring-data-profiling">Configuring data profiling</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../registries.html">RIME Registries</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basic_tasks.html#stress-tests">Stress Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basic_tasks.html#continuous-tests">Continuous Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basic_tasks.html#model-cards">Model cards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basic_tasks.html#notifications-and-alerts">Notifications and alerts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basic_tasks.html#notebook-walkthroughs">Notebook walkthroughs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../adv_tasks.html">Customization, and troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/shostedinst.html">Self-Hosted</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SDK reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_library/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_library/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_library/how_to_guides.html">Python SDK tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_library/reference.html">API Test Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../basic_tasks.html">Setting up and testing with RIME</a></li>
+      <li class="breadcrumb-item active">Project management operations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/for_data_scientists/how_to_guides/common_use_cases/project_test_config.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="project-management-operations">
+<h1>Project management operations<a class="headerlink" href="#project-management-operations" title="Permalink to this heading"></a></h1>
+<p>A user with the required privilege level can configure several aspects of a project and
+the tests within that project, as well as move test runs between existing projects.</p>
+<p>An audit trail of the changes to project settings is available by selecting <em>Settings
+History</em> from the left navigation bar of the project settings page.</p>
+<section id="configuring-a-project-from-the-project-settings-page">
+<h2>Configuring a project from the project settings page<a class="headerlink" href="#configuring-a-project-from-the-project-settings-page" title="Permalink to this heading"></a></h2>
+<p>The project settings page enables you to modify the following configuration aspects:</p>
+<ul class="simple">
+<li><p>Project configuration</p></li>
+<li><p>Configuration of the model used by the project</p></li>
+<li><p>Configuration of the test runs for the model</p></li>
+<li><p>Configuration of the actual tests run on the model</p></li>
+</ul>
+<ol class="arabic">
+<li><p>Sign in to a RIME instance.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click a workspace.</p>
+<blockquote>
+<div><p>The Workspaces summary page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Select a project.</p>
+<blockquote>
+<div><p>You can filter or sort the list of projects in a workspace with the
+<em>Sort</em> and <em>Filter</em> controls in the upper right. Click the glyph to the
+right of the <em>Filter</em> control to switch between list and card display
+for projects. Type a string in <em>Search Projects…</em> to display only
+projects that match the string.</p>
+</div></blockquote>
+<blockquote>
+<div><p>The project overview page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click the <em>Project Settings</em> gear icon on the left navigation bar.</p>
+<blockquote>
+<div><p>The project settings page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Edit the project settings as required and click <em>Save</em>  .</p></li>
+</ol>
+<p>RIME updates the project with the new settings.</p>
+<section id="list-of-configurable-project-settings">
+<h3>List of configurable project settings<a class="headerlink" href="#list-of-configurable-project-settings" title="Permalink to this heading"></a></h3>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Settings section</th>
+<th>Setting name</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Project Info</td>
+<td>Project Name</td>
+<td>Text field</td>
+</tr>
+<tr>
+<td></td>
+<td>Project Description</td>
+<td>Text field</td>
+</tr>
+<tr>
+<td></td>
+<td>Data Type</td>
+<td>Text field</td>
+</tr>
+<tr>
+<td></td>
+<td>Model Task</td>
+<td>Drop-down</td>
+</tr>
+<tr>
+<td></td>
+<td>Ethical Considerations</td>
+<td>Text field</td>
+</tr>
+<tr>
+<td></td>
+<td>Intended Use Case</td>
+<td>Text field</td>
+</tr>
+<tr>
+<td></td>
+<td>Project Tags</td>
+<td>Text field</td>
+</tr>
+<tr>
+<td>Production Model Info</td>
+<td>Model Architecture</td>
+<td>Text field</td>
+</tr>
+<tr>
+<td></td>
+<td>Created Date</td>
+<td>Date selector</td>
+</tr>
+<tr>
+<td></td>
+<td>Reference Dataset (training)</td>
+<td>File path</td>
+</tr>
+<tr>
+<td></td>
+<td>Evaluation Dataset</td>
+<td>File path</td>
+</tr>
+<tr>
+<td></td>
+<td>Model ID</td>
+<td>Text field</td>
+</tr>
+<tr>
+<td></td>
+<td>External ID</td>
+<td>Text field</td>
+</tr>
+<tr>
+<td></td>
+<td>Model Path</td>
+<td>File path</td>
+</tr>
+<tr>
+<td></td>
+<td>Model Owner</td>
+<td>Text field</td>
+</tr>
+<tr>
+<td></td>
+<td>Model Tester</td>
+<td>Text field</td>
+</tr>
+<tr>
+<td></td>
+<td>Business Owner</td>
+<td>Text field</td>
+</tr>
+<tr>
+<td></td>
+<td>Notes</td>
+<td>Text field</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="deleting-a-project">
+<h2>Deleting a project<a class="headerlink" href="#deleting-a-project" title="Permalink to this heading"></a></h2>
+<ol class="arabic">
+<li><p>Sign in to a RIME instance.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click a workspace.</p>
+<blockquote>
+<div><p>The Workspaces summary page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Select a set of projects.</p>
+<blockquote>
+<div><p>The Delete option appears above the list of projects.</p>
+</div></blockquote>
+</li>
+<li><p>Click <em>Delete</em>.</p>
+<blockquote>
+<div><p>A confirmation dialog box appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click <em>Remove</em>.</p></li>
+</ol>
+<p>The selected projects are removed from the workspace.</p>
+</section>
+<section id="sharing-a-project">
+<h2>Sharing a project<a class="headerlink" href="#sharing-a-project" title="Permalink to this heading"></a></h2>
+<p>Share a project to enable other users to view the project. Users require edit-level
+access to a project in order to share the project. Details on access privileges are
+discussed in the section on <a class="reference internal" href="../../../for_admins/rbac.html"><span class="doc std std-doc">role-based access control</span></a>.</p>
+<ol class="arabic">
+<li><p>Sign in to a RIME instance.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click a workspace.</p>
+<blockquote>
+<div><p>The Workspaces summary page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Select a project.</p>
+<blockquote>
+<div><p>You can filter or sort the list of projects in a workspace with the
+<em>Sort</em> and <em>Filter</em> controls in the upper right. Click the glyph to the
+right of the <em>Filter</em> control to switch between list and card display
+for projects. Type a string in <em>Search Projects…</em> to display only
+projects that match the string.</p>
+</div></blockquote>
+<blockquote>
+<div><p>The project overview page appears.</p>
+</div></blockquote>
+</li>
+<li><p>In the top right, click <em>Share</em>.</p>
+<blockquote>
+<div><p>The Project Sharing dialog appears.</p>
+</div></blockquote>
+</li>
+<li><p>(Pending share request) Choose to approve or deny the outstanding share request.</p>
+<blockquote>
+<div><p>Click <em>Deny</em> or <em>Approve</em>, as appropriate.</p>
+</div></blockquote>
+</li>
+<li><p>(Optional) Click the <em>Published to workspace</em> toggle to set whether the project is
+published to the workspace.</p></li>
+<li><p>In <em>Sharing</em>, type the email address of another user on the RIME instance and click
+<em>Add</em>.</p>
+<blockquote>
+<div><p>The project is available to the added user. To remove a user from the list,
+click the trash icon next to the user.</p>
+</div></blockquote>
+</li>
+<li><p>(Optional) From the <em>View Access</em> drop-down, select a sharing privilege level.</p>
+<blockquote>
+<div><p>The sharing privilege levels are <em>Edit Access</em>, <em>View Access</em>, and
+<em>No Access (Private)</em>.</p>
+</div></blockquote>
+</li>
+<li><p>(Optional) Click <em>Copy Link</em> to copy a link to the project to the clipboard.</p></li>
+<li><p>Click <em>Save</em>.</p></li>
+</ol>
+<p>RIME updates the project sharing configuration.</p>
+</section>
+<section id="project-publication">
+<h2>Project publication<a class="headerlink" href="#project-publication" title="Permalink to this heading"></a></h2>
+<p>Publishing a project makes that project visible from the <a class="reference internal" href="../../../getstarted/workspace-overview.html"><span class="doc std std-doc">Workspace Overview</span></a>.
+Only the project owner can publish or unpublish the project.</p>
+<section id="publishing-a-project">
+<h3>Publishing a project<a class="headerlink" href="#publishing-a-project" title="Permalink to this heading"></a></h3>
+<ol class="arabic">
+<li><p>Sign in to a RIME instance.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click a workspace.</p>
+<blockquote>
+<div><p>The Workspaces summary page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Select a project.</p>
+<blockquote>
+<div><p>You can filter or sort the list of projects in a workspace with the
+<em>Sort</em> and <em>Filter</em> controls in the upper right. Click the glyph to the
+right of the <em>Filter</em> control to switch between list and card display
+for projects. Type a string in <em>Search Projects…</em> to display only
+projects that match the string.</p>
+</div></blockquote>
+<blockquote>
+<div><p>The project overview page appears.</p>
+</div></blockquote>
+</li>
+<li><p>In the top right, click <em>Share</em>.</p>
+<blockquote>
+<div><p>The Project Sharing dialog appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click the <em>Published to workspace</em> toggle.</p></li>
+<li><p>Click <em>Save</em>.</p></li>
+</ol>
+<p>RIME changes the project’s publication status.</p>
+<!--
+## Moving test runs between projects
+
+1.  Sign in to a RIME instance.  
+    >   The Workspaces page appears.
+2.  Click a workspace.  
+    >   The Workspaces summary page appears.
+3.  Select a project.
+    >   You can filter or sort the list of projects in a workspace with the
+    >   *Sort* and *Filter* controls in the upper right. Click the glyph to the
+    >   right of the *Filter* control to switch between list and card display
+    >   for projects. Type a string in *Search Projects...* to display only
+    >   projects that match the string.
+
+    >   The project overview page appears.
+4.  From the left-hand navigation bar, select the *AI Stress Tests* icon.
+    >   A table of test runs appears.
+5.  Select a set of test runs.
+    >   The Move to Project and Delete options appear above the table of test runs.
+6.  Click *Move to Project*.
+    >   The Move to Project dialog box appears.
+7.  Select a project.
+    >   Type a string in *Search Projects...* to display only
+    >   projects that match the string.
+8.  Click *Move*.
+
+The selected test runs move to the specified project.
+-->
+</section>
+</section>
+<section id="setting-up-project-alerts">
+<h2>Setting up project alerts<a class="headerlink" href="#setting-up-project-alerts" title="Permalink to this heading"></a></h2>
+<ol class="arabic">
+<li><p>Sign in to a RIME instance.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click a workspace.</p>
+<blockquote>
+<div><p>The Workspaces summary page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Select a project.</p>
+<blockquote>
+<div><p>You can filter or sort the list of projects in a workspace with the
+<em>Sort</em> and <em>Filter</em> controls in the upper right. Click the glyph to the
+right of the <em>Filter</em> control to switch between list and card display
+for projects. Type a string in <em>Search Projects…</em> to display only
+projects that match the string.</p>
+</div></blockquote>
+<blockquote>
+<div><p>The project overview page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click <em>Alerts</em> next to the project name.</p>
+<blockquote>
+<div><p>The Project Alerts dialog box appears.</p>
+</div></blockquote>
+</li>
+<li><p>Choose an alert delivery model.</p>
+<blockquote>
+<div><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Alert delivery</p></th>
+<th class="head"><p>Configuration step</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Email</p></td>
+<td><p>In <em>Email Address</em>, type an email address and click <em>Add</em>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slack</p></td>
+<td><p>In <em>Webhook URL</em>, paste the Slack webhook URL and click <em>Add</em>.</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><a class="reference external" href="https://api.slack.com/messaging/webhooks">Slack documentation</a> provides details on generating a Slack webhook URL.</p>
+</li>
+<li><p>Click <em>Done</em>.</p></li>
+</ol>
+<p>Alerts are configured for this project.</p>
+</section>
+<section id="configuring-test-category-and-sensitivity">
+<h2>Configuring test category and sensitivity<a class="headerlink" href="#configuring-test-category-and-sensitivity" title="Permalink to this heading"></a></h2>
+<p>Project-level test configuration affects Stress Tests and Continuous Tests that run in
+that project.</p>
+<ol class="arabic">
+<li><p>Sign in to a RIME instance.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click a workspace.</p>
+<blockquote>
+<div><p>The Workspaces summary page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Select a project.</p>
+<blockquote>
+<div><p>You can filter or sort the list of projects in a workspace with the
+<em>Sort</em> and <em>Filter</em> controls in the upper right. Click the glyph to the
+right of the <em>Filter</em> control to switch between list and card display
+for projects. Type a string in <em>Search Projects…</em> to display only
+projects that match the string.</p>
+</div></blockquote>
+<blockquote>
+<div><p>The project overview page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click the <em>Project Settings</em> gear icon on the left navigation bar.</p>
+<blockquote>
+<div><p>The project settings page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click the <em>Test Configuration</em> tab at the top.</p></li>
+<li><p>The Test Configuration page opens at the Categories and Sensitivity pane.</p></li>
+<li><p>Select a test type.</p>
+<blockquote>
+<div><p>Both Stress and Continuous tests have the same configuration elements.</p>
+</div></blockquote>
+</li>
+<li><p>Select a set of tests.</p>
+<blockquote>
+<div><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Risk category</p></th>
+<th class="head"><p>Test types</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Operational risks</p></td>
+<td><p>Overall performance</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>Subset performance</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>Drift (continuous testing focus)</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>Transformations (stress testing focus)</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>Abnormal inputs (continuous testing focus)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Security risks</p></td>
+<td><p>Security events</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>Data poisoning</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>Model evasion</p></td>
+</tr>
+<tr class="row-even"><td><p>Fairness risks</p></td>
+<td><p>Compliance and fairness</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</li>
+<li><p>Select an overall test sensitivity level.</p></li>
+<li><p>Click <em>Save Settings</em>.</p></li>
+</ol>
+<p>The configuration for test category and sensitivity is saved.</p>
+</section>
+<section id="configuring-continuous-testing-data-sources-and-scheduling">
+<h2>Configuring Continuous Testing data sources and scheduling<a class="headerlink" href="#configuring-continuous-testing-data-sources-and-scheduling" title="Permalink to this heading"></a></h2>
+<p>This procedure assumes data sources have already been configured. Consult the section
+on configuring an <a class="reference internal" href="../../../for_admins/data-integrations.html"><span class="doc std std-doc">integration</span></a> for details.</p>
+<ol class="arabic">
+<li><p>Sign in to a RIME instance.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click a workspace.</p>
+<blockquote>
+<div><p>The Workspaces summary page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Select a project.</p>
+<blockquote>
+<div><p>You can filter or sort the list of projects in a workspace with the
+<em>Sort</em> and <em>Filter</em> controls in the upper right. Click the glyph to the
+right of the <em>Filter</em> control to switch between list and card display
+for projects. Type a string in <em>Search Projects…</em> to display only
+projects that match the string.</p>
+</div></blockquote>
+<blockquote>
+<div><p>The project overview page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click the <em>Project Settings</em> gear icon on the left navigation bar.</p>
+<blockquote>
+<div><p>The project settings page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click the <em>Test Configuration</em> tab at the top.</p></li>
+<li><p>The Test Configuration page opens at the Categories and Sensitivity pane.</p></li>
+<li><p>From the left sidebar, click <em>Continuous Test data and schedule</em>.</p>
+<blockquote>
+<div><p>The Continuous Test data and schedule pane appears.</p>
+</div></blockquote>
+</li>
+<li><p>In <em>Connection</em>, choose a configured data source.</p></li>
+<li><p>In <em>Table Name</em>, choose a table name.</p></li>
+<li><p>Select columns from the <em>Timestamp Column</em>, <em>Label Column</em>, and <em>Prediction Column</em>
+drop-down selectors.</p></li>
+<li><p>In <em>Continuous Testing Schedule</em>, select a bin size, a rolling window, and a number
+of bins.</p></li>
+<li><p>Click <em>Save Settings</em>.</p></li>
+</ol>
+<p>RIME saves the configuration settings for data sources and scheduling.</p>
+</section>
+<section id="configuring-individual-tests">
+<h2>Configuring individual tests<a class="headerlink" href="#configuring-individual-tests" title="Permalink to this heading"></a></h2>
+<p>You can configure individual tests within a project.</p>
+<ol class="arabic">
+<li><p>Sign in to a RIME instance.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click a workspace.</p>
+<blockquote>
+<div><p>The Workspaces summary page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Select a project.</p>
+<blockquote>
+<div><p>You can filter or sort the list of projects in a workspace with the
+<em>Sort</em> and <em>Filter</em> controls in the upper right. Click the glyph to the
+right of the <em>Filter</em> control to switch between list and card display
+for projects. Type a string in <em>Search Projects…</em> to display only
+projects that match the string.</p>
+</div></blockquote>
+<blockquote>
+<div><p>The project overview page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click the <em>Project Settings</em> gear icon on the left navigation bar.</p>
+<blockquote>
+<div><p>The project settings page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click the <em>Test Configuration</em> tab at the top.</p></li>
+<li><p>The Test Configuration page opens at the Categories and Sensitivity pane.</p></li>
+<li><p>From the left sidebar, click <em>Individual Test Config</em>.</p>
+<blockquote>
+<div><p>The Individual Test Configuration pane appears.</p>
+</div></blockquote>
+</li>
+<li><p>Unfold one of the risk categories to display individual tests in that category.</p></li>
+<li><p>Click the pencil icon next to a test.</p>
+<blockquote>
+<div><p>The Advanced Configuration pane for that test displays. <!-- might be a button labeled 'edit' or 'configured', watch for changes --></p>
+</div></blockquote>
+</li>
+<li><p>Choose where to run the test.</p>
+<blockquote>
+<div><p>A specific test can run in Stress Testing, Continuous Testing, or both.</p>
+</div></blockquote>
+</li>
+<li><p>In <em>Severity Thresholds</em>, enter values and define conditions for each alert level.</p>
+<blockquote>
+<div><p>The RIME instance generates an event each time the test result meets the value and condition.</p>
+</div></blockquote>
+</li>
+<li><p>Select an on-save action.</p>
+<blockquote>
+<div><p>Update Current Run Settings &amp; Thresholds applies the new values to a testing run that is already in progress.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Update Project Settings saves the values to the project and applies the new values to any future test runs.</p>
+</div></blockquote>
+</li>
+<li><p>Click <em>Save Updates</em>.</p>
+<blockquote>
+<div><p>The Individual Test Configuration pane appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click <em>Save Settings</em>.</p></li>
+</ol>
+<p>RIME saves the updated individual test configuration.</p>
+</section>
+<section id="configuring-data-profiling">
+<h2>Configuring data profiling<a class="headerlink" href="#configuring-data-profiling" title="Permalink to this heading"></a></h2>
+<p>RIME instances perform <a class="reference internal" href="../../reference/data_profiling.html"><span class="doc std std-doc">data profiling</span></a> and
+modify test runs according to the results.</p>
+<ol class="arabic">
+<li><p>Sign in to a RIME instance.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click a workspace.</p>
+<blockquote>
+<div><p>The Workspaces summary page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Select a project.</p>
+<blockquote>
+<div><p>You can filter or sort the list of projects in a workspace with the
+<em>Sort</em> and <em>Filter</em> controls in the upper right. Click the glyph to the
+right of the <em>Filter</em> control to switch between list and card display
+for projects. Type a string in <em>Search Projects…</em> to display only
+projects that match the string.</p>
+</div></blockquote>
+<blockquote>
+<div><p>The project overview page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click the <em>Project Settings</em> gear icon on the left navigation bar.</p>
+<blockquote>
+<div><p>The project settings page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click the <em>Test Configuration</em> tab at the top.</p></li>
+<li><p>The Test Configuration page opens at the Categories and Sensitivity pane.</p></li>
+<li><p>In the Run Configuration section of the left navigation bar, click <em>Data Profiling</em>.</p>
+<blockquote>
+<div><p>The Column Profiling page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Change values and toggles as required and click <em>Save Settings</em>.</p></li>
+</ol>
+<p>RIME updates the data profiling settings.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="projects.html" class="btn btn-neutral float-left" title="Projects" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../registries.html" class="btn btn-neutral float-right" title="RIME Registries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

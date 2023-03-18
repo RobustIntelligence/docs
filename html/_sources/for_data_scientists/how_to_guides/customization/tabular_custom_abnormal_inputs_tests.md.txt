@@ -1,12 +1,18 @@
 # Tabular Custom Abnormal Inputs Test
 
 {{ custom_tests_intro }}
-This Python file should expose a class named ``CustomAbnormalInputsBatchRunner``, which should inherit from the ``AbstractCustomAbnormalInputsBatchRunner`` interface that RIME defines.
-After inheriting from this class you will need to implement 2 methods:
-1. `batch_test_name`: this is a property that should be unique for each test.
-Name collisions with existing tests will cause errors.
-2. `abnormal_inputs_criteria`: this is a class method that takes in your reference and evaluation dataframes and outputs a `pd.Series` object with boolean values, indicating for each row in the `evaluation_set` whether the input is abnormal.
-Your implementation can also take in additional arguments that you pass in through the `params` dictionary in your config.
+
+This Python file must expose a class named ``CustomAbnormalInputsBatchRunner`` that 
+inherits from the ``AbstractCustomAbnormalInputsBatchRunner`` interface specified by 
+RIME.
+
+Implement the following methods in the ``CustomAbnormalInputsBatchRunner`` class.
+
+* `batch_test_name`: A unique property for each test. Non-unique tests cause errors.
+* `abnormal_inputs_criteria`: Takes reference and evaluation dataframes and returns a
+    `pd.Series` object with a Boolean values for each row in the evaluation set. 
+    The Boolean specifies whether the input is normal. The implementation can also take 
+    additional arguments through the `params` dictionary in the configuration.
 
 ```python
 """Simple custom abnormal inputs test example."""
@@ -54,19 +60,25 @@ class CustomAbnormalInputsBatchRunner(AbstractCustomAbnormalInputsBatchRunner):
 
 
 ```
-There are also several optional methods whose implementation you can override depending on your needs.
-1. `get_batch_args`: this is a class method that takes in your reference and evaluation dataframes and returns a list of key-word arguments to each run of your test.
-You should implement this logic if you want to run the same `abnormal_inputs_criteria` over several tests but with different arguments.
-`column_names` is a required key in each dictionary with corresponding value of a list of the column names that this test uses, and this value is used by RIME to help flag features for you.
-All other arguments are passed to your implementation of `abnormal_inputs_crtieria`.
-Your arguments should avoid name collisions with the keys in the `params` dictionary of your config.
-2. `description`: this is a property that should return a short description of your test as a string.
-3. `starter_string`: this is a property that should return a longer description of your test as a string.
-4. `why_string`: this is a property that should return a string that explains why this test is useful.
-5. `configuration_string`: this is a property that should return a string describing the configuration of the test.
-6. `example_string`: this is a property that should return a string that gives an example of the use-case of this test.
 
-Each of the strings can be formatted with HTML. The `starter_string`, `why_string`, `configuration_string`, an `example_stirng` properties are displayed in the "ⓘ More" pop-up.
+The following optional methods can have their implementation overridden.
+
+* `get_batch_args`: Takes in reference and evaluation dataframes and returns a list of 
+    keyword arguments to each run of your test. Implement this logic to run the same 
+    abnormal input criteria over several tests with different arguments. `column_names` 
+    is a required key in each dictionary with the corresponding value of a list of the 
+    column names that this test uses. RIME uses this value to help flag features. All 
+    other arguments pass to the implementation of `abnormal_inputs_criteria`. The 
+    arguments must avoid name collisions with the keys in the `params` dictionary of 
+    the configuration.
+* `description`: Returns a short description of the test as a string.
+* `starter_string`: Returns a longer description of the test as a string.
+* `why_string`: Returns a string that explains why this test is useful.
+* `configuration_string`: Returns a string describing the configuration of the test.
+* `example_string`: Returns a string that gives an example of the use-case of this test.
+
+Each of the strings can be formatted with HTML. The `starter_string`, `why_string`, `configuration_string`, and `example_stirng` properties are displayed in the "ⓘ More" pop-up.
+
 ```python
 """Advanced custom abnormal inputs test example."""
 from typing import List

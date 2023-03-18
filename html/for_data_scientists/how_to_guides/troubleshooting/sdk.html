@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Debugging the Python SDK &mdash; RIME  documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -21,12 +23,12 @@
         <script src="../../../_static/sphinx_highlight.js"></script>
         <script src="../../../_static/clipboard.min.js"></script>
         <script src="../../../_static/copybutton.js"></script>
-        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
         <script src="../../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="RIME Data Format Check" href="rime_data_format_check.html" />
+    <link rel="next" title="Reference" href="../../reference.html" />
     <link rel="prev" title="Run RIME on Managed Docker Images" href="../customization/custom_docker.html" />
 <link href="../../../_static/style.css" rel="stylesheet" type="text/css">
 
@@ -44,74 +46,65 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> RIME
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            RIME
           </a>
               <div class="version">
-                0.20.4
+                2.0.0-rc.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../changelogs.html">Release Notes</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/index.html">RIME overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/modeltesting.html">RIME model testing</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Administering the RI Platform</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/index.html">Administering the RI Platform</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Installing the RI Platform</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Data science with the RI Platform</span></p>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../get_started.html">Get Started</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../../how_to_guides.html">How-To Guides</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/api-authentication.html">API Authentication</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/adversarial_nlp.html">NLP Adversarial Robustness</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/compare_test_runs.html">Comparing Two Test Runs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/compliance.html">Compliance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/upload_data.html">Uploading Data to RIME</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/querying_results.html">Querying RIME Results</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/updating_a_firewall.html">Updating a Firewall</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/using_data_collector.html">Using the Data Collector</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/scheduling_ct_runs.html">Scheduling Continuous Testing Runs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/rest_api.html">Using the REST API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/modelcards.html">Model cards</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../common_use_cases/embeddings.html">Custom embeddings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../platform_integrations.html">Platform Integrations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../model_integrations.html">Model Integrations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../data_integrations.html">Data Integrations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../alerting/setup_alerts.html">Alerts and Notifications</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../alerting/test_run_progress.html">Test Run Progress</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../customization/custom_metrics.html">Custom Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../customization/custom_tests.html">Custom Tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../customization/custom_docker.html">Run RIME on Managed Docker Images</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Debugging the Python SDK</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#troubleshooting-rime-stress-tests">Troubleshooting RIME Stress Tests</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#lost-job-object">Lost Job Object</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#test-run-results-don-t-show-up-in-ui">Test Run Results Don’t Show Up in UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basic_tasks.html">Setting up and testing with RIME</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../adv_tasks.html">Customization, and troubleshooting</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../adv_tasks.html#customization">Customization</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../adv_tasks.html#troubleshooting">Troubleshooting</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Debugging the Python SDK</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#troubleshooting-rime-stress-tests">Troubleshooting RIME Stress Tests</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="rime_data_format_check.html">RIME Data Format Check</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference.html">Reference</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">RIME in-depth reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/shostedinst.html">Self-Hosted</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SDK reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_library/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_library/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_library/how_to_guides.html">Python SDK tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_library/reference.html">API Test Reference</a></li>
 </ul>
 
         </div>
@@ -127,8 +120,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
-          <li class="breadcrumb-item"><a href="../../how_to_guides.html">How-To Guides</a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../adv_tasks.html">Customization, and troubleshooting</a></li>
       <li class="breadcrumb-item active">Debugging the Python SDK</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../_sources/for_data_scientists/how_to_guides/troubleshooting/sdk.md.txt" rel="nofollow"> View page source</a>
@@ -143,21 +136,20 @@
 <h1>Debugging the Python SDK<a class="headerlink" href="#debugging-the-python-sdk" title="Permalink to this heading"></a></h1>
 <section id="troubleshooting-rime-stress-tests">
 <h2>Troubleshooting RIME Stress Tests<a class="headerlink" href="#troubleshooting-rime-stress-tests" title="Permalink to this heading"></a></h2>
-<p>When running a suite of stress tests on arbitrary models and datasets on a custom image, things can go wrong.
-The RIME SDK has tools available to help you debug your stress test jobs.
+<p>The RIME SDK has tools available to help you debug your stress test jobs.
 This document includes a few common failure scenarios and recommended debugging techniques.</p>
 <section id="lost-job-object">
 <h3>Lost Job Object<a class="headerlink" href="#lost-job-object" title="Permalink to this heading"></a></h3>
-<p>If you close your Python notebook or scripting session, you will lose access to the ephemeral in-memory objects such as <code class="docutils literal notranslate"><span class="pre">Job</span></code>.
+<p>When you close your Python notebook or scripting session, you lose access to ephemeral in-memory objects such as <code class="docutils literal notranslate"><span class="pre">Job</span></code>.
 To recover these objects, connect the client to the same backend service.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">rime_client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;my_vpc.rime.com&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;api-key&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Then, use <code class="docutils literal notranslate"><span class="pre">rime_client.list_stress_test_jobs()</span></code> to query the server for a list of jobs from the past two days.
-You can filter by status and project ID to reduce the volume of jobs returned.
-Then, you can call <code class="docutils literal notranslate"><span class="pre">get_status()</span></code> on each job to find which job is yours.
+<p>After connecting, use <code class="docutils literal notranslate"><span class="pre">rime_client.list_stress_testing_jobs()</span></code> to query the server for a list of jobs from the past two days.
+You can filter the list ny status and project ID to reduce the volume of jobs returned.
+Call <code class="docutils literal notranslate"><span class="pre">get_status()</span></code> on each job to find which job is yours.
 The return value from <code class="docutils literal notranslate"><span class="pre">get_status()</span></code> includes the start time and status of the job which should help you identify which job you started.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">jobs</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">list_stress_test_jobs</span><span class="p">(</span><span class="n">status_filters</span><span class="o">=</span> <span class="p">[</span><span class="s1">&#39;succeeded&#39;</span><span class="p">,</span> <span class="s1">&#39;failed&#39;</span><span class="p">],</span> <span class="n">project_id</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">jobs</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">list_stress_testing_jobs</span><span class="p">(</span><span class="n">status_filters</span><span class="o">=</span> <span class="p">[</span><span class="s1">&#39;succeeded&#39;</span><span class="p">,</span> <span class="s1">&#39;failed&#39;</span><span class="p">],</span> <span class="n">project_id</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
 <span class="c1"># Print out the metadata for each job to see which one you started most recently.</span>
 <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">jobs</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">get_status</span><span class="p">())</span>
@@ -175,7 +167,7 @@ Here are a few:</p>
 <li><p>Managed image doesn’t include the model’s required dependencies.</p></li>
 <li><p>SDK version doesn’t match the version of the cluster.
 The best place to start is the <code class="docutils literal notranslate"><span class="pre">get_status()</span></code> of the <code class="docutils literal notranslate"><span class="pre">Job</span></code> object.
-If the job status is <code class="docutils literal notranslate"><span class="pre">'FAILING'</span></code> and the <code class="docutils literal notranslate"><span class="pre">verbose</span></code> flag is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">get_status()</span></code> will dump the logs to <code class="docutils literal notranslate"><span class="pre">stdout</span></code>.
+When the job status is <code class="docutils literal notranslate"><span class="pre">'FAILING'</span></code> and the <code class="docutils literal notranslate"><span class="pre">verbose</span></code> flag is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">get_status()</span></code> dumps the logs to <code class="docutils literal notranslate"><span class="pre">stdout</span></code>.
 For configuration issues, this can be very helpful.</p></li>
 </ul>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Assume the job is &#39;FAILING&#39;</span>
@@ -183,7 +175,7 @@ For configuration issues, this can be very helpful.</p></li>
 <span class="c1"># This will dump the logs if there are any to stdout.</span>
 </pre></div>
 </div>
-<p>Looking at the logs can help solve a lot of problems.</p>
+<p>Looking at the logs can help solve many problems.</p>
 <p>If you have trouble making additional progress with debugging, please contact RI support.</p>
 </section>
 </section>
@@ -194,7 +186,7 @@ For configuration issues, this can be very helpful.</p></li>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../customization/custom_docker.html" class="btn btn-neutral float-left" title="Run RIME on Managed Docker Images" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="rime_data_format_check.html" class="btn btn-neutral float-right" title="RIME Data Format Check" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../../reference.html" class="btn btn-neutral float-right" title="Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

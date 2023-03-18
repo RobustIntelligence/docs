@@ -1,0 +1,46 @@
+# Runtime configuration
+
+You can configure specific details on how RIME runs a particular job.
+
+By default, RIME attempts to infer optimal values for all of these options. Manually set
+these parameters only when RIME is not selecting appropriate values.  
+
+### Template
+
+Specify this configuration in the [Stress Testing configuration](stress_testing.md) 
+JSON file, under the `runtimeinfo` parameter.
+
+```
+{
+  ...,
+  "model_profiling": {
+    "agent_id": 1,
+    "custom_image": 2,
+    "resource_request": 3,
+    "explicit_errors": False,
+    "random_seed": 5
+  }
+}
+```
+
+### Arguments
+
+- `agent_id`: rime.UUID or `null`, *default* = the ID of the default agent for the workspace.
+
+  The ID of the agent on which to run this job.
+
+- `custom_image`: CustomImageType or `null`, *default* = `null`
+
+  Specifies a custom Docker image used by the job.
+
+- `resource_request`: ResourceRequest or `null`, *default* = `null`
+
+  The compute resources, such as RAM and CPU, that the job requires.
+
+- `explicit_errors`: `Boolean` or `null`, *default* = `False`
+
+  When true, the job does not ignore silent errors.
+
+- `random_seed`: int64 or `null`, *default* = `1`
+
+  Random seed for the job to avoid deterministic results.
