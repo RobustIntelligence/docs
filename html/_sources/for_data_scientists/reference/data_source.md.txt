@@ -7,27 +7,25 @@ in the `data_params` argument.
 The `data_params` configuration can take on different forms, offering a tradeoff between 
 simplicity and flexibility.
 
-NOTE: Continuous Tests require a specified set of predictions. Either `pred_col` or both
-of `ref_pred_path` and `eval_pred_path` must have a value specified.
-
 ### Default Data Params Template
-```python
+
+```
 {
     "data_params": {
-        "label_col": "Label",
-        "pred_col": "Prediction",
-        "timestamp_col": "Timestamp",
-        "class_names": "Class1", "Class2", "Class3",
+        "label_col": "",
+        "pred_col": "",
+        "timestamp_col": "",
+        "class_names": [],
         "ranking_info":{
-            "query_col":"Query",
-            "nqueries": 4,
-            "nrows_per_query": 2,
-            "drop_query_id": True
+            "query_col":"",
+            "nqueries": null,
+            "nrows_per_query": null,
+            "drop_query_id": null
         },
 
         "nrows": null,
         "nrows_per_time_bin": null,
-        "sample": False,
+        "sample": null,
         "categorical_features": null,
         "protected_features": null,
         "features_not_in_model": null,
@@ -92,7 +90,7 @@ of `ref_pred_path` and `eval_pred_path` must have a value specified.
 | loading_kwargs | String | Keyword arguments passed to the pandas loading function. Do not specify `nrows` here. |
 | feature_type_path | String | Deprecated. Path to a CSV file that specifies the data type of each feature. The file must have two columns, `FeatureName` and `FeatureType`. |
 | pred_path | String | Deprecated. Path to a CSV file or Parquet file that contains predictions. |
-| image_load_path | String | Path to a CSV file that contains images to load for `image_features`. |
+| image_load_path | String | Path to a python file that contains a `load_image` function defining custom logic for loading an image from the file path provided in the dataset. |
 
 ### Data Info template
 
@@ -100,7 +98,7 @@ The `data_info` format supports separately specifying a reference and evaluation
 [Register](../how_to_guides/registries.md) your reference and evaluation datasets separately, then specify the unique
 IDs for each dataset in `data_info`.
 
-```python
+```
 {
     "data_info": {
         "ref_dataset_id": ...,
@@ -117,36 +115,10 @@ IDs for each dataset in `data_info`.
 | ref_dataset_id | String | Unique identifier of a reference dataset. |
 | eval_dataset_id | String | Unique identifier of an evaluation dataset. |
 
-## Custom embeddings
-
-Data science often makes use of an extremely high number of dimensions to perform
-mathematical transformations as part of the analysis of a data set. When these
-dimensions don't provide useful information without their adjacent contexts, an
-embedding provides a way to attempt a holistic analysis by grouping similar dimensions.
-
-You can specify the particular embeddings used by your model and make them available to
-RIME by using the Python SDK.
-
-### Custom embedding example
-
-An example embedding is defined by the following JSON:
-
-```
-{
-  ...
-  "data_info": {
-    ...
-    "embeddings": [{"name": "foobar": "cols": ["colX", "colY", "colZ"]}]
-  }
-}
-```
-
-The dataset must include the specified columns `colX`, `colY`, and `colZ`.
-
 ### Single Data Info Templates
 
 Use `SingleDataInfo` to specify reference and evaluation datasets in a
-split approach, as seen in the previous template. `SingleDataInfo` struct takes
+split approach, as seen in the previous template. `SingleDataInfo` takes
 two elements, a `connection_info` object and a `data_params` object, detailed
 following this section.
 
@@ -156,7 +128,7 @@ additional data properties.
 Continuous Testing requires that you specify a prediction set by setting a value
 for either the `pred_col` or `pred_path` variables.
 
-```python
+```
 {
     "connection_info": ...,
     "data_params": ...,
@@ -167,8 +139,8 @@ for either the `pred_col` or `pred_path` variables.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| connection_info | ConnectionInfo | Path to a connection info struct. |
-| data_params | DataInfoParams |  | Path to a data params struct. |
+| connection_info | ConnectionInfo | Path to a ConnectionInfo object. |
+| data_params | DataInfoParams |  | Path to a data_params object. |
 
 #### Connection Info template
 
@@ -185,41 +157,48 @@ the following table.
 
 #### File-based Single Data Info Template
 
-Uses `ConnectionInfo` and `DataInfoParams` structs, which are discussed earlier in this
+Uses `ConnectionInfo` and `DataInfoParams` objects, which are discussed earlier in this
 section.
 
-```python
+```
 {
-    "connection_info": {"data_file": {"path": "thefile.csv"}},
-    "data_params": {
-        "pred_col": "foo",
-        "label_col": "bar",
-        "sample": False,
-        "text_features": ["text_1", "text_2"],
-    },
+    "connection_info": {
+        "data_file": {
+            "path": ""
+        }
+    }
+    "data_params": ...,
 }
 ```
 
 #### Data Collector Single Data Info Template
 
-This can only be specified as part of a Continuous Testing config, not offline testing config.
+This can only be specified as part of a Continuous Testing configuration.
 
-```python
+```
 {
     "connection_info": {
         "data_collector": {
-            "start_time": "1970-01-01 00:00:01",
-            "end_time": "1970-01-01 00:00:02",
+            "data_stream_id": null,
+            "start_time": 0,
+            "end_time": 0
         }
     },
-    "data_params": {"label_col": "bar"},
+    "data_params": {},
 }
 ```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| data_stream_id | rime.UUID | The unique identifier assigned by RIME to a data stream. |
+| start_time | int64 | The start time in seconds from the UNIX epoch. |
+| end_time | int64 | The end time in seconds from the UNIX epoch. |
+
 #### Delta Lake Single Data Info Template
 
 Loads a Delta Lake table.
 
-```python
+```
 {
     "connection_info": {
         "delta_lake_info": {
@@ -229,7 +208,7 @@ Loads a Delta Lake table.
             "time_col": "Updated",
         }
     },
-    "data_params": {"label_col": "bar"},
+    "data_params": {},
 }
 ```
 
@@ -244,19 +223,16 @@ Loads a Delta Lake table.
 
 Specifies how to load a HuggingFace dataset.
 
-```python
+```
 {
     "connection_info": {
         "hugging_face": {
-            "dataset_uri": "sst2",
-            "split_name": split_name,
+            "dataset_uri": "",
+            "split_name": "",
+            "loading_params_json": ""
         }
     },
-    "data_params": {
-        "label_col": "label",
-        "text_features": ["sentence"],
-        "sample": True, "nrows": 10
-    },
+    "data_params": {}
 }
 ```
 
@@ -264,3 +240,4 @@ Specifies how to load a HuggingFace dataset.
 |-----------|------|-------------|
 | dataset_uri | String | The unique identifier of the dataset. |
 | split_name | String | The name of a predefined subset of data. |
+| loading_params_json | String | A JSON serialized string that contains loading parameters. |

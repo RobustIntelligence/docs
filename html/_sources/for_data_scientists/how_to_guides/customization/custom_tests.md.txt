@@ -1,4 +1,4 @@
-# Tabular Custom Generic Tests
+# Custom Generic Tests
 
 {{ custom_tests_intro }}
 
@@ -45,7 +45,7 @@ from rime.core.schema import (
 from rime.core.test import BaseTest, TestExtraInfo
 from rime.tabular.data_tests.batch_runner import DataTestBatchRunner
 from rime.tabular.data_tests.schema.result import DataTestBatchResult, DataTestOutput
-from rime.tabular.profiler.run_containers import TabularRunContainer
+from rime.tabular.profiler.run_containers import TabularRunContainer as RunContainer
 
 
 # Signature should not be changed.
@@ -58,7 +58,7 @@ class CustomTest(BaseTest):
     # Signature should not be changed.
     def run(
         self,
-        run_container: TabularRunContainer,
+        run_container: RunContainer,
         silent_errors: bool = False
     ) -> Tuple[TestOutput, TestExtraInfo]:
         ref_data_size = len(run_container.ref_data.df)
@@ -82,7 +82,7 @@ class CustomBatchRunner(DataTestBatchRunner):
     # Signature should not be changed.
     @classmethod
     def _from_config(
-        cls, run_container: TabularRunContainer,  config: CustomConfig, category: str
+        cls, run_container: RunContainer,  config: CustomConfig, category: str
     ) -> "DataTestBatchRunner":
         if config.params is None:
             delta = 0
@@ -94,7 +94,7 @@ class CustomBatchRunner(DataTestBatchRunner):
     # Signature should not be changed.
     def _outputs_to_batch_res(
         self,
-        run_container: TabularRunContainer,
+        run_container: RunContainer,
         outputs: List[DataTestOutput],
         extra_infos: List[dict],
         duration: float,
