@@ -28,7 +28,6 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Python SDK tutorials" href="how_to_guides.html" />
     <link rel="prev" title="Terraform Variables Reference" href="../installation/self_hosted/terraform_variables.html" />
 <link href="../_static/style.css" rel="stylesheet" type="text/css">
 
@@ -53,7 +52,7 @@
             RIME
           </a>
               <div class="version">
-                2.0.0-beta.10
+                2.0.0-rc.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -201,9 +200,6 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_guides.html">Python SDK tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reference.html">API Test Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dependencies.html">Dependencies</a></li>
 </ul>
 
         </div>
@@ -607,7 +603,7 @@ a single Managed Image.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Client.start_stress_test">
-<span class="sig-name descname"><span class="pre">start_stress_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_run_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rime_managed_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">RuntimeinfoCustomImage</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">exp_fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.Job" title="rime_sdk.job.Job"><span class="pre">Job</span></a></span></span><a class="headerlink" href="#rime_sdk.Client.start_stress_test" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">start_stress_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_run_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">exp_fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.Job" title="rime_sdk.job.Job"><span class="pre">Job</span></a></span></span><a class="headerlink" href="#rime_sdk.Client.start_stress_test" title="Permalink to this definition"></a></dt>
 <dd><p>Start a Stress Testing run.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -618,17 +614,6 @@ locate the model and datasets to be used for the test.</p></li>
 <li><p><strong>project_id</strong> – str
 Identifier for the Project where the resulting test run will be stored.
 When not specified, stores the results in the default Project.</p></li>
-<li><p><strong>rime_managed_image</strong> – Optional[str]
-Name of a Managed Image to use when running the model test.
-The image must have all dependencies required by your model. To create
-new Managed Images with your desired dependencies, use the client’s
-<cite>create_managed_image()</cite> method.</p></li>
-<li><p><strong>custom_image</strong> – Optional[RuntimeinfoCustomImage]
-Specification of a customized container image to use running the model
-test. The image must have all dependencies required by your model.
-The image must specify a name for the image and optionally a pull secret
-(of type RuntimeinfoCustomImagePullSecret) with the name of the
-kubernetes pull secret used to access the given image.</p></li>
 <li><p><strong>exp_fields</strong> – Dict[str, object]
 [BETA] Fields for experimental features.</p></li>
 </ul>
@@ -2461,7 +2446,6 @@ This example logs two predictions to the Data Collector.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../installation/self_hosted/terraform_variables.html" class="btn btn-neutral float-left" title="Terraform Variables Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="how_to_guides.html" class="btn btn-neutral float-right" title="Python SDK tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
