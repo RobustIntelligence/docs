@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Upgrading Your RI Platform Cluster &mdash; RIME  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -21,12 +23,12 @@
         <script src="../../_static/sphinx_highlight.js"></script>
         <script src="../../_static/clipboard.min.js"></script>
         <script src="../../_static/copybutton.js"></script>
-        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
         <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Architecture Overview" href="../cloud/arch_overview.html" />
+    <link rel="next" title="Terraform Variables Reference" href="terraform_variables.html" />
     <link rel="prev" title="Deploying Your RI Platform Cluster" href="deployment.html" />
 <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
@@ -44,59 +46,67 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> RIME
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
           </a>
               <div class="version">
-                0.20.4
+                2.0.0-rc.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../changelogs.html">Release Notes</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../getstarted/index.html">RIME overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/modeltesting.html">RIME model testing</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Administering the RI Platform</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../for_admins/index.html">Administering the RI Platform</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Installing the RI Platform</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Installation Guide</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../index.html#managed-cloud">Managed Cloud</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../index.html#self-hosted">Self-Hosted</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="arch_overview.html">Architecture Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="requirements.html">System Requirements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html">Infrastructure Configuration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="deployment.html">Deploying Your RI Platform Cluster</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Upgrading Your RI Platform Cluster</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#terraform-apply">Terraform Apply</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#for-private-registries">For Private Registries</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../index.html#cloud">Cloud</a></li>
-</ul>
-</li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Data science with the RI Platform</span></p>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/get_started.html">Get Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/how_to_guides.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/basic_tasks.html">Setting up and testing with RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/adv_tasks.html">Customization and troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/reference.html">Reference</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">RIME in-depth reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../shostedinst.html">Self-Hosted</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="arch_overview.html">Architecture Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="requirements.html">System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Infrastructure Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment.html">Deploying Your RI Platform Cluster</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Upgrading Your RI Platform Cluster</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#terraform-apply">Terraform Apply</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#main-tf"><code class="docutils literal notranslate"><span class="pre">main.tf</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#for-private-registries">For Private Registries</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="terraform_variables.html">Terraform Variables Reference</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SDK reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../python_library/python-sdk.html">Python SDK reference</a></li>
 </ul>
 
         </div>
@@ -112,8 +122,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a></li>
-          <li class="breadcrumb-item"><a href="../index.html">Installation Guide</a></li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../shostedinst.html">Self-Hosted</a></li>
       <li class="breadcrumb-item active">Upgrading Your RI Platform Cluster</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/installation/self_hosted/upgrade.md.txt" rel="nofollow"> View page source</a>
@@ -133,29 +143,29 @@
 <section id="main-tf">
 <h3><code class="docutils literal notranslate"><span class="pre">main.tf</span></code><a class="headerlink" href="#main-tf" title="Permalink to this heading"></a></h3>
 <p>In your configuration, replace the version declarations in <code class="docutils literal notranslate"><span class="pre">source</span></code> and <code class="docutils literal notranslate"><span class="pre">rime_version</span></code>.</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">module</span><span class="w"> </span><span class="nv">&quot;rime&quot;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">module</span><span class="w"> </span><span class="nv">&quot;rime&quot;</span><span class="w"> </span><span class="p">{</span>
 
-<span class="w">  </span><span class="na">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;https://github.com/RobustIntelligence/terraform/archive/refs/tags/&lt;NEW_VERSION&gt;.tar.gz&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="na">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;https://github.com/RobustIntelligence/terraform/archive/refs/tags/&lt;NEW_VERSION&gt;.tar.gz&quot;</span>
 
-<span class="w">  </span><span class="na">rime_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;NEW_VERSION&gt;&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="na">rime_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;NEW_VERSION&gt;&quot;</span>
 
-<span class="w">  </span><span class="p">...</span><span class="w"></span>
+<span class="w">  </span><span class="p">...</span>
 
-<span class="p">}</span><span class="w"></span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Once complete, simply refresh metadata and re-apply:</p>
 <ol class="arabic simple">
 <li><p>Refresh Helm chart and Terraform metadata.</p></li>
 </ol>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>helm repo update
-terraform get -update
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>helm<span class="w"> </span>repo<span class="w"> </span>update
+terraform<span class="w"> </span>get<span class="w"> </span>-update
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
 <li><p>Re-apply Terraform.</p></li>
 </ol>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>terraform apply
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>terraform<span class="w"> </span>apply
 </pre></div>
 </div>
 </section>
@@ -172,7 +182,7 @@ terraform get -update
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="deployment.html" class="btn btn-neutral float-left" title="Deploying Your RI Platform Cluster" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../cloud/arch_overview.html" class="btn btn-neutral float-right" title="Architecture Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="terraform_variables.html" class="btn btn-neutral float-right" title="Terraform Variables Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scheduling Continuous Testing Runs &mdash; RIME  documentation</title>
+  <title>Scheduling Continuous Testing runs &mdash; RIME  documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -21,13 +23,13 @@
         <script src="../../../_static/sphinx_highlight.js"></script>
         <script src="../../../_static/clipboard.min.js"></script>
         <script src="../../../_static/copybutton.js"></script>
-        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
         <script src="../../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Using the REST API" href="rest_api.html" />
-    <link rel="prev" title="Using the Data Collector" href="using_data_collector.html" />
+    <link rel="next" title="Scheduling Continuous Tests" href="scheduled_ct_configuration.html" />
+    <link rel="prev" title="Continuous Tests" href="ct-ui.html" />
 <link href="../../../_static/style.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -44,81 +46,73 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> RIME
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            RIME
           </a>
               <div class="version">
-                0.20.4
+                2.0.0-rc.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../changelogs.html">Release Notes</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/index.html">RIME overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/modeltesting.html">RIME model testing</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Administering the RI Platform</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/index.html">Administering the RI Platform</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Installing the RI Platform</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Guide</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Data science with the RI Platform</span></p>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../get_started.html">Get Started</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../../how_to_guides.html">How-To Guides</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="api-authentication.html">API Authentication</a></li>
-<li class="toctree-l2"><a class="reference internal" href="adversarial_nlp.html">NLP Adversarial Robustness</a></li>
-<li class="toctree-l2"><a class="reference internal" href="compare_test_runs.html">Comparing Two Test Runs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="compliance.html">Compliance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upload_data.html">Uploading Data to RIME</a></li>
-<li class="toctree-l2"><a class="reference internal" href="querying_results.html">Querying RIME Results</a></li>
-<li class="toctree-l2"><a class="reference internal" href="updating_a_firewall.html">Updating a Firewall</a></li>
-<li class="toctree-l2"><a class="reference internal" href="using_data_collector.html">Using the Data Collector</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Scheduling Continuous Testing Runs</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#activating-a-schedule">Activating a Schedule</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#creating-a-schedule-with-a-new-firewall-from-sdk">Creating a Schedule with a New Firewall from SDK</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#creating-a-schedule-on-an-existing-firewall-from-sdk">Creating a Schedule on an Existing Firewall from SDK</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../basic_tasks.html">Setting up and testing with RIME</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../basic_tasks.html#initial-setup">Initial setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basic_tasks.html#stress-tests">Stress Tests</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../basic_tasks.html#continuous-tests">Continuous Tests</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ct-ui.html">Continuous Tests</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Scheduling Continuous Testing runs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#activating-a-schedule">Activating a schedule</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#deactivating-a-schedule-from-the-sdk">Deactivating a schedule from the SDK</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#activating-and-deactivating-a-schedule-from-the-ui">Activating and deactivating a schedule from the UI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#additional-specifications">Additional specifications</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modifying-the-reference-dataset">Modifying the reference dataset</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#deactivating-a-schedule-from-sdk">Deactivating a Schedule from SDK</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#activating-and-deactivating-through-the-ui">Activating and Deactivating through the UI</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#extra-specifications">Extra Specifications</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#modifying-the-reference-dataset">Modifying the Reference Dataset</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#modifying-existing-schedules">Modifying Existing Schedules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scheduled_ct_configuration.html">Scheduling Continuous Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ct-events-rca.html">Continuous Testing feedback and observability</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../basic_tasks.html#model-cards">Model cards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basic_tasks.html#notifications-and-alerts">Notifications and alerts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basic_tasks.html#notebook-walkthroughs">Notebook walkthroughs</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="rest_api.html">Using the REST API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modelcards.html">Model cards</a></li>
-<li class="toctree-l2"><a class="reference internal" href="embeddings.html">Custom embeddings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../platform_integrations.html">Platform Integrations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../model_integrations.html">Model Integrations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../data_integrations.html">Data Integrations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../alerting/setup_alerts.html">Alerts and Notifications</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../alerting/test_run_progress.html">Test Run Progress</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../customization/custom_metrics.html">Custom Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../customization/custom_tests.html">Custom Tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../customization/custom_docker.html">Run RIME on Managed Docker Images</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/sdk.html">Debugging the Python SDK</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../troubleshooting/rime_data_format_check.html">RIME Data Format Check</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../../adv_tasks.html">Customization and troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference.html">Reference</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">RIME in-depth reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/shostedinst.html">Self-Hosted</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SDK reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_library/python-sdk.html">Python SDK reference</a></li>
 </ul>
 
         </div>
@@ -134,9 +128,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
-          <li class="breadcrumb-item"><a href="../../how_to_guides.html">How-To Guides</a></li>
-      <li class="breadcrumb-item active">Scheduling Continuous Testing Runs</li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../basic_tasks.html">Setting up and testing with RIME</a></li>
+      <li class="breadcrumb-item active">Scheduling Continuous Testing runs</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../_sources/for_data_scientists/how_to_guides/common_use_cases/scheduling_ct_runs.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -147,52 +141,42 @@
            <div itemprop="articleBody">
              
   <section id="scheduling-continuous-testing-runs">
-<h1>Scheduling Continuous Testing Runs<a class="headerlink" href="#scheduling-continuous-testing-runs" title="Permalink to this heading"></a></h1>
-<p>Once a Firewall has been created, you can monitor your model on a regular schedule without have to do any manual work. In this guide, we will
-show you how to create and update this schedule from the SDK and the UI. For more configuration information see the <a class="reference internal" href="../../reference/tabular/scheduled_ct_configuration.html"><span class="doc std std-doc">Scheduled CT Configuration Page</span></a></p>
+<h1>Scheduling Continuous Testing runs<a class="headerlink" href="#scheduling-continuous-testing-runs" title="Permalink to this heading"></a></h1>
+<p>You can create and update the schedule for a Continuous Test from the SDK or the UI. For
+more configuration information, see the <a class="reference internal" href="scheduled_ct_configuration.html"><span class="doc std std-doc">Scheduled CT Configuration Page</span></a></p>
 <section id="activating-a-schedule">
-<h2>Activating a Schedule<a class="headerlink" href="#activating-a-schedule" title="Permalink to this heading"></a></h2>
-<section id="creating-a-schedule-with-a-new-firewall-from-sdk">
-<h3>Creating a Schedule with a New Firewall from SDK<a class="headerlink" href="#creating-a-schedule-with-a-new-firewall-from-sdk" title="Permalink to this heading"></a></h3>
+<h2>Activating a schedule<a class="headerlink" href="#activating-a-schedule" title="Permalink to this heading"></a></h2>
+<section id="creating-a-schedule-with-a-new-continuous-test-from-sdk">
+<h3>Creating a schedule with a new Continuous Test from SDK<a class="headerlink" href="#creating-a-schedule-with-a-new-continuous-test-from-sdk" title="Permalink to this heading"></a></h3>
 <p>To begin, initialize the <code class="docutils literal notranslate"><span class="pre">Client</span></code> and point it to the location of your RIME backend.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">ImageType</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
 
-<span class="n">rime_client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;rime.&lt;YOUR_ORG_NAME&gt;.rime.dev&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;YOUR_API_TOKEN&gt;&quot;</span><span class="p">)</span>
+<span class="n">rime_client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;rime.&lt;YOUR_ORG_NAME&gt;.rbst.io&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;YOUR_API_TOKEN&gt;&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>After creating a project and running stress tests, a schedule can be created
-when creating a firewall. To create a schedule, you will need to provide the location to pull data from as well as any arguments needed to access this location.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span><span class="s2">&quot;&lt;NAME&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;DESCRIPTION&gt;&quot;</span><span class="p">)</span>
-
-<span class="c1"># Run a stress test and wait until finished</span>
-<span class="n">job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="s2">&quot;&lt;YOUR_CONFIG&gt;&quot;</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">)</span>
-<span class="n">job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">test_run_id</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">get_test_run_id</span><span class="p">()</span>
-
-<span class="c1"># Create a firewall with an active schedule. This will routinely read from</span>
-<span class="c1"># the data collector and run tests once every bin_size time period (eg. once a day, week, etc...).</span>
-<span class="c1"># No arguments are needed by the RIME Engine to access the data collector, since the service is internal</span>
-<span class="n">firewall</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_firewall</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="s2">&quot;&lt;NAME&gt;&quot;</span><span class="p">,</span> <span class="n">bin_size</span><span class="o">=</span><span class="s2">&quot;&lt;BIN_SIZE&gt;&quot;</span><span class="p">,</span> <span class="n">test_run_id</span><span class="o">=</span><span class="n">test_run_id</span><span class="p">,</span> <span class="n">run_ct_schedule</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">location_type</span><span class="o">=</span><span class="s2">&quot;data_collector&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>You can additionally provide parameters to process this data (eg. timestamp column names).</p>
+<p>You can set a schedule at the same time you <a class="reference internal" href="ct-ui.html"><span class="doc std std-doc">create a Continuous Test</span></a>. To create a
+schedule, specify a data source as well as any credentials required for access to the
+data source.</p>
+<p>Determine the IDs for the model and dataset in the <a class="reference internal" href="../registries.html"><span class="doc std std-doc">RIME Registry</span></a>.</p>
+<p>Optionally, provide parameters to process this data, such as timestamp column names.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_params_dict</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;nrows&quot;</span><span class="p">:</span> <span class="mi">100</span>
 <span class="p">}</span>
 
 <span class="c1"># Create a firewall with an active schedule.</span>
 <span class="c1"># The data loaded has a timestamp column defined above.</span>
-<span class="n">firewall</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_firewall</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="s2">&quot;&lt;NAME&gt;&quot;</span><span class="p">,</span> <span class="n">bin_size</span><span class="o">=</span><span class="s2">&quot;&lt;BIN_SIZE&gt;&quot;</span><span class="p">,</span> <span class="n">test_run_id</span><span class="o">=</span><span class="n">test_run_id</span><span class="p">,</span> <span class="n">run_ct_schedule</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">location_type</span><span class="o">=</span><span class="s2">&quot;data_collector&quot;</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="n">data_params_dict</span><span class="p">)</span>
+<span class="n">firewall</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_firewall</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_data_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>Since each data location requires specific parameters for the RIME Engine to access and process the data, please visit the <a class="reference internal" href="../../reference/tabular/scheduled_ct_configuration.html"><span class="doc std std-doc">Scheduled CT Configuration Page</span></a> to
-learn more about configuration for different use cases.</p>
+<p>Since each data location requires specific parameters for the RIME Engine to access and
+process the data, see the <a class="reference internal" href="scheduled_ct_configuration.html"><span class="doc std std-doc">Scheduled CT Configuration Page</span></a>
+for details about configurations for different use cases.</p>
 </section>
-<section id="creating-a-schedule-on-an-existing-firewall-from-sdk">
-<h3>Creating a Schedule on an Existing Firewall from SDK<a class="headerlink" href="#creating-a-schedule-on-an-existing-firewall-from-sdk" title="Permalink to this heading"></a></h3>
-<p>Firewalls without scheduling can enable scheduling at any time.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the firewall for a project</span>
-<span class="n">firewall</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_firewall_for_project</span><span class="p">(</span><span class="s2">&quot;&lt;YOUR_PROJECT_ID&gt;&quot;</span><span class="p">)</span>
+<section id="creating-a-schedule-on-an-existing-continuous-test-from-the-sdk">
+<h3>Creating a schedule on an existing Continuous Test from the SDK<a class="headerlink" href="#creating-a-schedule-on-an-existing-continuous-test-from-the-sdk" title="Permalink to this heading"></a></h3>
+<p>You can enable a schedule for an existing Continuous Test at any time.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get a Continuous Test from a project</span>
+<span class="n">firewall</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">get_firewall_for_project</span><span class="p">(</span><span class="s2">&quot;foo-project&quot;</span><span class="p">)</span>
 
 <span class="c1"># Activate a schedule</span>
 <span class="n">firewall</span><span class="o">.</span><span class="n">activate_ct_schedule</span><span class="p">(</span><span class="n">location_type</span><span class="o">=</span><span class="s2">&quot;data_collector&quot;</span><span class="p">,</span> <span class="n">reference_set_window</span><span class="o">=</span><span class="n">reference_set_bin</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="n">data_params_dict</span><span class="p">)</span>
@@ -200,35 +184,35 @@ learn more about configuration for different use cases.</p>
 </div>
 </section>
 </section>
-<section id="deactivating-a-schedule-from-sdk">
-<h2>Deactivating a Schedule from SDK<a class="headerlink" href="#deactivating-a-schedule-from-sdk" title="Permalink to this heading"></a></h2>
-<p>To deactivate a schedule for a firewall, simply run the following command.</p>
+<section id="deactivating-a-schedule-from-the-sdk">
+<h2>Deactivating a schedule from the SDK<a class="headerlink" href="#deactivating-a-schedule-from-the-sdk" title="Permalink to this heading"></a></h2>
+<p>To deactivate a schedule for a Contnuous Test, run the following command.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">firewall</span><span class="o">.</span><span class="n">deactivate_ct_schedule</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
-<section id="activating-and-deactivating-through-the-ui">
-<h2>Activating and Deactivating through the UI<a class="headerlink" href="#activating-and-deactivating-through-the-ui" title="Permalink to this heading"></a></h2>
-<p>Within a project, from the stress test view, you can click on the “Promote Model” button to open up a settings view of the firewall.</p>
-<img src="../../../_static/promote_model.png">
-<img src="../../../_static/fw_settings_view.png">
-<p>After toggling to activate scheduled CT, you must choose where you want your data to come from.
-The current supported options are Databricks DeltaLake, the Data Collector, or your own custom loader.</p>
-<p>Delta Lake connections can be set up following the instructions in the <a class="reference internal" href="../../../for_admins/how_to_guides/data-sources.html"><span class="doc std std-doc">data sources setup guide</span></a>
-You must then specify a table and timestamp column.</p>
+<section id="activating-and-deactivating-a-schedule-from-the-ui">
+<h2>Activating and deactivating a schedule from the UI<a class="headerlink" href="#activating-and-deactivating-a-schedule-from-the-ui" title="Permalink to this heading"></a></h2>
+<p>Choose an <a class="reference internal" href="../../../for_admins/data-integrations.html"><span class="doc std std-doc">integration</span></a> to use as a data
+source. The current supported options are Databricks Delta Lake, the Data Collector,
+or a custom data loader.</p>
+<p>Specify a table and timestamp column.</p>
 <img src="../../../_static/fw_deltalake.png">
-<p>For the custom loader, you should specify the path of your custom loading file, the name of the function that loads the data, any relevant keyword arguments in json form, and the timestamp column.</p>
+<p>For the custom loader, specify the path of the custom loading file, the name of the
+function that loads the data, any relevant keyword arguments in JSON format, and the
+timestamp column.</p>
 <img src="../../../_static/fw_custom_loader.png">
 </section>
-<section id="extra-specifications">
-<h2>Extra Specifications<a class="headerlink" href="#extra-specifications" title="Permalink to this heading"></a></h2>
+<section id="additional-specifications">
+<h2>Additional specifications<a class="headerlink" href="#additional-specifications" title="Permalink to this heading"></a></h2>
 </section>
 <section id="modifying-the-reference-dataset">
-<h2>Modifying the Reference Dataset<a class="headerlink" href="#modifying-the-reference-dataset" title="Permalink to this heading"></a></h2>
-<p>In addition to specifying access and process parameters, you can also modify the reference data that
-tests are routinely run against.</p>
-<p>By default, the reference set of CT runs is the same reference set as the stress test that the firewall is configured to use, but you may also use a rolling window or a specific time period.</p>
-<p>From the UI, you can choose a reference dataset in the “Reference Set” dropdown and fill in the relevant fields.
+<h2>Modifying the reference dataset<a class="headerlink" href="#modifying-the-reference-dataset" title="Permalink to this heading"></a></h2>
+<p>In addition to specifying access and process parameters, you can also modify the
+reference data that tests are routinely run against.</p>
+<p>A Continuous Test run can use a <a class="reference internal" href="../registries.html"><span class="doc std std-doc">registered</span></a> dataset, a rolling time
+window, or a specific time period.</p>
+<p>From the UI, choose a reference dataset in the “Reference Set” dropdown and fill in the relevant fields.
 For the non-default options, the reference dataset always comes from the same data source that is specified for CT scheduling.</p>
 <p>You can also specify the reference dataset from the SDK.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
@@ -246,7 +230,7 @@ For the non-default options, the reference dataset always comes from the same da
 </pre></div>
 </div>
 <section id="modifying-existing-schedules">
-<h3>Modifying Existing Schedules<a class="headerlink" href="#modifying-existing-schedules" title="Permalink to this heading"></a></h3>
+<h3>Modifying existing schedules<a class="headerlink" href="#modifying-existing-schedules" title="Permalink to this heading"></a></h3>
 <p>To change the data location associated with your runs or the reference set, use the <code class="docutils literal notranslate"><span class="pre">update_location_info</span></code>
 function.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
@@ -266,8 +250,8 @@ function.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="using_data_collector.html" class="btn btn-neutral float-left" title="Using the Data Collector" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="rest_api.html" class="btn btn-neutral float-right" title="Using the REST API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ct-ui.html" class="btn btn-neutral float-left" title="Continuous Tests" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="scheduled_ct_configuration.html" class="btn btn-neutral float-right" title="Scheduling Continuous Tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

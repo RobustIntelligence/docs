@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Get Started &mdash; RIME  documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -21,13 +23,13 @@
         <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
-        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
         <script src="../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Setup" href="get_started/setup.html" />
-    <link rel="prev" title="Local Agent" href="../installation/cloud/local.html" />
+    <link rel="next" title="Setting up and testing with RIME" href="basic_tasks.html" />
+    <link rel="prev" title="Tests" href="../getstarted/explanation/tests/tabular/tests.html" />
 <link href="../_static/style.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -44,50 +46,73 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> RIME
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            RIME
           </a>
               <div class="version">
-                0.20.4
+                2.0.0-rc.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../changelogs.html">Release Notes</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../getstarted/index.html">RIME overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getstarted/modeltesting.html">RIME model testing</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Administering the RI Platform</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../for_admins/index.html">Administering the RI Platform</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Installing the RI Platform</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation Guide</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Data science with the RI Platform</span></p>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Get Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="get_started/setup.html">Setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#tabular-notebooks">Tabular Notebooks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#nlp-notebooks">NLP Notebooks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#cv-notebooks">CV Notebooks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#custom-notebooks">Custom Notebooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#set-up-rime">Set up RIME</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cluster-url">Cluster URL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api-token">API token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-the-rime-sdk">Install the RIME SDK</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#set-up-rime">Set up RIME</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#cluster-url">Cluster URL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#api-token">API token</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#install-the-rime-sdk">Install the RIME SDK</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_guides.html">How-To Guides</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#try-a-tutorial-notebook">Try a tutorial notebook</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tabular-notebooks">Tabular Notebooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nlp-notebooks">NLP Notebooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cv-notebooks">CV Notebooks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#set-up-a-new-test-run">Set up a new test run</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="basic_tasks.html">Setting up and testing with RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adv_tasks.html">Customization and troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">Reference</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">RIME in-depth reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/shostedinst.html">Self-Hosted</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SDK reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../python_library/python-sdk.html">Python SDK reference</a></li>
 </ul>
 
         </div>
@@ -103,7 +128,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Get Started</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/for_data_scientists/get_started.rst.txt" rel="nofollow"> View page source</a>
@@ -116,47 +141,102 @@
              
   <section id="get-started">
 <h1>Get Started<a class="headerlink" href="#get-started" title="Permalink to this heading"></a></h1>
-<p>First, make sure you have everything set up correctly to run RIME:</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="get_started/setup.html">Setup</a></li>
-</ul>
-</div>
-<p>Then, check out one of our <strong>Google Colab</strong> tutorials for a quick introduction into running RIME.</p>
-<p>Each notebook illustrates how to use RIME to validate, protect, and monitor your ML pipeline across a wide range of tasks
-(from classification to ranking) and data modalities (Tabular, NLP, and Images).
-The datasets and models used in these examples come from well-known public sources like
-<a class="reference external" href="https://www.kaggle.com/datasets/uciml/adult-census-income">UCI ML</a> or
-<a class="reference external" href="https://www.kaggle.com/datasets/Cornell-University/arxiv?select=arxiv-metadata-oai-snapshot.json">arXiv</a>.
-In these notebooks, we walk through the steps of setting up RIME with an example dataset/model;
-we run Stress Testing and then the AI Firewall.</p>
-<section id="tabular-notebooks">
-<h2>Tabular Notebooks<a class="headerlink" href="#tabular-notebooks" title="Permalink to this heading"></a></h2>
+<p>To get started with RIME, first make sure your deployment is <a class="reference internal" href="../installation/index.html#installguide"><span class="std std-ref">installed</span></a>.
+Then perform the setup steps.</p>
+<section id="set-up-rime">
+<h2>Set up RIME<a class="headerlink" href="#set-up-rime" title="Permalink to this heading"></a></h2>
+<p>Once you have access to a working RIME deployment, you need the following items in order
+to start performing data science tasks:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://colab.research.google.com/drive/1qytdRPqE1hsJ2aKrCW3WvaBoVWdKLeL6" target="_blank">Fraud Detection (Binary Classification)</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/drive/1xbBQo0P57PfdeJz1cZacuGNpTknewKe7" target="_blank">NYC Taxi Dataset (Regression)</a></p></li>
-<li><p><a class="reference external" href="https://colab.research.google.com/drive/1a5EEO4Ax0Ly3dLFuBP0BuqtKUdMupoGi" target="_blank">Movie Recommendations (Ranking)</a></p></li>
+<li><p>Get your RIME cluster URL</p></li>
+<li><p>Create an API token</p></li>
+<li><p>Install the RIME SDK</p></li>
+</ul>
+</section>
+<section id="cluster-url">
+<h2>Cluster URL<a class="headerlink" href="#cluster-url" title="Permalink to this heading"></a></h2>
+<p>The URL of your RIME cluster is where the webUI for RIME is available. This URL is also
+used to upload results. The URL is typically in the form <cite>rime.{}.rbst.io</cite>. Consult your
+site administrator with questions about your cluster URL.</p>
+</section>
+<section id="api-token">
+<h2>API token<a class="headerlink" href="#api-token" title="Permalink to this heading"></a></h2>
+<p>You now need to create an API token. This will be used to connect programmatically to the RIME cluster.
+Creating this API Token is done in the web UI. Go to <cite>Settings</cite> -&gt; <cite>API Access Tokens</cite> and create your own
+token. Full details on API tokens are discussed in <a class="reference internal" href="../for_admins/userauthnz.html#userauth"><span class="std std-ref">Users, authorization, and authentication</span></a>.</p>
+</section>
+<section id="install-the-rime-sdk">
+<h2>Install the RIME SDK<a class="headerlink" href="#install-the-rime-sdk" title="Permalink to this heading"></a></h2>
+<p>The RIME SDK is a Python package for interacting with RIME programmatically. This SDK is available
+on pypi, so it can easily be installed with <cite>pip install rime-sdk</cite>. This will install the most recent
+version of the RIME SDK. If your cluster is on an older version of RIME, you can install that specific
+version with <cite>pip install rime-sdk==X.Y.Z</cite>.</p>
+<section id="set-up-rime">
+<h3>Set up RIME<a class="headerlink" href="#set-up-rime" title="Permalink to this heading"></a></h3>
+<p>Once you have access to a working RIME deployment, you need the following items in order
+to start performing data science tasks:</p>
+<ul class="simple">
+<li><p>Get your RIME cluster URL</p></li>
+<li><p>Create an API token in the UI</p></li>
+<li><p>Install the RIME SDK</p></li>
+</ul>
+<section id="cluster-url">
+<h4>Cluster URL<a class="headerlink" href="#cluster-url" title="Permalink to this heading"></a></h4>
+<p>The first order of business is figuring out the cluster URL for your RIME cluster. This is the URL
+at which you will view your results, and is also used to upload your results. It is usually in the
+form <code class="docutils literal notranslate"><span class="pre">rime.{}.rbst.io</span></code>. If you have any questions about what your cluster URL is, please ask your
+administrator (or whoever set up the RIME cluster).</p>
+</section>
+<section id="api-token">
+<h4>API token<a class="headerlink" href="#api-token" title="Permalink to this heading"></a></h4>
+<p>You now need to create an API token. This will be used to connect programmatically to the RIME cluster.
+Creating this API Token is done in the web UI. Go to <code class="docutils literal notranslate"><span class="pre">Settings</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">API</span> <span class="pre">Access</span> <span class="pre">Tokens</span></code> and create your own
+token. Full details on API tokens are discussed in <a class="reference internal" href="../for_admins/api-authentication.html"><span class="doc std std-doc">API Authentication</span></a>.</p>
+</section>
+<section id="install-the-rime-sdk">
+<h4>Install the RIME SDK<a class="headerlink" href="#install-the-rime-sdk" title="Permalink to this heading"></a></h4>
+<p>The RIME SDK is a Python package for interacting with RIME programmatically. This SDK is available
+on pypi, so it can easily be installed with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">rime-sdk</span></code>. This will install the most recent
+version of the RIME SDK. If your cluster is on an older version of RIME, you can install that specific
+version with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">rime-sdk==X.Y.Z</span></code>.</p>
+</section>
+</section>
+</section>
+<section id="try-a-tutorial-notebook">
+<h2>Try a tutorial notebook<a class="headerlink" href="#try-a-tutorial-notebook" title="Permalink to this heading"></a></h2>
+<p>Each notebook illustrates how to use RIME to validate, protect, and monitor your ML
+pipeline across a wide range of tasks, from classification to ranking, and across
+tabular, natural language processing (NLP), and computer vision (CV) data modalities.</p>
+<p>The datasets and models used in these examples come from well-known public sources such as</p>
+<p><a class="reference external" href="https://www.kaggle.com/datasets/uciml/adult-census-income">UCI ML</a> or
+<a class="reference external" href="https://www.kaggle.com/datasets/Cornell-University/arxiv?select=arxiv-metadata-oai-snapshot.json">arXiv</a>.</p>
+<p>In these notebooks, we walk through the steps of setting up RIME with an example dataset/model;
+we run Stress Testing first, then Continuous Testing.</p>
+<section id="tabular-notebooks">
+<h3>Tabular Notebooks<a class="headerlink" href="#tabular-notebooks" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://colab.research.google.com/drive/18PXd-T7lQtGrfV00C_cMyX1PYGV6jJLF" target="_blank">Fraud Detection (Binary Classification)</a></p></li>
+<li><p><a class="reference external" href="https://colab.research.google.com/drive/178SVfo89ni6iiC1jW_wJEYPz5znJi84j" target="_blank">NYC Taxi Dataset (Regression)</a></p></li>
+<li><p><a class="reference external" href="https://colab.research.google.com/drive/1KrscEw_c371gegJxgu8kyC0V2TFj5nUO" target="_blank">Movie Recommendations (Ranking)</a></p></li>
 </ul>
 </section>
 <section id="nlp-notebooks">
-<h2>NLP Notebooks<a class="headerlink" href="#nlp-notebooks" title="Permalink to this heading"></a></h2>
+<h3>NLP Notebooks<a class="headerlink" href="#nlp-notebooks" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p><a class="reference external" href="https://colab.research.google.com/drive/1IwN3aLeCCAzWl8MCk35wpyYYdu7Y1JgI" target="_blank">ArXiv Dataset (NLP, Classification)</a></p></li>
-<li><p><a class="reference internal" href="how_to_guides/common_use_cases/adversarial_nlp.html"><span class="doc">NLP Adversarial Robustness</span></a></p></li>
+<li><p><a class="reference external" href="https://colab.research.google.com/drive/1NMPgFnPdlvhJDLG0Jda0M_leJ6ClPVKD" target="_blank">ArXiv Dataset (NLP, Classification)</a></p></li>
+<li><p><a href="how_to_guides/common_use_cases/adversarial_nlp.html">Adversarial NLP Walkthrough</a></p></li>
 </ul>
 </section>
 <section id="cv-notebooks">
-<h2>CV Notebooks<a class="headerlink" href="#cv-notebooks" title="Permalink to this heading"></a></h2>
+<h3>CV Notebooks<a class="headerlink" href="#cv-notebooks" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p><a class="reference external" href="https://colab.research.google.com/drive/1ul-WPOfpqEF6Te_SLKsP9PptpTXeYbPT" target="_blank">Animals with Attributes 2 (Images, Classification)</a></p></li>
+<li><p><a class="reference external" href="https://colab.research.google.com/drive/1MxAiaf5OvTcT0csQUNN0Z4pjrjxnz-Ew" target="_blank">Animals with Attributes 2 (Images, Classification)</a></p></li>
 </ul>
-<p>We also provide a lightweight template so that you can easily plug in your own dataset and model.</p>
 </section>
-<section id="custom-notebooks">
-<h2>Custom Notebooks<a class="headerlink" href="#custom-notebooks" title="Permalink to this heading"></a></h2>
-<ul class="simple">
-<li><p><a class="reference external" href="https://colab.research.google.com/drive/1bW0gdXep4BSBchuVaBUx4OtzZ3TYNm_p" target="_blank">Use RIME with your Own Dataset/Model</a></p></li>
-</ul>
+</section>
+<section id="set-up-a-new-test-run">
+<h2>Set up a new test run<a class="headerlink" href="#set-up-a-new-test-run" title="Permalink to this heading"></a></h2>
+<p>After the tutorials, you can get familiar with details about starting a new <a class="reference internal" href="basic_tasks.html#rimesetup-testing"><span class="std std-ref">Continuous or Stress test</span></a>.</p>
 </section>
 </section>
 
@@ -164,8 +244,8 @@ we run Stress Testing and then the AI Firewall.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../installation/cloud/local.html" class="btn btn-neutral float-left" title="Local Agent" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="get_started/setup.html" class="btn btn-neutral float-right" title="Setup" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../getstarted/explanation/tests/tabular/tests.html" class="btn btn-neutral float-left" title="Tests" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="basic_tasks.html" class="btn btn-neutral float-right" title="Setting up and testing with RIME" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

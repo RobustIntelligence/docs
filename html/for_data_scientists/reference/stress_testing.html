@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stress Testing &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Continuous Tests" href="continuous_testing.html" />
+    <link rel="prev" title="Reference" href="../reference.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                2.0.0-rc.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/modeltesting.html">RIME model testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic_tasks.html">Setting up and testing with RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../adv_tasks.html">Customization and troubleshooting</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../reference.html#rime-configuration">RIME Configuration</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Stress Testing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#template">Template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#arguments">Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="continuous_testing.html">Continuous Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="task_data_format.html">Input Data Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_source.html">Data Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model_source.html">Model Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="specify_model.html">Specify a Model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html#profiling-configuration">Profiling Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference.html#test-configuration">Test Configuration</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/shostedinst.html">Self-Hosted</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SDK reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../python_library/python-sdk.html">Python SDK reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../reference.html">Reference</a></li>
+      <li class="breadcrumb-item active">Stress Testing</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/for_data_scientists/reference/stress_testing.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="stress-testing">
+<h1>Stress Testing<a class="headerlink" href="#stress-testing" title="Permalink to this heading"></a></h1>
+<p>Configuration of RIME Stress Testing is done through a JSON configuration
+file that you pass as an argument to the Python SDK.</p>
+<section id="template">
+<h2>Template<a class="headerlink" href="#template" title="Permalink to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Run Name&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">REQUIRED</span><span class="p">)</span>
+  <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="s2">&quot;my_ref_dataset_id&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">REQUIRED</span><span class="p">)</span>
+      <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="s2">&quot;my_eval_dataset_id&quot;</span> <span class="p">(</span><span class="n">REQUIRED</span><span class="p">)</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="s2">&quot;my_model_id&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">REQUIRED</span><span class="p">)</span>
+  <span class="s2">&quot;profiling_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;model_profiling&quot;</span><span class="p">:</span> <span class="p">{</span><span class="o">...</span><span class="p">},</span>
+      <span class="s2">&quot;data_profiling&quot;</span><span class="p">:</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;test_suite_config&quot;</span><span class="p">:</span> <span class="p">{</span><span class="o">...</span><span class="p">},</span>
+  <span class="s2">&quot;run_time_info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments">
+<h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this heading"></a></h2>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">run_name</span></code></strong>: string, <em><strong>required</strong></em></p>
+<p>The name under which your run will appear in the UI.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">data_info</span></code></strong>: Dict[string, string], <em><strong>required</strong></em></p>
+<p>Specification of the <code class="docutils literal notranslate"><span class="pre">ref_dataset_id</span></code> and <code class="docutils literal notranslate"><span class="pre">eval_dataset_id</span></code> parameters, which determine the Reference and Evaluation Datasets to use, respectively. For documentation on how to register a Dataset and receive a Dataset ID, see <a class="reference internal" href="../how_to_guides/registries.html"><span class="doc std std-doc">RIME Registries</span></a></p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">model_id</span></code></strong>: string, <em><strong>required</strong></em></p>
+<p>Configuration for the Model to use. For a reference on how to configure a
+model, see <a class="reference internal" href="../how_to_guides/registries.html"><span class="doc std std-doc">RIME Registries</span></a>. If you are not providing
+a model, this should be <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">model_task</span></code></strong>: string, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">&quot;Binary</span> <span class="pre">Classification&quot;</span></code></p>
+<p>Specification of the model task. Current accepted values are <code class="docutils literal notranslate"><span class="pre">&quot;Binary</span>&#160;&#160; <span class="pre">Classification&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;Multi-class</span> <span class="pre">Classification&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;Regression&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;Ranking&quot;</span></code>.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">profiling_config</span></code></strong>: ProfilingConfig, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">ProfilingConfig()</span></code></p>
+<p>Specification of the configuration for profiling the model and data.
+NOTE: this argument is optional. If it is not specified default parameters
+will be used.</p>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">model_profiling</span></code></strong>: ModelProfilingInfo, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">ModelProfilingInfo()</span></code></p>
+<p>Optional. Specifies how to profile the model. <a class="reference internal" href="model_profiling.html"><span class="doc std std-doc">Model Profiling Configuration</span></a>
+discusses how to configure model profiling. When this parameter is not specified, profiling uses
+default parameters.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">data_profiling</span></code></strong>: DataProfilingInfo, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">DataProfilingInfo()</span></code></p>
+<p>Optional. Specifies how to profile the data. <a class="reference internal" href="model_profiling.html"><span class="doc std std-doc">Data Profiling Configuration</span></a>
+discusses how to configure data profiling. When this parameter is not specified, profiling uses
+default parameters.</p>
+</li>
+</ul>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_suite_config</span></code></strong>: TestSuiteConfig, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">TestSuiteConfig()</span></code></p>
+<p>Optional. Specifies which tests to run and what test parameters to use. <a class="reference internal" href="tabular/tests.html"><span class="doc std std-doc">Test Suite Configuration</span></a> discusses how to configure test settings.When this parameter is not specified, default tests run with default parameters.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">run_time_info</span></code></strong>: RunTimeInfo, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">RunTimeInfo()</span></code></p>
+<p>Optional. Specifies runtime-specific parameters associated with the Stress Test run.
+See <a class="reference internal" href="runtime.html"><span class="doc std std-doc">Run Time Information</span></a> for details. When this argument is not specified, the
+Stress Test run uses default parameters.</p>
+</li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../reference.html" class="btn btn-neutral float-left" title="Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="continuous_testing.html" class="btn btn-neutral float-right" title="Continuous Tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+Input Data Format
+=========================
+
+## Supported File Formats
+
+RIME currently supports the following formats:
+
+* [Parquet](https://parquet.apache.org/docs/file-format/)
+* Delta lake tables
+* JSON
+* JSONL
+* CSV
+
+The header columns of input files are used as feature names and must be strings.
+
+RIME is most effective when both label and prediction column are provided; however, neither are required for most tasks.
+
+## Requirements By Task
+
+### Binary Classification
+- Labels must be the integer values 0 or 1
+- Predictions must be float values between 0 and 1 that represent the positive class (label = 1) probability
+
+### Multi-Class Classification
+- Labels should be integers referring to class index
+- Specify predictions using the [registry](../how_to_guides/registries.md) functionality.
+
+### Ranking
+- **Labels are required**
+- Labels can be any real number
+- Predictions can be any real number
+- `ranking_info` must be provided in the [data configuration](data_source.md)
+
+### Regression
+- Labels can be any real number
+- Predictions can be any real number

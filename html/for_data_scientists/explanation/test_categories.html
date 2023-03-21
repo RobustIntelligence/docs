@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summary Tests &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Tests" href="../../getstarted/explanation/tests/tabular/tests.html" />
+    <link rel="prev" title="RIME model testing" href="../../getstarted/modeltesting.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                2.0.0-rc.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../getstarted/modeltesting.html">RIME model testing</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Summary Tests</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#drift">Drift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#abnormal-inputs">Abnormal Inputs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subset-performance">Subset Performance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bias-and-fairness">Bias and Fairness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transformations">Transformations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-performance">Model Performance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-cleanliness">Data Cleanliness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adversarial">Adversarial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subset-performance-degradation">Subset Performance Degradation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-poisoning-detection">Data Poisoning Detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#evasion-attack-detection">Evasion Attack Detection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../getstarted/modeltesting.html#rime-consolidated-test-database">RIME consolidated test database</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../getstarted/modeltesting.html#tests">Tests</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Summary Tests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#drift">Drift</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abnormal-inputs">Abnormal Inputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-performance">Subset Performance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bias-and-fairness">Bias and Fairness</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#transformations">Transformations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model-performance">Model Performance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#data-cleanliness">Data Cleanliness</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#adversarial">Adversarial</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subset-performance-degradation">Subset Performance Degradation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#data-poisoning-detection">Data Poisoning Detection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#evasion-attack-detection">Evasion Attack Detection</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../getstarted/explanation/tests/tabular/tests.html">Tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic_tasks.html">Setting up and testing with RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../adv_tasks.html">Customization and troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/shostedinst.html">Self-Hosted</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SDK reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../python_library/python-sdk.html">Python SDK reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../getstarted/modeltesting.html">RIME model testing</a></li>
+      <li class="breadcrumb-item active">Summary Tests</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/for_data_scientists/explanation/test_categories.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="summary-tests">
+<h1>Summary Tests<a class="headerlink" href="#summary-tests" title="Permalink to this heading"></a></h1>
+<section id="drift">
+<h2>Drift<a class="headerlink" href="#drift" title="Permalink to this heading"></a></h2>
+<p>Test for differences in the distribution of the reference dataset versus the evaluation dataset.If predictions and labels are provided, measure the performance degradation caused by shifting data as well as drift in predictions and labels themselves.<br><b>Data Requirements:</b> Labels and predictions are not required but they improve results.</p>
+</section>
+<section id="abnormal-inputs">
+<h2>Abnormal Inputs<a class="headerlink" href="#abnormal-inputs" title="Permalink to this heading"></a></h2>
+<p>Check the evaluation dataset for abnormal values commonly encountered in production.If model predictions are provided, test if the observed abnormal values cause a degradation in your model’s performance.<br><b>Data Requirements:</b> Labels and predictions are not required but they improve results.</p>
+</section>
+<section id="subset-performance">
+<h2>Subset Performance<a class="headerlink" href="#subset-performance" title="Permalink to this heading"></a></h2>
+<p>Test that your model performs equally well across different subsets of the evaluation dataset.<br><b>Data Requirements:</b> Predictions are required. Labels are required for most tests.</p>
+</section>
+<section id="bias-and-fairness">
+<h2>Bias and Fairness<a class="headerlink" href="#bias-and-fairness" title="Permalink to this heading"></a></h2>
+<p>Test that your model does not discriminate based on protected features.<br><b>Data Requirements:</b> For some tests predictions, labels and/or model are required.</p>
+</section>
+<section id="transformations">
+<h2>Transformations<a class="headerlink" href="#transformations" title="Permalink to this heading"></a></h2>
+<p>Augment your evaluation dataset with synthetic abnormal values to proactively test your pipeline’s error-handling behavior and measure the performance degradation caused by different types of abnormal values.<br><b>Data Requirements:</b> Model is required. Labels are not required but they improve results.</p>
+</section>
+<section id="model-performance">
+<h2>Model Performance<a class="headerlink" href="#model-performance" title="Permalink to this heading"></a></h2>
+<p>Test that your model performs well on the evaluation dataset and is not degrading in performance.<br><b>Data Requirements:</b> Predictions are required. Labels are required for exact performance metrics, otherwise approximate performance metrics will be used.</p>
+</section>
+<section id="data-cleanliness">
+<h2>Data Cleanliness<a class="headerlink" href="#data-cleanliness" title="Permalink to this heading"></a></h2>
+<p>Test for data reliability by checking that your data is consistent and complete.<br><b>Data Requirements:</b> This category only requires input data.</p>
+</section>
+<section id="adversarial">
+<h2>Adversarial<a class="headerlink" href="#adversarial" title="Permalink to this heading"></a></h2>
+<p>Test the robustness of your model by measuring the worst-case change in model predictions that can be caused by small perturbations to data points.<br><b>Data Requirements:</b> Model is required.</p>
+</section>
+<section id="subset-performance-degradation">
+<h2>Subset Performance Degradation<a class="headerlink" href="#subset-performance-degradation" title="Permalink to this heading"></a></h2>
+<p>Test that your model’s performance on different subsets of the data has not degraded.<br><b>Data Requirements:</b> Predictions are required. Labels are required for most tests.</p>
+</section>
+<section id="data-poisoning-detection">
+<h2>Data Poisoning Detection<a class="headerlink" href="#data-poisoning-detection" title="Permalink to this heading"></a></h2>
+<p>Test for the presence of potentially corrupted samples in your data.<br>Note that the default behavior of this test category in Continuous Testing depends on the quality of data used for the initial stress test.If corrupted samples were detected in the stress test, then the continuous test will be more  permissive.<br><b>Data Requirements:</b> Labels are required.</p>
+</section>
+<section id="evasion-attack-detection">
+<h2>Evasion Attack Detection<a class="headerlink" href="#evasion-attack-detection" title="Permalink to this heading"></a></h2>
+<p>Test for the presence of adversarial evasion attacks against your model.<br><b>Data Requirements:</b> This category only requires input data.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../../getstarted/modeltesting.html" class="btn btn-neutral float-left" title="RIME model testing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../getstarted/explanation/tests/tabular/tests.html" class="btn btn-neutral float-right" title="Tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

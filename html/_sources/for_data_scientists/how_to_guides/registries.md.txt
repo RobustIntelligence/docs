@@ -1,0 +1,38 @@
+# RIME Registries
+
+RIME provides registries to keep track of the models, datasets, and predictions files 
+that have been uploaded to a RIME instance. You can register these data objects from 
+the RIME SDK or in the RIME web UI during project configuration.
+
+Models are typically Python files in either `py` or `pkl` formats. Reference or 
+evaluation datasets and prediction sets can be provided in several formats, most
+commonly CSV.
+
+Any of these data objects can be directly uploaded to the RIME instance using the SDK
+or sourced from an [integration](../../for_admins/data-integrations.md). Register the data
+object after upload.
+
+Once a model, dataset, or prediction set has been registered with a RIME instance,
+that data object is available for selection in the appropriate drop-down selectors
+during project configuration for either a [Stress test](common_use_cases/st-ui.md) or a [Continuous test](common_use_cases/ct-ui.md).
+
+## Registering a model, dataset, or prediction set with a RIME instance using the SDK
+
+This procedure assumes the RIME SDK is installed and available for use and that the 
+relevant data objects have been uploaded to the RIME instance. See the Python
+SDK documentation for full details on the SDK calls used in this procedure.
+
+1. Choose an existing project or create a new project.
+    >   | Option           | Action                          |
+    >   |------------------|---------------------------------|
+    >   | Existing project | Use the `client.get_project` call with the ID of the project. |
+    >   | New project      | Use the `client.create_project` call to create the new project. |
+    
+2.  Use the correct `register` call based on the type of object being registered.
+    >   | Data object type | SDK call                       |
+    >   |------------------|--------------------------------|
+    >   | Model            | `project.register_model`       |
+    >   | Dataset          | `project.register_dataset`     |
+    >   | Prediction set   | `project.register_predictions` |
+
+The registered data objects are now available from the UI during project configuration.

@@ -4,38 +4,44 @@ In this configuration, **both planes** are hosted in your organization’s priva
 
 <img src="../../_static/diagrams/self_hosted.png" style="max-height:500px" />
 
-This means that you have **full control** over your deployment, from configuring routing rules (for the web client and API endpoints) to managing storage to optimizing compute for your model testing jobs.
+The self-deployed configuration provides complete control over the RIME cluster's behavior,
+including routing rule configuration, storage management, and compute resource optimization
+for model testin jobs.
 
 ## Cloud Services
-AWS services utilized by the RI Platform include:
+AWS services used by RIME include:
 - IAM
-  - managing roles for internal services, which involve:
+  - manages roles for internal services, which enable:
     - reading and writing data from S3
     - building images and pushing them to ECR
     - autoscaling cluster nodes by changing autoscaling group targets
     - configuring DNS records in route53 for external access
 - EKS/EC2/ELB
-  - creating the Kubernetes cluster, its constituent nodes, and load balancers for external access
+  - creates the Kubernetes cluster, the constituent nodes of that cluster, and load balancers for external access
 - Route 53/ACM
-  - managing records for external access to API layer, validated by SSL certificates
+  - manages records for external access to the API layer, validated by SSL certificates
 - VPC
-  - isolate the EKS cluster
+  - isolates the EKS cluster
 - Secrets Manager
   - used during installation
 - S3
-  - for storing and serving data and models
+  - stores and serves data and models
 
-Other cloud services utilized by the RI Platform include:
+Other cloud services used by the RI Platform include:
 - Velero
-  - for backup and disaster recovery
+  - provides backup and disaster recovery
+- Hashicorp Vault
+  - provides secrets management
 - OIDC Authentication (Optional)
-  - integrating with your existing identity provider
+  - integrates with your existing identity provider
 - SMTP Service (Optional)
-  - for email notifications related to model testing
+  - sends email notifications related to model testing
 - DataDog (Optional)
-  - for cluster health monitoring
+  - provides cluster health monitoring
 
 ## Terraform
-To reduce the manual effort involved in deploying the RI Platform, we provide template Terraform modules (which we will help you fill out) to handle cluster deployment.
+Robust Intelligence provides Terraform template modules to reduce the work involved in deploying RIME.
+Robust Intelligence staff is available to assist filling out the template modules.
 
-For non-AWS deployments, the Robust Intelligence team will work with your DevOps team to design an appropriate integration strategy.
+Robust Intelligence staff can assist your DevOps team to design appropriate integration
+strategies for deployments that do not use AWS.

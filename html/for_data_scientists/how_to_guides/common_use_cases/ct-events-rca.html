@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Continuous Testing feedback and observability &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Model cards" href="modelcards.html" />
+    <link rel="prev" title="Scheduling Continuous Tests" href="scheduled_ct_configuration.html" />
+<link href="../../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../../index.html">
+        <img src="../../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                2.0.0-rc.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getstarted/modeltesting.html">RIME model testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../get_started.html">Get Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../basic_tasks.html">Setting up and testing with RIME</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../basic_tasks.html#initial-setup">Initial setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basic_tasks.html#stress-tests">Stress Tests</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../basic_tasks.html#continuous-tests">Continuous Tests</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ct-ui.html">Continuous Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scheduling_ct_runs.html">Scheduling Continuous Testing runs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scheduled_ct_configuration.html">Scheduling Continuous Tests</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Continuous Testing feedback and observability</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#model-monitors">Model monitors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#events">Events</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basic_tasks.html#model-cards">Model cards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basic_tasks.html#notifications-and-alerts">Notifications and alerts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basic_tasks.html#notebook-walkthroughs">Notebook walkthroughs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../adv_tasks.html">Customization and troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/shostedinst.html">Self-Hosted</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SDK reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../python_library/python-sdk.html">Python SDK reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../basic_tasks.html">Setting up and testing with RIME</a></li>
+      <li class="breadcrumb-item active">Continuous Testing feedback and observability</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/for_data_scientists/how_to_guides/common_use_cases/ct-events-rca.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="continuous-testing-feedback-and-observability">
+<h1>Continuous Testing feedback and observability<a class="headerlink" href="#continuous-testing-feedback-and-observability" title="Permalink to this heading"></a></h1>
+<p>Once a model is in production, RIME can provide detailed information on the model’s
+performance to enable you to identify and correct issues.</p>
+<section id="model-monitors">
+<h2>Model monitors<a class="headerlink" href="#model-monitors" title="Permalink to this heading"></a></h2>
+<p>A model under continuous testing displays summary information about model health on the
+Overview page of the project that contains the model. RIME monitors machine learning
+model performance across the following categories:</p>
+<ul class="simple">
+<li><p>Operational Health tests a model’s performance and accuracy.</p></li>
+<li><p>Security tests a model’s resilience against compromise from external attacks.</p></li>
+<li><p>Fairness tests a model’s outcome for fair treatment among subcategories in the data.</p></li>
+</ul>
+<section id="viewing-the-project-overview-page">
+<h3>Viewing the Project Overview page<a class="headerlink" href="#viewing-the-project-overview-page" title="Permalink to this heading"></a></h3>
+<ol class="arabic">
+<li><p>Sign in to a RI Platform instance.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click a workspace.</p>
+<blockquote>
+<div><p>The Workspaces summary page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Select a project.</p>
+<blockquote>
+<div><p>You can filter or sort the list of projects in a workspace with the
+<em>Sort</em> and <em>Filter</em> controls in the upper right. Click the glyph to the
+right of the <em>Filter</em> control to switch between list and card display
+for projects. Type a string in <em>Search Projects…</em> to display only
+projects that match the string.</p>
+</div></blockquote>
+</li>
+</ol>
+<p>The project overview page appears.</p>
+</section>
+<section id="monitors-and-risk-categories">
+<h3>Monitors and risk categories<a class="headerlink" href="#monitors-and-risk-categories" title="Permalink to this heading"></a></h3>
+<p>Monitors of particular interest can be pinned to the top of the list by clicking the
+pushpin icon at the top left corner of the monitor. Use the <strong>Zoom</strong> controls to change
+your view of the monitor chart.</p>
+<section id="enabling-or-disabling-notifications-for-a-monitor">
+<h4>Enabling or disabling notifications for a monitor<a class="headerlink" href="#enabling-or-disabling-notifications-for-a-monitor" title="Permalink to this heading"></a></h4>
+<p>You can enable or suppress notifications from a specified monitor.</p>
+<ol class="arabic">
+<li><p>Sign in to a RI Platform instance.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click a workspace.</p>
+<blockquote>
+<div><p>The Workspaces summary page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Select a project.</p>
+<blockquote>
+<div><p>You can filter or sort the list of projects in a workspace with the
+<em>Sort</em> and <em>Filter</em> controls in the upper right. Click the glyph to the
+right of the <em>Filter</em> control to switch between list and card display
+for projects. Type a string in <em>Search Projects…</em> to display only
+projects that match the string.
+The project overview page appears.</p>
+</div></blockquote>
+</li>
+<li><p>In the top right corner of a monitor, click <strong>Edit Monitor</strong>.</p>
+<blockquote>
+<div><p>The Edit Monitor wizard appears.</p>
+</div></blockquote>
+</li>
+<li><p>Toggle <strong>Add to Project Notifications</strong> and click Save Settings.</p></li>
+</ol>
+<p>Notifications for this monitor are added or removed from the project according to the
+position of the toggle.</p>
+<!-- Notification settings are managed from {TKK xref to notif/alert config} -->
+</section>
+<section id="operational-risk">
+<h4>Operational risk<a class="headerlink" href="#operational-risk" title="Permalink to this heading"></a></h4>
+<p>Tests for operational risk assess a model’s performance and accuracy. These tests are
+divided into tests for performance, drift, and abnormal input.</p>
+<section id="performance-tests">
+<h5>Performance tests<a class="headerlink" href="#performance-tests" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Performance test</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Accuracy</td>
+<td>The ratio of correct predictions to the total number of predictions.</td>
+</tr>
+<tr>
+<td>Average Thresholded Confidence (ATC)</td>
+<td>Tests the variance of the ATC between reference and evaluation datasets. ATC estimates the accuracy of unlabeled examples.</td>
+</tr>
+<tr>
+<td>Average Confidence</td>
+<td>Tests the variance of average prediction confidence between the reference and evaluation datasets.</td>
+</tr>
+<tr>
+<td>Calibration Comparison</td>
+<td>Tests whether the calibration curve of the evaluation set has changed relative to the reference set.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="drift-tests">
+<h5>Drift tests<a class="headerlink" href="#drift-tests" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Drift test</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prediction drift</td>
+<td>Tests the change in distribution between the prediction sets generated by the reference and evaluation datasets.</td>
+</tr>
+<tr>
+<td>Label Drift</td>
+<td>Tests the change in distribution in the model's output.</td>
+</tr>
+<tr>
+<td>Label Drift in Population Stability Index (PSI)</td>
+<td>Tests the change in distribution in the PSI of a model's output.</td>
+</tr>
+<tr>
+<td>Categorical Feature Drift</td>
+<td>Tests the change in distribution within a given categorical feature.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="abnormal-inputs-test">
+<h5>Abnormal inputs test<a class="headerlink" href="#abnormal-inputs-test" title="Permalink to this heading"></a></h5>
+<p>There is only one abnormal inputs test, for Rare Categories. This test measures the
+model’s response to data that contains categorical values that are rarely observed in
+the reference set.</p>
+</section>
+</section>
+<section id="security-risk">
+<h4>Security risk<a class="headerlink" href="#security-risk" title="Permalink to this heading"></a></h4>
+<p>Tests for security risk assess the security of the model and underlying dataset,
+providing alerts in cases of model evasion or subversion.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Security risk test</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Security Events</td>
+<td>Lists specific attack events.</td>
+</tr>
+<tr>
+<td>Data Poisoning</td>
+<td>Tests for corrupted input data.</td>
+</tr>
+<tr>
+<td>Model Evasion</td>
+<td>Tests for adversarial evasion attacks.</td>
+</tr>
+</tbody>
+</table>
+<!-- | Model Inversion | Tests for attempts to reconstruct model inputs by examining model output. |
+| Membership Inference | Tests for attempts to determine whether a given record is part of the model's reference dataset. |
+| Attribute Inference | Tests for attacks that attempt to determine values of a record in the model's reference dataset based on partial knowledge of other values in that record. |
+| Model Extraction | Tests for attacks that attempt to reconstruct the functionality of a model. |
+| Model Availability |  |
+| Other Security Risks |  | 
+PECHEVERRI NOTE: This material isn't in Beta, might be in GA, uncomment at that point if so -->
+</section>
+<section id="fairness-and-compliance-risk">
+<h4>Fairness and Compliance risk<a class="headerlink" href="#fairness-and-compliance-risk" title="Permalink to this heading"></a></h4>
+<p>Tests for fairness and compliance risk assess a model’s outcome for fair treatment
+among subcategories in the data.</p>
+</section>
+</section>
+</section>
+<section id="events">
+<h2>Events<a class="headerlink" href="#events" title="Permalink to this heading"></a></h2>
+<p>The Overview page of a model under continuous testing displays a list of Active Events
+to the right of the active monitors.</p>
+<p>The Events list provides several filter selectors to focus on a specific set of events.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Filter</th>
+<th>Description</th>
+<th>Potential states</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Testing</td>
+<td>Test type</td>
+<td>Stress test or Continuous test</td>
+</tr>
+<tr>
+<td>Risk Categories</td>
+<td>Major risk category</td>
+<td>Operational, Security, Fairness</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>The status of a specific test</td>
+<td>Fail, Warning, Pass, Skip</td>
+</tr>
+<tr>
+<td>Level</td>
+<td>The importance level of the event</td>
+<td>None, Low, High</td>
+</tr>
+</tbody>
+</table>
+<section id="inspecting-the-events-list">
+<h3>Inspecting the Events list<a class="headerlink" href="#inspecting-the-events-list" title="Permalink to this heading"></a></h3>
+<p>You can display the full list of events in a project.</p>
+<ol class="arabic">
+<li><p>Sign in to a RI Platform instance.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click a workspace.</p>
+<blockquote>
+<div><p>The Workspaces summary page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Select a project.</p>
+<blockquote>
+<div><p>You can filter or sort the list of projects in a workspace with the
+<em>Sort</em> and <em>Filter</em> controls in the upper right. Click the glyph to the
+right of the <em>Filter</em> control to switch between list and card display
+for projects. Type a string in <em>Search Projects…</em> to display only
+projects that match the string.
+The project overview page appears.</p>
+</div></blockquote>
+</li>
+<li><p>At the lower right, click <strong>View all events –&gt;</strong>.</p>
+<blockquote>
+<div><p>The Events list appears.</p>
+</div></blockquote>
+</li>
+<li><p>(Optional) Click <strong>Show Details</strong> to display in-depth information about the type
+of event.</p></li>
+<li><p>(Optional) Click <strong>Resolve</strong> to view specific details about the detected event.</p>
+<blockquote>
+<div><p>This information includes specific information about the location in the
+dataset affected by the event.</p>
+</div></blockquote>
+</li>
+<li><p>(Optional, while viewing event details) Click <strong>Export CSV</strong> to download the
+event details as a CSV file.</p></li>
+</ol>
+</section>
+<section id="event-root-cause-analysis-and-actionability">
+<h3>Event root-cause analysis and actionability<a class="headerlink" href="#event-root-cause-analysis-and-actionability" title="Permalink to this heading"></a></h3>
+<p>RIME can provide significant context and analysis of a detected event. This analysis
+includes the metric and threshold value defining the event, as well as the underlying
+data leading to the event.</p>
+<ol class="arabic">
+<li><p>Sign in to a RI Platform instance.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click a workspace.</p>
+<blockquote>
+<div><p>The Workspaces summary page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Select a project.</p>
+<blockquote>
+<div><p>You can filter or sort the list of projects in a workspace with the
+<em>Sort</em> and <em>Filter</em> controls in the upper right. Click the glyph to the
+right of the <em>Filter</em> control to switch between list and card display
+for projects. Type a string in <em>Search Projects…</em> to display only
+projects that match the string.
+The project overview page appears.</p>
+</div></blockquote>
+</li>
+<li><p>At the lower right, click <strong>View all events –&gt;</strong>.</p>
+<blockquote>
+<div><p>The Events list appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click an event.</p>
+<blockquote>
+<div><p>The Analysis pane for that event appears.</p>
+</div></blockquote>
+</li>
+</ol>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="scheduled_ct_configuration.html" class="btn btn-neutral float-left" title="Scheduling Continuous Tests" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modelcards.html" class="btn btn-neutral float-right" title="Model cards" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
