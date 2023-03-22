@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ri/api/agent/agent.proto &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ri/api/datacollector/data_collector.proto" href="../datacollector/data_collector.swagger.html" />
+    <link rel="prev" title="RI REST API" href="../rest-api.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                2.0.0-beta.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/modeltesting.html">RIME model testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/basic_tasks.html">Setting up and testing with RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/adv_tasks.html">Customization and troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/shostedinst.html">Self-Hosted</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REST API and SDK reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../python_library/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../rest-api.html">RI REST API</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ri/api/agent/agent.proto</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#version-version-not-set">Version: version not set</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#v1-agents">/v1/agents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-agents-deactivate-agentid-uuid">/v1/agents/deactivate/{agentId.uuid}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-agents-agentid-uuid">/v1/agents/{agentId.uuid}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#models">Models</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../datacollector/data_collector.swagger.html">ri/api/datacollector/data_collector.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../detection/detection.swagger.html">ri/api/detection/detection.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../featureflag/feature_flag.swagger.html">ri/api/featureflag/feature_flag.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../filescanning/file_scanning.swagger.html">ri/api/filescanning/file_scanning.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileupload/file_upload.swagger.html">ri/api/fileupload/file_upload.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../firewall/firewall.swagger.html">ri/api/firewall/firewall.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../imageregistry/image_registry.swagger.html">ri/api/imageregistry/image_registry.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../imageregistry/managed_image.swagger.html">ri/api/imageregistry/managed_image.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_manager.swagger.html">ri/api/jobs/job_manager.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_message.swagger.html">ri/api/jobs/job_message.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_reader.swagger.html">ri/api/jobs/job_reader.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modelcard/model_card.swagger.html">ri/api/modelcard/model_card.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modeltesting/model_testing.swagger.html">ri/api/modeltesting/model_testing.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../monitor/monitor.swagger.html">ri/api/monitor/monitor.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notification/notification.swagger.html">ri/api/notification/notification.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project/project.swagger.html">ri/api/project/project.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../registry/registry.swagger.html">ri/api/registry/registry.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resultsynthesizer/result_message.swagger.html">ri/api/resultsynthesizer/result_message.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rimeinfo/rime_info.swagger.html">ri/api/rimeinfo/rime_info.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testrunresults/test_run_results.swagger.html">ri/api/testrunresults/test_run_results.proto</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../rest-api.html">RI REST API</a></li>
+      <li class="breadcrumb-item active">ri/api/agent/agent.proto</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/rest_api/agent/agent.swagger.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ri-api-agent-agent-proto">
+<h1>ri/api/agent/agent.proto<a class="headerlink" href="#ri-api-agent-agent-proto" title="Permalink to this heading"></a></h1>
+<section id="version-version-not-set">
+<h2>Version: version not set<a class="headerlink" href="#version-version-not-set" title="Permalink to this heading"></a></h2>
+<section id="v1-agents">
+<h3>/v1/agents<a class="headerlink" href="#v1-agents" title="Permalink to this heading"></a></h3>
+<section id="get">
+<h4>GET<a class="headerlink" href="#get" title="Permalink to this heading"></a></h4>
+<section id="summary">
+<h5>Summary:<a class="headerlink" href="#summary" title="Permalink to this heading"></a></h5>
+<p>ListAgents</p>
+</section>
+<section id="description">
+<h5>Description:<a class="headerlink" href="#description" title="Permalink to this heading"></a></h5>
+<p>Returns a paginated list of agents.</p>
+</section>
+<section id="parameters">
+<h5>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pageSize</td>
+<td>query</td>
+<td>The maximum number of Agent objects to return in a single page.</td>
+<td>No</td>
+<td>string (int64)</td>
+</tr>
+<tr>
+<td>pageToken</td>
+<td>query</td>
+<td>Specifies a page of the list returned by a ListAgents query. The ListAgents query returns a pageToken when there is more than one page of results. Specify either this field or the firstPageQuery field.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>firstPageQuery.agentStatusTypes</td>
+<td>query</td>
+<td>Specifies a set of agent status types. The query filters for results that match the specified types.   - AGENT_STATUS_PENDING: Resources have been created for the agent but the agent has not started yet.  - AGENT_STATUS_ACTIVE: Agent can run jobs.  - AGENT_STATUS_UNRESPONSIVE: No agent heartbeat for three minutes.  - AGENT_STATUS_DEACTIVATED: Agent can no longer run jobs and can be deleted.</td>
+<td>No</td>
+<td>[ string ]</td>
+</tr>
+<tr>
+<td>firstPageQuery.agentIds</td>
+<td>query</td>
+<td>Specifies a set of agent IDs. The query filters for results that match the specified IDs.</td>
+<td>No</td>
+<td>[ string ]</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="responses">
+<h5>Responses<a class="headerlink" href="#responses" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimelistagentsresponse">rimeListAgentsResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="post">
+<h4>POST<a class="headerlink" href="#post" title="Permalink to this heading"></a></h4>
+<section id="id1">
+<h5>Summary:<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h5>
+<p>CreateAgent</p>
+</section>
+<section id="id2">
+<h5>Description:<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h5>
+<p>Creates agent and returns the configuration
+for installing the agent.</p>
+</section>
+<section id="id3">
+<h5>Parameters<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td></td>
+<td>Yes</td>
+<td><a href="#rimecreateagentrequest">rimeCreateAgentRequest</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h5>Responses<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimecreateagentresponse">rimeCreateAgentResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-agents-deactivate-agentid-uuid">
+<h3>/v1/agents/deactivate/{agentId.uuid}<a class="headerlink" href="#v1-agents-deactivate-agentid-uuid" title="Permalink to this heading"></a></h3>
+<section id="put">
+<h4>PUT<a class="headerlink" href="#put" title="Permalink to this heading"></a></h4>
+<section id="id5">
+<h5>Summary:<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h5>
+<p>DeactivateAgent</p>
+</section>
+<section id="id6">
+<h5>Description:<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h5>
+<p>Deactivates the agent by setting its status to deactivated
+and revoking the agent’s API Token. An error is returned if the
+deactivation fails.</p>
+</section>
+<section id="id7">
+<h5>Parameters<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>agentId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id8">
+<h5>Responses<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimedeactivateagentresponse">rimeDeactivateAgentResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-agents-agentid-uuid">
+<h3>/v1/agents/{agentId.uuid}<a class="headerlink" href="#v1-agents-agentid-uuid" title="Permalink to this heading"></a></h3>
+<section id="id9">
+<h4>GET<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h4>
+<section id="id10">
+<h5>Summary:<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h5>
+<p>GetAgent</p>
+</section>
+<section id="id11">
+<h5>Description:<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h5>
+<p>Returns the agent that matches the specified ID.</p>
+</section>
+<section id="id12">
+<h5>Parameters<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>agentId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id13">
+<h5>Responses<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimegetagentresponse">rimeGetAgentResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="delete">
+<h4>DELETE<a class="headerlink" href="#delete" title="Permalink to this heading"></a></h4>
+<section id="id14">
+<h5>Summary:<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h5>
+<p>DeleteAgent</p>
+</section>
+<section id="id15">
+<h5>Description:<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h5>
+<p>Deletes a specified agent. Must be
+called on an already deactivated agent. An error is returned if the
+deletion fails or if the agent is not in a deletable state.</p>
+</section>
+<section id="id16">
+<h5>Parameters<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>agentId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id17">
+<h5>Responses<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimedeleteagentresponse">rimeDeleteAgentResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="models">
+<h3>Models<a class="headerlink" href="#models" title="Permalink to this heading"></a></h3>
+<section id="createagentrequestawsconfig">
+<h4>CreateAgentRequestAWSConfig<a class="headerlink" href="#createagentrequestawsconfig" title="Permalink to this heading"></a></h4>
+<p>Configuration for AWS.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>awsRoleArn</td>
+<td>string</td>
+<td>AWS ARN of the the role to be attached to the service account of the model test jobs.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="createagentrequestgcpconfig">
+<h4>CreateAgentRequestGCPConfig<a class="headerlink" href="#createagentrequestgcpconfig" title="Permalink to this heading"></a></h4>
+<p>Configuration for GCP.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gcpSaEmail</td>
+<td>string</td>
+<td>GCP service account email for the role to be attached to the service account of the model test jobs.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="createagentrequestlocalconfig">
+<h4>CreateAgentRequestLocalConfig<a class="headerlink" href="#createagentrequestlocalconfig" title="Permalink to this heading"></a></h4>
+<p>Configuration for local machine.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CreateAgentRequestLocalConfig</td>
+<td>object</td>
+<td>Configuration for local machine.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="listagentsrequestlistagentsquery">
+<h4>ListAgentsRequestListAgentsQuery<a class="headerlink" href="#listagentsrequestlistagentsquery" title="Permalink to this heading"></a></h4>
+<p>This query can filter the results by agent status types, such as
+AGENT_STATUS_ACTIVE, and by agent IDs.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>agentStatusTypes</td>
+<td>[ <a href="#rimeagentstatus">rimeAgentStatus</a> ]</td>
+<td>Specifies a set of agent status types. The query filters for results that match the specified types.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>agentIds</td>
+<td>[ string ]</td>
+<td>Specifies a set of agent IDs. The query filters for results that match the specified IDs.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="googlerpcstatus">
+<h4>googlerpcStatus<a class="headerlink" href="#googlerpcstatus" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>code</td>
+<td>integer</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>message</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>details</td>
+<td>[ <a href="#protobufany">protobufAny</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="protobufany">
+<h4>protobufAny<a class="headerlink" href="#protobufany" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@type</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeagent">
+<h4>rimeAgent<a class="headerlink" href="#rimeagent" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>agentId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>Uniquely specifies an Agent.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The user given name of the agent.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>creationTime</td>
+<td>dateTime</td>
+<td>The time of creation of the agent.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>status</td>
+<td><a href="#rimeagentstatus">rimeAgentStatus</a></td>
+<td>The status of the agent.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>internal</td>
+<td>boolean</td>
+<td>Whether the agent is an internal agent or not. Internal agents come bundled with the deployment.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeagentstatus">
+<h4>rimeAgentStatus<a class="headerlink" href="#rimeagentstatus" title="Permalink to this heading"></a></h4>
+<ul class="simple">
+<li><p>AGENT_STATUS_PENDING: Resources have been created for the agent but
+the agent has not started yet.</p></li>
+<li><p>AGENT_STATUS_ACTIVE: Agent can run jobs.</p></li>
+<li><p>AGENT_STATUS_UNRESPONSIVE: No agent heartbeat for three minutes.</p></li>
+<li><p>AGENT_STATUS_DEACTIVATED: Agent can no longer run jobs and can be deleted.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeAgentStatus</td>
+<td>string</td>
+<td>- AGENT_STATUS_PENDING: Resources have been created for the agent but the agent has not started yet.  - AGENT_STATUS_ACTIVE: Agent can run jobs.  - AGENT_STATUS_UNRESPONSIVE: No agent heartbeat for three minutes.  - AGENT_STATUS_DEACTIVATED: Agent can no longer run jobs and can be deleted.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimecreateagentrequest">
+<h4>rimeCreateAgentRequest<a class="headerlink" href="#rimecreateagentrequest" title="Permalink to this heading"></a></h4>
+<p>CreateAgentRequest is the request for creating an agent.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Agent name given by the user.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>localConfig</td>
+<td><a href="#createagentrequestlocalconfig">CreateAgentRequestLocalConfig</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>awsConfig</td>
+<td><a href="#createagentrequestawsconfig">CreateAgentRequestAWSConfig</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>gcpConfig</td>
+<td><a href="#createagentrequestgcpconfig">CreateAgentRequestGCPConfig</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimecreateagentresponse">
+<h4>rimeCreateAgentResponse<a class="headerlink" href="#rimecreateagentresponse" title="Permalink to this heading"></a></h4>
+<p>CreateAgentResponse is the repsonse for creating an agent which contains
+the configuration values for installing the agent.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>config</td>
+<td>byte</td>
+<td>File that contains configuration values for installing the agent.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>agentId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>Uniquely specifies an Agent.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimedeactivateagentresponse">
+<h4>rimeDeactivateAgentResponse<a class="headerlink" href="#rimedeactivateagentresponse" title="Permalink to this heading"></a></h4>
+<p>DeactivateAgentResponse is the response for DeactivateAgent.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeDeactivateAgentResponse</td>
+<td>object</td>
+<td>DeactivateAgentResponse is the response for DeactivateAgent.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimedeleteagentresponse">
+<h4>rimeDeleteAgentResponse<a class="headerlink" href="#rimedeleteagentresponse" title="Permalink to this heading"></a></h4>
+<p>DeleteAgentResponse is the response for DeleteAgent.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeDeleteAgentResponse</td>
+<td>object</td>
+<td>DeleteAgentResponse is the response for DeleteAgent.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimegetagentresponse">
+<h4>rimeGetAgentResponse<a class="headerlink" href="#rimegetagentresponse" title="Permalink to this heading"></a></h4>
+<p>GetAgentResponse is the response returns a single agent.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>agent</td>
+<td><a href="#rimeagent">rimeAgent</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeheartbeatresponse">
+<h4>rimeHeartbeatResponse<a class="headerlink" href="#rimeheartbeatresponse" title="Permalink to this heading"></a></h4>
+<p>HeartbeatResponse is the response from the server
+that accepted the heartbeat.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeHeartbeatResponse</td>
+<td>object</td>
+<td>HeartbeatResponse is the response from the server that accepted the heartbeat.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimelistagentsresponse">
+<h4>rimeListAgentsResponse<a class="headerlink" href="#rimelistagentsresponse" title="Permalink to this heading"></a></h4>
+<p>ListAgentsResponse returns the list of agent metadata.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>agents</td>
+<td>[ <a href="#rimeagent">rimeAgent</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>nextPageToken</td>
+<td>string</td>
+<td>Use this page token in your next ListAgents call to access to the next page of results.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>hasMore</td>
+<td>boolean</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeregisterinternalagentresponse">
+<h4>rimeRegisterInternalAgentResponse<a class="headerlink" href="#rimeregisterinternalagentresponse" title="Permalink to this heading"></a></h4>
+<p>RegisterInternalAgentResponse contains the ID of the internal agent according
+to the Agent Management Service.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>agentId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeuuid">
+<h4>rimeUUID<a class="headerlink" href="#rimeuuid" title="Permalink to this heading"></a></h4>
+<p>Unique ID of an object in RIME.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uuid</td>
+<td>string</td>
+<td>String value of the object ID.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table></section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../rest-api.html" class="btn btn-neutral float-left" title="RI REST API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../datacollector/data_collector.swagger.html" class="btn btn-neutral float-right" title="ri/api/datacollector/data_collector.proto" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

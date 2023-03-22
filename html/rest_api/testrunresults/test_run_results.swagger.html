@@ -1,0 +1,3220 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ri/api/testrunresults/test_run_results.proto &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="ri/api/rimeinfo/rime_info.proto" href="../rimeinfo/rime_info.swagger.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                2.0.0-beta.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/modeltesting.html">RIME model testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/basic_tasks.html">Setting up and testing with RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/adv_tasks.html">Customization and troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/shostedinst.html">Self-Hosted</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REST API and SDK reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../python_library/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../rest-api.html">RI REST API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../agent/agent.swagger.html">ri/api/agent/agent.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datacollector/data_collector.swagger.html">ri/api/datacollector/data_collector.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../detection/detection.swagger.html">ri/api/detection/detection.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../featureflag/feature_flag.swagger.html">ri/api/featureflag/feature_flag.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../filescanning/file_scanning.swagger.html">ri/api/filescanning/file_scanning.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileupload/file_upload.swagger.html">ri/api/fileupload/file_upload.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../firewall/firewall.swagger.html">ri/api/firewall/firewall.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../imageregistry/image_registry.swagger.html">ri/api/imageregistry/image_registry.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../imageregistry/managed_image.swagger.html">ri/api/imageregistry/managed_image.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_manager.swagger.html">ri/api/jobs/job_manager.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_message.swagger.html">ri/api/jobs/job_message.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_reader.swagger.html">ri/api/jobs/job_reader.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modelcard/model_card.swagger.html">ri/api/modelcard/model_card.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modeltesting/model_testing.swagger.html">ri/api/modeltesting/model_testing.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../monitor/monitor.swagger.html">ri/api/monitor/monitor.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notification/notification.swagger.html">ri/api/notification/notification.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project/project.swagger.html">ri/api/project/project.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../registry/registry.swagger.html">ri/api/registry/registry.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resultsynthesizer/result_message.swagger.html">ri/api/resultsynthesizer/result_message.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rimeinfo/rime_info.swagger.html">ri/api/rimeinfo/rime_info.proto</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ri/api/testrunresults/test_run_results.proto</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#version-version-not-set">Version: version not set</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#v1-batch-results">/v1/batch-results</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-feature-results">/v1/feature-results</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-summary-tests">/v1/summary-tests</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-test-cases">/v1/test-cases</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-test-runs">/v1/test-runs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-test-runs-rename-testrunid">/v1/test-runs/rename/{testRunId}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-test-runs-testrunid">/v1/test-runs/{testRunId}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-test-runs-testrunid-batch-result-testtype">/v1/test-runs/{testRunId}/batch-result/{testType}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-test-runs-testrunid-feature-result-urlsafefeatureid">/v1/test-runs/{testRunId}/feature-result/{urlSafeFeatureId}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#models">Models</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../rest-api.html">RI REST API</a></li>
+      <li class="breadcrumb-item active">ri/api/testrunresults/test_run_results.proto</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/rest_api/testrunresults/test_run_results.swagger.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ri-api-testrunresults-test-run-results-proto">
+<h1>ri/api/testrunresults/test_run_results.proto<a class="headerlink" href="#ri-api-testrunresults-test-run-results-proto" title="Permalink to this heading"></a></h1>
+<section id="version-version-not-set">
+<h2>Version: version not set<a class="headerlink" href="#version-version-not-set" title="Permalink to this heading"></a></h2>
+<section id="v1-batch-results">
+<h3>/v1/batch-results<a class="headerlink" href="#v1-batch-results" title="Permalink to this heading"></a></h3>
+<section id="get">
+<h4>GET<a class="headerlink" href="#get" title="Permalink to this heading"></a></h4>
+<section id="summary">
+<h5>Summary:<a class="headerlink" href="#summary" title="Permalink to this heading"></a></h5>
+<p>ListBatchResults</p>
+</section>
+<section id="description">
+<h5>Description:<a class="headerlink" href="#description" title="Permalink to this heading"></a></h5>
+<p>Returns a paginated list of batch results from a test run.</p>
+<p><span class="xref myst">Python pagination example</span></p>
+</section>
+<section id="parameters">
+<h5>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRunId</td>
+<td>query</td>
+<td>The ID of the Test Run associated with batch results. Specify exactly one of the pageToken field or this field.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>pageToken</td>
+<td>query</td>
+<td>A token representing one page from the list returned by a ListBatchResults query. The ListBatchResults query returns a page_token when there is more than one page of results. Specify exactly one of the testRunId field or this field.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>query</td>
+<td>The maximum number of Batch Result objects to return in a single page.</td>
+<td>No</td>
+<td>string (int64)</td>
+</tr>
+<tr>
+<td>showDisplay</td>
+<td>query</td>
+<td>A Boolean that toggles whether to return display html info.</td>
+<td>No</td>
+<td>boolean</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="responses">
+<h5>Responses<a class="headerlink" href="#responses" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#testrunresultlistbatchresultsresponse">testrunresultListBatchResultsResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-feature-results">
+<h3>/v1/feature-results<a class="headerlink" href="#v1-feature-results" title="Permalink to this heading"></a></h3>
+<section id="id1">
+<h4>GET<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h4>
+<section id="id2">
+<h5>Summary:<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h5>
+<p>ListFeatureResults</p>
+</section>
+<section id="id3">
+<h5>Description:<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h5>
+<p>List all feature results from a test run.</p>
+<p><span class="xref myst">Python pagination example</span></p>
+</section>
+<section id="id4">
+<h5>Parameters<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRunId</td>
+<td>query</td>
+<td>The ID of the Test Run associated with feature results. Specify exactly one of the page_token field or this field.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>pageToken</td>
+<td>query</td>
+<td>A token representing one page from the list returned by a ListFeatureResults query. The ListFeatureResults query returns a page_token when there is more than one page of results. Specify exactly one of the testRunId field or this field.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>query</td>
+<td>The maximum number of Feature Result objects to return in a single page.</td>
+<td>No</td>
+<td>string (int64)</td>
+</tr>
+<tr>
+<td>showDisplay</td>
+<td>query</td>
+<td>A Boolean that specifies whether to return display HTML information.</td>
+<td>No</td>
+<td>boolean</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id5">
+<h5>Responses<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#testrunresultlistfeatureresultsresponse">testrunresultListFeatureResultsResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-summary-tests">
+<h3>/v1/summary-tests<a class="headerlink" href="#v1-summary-tests" title="Permalink to this heading"></a></h3>
+<section id="id6">
+<h4>GET<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h4>
+<section id="id7">
+<h5>Summary:<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h5>
+<p>ListSummaryTests</p>
+</section>
+<section id="id8">
+<h5>Description:<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h5>
+<p>Returns a paginated list of the summary tests of a test run.</p>
+<p><span class="xref myst">Python pagination example</span></p>
+</section>
+<section id="id9">
+<h5>Parameters<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>query.testRunId</td>
+<td>query</td>
+<td>The ID of the test run associated with summary tests. Specify exactly one of the page_token field or this field.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>pageToken</td>
+<td>query</td>
+<td>A token representing one page from the list returned by a ListSummaryTests query. The ListSummaryTests query returns a page_token when there is more than one page of results. Specify exactly one of the query.testRunId field or this field.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>query</td>
+<td>The maximum number of Summary Test objects to return in a single page.</td>
+<td>No</td>
+<td>string (int64)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id10">
+<h5>Responses<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#testrunresultlistsummarytestsresponse">testrunresultListSummaryTestsResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-test-cases">
+<h3>/v1/test-cases<a class="headerlink" href="#v1-test-cases" title="Permalink to this heading"></a></h3>
+<section id="id11">
+<h4>GET<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h4>
+<section id="id12">
+<h5>Summary:<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h5>
+<p>ListTestCases</p>
+</section>
+<section id="id13">
+<h5>Description:<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h5>
+<p>Returns a paginated list of the test cases in a test run. Specify a set of
+test types to filter the list by test types.</p>
+<p><span class="xref myst">Python pagination example</span></p>
+</section>
+<section id="id14">
+<h5>Parameters<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>listTestCasesQuery.testRunId</td>
+<td>query</td>
+<td>Uniquely specifies a Test Run associated with test cases. Specify exactly one of the page_token field or this field.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>listTestCasesQuery.testTypes</td>
+<td>query</td>
+<td>Optional filter for test types.</td>
+<td>No</td>
+<td>[ string ]</td>
+</tr>
+<tr>
+<td>listTestCasesQuery.urlSafeFeatureIds</td>
+<td>query</td>
+<td>Optional filter for features.</td>
+<td>No</td>
+<td>[ string ]</td>
+</tr>
+<tr>
+<td>pageToken</td>
+<td>query</td>
+<td>A token representing one page from the list returned by a ListTestCases query. The ListTestCases query returns a page_token when there is more than one page of results. Specify exactly one of the ListTestCasesQuery.testRunId field or this field.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>query</td>
+<td>The maximum number of Test Case objects to return in a single page.</td>
+<td>No</td>
+<td>string (int64)</td>
+</tr>
+<tr>
+<td>showDisplay</td>
+<td>query</td>
+<td>A Boolean flag that specifies whether to return display HTML information with the message.</td>
+<td>No</td>
+<td>boolean</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id15">
+<h5>Responses<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#testrunresultlisttestcasesresponse">testrunresultListTestCasesResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-test-runs">
+<h3>/v1/test-runs<a class="headerlink" href="#v1-test-runs" title="Permalink to this heading"></a></h3>
+<section id="id16">
+<h4>GET<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h4>
+<section id="id17">
+<h5>Summary:<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h5>
+<p>ListTestRuns</p>
+</section>
+<section id="id18">
+<h5>Description:<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h5>
+<p>Lists all test runs belonging to a project.</p>
+<p><span class="xref myst">Python pagination example</span></p>
+</section>
+<section id="id19">
+<h5>Parameters<a class="headerlink" href="#id19" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>projectId</td>
+<td>query</td>
+<td>The ID of the project containing the requested test runs. Specify exactly one of the page_token field or this field.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>pageToken</td>
+<td>query</td>
+<td>A token representing one page from the list returned by a ListTestRuns query. The ListTestRuns query returns a page_token when there is more than one page of results. Specify exactly one of the projectId field or this field.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>query</td>
+<td>The maximum number of Test Run objects to return in a single page.</td>
+<td>No</td>
+<td>string (int64)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id20">
+<h5>Responses<a class="headerlink" href="#id20" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#testrunresultlisttestrunsresponse">testrunresultListTestRunsResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-test-runs-rename-testrunid">
+<h3>/v1/test-runs/rename/{testRunId}<a class="headerlink" href="#v1-test-runs-rename-testrunid" title="Permalink to this heading"></a></h3>
+<section id="post">
+<h4>POST<a class="headerlink" href="#post" title="Permalink to this heading"></a></h4>
+<section id="id21">
+<h5>Summary:<a class="headerlink" href="#id21" title="Permalink to this heading"></a></h5>
+<p>RenameTestRun</p>
+</section>
+<section id="id22">
+<h5>Description:<a class="headerlink" href="#id22" title="Permalink to this heading"></a></h5>
+<p>Updates the name of a test run.</p>
+</section>
+<section id="id23">
+<h5>Parameters<a class="headerlink" href="#id23" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRunId</td>
+<td>path</td>
+<td>Uniquely specifies a Test Run to rename.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>body</td>
+<td>body</td>
+<td></td>
+<td>Yes</td>
+<td>object</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id24">
+<h5>Responses<a class="headerlink" href="#id24" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#testrunresultrenametestrunresponse">testrunresultRenameTestRunResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-test-runs-testrunid">
+<h3>/v1/test-runs/{testRunId}<a class="headerlink" href="#v1-test-runs-testrunid" title="Permalink to this heading"></a></h3>
+<section id="id25">
+<h4>GET<a class="headerlink" href="#id25" title="Permalink to this heading"></a></h4>
+<section id="id26">
+<h5>Summary:<a class="headerlink" href="#id26" title="Permalink to this heading"></a></h5>
+<p>GetTestRun</p>
+</section>
+<section id="id27">
+<h5>Description:<a class="headerlink" href="#id27" title="Permalink to this heading"></a></h5>
+<p>Returns the test run result detail for a given Test Run ID.</p>
+</section>
+<section id="id28">
+<h5>Parameters<a class="headerlink" href="#id28" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRunId</td>
+<td>path</td>
+<td>Uniquely specifies a test run.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id29">
+<h5>Responses<a class="headerlink" href="#id29" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#testrunresultgettestrunresponse">testrunresultGetTestRunResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="delete">
+<h4>DELETE<a class="headerlink" href="#delete" title="Permalink to this heading"></a></h4>
+<section id="id30">
+<h5>Summary:<a class="headerlink" href="#id30" title="Permalink to this heading"></a></h5>
+<p>DeleteTestRun</p>
+</section>
+<section id="id31">
+<h5>Description:<a class="headerlink" href="#id31" title="Permalink to this heading"></a></h5>
+<p>Deletes a specified test run.</p>
+</section>
+<section id="id32">
+<h5>Parameters<a class="headerlink" href="#id32" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRunId</td>
+<td>path</td>
+<td>Uniquely specifies a Test Run to delete.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id33">
+<h5>Responses<a class="headerlink" href="#id33" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td>object</td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-test-runs-testrunid-batch-result-testtype">
+<h3>/v1/test-runs/{testRunId}/batch-result/{testType}<a class="headerlink" href="#v1-test-runs-testrunid-batch-result-testtype" title="Permalink to this heading"></a></h3>
+<section id="id34">
+<h4>GET<a class="headerlink" href="#id34" title="Permalink to this heading"></a></h4>
+<section id="id35">
+<h5>Summary:<a class="headerlink" href="#id35" title="Permalink to this heading"></a></h5>
+<p>GetBatchResult</p>
+</section>
+<section id="id36">
+<h5>Description:<a class="headerlink" href="#id36" title="Permalink to this heading"></a></h5>
+<p>Gets the batch result for a given Test Run ID and a test type.</p>
+</section>
+<section id="id37">
+<h5>Parameters<a class="headerlink" href="#id37" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRunId</td>
+<td>path</td>
+<td>Uniquely specifies a Test Run.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>testType</td>
+<td>path</td>
+<td>The type of test, such as "Subset Accuracy" or "Overall Metrics".</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>showDisplay</td>
+<td>query</td>
+<td>A Boolean flag that toggles whether to return display HTML. info with message.</td>
+<td>No</td>
+<td>boolean</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id38">
+<h5>Responses<a class="headerlink" href="#id38" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#testrunresultgetbatchresultresponse">testrunresultGetBatchResultResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-test-runs-testrunid-feature-result-urlsafefeatureid">
+<h3>/v1/test-runs/{testRunId}/feature-result/{urlSafeFeatureId}<a class="headerlink" href="#v1-test-runs-testrunid-feature-result-urlsafefeatureid" title="Permalink to this heading"></a></h3>
+<section id="id39">
+<h4>GET<a class="headerlink" href="#id39" title="Permalink to this heading"></a></h4>
+<section id="id40">
+<h5>Summary:<a class="headerlink" href="#id40" title="Permalink to this heading"></a></h5>
+<p>GetFeatureResult</p>
+</section>
+<section id="id41">
+<h5>Description:<a class="headerlink" href="#id41" title="Permalink to this heading"></a></h5>
+<p>Returns the feature result that matches the specified test run ID
+and feature ID.</p>
+</section>
+<section id="id42">
+<h5>Parameters<a class="headerlink" href="#id42" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRunId</td>
+<td>path</td>
+<td>Uniquely specifies a Test Run.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>urlSafeFeatureId</td>
+<td>path</td>
+<td>Uniquely specifies a Feature.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>showDisplay</td>
+<td>query</td>
+<td>A Boolean flag that specifies whether to return display HTML information.</td>
+<td>No</td>
+<td>boolean</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id43">
+<h5>Responses<a class="headerlink" href="#id43" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#testrunresultgetfeatureresultresponse">testrunresultGetFeatureResultResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="models">
+<h3>Models<a class="headerlink" href="#models" title="Permalink to this heading"></a></h3>
+<section id="differencefromtargetdifference">
+<h4>DifferenceFromTargetDifference<a class="headerlink" href="#differencefromtargetdifference" title="Permalink to this heading"></a></h4>
+<p>The type of difference to calculate.</p>
+<ul class="simple">
+<li><p>DIFFERENCE_RAW: Raw difference between values (x - y)</p></li>
+<li><p>DIFFERENCE_ABSOLUTE: Absolute difference between values (|x - y|)</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DifferenceFromTargetDifference</td>
+<td>string</td>
+<td>The type of difference to calculate.   - DIFFERENCE_RAW: Raw difference between values (x - y)  - DIFFERENCE_ABSOLUTE: Absolute difference between values (</td>
+<td>x - y</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="differencefromtargettarget">
+<h4>DifferenceFromTargetTarget<a class="headerlink" href="#differencefromtargettarget" title="Permalink to this heading"></a></h4>
+<p>The target to compare against.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DifferenceFromTargetTarget</td>
+<td>string</td>
+<td>The target to compare against.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="listsummarytestsrequestlistsummarytestsquery">
+<h4>ListSummaryTestsRequestListSummaryTestsQuery<a class="headerlink" href="#listsummarytestsrequestlistsummarytestsquery" title="Permalink to this heading"></a></h4>
+<p>The resulting query is the intersection of the
+following constraints.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRunId</td>
+<td>string</td>
+<td>The ID of the test run associated with summary tests. Specify exactly one of the page_token field or this field.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="listtestcasesrequestlisttestcasesquery">
+<h4>ListTestCasesRequestListTestCasesQuery<a class="headerlink" href="#listtestcasesrequestlisttestcasesquery" title="Permalink to this heading"></a></h4>
+<p>The resulting query is the intersection of the
+following constraints.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRunId</td>
+<td>string</td>
+<td>Uniquely specifies a Test Run associated with test cases. Specify exactly one of the page_token field or this field.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>testTypes</td>
+<td>[ string ]</td>
+<td>Optional filter for test types.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>urlSafeFeatureIds</td>
+<td>[ string ]</td>
+<td>Optional filter for features.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="securityeventdetailsflaggeddatapoint">
+<h4>SecurityEventDetailsFlaggedDatapoint<a class="headerlink" href="#securityeventdetailsflaggeddatapoint" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rowId</td>
+<td>string (int64)</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>rowTimestamp</td>
+<td>dateTime</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="securityeventdetailssecurityeventtype">
+<h4>SecurityEventDetailsSecurityEventType<a class="headerlink" href="#securityeventdetailssecurityeventtype" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SecurityEventDetailsSecurityEventType</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunmetricscategorysummarymetric">
+<h4>TestRunMetricsCategorySummaryMetric<a class="headerlink" href="#testrunmetricscategorysummarymetric" title="Permalink to this heading"></a></h4>
+<p>CategorySummaryMetric returns a summary metric across test
+batches for a particular category, such as the average severity
+for all “Drift” tests.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>categoryId</td>
+<td>string</td>
+<td>Uniquely specifies a Category.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>testCategory</td>
+<td><a href="#testruntestcategorytype">testrunTestCategoryType</a></td>
+<td>The category of the test.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the category.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>value</td>
+<td>double</td>
+<td>The value of the metric over the specified category.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunmetricsmodelperfmetric">
+<h4>TestRunMetricsModelPerfMetric<a class="headerlink" href="#testrunmetricsmodelperfmetric" title="Permalink to this heading"></a></h4>
+<p>ModelPerfMetric returns the model performance for a metric
+over the reference and evaluation datasets.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>refMetric</td>
+<td>double</td>
+<td>Optional metric for the reference dataset.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>evalMetric</td>
+<td>double</td>
+<td>Optional metric for the evaluation dataset.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="detectionsecurityeventdetails">
+<h4>detectionSecurityEventDetails<a class="headerlink" href="#detectionsecurityeventdetails" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td><a href="#securityeventdetailssecurityeventtype">SecurityEventDetailsSecurityEventType</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>effectOnModel</td>
+<td>[ string ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>possibleIntent</td>
+<td>[ string ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>evidence</td>
+<td>[ string ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>recommendations</td>
+<td>[ string ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>datapoints</td>
+<td>[ <a href="#securityeventdetailsflaggeddatapoint">SecurityEventDetailsFlaggedDatapoint</a> ]</td>
+<td>Include descriptions of all the flagged datapoints for the attack.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="googlerpcstatus">
+<h4>googlerpcStatus<a class="headerlink" href="#googlerpcstatus" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>code</td>
+<td>integer</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>message</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>details</td>
+<td>[ <a href="#protobufany">protobufAny</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitordifferencefromtarget">
+<h4>monitorDifferenceFromTarget<a class="headerlink" href="#monitordifferencefromtarget" title="Permalink to this heading"></a></h4>
+<p>DifferenceFromTarget defines a transform that
+calculates the difference between the aggregated metric
+defined in the monitor and the same metric defined with the target.
+if no aggregation is specified, an average value is used.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>difference</td>
+<td><a href="#differencefromtargetdifference">DifferenceFromTargetDifference</a></td>
+<td>The difference function for this transform.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>target</td>
+<td><a href="#differencefromtargettarget">DifferenceFromTargetTarget</a></td>
+<td>The target for this transform.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitorexcludedtransforms">
+<h4>monitorExcludedTransforms<a class="headerlink" href="#monitorexcludedtransforms" title="Permalink to this heading"></a></h4>
+<p>ExcludedTransforms allows a metric to define which
+transforms cannot be applied to the metric.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>excludedTransforms</td>
+<td>[ <a href="#monitortransform">monitorTransform</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitorthreshold">
+<h4>monitorThreshold<a class="headerlink" href="#monitorthreshold" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>low</td>
+<td>double</td>
+<td>The threshold for warning.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>high</td>
+<td>double</td>
+<td>The threshold for alert.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>type</td>
+<td><a href="#monitorthresholdtype">monitorThresholdType</a></td>
+<td>The type of the threshold.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitorthresholdtype">
+<h4>monitorThresholdType<a class="headerlink" href="#monitorthresholdtype" title="Permalink to this heading"></a></h4>
+<ul class="simple">
+<li><p>TYPE_UPPER_BOUND: The threshold is violated when the metric’s value is greater than
+the upper bound.</p></li>
+<li><p>TYPE_LOWER_BOUND: The threshold is violated when the metric’s value is less than the
+lower bound.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>monitorThresholdType</td>
+<td>string</td>
+<td>- TYPE_UPPER_BOUND: The threshold is violated when the metric's value is greater than the upper bound.  - TYPE_LOWER_BOUND: The threshold is violated when the metric's value is less than the lower bound.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitortransform">
+<h4>monitorTransform<a class="headerlink" href="#monitortransform" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>differenceFromTarget</td>
+<td><a href="#monitordifferencefromtarget">monitorDifferenceFromTarget</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="protobufany">
+<h4>protobufAny<a class="headerlink" href="#protobufany" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@type</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rcarcarole">
+<h4>rcaRCARole<a class="headerlink" href="#rcarcarole" title="Permalink to this heading"></a></h4>
+<p>RCARole indicates the RCA role of a detection event or a monitor.
+Their use in the RCA algorithm depends on their role.
+For example, RCA will be computed for EFFECT monitors.
+We will examine all FEATURE_CAUSE and TEST_CAUSE monitors to determine
+which one is most relevant.
+TODO: document this.</p>
+<ul class="simple">
+<li><p>RCAROLE_UNSPECIFIED: Unspecified is an invalid value: do not use.</p></li>
+<li><p>RCAROLE_EFFECT: The given degradation is the “effect” of a low level failure.</p></li>
+<li><p>RCAROLE_FEATURE_CAUSE: The given degradation in a feature (e.g. drift) may have caused a high
+level failure in an “effect” monitor.</p></li>
+<li><p>RCAROLE_TEST_CAUSE: The given degradation in a test may have caused a high level failure.</p></li>
+<li><p>RCAROLE_EXCLUDED: All monitors with the excluded tag will be excluded from RCA analysis.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rcaRCARole</td>
+<td>string</td>
+<td>RCARole indicates the RCA role of a detection event or a monitor. Their use in the RCA algorithm depends on their role. For example, RCA will be computed for EFFECT monitors. We will examine all FEATURE_CAUSE and TEST_CAUSE monitors to determine which one is most relevant. TODO: document this.   - RCAROLE_UNSPECIFIED: Unspecified is an invalid value: do not use.  - RCAROLE_EFFECT: The given degradation is the "effect" of a low level failure.  - RCAROLE_FEATURE_CAUSE: The given degradation in a feature (e.g. drift) may have caused a high level failure in an "effect" monitor.  - RCAROLE_TEST_CAUSE: The given degradation in a test may have caused a high level failure.  - RCAROLE_EXCLUDED: All monitors with the excluded tag will be excluded from RCA analysis.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimecategorymetric">
+<h4>rimeCategoryMetric<a class="headerlink" href="#rimecategorymetric" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>value</td>
+<td>double</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>threshold</td>
+<td><a href="#monitorthreshold">monitorThreshold</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>riskCategoryType</td>
+<td><a href="#riskscoreriskcategorytype">riskscoreRiskCategoryType</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimecategorytestresult">
+<h4>rimeCategoryTestResult<a class="headerlink" href="#rimecategorytestresult" title="Permalink to this heading"></a></h4>
+<p>CategoryTestResult is a summary of a single category of tests in RIME.
+For instance, the “Drift” category includes specific tests such as Prediction
+Drift or Label Drift.
+The CategoryTestResult for Drift includes an overall severity and other
+details aggregated across those individual tests.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>When combined with the test run ID, this uniquely identifies a category test result.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>severity</td>
+<td><a href="#rimeseverity">rimeSeverity</a></td>
+<td>Severity of the Category Test Result.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>suggestion</td>
+<td><a href="#rimesuggestion">rimeSuggestion</a></td>
+<td>Suggestion includes insights on how to address test failures in the category.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>categoryMetrics</td>
+<td>[ <a href="#rimecategorymetric">rimeCategoryMetric</a> ]</td>
+<td>Category metrics are aggregated or important metrics for the category.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>testBatchTypes</td>
+<td>[ string ]</td>
+<td>List of the tests in the category.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td>Human-readable description of the category test result.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>severityCounts</td>
+<td><a href="#rimeseveritycounts">rimeSeverityCounts</a></td>
+<td>Counts of tests that are passing or failing.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>failingTestTypes</td>
+<td>[ string ]</td>
+<td>List of all the failing test types.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>duration</td>
+<td>double</td>
+<td>Duration is the total time in seconds for tests in that category.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>categoryImportance</td>
+<td>double</td>
+<td>The relative importance of the category.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>riskCategory</td>
+<td><a href="#riskscoreriskcategorytype">riskscoreRiskCategoryType</a></td>
+<td>The risk category to which the test category pertains. For example, "Drift" is under the Operational Risk category.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>testCategory</td>
+<td><a href="#testruntestcategorytype">testrunTestCategoryType</a></td>
+<td>The type of the category. This is functionally equivalent to the ID field above.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimefailingrow">
+<h4>rimeFailingRow<a class="headerlink" href="#rimefailingrow" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rowId</td>
+<td>string (int64)</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>failingFeatures</td>
+<td>[ string ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>details</td>
+<td>byte</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimefailingrowsresult">
+<h4>rimeFailingRowsResult<a class="headerlink" href="#rimefailingrowsresult" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>failingRows</td>
+<td>[ <a href="#rimefailingrow">rimeFailingRow</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>topCount</td>
+<td>string (int64)</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>totalCount</td>
+<td>string (int64)</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>allIncluded</td>
+<td>boolean</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimefeaturetype">
+<h4>rimeFeatureType<a class="headerlink" href="#rimefeaturetype" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeFeatureType</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimefloatlist">
+<h4>rimeFloatList<a class="headerlink" href="#rimefloatlist" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>values</td>
+<td>[ double ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeintlist">
+<h4>rimeIntList<a class="headerlink" href="#rimeintlist" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>values</td>
+<td>[ string (int64) ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimelongdescriptiontab">
+<h4>rimeLongDescriptionTab<a class="headerlink" href="#rimelongdescriptiontab" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>title</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>contents</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimemodeltask">
+<h4>rimeModelTask<a class="headerlink" href="#rimemodeltask" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeModelTask</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimenameddouble">
+<h4>rimeNamedDouble<a class="headerlink" href="#rimenameddouble" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>value</td>
+<td>double</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimesafeurl">
+<h4>rimeSafeURL<a class="headerlink" href="#rimesafeurl" title="Permalink to this heading"></a></h4>
+<p>SafeURL represents a URL that has been safely constructed.
+e.g. a user clicking on this link is guaranteed to land on the RIME web app.
+We use this instead of a raw str so that application code can generate
+SafeURL messages in certain ways -&gt; this provides stronger typing than just
+using a string.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>url</td>
+<td>string</td>
+<td>A safely constructed URL.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeseverity">
+<h4>rimeSeverity<a class="headerlink" href="#rimeseverity" title="Permalink to this heading"></a></h4>
+<p>Severity specifies the severity level of an event. Depending on the direction
+of degradation, a metric going below or above a threshold will trigger a
+higher severity level.</p>
+<ul class="simple">
+<li><p>SEVERITY_PASS: Indicates that the specified metric is lower than the low threshold
+in the case where the Monitor is configured to trigger on an increase of a
+metric.</p></li>
+<li><p>SEVERITY_WARNING: Indicates that the specified metric is higher than the low threshold
+but still lower than the high threshold, in the case that a Monitor is
+configured to trigger on an increase of a metric. Warning and Alert
+severity levels will trigger a Degradation event.</p></li>
+<li><p>SEVERITY_ALERT: Indicates that the specified metric is higher than the high threshold
+in the case that the Monitor is configured to trigger on an increase of a
+metric. Warning and Alert severity level will trigger a Degradation event.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeSeverity</td>
+<td>string</td>
+<td>Severity specifies the severity level of an event. Depending on the direction of degradation, a metric going below or above a threshold will trigger a higher severity level.   - SEVERITY_PASS: Indicates that the specified metric is lower than the low threshold in the case where the Monitor is configured to trigger on an increase of a metric.  - SEVERITY_WARNING: Indicates that the specified metric is higher than the low threshold but still lower than the high threshold, in the case that a Monitor is configured to trigger on an increase of a metric. Warning and Alert severity levels will trigger a Degradation event.  - SEVERITY_ALERT: Indicates that the specified metric is higher than the high threshold in the case that the Monitor is configured to trigger on an increase of a metric. Warning and Alert severity level will trigger a Degradation event.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeseveritycounts">
+<h4>rimeSeverityCounts<a class="headerlink" href="#rimeseveritycounts" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>numNoneSeverity</td>
+<td>string (int64)</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>numLowSeverity</td>
+<td>string (int64)</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>numHighSeverity</td>
+<td>string (int64)</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimestrlist">
+<h4>rimeStrList<a class="headerlink" href="#rimestrlist" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>values</td>
+<td>[ string ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimesuggestion">
+<h4>rimeSuggestion<a class="headerlink" href="#rimesuggestion" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>details</td>
+<td>byte</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimetablecolumn">
+<h4>rimeTableColumn<a class="headerlink" href="#rimetablecolumn" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>type</td>
+<td><a href="#rimetablecolumntype">rimeTableColumnType</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimetablecolumntype">
+<h4>rimeTableColumnType<a class="headerlink" href="#rimetablecolumntype" title="Permalink to this heading"></a></h4>
+<ul class="simple">
+<li><p>TABLE_COLUMN_TYPE_PICKABLE: Used for columns that support selection, including multi-selection.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeTableColumnType</td>
+<td>string</td>
+<td>- TABLE_COLUMN_TYPE_PICKABLE: Used for columns that support selection, including multi-selection.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimetestcasemonitorinfo">
+<h4>rimeTestCaseMonitorInfo<a class="headerlink" href="#rimetestcasemonitorinfo" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>threshold</td>
+<td><a href="#monitorthreshold">monitorThreshold</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>isSubsetMetric</td>
+<td>boolean</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>rcaRole</td>
+<td><a href="#rcarcarole">rcaRCARole</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>excludedTransforms</td>
+<td><a href="#monitorexcludedtransforms">monitorExcludedTransforms</a></td>
+<td>optional message to define which transforms do not apply to this metric.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimetestcasestatus">
+<h4>rimeTestCaseStatus<a class="headerlink" href="#rimetestcasestatus" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeTestCaseStatus</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimetestmetric">
+<h4>rimeTestMetric<a class="headerlink" href="#rimetestmetric" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>metric</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>category</td>
+<td><a href="#rimetestmetriccategory">rimeTestMetricCategory</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>intValue</td>
+<td>string (int64)</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>floatValue</td>
+<td>double</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>empty</td>
+<td>object</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>strValue</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>intList</td>
+<td><a href="#rimeintlist">rimeIntList</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>floatList</td>
+<td><a href="#rimefloatlist">rimeFloatList</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>strList</td>
+<td><a href="#rimestrlist">rimeStrList</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>testCaseMonitorInfo</td>
+<td><a href="#rimetestcasemonitorinfo">rimeTestCaseMonitorInfo</a></td>
+<td>if metric is tracked as a default monitor specify TestCaseMonitorInfo. This is only relevant if the test has a corresponding CT instance. The FirewallID, TestBatchType, FeatureID, and metric will be used to construct a ri.schema.monitor.MetricIdentifier for this TestMetric which will function as a unique key for the default monitor. If this default monitor doesn't exist, BE will create it. If it already exists, the monitor will be updated with the threshold and risk category type.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimetestmetriccategory">
+<h4>rimeTestMetricCategory<a class="headerlink" href="#rimetestmetriccategory" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeTestMetricCategory</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimetesttaskstatus">
+<h4>rimeTestTaskStatus<a class="headerlink" href="#rimetesttaskstatus" title="Permalink to this heading"></a></h4>
+<p>Status of individual test units, e.g. test runs, test batches, test cases.
+This is different from job status because these are more abstract.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeTestTaskStatus</td>
+<td>string</td>
+<td>Status of individual test units, e.g. test runs, test batches, test cases. This is different from job status because these are more abstract.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimetesttype">
+<h4>rimeTestType<a class="headerlink" href="#rimetesttype" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeTestType</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeuuid">
+<h4>rimeUUID<a class="headerlink" href="#rimeuuid" title="Permalink to this heading"></a></h4>
+<p>Unique ID of an object in RIME.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uuid</td>
+<td>string</td>
+<td>String value of the object ID.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="riskscoreriskcategorytype">
+<h4>riskscoreRiskCategoryType<a class="headerlink" href="#riskscoreriskcategorytype" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>riskscoreRiskCategoryType</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="riskscoreriskscore">
+<h4>riskscoreRiskScore<a class="headerlink" href="#riskscoreriskscore" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td><a href="#riskscoreriskcategorytype">riskscoreRiskCategoryType</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>severity</td>
+<td><a href="#rimeseverity">rimeSeverity</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>score</td>
+<td>double</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunannotatedtestconfig">
+<h4>testrunAnnotatedTestConfig<a class="headerlink" href="#testrunannotatedtestconfig" title="Permalink to this heading"></a></h4>
+<p>AnnotatedTestConfig stores the configuration values
+for a single test, alongside descriptions of the
+configuration values.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>contents</td>
+<td>byte</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td>A description of the configuration parameters for the test.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testruntestcategorytype">
+<h4>testrunTestCategoryType<a class="headerlink" href="#testruntestcategorytype" title="Permalink to this heading"></a></h4>
+<p>TestCategoryType contains all the possible values for test categories that
+can be run in RIME.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testrunTestCategoryType</td>
+<td>string</td>
+<td>TestCategoryType contains all the possible values for test categories that can be run in RIME.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunresultgetbatchresultresponse">
+<h4>testrunresultGetBatchResultResponse<a class="headerlink" href="#testrunresultgetbatchresultresponse" title="Permalink to this heading"></a></h4>
+<p>GetBatchResultResponse returns the batch result for a test run as requested.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testBatch</td>
+<td><a href="#testrunresulttestbatchresult">testrunresultTestBatchResult</a></td>
+<td>The test batch that was requested.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunresultgetfeatureresultresponse">
+<h4>testrunresultGetFeatureResultResponse<a class="headerlink" href="#testrunresultgetfeatureresultresponse" title="Permalink to this heading"></a></h4>
+<p>GetFeatureResultResponse returns the feature result as requested.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>featureResult</td>
+<td><a href="#testrunresulttestfeatureresult">testrunresultTestFeatureResult</a></td>
+<td>The feature result that was requested.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunresultgettestconfigresponse">
+<h4>testrunresultGetTestConfigResponse<a class="headerlink" href="#testrunresultgettestconfigresponse" title="Permalink to this heading"></a></h4>
+<p>GetTestConfigResponse returns the test config as requested.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>annotatedTestConfig</td>
+<td><a href="#testrunannotatedtestconfig">testrunAnnotatedTestConfig</a></td>
+<td>The test config specified.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunresultgettestrunresponse">
+<h4>testrunresultGetTestRunResponse<a class="headerlink" href="#testrunresultgettestrunresponse" title="Permalink to this heading"></a></h4>
+<p>GetTestRunResponse returns the results of a test run.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRun</td>
+<td><a href="#testrunresulttestrundetail">testrunresultTestRunDetail</a></td>
+<td>The details of the test run.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunresultlistbatchresultsresponse">
+<h4>testrunresultListBatchResultsResponse<a class="headerlink" href="#testrunresultlistbatchresultsresponse" title="Permalink to this heading"></a></h4>
+<p>ListBatchResultsResponse returns all the batch results as requested.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testBatches</td>
+<td>[ <a href="#testrunresulttestbatchresult">testrunresultTestBatchResult</a> ]</td>
+<td>The list of test batch results.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>nextPageToken</td>
+<td>string</td>
+<td>A token representing the next page from the list returned by a ListBatchResults query.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>hasMore</td>
+<td>boolean</td>
+<td>A Boolean that specifies whether there are more batch results to return.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunresultlistfeatureresultsresponse">
+<h4>testrunresultListFeatureResultsResponse<a class="headerlink" href="#testrunresultlistfeatureresultsresponse" title="Permalink to this heading"></a></h4>
+<p>ListFeatureResultsResponse returns a list of feature results as requested.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>featureResults</td>
+<td>[ <a href="#testrunresulttestfeatureresult">testrunresultTestFeatureResult</a> ]</td>
+<td>The list of feature results.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>nextPageToken</td>
+<td>string</td>
+<td>A token representing the next page from the list returned by a ListFeatureResults query.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>hasMore</td>
+<td>boolean</td>
+<td>A Boolean flag that specifies whether there are more feature results to return.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunresultlistsummarytestsresponse">
+<h4>testrunresultListSummaryTestsResponse<a class="headerlink" href="#testrunresultlistsummarytestsresponse" title="Permalink to this heading"></a></h4>
+<p>ListSummaryTestsResponse returns the list of summary tests as requested.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>summaryTestResults</td>
+<td>[ <a href="#rimecategorytestresult">rimeCategoryTestResult</a> ]</td>
+<td>The list of summary test results.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>nextPageToken</td>
+<td>string</td>
+<td>A token representing the next page from the list returned by a ListSummaryTests query.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>hasMore</td>
+<td>boolean</td>
+<td>A Boolean flag that specifies whether there are more summary tests to return.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunresultlisttestcasesresponse">
+<h4>testrunresultListTestCasesResponse<a class="headerlink" href="#testrunresultlisttestcasesresponse" title="Permalink to this heading"></a></h4>
+<p>ListTestCasesResponse returns the list of test cases requested.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testCases</td>
+<td>[ <a href="#testrunresulttestcase">testrunresultTestCase</a> ]</td>
+<td>The list of test cases.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>nextPageToken</td>
+<td>string</td>
+<td>A token representing the next page from the list returned by a ListTestCases query.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>hasMore</td>
+<td>boolean</td>
+<td>A Boolean flag that specifies whether there are more test cases to return.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunresultlisttestrunsresponse">
+<h4>testrunresultListTestRunsResponse<a class="headerlink" href="#testrunresultlisttestrunsresponse" title="Permalink to this heading"></a></h4>
+<p>ListTestRunsResponse returns all the test runs as requested.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRuns</td>
+<td>[ <a href="#testrunresulttestrundetail">testrunresultTestRunDetail</a> ]</td>
+<td>The details of the test runs.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>nextPageToken</td>
+<td>string</td>
+<td>A token representing the next page from the list returned by a ListTestRuns query.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>hasMore</td>
+<td>boolean</td>
+<td>A Boolean that specifies whether there are more test runs to return.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunresultrenametestrunresponse">
+<h4>testrunresultRenameTestRunResponse<a class="headerlink" href="#testrunresultrenametestrunresponse" title="Permalink to this heading"></a></h4>
+<p>RenameTestRunResponse returns the renamed test run as requested.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRun</td>
+<td><a href="#testrunresulttestrundetail">testrunresultTestRunDetail</a></td>
+<td>The test run that is renamed.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunresultresultsummarycounts">
+<h4>testrunresultResultSummaryCounts<a class="headerlink" href="#testrunresultresultsummarycounts" title="Permalink to this heading"></a></h4>
+<p>ResultSummaryCounts returns the number of tests that have each status
+for a given test run.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>total</td>
+<td>string (int64)</td>
+<td>The total number of tests.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>pass</td>
+<td>string (int64)</td>
+<td>The number of tests that pass.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>warning</td>
+<td>string (int64)</td>
+<td>The number of tests that raise a warning.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>fail</td>
+<td>string (int64)</td>
+<td>The number of tests that fail.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>skip</td>
+<td>string (int64)</td>
+<td>The number of tests that are skipped.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunresulttestbatchresult">
+<h4>testrunresultTestBatchResult<a class="headerlink" href="#testrunresulttestbatchresult" title="Permalink to this heading"></a></h4>
+<p>TestBatchResult returns the test batch results.
+Similar to results_upload.proto but with separation of
+uploading and querying.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRunId</td>
+<td>string</td>
+<td>Uniquely specifies a parent Test Run.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>testType</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>testName</td>
+<td>string</td>
+<td>The display-friendly name; for example: 'Categorical Feature Drift'.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td>The description of the test. Note: this is currently identical to the display.description_html field.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>category</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>durationInMillis</td>
+<td>string (int64)</td>
+<td>The duration of the test run.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>severity</td>
+<td><a href="#rimeseverity">rimeSeverity</a></td>
+<td>The severity raised from the test.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>summaryCounts</td>
+<td><a href="#testrunresultresultsummarycounts">testrunresultResultSummaryCounts</a></td>
+<td>The summary counts from the test.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>failingFeatures</td>
+<td>[ string ]</td>
+<td>The list of failing features.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>metrics</td>
+<td>[ <a href="#rimetestmetric">rimeTestMetric</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>showInTestComparisons</td>
+<td>boolean</td>
+<td>A Boolean that specifies whether to include the test batch in the test comparison page in the web UI.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>display</td>
+<td><a href="#testrunresulttestbatchresultdisplay">testrunresultTestBatchResultDisplay</a></td>
+<td>The display information for the test. WARNING: this is unstable, do not programmatically parse.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>failingRowsResult</td>
+<td><a href="#rimefailingrowsresult">rimeFailingRowsResult</a></td>
+<td>A sample of the failing rows for the given test. The total number of failing rows is too large to send over gRPC.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>securityTestDetails</td>
+<td><a href="#detectionsecurityeventdetails">detectionSecurityEventDetails</a></td>
+<td>Extra details required for security tests for model cards page.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunresulttestbatchresultdisplay">
+<h4>testrunresultTestBatchResultDisplay<a class="headerlink" href="#testrunresulttestbatchresultdisplay" title="Permalink to this heading"></a></h4>
+<p>Display contains information for displaying the test case in the
+RI web app.
+The contents of each field are unstable; it is not recommended to parse
+them programmatically.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>summaryDetails</td>
+<td>byte</td>
+<td>Summary details are marshalled JSON.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>tableColumnsToShow</td>
+<td>[ <a href="#rimetablecolumn">rimeTableColumn</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>longDescriptionTabs</td>
+<td>[ <a href="#rimelongdescriptiontab">rimeLongDescriptionTab</a> ]</td>
+<td>More detailed information about the test batch.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>descriptionHtml</td>
+<td>string</td>
+<td>Description of the test batch result that may contain HTML.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunresulttestcase">
+<h4>testrunresultTestCase<a class="headerlink" href="#testrunresulttestcase" title="Permalink to this heading"></a></h4>
+<p>TestCase returns information for a given test case.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRunId</td>
+<td>string</td>
+<td>Uniquely specifies a Test Run.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>features</td>
+<td>[ string ]</td>
+<td>The list of features used in the test case.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>testBatchType</td>
+<td>string</td>
+<td>The type of test batch.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>status</td>
+<td><a href="#rimetestcasestatus">rimeTestCaseStatus</a></td>
+<td>The status of the test case. For example, pass, fail, warn, skip.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>severity</td>
+<td><a href="#rimeseverity">rimeSeverity</a></td>
+<td>The severity of the test case. For example warning, alert.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>importanceScore</td>
+<td>double</td>
+<td>The model impact of the test case.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>category</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>testCategory</td>
+<td><a href="#testruntestcategorytype">testrunTestCategoryType</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>metrics</td>
+<td>[ <a href="#rimetestmetric">rimeTestMetric</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>urlSafeFeatureId</td>
+<td>string</td>
+<td>Optional URL-safe feature ID if the test case is associated with a feature. This may be empty for modalities that do not have features or test cases that pertain to two or more features, such as subset tests.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>testCaseId</td>
+<td>string</td>
+<td>Together with the Test Run ID and the test batch type, this forms the primary key for the test case.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>display</td>
+<td><a href="#testrunresulttestcasedisplay">testrunresultTestCaseDisplay</a></td>
+<td>This contains additional information for displaying the test case in the RI web app.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunresulttestcasedisplay">
+<h4>testrunresultTestCaseDisplay<a class="headerlink" href="#testrunresulttestcasedisplay" title="Permalink to this heading"></a></h4>
+<p>Display contains information for displaying the test case in the
+web UI.
+The contents of each field are unstable; it is not recommended to parse
+them programmatically.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tableInfo</td>
+<td>byte</td>
+<td>Table info contains information for displaying the test case in a table in the FE.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>details</td>
+<td>byte</td>
+<td>Details includes ML-specified details for the test case. This can include graphs, HTML, etc.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>detailsLayout</td>
+<td>[ string (int64) ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunresulttestfeatureresult">
+<h4>testrunresultTestFeatureResult<a class="headerlink" href="#testrunresulttestfeatureresult" title="Permalink to this heading"></a></h4>
+<p>TestFeatureResult returns the feature results for a given test.
+Similar to results_upload.proto but with separation of
+uploading and querying.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>urlSafeFeatureId</td>
+<td>string</td>
+<td>The URL-compatible (base 64) encoding of feature name.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>featureName</td>
+<td>string</td>
+<td>The human-readable feature name.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>featureType</td>
+<td><a href="#rimefeaturetype">rimeFeatureType</a></td>
+<td>The type of feature.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>severity</td>
+<td><a href="#rimeseverity">rimeSeverity</a></td>
+<td>The severity raised for the feature in the test.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>summaryCounts</td>
+<td><a href="#testrunresultresultsummarycounts">testrunresultResultSummaryCounts</a></td>
+<td>The summary counts for the feature in the test.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>failingTests</td>
+<td>[ string ]</td>
+<td>The list of tests that fail for the feature.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>numFailingRows</td>
+<td>string (int64)</td>
+<td>The number of rows that fail.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>failingRowsHtml</td>
+<td>string</td>
+<td>The names of the rows that fail; may contain HTML.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>driftStatistic</td>
+<td><a href="#rimenameddouble">rimeNamedDouble</a></td>
+<td>The drift statistic used for the feature result.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>modelImpact</td>
+<td><a href="#rimenameddouble">rimeNamedDouble</a></td>
+<td>The model impact used for the feature result.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>featureInfos</td>
+<td>[ string ]</td>
+<td>The list of feature information used.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>display</td>
+<td><a href="#testrunresulttestfeatureresultdisplay">testrunresultTestFeatureResultDisplay</a></td>
+<td>The display information for the test. WARNING: this is unstable, do not programmatically parse.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunresulttestfeatureresultdisplay">
+<h4>testrunresultTestFeatureResultDisplay<a class="headerlink" href="#testrunresulttestfeatureresultdisplay" title="Permalink to this heading"></a></h4>
+<p>Display contains information for displaying the feature result in the
+RI web app.
+The contents of each field are unstable; it is not recommended to parse
+them programmatically.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>summaryDetails</td>
+<td>byte</td>
+<td>Summary details are marshalled JSON.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>tableColumnsToShow</td>
+<td>[ <a href="#rimetablecolumn">rimeTableColumn</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunresulttestrundetail">
+<h4>testrunresultTestRunDetail<a class="headerlink" href="#testrunresulttestrundetail" title="Permalink to this heading"></a></h4>
+<p>TestRunDetail returns the details for a given test run.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRunId</td>
+<td>string</td>
+<td>Uniquely specifies a Test Run.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the Test Run.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>projectId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>Uniquely specifies a Project.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>testingType</td>
+<td><a href="#rimetesttype">rimeTestType</a></td>
+<td>The type of test. e.g. stress testing, continuous testing.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>modelTask</td>
+<td><a href="#rimemodeltask">rimeModelTask</a></td>
+<td>The model task for the test run. e.g. binary classification, regression, learning-to-rank, etc.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>refDataId</td>
+<td>string</td>
+<td>Uniquely specifies a reference dataset.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>evalDataId</td>
+<td>string</td>
+<td>Uniquely specifies an evaluation dataset.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>modelId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>Uniquely specifies a model.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>uploadTime</td>
+<td>dateTime</td>
+<td>The upload time of the test run.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>webAppUrl</td>
+<td><a href="#rimesafeurl">rimeSafeURL</a></td>
+<td>The web app url for the test run.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>testCategories</td>
+<td>[ <a href="#testruntestcategorytype">testrunTestCategoryType</a> ]</td>
+<td>The list of child references to the category tests belonging to this test run.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>metrics</td>
+<td><a href="#testrunresulttestrunmetrics">testrunresultTestRunMetrics</a></td>
+<td>The metrics computed for the test run.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>status</td>
+<td><a href="#rimetesttaskstatus">rimeTestTaskStatus</a></td>
+<td>The current status of the test run (e.g. SUCCEEDED, FAILED, RUNNING).</td>
+<td>No</td>
+</tr>
+<tr>
+<td>progress</td>
+<td>string</td>
+<td>Human-readable succinct message about the progress of the test run.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>rimeVersion</td>
+<td>string</td>
+<td>The version of RIME that ran this test.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunresulttestrunmetrics">
+<h4>testrunresultTestRunMetrics<a class="headerlink" href="#testrunresulttestrunmetrics" title="Permalink to this heading"></a></h4>
+<p>TestRunMetrics returns metrics for a test run.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>modelPerf</td>
+<td>object</td>
+<td>The model performance over the test run as computed using various metrics.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>averagePrediction</td>
+<td>double</td>
+<td>The average prediction for the test run (only defined for a subset of tasks such as binary classification).</td>
+<td>No</td>
+</tr>
+<tr>
+<td>numInputs</td>
+<td>string (int64)</td>
+<td>The number of inputs. For tabular data, an input is one row.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>numFailingInputs</td>
+<td>string (int64)</td>
+<td>The number of failing inputs.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>durationMillis</td>
+<td>string (int64)</td>
+<td>The duration of the test run in milliseconds.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>severityCounts</td>
+<td><a href="#rimeseveritycounts">rimeSeverityCounts</a></td>
+<td>The number of tests with each severity level.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>summaryCounts</td>
+<td><a href="#testrunresultresultsummarycounts">testrunresultResultSummaryCounts</a></td>
+<td>The number of tests with each status level.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>categorySummaryMetrics</td>
+<td>[ <a href="#testrunmetricscategorysummarymetric">TestRunMetricsCategorySummaryMetric</a> ]</td>
+<td>The list of category summary metrics.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>riskScores</td>
+<td>[ <a href="#riskscoreriskscore">riskscoreRiskScore</a> ]</td>
+<td>The list of risk scores.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table></section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../rimeinfo/rime_info.swagger.html" class="btn btn-neutral float-left" title="ri/api/rimeinfo/rime_info.proto" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

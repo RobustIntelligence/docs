@@ -1,0 +1,2623 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ri/api/registry/registry.proto &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ri/api/resultsynthesizer/result_message.proto" href="../resultsynthesizer/result_message.swagger.html" />
+    <link rel="prev" title="ri/api/project/project.proto" href="../project/project.swagger.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                2.0.0-beta.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/modeltesting.html">RIME model testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/basic_tasks.html">Setting up and testing with RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/adv_tasks.html">Customization and troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/shostedinst.html">Self-Hosted</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REST API and SDK reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../python_library/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../rest-api.html">RI REST API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../agent/agent.swagger.html">ri/api/agent/agent.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datacollector/data_collector.swagger.html">ri/api/datacollector/data_collector.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../detection/detection.swagger.html">ri/api/detection/detection.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../featureflag/feature_flag.swagger.html">ri/api/featureflag/feature_flag.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../filescanning/file_scanning.swagger.html">ri/api/filescanning/file_scanning.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileupload/file_upload.swagger.html">ri/api/fileupload/file_upload.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../firewall/firewall.swagger.html">ri/api/firewall/firewall.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../imageregistry/image_registry.swagger.html">ri/api/imageregistry/image_registry.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../imageregistry/managed_image.swagger.html">ri/api/imageregistry/managed_image.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_manager.swagger.html">ri/api/jobs/job_manager.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_message.swagger.html">ri/api/jobs/job_message.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_reader.swagger.html">ri/api/jobs/job_reader.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modelcard/model_card.swagger.html">ri/api/modelcard/model_card.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modeltesting/model_testing.swagger.html">ri/api/modeltesting/model_testing.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../monitor/monitor.swagger.html">ri/api/monitor/monitor.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notification/notification.swagger.html">ri/api/notification/notification.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project/project.swagger.html">ri/api/project/project.proto</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ri/api/registry/registry.proto</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#version-version-not-set">Version: version not set</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#v1-registry-dataset">/v1/registry/dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-registry-dataset-datasetid">/v1/registry/dataset/{datasetId}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-registry-dataset-projectid-uuid">/v1/registry/dataset/{projectId.uuid}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-registry-model">/v1/registry/model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-registry-model-modelid-uuid">/v1/registry/model/{modelId.uuid}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-registry-model-projectid-uuid">/v1/registry/model/{projectId.uuid}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-registry-prediction-modelid-uuid-datasetid">/v1/registry/prediction/{modelId.uuid}/{datasetId}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-registry-prediction-projectid-uuid-modelid-uuid-datasetid">/v1/registry/prediction/{projectId.uuid}/{modelId.uuid}/{datasetId}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-registry-projectid-uuid-dataset">/v1/registry/{projectId.uuid}/dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-registry-projectid-uuid-model">/v1/registry/{projectId.uuid}/model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-registry-projectid-uuid-prediction">/v1/registry/{projectId.uuid}/prediction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-registry-projectid-uuid-prediction-modelid-uuid-datasetid">/v1/registry/{projectId.uuid}/prediction/{modelId.uuid}/{datasetId}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#models">Models</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../resultsynthesizer/result_message.swagger.html">ri/api/resultsynthesizer/result_message.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rimeinfo/rime_info.swagger.html">ri/api/rimeinfo/rime_info.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testrunresults/test_run_results.swagger.html">ri/api/testrunresults/test_run_results.proto</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../rest-api.html">RI REST API</a></li>
+      <li class="breadcrumb-item active">ri/api/registry/registry.proto</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/rest_api/registry/registry.swagger.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ri-api-registry-registry-proto">
+<h1>ri/api/registry/registry.proto<a class="headerlink" href="#ri-api-registry-registry-proto" title="Permalink to this heading"></a></h1>
+<section id="version-version-not-set">
+<h2>Version: version not set<a class="headerlink" href="#version-version-not-set" title="Permalink to this heading"></a></h2>
+<section id="v1-registry-dataset">
+<h3>/v1/registry/dataset<a class="headerlink" href="#v1-registry-dataset" title="Permalink to this heading"></a></h3>
+<section id="get">
+<h4>GET<a class="headerlink" href="#get" title="Permalink to this heading"></a></h4>
+<section id="summary">
+<h5>Summary:<a class="headerlink" href="#summary" title="Permalink to this heading"></a></h5>
+<p>GetDataset</p>
+</section>
+<section id="description">
+<h5>Description:<a class="headerlink" href="#description" title="Permalink to this heading"></a></h5>
+<p>Returns information about a registered Dataset.</p>
+</section>
+<section id="parameters">
+<h5>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>datasetId</td>
+<td>query</td>
+<td>Uniquely specifies a Dataset.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>datasetName</td>
+<td>query</td>
+<td>Unique name of a Dataset.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="responses">
+<h5>Responses<a class="headerlink" href="#responses" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimegetdatasetresponse">rimeGetDatasetResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-registry-dataset-datasetid">
+<h3>/v1/registry/dataset/{datasetId}<a class="headerlink" href="#v1-registry-dataset-datasetid" title="Permalink to this heading"></a></h3>
+<section id="delete">
+<h4>DELETE<a class="headerlink" href="#delete" title="Permalink to this heading"></a></h4>
+<section id="id1">
+<h5>Summary:<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h5>
+<p>DeleteDataset</p>
+</section>
+<section id="id2">
+<h5>Description:<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h5>
+<p>Delete a Dataset from the Registry.</p>
+</section>
+<section id="id3">
+<h5>Parameters<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>datasetId</td>
+<td>path</td>
+<td>Uniquely specifies a Dataset.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h5>Responses<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimedeletedatasetresponse">rimeDeleteDatasetResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-registry-dataset-projectid-uuid">
+<h3>/v1/registry/dataset/{projectId.uuid}<a class="headerlink" href="#v1-registry-dataset-projectid-uuid" title="Permalink to this heading"></a></h3>
+<section id="post">
+<h4>POST<a class="headerlink" href="#post" title="Permalink to this heading"></a></h4>
+<section id="id5">
+<h5>Summary:<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h5>
+<p>RegisterDataset</p>
+</section>
+<section id="id6">
+<h5>Description:<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h5>
+<p>Register a new Dataset for the specified Project.</p>
+</section>
+<section id="id7">
+<h5>Parameters<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>projectId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>body</td>
+<td>body</td>
+<td></td>
+<td>Yes</td>
+<td>object</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id8">
+<h5>Responses<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimeregisterdatasetresponse">rimeRegisterDatasetResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-registry-model">
+<h3>/v1/registry/model<a class="headerlink" href="#v1-registry-model" title="Permalink to this heading"></a></h3>
+<section id="id9">
+<h4>GET<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h4>
+<section id="id10">
+<h5>Summary:<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h5>
+<p>GetModel</p>
+</section>
+<section id="id11">
+<h5>Description:<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h5>
+<p>Returns information about a registered Model.</p>
+</section>
+<section id="id12">
+<h5>Parameters<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>modelId.uuid</td>
+<td>query</td>
+<td>String value of the object ID.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>modelName</td>
+<td>query</td>
+<td>Unique name of a Model.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id13">
+<h5>Responses<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimegetmodelresponse">rimeGetModelResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-registry-model-modelid-uuid">
+<h3>/v1/registry/model/{modelId.uuid}<a class="headerlink" href="#v1-registry-model-modelid-uuid" title="Permalink to this heading"></a></h3>
+<section id="id14">
+<h4>DELETE<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h4>
+<section id="id15">
+<h5>Summary:<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h5>
+<p>DeleteModel</p>
+</section>
+<section id="id16">
+<h5>Description:<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h5>
+<p>Delete a Model from the Registry.</p>
+</section>
+<section id="id17">
+<h5>Parameters<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>modelId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id18">
+<h5>Responses<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimedeletemodelresponse">rimeDeleteModelResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-registry-model-projectid-uuid">
+<h3>/v1/registry/model/{projectId.uuid}<a class="headerlink" href="#v1-registry-model-projectid-uuid" title="Permalink to this heading"></a></h3>
+<section id="id19">
+<h4>POST<a class="headerlink" href="#id19" title="Permalink to this heading"></a></h4>
+<section id="id20">
+<h5>Summary:<a class="headerlink" href="#id20" title="Permalink to this heading"></a></h5>
+<p>RegisterModel</p>
+</section>
+<section id="id21">
+<h5>Description:<a class="headerlink" href="#id21" title="Permalink to this heading"></a></h5>
+<p>Register a new Model for the specified Project.</p>
+</section>
+<section id="id22">
+<h5>Parameters<a class="headerlink" href="#id22" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>projectId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>body</td>
+<td>body</td>
+<td></td>
+<td>Yes</td>
+<td>object</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id23">
+<h5>Responses<a class="headerlink" href="#id23" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimeregistermodelresponse">rimeRegisterModelResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-registry-prediction-modelid-uuid-datasetid">
+<h3>/v1/registry/prediction/{modelId.uuid}/{datasetId}<a class="headerlink" href="#v1-registry-prediction-modelid-uuid-datasetid" title="Permalink to this heading"></a></h3>
+<section id="id24">
+<h4>GET<a class="headerlink" href="#id24" title="Permalink to this heading"></a></h4>
+<section id="id25">
+<h5>Summary:<a class="headerlink" href="#id25" title="Permalink to this heading"></a></h5>
+<p>GetPredictionSet</p>
+</section>
+<section id="id26">
+<h5>Description:<a class="headerlink" href="#id26" title="Permalink to this heading"></a></h5>
+<p>Returns information about a registered Prediction set.</p>
+</section>
+<section id="id27">
+<h5>Parameters<a class="headerlink" href="#id27" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>modelId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>datasetId</td>
+<td>path</td>
+<td>Uniquely specifies a Dataset.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id28">
+<h5>Responses<a class="headerlink" href="#id28" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimegetpredictionsetresponse">rimeGetPredictionSetResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="id29">
+<h4>DELETE<a class="headerlink" href="#id29" title="Permalink to this heading"></a></h4>
+<section id="id30">
+<h5>Summary:<a class="headerlink" href="#id30" title="Permalink to this heading"></a></h5>
+<p>DeletePredictionSet</p>
+</section>
+<section id="id31">
+<h5>Description:<a class="headerlink" href="#id31" title="Permalink to this heading"></a></h5>
+<p>Delete the Prediction set corresponding to a specified Model and Dataset.</p>
+</section>
+<section id="id32">
+<h5>Parameters<a class="headerlink" href="#id32" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>modelId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>datasetId</td>
+<td>path</td>
+<td>Uniquely specifies a Dataset.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id33">
+<h5>Responses<a class="headerlink" href="#id33" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimedeletepredictionsetresponse">rimeDeletePredictionSetResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-registry-prediction-projectid-uuid-modelid-uuid-datasetid">
+<h3>/v1/registry/prediction/{projectId.uuid}/{modelId.uuid}/{datasetId}<a class="headerlink" href="#v1-registry-prediction-projectid-uuid-modelid-uuid-datasetid" title="Permalink to this heading"></a></h3>
+<section id="id34">
+<h4>POST<a class="headerlink" href="#id34" title="Permalink to this heading"></a></h4>
+<section id="id35">
+<h5>Summary:<a class="headerlink" href="#id35" title="Permalink to this heading"></a></h5>
+<p>RegisterPredictionSet</p>
+</section>
+<section id="id36">
+<h5>Description:<a class="headerlink" href="#id36" title="Permalink to this heading"></a></h5>
+<p>Register a Prediction set corresponding to a specified Model and Dataset.</p>
+</section>
+<section id="id37">
+<h5>Parameters<a class="headerlink" href="#id37" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>projectId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>modelId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>datasetId</td>
+<td>path</td>
+<td>Uniquely specifies a Dataset.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>body</td>
+<td>body</td>
+<td></td>
+<td>Yes</td>
+<td>object</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id38">
+<h5>Responses<a class="headerlink" href="#id38" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimeregisterpredictionsetresponse">rimeRegisterPredictionSetResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-registry-projectid-uuid-dataset">
+<h3>/v1/registry/{projectId.uuid}/dataset<a class="headerlink" href="#v1-registry-projectid-uuid-dataset" title="Permalink to this heading"></a></h3>
+<section id="id39">
+<h4>GET<a class="headerlink" href="#id39" title="Permalink to this heading"></a></h4>
+<section id="id40">
+<h5>Summary:<a class="headerlink" href="#id40" title="Permalink to this heading"></a></h5>
+<p>ListDatasets</p>
+</section>
+<section id="id41">
+<h5>Description:<a class="headerlink" href="#id41" title="Permalink to this heading"></a></h5>
+<p>List all Datasets in the Registry with optional filters.</p>
+</section>
+<section id="id42">
+<h5>Parameters<a class="headerlink" href="#id42" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>projectId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>firstPageReq.firewallId</td>
+<td>query</td>
+<td>Uniquely specifies a Firewall.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>firstPageReq.scheduledCtIntervals.startTime</td>
+<td>query</td>
+<td></td>
+<td>No</td>
+<td>dateTime</td>
+</tr>
+<tr>
+<td>firstPageReq.scheduledCtIntervals.endTime</td>
+<td>query</td>
+<td></td>
+<td>No</td>
+<td>dateTime</td>
+</tr>
+<tr>
+<td>pageToken</td>
+<td>query</td>
+<td>Specifies a page of the list returned by a ListDatasets query. The ListDatasets query returns a pageToken when there is more than one page of results. Specify either this field or the firstPageReq field.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>query</td>
+<td>The maximum number of Dataset objects to return in a single page.</td>
+<td>No</td>
+<td>string (int64)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id43">
+<h5>Responses<a class="headerlink" href="#id43" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimelistdatasetsresponse">rimeListDatasetsResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="id44">
+<h4>POST<a class="headerlink" href="#id44" title="Permalink to this heading"></a></h4>
+<section id="id45">
+<h5>Summary:<a class="headerlink" href="#id45" title="Permalink to this heading"></a></h5>
+<p>RegisterDataset</p>
+</section>
+<section id="id46">
+<h5>Description:<a class="headerlink" href="#id46" title="Permalink to this heading"></a></h5>
+<p>Register a new Dataset for the specified Project.</p>
+</section>
+<section id="id47">
+<h5>Parameters<a class="headerlink" href="#id47" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>projectId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>body</td>
+<td>body</td>
+<td></td>
+<td>Yes</td>
+<td>object</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id48">
+<h5>Responses<a class="headerlink" href="#id48" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimeregisterdatasetresponse">rimeRegisterDatasetResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-registry-projectid-uuid-model">
+<h3>/v1/registry/{projectId.uuid}/model<a class="headerlink" href="#v1-registry-projectid-uuid-model" title="Permalink to this heading"></a></h3>
+<section id="id49">
+<h4>GET<a class="headerlink" href="#id49" title="Permalink to this heading"></a></h4>
+<section id="id50">
+<h5>Summary:<a class="headerlink" href="#id50" title="Permalink to this heading"></a></h5>
+<p>ListModels</p>
+</section>
+<section id="id51">
+<h5>Description:<a class="headerlink" href="#id51" title="Permalink to this heading"></a></h5>
+<p>List all Models in the Registry.</p>
+</section>
+<section id="id52">
+<h5>Parameters<a class="headerlink" href="#id52" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>projectId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>pageToken</td>
+<td>query</td>
+<td>Specifies a page of the list returned by a ListModels query. The ListModels query returns a pageToken when there is more than one page of results. Specify either this field or the firstPageReq field.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>query</td>
+<td>The maximum number of Model objects to return in a single page.</td>
+<td>No</td>
+<td>string (int64)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id53">
+<h5>Responses<a class="headerlink" href="#id53" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimelistmodelsresponse">rimeListModelsResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="id54">
+<h4>POST<a class="headerlink" href="#id54" title="Permalink to this heading"></a></h4>
+<section id="id55">
+<h5>Summary:<a class="headerlink" href="#id55" title="Permalink to this heading"></a></h5>
+<p>RegisterModel</p>
+</section>
+<section id="id56">
+<h5>Description:<a class="headerlink" href="#id56" title="Permalink to this heading"></a></h5>
+<p>Register a new Model for the specified Project.</p>
+</section>
+<section id="id57">
+<h5>Parameters<a class="headerlink" href="#id57" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>projectId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>body</td>
+<td>body</td>
+<td></td>
+<td>Yes</td>
+<td>object</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id58">
+<h5>Responses<a class="headerlink" href="#id58" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimeregistermodelresponse">rimeRegisterModelResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-registry-projectid-uuid-prediction">
+<h3>/v1/registry/{projectId.uuid}/prediction<a class="headerlink" href="#v1-registry-projectid-uuid-prediction" title="Permalink to this heading"></a></h3>
+<section id="id59">
+<h4>GET<a class="headerlink" href="#id59" title="Permalink to this heading"></a></h4>
+<section id="id60">
+<h5>Summary:<a class="headerlink" href="#id60" title="Permalink to this heading"></a></h5>
+<p>ListPredictionSet</p>
+</section>
+<section id="id61">
+<h5>Description:<a class="headerlink" href="#id61" title="Permalink to this heading"></a></h5>
+<p>List all Prediction sets in the Registry with optional filters.</p>
+</section>
+<section id="id62">
+<h5>Parameters<a class="headerlink" href="#id62" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>projectId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>firstPageReq.modelId</td>
+<td>query</td>
+<td>Uniquely specifies a Model.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>firstPageReq.datasetId</td>
+<td>query</td>
+<td>Uniquely specifies a Dataset.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>pageToken</td>
+<td>query</td>
+<td>Specifies a page of the list returned by a ListPredictions query. The ListPredictions query returns a pageToken when there is more than one page of results. Specify either this field or the firstPageReq field.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>query</td>
+<td>The maximum number of Prediction objects to return in a single page.</td>
+<td>No</td>
+<td>string (int64)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id63">
+<h5>Responses<a class="headerlink" href="#id63" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimelistpredictionsresponse">rimeListPredictionsResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-registry-projectid-uuid-prediction-modelid-uuid-datasetid">
+<h3>/v1/registry/{projectId.uuid}/prediction/{modelId.uuid}/{datasetId}<a class="headerlink" href="#v1-registry-projectid-uuid-prediction-modelid-uuid-datasetid" title="Permalink to this heading"></a></h3>
+<section id="id64">
+<h4>POST<a class="headerlink" href="#id64" title="Permalink to this heading"></a></h4>
+<section id="id65">
+<h5>Summary:<a class="headerlink" href="#id65" title="Permalink to this heading"></a></h5>
+<p>RegisterPredictionSet</p>
+</section>
+<section id="id66">
+<h5>Description:<a class="headerlink" href="#id66" title="Permalink to this heading"></a></h5>
+<p>Register a Prediction set corresponding to a specified Model and Dataset.</p>
+</section>
+<section id="id67">
+<h5>Parameters<a class="headerlink" href="#id67" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>projectId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>modelId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>datasetId</td>
+<td>path</td>
+<td>Uniquely specifies a Dataset.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>body</td>
+<td>body</td>
+<td></td>
+<td>Yes</td>
+<td>object</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id68">
+<h5>Responses<a class="headerlink" href="#id68" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimeregisterpredictionsetresponse">rimeRegisterPredictionSetResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="models">
+<h3>Models<a class="headerlink" href="#models" title="Permalink to this heading"></a></h3>
+<section id="datainfoparamsfeatureintersection">
+<h4>DataInfoParamsFeatureIntersection<a class="headerlink" href="#datainfoparamsfeatureintersection" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>features</td>
+<td>[ string ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="datainfoparamsrankinginfo">
+<h4>DataInfoParamsRankingInfo<a class="headerlink" href="#datainfoparamsrankinginfo" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>queryCol</td>
+<td>string</td>
+<td>Name of column in dataset that contains the query ids.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>nqueries</td>
+<td>string (int64)</td>
+<td>Number of queries to consider. If null, will use all queries.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>nrowsPerQuery</td>
+<td>string (int64)</td>
+<td>Number of rows to use per query. If null, will use all rows.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>dropQueryId</td>
+<td>boolean</td>
+<td>Whether to drop the query ID column from the dataset to avoid  passing as a feature to the model.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="listdatasetsrequestdatasetsquery">
+<h4>ListDatasetsRequestDatasetsQuery<a class="headerlink" href="#listdatasetsrequestdatasetsquery" title="Permalink to this heading"></a></h4>
+<p>DatasetsQuery is used to filter all datasets within
+a specified time range and firewall ID.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>firewallId</td>
+<td>string</td>
+<td>Uniquely specifies a Firewall.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>scheduledCtIntervals</td>
+<td><a href="#rimetimeinterval">rimeTimeInterval</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="listmodelsrequestmodelquery">
+<h4>ListModelsRequestModelQuery<a class="headerlink" href="#listmodelsrequestmodelquery" title="Permalink to this heading"></a></h4>
+<p>Placeholder query message to avoid potential breaking
+changes in the future. We want to make sure this
+message exists to setup the proper pagination format.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ListModelsRequestModelQuery</td>
+<td>object</td>
+<td>Placeholder query message to avoid potential breaking  changes in the future. We want to make sure this message exists to setup the proper pagination format.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="listpredictionsrequestpredictionquery">
+<h4>ListPredictionsRequestPredictionQuery<a class="headerlink" href="#listpredictionsrequestpredictionquery" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>modelId</td>
+<td>string</td>
+<td>Uniquely specifies a Model.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>datasetId</td>
+<td>string</td>
+<td>Uniquely specifies a Dataset.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="datasetctinfo">
+<h4>datasetCTInfo<a class="headerlink" href="#datasetctinfo" title="Permalink to this heading"></a></h4>
+<p>CTInfo represents information about the dataset and its use in CT runs.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>firewallId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>firewall_id is the firewall this dataset is associated with.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>startTime</td>
+<td>dateTime</td>
+<td>start and end time are the start and end time of this dataset. this should is used by scheduled ct when registering new datasets.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>endTime</td>
+<td>dateTime</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="datasetdataset">
+<h4>datasetDataset<a class="headerlink" href="#datasetdataset" title="Permalink to this heading"></a></h4>
+<p>Dataset represents a full entry in the Data Registry, with
+info, metadata, and tags used to identify the data both internally
+and to an external user.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name and dataset_id are both enforced to be unique. Name is user specified. dataset_id is internally generated. It is semantically determined as firewall_id#start_time#end_time in the case the CTInfo is provided.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>datasetId</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>projectIds</td>
+<td>[ <a href="#rimeuuid">rimeUUID</a> ]</td>
+<td>For now, a dataset will only have one project_id associated with it. We make this an array to allow dataset's to be shared in the future.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>creatorId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>creator and created_time of the model will be automatically populated.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>creationTime</td>
+<td>dateTime</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>userMetadata</td>
+<td><a href="#schemaregistrymetadata">schemaregistryMetadata</a></td>
+<td>User defined metadata such as searchable tags + extra information.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>integrationId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>Information about where the data is stored and how to access said data. IntegrationID is the name of the integration used to identify  where the data resides. DataInfo defines more granular information about how to access the data and its properties.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>dataInfo</td>
+<td><a href="#testrunsingledatainfo">testrunSingleDataInfo</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>ctInfo</td>
+<td><a href="#datasetctinfo">datasetCTInfo</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="googlerpcstatus">
+<h4>googlerpcStatus<a class="headerlink" href="#googlerpcstatus" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>code</td>
+<td>integer</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>message</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>details</td>
+<td>[ <a href="#protobufany">protobufAny</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="modelhuggingfacemodelinfo">
+<h4>modelHuggingFaceModelInfo<a class="headerlink" href="#modelhuggingfacemodelinfo" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>modelUri</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>kwargs</td>
+<td>string</td>
+<td>We are currently in the process of adding extra  huggingface params and separating use cases into tabular and nlp. Use a serialized json dictionary for other variables right now to ensure maximum flexibility.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="modelmodel">
+<h4>modelModel<a class="headerlink" href="#modelmodel" title="Permalink to this heading"></a></h4>
+<p>Model represents a full entry in the Model Registry, with
+info, metadata, and tags used to identify the model both internally
+and to an external user.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name and model_id are both enforced to be unique. Name is user specified. Model_id is internally generated.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>modelId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>projectIds</td>
+<td>[ <a href="#rimeuuid">rimeUUID</a> ]</td>
+<td>For now, a model will only have one project_id associated with it. We make this an array to allow model's to be shared in the future.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>creatorId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>creator and created_time of the model will be automatically populated.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>creationTime</td>
+<td>dateTime</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>externalId</td>
+<td>string</td>
+<td>external_id is an optional way for a user to identify the model  with their own Model IDs.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>userMetadata</td>
+<td><a href="#schemaregistrymetadata">schemaregistryMetadata</a></td>
+<td>User defined metadata such as searchable tags + extra information.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>modelInfo</td>
+<td><a href="#modelmodelinfo">modelModelInfo</a></td>
+<td>Information about how the model is stored, and how to retrieve it. Used by the rime-engine to load the model. If no info is specified, this field is empty.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="modelmodelinfo">
+<h4>modelModelInfo<a class="headerlink" href="#modelmodelinfo" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>modelPath</td>
+<td><a href="#modelmodelpathinfo">modelModelPathInfo</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>huggingFace</td>
+<td><a href="#modelhuggingfacemodelinfo">modelHuggingFaceModelInfo</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="modelmodelpathinfo">
+<h4>modelModelPathInfo<a class="headerlink" href="#modelmodelpathinfo" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>path</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="projectownerdetails">
+<h4>projectOwnerDetails<a class="headerlink" href="#projectownerdetails" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>email</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="protobufany">
+<h4>protobufAny<a class="headerlink" href="#protobufany" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@type</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="registrypredictionprediction">
+<h4>registrypredictionPrediction<a class="headerlink" href="#registrypredictionprediction" title="Permalink to this heading"></a></h4>
+<p>Prediction represents a full entry in the Predictions Registry, with
+info, metadata, and tags used to identify the predictions both internally
+and to an external user.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>datasetId</td>
+<td>string</td>
+<td>The dataset_id and model_id are used to uniquely identify a prediction. These must be provided by the user.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>modelId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>projectIds</td>
+<td>[ <a href="#rimeuuid">rimeUUID</a> ]</td>
+<td>For now, a pred will only have one project_id associated with it. We make this an array to allow pred's to be shared in the future.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>creatorId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>creator and created_time of the model will be automatically populated.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>creationTime</td>
+<td>dateTime</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>userMetadata</td>
+<td><a href="#schemaregistrymetadata">schemaregistryMetadata</a></td>
+<td>User defined metadata such as searchable tags + extra information.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>integrationId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>Information about where the predictions are stored and how to access said predictions. IntegrationID is the name of the integration specifying where the preds resides. PredInfo defines more granular information about how to access the preds and its properties.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>predInfo</td>
+<td><a href="#testrunpredinfo">testrunPredInfo</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimedeletedatasetresponse">
+<h4>rimeDeleteDatasetResponse<a class="headerlink" href="#rimedeletedatasetresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeDeleteDatasetResponse</td>
+<td>object</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimedeletemodelresponse">
+<h4>rimeDeleteModelResponse<a class="headerlink" href="#rimedeletemodelresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeDeleteModelResponse</td>
+<td>object</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimedeletepredictionsetresponse">
+<h4>rimeDeletePredictionSetResponse<a class="headerlink" href="#rimedeletepredictionsetresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeDeletePredictionSetResponse</td>
+<td>object</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimegetdatasetresponse">
+<h4>rimeGetDatasetResponse<a class="headerlink" href="#rimegetdatasetresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dataset</td>
+<td><a href="#datasetdataset">datasetDataset</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimegetmodelresponse">
+<h4>rimeGetModelResponse<a class="headerlink" href="#rimegetmodelresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>model</td>
+<td><a href="#rimemodelwithownerdetails">rimeModelWithOwnerDetails</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimegetpredictionsetresponse">
+<h4>rimeGetPredictionSetResponse<a class="headerlink" href="#rimegetpredictionsetresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>prediction</td>
+<td><a href="#registrypredictionprediction">registrypredictionPrediction</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimelistdatasetsresponse">
+<h4>rimeListDatasetsResponse<a class="headerlink" href="#rimelistdatasetsresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>datasets</td>
+<td>[ <a href="#datasetdataset">datasetDataset</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>nextPageToken</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>hasMore</td>
+<td>boolean</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimelistmodelsresponse">
+<h4>rimeListModelsResponse<a class="headerlink" href="#rimelistmodelsresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>models</td>
+<td>[ <a href="#rimemodelwithownerdetails">rimeModelWithOwnerDetails</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>nextPageToken</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>hasMore</td>
+<td>boolean</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimelistpredictionsresponse">
+<h4>rimeListPredictionsResponse<a class="headerlink" href="#rimelistpredictionsresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>predictions</td>
+<td>[ <a href="#registrypredictionprediction">registrypredictionPrediction</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>nextPageToken</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>hasMore</td>
+<td>boolean</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimemodelwithownerdetails">
+<h4>rimeModelWithOwnerDetails<a class="headerlink" href="#rimemodelwithownerdetails" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>model</td>
+<td><a href="#modelmodel">modelModel</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>ownerDetails</td>
+<td><a href="#projectownerdetails">projectOwnerDetails</a></td>
+<td>Information about the owner of the Project.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeregisterdatasetresponse">
+<h4>rimeRegisterDatasetResponse<a class="headerlink" href="#rimeregisterdatasetresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>datasetId</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeregistermodelresponse">
+<h4>rimeRegisterModelResponse<a class="headerlink" href="#rimeregistermodelresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>modelId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeregisterpredictionsetresponse">
+<h4>rimeRegisterPredictionSetResponse<a class="headerlink" href="#rimeregisterpredictionsetresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeRegisterPredictionSetResponse</td>
+<td>object</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimetimeinterval">
+<h4>rimeTimeInterval<a class="headerlink" href="#rimetimeinterval" title="Permalink to this heading"></a></h4>
+<p>TimeInterval describes a time interval.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>startTime</td>
+<td>dateTime</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>endTime</td>
+<td>dateTime</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeuuid">
+<h4>rimeUUID<a class="headerlink" href="#rimeuuid" title="Permalink to this heading"></a></h4>
+<p>Unique ID of an object in RIME.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uuid</td>
+<td>string</td>
+<td>String value of the object ID.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="schemaregistrymetadata">
+<h4>schemaregistryMetadata<a class="headerlink" href="#schemaregistrymetadata" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tags</td>
+<td>[ string ]</td>
+<td>Tags are optional single strings used to identify and organize across a project.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>extraInfo</td>
+<td>string</td>
+<td>Metadata are optional json encoded information that users wish to associate.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunconnectioninfo">
+<h4>testrunConnectionInfo<a class="headerlink" href="#testrunconnectioninfo" title="Permalink to this heading"></a></h4>
+<p>ConnectionInfo specifies how to connect to a data source.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dataFile</td>
+<td><a href="#testrundatafileinfo">testrunDataFileInfo</a></td>
+<td>DataFileInfo provides the information needed to load a data file.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>dataLoading</td>
+<td><a href="#testrundataloadinginfo">testrunDataLoadingInfo</a></td>
+<td>DataLoadingInfo provides the information needed to load a data file with extra parameters.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>dataCollector</td>
+<td><a href="#testrundatacollectorinfo">testrunDataCollectorInfo</a></td>
+<td>DataCollectorInfo provides the information needed to load a data stream from a data collector.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>deltaLake</td>
+<td><a href="#testrundeltalakeinfo">testrunDeltaLakeInfo</a></td>
+<td>DeltaLakeInfo provides the information needed to load a Delta Lake table.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>huggingFace</td>
+<td><a href="#testrunhuggingfacedatainfo">testrunHuggingFaceDataInfo</a></td>
+<td>HuggingFaceDataInfo provides the information needed to load a HuggingFace dataset.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrundatacollectorinfo">
+<h4>testrunDataCollectorInfo<a class="headerlink" href="#testrundatacollectorinfo" title="Permalink to this heading"></a></h4>
+<p>DataCollectorInfo provides the information needed to load a data stream from
+a data collector.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dataStreamId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>Uniquely specifies a data stream.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>startTime</td>
+<td>string (int64)</td>
+<td>The start time in seconds.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>endTime</td>
+<td>string (int64)</td>
+<td>The end time in seconds.</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrundatafileinfo">
+<h4>testrunDataFileInfo<a class="headerlink" href="#testrundatafileinfo" title="Permalink to this heading"></a></h4>
+<p>DataFileInfo specifies how to connect to a data file.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>path</td>
+<td>string</td>
+<td>The path to the data file.</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrundatainfoparams">
+<h4>testrunDataInfoParams<a class="headerlink" href="#testrundatainfoparams" title="Permalink to this heading"></a></h4>
+<p>DataInfoParams specifies the parameters for a dataset.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>labelCol</td>
+<td>string</td>
+<td>Naming of special columns.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>predCol</td>
+<td>string</td>
+<td>Column to look at for predictions.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>timestampCol</td>
+<td>string</td>
+<td>Column to look at for CT timestamp.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>classNames</td>
+<td>[ string ]</td>
+<td>List of label class names.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>rankingInfo</td>
+<td><a href="#datainfoparamsrankinginfo">DataInfoParamsRankingInfo</a></td>
+<td>Params relevant for ranking model task.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>nrows</td>
+<td>string (int64)</td>
+<td>Dataset size parameters. Number of rows of data to load and test. If null, will load all rows.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>nrowsPerTimeBin</td>
+<td>string (int64)</td>
+<td>Number of rows of data per time bin to load and test in CT. If null,  will load all rows.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>sample</td>
+<td>boolean</td>
+<td>Whether to sample rows in the data. Default is True.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>categoricalFeatures</td>
+<td>[ string ]</td>
+<td>Feature types and relations.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>protectedFeatures</td>
+<td>[ string ]</td>
+<td>Features that are protected attributes. If Bias and Fairness category is specified, these tests will run only over protected_features.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>featuresNotInModel</td>
+<td>[ string ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>textFeatures</td>
+<td>[ string ]</td>
+<td>Text features to run NLP tests over.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>imageFeatures</td>
+<td>[ string ]</td>
+<td>Image features to run CV tests over.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>intersections</td>
+<td>[ <a href="#datainfoparamsfeatureintersection">DataInfoParamsFeatureIntersection</a> ]</td>
+<td>A list of arrays of features. Each array represents the intersection of features on which certain subset and fairness tests are run.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>loadingKwargs</td>
+<td>string</td>
+<td>Paths for external resources. Keyword arguments to be passed to the pandas loading function (either pd.read_CSV or pd.read_Parquet, depending on your data format). NOTE: if you wish to specify nrows, this should NOT be done with kwargs.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>featureTypePath</td>
+<td>string</td>
+<td>Path to a CSV file that specifies the data type of each feature.  The file should have two columns: FeatureName and FeatureType.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>predPath</td>
+<td>string</td>
+<td>Path to a CSV file or Parquet file containing the predictions.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>imageLoadPath</td>
+<td>string</td>
+<td>Path to a CSV file that contains images to load for image_features.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrundataloadinginfo">
+<h4>testrunDataLoadingInfo<a class="headerlink" href="#testrundataloadinginfo" title="Permalink to this heading"></a></h4>
+<p>DataLoadingInfo provides the information needed to load a data file with
+extra parameters and loading function.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>path</td>
+<td>string</td>
+<td>The path to the data file.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>loadFuncName</td>
+<td>string</td>
+<td>The name of the function that loads the data.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>loaderKwargsJson</td>
+<td>string</td>
+<td>This is a JSON-serialized string from a map.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrundeltalakeinfo">
+<h4>testrunDeltaLakeInfo<a class="headerlink" href="#testrundeltalakeinfo" title="Permalink to this heading"></a></h4>
+<p>DeltaLakeInfo provides the information needed to load a Delta Lake table.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tableName</td>
+<td>string</td>
+<td>The database table name to use.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>startTime</td>
+<td>string (int64)</td>
+<td>The start time in seconds.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>endTime</td>
+<td>string (int64)</td>
+<td>The end time in seconds.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>timeCol</td>
+<td>string</td>
+<td>The column name that contains the timestamp of the last update.</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunhuggingfacedatainfo">
+<h4>testrunHuggingFaceDataInfo<a class="headerlink" href="#testrunhuggingfacedatainfo" title="Permalink to this heading"></a></h4>
+<p>HuggingFaceDataInfo provides the information needed to load a HuggingFace
+dataset.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>datasetUri</td>
+<td>string</td>
+<td>The unique identifier of the dataset.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>splitName</td>
+<td>string</td>
+<td>The string that represents the name of a predefined subset of data.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>loadingParamsJson</td>
+<td>string</td>
+<td>This is a JSON-serialized string from a map.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunpredinfo">
+<h4>testrunPredInfo<a class="headerlink" href="#testrunpredinfo" title="Permalink to this heading"></a></h4>
+<p>PredInfo specifies the information needed for a prediction set.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>connectionInfo</td>
+<td><a href="#testrunconnectioninfo">testrunConnectionInfo</a></td>
+<td>The connection information for the prediction set.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>predParams</td>
+<td><a href="#testrunpredictionparams">testrunPredictionParams</a></td>
+<td>The parameters for the prediction set.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunpredictionparams">
+<h4>testrunPredictionParams<a class="headerlink" href="#testrunpredictionparams" title="Permalink to this heading"></a></h4>
+<p>PredictionParams specifies how to make predictions.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>predCol</td>
+<td>string</td>
+<td>Column used for predictions.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunsingledatainfo">
+<h4>testrunSingleDataInfo<a class="headerlink" href="#testrunsingledatainfo" title="Permalink to this heading"></a></h4>
+<p>SingleDataInfo specifies the information needed for a dataset.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>connectionInfo</td>
+<td><a href="#testrunconnectioninfo">testrunConnectionInfo</a></td>
+<td>The connection information for the dataset.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>dataParams</td>
+<td><a href="#testrundatainfoparams">testrunDataInfoParams</a></td>
+<td>The parameters for the dataset.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table></section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../project/project.swagger.html" class="btn btn-neutral float-left" title="ri/api/project/project.proto" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../resultsynthesizer/result_message.swagger.html" class="btn btn-neutral float-right" title="ri/api/resultsynthesizer/result_message.proto" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

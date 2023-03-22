@@ -106,9 +106,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/mcloudinst.html">Managed Cloud</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/shostedinst.html">Self-Hosted</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">SDK reference</span></p>
+<p class="caption" role="heading"><span class="caption-text">REST API and SDK reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../python_library/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_api/rest-api.html">RI REST API</a></li>
 </ul>
 
         </div>
@@ -142,7 +143,7 @@
 vulnerability.</p>
 <section id="creating-a-new-continuous-test-from-the-sdk">
 <h2>Creating a new Continuous Test from the SDK<a class="headerlink" href="#creating-a-new-continuous-test-from-the-sdk" title="Permalink to this heading"></a></h2>
-<p>This procedure presumes a model is already loaded into RIME and that all commands are issued in a Python environment.</p>
+<p>This procedure presumes a model is already <a class="reference internal" href="../../../python_library/how_to_guides/rime_data_model_setup.html"><span class="doc std std-doc">loaded</span></a> into RIME and that all commands are issued in a Python environment.</p>
 <ol class="arabic">
 <li><p>(When a suitable <a class="reference internal" href="projects.html"><span class="doc std std-doc">project</span></a> does not already exist) Create a project
 using the following <a class="reference internal" href="../../../python_library/python-sdk.html"><span class="doc std std-doc">SDK command</span></a>.</p>
@@ -156,13 +157,8 @@ using the following <a class="reference internal" href="../../../python_library/
 </li>
 <li><p>Register a reference dataset.</p>
 <blockquote>
-<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reference_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="n">DATASET_NAME</span><span class="p">,</span>
-    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;data_file&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">FILE_PATH</span><span class="p">}},</span>
-        <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="n">LABEL_COL</span><span class="p">},</span>
-    <span class="p">},</span>
-    <span class="n">integration_id</span><span class="o">=</span><span class="n">INTEGRATION_ID</span><span class="p">,</span>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reference</span> <span class="o">=</span> <span class="n">rime_project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span> 
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="nb">dict</span> 
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -173,8 +169,8 @@ using the following <a class="reference internal" href="../../../python_library/
 </li>
 <li><p>Register an evaluation dataset.</p>
 <blockquote>
-<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">evaluation_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">data_config</span><span class="o">=</span><span class="nb">dict</span>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">evaluation</span> <span class="o">=</span> <span class="n">rime_project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="nb">dict</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -185,7 +181,7 @@ using the following <a class="reference internal" href="../../../python_library/
 </li>
 <li><p>Register a model.</p>
 <blockquote>
-<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">rime_project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;baz&quot;</span>
 <span class="p">)</span>
 </pre></div>
@@ -287,8 +283,7 @@ Continuous Test.</p>
 27. (Optional) Activate the *Predictions (optional)* toggle and enter a connection name, table name, optional timestamp column name, and prediction column name.
 28. Click *Next*.
 
-The wizard closes and the new Continuous Test begins initial processing. -->
-</section>
+The wizard closes and the new Continuous Test begins initial processing. --></section>
 </section>
 
 

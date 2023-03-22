@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ri/api/firewall/firewall.proto &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ri/api/imageregistry/image_registry.proto" href="../imageregistry/image_registry.swagger.html" />
+    <link rel="prev" title="ri/api/fileupload/file_upload.proto" href="../fileupload/file_upload.swagger.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                2.0.0-beta.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/modeltesting.html">RIME model testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/basic_tasks.html">Setting up and testing with RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/adv_tasks.html">Customization and troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/shostedinst.html">Self-Hosted</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REST API and SDK reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../python_library/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../rest-api.html">RI REST API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../agent/agent.swagger.html">ri/api/agent/agent.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datacollector/data_collector.swagger.html">ri/api/datacollector/data_collector.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../detection/detection.swagger.html">ri/api/detection/detection.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../featureflag/feature_flag.swagger.html">ri/api/featureflag/feature_flag.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../filescanning/file_scanning.swagger.html">ri/api/filescanning/file_scanning.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileupload/file_upload.swagger.html">ri/api/fileupload/file_upload.proto</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ri/api/firewall/firewall.proto</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#version-version-not-set">Version: version not set</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#v1-beta-firewall-firewallid-uuid-url">/v1-beta/firewall/{firewallId.uuid}/url</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-firewall">/v1/firewall</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-firewall-firewall-firewallid-uuid">/v1/firewall/{firewall.firewallId.uuid}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-firewall-firewallid-uuid">/v1/firewall/{firewallId.uuid}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#models">Models</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../imageregistry/image_registry.swagger.html">ri/api/imageregistry/image_registry.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../imageregistry/managed_image.swagger.html">ri/api/imageregistry/managed_image.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_manager.swagger.html">ri/api/jobs/job_manager.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_message.swagger.html">ri/api/jobs/job_message.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_reader.swagger.html">ri/api/jobs/job_reader.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modelcard/model_card.swagger.html">ri/api/modelcard/model_card.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modeltesting/model_testing.swagger.html">ri/api/modeltesting/model_testing.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../monitor/monitor.swagger.html">ri/api/monitor/monitor.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notification/notification.swagger.html">ri/api/notification/notification.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project/project.swagger.html">ri/api/project/project.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../registry/registry.swagger.html">ri/api/registry/registry.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resultsynthesizer/result_message.swagger.html">ri/api/resultsynthesizer/result_message.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rimeinfo/rime_info.swagger.html">ri/api/rimeinfo/rime_info.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testrunresults/test_run_results.swagger.html">ri/api/testrunresults/test_run_results.proto</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../rest-api.html">RI REST API</a></li>
+      <li class="breadcrumb-item active">ri/api/firewall/firewall.proto</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/rest_api/firewall/firewall.swagger.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ri-api-firewall-firewall-proto">
+<h1>ri/api/firewall/firewall.proto<a class="headerlink" href="#ri-api-firewall-firewall-proto" title="Permalink to this heading"></a></h1>
+<section id="version-version-not-set">
+<h2>Version: version not set<a class="headerlink" href="#version-version-not-set" title="Permalink to this heading"></a></h2>
+<section id="v1-beta-firewall-firewallid-uuid-url">
+<h3>/v1-beta/firewall/{firewallId.uuid}/url<a class="headerlink" href="#v1-beta-firewall-firewallid-uuid-url" title="Permalink to this heading"></a></h3>
+<section id="get">
+<h4>GET<a class="headerlink" href="#get" title="Permalink to this heading"></a></h4>
+<section id="summary">
+<h5>Summary:<a class="headerlink" href="#summary" title="Permalink to this heading"></a></h5>
+<p>GetURL</p>
+</section>
+<section id="description">
+<h5>Description:<a class="headerlink" href="#description" title="Permalink to this heading"></a></h5>
+<p>Returns the URL for the specified Firewall in the RIME web application.</p>
+</section>
+<section id="parameters">
+<h5>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>firewallId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="responses">
+<h5>Responses<a class="headerlink" href="#responses" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimegeturlresponse">rimeGetURLResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-firewall">
+<h3>/v1/firewall<a class="headerlink" href="#v1-firewall" title="Permalink to this heading"></a></h3>
+<section id="post">
+<h4>POST<a class="headerlink" href="#post" title="Permalink to this heading"></a></h4>
+<section id="id1">
+<h5>Summary:<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h5>
+<p>CreateFirewall</p>
+</section>
+<section id="id2">
+<h5>Description:<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h5>
+<p>Creates a firewall with the required fields.</p>
+</section>
+<section id="id3">
+<h5>Parameters<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td></td>
+<td>Yes</td>
+<td><a href="#rimecreatefirewallrequest">rimeCreateFirewallRequest</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h5>Responses<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimecreatefirewallresponse">rimeCreateFirewallResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-firewall-firewall-firewallid-uuid">
+<h3>/v1/firewall/{firewall.firewallId.uuid}<a class="headerlink" href="#v1-firewall-firewall-firewallid-uuid" title="Permalink to this heading"></a></h3>
+<section id="put">
+<h4>PUT<a class="headerlink" href="#put" title="Permalink to this heading"></a></h4>
+<section id="id5">
+<h5>Summary:<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h5>
+<p>UpdateFirewall</p>
+</section>
+<section id="id6">
+<h5>Description:<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h5>
+<p>Updates a firewall’s editable fields.</p>
+</section>
+<section id="id7">
+<h5>Parameters<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>firewall.firewallId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>body</td>
+<td>body</td>
+<td></td>
+<td>Yes</td>
+<td>object</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id8">
+<h5>Responses<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimeupdatefirewallresponse">rimeUpdateFirewallResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-firewall-firewallid-uuid">
+<h3>/v1/firewall/{firewallId.uuid}<a class="headerlink" href="#v1-firewall-firewallid-uuid" title="Permalink to this heading"></a></h3>
+<section id="id9">
+<h4>GET<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h4>
+<section id="id10">
+<h5>Summary:<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h5>
+<p>GetFirewall</p>
+</section>
+<section id="id11">
+<h5>Description:<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h5>
+<p>Gets the firewall that matches the specified ID.</p>
+</section>
+<section id="id12">
+<h5>Parameters<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>firewallId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id13">
+<h5>Responses<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimegetfirewallresponse">rimeGetFirewallResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="delete">
+<h4>DELETE<a class="headerlink" href="#delete" title="Permalink to this heading"></a></h4>
+<section id="id14">
+<h5>Summary:<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h5>
+<p>DeleteFirewall</p>
+</section>
+<section id="id15">
+<h5>Description:<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h5>
+<p>Deletes the firewall with the specified ID.</p>
+</section>
+<section id="id16">
+<h5>Parameters<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>firewallId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id17">
+<h5>Responses<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimedeletefirewallresponse">rimeDeleteFirewallResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="models">
+<h3>Models<a class="headerlink" href="#models" title="Permalink to this heading"></a></h3>
+<section id="createfirewallrequestscheduledctparameters">
+<h4>CreateFirewallRequestScheduledCTParameters<a class="headerlink" href="#createfirewallrequestscheduledctparameters" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>evalDataLocation</td>
+<td><a href="#firewalldatalocation">firewallDataLocation</a></td>
+<td>Location of the evaluation sets in a scheduled CT.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>evalPredLocation</td>
+<td><a href="#firewalldatalocation">firewallDataLocation</a></td>
+<td>Location of the prediction sets based on the evaluation sets in a scheduled CT.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>rollingWindow</td>
+<td>string</td>
+<td>The reference set updates every time a scheduled CT runs, when the rolling window for that scheduled CT run is not empty.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="datainfoparamsfeatureintersection">
+<h4>DataInfoParamsFeatureIntersection<a class="headerlink" href="#datainfoparamsfeatureintersection" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>features</td>
+<td>[ string ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="datainfoparamsrankinginfo">
+<h4>DataInfoParamsRankingInfo<a class="headerlink" href="#datainfoparamsrankinginfo" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>queryCol</td>
+<td>string</td>
+<td>Name of column in dataset that contains the query ids.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>nqueries</td>
+<td>string (int64)</td>
+<td>Number of queries to consider. If null, will use all queries.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>nrowsPerQuery</td>
+<td>string (int64)</td>
+<td>Number of rows to use per query. If null, will use all rows.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>dropQueryId</td>
+<td>boolean</td>
+<td>Whether to drop the query ID column from the dataset to avoid  passing as a feature to the model.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="firewallcustomloaderlocation">
+<h4>firewallCustomLoaderLocation<a class="headerlink" href="#firewallcustomloaderlocation" title="Permalink to this heading"></a></h4>
+<p>The CustomLoaderLocation variable specifies the arguments that
+define a custom location used as a data source by a scheduled CT.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>path</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>loadFuncName</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>loaderKwargsJson</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="firewalldatacollectorlocation">
+<h4>firewallDataCollectorLocation<a class="headerlink" href="#firewalldatacollectorlocation" title="Permalink to this heading"></a></h4>
+<p>The DataCollectorLocation variable specifies the arguments required by
+a data collector location used as a data source by a scheduled CT.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dataStreamId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="firewalldatalocation">
+<h4>firewallDataLocation<a class="headerlink" href="#firewalldatalocation" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>integrationId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>Defines variables required for location access.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>locationArgs</td>
+<td><a href="#firewalllocationargs">firewallLocationArgs</a></td>
+<td>The LocationArgs variable defines the location of the data source used by a scheduled Continuous Test.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>locationParams</td>
+<td><a href="#firewalllocationparams">firewallLocationParams</a></td>
+<td>The LocationParams variable specifies how to load the data from the location defined in the LocationArgs variable. Data loading varies depending on whether the data is input or prediction data.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="firewalldeltalakelocation">
+<h4>firewallDeltaLakeLocation<a class="headerlink" href="#firewalldeltalakelocation" title="Permalink to this heading"></a></h4>
+<p>The DeltaLakeLocation variable specifies the arguments that define
+a Delta Lake data location used as a data source by a scheduled CT.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tableName</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>timeCol</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="firewallfirewall">
+<h4>firewallFirewall<a class="headerlink" href="#firewallfirewall" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>firewallId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>projectId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>modelId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>binSize</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>refDataId</td>
+<td>string</td>
+<td>The semantic ID of the reference dataset. This should correspond with the primary key in the Dataset Registry.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>scheduledCtInfo</td>
+<td><a href="#firewallscheduledctinfo">firewallScheduledCTInfo</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>riskScores</td>
+<td>[ <a href="#riskscoreriskscore">riskscoreRiskScore</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>testCategorySeverities</td>
+<td>[ <a href="#firewalltestcategoryseverity">firewallTestCategorySeverity</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>latestRunInfo</td>
+<td><a href="#firewalllatestruninfo">firewallLatestRunInfo</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="firewalllatestruninfo">
+<h4>firewallLatestRunInfo<a class="headerlink" href="#firewalllatestruninfo" title="Permalink to this heading"></a></h4>
+<p>LatestRunInfo tracks the latest run bin in the firewall.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bin</td>
+<td><a href="#rimetimeinterval">rimeTimeInterval</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="firewalllocationargs">
+<h4>firewallLocationArgs<a class="headerlink" href="#firewalllocationargs" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dataCollectorLocation</td>
+<td><a href="#firewalldatacollectorlocation">firewallDataCollectorLocation</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>deltaLakeLocation</td>
+<td><a href="#firewalldeltalakelocation">firewallDeltaLakeLocation</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>customLocation</td>
+<td><a href="#firewallcustomloaderlocation">firewallCustomLoaderLocation</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="firewalllocationparams">
+<h4>firewallLocationParams<a class="headerlink" href="#firewalllocationparams" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dataParams</td>
+<td><a href="#testrundatainfoparams">testrunDataInfoParams</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>predParams</td>
+<td><a href="#testrunpredictionparams">testrunPredictionParams</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="firewallscheduledctinfo">
+<h4>firewallScheduledCTInfo<a class="headerlink" href="#firewallscheduledctinfo" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>evalDataLocation</td>
+<td><a href="#firewalldatalocation">firewallDataLocation</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>evalPredLocation</td>
+<td><a href="#firewalldatalocation">firewallDataLocation</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>rollingWindow</td>
+<td>string</td>
+<td>Providing this value overwrites any existing reference data set.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>lastCtScheduled</td>
+<td>dateTime</td>
+<td>Specifies a timestamp based on the end time of the window for each run. The scheduler uses this timestamp to determine job start times and the time bin to use.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>activatedTime</td>
+<td>dateTime</td>
+<td>When the AI Firewall has no bins, this value is used as the start time. Otherwise, the end time of the last bin in the AI Firewall is used as the AI Firewall start time.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>disableScheduledCt</td>
+<td>boolean</td>
+<td>Option for disabling scheduled CT - this should be false by default. This enables users to suspend a scheduled CT while preserving existing settings.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="firewalltestcategoryseverity">
+<h4>firewallTestCategorySeverity<a class="headerlink" href="#firewalltestcategoryseverity" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testCategory</td>
+<td><a href="#testruntestcategorytype">testrunTestCategoryType</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>riskCategoryType</td>
+<td><a href="#riskscoreriskcategorytype">riskscoreRiskCategoryType</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>severity</td>
+<td><a href="#rimeseverity">rimeSeverity</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="googlerpcstatus">
+<h4>googlerpcStatus<a class="headerlink" href="#googlerpcstatus" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>code</td>
+<td>integer</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>message</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>details</td>
+<td>[ <a href="#protobufany">protobufAny</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="protobufany">
+<h4>protobufAny<a class="headerlink" href="#protobufany" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@type</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimecreatefirewallrequest">
+<h4>rimeCreateFirewallRequest<a class="headerlink" href="#rimecreatefirewallrequest" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>projectId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>Uniquely specifies a Project.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>modelId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>Uniquely specifies a Model.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>binSize</td>
+<td>string</td>
+<td>Duration of each bin size of continuous tests.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>refDataId</td>
+<td>string</td>
+<td>Uniquely specifies a reference data set.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>scheduledCtParameters</td>
+<td><a href="#createfirewallrequestscheduledctparameters">CreateFirewallRequestScheduledCTParameters</a></td>
+<td>Parameters for scheduled CT.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimecreatefirewallresponse">
+<h4>rimeCreateFirewallResponse<a class="headerlink" href="#rimecreatefirewallresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>firewallId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimedeletefirewallresponse">
+<h4>rimeDeleteFirewallResponse<a class="headerlink" href="#rimedeletefirewallresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeDeleteFirewallResponse</td>
+<td>object</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimegetfirewallresponse">
+<h4>rimeGetFirewallResponse<a class="headerlink" href="#rimegetfirewallresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>firewall</td>
+<td><a href="#firewallfirewall">firewallFirewall</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimegeturlresponse">
+<h4>rimeGetURLResponse<a class="headerlink" href="#rimegeturlresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>url</td>
+<td><a href="#rimesafeurl">rimeSafeURL</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimesafeurl">
+<h4>rimeSafeURL<a class="headerlink" href="#rimesafeurl" title="Permalink to this heading"></a></h4>
+<p>SafeURL represents a URL that has been safely constructed.
+e.g. a user clicking on this link is guaranteed to land on the RIME web app.
+We use this instead of a raw str so that application code can generate
+SafeURL messages in certain ways -&gt; this provides stronger typing than just
+using a string.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>url</td>
+<td>string</td>
+<td>A safely constructed URL.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeseverity">
+<h4>rimeSeverity<a class="headerlink" href="#rimeseverity" title="Permalink to this heading"></a></h4>
+<p>Severity specifies the severity level of an event. Depending on the direction
+of degradation, a metric going below or above a threshold will trigger a
+higher severity level.</p>
+<ul class="simple">
+<li><p>SEVERITY_PASS: Indicates that the specified metric is lower than the low threshold
+in the case where the Monitor is configured to trigger on an increase of a
+metric.</p></li>
+<li><p>SEVERITY_WARNING: Indicates that the specified metric is higher than the low threshold
+but still lower than the high threshold, in the case that a Monitor is
+configured to trigger on an increase of a metric. Warning and Alert
+severity levels will trigger a Degradation event.</p></li>
+<li><p>SEVERITY_ALERT: Indicates that the specified metric is higher than the high threshold
+in the case that the Monitor is configured to trigger on an increase of a
+metric. Warning and Alert severity level will trigger a Degradation event.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeSeverity</td>
+<td>string</td>
+<td>Severity specifies the severity level of an event. Depending on the direction of degradation, a metric going below or above a threshold will trigger a higher severity level.   - SEVERITY_PASS: Indicates that the specified metric is lower than the low threshold in the case where the Monitor is configured to trigger on an increase of a metric.  - SEVERITY_WARNING: Indicates that the specified metric is higher than the low threshold but still lower than the high threshold, in the case that a Monitor is configured to trigger on an increase of a metric. Warning and Alert severity levels will trigger a Degradation event.  - SEVERITY_ALERT: Indicates that the specified metric is higher than the high threshold in the case that the Monitor is configured to trigger on an increase of a metric. Warning and Alert severity level will trigger a Degradation event.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimetimeinterval">
+<h4>rimeTimeInterval<a class="headerlink" href="#rimetimeinterval" title="Permalink to this heading"></a></h4>
+<p>TimeInterval describes a time interval.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>startTime</td>
+<td>dateTime</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>endTime</td>
+<td>dateTime</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeuuid">
+<h4>rimeUUID<a class="headerlink" href="#rimeuuid" title="Permalink to this heading"></a></h4>
+<p>Unique ID of an object in RIME.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uuid</td>
+<td>string</td>
+<td>String value of the object ID.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeupdatefirewallresponse">
+<h4>rimeUpdateFirewallResponse<a class="headerlink" href="#rimeupdatefirewallresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>firewall</td>
+<td><a href="#firewallfirewall">firewallFirewall</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="riskscoreriskcategorytype">
+<h4>riskscoreRiskCategoryType<a class="headerlink" href="#riskscoreriskcategorytype" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>riskscoreRiskCategoryType</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="riskscoreriskscore">
+<h4>riskscoreRiskScore<a class="headerlink" href="#riskscoreriskscore" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td><a href="#riskscoreriskcategorytype">riskscoreRiskCategoryType</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>severity</td>
+<td><a href="#rimeseverity">rimeSeverity</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>score</td>
+<td>double</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrundatainfoparams">
+<h4>testrunDataInfoParams<a class="headerlink" href="#testrundatainfoparams" title="Permalink to this heading"></a></h4>
+<p>DataInfoParams specifies the parameters for a dataset.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>labelCol</td>
+<td>string</td>
+<td>Naming of special columns.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>predCol</td>
+<td>string</td>
+<td>Column to look at for predictions.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>timestampCol</td>
+<td>string</td>
+<td>Column to look at for CT timestamp.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>classNames</td>
+<td>[ string ]</td>
+<td>List of label class names.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>rankingInfo</td>
+<td><a href="#datainfoparamsrankinginfo">DataInfoParamsRankingInfo</a></td>
+<td>Params relevant for ranking model task.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>nrows</td>
+<td>string (int64)</td>
+<td>Dataset size parameters. Number of rows of data to load and test. If null, will load all rows.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>nrowsPerTimeBin</td>
+<td>string (int64)</td>
+<td>Number of rows of data per time bin to load and test in CT. If null,  will load all rows.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>sample</td>
+<td>boolean</td>
+<td>Whether to sample rows in the data. Default is True.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>categoricalFeatures</td>
+<td>[ string ]</td>
+<td>Feature types and relations.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>protectedFeatures</td>
+<td>[ string ]</td>
+<td>Features that are protected attributes. If Bias and Fairness category is specified, these tests will run only over protected_features.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>featuresNotInModel</td>
+<td>[ string ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>textFeatures</td>
+<td>[ string ]</td>
+<td>Text features to run NLP tests over.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>imageFeatures</td>
+<td>[ string ]</td>
+<td>Image features to run CV tests over.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>intersections</td>
+<td>[ <a href="#datainfoparamsfeatureintersection">DataInfoParamsFeatureIntersection</a> ]</td>
+<td>A list of arrays of features. Each array represents the intersection of features on which certain subset and fairness tests are run.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>loadingKwargs</td>
+<td>string</td>
+<td>Paths for external resources. Keyword arguments to be passed to the pandas loading function (either pd.read_CSV or pd.read_Parquet, depending on your data format). NOTE: if you wish to specify nrows, this should NOT be done with kwargs.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>featureTypePath</td>
+<td>string</td>
+<td>Path to a CSV file that specifies the data type of each feature.  The file should have two columns: FeatureName and FeatureType.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>predPath</td>
+<td>string</td>
+<td>Path to a CSV file or Parquet file containing the predictions.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>imageLoadPath</td>
+<td>string</td>
+<td>Path to a CSV file that contains images to load for image_features.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunpredictionparams">
+<h4>testrunPredictionParams<a class="headerlink" href="#testrunpredictionparams" title="Permalink to this heading"></a></h4>
+<p>PredictionParams specifies how to make predictions.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>predCol</td>
+<td>string</td>
+<td>Column used for predictions.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testruntestcategorytype">
+<h4>testrunTestCategoryType<a class="headerlink" href="#testruntestcategorytype" title="Permalink to this heading"></a></h4>
+<p>TestCategoryType contains all the possible values for test categories that
+can be run in RIME.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testrunTestCategoryType</td>
+<td>string</td>
+<td>TestCategoryType contains all the possible values for test categories that can be run in RIME.</td>
+<td></td>
+</tr>
+</tbody>
+</table></section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../fileupload/file_upload.swagger.html" class="btn btn-neutral float-left" title="ri/api/fileupload/file_upload.proto" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../imageregistry/image_registry.swagger.html" class="btn btn-neutral float-right" title="ri/api/imageregistry/image_registry.proto" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

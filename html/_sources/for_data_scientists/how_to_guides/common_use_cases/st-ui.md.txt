@@ -5,31 +5,28 @@ vulnerability.
 
 ## Creating a new Stress Test from the SDK
 
-This procedure presumes a model is already loaded into RIME and that all commands are issued in a Python environment.
+This procedure presumes a model is already [loaded](../../../python_library/how_to_guides/rime_data_model_setup.md) into RIME and that all commands are issued in a Python environment.
 
 1.  (When a suitable [project](projects.md) does not already exist) Create a project 
     using the following [SDK command](../../../python_library/python-sdk.rst).
-
-    >   ```python
+    >   ```
     >   project = rime_client.create_project(
     >       name="project", description="$DESC", model_task='MODEL_TASK_BINARY_CLASSIFICATION'
     >   )
     >   ```
-    
-    >   You can also access an existing project using its project ID:
 
-    >   ```python
-    >   project = rime_client.get_project(MY_PROJECT_ID)
-    >   ```
-
-    >   Replace `$DESC` with a description of the project or modeling TASK_NATURAL_LANGUAGE_INFERENCE
+    >   Replace `$DESC` with a description of the project or modeling application application.
+    >   Valid values for `model_task` include:
+    >   - MODEL_TASK_REGRESSION
+    >   - MODEL_TASK_BINARY_CLASSIFICATION
+    >   - MODEL_TASK_MULTICLASS_CLASSIFICATION
+    >   - MODEL_TASK_NAMED_ENTITY_RECOGNITION
+    >   - MODEL_TASK_RANKING
+    >   - MODEL_TASK_OBJECT_DETECTION
+    >   - MODEL_TASK_NATURAL_LANGUAGE_INFERENCE
     >   - MODEL_TASK_FILL_MASK
-
 2.  Register a reference dataset.
-
-    >   This example registers a dataset from a file.
-
-    >   ```python
+    >   ```
     >   reference_id = project.register_dataset(
     >       name=DATASET_NAME,
     >       data_params={
@@ -39,12 +36,9 @@ This procedure presumes a model is already loaded into RIME and that all command
     >       integration_id=INTEGRATION_ID,
     >   )
     >   ```
-
     >   The SDK returns the ID of the reference dataset.
-
 3.  Register an evaluation dataset.
-
-    >   ``` python
+    >   ```
     >   evaluation_id = project.register_dataset(
     >       name=DATASET_NAME,
     >       data_params={
@@ -56,60 +50,46 @@ This procedure presumes a model is already loaded into RIME and that all command
     >   ```
 
     >   The SDK returns the ID of the evaluation dataset.
-
 4.  Register a model.
-
-    >   This example registers a model from a `model.py` file. The 
-    >   [Specify a Model](../../reference/specify_model.md) section has details on how to format `model.py` files.
-    >   ```python
-    >   model_id = project.register_model_from_path(
-    >           name=MODEL_NAME,
-    >           remote_path=S3_PATH_TO_MODEL_PY
+    >   ```
+    >   model_id = project.register_model(
+    >       name=MODEL_NAME,
+    >       model_config={
+    >           "hugging_face": {
+    >               "model_uri": URI,
+    >               "kwargs": {
+    >                   "tokenizer_uri": TOKENIZER_URI,
+    >                   "class_map": MAP,
+    >                   "ignore_class_names": True,
+    >               },
+    >           }
+    >       },
+    >       tags=[MODEL_TAG],
+    >       metadata={KEY: VALUE},
+    >       external_id=EXTERNAL_ID,
     >   )
     >   ```
 
-    >   This example registers a Hugging Face model.
-
-    >   ```python
-    >          model_id = project.register_model(
-    >              name=MODEL_NAME,
-    >              model_config={
-    >                  "hugging_face": {
-    >                      "model_uri": URI,
-    >                      "kwargs": {
-    >                          "tokenizer_uri": TOKENIZER_URI,
-    >                          "class_map": MAP,
-    >                          "ignore_class_names": True,
-    >                      },
-    >                  }
-    >              },
-    >          )
-    >   ```
-
     >   The SDK returns the model ID.
-
-5.  Create a [test run configuration](../../reference/stress_testing.md) that uses the 
+5.  Create a [test run configuration](../../reference/tabular/tests.md) that uses the 
     registered reference and evaluation datasets and the model, specifying a name and
     model task in addition to the IDs of the datasets and model registered earlier in
     this procedure.
-
-    >   ```python
+    >   ```
     >   config = {
-    >       "data_info": {"ref_dataset_id": reference_id, "eval_dataset_id": evaluation_id},
-    >       "model_id": model_id,
+    >       "data_info": {"ref_dataset_id": "foo", "eval_dataset_id": "bar"},
+    >       "model_id": "model_uuid",
     >       "run_name": "My Stress Test Run",
     >   }
     >   ```
 
     >   You can also [specify predictions](../../reference/data_source) in the test run configuration.
-
 6.  Issue the following command to start the Stress Test, specifying the configuration
     created in the previous step and the unique ID of the project that contains the
     Stress Test.
-
-    >   ```python
+    >   ```
     >   job = client.start_stress_test(
-    >       test_run_config=config, project_id=project.project_id
+    >       test_run_config=config, project_id="123-445-981"
     >   )
     >   ```
 

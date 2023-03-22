@@ -1,0 +1,159 @@
+# ri/api/modelcard/model_card.proto
+## Version: version not set
+
+### /v1-beta/modelcards/projects/{projectId}
+
+#### GET
+##### Summary:
+
+ListModelCards
+
+##### Description:
+
+List Model Cards by Project.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId | path | Uniquely specifies a Project. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeListModelCardsResponse](#rimelistmodelcardsresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1-beta/modelcards/{modelCard.modelCardId.uuid}
+
+#### PUT
+##### Summary:
+
+UpdateModelCard
+
+##### Description:
+
+Update Model Card by ID.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| modelCard.modelCardId.uuid | path | String value of the object ID. | Yes | string |
+| body | body |  | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeUpdateModelCardResponse](#rimeupdatemodelcardresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1-beta/modelcards/{modelCardId.uuid}
+
+#### GET
+##### Summary:
+
+GetModelCard
+
+##### Description:
+
+Get Model Card By ID.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| modelCardId.uuid | path | String value of the object ID. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeGetModelCardResponse](#rimegetmodelcardresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+#### DELETE
+##### Summary:
+
+DeleteModelCard
+
+##### Description:
+
+Delete Model Card.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| modelCardId.uuid | path | String value of the object ID. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeDeleteModelCardResponse](#rimedeletemodelcardresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### Models
+
+
+#### googlerpcStatus
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| code | integer |  | No |
+| message | string |  | No |
+| details | [ [protobufAny](#protobufany) ] |  | No |
+
+#### protobufAny
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| @type | string |  | No |
+
+#### rimeCreateModelCardResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| modelCardId | [rimeUUID](#rimeuuid) |  | No |
+
+#### rimeDeleteModelCardResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| modelCardId | [rimeUUID](#rimeuuid) |  | No |
+
+#### rimeGetModelCardResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| modelCard | [rimeModelCard](#rimemodelcard) |  | No |
+
+#### rimeListModelCardsResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| modelCardMap | object |  | No |
+
+#### rimeModelCard
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| modelCardId | [rimeUUID](#rimeuuid) |  | No |
+| details | string |  | No |
+
+#### rimeUUID
+
+Unique ID of an object in RIME.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| uuid | string | String value of the object ID. | No |
+
+#### rimeUpdateModelCardResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| modelCard | [rimeModelCard](#rimemodelcard) |  | No |

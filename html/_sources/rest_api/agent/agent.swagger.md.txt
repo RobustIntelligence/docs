@@ -1,0 +1,280 @@
+# ri/api/agent/agent.proto
+## Version: version not set
+
+### /v1/agents
+
+#### GET
+##### Summary:
+
+ListAgents
+
+##### Description:
+
+Returns a paginated list of agents.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| pageSize | query | The maximum number of Agent objects to return in a single page. | No | string (int64) |
+| pageToken | query | Specifies a page of the list returned by a ListAgents query. The ListAgents query returns a pageToken when there is more than one page of results. Specify either this field or the firstPageQuery field. | No | string |
+| firstPageQuery.agentStatusTypes | query | Specifies a set of agent status types. The query filters for results that match the specified types.   - AGENT_STATUS_PENDING: Resources have been created for the agent but the agent has not started yet.  - AGENT_STATUS_ACTIVE: Agent can run jobs.  - AGENT_STATUS_UNRESPONSIVE: No agent heartbeat for three minutes.  - AGENT_STATUS_DEACTIVATED: Agent can no longer run jobs and can be deleted. | No | [ string ] |
+| firstPageQuery.agentIds | query | Specifies a set of agent IDs. The query filters for results that match the specified IDs. | No | [ string ] |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeListAgentsResponse](#rimelistagentsresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+#### POST
+##### Summary:
+
+CreateAgent
+
+##### Description:
+
+Creates agent and returns the configuration
+for installing the agent.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| body | body |  | Yes | [rimeCreateAgentRequest](#rimecreateagentrequest) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeCreateAgentResponse](#rimecreateagentresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/agents/deactivate/{agentId.uuid}
+
+#### PUT
+##### Summary:
+
+DeactivateAgent
+
+##### Description:
+
+Deactivates the agent by setting its status to deactivated
+and revoking the agent's API Token. An error is returned if the
+deactivation fails.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| agentId.uuid | path | String value of the object ID. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeDeactivateAgentResponse](#rimedeactivateagentresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/agents/{agentId.uuid}
+
+#### GET
+##### Summary:
+
+GetAgent
+
+##### Description:
+
+Returns the agent that matches the specified ID.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| agentId.uuid | path | String value of the object ID. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeGetAgentResponse](#rimegetagentresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+#### DELETE
+##### Summary:
+
+DeleteAgent
+
+##### Description:
+
+Deletes a specified agent. Must be
+called on an already deactivated agent. An error is returned if the
+deletion fails or if the agent is not in a deletable state.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| agentId.uuid | path | String value of the object ID. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeDeleteAgentResponse](#rimedeleteagentresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### Models
+
+
+#### CreateAgentRequestAWSConfig
+
+Configuration for AWS.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| awsRoleArn | string | AWS ARN of the the role to be attached to the service account of the model test jobs. | No |
+
+#### CreateAgentRequestGCPConfig
+
+Configuration for GCP.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| gcpSaEmail | string | GCP service account email for the role to be attached to the service account of the model test jobs. | No |
+
+#### CreateAgentRequestLocalConfig
+
+Configuration for local machine.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| CreateAgentRequestLocalConfig | object | Configuration for local machine. |  |
+
+#### ListAgentsRequestListAgentsQuery
+
+This query can filter the results by agent status types, such as
+AGENT_STATUS_ACTIVE, and by agent IDs.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| agentStatusTypes | [ [rimeAgentStatus](#rimeagentstatus) ] | Specifies a set of agent status types. The query filters for results that match the specified types. | No |
+| agentIds | [ string ] | Specifies a set of agent IDs. The query filters for results that match the specified IDs. | No |
+
+#### googlerpcStatus
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| code | integer |  | No |
+| message | string |  | No |
+| details | [ [protobufAny](#protobufany) ] |  | No |
+
+#### protobufAny
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| @type | string |  | No |
+
+#### rimeAgent
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| agentId | [rimeUUID](#rimeuuid) | Uniquely specifies an Agent. | No |
+| name | string | The user given name of the agent. | No |
+| creationTime | dateTime | The time of creation of the agent. | No |
+| status | [rimeAgentStatus](#rimeagentstatus) | The status of the agent. | No |
+| internal | boolean | Whether the agent is an internal agent or not. Internal agents come bundled with the deployment. | No |
+
+#### rimeAgentStatus
+
+ - AGENT_STATUS_PENDING: Resources have been created for the agent but
+the agent has not started yet.
+ - AGENT_STATUS_ACTIVE: Agent can run jobs.
+ - AGENT_STATUS_UNRESPONSIVE: No agent heartbeat for three minutes.
+ - AGENT_STATUS_DEACTIVATED: Agent can no longer run jobs and can be deleted.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeAgentStatus | string |  - AGENT_STATUS_PENDING: Resources have been created for the agent but the agent has not started yet.  - AGENT_STATUS_ACTIVE: Agent can run jobs.  - AGENT_STATUS_UNRESPONSIVE: No agent heartbeat for three minutes.  - AGENT_STATUS_DEACTIVATED: Agent can no longer run jobs and can be deleted. |  |
+
+#### rimeCreateAgentRequest
+
+CreateAgentRequest is the request for creating an agent.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| name | string | Agent name given by the user. | No |
+| localConfig | [CreateAgentRequestLocalConfig](#createagentrequestlocalconfig) |  | No |
+| awsConfig | [CreateAgentRequestAWSConfig](#createagentrequestawsconfig) |  | No |
+| gcpConfig | [CreateAgentRequestGCPConfig](#createagentrequestgcpconfig) |  | No |
+
+#### rimeCreateAgentResponse
+
+CreateAgentResponse is the repsonse for creating an agent which contains
+the configuration values for installing the agent.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| config | byte | File that contains configuration values for installing the agent. | No |
+| agentId | [rimeUUID](#rimeuuid) | Uniquely specifies an Agent. | No |
+
+#### rimeDeactivateAgentResponse
+
+DeactivateAgentResponse is the response for DeactivateAgent.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeDeactivateAgentResponse | object | DeactivateAgentResponse is the response for DeactivateAgent. |  |
+
+#### rimeDeleteAgentResponse
+
+DeleteAgentResponse is the response for DeleteAgent.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeDeleteAgentResponse | object | DeleteAgentResponse is the response for DeleteAgent. |  |
+
+#### rimeGetAgentResponse
+
+GetAgentResponse is the response returns a single agent.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| agent | [rimeAgent](#rimeagent) |  | No |
+
+#### rimeHeartbeatResponse
+
+HeartbeatResponse is the response from the server
+that accepted the heartbeat.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeHeartbeatResponse | object | HeartbeatResponse is the response from the server that accepted the heartbeat. |  |
+
+#### rimeListAgentsResponse
+
+ListAgentsResponse returns the list of agent metadata.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| agents | [ [rimeAgent](#rimeagent) ] |  | No |
+| nextPageToken | string | Use this page token in your next ListAgents call to access to the next page of results. | No |
+| hasMore | boolean |  | No |
+
+#### rimeRegisterInternalAgentResponse
+
+RegisterInternalAgentResponse contains the ID of the internal agent according
+to the Agent Management Service.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| agentId | [rimeUUID](#rimeuuid) |  | No |
+
+#### rimeUUID
+
+Unique ID of an object in RIME.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| uuid | string | String value of the object ID. | No |

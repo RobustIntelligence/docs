@@ -1,0 +1,399 @@
+# ri/api/jobs/job_reader.proto
+## Version: version not set
+
+### /v1-beta/jobs
+
+#### GET
+##### Summary:
+
+ListJobs
+
+##### Description:
+
+Returns a paginated list of all jobs. The list can be filtered by job type
+and status.
+
+#### Python pagination example:
+
+```python
+all_objects = []
+# Required for authentication to all methods in the API.
+headers = {"rime-api-key": "INSERT_API_TOKEN"}
+page_token = ""
+# Initialize query parameters in a dictionary
+params = {"INSERT_QUERY_PARAMETER": "INSERT_QUERY_VALUE"}
+# Make requests until all results have been returned.
+while True:
+    # If the page_token from a previous response is not empty, we need to specify this 
+    # token as a parameter to the next request in order to return the next page.
+    if page_token != "":
+        params = {"page_token": page_token}
+    res = requests.get("INSERT_METHOD_URI", params=params, headers=headers)
+    if res.status_code != 200 :
+        raise ValueError(res)
+    res_json = res.json()
+    all_objects.extend(res_json['jobs'])
+    page_token = res_json['nextPageToken']
+    # If all results have been returned, res_json['hasMore'] is false.
+    if not res_json["hasMore"]:
+        break
+```
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| firstPageQuery.selectedStatuses | query | Specifies a set of statuses. The query only returns results with a status in the specified set. Specify no statuses to return all results.   - JOB_STATUS_PENDING: Resources have been created for the job but the job has not started yet.  - JOB_STATUS_FAILED: Blanket status for user or system-related job failure. Check the Termination Reason for details.  - JOB_STATUS_REQUESTED: The job descriptor exists but has no resources allocated. Jobs that remain in this status without moving to the PENDING status are at risk of entering the FAILED status.  - JOB_STATUS_CANCELLED: Job has been cancelled. Cancelled jobs cannot be recovered.  - JOB_STATUS_RECONCILING: Job is being reconciled by the operator. | No | [ string ] |
+| firstPageQuery.selectedTypes | query | Specifies a set of types. The query only returns jobs with types in the specified set. Specify no types to return all results. | No | [ string ] |
+| firstPageQuery.objectId | query | Specifies an object ID. The query only returns results matching the specified object ID. Object IDs vary by job type. For example, stress test jobs have a project ID and continuous incremental test jobs have a firewall ID. | No | string |
+| pageToken | query | Specifies a page of the list returned by a ListJobs query. The ListJobs query returns a pageToken when there is more than one page of results. Specify either this field or the firstPageQuery field. | No | string |
+| pageSize | query | The maximum number of Job objects to return in a single page. | No | string (int64) |
+| view | query | Specifies how much information about each job to retrieve.   - JOB_VIEW_UNSPECIFIED: The default behavior is the Basic view.  - JOB_VIEW_BASIC: Server responses only include basic information about the job, including type, status, and some job data.  - JOB_VIEW_FULL: Server responses include all available information about the job, including progress. Has greater performance requirements than the Basic view. | No | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeListJobsResponse](#rimelistjobsresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1-beta/jobs/cancel/{jobId}
+
+#### POST
+##### Summary:
+
+CancelJob
+
+##### Description:
+
+Cancels the job with the specified ID.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| jobId | path | Unique job ID of job to be cancelled. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeCancelJobResponse](#rimecanceljobresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1-beta/jobs/{jobId}
+
+#### GET
+##### Summary:
+
+GetJob
+
+##### Description:
+
+Get a single job by ID.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| jobId | path | Unique job ID | Yes | string |
+| view | query | Specifies how much information about the job to retrieve.   - JOB_VIEW_UNSPECIFIED: The default behavior is the Basic view.  - JOB_VIEW_BASIC: Server responses only include basic information about the job, including type, status, and some job data.  - JOB_VIEW_FULL: Server responses include all available information about the job, including progress. Has greater performance requirements than the Basic view. | No | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeGetJobResponse](#rimegetjobresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1-beta/jobs/{jobId}/project-id
+
+#### GET
+##### Summary:
+
+GetProjectID
+
+##### Description:
+
+Returns the tireproject ID of the project running the job with the
+specified job ID.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| jobId | path | Unique job ID belonging to the project. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeGetProjectIDResponse](#rimegetprojectidresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1-beta/jobs/{jobId}/test-run-id
+
+#### GET
+##### Summary:
+
+GetTestRunID
+
+##### Description:
+
+Returns a test run ID based on a specified job ID. The job ID must be
+for a completed stress test job.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| jobId | path | Unique job ID associated with the test run. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeGetTestRunIDResponse](#rimegettestrunidresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### Models
+
+
+#### TestRunProgressTestBatchProgress
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| type | string | (test run ID, test batch type) are a unique ID of the test batch. | No |
+| status | [rimeTestTaskStatus](#rimetesttaskstatus) | The status of each test batch is populated by the synthesizer. | No |
+
+#### googlerpcStatus
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| code | integer |  | No |
+| message | string |  | No |
+| details | [ [protobufAny](#protobufany) ] |  | No |
+
+#### protobufAny
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| @type | string |  | No |
+
+#### rimeArchivedJobLogs
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| url | [rimeSafeURL](#rimesafeurl) |  | No |
+| expirationTime | dateTime |  | No |
+
+#### rimeCancelJobResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeCancelJobResponse | object |  |  |
+
+#### rimeContinuousTestJobProgress
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testRuns | [ [rimeContinuousTestRunProgress](#rimecontinuoustestrunprogress) ] |  | No |
+
+#### rimeContinuousTestRunProgress
+
+ContinuousTestRunProgress is a wrapper around TestRunProgress with
+added metadata about the bins.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testRun | [rimeTestRunProgress](#rimetestrunprogress) |  | No |
+| binStartTime | dateTime |  | No |
+| binEndTime | dateTime |  | No |
+
+#### rimeGetJobResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| job | [rimeJobMetadata](#rimejobmetadata) |  | No |
+
+#### rimeGetProjectIDResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| projectId | [rimeUUID](#rimeuuid) |  | No |
+
+#### rimeGetTestRunIDResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testRunId | string |  | No |
+
+#### rimeJobData
+
+Note that progress may not be populated depending on the parameters of the
+request.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| stress | [rimeJobDataStressTest](#rimejobdatastresstest) |  | No |
+| continuousInc | [rimeJobDataContinuousIncrementalTest](#rimejobdatacontinuousincrementaltest) |  | No |
+| fileScan | object |  | No |
+
+#### rimeJobDataContinuousIncrementalTest
+
+A continuous incremental test job runs `n` test runs, where `n` is the
+number of bins specified in the dataset.
+This is a production specific workflow and is used to monitor a model's
+performance over time.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| firewallId | string |  | No |
+| ctTestRunIds | [ string ] |  | No |
+| progress | [rimeContinuousTestJobProgress](#rimecontinuoustestjobprogress) |  | No |
+
+#### rimeJobDataStressTest
+
+A stress test job runs a single test run over a model and dataset.
+This is also known as offline testing; it is run before production
+deployment of the model.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| projectId | [rimeUUID](#rimeuuid) |  | No |
+| testRunId | string |  | No |
+| progress | [rimeStressTestJobProgress](#rimestresstestjobprogress) |  | No |
+
+#### rimeJobMetadata
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| jobId | string | The identifier within our job tracking system. | No |
+| terminationReason | [rimeTerminationReason](#rimeterminationreason) |  | No |
+| jobType | [rimeJobType](#rimejobtype) | The type of the job. | No |
+| status | [statedbJobStatus](#statedbjobstatus) | The job's current status. | No |
+| startTime | dateTime | The start time of the job (when the job transitions in state to RUNNING). Note, this may not be populated immediately when the job is created. | No |
+| creationTime | dateTime | The time the job was created. | No |
+| runningTimeSecs | double | The total running time a job took to complete if the job is finished or the current running time if the job is still in progress (seconds). | No |
+| jobData | [rimeJobData](#rimejobdata) | Job-type specific data. e.g. for stress test jobs, this is populated with the project ID and the test run ID. The type of the job data payload must match the JobType in this message. | No |
+| jobProgressStr | string | Pretty-printed, human-readable representation of job progress. This will only be populated for Read methods with the FULL job view. To get schema for progress for each type of job, see the field inside that job's job data message (e.g. StressTestJobProgress). Note: this is unstable, do not rely on parsing this. | No |
+| cancellationRequested | boolean | Marked when the job has been requested to be cancelled by the user. This is declarative; once the user requests cancellation, the backend will conduct garbage collection on the job in the background and eventually update the status of the job to CANCELLED. | No |
+| agentId | [rimeUUID](#rimeuuid) | agent_id denotes the agent this job is run on. | No |
+| archivedJobLogs | [rimeArchivedJobLogs](#rimearchivedjoblogs) |  | No |
+
+#### rimeJobType
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeJobType | string |  |  |
+
+#### rimeJobView
+
+Based on https://cloud.google.com/apis/design/design_patterns#resource_view.
+
+ - JOB_VIEW_UNSPECIFIED: The default behavior is the Basic view.
+ - JOB_VIEW_BASIC: Server responses only include basic information about the job,
+including type, status, and some job data.
+ - JOB_VIEW_FULL: Server responses include all available information about the job,
+including progress. Has greater performance requirements than the Basic
+view.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeJobView | string | Based on https://cloud.google.com/apis/design/design_patterns#resource_view.   - JOB_VIEW_UNSPECIFIED: The default behavior is the Basic view.  - JOB_VIEW_BASIC: Server responses only include basic information about the job, including type, status, and some job data.  - JOB_VIEW_FULL: Server responses include all available information about the job, including progress. Has greater performance requirements than the Basic view. |  |
+
+#### rimeListJobsRequestQuery
+
+In general, these queries do not apply to specific fields in the job
+data, such as `project_id` for stress tests.
+Job data specific filtering occurs primarily on the client side.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| selectedStatuses | [ [statedbJobStatus](#statedbjobstatus) ] | Specifies a set of statuses. The query only returns results with a status in the specified set. Specify no statuses to return all results. | No |
+| selectedTypes | [ [rimeJobType](#rimejobtype) ] | Specifies a set of types. The query only returns jobs with types in the specified set. Specify no types to return all results. | No |
+| objectId | string | Specifies an object ID. The query only returns results matching the specified object ID. Object IDs vary by job type. For example, stress test jobs have a project ID and continuous incremental test jobs have a firewall ID. | No |
+
+#### rimeListJobsResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| jobs | [ [rimeJobMetadata](#rimejobmetadata) ] |  | No |
+| nextPageToken | string | Use this page token in your next ListJobs call to access the next page of results. | No |
+| hasMore | boolean |  | No |
+
+#### rimeSafeURL
+
+SafeURL represents a URL that has been safely constructed.
+e.g. a user clicking on this link is guaranteed to land on the RIME web app.
+We use this instead of a raw str so that application code can generate
+SafeURL messages in certain ways -> this provides stronger typing than just
+using a string.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| url | string | A safely constructed URL. | No |
+
+#### rimeStressTestJobProgress
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testRun | [rimeTestRunProgress](#rimetestrunprogress) |  | No |
+
+#### rimeTerminationReason
+
+ - TERMINATION_REASON_OOMKILLED: The job was terminated for using more memory than the amount assigned
+to the job.
+ - TERMINATION_REASON_GENERIC_ERROR: This is the catch-all error and is typically used for user errors.
+ - TERMINATION_REASON_INTERNAL_ERROR: Specifies a system error. Contact the support team.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeTerminationReason | string |  - TERMINATION_REASON_OOMKILLED: The job was terminated for using more memory than the amount assigned to the job.  - TERMINATION_REASON_GENERIC_ERROR: This is the catch-all error and is typically used for user errors.  - TERMINATION_REASON_INTERNAL_ERROR: Specifies a system error. Contact the support team. |  |
+
+#### rimeTestRunProgress
+
+TestRunProgress is a shared message for representing the progress of a
+single test run.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testRunId | string |  | No |
+| status | [rimeTestTaskStatus](#rimetesttaskstatus) |  | No |
+| testBatches | [ [TestRunProgressTestBatchProgress](#testrunprogresstestbatchprogress) ] |  | No |
+
+#### rimeTestTaskStatus
+
+Status of individual test units, e.g. test runs, test batches, test cases.
+This is different from job status because these are more abstract.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeTestTaskStatus | string | Status of individual test units, e.g. test runs, test batches, test cases. This is different from job status because these are more abstract. |  |
+
+#### rimeUUID
+
+Unique ID of an object in RIME.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| uuid | string | String value of the object ID. | No |
+
+#### statedbJobStatus
+
+TODO(AIRS-764): redesign as part of Job Monitoring consolidation with 
+StateDB effort.
+
+ - JOB_STATUS_PENDING: Resources have been created for the job but the job has not started yet.
+ - JOB_STATUS_FAILED: Blanket status for user or system-related job failure.
+Check the Termination Reason for details.
+ - JOB_STATUS_REQUESTED: The job descriptor exists but has no resources allocated.
+Jobs that remain in this status without moving to the PENDING status are
+at risk of entering the FAILED status.
+ - JOB_STATUS_CANCELLED: Job has been cancelled.
+Cancelled jobs cannot be recovered.
+ - JOB_STATUS_RECONCILING: Job is being reconciled by the operator.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| statedbJobStatus | string | TODO(AIRS-764): redesign as part of Job Monitoring consolidation with  StateDB effort.   - JOB_STATUS_PENDING: Resources have been created for the job but the job has not started yet.  - JOB_STATUS_FAILED: Blanket status for user or system-related job failure. Check the Termination Reason for details.  - JOB_STATUS_REQUESTED: The job descriptor exists but has no resources allocated. Jobs that remain in this status without moving to the PENDING status are at risk of entering the FAILED status.  - JOB_STATUS_CANCELLED: Job has been cancelled. Cancelled jobs cannot be recovered.  - JOB_STATUS_RECONCILING: Job is being reconciled by the operator. |  |

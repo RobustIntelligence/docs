@@ -1,0 +1,729 @@
+# ri/api/project/project.proto
+## Version: version not set
+
+### /v1/projects
+
+#### GET
+##### Summary:
+
+ListProjects
+
+##### Description:
+
+Returns a paginated list of Projects for a given Workspace ID. 
+Filters out Projects that the user does not have access to.
+The list is sorted by the last test run time field of each Project.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| workspaceId.uuid | query | String value of the object ID. | No | string |
+| pageToken | query | Specifies a page of the list returned by a ListProjects query. The ListProjects query returns a pageToken when there is more than one page of results. Specify either this field or the firstPageQuery field. | No | string |
+| pageSize | query | The maximum number of Project objects to return in a single page. | No | string (int64) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [projectListProjectsResponse](#projectlistprojectsresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+#### POST
+##### Summary:
+
+CreateProject
+
+##### Description:
+
+Creates a Project with required fields.
+Project is an organizational entity under a Workspace that contains 
+Test Runs, Continuous Tests, and Stress Tests, along with their 
+configurations.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| body | body |  | Yes | [projectCreateProjectRequest](#projectcreateprojectrequest) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [projectCreateProjectResponse](#projectcreateprojectresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/projects/{projectId.uuid}
+
+#### GET
+##### Summary:
+
+GetProject
+
+##### Description:
+
+Returns a Project for a given Project ID.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [projectGetProjectResponse](#projectgetprojectresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+#### DELETE
+##### Summary:
+
+DeleteProject
+
+##### Description:
+
+Deletes a Project for a given Project ID.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [projectDeleteProjectResponse](#projectdeleteprojectresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+#### PUT
+##### Summary:
+
+UpdateProject
+
+##### Description:
+
+Updates a Project for a given Project ID.
+Only updates the fields specified in the FieldMask.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+| body | body |  | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [projectUpdateProjectResponse](#projectupdateprojectresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/projects/{projectId.uuid}/role/users
+
+#### GET
+##### Summary:
+
+ListUsersOfProject
+
+##### Description:
+
+Lists the users and their roles of a Project for a given Project ID.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+| pageToken | query | Specifies a page of the list returned by a ListUsersOfProject query. The ListUsersOfProject query returns a pageToken when there is more than one page of results. | No | string |
+| pageSize | query | The maximum number of User objects to return in a single page. | No | string (int64) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [projectListUsersOfProjectResponse](#projectlistusersofprojectresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+#### POST
+##### Summary:
+
+AddUsersToProject
+
+##### Description:
+
+Grants existing Organization users permissions to a Project 
+for a given Project ID, based on the pairs of role and User ID
+provided in the request.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+| body | body |  | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [projectAddUsersToProjectResponse](#projectadduserstoprojectresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/projects/{projectId.uuid}/role/users/{user.userId.uuid}
+
+#### PUT
+##### Summary:
+
+UpdateUserOfProject
+
+##### Description:
+
+Updates the existing permission of a user of a Project given 
+Project ID and User ID.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+| user.userId.uuid | path | String value of the object ID. | Yes | string |
+| body | body |  | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [projectUpdateUserOfProjectResponse](#projectupdateuserofprojectresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/projects/{projectId.uuid}/role/users/{userId.uuid}
+
+#### DELETE
+##### Summary:
+
+RemoveUserFromProject
+
+##### Description:
+
+Removes all existing permissions of a user from a Project given
+Project ID and User ID.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+| userId.uuid | path | String value of the object ID. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [projectRemoveUserFromProjectResponse](#projectremoveuserfromprojectresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/projects/{projectId.uuid}/role/workspace
+
+#### GET
+##### Summary:
+
+GetWorkspaceRoleForProject
+
+##### Description:
+
+Returns the permissions of the Workspace members for a Project given
+Project ID.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [projectGetWorkspaceRolesForProjectResponse](#projectgetworkspacerolesforprojectresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+#### PUT
+##### Summary:
+
+UpdateWorkspaceRoleForProject
+
+##### Description:
+
+Updates the permissions of Workspace members for a Project given
+Project ID.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+| body | body |  | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [projectUpdateWorkspaceRolesForProjectResponse](#projectupdateworkspacerolesforprojectresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/projects/{projectId.uuid}/url
+
+#### GET
+##### Summary:
+
+GetProjectURL
+
+##### Description:
+
+Return the URL of a Project for a given Project ID.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [projectGetProjectURLResponse](#projectgetprojecturlresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### Models
+
+
+#### CustomImagePullSecret
+
+Description of the secret required to pull a custom image.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| name | string | Name of the Kubernetes pull secret that stores the required pull secret for the custom image. | No |
+
+#### DataProfilingColumnTypeInfo
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| minNuniqueForNumeric | string (int64) | Specifies a minimum number of unique values in a column for that column  to count as a numeric column. Columns that do not meet this minimum are considered as categorical columns. | No |
+| numericViolationThreshold | double | Maximum fraction of violations when assigning numeric columns (not including missing values). | No |
+| categoricalViolationThreshold | double | Maximum fraction of violations when assigning categorical subtypes (not including missing values). | No |
+| minUniqueProp | double | When the data has a number of unique values equal to at least the value of the min_unique_prop variable, classify the column as a column that  requires unique values. | No |
+| allowFloatUnique | boolean | Allow float columns to be inferred as unique values. | No |
+| numericRangeInferenceThreshold | double | The percent of non-null values that must fall within an inferrable numeric range ([0,1], [0,inf), (-inf, inf)) in order to be inferred as the valid range for a numeric column. By default, this value is 1.0,  requiring all non-null values to fall within the range for that range to be inferred. For example: if 98% of feature X falls in [0, 1] but 100% of feature X falls in [0, inf) then we'll infer [0, inf) as the valid range for feature X. However, if this threshold is 0.98, we'll instead infer [0, 1] as feature X's range. | No |
+| unseenValuesAllowedCriteria | double | Either the fraction or count of unique values in the reference dataset required to infer that a categorical feature is allowed to have unseen values in the evaluation set. If the criterion is provided as a float in [0.0, 1.0], it will be treated as the fraction of unique non-null values divided by the total number of non-null values required to infer that unseen values are allowed. If provided as an integer in [2, inf), the criterion is treated as the count of non-null unique values required to infer that unseen values are allowed. | No |
+
+#### DataProfilingFeatureRelationshipInfo
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| numFeatsToProfile | string (int64) | Number of features to profile for smart feature sampling. | No |
+| computeFeatureRelationships | boolean | Whether to compute feature relationships. | No |
+| computeNumericFeatureRelationships | boolean | Whether to compute feature relationships for numeric columns. | No |
+| ignoreNanForFeatureRelationships | boolean | Whether to ignore nan values when computing feature relationships. | No |
+
+#### googlerpcStatus
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| code | integer |  | No |
+| message | string |  | No |
+| details | [ [protobufAny](#protobufany) ] |  | No |
+
+#### projectAddUsersToProjectResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| projectAddUsersToProjectResponse | object |  |  |
+
+#### projectCreateProjectRequest
+
+CreateProjectRequest defines a request to create a new Project.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| name | string |  | Yes |
+| description | string |  | Yes |
+| useCase | string |  | No |
+| ethicalConsideration | string |  | No |
+| workspaceId | [rimeUUID](#rimeuuid) | Uniquely specifies the workspace to which the Project belongs. | No |
+| modelTask | [rimeModelTask](#rimemodeltask) | Model Task the Test Runs in the Project are testing. | No |
+| tags | [ string ] | List of tags associated with the Project to help organizing Projects. | No |
+| profilingConfig | [testrunProfilingConfig](#testrunprofilingconfig) | Test run profile configuration for the Project. | No |
+| isPublished | boolean | Published projects are shown on the Workspace overview page. | No |
+
+#### projectCreateProjectResponse
+
+CreateProjectResponse returns a newly created Project.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| project | [projectProject](#projectproject) |  | No |
+
+#### projectDeleteProjectResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| projectDeleteProjectResponse | object |  |  |
+
+#### projectGetProjectResponse
+
+GetProjectResponse returns a project with its owner details.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| project | [projectProjectWithOwnerDetails](#projectprojectwithownerdetails) |  | No |
+
+#### projectGetProjectURLResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| url | [rimeSafeURL](#rimesafeurl) | The URL for the Project. | No |
+
+#### projectGetWorkspaceRolesForProjectResponse
+
+GetWorkspaceRolesForProjectResponse returns a list of role pairs of 
+Workspace user roles and their Project user roles.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| projectId | [rimeUUID](#rimeuuid) | Uniquely specifies a Project. | No |
+| rolePairs | [ [rimeParentRoleSubjectRolePair](#rimeparentrolesubjectrolepair) ] |  | No |
+
+#### projectListProjectsRequestQuery
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| projectListProjectsRequestQuery | object |  |  |
+
+#### projectListProjectsResponse
+
+ListProjectsResponse returns a list of Projects as requested.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| projects | [ [projectProjectWithOwnerDetails](#projectprojectwithownerdetails) ] |  | No |
+| nextPageToken | string | A token representing the next page from the list returned by a ListProjects query. | No |
+| hasMore | boolean | A Boolean that specifies whether there are more Projects to return. | No |
+
+#### projectListUsersOfProjectResponse
+
+ListUsersOfProjectResponse returns a list of users of the Project
+as requested.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| projectId | [rimeUUID](#rimeuuid) |  | No |
+| users | [ [rimeUserDetailWithRole](#rimeuserdetailwithrole) ] |  | No |
+| nextPageToken | string |  | No |
+| hasMore | boolean |  | No |
+
+#### projectOwnerDetails
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| name | string |  | No |
+| email | string |  | No |
+
+#### projectProject
+
+Project collects test runs for a Stress Test or Continous Test that relate 
+to a shared machine learning task. Each model for the task is tested by 
+an individual test run. A Continuous Test monitors a currently promoted model
+over time by continuously testing that model.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| id | [rimeUUID](#rimeuuid) | Uniquely specifies a Project. | No |
+| name | string |  | No |
+| description | string |  | No |
+| useCase | string |  | No |
+| ethicalConsideration | string |  | No |
+| creationTime | dateTime |  | No |
+| ownerId | [rimeUUID](#rimeuuid) | Uniquely specifies the owner of the Project. | No |
+| workspaceId | [rimeUUID](#rimeuuid) | Uniquely specifies the Workspace to which the Project belongs. | No |
+| modelTask | [rimeModelTask](#rimemodeltask) | Model Task the Test Runs in the Project are testing. | No |
+| tags | [ string ] | List of tags associated with the Project to help organizing Projects. | No |
+| firewallIds | [ [rimeUUID](#rimeuuid) ] | List of Firewall IDs that belong to the Project. | No |
+| projectTestSuiteConfig | [testrunTestSuiteConfig](#testruntestsuiteconfig) | Test run configuration for the Project. | No |
+| profilingConfig | [testrunProfilingConfig](#testrunprofilingconfig) | Test run profile configuration for the Project. | No |
+| runTimeInfo | [runtimeinfoRunTimeInfo](#runtimeinforuntimeinfo) | Default run time info for the Project, can be empty. | No |
+| isPublished | boolean | Published projects are shown on the Workspace overview page. | No |
+| lastTestRunTime | dateTime | Last time a Test Run was successfully uploaded to the Project. | No |
+
+#### projectProjectWithOwnerDetails
+
+ProjectWithOwnerDetails returns the Project and the Project 
+Owner's details.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| project | [projectProject](#projectproject) |  | No |
+| ownerDetails | [projectOwnerDetails](#projectownerdetails) |  | No |
+
+#### projectRemoveUserFromProjectResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| projectRemoveUserFromProjectResponse | object |  |  |
+
+#### projectUpdateProjectResponse
+
+UpdateProjectResponse returns an updated Project.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| project | [projectProject](#projectproject) |  | No |
+
+#### projectUpdateUserOfProjectResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| projectUpdateUserOfProjectResponse | object |  |  |
+
+#### projectUpdateWorkspaceRolesForProjectResponse
+
+UpdateWorkspaceRolesForProjectResponse returns an updated list of role pairs
+of the Workspace user roles and their Project user roles.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| projectId | [rimeUUID](#rimeuuid) | Uniquely specifies a Project. | No |
+| rolePairs | [ [rimeParentRoleSubjectRolePair](#rimeparentrolesubjectrolepair) ] |  | No |
+
+#### protobufAny
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| @type | string |  | No |
+
+#### rimeActorRole
+
+ActorRole specifies a set of permissions an actor has on an object.
+
+ - ACTOR_ROLE_ADMIN: Admin role has full manage access to the object, including deletion
+and adding users.
+ - ACTOR_ROLE_USER: User role has edit and view access to the object.
+ - ACTOR_ROLE_SUPPORT: Support role is used by RI support engineers.
+ - ACTOR_ROLE_VIEWER: Viewer role is read-only.
+ - ACTOR_ROLE_NONE: None role has no permissions to the object.
+ - ACTOR_ROLE_VP: VP role has full manage access to the object, including deletion
+and adding users.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeActorRole | string | ActorRole specifies a set of permissions an actor has on an object.   - ACTOR_ROLE_ADMIN: Admin role has full manage access to the object, including deletion and adding users.  - ACTOR_ROLE_USER: User role has edit and view access to the object.  - ACTOR_ROLE_SUPPORT: Support role is used by RI support engineers.  - ACTOR_ROLE_VIEWER: Viewer role is read-only.  - ACTOR_ROLE_NONE: None role has no permissions to the object.  - ACTOR_ROLE_VP: VP role has full manage access to the object, including deletion and adding users. |  |
+
+#### rimeModelTask
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeModelTask | string |  |  |
+
+#### rimeParentRoleSubjectRolePair
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| subjectRole | [rimeActorRole](#rimeactorrole) |  | No |
+| parentRole | [rimeActorRole](#rimeactorrole) |  | No |
+
+#### rimeSafeURL
+
+SafeURL represents a URL that has been safely constructed.
+e.g. a user clicking on this link is guaranteed to land on the RIME web app.
+We use this instead of a raw str so that application code can generate
+SafeURL messages in certain ways -> this provides stronger typing than just
+using a string.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| url | string | A safely constructed URL. | No |
+
+#### rimeUUID
+
+Unique ID of an object in RIME.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| uuid | string | String value of the object ID. | No |
+
+#### rimeUserDetailWithRole
+
+This message type is useful when describing list of user's detail with their 
+roles for the same subject.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| userDetail | [userUserDetail](#useruserdetail) |  | No |
+| userRole | [rimeActorRole](#rimeactorrole) |  | No |
+| implicitGrant | boolean |  | No |
+
+#### rimeUserWithRole
+
+This message type is useful when describing list of User IDs with their roles
+for the same subject.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| userId | [rimeUUID](#rimeuuid) |  | No |
+| userRole | [rimeActorRole](#rimeactorrole) |  | No |
+
+#### runtimeinfoCustomImage
+
+CustomImage is an external image provided by the customer.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| name | string | Name of the custom image (e.g. a docker image name). | No |
+| pullSecret | [CustomImagePullSecret](#customimagepullsecret) | Secret used to pull the custom image. | No |
+
+#### runtimeinfoCustomImageType
+
+CustomImageType is a union of all possible custom managed image and RI
+managed image.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| customImage | [runtimeinfoCustomImage](#runtimeinfocustomimage) |  | No |
+| managedImageName | string | Name of the RI managed image. | No |
+
+#### runtimeinfoResourceRequest
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| ramRequestMegabytes | string (uint64) | Megabytes of RAM requested for the stress test job. | No |
+| cpuRequestMillicores | string (uint64) | Millicores of CPU requested for the stress test job. | No |
+
+#### runtimeinfoRunTimeInfo
+
+RuntimeInfo contains information about how a job should be run.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| agentId | [rimeUUID](#rimeuuid) | ID of the agent this job should be run on. If not specified, the default agent for the workspace is used. | No |
+| customImage | [runtimeinfoCustomImageType](#runtimeinfocustomimagetype) |  | No |
+| resourceRequest | [runtimeinfoResourceRequest](#runtimeinforesourcerequest) |  | No |
+| explicitErrors | boolean | If true, the job will not ignore silent errors. | No |
+| randomSeed | string (int64) | Random seed to use for the job, so that test job result will be deterministic. | No |
+
+#### testrunDataProfiling
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| numQuantiles | string (int64) | The number of quantiles into which numeric subsets are split. | No |
+| numSubsets | string (int64) | The number of subsets to test (sorted by count). | No |
+| columnTypeInfo | [DataProfilingColumnTypeInfo](#dataprofilingcolumntypeinfo) |  | No |
+| featureRelationshipInfo | [DataProfilingFeatureRelationshipInfo](#dataprofilingfeaturerelationshipinfo) |  | No |
+
+#### testrunModelProfiling
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| nrowsForSummary | string (int64) | Number of rows to perform inference on the model if no predictions. | No |
+| nrowsForFeatureImportance | string (int64) | Number of rows to calculate feature importance over. | No |
+| metricConfigsJson | string | A JSON map of the metric API name to kwargs, allowing configuratbility of  any metric. | No |
+| impactMetric | string | Default impact metric. | No |
+| impactLabelThreshold | double | Threshold for using labeled performance metrics vs prediction metrics for model impact, given partial labels. | No |
+| driftImpactMetric | string | Default drift impact metric. | No |
+| subsetSummaryMetric | string | The subset performance degradation summary metric is calculated by taking the difference between the worst subset degradation and the overall degradation of the configured metric. | No |
+| numFeatsForSubsetSummary | string (int64) | Number of features over which the subset performance degradation summary metric is aggregated. | No |
+
+#### testrunProfilingConfig
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| dataProfiling | [testrunDataProfiling](#testrundataprofiling) |  | No |
+| modelProfiling | [testrunModelProfiling](#testrunmodelprofiling) |  | No |
+
+#### testrunTestCategory
+
+TestCategory contains information about a given category of RIME tests to
+run.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| type | [testrunTestCategoryType](#testruntestcategorytype) | The specific category that this message refers to. | No |
+| runSt | boolean | Specifies whether to run this test in Stress Testing. | No |
+| runCt | boolean | Specifies whether to run this test in Continuous Testing. | No |
+
+#### testrunTestCategoryType
+
+TestCategoryType contains all the possible values for test categories that
+can be run in RIME.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testrunTestCategoryType | string | TestCategoryType contains all the possible values for test categories that can be run in RIME. |  |
+
+#### testrunTestSensitivity
+
+TestSensitivity specifies how sensitive to make a RIME test. This setting
+controls the thresholds for what constitutes a 'failure' in a given test
+case, with TEST_SENSITIVITY_LESS_SENSITIVE allowing the widest margin of
+error, and TEST_SENSITIVITY_MORE_SENSITIVE allowing the narrowest.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testrunTestSensitivity | string | TestSensitivity specifies how sensitive to make a RIME test. This setting controls the thresholds for what constitutes a 'failure' in a given test case, with TEST_SENSITIVITY_LESS_SENSITIVE allowing the widest margin of error, and TEST_SENSITIVITY_MORE_SENSITIVE allowing the narrowest. |  |
+
+#### testrunTestSuiteConfig
+
+TestSuiteConfig contains configuration for specific RIME tests in the test
+suite, configures which test categories to run, and configures the overall
+test sensitivity settings.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| categories | [ [testrunTestCategory](#testruntestcategory) ] | List of test categories to be run. | No |
+| globalTestSensitivity | [testrunTestSensitivity](#testruntestsensitivity) | The test sensitivity setting to be applied to all tests. | No |
+| individualTestsConfig | string | A serialized JSON blob including a config for each test. | No |
+| customTests | [ string ] | A list of JSON custom test configurations. | No |
+
+#### userFavoriteProjects
+
+Up to 3 favorite project_ids for each workspace.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| workspaceId | [rimeUUID](#rimeuuid) |  | No |
+| projectIds | [ [rimeUUID](#rimeuuid) ] |  | No |
+
+#### userPrivateInfo
+
+PrivateInfo holds fields which are considered private to a user.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| favoriteProjects | [ [userFavoriteProjects](#userfavoriteprojects) ] |  | No |
+
+#### userRole
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| userRole | string |  |  |
+
+#### userUserDetail
+
+User management messages for API usage.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| id | [rimeUUID](#rimeuuid) |  | No |
+| name | string |  | No |
+| role | [userRole](#userrole) |  | No |
+| email | string |  | No |
+| fullName | string |  | No |
+| showTutorial | boolean |  | No |
+| orgRole | [rimeActorRole](#rimeactorrole) |  | No |
+| privateInfo | [userPrivateInfo](#userprivateinfo) |  | No |

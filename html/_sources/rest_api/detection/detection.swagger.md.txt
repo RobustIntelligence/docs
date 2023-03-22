@@ -1,0 +1,293 @@
+# ri/api/detection/detection.proto
+## Version: version not set
+
+### /v1-beta/detection-events/{projectId.uuid}
+
+#### GET
+##### Summary:
+
+ListDetectionEvents
+
+##### Description:
+
+List out events for a given project.
+Detection events represent problems RIME detects in different risk
+categories, such as performance degradation or security risk.
+This is a paginated method.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+| firstPageReq.eventObjectId | query | Optional: return a series of detection events for a single object. | No | string |
+| firstPageReq.eventTimeRange.startTime | query |  | No | dateTime |
+| firstPageReq.eventTimeRange.endTime | query |  | No | dateTime |
+| firstPageReq.severity | query | Optional: When unspecified, returns all.   - SEVERITY_PASS: Indicates that the specified metric is lower than the low threshold in the case where the Monitor is configured to trigger on an increase of a metric.  - SEVERITY_WARNING: Indicates that the specified metric is higher than the low threshold but still lower than the high threshold, in the case that a Monitor is configured to trigger on an increase of a metric. Warning and Alert severity levels will trigger a Degradation event.  - SEVERITY_ALERT: Indicates that the specified metric is higher than the high threshold in the case that the Monitor is configured to trigger on an increase of a metric. Warning and Alert severity level will trigger a Degradation event. | No | string |
+| firstPageReq.eventTypes | query | Optional: When the list is empty, returns all. | No | [ string ] |
+| firstPageReq.riskCategoryTypes | query | Optional: When the list is empty, returns all. | No | [ string ] |
+| firstPageReq.testCategories | query | Optional: When the list is empty, return all. | No | [ string ] |
+| firstPageReq.sort.sortOrder | query |  | No | string |
+| firstPageReq.sort.sortBy | query |  | No | string |
+| pageToken | query | Specifies a page of the list returned by a ListDetectionEvents query. The ListDetectionEvents query returns a pageToken when there is more than one page of results. Specify either this field or the firstPageReq field. | No | string |
+| pageSize | query | The maximum number of Detection Event objects to return in a single page. | No | string (int64) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeListDetectionEventsResponse](#rimelistdetectioneventsresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### Models
+
+
+#### SecurityEventDetailsFlaggedDatapoint
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rowId | string (int64) |  | No |
+| rowTimestamp | dateTime |  | No |
+
+#### SecurityEventDetailsSecurityEventType
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| SecurityEventDetailsSecurityEventType | string |  |  |
+
+#### detectionDetectionEvent
+
+DetectionEvent describes a specific problem with a model.
+Examples of issues reported by this event include performance metrics
+dropping below a specified threshold or detecting an evasion attack.
+Each event is attached to a parent monitor that has a corresponding test in
+the RIME engine.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| id | [rimeUUID](#rimeuuid) | Unique key of the event. | No |
+| projectId | [rimeUUID](#rimeuuid) |  | No |
+| firewallId | [rimeUUID](#rimeuuid) | Firewall ID is empty for events that are not associated with a firewall, such as offline test events. | No |
+| eventType | [detectionEventType](#detectioneventtype) |  | No |
+| severity | [rimeSeverity](#rimeseverity) | Severity of the event. As an invariant, there are no events with zero severity. | No |
+| eventObjectId | string | The event object varies with the event type. CT and security events use a monitor. Offline Test events use the test run. | No |
+| eventObjectName | string | event_object_name to avoid extra query from UI to display, and allow easier search support with DB. If the event object is renamed, the event will not be updated. | No |
+| eventTimeRange | [rimeTimeInterval](#rimetimeinterval) | The event range describes the exact time interval in which our system detected the event. | No |
+| lastUpdateTime | dateTime |  | No |
+| riskCategoryType | [riskscoreRiskCategoryType](#riskscoreriskcategorytype) |  | No |
+| testCategory | [testrunTestCategoryType](#testruntestcategorytype) |  | No |
+| description | string | Human-readable description of the event. | No |
+| descriptionHtml | string | Description of the event with HTML for nicer rendering. | No |
+| resolution | [detectionResolution](#detectionresolution) |  | No |
+| detail | [detectionEventDetail](#detectioneventdetail) |  | No |
+| rcaRole | [rcaRCARole](#rcarcarole) | The RCA role of the parent monitor for this event. | No |
+
+#### detectionEventDetail
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| metricDegradation | [detectionMetricDegradationEventDetails](#detectionmetricdegradationeventdetails) |  | No |
+| security | [detectionSecurityEventDetails](#detectionsecurityeventdetails) |  | No |
+
+#### detectionEventType
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| detectionEventType | string |  |  |
+
+#### detectionMetricDegradationEventDetails
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| eventContextRange | [rimeTimeInterval](#rimetimeinterval) | A wider interval that describes the context of the degradation event. This interval provides a broader context to the root cause analysis (RCA) service in order to obtain improved results. | No |
+| rcaResult | [rcaRCAResult](#rcarcaresult) | RCA indicates the root cause of the metric degradation. We only define RCA on a subset of monitors. | No |
+
+#### detectionResolution
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| resolveTime | dateTime |  | No |
+| resolvedByUserId | [rimeUUID](#rimeuuid) |  | No |
+
+#### detectionSecurityEventDetails
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| type | [SecurityEventDetailsSecurityEventType](#securityeventdetailssecurityeventtype) |  | No |
+| effectOnModel | [ string ] |  | No |
+| possibleIntent | [ string ] |  | No |
+| evidence | [ string ] |  | No |
+| recommendations | [ string ] |  | No |
+| datapoints | [ [SecurityEventDetailsFlaggedDatapoint](#securityeventdetailsflaggeddatapoint) ] | Include descriptions of all the flagged datapoints for the attack. | No |
+
+#### googlerpcStatus
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| code | integer |  | No |
+| message | string |  | No |
+| details | [ [protobufAny](#protobufany) ] |  | No |
+
+#### protobufAny
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| @type | string |  | No |
+
+#### rcaFeatureCause
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| featureName | string | Human-readable name of the feature. | No |
+| testCaseCauses | [ [rcaTestCaseCause](#rcatestcasecause) ] |  | No |
+| description | string |  | No |
+| descriptionHtml | string |  | No |
+| confidenceScore | float | Confidence that FeatureCause is responsible for the MetricDegradationEvent. Used to rank FeatureCauses. In range [0,1]. | No |
+| monitorId | [rimeUUID](#rimeuuid) |  | No |
+
+#### rcaRCAResult
+
+RootCauseAnalysisResult represents an ordered list of
+potentially problematic features which may have
+caused a MetricDegradationEvent. Each problematic
+feature is represented as a FeatureCause. Each FeatureCause
+has a list of TestCaseCauses that might explain the specific
+issue with the feature.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| featureCauses | [ [rcaFeatureCause](#rcafeaturecause) ] | Potentially problematic features that may have caused the MetricDegradationEvent. Sorted by confidence score. | No |
+| description | string |  | No |
+| descriptionHtml | string |  | No |
+
+#### rcaRCARole
+
+RCARole indicates the RCA role of a detection event or a monitor.
+Their use in the RCA algorithm depends on their role.
+For example, RCA will be computed for EFFECT monitors.
+We will examine all FEATURE_CAUSE and TEST_CAUSE monitors to determine
+which one is most relevant.
+TODO: document this.
+
+ - RCAROLE_UNSPECIFIED: Unspecified is an invalid value: do not use.
+ - RCAROLE_EFFECT: The given degradation is the "effect" of a low level failure.
+ - RCAROLE_FEATURE_CAUSE: The given degradation in a feature (e.g. drift) may have caused a high
+level failure in an "effect" monitor.
+ - RCAROLE_TEST_CAUSE: The given degradation in a test may have caused a high level failure.
+ - RCAROLE_EXCLUDED: All monitors with the excluded tag will be excluded from RCA analysis.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rcaRCARole | string | RCARole indicates the RCA role of a detection event or a monitor. Their use in the RCA algorithm depends on their role. For example, RCA will be computed for EFFECT monitors. We will examine all FEATURE_CAUSE and TEST_CAUSE monitors to determine which one is most relevant. TODO: document this.   - RCAROLE_UNSPECIFIED: Unspecified is an invalid value: do not use.  - RCAROLE_EFFECT: The given degradation is the "effect" of a low level failure.  - RCAROLE_FEATURE_CAUSE: The given degradation in a feature (e.g. drift) may have caused a high level failure in an "effect" monitor.  - RCAROLE_TEST_CAUSE: The given degradation in a test may have caused a high level failure.  - RCAROLE_EXCLUDED: All monitors with the excluded tag will be excluded from RCA analysis. |  |
+
+#### rcaTestCaseCause
+
+TestCaseCause represents a test case that might
+explain an issue with a feature.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testCaseId | [rcaTestCaseID](#rcatestcaseid) | Different from TestCaseID in result_synthesizer. This TestCaseID identifies a test case across different time bins. | No |
+| description | string |  | No |
+| descriptionHtml | string |  | No |
+| confidenceScore | float | Confidence that TestCaseCause explains the issue with the feature. Used to rank TestCaseCauses. In range [0,1]. | No |
+| monitorId | [rimeUUID](#rimeuuid) |  | No |
+
+#### rcaTestCaseID
+
+TestCaseID uniquely identifies a test case entity.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testBatchType | string |  | No |
+| testFeatureName | string | Can be empty string if no feature associated with this test case. | No |
+
+#### rimeListDetectionEventsRequestQuery
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| firewallId | [rimeUUID](#rimeuuid) | Optional: return a series of detection events for a single Firewall. | No |
+| eventObjectId | string | Optional: return a series of detection events for a single object. | No |
+| eventTimeRange | [rimeTimeInterval](#rimetimeinterval) | Optional: When specified, returns all detection events that end in the time range. | No |
+| severity | [rimeSeverity](#rimeseverity) | Optional: When unspecified, returns all. | No |
+| eventTypes | [ [detectionEventType](#detectioneventtype) ] | Optional: When the list is empty, returns all. | No |
+| riskCategoryTypes | [ [riskscoreRiskCategoryType](#riskscoreriskcategorytype) ] | Optional: When the list is empty, returns all. | No |
+| testCategories | [ [testrunTestCategoryType](#testruntestcategorytype) ] | Optional: When the list is empty, return all. | No |
+| sort | [rimeSortSpec](#rimesortspec) |  | No |
+
+#### rimeListDetectionEventsResponse
+
+ListDetectionEventsResponse repesents a single page of detection events
+returned from the backend.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| events | [ [detectionDetectionEvent](#detectiondetectionevent) ] | Page of events returned from the backend. | No |
+| nextPageToken | string | Page token to use in the next ListDetectionEvents call. | No |
+| hasMore | boolean | Indicates whether there are more events to return. | No |
+
+#### rimeOrder
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeOrder | string |  |  |
+
+#### rimeSeverity
+
+Severity specifies the severity level of an event. Depending on the direction
+of degradation, a metric going below or above a threshold will trigger a
+higher severity level.
+
+ - SEVERITY_PASS: Indicates that the specified metric is lower than the low threshold
+in the case where the Monitor is configured to trigger on an increase of a
+metric.
+ - SEVERITY_WARNING: Indicates that the specified metric is higher than the low threshold
+but still lower than the high threshold, in the case that a Monitor is
+configured to trigger on an increase of a metric. Warning and Alert
+severity levels will trigger a Degradation event.
+ - SEVERITY_ALERT: Indicates that the specified metric is higher than the high threshold
+in the case that the Monitor is configured to trigger on an increase of a
+metric. Warning and Alert severity level will trigger a Degradation event.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeSeverity | string | Severity specifies the severity level of an event. Depending on the direction of degradation, a metric going below or above a threshold will trigger a higher severity level.   - SEVERITY_PASS: Indicates that the specified metric is lower than the low threshold in the case where the Monitor is configured to trigger on an increase of a metric.  - SEVERITY_WARNING: Indicates that the specified metric is higher than the low threshold but still lower than the high threshold, in the case that a Monitor is configured to trigger on an increase of a metric. Warning and Alert severity levels will trigger a Degradation event.  - SEVERITY_ALERT: Indicates that the specified metric is higher than the high threshold in the case that the Monitor is configured to trigger on an increase of a metric. Warning and Alert severity level will trigger a Degradation event. |  |
+
+#### rimeSortSpec
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| sortOrder | [rimeOrder](#rimeorder) |  | No |
+| sortBy | string |  | No |
+
+#### rimeTimeInterval
+
+TimeInterval describes a time interval.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| startTime | dateTime |  | No |
+| endTime | dateTime |  | No |
+
+#### rimeUUID
+
+Unique ID of an object in RIME.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| uuid | string | String value of the object ID. | No |
+
+#### riskscoreRiskCategoryType
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| riskscoreRiskCategoryType | string |  |  |
+
+#### testrunTestCategoryType
+
+TestCategoryType contains all the possible values for test categories that
+can be run in RIME.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testrunTestCategoryType | string | TestCategoryType contains all the possible values for test categories that can be run in RIME. |  |

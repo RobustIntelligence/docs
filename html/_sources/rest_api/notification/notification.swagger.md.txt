@@ -1,0 +1,316 @@
+# ri/api/notification/notification.proto
+## Version: version not set
+
+### /v1/notif-settings
+
+#### GET
+##### Summary:
+
+ListNotifications
+
+##### Description:
+
+Lists notification settings with options to filter by project or the
+type of notification.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| listNotificationsQuery.objectTypes | query | Specifies a set of object types. Filters results by the specified set of object types.   - OBJECT_TYPE_UNSPECIFIED: Unspecified is an invalid object type - do not use.  - OBJECT_TYPE_PROJECT: Used for notifications associated with an project. The Notification object ID is the Project ID. | No | [ string ] |
+| listNotificationsQuery.objectIds | query | Specifies a set of object IDs. Filters results by the specified set of object IDs. | No | [ string ] |
+| pageToken | query | Specifies a page of the list returned by a ListNotifications query. The ListNotifications query returns a pageToken when there is more than one page of results. Specify either this field or the listNotificationsQuery field. | No | string |
+| pageSize | query | The maximum number of Notification objects to return in a single page. | No | string (int64) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeListNotificationsResponse](#rimelistnotificationsresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+#### POST
+##### Summary:
+
+CreateNotification
+
+##### Description:
+
+Creates a new notification setting.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| body | body |  | Yes | [rimeCreateNotificationRequest](#rimecreatenotificationrequest) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeCreateNotificationResponse](#rimecreatenotificationresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/notif-settings/{id.uuid}
+
+#### DELETE
+##### Summary:
+
+DeleteNotification
+
+##### Description:
+
+Hard-delete a notification setting.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| id.uuid | path | String value of the object ID. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | object |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/notif-settings/{notification.id.uuid}
+
+#### PUT
+##### Summary:
+
+UpdateNotification
+
+##### Description:
+
+Updates an existing notification setting.
+The ID in the provided notification is used to identify it.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| notification.id.uuid | path | String value of the object ID. | Yes | string |
+| body | body |  | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeUpdateNotificationResponse](#rimeupdatenotificationresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### Models
+
+
+#### DigestConfigDigestFrequency
+
+DigestFrequency determines the frequency under which digest notifications
+will be sent.
+
+ - DIGEST_FREQUENCY_UNSPECIFIED: Unspecified is an invalid digest frequency - do not use.
+ - DIGEST_FREQUENCY_DAILY: Daily is the frequency for sending digest notifications every day.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| DigestConfigDigestFrequency | string | DigestFrequency determines the frequency under which digest notifications will be sent.   - DIGEST_FREQUENCY_UNSPECIFIED: Unspecified is an invalid digest frequency - do not use.  - DIGEST_FREQUENCY_DAILY: Daily is the frequency for sending digest notifications every day. |  |
+
+#### ListNotificationsRequestListNotificationsQuery
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| objectTypes | [ [NotificationObjectType](#notificationobjecttype) ] | Specifies a set of object types. Filters results by the specified set of object types. | No |
+| objectIds | [ string ] | Specifies a set of object IDs. Filters results by the specified set of object IDs. | No |
+
+#### MonitoringConfigAlertLevel
+
+AlertLevel allows users to configure their desired notification
+sensitivity.
+Low severity degradation events will only trigger notifications for
+the WARNING_AND_ALERTS level.
+
+ - ALERT_LEVEL_UNSPECIFIED: Note: ALERT_LEVEL_UNSPECIFIED defaults to ALERT_LEVEL_ONLY_ALERTS during
+notification creation.
+Notifications cannot have the value ALERT_LEVEL_UNSPECIFIED.
+ - ALERT_LEVEL_WARNINGS_AND_ALERTS: Receive notifications when there are events with Warning or Alert
+severity.
+ - ALERT_LEVEL_ONLY_ALERTS: Only receive notifications when there are events with Alert severity.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| MonitoringConfigAlertLevel | string | AlertLevel allows users to configure their desired notification sensitivity. Low severity degradation events will only trigger notifications for the WARNING_AND_ALERTS level.   - ALERT_LEVEL_UNSPECIFIED: Note: ALERT_LEVEL_UNSPECIFIED defaults to ALERT_LEVEL_ONLY_ALERTS during notification creation. Notifications cannot have the value ALERT_LEVEL_UNSPECIFIED.  - ALERT_LEVEL_WARNINGS_AND_ALERTS: Receive notifications when there are events with Warning or Alert severity.  - ALERT_LEVEL_ONLY_ALERTS: Only receive notifications when there are events with Alert severity. |  |
+
+#### NotificationObjectType
+
+ - OBJECT_TYPE_UNSPECIFIED: Unspecified is an invalid object type - do not use.
+ - OBJECT_TYPE_PROJECT: Used for notifications associated with an project.
+The Notification object ID is the Project ID.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| NotificationObjectType | string |  - OBJECT_TYPE_UNSPECIFIED: Unspecified is an invalid object type - do not use.  - OBJECT_TYPE_PROJECT: Used for notifications associated with an project. The Notification object ID is the Project ID. |  |
+
+#### googlerpcStatus
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| code | integer |  | No |
+| message | string |  | No |
+| details | [ [protobufAny](#protobufany) ] |  | No |
+
+#### notificationDigestConfig
+
+DigestConfig is a configuration for digest notifications.
+These notifications are helpful for receiving a succinct summary of activity
+under a given project.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| frequency | [DigestConfigDigestFrequency](#digestconfigdigestfrequency) | The frequency at which digest notifications will be sent if the criteria is met. | No |
+| hourOffset | integer | The offset in the day when the digest starts. The offset is taken in the configured timezone for the workspace. Uses a default value of 08:00 when not provided. | No |
+| lastDigestTime | dateTime | The last time that the RI platform sent the digest. This timestamp is zero when no digests have ever been sent. | No |
+
+#### notificationJobActionConfig
+
+JobActionConfig is a configuration for job action notifications.
+These notifications are helpful for tracking the status of jobs.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| notificationJobActionConfig | object | JobActionConfig is a configuration for job action notifications. These notifications are helpful for tracking the status of jobs. |  |
+
+#### notificationMonitoringConfig
+
+MonitoringConfig is a configuration for Continuous Testing notifications.
+These notifications are triggered when certain Monitors detect abnormalities.
+For instance, if a model performance Monitor fails, the system will send a
+notification after the job completes.
+Turn on and off notifications for Monitors in the web application or the SDK.
+Only a subset of Monitors will have notifications on by default.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| level | [MonitoringConfigAlertLevel](#monitoringconfigalertlevel) | Configure the alert sensitivity. | No |
+
+#### notificationNotification
+
+Notification represents a single notification setting in the backend.
+It includes the configuration for when notifications should be sent as well
+as the list of receivers (emails, webhooks, etc.).
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| id | [rimeUUID](#rimeuuid) | Uniquely specifies a Notification. | No |
+| objectType | [NotificationObjectType](#notificationobjecttype) | The object that the notification is associated with; usually this will be a Project. | No |
+| objectId | string | Uniquely specifies the object for the notification. | No |
+| notificationType | [notificationNotificationType](#notificationnotificationtype) | Notification type is the specific subtype of the notification. | No |
+| config | [schemanotificationConfig](#schemanotificationconfig) | Configuration specifies user preferences for each type of notification setting. For most notification types, the configuration specifies the criteria under which a notification will be sent. | No |
+| webhooks | [ [notificationWebhookConfig](#notificationwebhookconfig) ] | Webhooks are a list of destination webhooks to which notifications will be sent. | No |
+| emails | [ string ] | Emails specify the list of emails to which notifications will be sent. | No |
+| lastSendTime | dateTime | Last send time is the last time the notification was successfully sent. | No |
+
+#### notificationNotificationType
+
+The type of the notification setting (e.g. Monitoring, Daily Digest, etc.)
+Each notification setting is triggered on a different cadence and different
+criteria.
+For example, daily digests are sent once a day and contain a summary of
+Stress Tests.
+
+ - NOTIFICATION_TYPE_UNSPECIFIED: Unspecified is an invalid notification type - do not use.
+ - NOTIFICATION_TYPE_DIGEST: Digest notifications will send a summary of activity for a given project
+on a given cadence.
+ - NOTIFICATION_TYPE_JOB_ACTION: Job action will send alerts to users for job events, such as completion or
+failure.
+Applies to jobs for stress testing and continuous testing.
+ - NOTIFICATION_TYPE_MONITORING: When a CT job completes, monitoring notifications trigger when bins contain
+degradation events.
+The sensitivity of these alerts is configurable to change alert frequency.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| notificationNotificationType | string | The type of the notification setting (e.g. Monitoring, Daily Digest, etc.) Each notification setting is triggered on a different cadence and different criteria. For example, daily digests are sent once a day and contain a summary of Stress Tests.   - NOTIFICATION_TYPE_UNSPECIFIED: Unspecified is an invalid notification type - do not use.  - NOTIFICATION_TYPE_DIGEST: Digest notifications will send a summary of activity for a given project on a given cadence.  - NOTIFICATION_TYPE_JOB_ACTION: Job action will send alerts to users for job events, such as completion or failure. Applies to jobs for stress testing and continuous testing.  - NOTIFICATION_TYPE_MONITORING: When a CT job completes, monitoring notifications trigger when bins contain degradation events. The sensitivity of these alerts is configurable to change alert frequency. |  |
+
+#### notificationWebhookConfig
+
+Configuration for an individual webhook.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| webhook | string | The URL of the destination webhook. It is not a strict requirement, but it is recommended that webhooks be preauthenticated by including a secure token in the URL. | No |
+
+#### protobufAny
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| @type | string |  | No |
+
+#### rimeCreateNotificationRequest
+
+CreateNotificationRequest is a request for creating a new notification
+setting in the backend.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| objectType | [NotificationObjectType](#notificationobjecttype) | The type of the object that the notification will be associated with (e.g. Project). | No |
+| objectId | string | Uniquely specifies an object for the notification. This varies depending on the object type; for Projects, this should be the unique identifier of the project. | No |
+| emails | [ string ] | List of emails that notifications should be sent to - this can be empty. | No |
+| config | [schemanotificationConfig](#schemanotificationconfig) | The configuration for the particular type of notificaton; this allows fine-grained control over when notifications will be sent. | No |
+| webhooks | [ [notificationWebhookConfig](#notificationwebhookconfig) ] | List of webhooks that notifications should be sent to - this can be empty. | No |
+
+#### rimeCreateNotificationResponse
+
+CreateNotificationResponse is the response from creating a notification.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| id | [rimeUUID](#rimeuuid) | Unique identifier for the newly created notification setting. | No |
+
+#### rimeListNotificationsResponse
+
+ListNotificationsResponse is a single page of notification settings.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| notifications | [ [notificationNotification](#notificationnotification) ] | List of individual notification objects requested from the backend. | No |
+| nextPageToken | string | The page token to use in the next ListNotifications call. | No |
+| hasMore | boolean | Whether or not there are more notification settings in the DB. | No |
+
+#### rimeRIEmailRecipient
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeRIEmailRecipient | string |  |  |
+
+#### rimeSendRIEmailResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeSendRIEmailResponse | object |  |  |
+
+#### rimeUUID
+
+Unique ID of an object in RIME.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| uuid | string | String value of the object ID. | No |
+
+#### rimeUpdateNotificationResponse
+
+UpdateNotificationResponse is returned after a successful update.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| notification | [notificationNotification](#notificationnotification) |  | No |
+
+#### schemanotificationConfig
+
+Config is the configuration for a notification setting.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| digestConfig | [notificationDigestConfig](#notificationdigestconfig) | Config for digest notifications. | No |
+| jobActionConfig | [notificationJobActionConfig](#notificationjobactionconfig) | Config for job update notifications. | No |
+| monitoringConfig | [notificationMonitoringConfig](#notificationmonitoringconfig) | Config for Continuous Testing notifications. | No |

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ri/api/jobs/job_message.proto &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ri/api/jobs/job_reader.proto" href="job_reader.swagger.html" />
+    <link rel="prev" title="ri/api/jobs/job_manager.proto" href="job_manager.swagger.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                2.0.0-beta.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/modeltesting.html">RIME model testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/basic_tasks.html">Setting up and testing with RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/adv_tasks.html">Customization and troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/shostedinst.html">Self-Hosted</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REST API and SDK reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../python_library/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../rest-api.html">RI REST API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../agent/agent.swagger.html">ri/api/agent/agent.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datacollector/data_collector.swagger.html">ri/api/datacollector/data_collector.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../detection/detection.swagger.html">ri/api/detection/detection.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../featureflag/feature_flag.swagger.html">ri/api/featureflag/feature_flag.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../filescanning/file_scanning.swagger.html">ri/api/filescanning/file_scanning.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileupload/file_upload.swagger.html">ri/api/fileupload/file_upload.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../firewall/firewall.swagger.html">ri/api/firewall/firewall.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../imageregistry/image_registry.swagger.html">ri/api/imageregistry/image_registry.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../imageregistry/managed_image.swagger.html">ri/api/imageregistry/managed_image.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="job_manager.swagger.html">ri/api/jobs/job_manager.proto</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ri/api/jobs/job_message.proto</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#version-version-not-set">Version: version not set</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#models">Models</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="job_reader.swagger.html">ri/api/jobs/job_reader.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modelcard/model_card.swagger.html">ri/api/modelcard/model_card.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modeltesting/model_testing.swagger.html">ri/api/modeltesting/model_testing.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../monitor/monitor.swagger.html">ri/api/monitor/monitor.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notification/notification.swagger.html">ri/api/notification/notification.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project/project.swagger.html">ri/api/project/project.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../registry/registry.swagger.html">ri/api/registry/registry.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resultsynthesizer/result_message.swagger.html">ri/api/resultsynthesizer/result_message.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rimeinfo/rime_info.swagger.html">ri/api/rimeinfo/rime_info.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testrunresults/test_run_results.swagger.html">ri/api/testrunresults/test_run_results.proto</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../rest-api.html">RI REST API</a></li>
+      <li class="breadcrumb-item active">ri/api/jobs/job_message.proto</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/rest_api/jobs/job_message.swagger.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ri-api-jobs-job-message-proto">
+<h1>ri/api/jobs/job_message.proto<a class="headerlink" href="#ri-api-jobs-job-message-proto" title="Permalink to this heading"></a></h1>
+<section id="version-version-not-set">
+<h2>Version: version not set<a class="headerlink" href="#version-version-not-set" title="Permalink to this heading"></a></h2>
+<section id="models">
+<h3>Models<a class="headerlink" href="#models" title="Permalink to this heading"></a></h3>
+<section id="googlerpcstatus">
+<h4>googlerpcStatus<a class="headerlink" href="#googlerpcstatus" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>code</td>
+<td>integer</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>message</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>details</td>
+<td>[ <a href="#protobufany">protobufAny</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="protobufany">
+<h4>protobufAny<a class="headerlink" href="#protobufany" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@type</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table></section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="job_manager.swagger.html" class="btn btn-neutral float-left" title="ri/api/jobs/job_manager.proto" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="job_reader.swagger.html" class="btn btn-neutral float-right" title="ri/api/jobs/job_reader.proto" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

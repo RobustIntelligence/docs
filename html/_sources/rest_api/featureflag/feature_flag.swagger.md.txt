@@ -1,0 +1,172 @@
+# ri/api/featureflag/feature_flag.proto
+## Version: version not set
+
+### /v1/feature-flags/{customerName}/features
+
+#### GET
+##### Summary:
+
+ListEnabledFeatures
+
+##### Description:
+
+Returns all features enabled in license for a customer.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| customerName | path | Name of the customer to query. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeListEnabledFeaturesResponse](#rimelistenabledfeaturesresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/feature-flags/{customerName}/limits/{limit}
+
+#### GET
+##### Summary:
+
+GetLimitStatus
+
+##### Description:
+
+Returns the status of a specified limit in this deployment's license.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| customerName | path | Name of the customer to query. | Yes | string |
+| limit | path | Specifies which limit to query. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeGetLimitStatusResponse](#rimegetlimitstatusresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### Models
+
+
+#### googlerpcStatus
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| code | integer |  | No |
+| message | string |  | No |
+| details | [ [protobufAny](#protobufany) ] |  | No |
+
+#### protobufAny
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| @type | string |  | No |
+
+#### rimeFeatureFlags
+
+FeatureFlags defines all maintained flags/toggles.
+In DB storage, these are encoded in a JWT token to guarantee authenticity.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| customerName | string | Customer Name. We maintain 1 set per customer. We need this for multi-tenancy (N customers in 1 cluster). | No |
+| subscriptionExpirationTime | dateTime | Subscription time. | No |
+| numProjects | string (uint64) | Num projects (not including deleted). | No |
+| numTestRuns | string (uint64) | Num test runs (successful only). | No |
+| uploadSizeBytes | string (uint64) | Upload data size. | No |
+| enableModelCards | boolean | Compliance model cards feature. | No |
+| numFirewalls | string (uint64) | Number of firewalls allowed. | No |
+
+#### rimeGetEnabledFeatureResponse
+
+GetEnabledFeatureResponse specifies if a feature is enabled for a customer.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| feature | [rimeLicenseFeature](#rimelicensefeature) | The feature that was requested. | No |
+| enabled | boolean | Whether the feature is enabled. | No |
+
+#### rimeGetFeatureFlagJwtResponse
+
+GetFeatureFlagJwtResponse is the response to get the Feature Flag JWT token
+that returns the signed JWT token of the customer.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| signedJwtTokenStr | string | The signed JWT token of the customer. | No |
+
+#### rimeGetFeatureFlagsResponse
+
+GetFeatureFlagsResponse contains the FeatureFlags of a customer.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| featureFlags | [rimeFeatureFlags](#rimefeatureflags) | The set of feature flags for a customer. | No |
+
+#### rimeGetLimitStatusResponse
+
+GetLimitStatusResponse contains the limit status of a requested limit
+for a customer.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| limitStatus | [rimeLimitStatus](#rimelimitstatus) | The status of a feature limit for a customer. | No |
+
+#### rimeLicenseFeature
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeLicenseFeature | string |  |  |
+
+#### rimeLicenseLimit
+
+LicenseLimit contains all feature flags to enforce limit as an int.
+
+ - LICENSE_LIMIT_EXPIRATION: A UNIX timestamp that specifies the expiration date of the license.
+ - LICENSE_LIMIT_STRESS_TEST_RUNS: The number of stress tests run to date and the total number of
+stress tests enabled by the license.
+ - LICENSE_LIMIT_FIREWALL: The number of firewalls created and the total number of
+firewalls enabled by the license.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeLicenseLimit | string | LicenseLimit contains all feature flags to enforce limit as an int.   - LICENSE_LIMIT_EXPIRATION: A UNIX timestamp that specifies the expiration date of the license.  - LICENSE_LIMIT_STRESS_TEST_RUNS: The number of stress tests run to date and the total number of stress tests enabled by the license.  - LICENSE_LIMIT_FIREWALL: The number of firewalls created and the total number of firewalls enabled by the license. |  |
+
+#### rimeLimitStatus
+
+LimitStatus contains the status of a limit in this deployment's license.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| limit | [rimeLicenseLimit](#rimelicenselimit) |  | No |
+| limitStatus | [rimeLimitStatusStatus](#rimelimitstatusstatus) |  | No |
+| limitValue | string (int64) |  | No |
+| currentValue | string (int64) |  | No |
+
+#### rimeLimitStatusStatus
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeLimitStatusStatus | string |  |  |
+
+#### rimeListEnabledFeaturesResponse
+
+ListEnabledFeaturesResponse contains all enabled features for a customer.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| customerName | string | Tthe customer to retrieve feature flags for. | No |
+| enabledFeatures | [ [rimeLicenseFeature](#rimelicensefeature) ] | The set of enabled features. | No |
+
+#### rimeUpsertFeatureFlagsResponse
+
+UpsertFeatureFlagsRequest is the response to UpsertFeatureFlags.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeUpsertFeatureFlagsResponse | object | UpsertFeatureFlagsRequest is the response to UpsertFeatureFlags. |  |

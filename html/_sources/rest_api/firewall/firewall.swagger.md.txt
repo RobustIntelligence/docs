@@ -1,0 +1,401 @@
+# ri/api/firewall/firewall.proto
+## Version: version not set
+
+### /v1-beta/firewall/{firewallId.uuid}/url
+
+#### GET
+##### Summary:
+
+GetURL
+
+##### Description:
+
+Returns the URL for the specified Firewall in the RIME web application.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| firewallId.uuid | path | String value of the object ID. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeGetURLResponse](#rimegeturlresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/firewall
+
+#### POST
+##### Summary:
+
+CreateFirewall
+
+##### Description:
+
+Creates a firewall with the required fields.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| body | body |  | Yes | [rimeCreateFirewallRequest](#rimecreatefirewallrequest) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeCreateFirewallResponse](#rimecreatefirewallresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/firewall/{firewall.firewallId.uuid}
+
+#### PUT
+##### Summary:
+
+UpdateFirewall
+
+##### Description:
+
+Updates a firewall's editable fields.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| firewall.firewallId.uuid | path | String value of the object ID. | Yes | string |
+| body | body |  | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeUpdateFirewallResponse](#rimeupdatefirewallresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/firewall/{firewallId.uuid}
+
+#### GET
+##### Summary:
+
+GetFirewall
+
+##### Description:
+
+Gets the firewall that matches the specified ID.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| firewallId.uuid | path | String value of the object ID. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeGetFirewallResponse](#rimegetfirewallresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+#### DELETE
+##### Summary:
+
+DeleteFirewall
+
+##### Description:
+
+Deletes the firewall with the specified ID.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| firewallId.uuid | path | String value of the object ID. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeDeleteFirewallResponse](#rimedeletefirewallresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### Models
+
+
+#### CreateFirewallRequestScheduledCTParameters
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| evalDataLocation | [firewallDataLocation](#firewalldatalocation) | Location of the evaluation sets in a scheduled CT. | No |
+| evalPredLocation | [firewallDataLocation](#firewalldatalocation) | Location of the prediction sets based on the evaluation sets in a scheduled CT. | No |
+| rollingWindow | string | The reference set updates every time a scheduled CT runs, when the rolling window for that scheduled CT run is not empty. | No |
+
+#### DataInfoParamsFeatureIntersection
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| features | [ string ] |  | No |
+
+#### DataInfoParamsRankingInfo
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| queryCol | string | Name of column in dataset that contains the query ids. | No |
+| nqueries | string (int64) | Number of queries to consider. If null, will use all queries. | No |
+| nrowsPerQuery | string (int64) | Number of rows to use per query. If null, will use all rows. | No |
+| dropQueryId | boolean | Whether to drop the query ID column from the dataset to avoid  passing as a feature to the model. | No |
+
+#### firewallCustomLoaderLocation
+
+The CustomLoaderLocation variable specifies the arguments that
+define a custom location used as a data source by a scheduled CT.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| path | string |  | No |
+| loadFuncName | string |  | No |
+| loaderKwargsJson | string |  | No |
+
+#### firewallDataCollectorLocation
+
+The DataCollectorLocation variable specifies the arguments required by
+a data collector location used as a data source by a scheduled CT.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| dataStreamId | [rimeUUID](#rimeuuid) |  | No |
+
+#### firewallDataLocation
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| integrationId | [rimeUUID](#rimeuuid) | Defines variables required for location access. | No |
+| locationArgs | [firewallLocationArgs](#firewalllocationargs) | The LocationArgs variable defines the location of the data source used by a scheduled Continuous Test. | No |
+| locationParams | [firewallLocationParams](#firewalllocationparams) | The LocationParams variable specifies how to load the data from the location defined in the LocationArgs variable. Data loading varies depending on whether the data is input or prediction data. | No |
+
+#### firewallDeltaLakeLocation
+
+The DeltaLakeLocation variable specifies the arguments that define
+a Delta Lake data location used as a data source by a scheduled CT.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| tableName | string |  | No |
+| timeCol | string |  | No |
+
+#### firewallFirewall
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| firewallId | [rimeUUID](#rimeuuid) |  | No |
+| projectId | [rimeUUID](#rimeuuid) |  | No |
+| modelId | [rimeUUID](#rimeuuid) |  | No |
+| binSize | string |  | No |
+| refDataId | string | The semantic ID of the reference dataset. This should correspond with the primary key in the Dataset Registry. | No |
+| scheduledCtInfo | [firewallScheduledCTInfo](#firewallscheduledctinfo) |  | No |
+| riskScores | [ [riskscoreRiskScore](#riskscoreriskscore) ] |  | No |
+| testCategorySeverities | [ [firewallTestCategorySeverity](#firewalltestcategoryseverity) ] |  | No |
+| latestRunInfo | [firewallLatestRunInfo](#firewalllatestruninfo) |  | No |
+
+#### firewallLatestRunInfo
+
+LatestRunInfo tracks the latest run bin in the firewall.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| bin | [rimeTimeInterval](#rimetimeinterval) |  | No |
+
+#### firewallLocationArgs
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| dataCollectorLocation | [firewallDataCollectorLocation](#firewalldatacollectorlocation) |  | No |
+| deltaLakeLocation | [firewallDeltaLakeLocation](#firewalldeltalakelocation) |  | No |
+| customLocation | [firewallCustomLoaderLocation](#firewallcustomloaderlocation) |  | No |
+
+#### firewallLocationParams
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| dataParams | [testrunDataInfoParams](#testrundatainfoparams) |  | No |
+| predParams | [testrunPredictionParams](#testrunpredictionparams) |  | No |
+
+#### firewallScheduledCTInfo
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| evalDataLocation | [firewallDataLocation](#firewalldatalocation) |  | No |
+| evalPredLocation | [firewallDataLocation](#firewalldatalocation) |  | No |
+| rollingWindow | string | Providing this value overwrites any existing reference data set. | No |
+| lastCtScheduled | dateTime | Specifies a timestamp based on the end time of the window for each run. The scheduler uses this timestamp to determine job start times and the time bin to use. | No |
+| activatedTime | dateTime | When the AI Firewall has no bins, this value is used as the start time. Otherwise, the end time of the last bin in the AI Firewall is used as the AI Firewall start time. | No |
+| disableScheduledCt | boolean | Option for disabling scheduled CT - this should be false by default. This enables users to suspend a scheduled CT while preserving existing settings. | No |
+
+#### firewallTestCategorySeverity
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testCategory | [testrunTestCategoryType](#testruntestcategorytype) |  | No |
+| riskCategoryType | [riskscoreRiskCategoryType](#riskscoreriskcategorytype) |  | No |
+| severity | [rimeSeverity](#rimeseverity) |  | No |
+
+#### googlerpcStatus
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| code | integer |  | No |
+| message | string |  | No |
+| details | [ [protobufAny](#protobufany) ] |  | No |
+
+#### protobufAny
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| @type | string |  | No |
+
+#### rimeCreateFirewallRequest
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| projectId | [rimeUUID](#rimeuuid) | Uniquely specifies a Project. | No |
+| modelId | [rimeUUID](#rimeuuid) | Uniquely specifies a Model. | No |
+| binSize | string | Duration of each bin size of continuous tests. | Yes |
+| refDataId | string | Uniquely specifies a reference data set. | Yes |
+| scheduledCtParameters | [CreateFirewallRequestScheduledCTParameters](#createfirewallrequestscheduledctparameters) | Parameters for scheduled CT. | No |
+
+#### rimeCreateFirewallResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| firewallId | [rimeUUID](#rimeuuid) |  | No |
+
+#### rimeDeleteFirewallResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeDeleteFirewallResponse | object |  |  |
+
+#### rimeGetFirewallResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| firewall | [firewallFirewall](#firewallfirewall) |  | No |
+
+#### rimeGetURLResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| url | [rimeSafeURL](#rimesafeurl) |  | No |
+
+#### rimeSafeURL
+
+SafeURL represents a URL that has been safely constructed.
+e.g. a user clicking on this link is guaranteed to land on the RIME web app.
+We use this instead of a raw str so that application code can generate
+SafeURL messages in certain ways -> this provides stronger typing than just
+using a string.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| url | string | A safely constructed URL. | No |
+
+#### rimeSeverity
+
+Severity specifies the severity level of an event. Depending on the direction
+of degradation, a metric going below or above a threshold will trigger a
+higher severity level.
+
+ - SEVERITY_PASS: Indicates that the specified metric is lower than the low threshold
+in the case where the Monitor is configured to trigger on an increase of a
+metric.
+ - SEVERITY_WARNING: Indicates that the specified metric is higher than the low threshold
+but still lower than the high threshold, in the case that a Monitor is
+configured to trigger on an increase of a metric. Warning and Alert
+severity levels will trigger a Degradation event.
+ - SEVERITY_ALERT: Indicates that the specified metric is higher than the high threshold
+in the case that the Monitor is configured to trigger on an increase of a
+metric. Warning and Alert severity level will trigger a Degradation event.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeSeverity | string | Severity specifies the severity level of an event. Depending on the direction of degradation, a metric going below or above a threshold will trigger a higher severity level.   - SEVERITY_PASS: Indicates that the specified metric is lower than the low threshold in the case where the Monitor is configured to trigger on an increase of a metric.  - SEVERITY_WARNING: Indicates that the specified metric is higher than the low threshold but still lower than the high threshold, in the case that a Monitor is configured to trigger on an increase of a metric. Warning and Alert severity levels will trigger a Degradation event.  - SEVERITY_ALERT: Indicates that the specified metric is higher than the high threshold in the case that the Monitor is configured to trigger on an increase of a metric. Warning and Alert severity level will trigger a Degradation event. |  |
+
+#### rimeTimeInterval
+
+TimeInterval describes a time interval.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| startTime | dateTime |  | No |
+| endTime | dateTime |  | No |
+
+#### rimeUUID
+
+Unique ID of an object in RIME.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| uuid | string | String value of the object ID. | No |
+
+#### rimeUpdateFirewallResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| firewall | [firewallFirewall](#firewallfirewall) |  | No |
+
+#### riskscoreRiskCategoryType
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| riskscoreRiskCategoryType | string |  |  |
+
+#### riskscoreRiskScore
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| type | [riskscoreRiskCategoryType](#riskscoreriskcategorytype) |  | No |
+| severity | [rimeSeverity](#rimeseverity) |  | No |
+| score | double |  | No |
+
+#### testrunDataInfoParams
+
+DataInfoParams specifies the parameters for a dataset.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| labelCol | string | Naming of special columns. | No |
+| predCol | string | Column to look at for predictions. | No |
+| timestampCol | string | Column to look at for CT timestamp. | No |
+| classNames | [ string ] | List of label class names. | No |
+| rankingInfo | [DataInfoParamsRankingInfo](#datainfoparamsrankinginfo) | Params relevant for ranking model task. | No |
+| nrows | string (int64) | Dataset size parameters. Number of rows of data to load and test. If null, will load all rows. | No |
+| nrowsPerTimeBin | string (int64) | Number of rows of data per time bin to load and test in CT. If null,  will load all rows. | No |
+| sample | boolean | Whether to sample rows in the data. Default is True. | No |
+| categoricalFeatures | [ string ] | Feature types and relations. | No |
+| protectedFeatures | [ string ] | Features that are protected attributes. If Bias and Fairness category is specified, these tests will run only over protected_features. | No |
+| featuresNotInModel | [ string ] |  | No |
+| textFeatures | [ string ] | Text features to run NLP tests over. | No |
+| imageFeatures | [ string ] | Image features to run CV tests over. | No |
+| intersections | [ [DataInfoParamsFeatureIntersection](#datainfoparamsfeatureintersection) ] | A list of arrays of features. Each array represents the intersection of features on which certain subset and fairness tests are run. | No |
+| loadingKwargs | string | Paths for external resources. Keyword arguments to be passed to the pandas loading function (either pd.read_CSV or pd.read_Parquet, depending on your data format). NOTE: if you wish to specify nrows, this should NOT be done with kwargs. | No |
+| featureTypePath | string | Path to a CSV file that specifies the data type of each feature.  The file should have two columns: FeatureName and FeatureType. | No |
+| predPath | string | Path to a CSV file or Parquet file containing the predictions. | No |
+| imageLoadPath | string | Path to a CSV file that contains images to load for image_features. | No |
+
+#### testrunPredictionParams
+
+PredictionParams specifies how to make predictions.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| predCol | string | Column used for predictions. | No |
+
+#### testrunTestCategoryType
+
+TestCategoryType contains all the possible values for test categories that
+can be run in RIME.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testrunTestCategoryType | string | TestCategoryType contains all the possible values for test categories that can be run in RIME. |  |

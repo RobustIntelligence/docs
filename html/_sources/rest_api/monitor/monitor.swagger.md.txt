@@ -1,0 +1,563 @@
+# ri/api/monitor/monitor.proto
+## Version: version not set
+
+### /v1-beta/custom-monitors/metrics/{firewallId.uuid}
+
+#### GET
+##### Summary:
+
+ListMetricIdentifiers
+
+##### Description:
+
+List all possible Custom Monitor Metric Identifiers
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| firewallId.uuid | path | String value of the object ID. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeListMetricIdentifiersResponse](#rimelistmetricidentifiersresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1-beta/custom-monitors/{monitorId.uuid}
+
+#### DELETE
+##### Summary:
+
+DeleteCustomMonitor
+
+##### Description:
+
+Delete a custom monitor
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| monitorId.uuid | path | String value of the object ID. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeDeleteCustomMonitorResponse](#rimedeletecustommonitorresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1-beta/custom-monitors/{name}
+
+#### POST
+##### Summary:
+
+CreateCustomMonitor
+
+##### Description:
+
+Create a new custom monitor
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| name | path | The name of the monitor. | Yes | string |
+| body | body |  | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeCreateCustomMonitorResponse](#rimecreatecustommonitorresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1-beta/monitors/result/{monitorId.uuid}
+
+#### GET
+##### Summary:
+
+GetMonitorResult
+
+##### Description:
+
+Graph a monitor within a time range
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| monitorId.uuid | path | String value of the object ID. | Yes | string |
+| timeInterval.startTime | query |  | No | dateTime |
+| timeInterval.endTime | query |  | No | dateTime |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeGetMonitorResultResponse](#rimegetmonitorresultresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1-beta/monitors/{firewallId.uuid}
+
+#### GET
+##### Summary:
+
+ListMonitors
+
+##### Description:
+
+lists monitors by firewall ID.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| firewallId.uuid | path | String value of the object ID. | Yes | string |
+| firstPageReq.includedMonitorTypes | query | Specifies a list of monitor types. Filters results to match the specified monitor types. | No | [ string ] |
+| firstPageReq.includedRiskCategoryTypes | query | Specifies a list of risk category types. Filters results to match the specified risk category types. | No | [ string ] |
+| firstPageReq.pinnedMonitorsOnly | query | When the value of this Boolean is True, this endpoint returns a list of pinned Monitors. Otherwise, this endpoint does not filter Monitors by pinned status. | No | boolean |
+| pageToken | query | Specifies a page of the list returned by a ListMonitors query. The ListMonitors query returns a pageToken when there is more than one page of results. Specify either this field or the firstPageReq field. | No | string |
+| pageSize | query | The maximum number of Monitor objects to return in a single page. | No | string (int64) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeListMonitorsResponse](#rimelistmonitorsresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1-beta/monitors/{monitor.id.uuid}
+
+#### PUT
+##### Summary:
+
+UpdateMonitor
+
+##### Description:
+
+Updates a monitor.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| monitor.id.uuid | path | String value of the object ID. | Yes | string |
+| body | body |  | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeUpdateMonitorResponse](#rimeupdatemonitorresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### Models
+
+
+#### ArtifactIdentifierCategoryTestIdentifier
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testCategory | [testrunTestCategoryType](#testruntestcategorytype) | The Test Category Type. | No |
+| metric | string | The metric name. | No |
+
+#### ArtifactIdentifierSubsetTestMetricIdentifier
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testBatchId | string | Uniquely specifies a Test Batch. | No |
+| metric | string | The metric name. | No |
+| featureNames | [ string ] | Human-readable names of the features. Must be sorted lexicographically. | No |
+| subsetName | string | Human-readable name of the feature subset used for the `subset_name` field. This is used to display the subset name on the frontend. | No |
+
+#### ArtifactIdentifierTestCaseMetricIdentifier
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testBatchId | string | Uniquely specifies a Test Batch. | No |
+| metric | string | The metric name. | No |
+| featureNames | [ string ] | Human-readable names of the features. Must be sorted lexicographically. | No |
+
+#### DifferenceFromTargetDifference
+
+The type of difference to calculate.
+
+ - DIFFERENCE_RAW: Raw difference between values (x - y)
+ - DIFFERENCE_ABSOLUTE: Absolute difference between values (|x - y|)
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| DifferenceFromTargetDifference | string | The type of difference to calculate.   - DIFFERENCE_RAW: Raw difference between values (x - y)  - DIFFERENCE_ABSOLUTE: Absolute difference between values (|x - y|) |  |
+
+#### DifferenceFromTargetTarget
+
+The target to compare against.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| DifferenceFromTargetTarget | string | The target to compare against. |  |
+
+#### ListMetricIdentifiersResponseAggregatedMetric
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testCaseMetricId | [ArtifactIdentifierTestCaseMetricIdentifier](#artifactidentifiertestcasemetricidentifier) |  | No |
+| categoryTestMetricId | [ArtifactIdentifierCategoryTestIdentifier](#artifactidentifiercategorytestidentifier) |  | No |
+| excludedTransforms | [monitorExcludedTransforms](#monitorexcludedtransforms) | The excluded transforms. | No |
+
+#### ListMetricIdentifiersResponseFeatureMetricWithoutSubsets
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testCaseMetricIdentifier | [ArtifactIdentifierTestCaseMetricIdentifier](#artifactidentifiertestcasemetricidentifier) | The test metric identifier. | No |
+| excludedTransforms | [monitorExcludedTransforms](#monitorexcludedtransforms) | The excluded transforms. | No |
+
+#### ListMetricIdentifiersResponseFeatureMetrics
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| featureMetricWithoutSubsets | [ [ListMetricIdentifiersResponseFeatureMetricWithoutSubsets](#listmetricidentifiersresponsefeaturemetricwithoutsubsets) ] |  | No |
+| subsetMetrics | object |  | No |
+
+#### ListMetricIdentifiersResponseSubsetMetric
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| metricId | [ArtifactIdentifierSubsetTestMetricIdentifier](#artifactidentifiersubsettestmetricidentifier) | Uniquely specifies a Metric. | No |
+| excludedTransforms | [monitorExcludedTransforms](#monitorexcludedtransforms) | The excluded transforms. | No |
+
+#### ListMetricIdentifiersResponseSubsetMetrics
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| metricIds | [ [ListMetricIdentifiersResponseSubsetMetric](#listmetricidentifiersresponsesubsetmetric) ] | List of Metric IDs. | No |
+
+#### ListMonitorsRequestFilter
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| includedMonitorTypes | [ [monitorMonitorType](#monitormonitortype) ] | Specifies a list of monitor types. Filters results to match the specified monitor types. | No |
+| includedRiskCategoryTypes | [ [riskscoreRiskCategoryType](#riskscoreriskcategorytype) ] | Specifies a list of risk category types. Filters results to match the specified risk category types. | No |
+| pinnedMonitorsOnly | boolean | When the value of this Boolean is True, this endpoint returns a list of pinned Monitors. Otherwise, this endpoint does not filter Monitors by pinned status. | No |
+
+#### googlerpcStatus
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| code | integer |  | No |
+| message | string |  | No |
+| details | [ [protobufAny](#protobufany) ] |  | No |
+
+#### monitorAggregation
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| aggregationType | [monitorAggregationType](#monitoraggregationtype) |  | No |
+| timeWindow | string |  | No |
+
+#### monitorAggregationType
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| monitorAggregationType | string |  |  |
+
+#### monitorAnomalyConfig
+
+Anomaly Monitors track events over time that are not associated with
+metrics.
+For instance, attacks on a model constitute Anomalies.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| monitorAnomalyConfig | object | Anomaly Monitors track events over time that are not associated with metrics. For instance, attacks on a model constitute Anomalies. |  |
+
+#### monitorArtifactIdentifier
+
+ArtifactIdentifier specifies the artifact a monitor tracks over time.
+Metrics exist in TestCases, TestBatches and CategoryTests.
+This is extendable to allow new kinds of metrics.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testCaseMetricIdentifier | [ArtifactIdentifierTestCaseMetricIdentifier](#artifactidentifiertestcasemetricidentifier) |  | No |
+| categoryTestMetricIdentifier | [ArtifactIdentifierCategoryTestIdentifier](#artifactidentifiercategorytestidentifier) |  | No |
+| subsetTestMetricIdentifier | [ArtifactIdentifierSubsetTestMetricIdentifier](#artifactidentifiersubsettestmetricidentifier) |  | No |
+
+#### monitorDifferenceFromTarget
+
+DifferenceFromTarget defines a transform that
+calculates the difference between the aggregated metric
+defined in the monitor and the same metric defined with the target.
+if no aggregation is specified, an average value is used.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| difference | [DifferenceFromTargetDifference](#differencefromtargetdifference) | The difference function for this transform. | No |
+| target | [DifferenceFromTargetTarget](#differencefromtargettarget) | The target for this transform. | No |
+
+#### monitorExcludedTransforms
+
+ExcludedTransforms allows a metric to define which
+transforms cannot be applied to the metric.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| excludedTransforms | [ [monitorTransform](#monitortransform) ] |  | No |
+
+#### monitorMetricDegradationConfig
+
+MetricDegradation Monitors track metrics over time.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| aggregation | [monitorAggregation](#monitoraggregation) | The aggregation for the metric. | No |
+| transform | [monitorTransform](#monitortransform) | The transformation for the metric. | No |
+| threshold | [monitorThreshold](#monitorthreshold) | The threshold needs to be same numerical range as the output of the transform func. Example: if the transform is a percentage difference, the threshold needs to be between (0, 100). | No |
+
+#### monitorMonitor
+
+Implied Comparison (CMP*): the implied comparison (GTE or LTE)
+   - This is implied because RI Platform knows which direction (+/-)
+     represents a degradation for each metric.
+
+ Aggregation (AGG):
+   Aggregation Type: min, max, sum, avg
+   Time Window: time window over which to aggregate
+
+ Transform (FUNC): takes in the scalar metric value
+   - The only real function we defined for V20 is a difference calculation
+     between metric in current time step and Baseline or Prev TimeWindow/ Bin
+   - Static monitors (compare metric directly to threshold) can be defined
+     without specifying a transform
+
+ Threshold (THRESHOLD): A Threshold
+   - The units for the threshold are implied by the transform function.
+
+ MetricIdentifier: a metric to compare
+   - specifies how the metric should be extracted from the doc store.
+
+ MonitorType: is monitor custom or default
+
+ RiskCategoryType: the type of risk category the monitor is evaluating
+
+ Category: the category of test to which the monitor belongs.
+   - e.g. "Drift", "Model Performance", or "Abnormal Inputs"
+   - This helps organize monitors into subgroups within a RiskCategoryType.
+
+ Notify: whether CT monitoring notifications should be sent for this monitor.
+
+ MonitorEventType: the type of events associated with this monitor.
+
+Examples of Custom Monitors defined by this API:
+ {
+   name : "cool-static-monitor",
+   metric: "MSE",
+   threshold: Threshold{
+         low: 10,
+         high: 12,
+   },
+ },
+ {
+   name : "cool-percentage-compare-to-baseline-monitor",
+   metric: "MSE",
+   Aggregation: Aggregation {
+       aggregation: 1,
+       TimeWindow: "1h",
+   },
+   transform: DifferenceFromTarget {
+        target : 1,
+        difference_calc : 1,
+   },
+   threshold: Threshold{
+       low: 10,
+       high: 12,
+   },
+ },
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| id | [rimeUUID](#rimeuuid) | Uniquely specifies a Monitor. | No |
+| name | string | The name of the monitor. | No |
+| firewallId | [rimeUUID](#rimeuuid) | Uniquely specifies a Firewall. | No |
+| monitorType | [monitorMonitorType](#monitormonitortype) | The type of this monitor. | No |
+| riskCategoryType | [riskscoreRiskCategoryType](#riskscoreriskcategorytype) | The risk category of this monitor. | No |
+| testCategory | [testrunTestCategoryType](#testruntestcategorytype) | The test category of this monitor. | No |
+| artifactIdentifier | [monitorArtifactIdentifier](#monitorartifactidentifier) | The artifact the monitor tracks. | No |
+| createdTime | dateTime | The time at which the monitor was created. | No |
+| notify | boolean | This field indicates whether the system should send CT monitoring notifications when this monitor is triggered. For default monitors, after the RIME engine creates a Monitor, this field should only be modified directly by the user. i.e. when we upsert the monitor in the Result synthesizer, we must not overwrite the value configured by the user. | No |
+| rcaRole | [rcaRCARole](#rcarcarole) |  | No |
+| config | [schemamonitorConfig](#schemamonitorconfig) | The configuration of this type of Monitor. | No |
+| excludedTransforms | [monitorExcludedTransforms](#monitorexcludedtransforms) | optional message to define which transforms do not apply to this metric. | No |
+| pinned | boolean | Option to pin a monitor. Pinned monitors are pinned for all users visiting the monitor's project. | No |
+
+#### monitorMonitorType
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| monitorMonitorType | string |  |  |
+
+#### monitorThreshold
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| low | double | The threshold for warning. | No |
+| high | double | The threshold for alert. | No |
+| type | [monitorThresholdType](#monitorthresholdtype) | The type of the threshold. | No |
+
+#### monitorThresholdType
+
+ - TYPE_UPPER_BOUND: The threshold is violated when the metric's value is greater than
+the upper bound.
+ - TYPE_LOWER_BOUND: The threshold is violated when the metric's value is less than the
+lower bound.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| monitorThresholdType | string |  - TYPE_UPPER_BOUND: The threshold is violated when the metric's value is greater than the upper bound.  - TYPE_LOWER_BOUND: The threshold is violated when the metric's value is less than the lower bound. |  |
+
+#### monitorTransform
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| differenceFromTarget | [monitorDifferenceFromTarget](#monitordifferencefromtarget) |  | No |
+
+#### protobufAny
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| @type | string |  | No |
+
+#### rcaRCARole
+
+RCARole indicates the RCA role of a detection event or a monitor.
+Their use in the RCA algorithm depends on their role.
+For example, RCA will be computed for EFFECT monitors.
+We will examine all FEATURE_CAUSE and TEST_CAUSE monitors to determine
+which one is most relevant.
+TODO: document this.
+
+ - RCAROLE_UNSPECIFIED: Unspecified is an invalid value: do not use.
+ - RCAROLE_EFFECT: The given degradation is the "effect" of a low level failure.
+ - RCAROLE_FEATURE_CAUSE: The given degradation in a feature (e.g. drift) may have caused a high
+level failure in an "effect" monitor.
+ - RCAROLE_TEST_CAUSE: The given degradation in a test may have caused a high level failure.
+ - RCAROLE_EXCLUDED: All monitors with the excluded tag will be excluded from RCA analysis.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rcaRCARole | string | RCARole indicates the RCA role of a detection event or a monitor. Their use in the RCA algorithm depends on their role. For example, RCA will be computed for EFFECT monitors. We will examine all FEATURE_CAUSE and TEST_CAUSE monitors to determine which one is most relevant. TODO: document this.   - RCAROLE_UNSPECIFIED: Unspecified is an invalid value: do not use.  - RCAROLE_EFFECT: The given degradation is the "effect" of a low level failure.  - RCAROLE_FEATURE_CAUSE: The given degradation in a feature (e.g. drift) may have caused a high level failure in an "effect" monitor.  - RCAROLE_TEST_CAUSE: The given degradation in a test may have caused a high level failure.  - RCAROLE_EXCLUDED: All monitors with the excluded tag will be excluded from RCA analysis. |  |
+
+#### rimeCreateCustomMonitorResponse
+
+CreateCustomMonitorResponse returns the created custom monitor.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| monitor | [monitorMonitor](#monitormonitor) | The created monitor. | No |
+
+#### rimeDeleteCustomMonitorResponse
+
+DeleteCustomMonitorResponse returns when a monitor is deleted.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeDeleteCustomMonitorResponse | object | DeleteCustomMonitorResponse returns when a monitor is deleted. |  |
+
+#### rimeGetMonitorResultResponse
+
+GetMonitorResultResponse returns the results for a monitor within a time
+range.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| monitorId | [rimeUUID](#rimeuuid) | Uniquely specifies a Monitor. | No |
+| monitorName | string | The name of the monitor. | No |
+| metricName | string |  | No |
+| threshold | [monitorThreshold](#monitorthreshold) | The threshold of the monitor. | No |
+| dataPoints | [ [rimeMonitorDataPoint](#rimemonitordatapoint) ] | The monitor data points. | No |
+
+#### rimeListMetricIdentifiersResponse
+
+ListMetricIdentifiersResponse returns metric identifiers grouped under
+features, subsets or neither.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| aggregatedMetrics | [ [ListMetricIdentifiersResponseAggregatedMetric](#listmetricidentifiersresponseaggregatedmetric) ] |  | No |
+| featureMetrics | object |  | No |
+
+#### rimeListMonitorsResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| monitors | [ [monitorMonitor](#monitormonitor) ] | The list of monitors. | No |
+| nextPageToken | string | The pagination token. | No |
+| hasMore | boolean |  | No |
+
+#### rimeMonitorDataPoint
+
+MonitorDataPoint defines a single data point
+in the monitor time series. It identifies both
+a metric value and time interval.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| timeInterval | [rimeTimeInterval](#rimetimeinterval) | The time interval of a data point. | No |
+| monitorValue | double |  | No |
+
+#### rimeTimeInterval
+
+TimeInterval describes a time interval.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| startTime | dateTime |  | No |
+| endTime | dateTime |  | No |
+
+#### rimeUUID
+
+Unique ID of an object in RIME.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| uuid | string | String value of the object ID. | No |
+
+#### rimeUpdateMonitorResponse
+
+UpdateMonitorResponse returns the updated monitor.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| monitor | [monitorMonitor](#monitormonitor) | The updated monitor. | No |
+
+#### riskscoreRiskCategoryType
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| riskscoreRiskCategoryType | string |  |  |
+
+#### schemamonitorConfig
+
+Config defines a configuration for a monitor.
+There are different varities of monitors, such as metric degradation monitors
+and anomaly monitors.
+Metric degradation monitors track metrics over time and make up the vast
+majority of monitors in our system.
+Anomaly monitors track discrete events such as Security infractions.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| degradation | [monitorMetricDegradationConfig](#monitormetricdegradationconfig) | The metric degradation configuration. | No |
+| anomaly | [monitorAnomalyConfig](#monitoranomalyconfig) | The anomaly configuration. | No |
+
+#### testrunTestCategoryType
+
+TestCategoryType contains all the possible values for test categories that
+can be run in RIME.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testrunTestCategoryType | string | TestCategoryType contains all the possible values for test categories that can be run in RIME. |  |

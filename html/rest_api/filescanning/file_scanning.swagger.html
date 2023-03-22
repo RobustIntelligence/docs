@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ri/api/filescanning/file_scanning.proto &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ri/api/fileupload/file_upload.proto" href="../fileupload/file_upload.swagger.html" />
+    <link rel="prev" title="ri/api/featureflag/feature_flag.proto" href="../featureflag/feature_flag.swagger.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                2.0.0-beta.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/modeltesting.html">RIME model testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/basic_tasks.html">Setting up and testing with RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/adv_tasks.html">Customization and troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/shostedinst.html">Self-Hosted</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REST API and SDK reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../python_library/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../rest-api.html">RI REST API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../agent/agent.swagger.html">ri/api/agent/agent.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datacollector/data_collector.swagger.html">ri/api/datacollector/data_collector.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../detection/detection.swagger.html">ri/api/detection/detection.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../featureflag/feature_flag.swagger.html">ri/api/featureflag/feature_flag.proto</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ri/api/filescanning/file_scanning.proto</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#version-version-not-set">Version: version not set</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#v1-beta-file-scans">/v1-beta/file-scans</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#models">Models</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../fileupload/file_upload.swagger.html">ri/api/fileupload/file_upload.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../firewall/firewall.swagger.html">ri/api/firewall/firewall.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../imageregistry/image_registry.swagger.html">ri/api/imageregistry/image_registry.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../imageregistry/managed_image.swagger.html">ri/api/imageregistry/managed_image.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_manager.swagger.html">ri/api/jobs/job_manager.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_message.swagger.html">ri/api/jobs/job_message.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_reader.swagger.html">ri/api/jobs/job_reader.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modelcard/model_card.swagger.html">ri/api/modelcard/model_card.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modeltesting/model_testing.swagger.html">ri/api/modeltesting/model_testing.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../monitor/monitor.swagger.html">ri/api/monitor/monitor.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notification/notification.swagger.html">ri/api/notification/notification.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project/project.swagger.html">ri/api/project/project.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../registry/registry.swagger.html">ri/api/registry/registry.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resultsynthesizer/result_message.swagger.html">ri/api/resultsynthesizer/result_message.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rimeinfo/rime_info.swagger.html">ri/api/rimeinfo/rime_info.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testrunresults/test_run_results.swagger.html">ri/api/testrunresults/test_run_results.proto</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../rest-api.html">RI REST API</a></li>
+      <li class="breadcrumb-item active">ri/api/filescanning/file_scanning.proto</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/rest_api/filescanning/file_scanning.swagger.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ri-api-filescanning-file-scanning-proto">
+<h1>ri/api/filescanning/file_scanning.proto<a class="headerlink" href="#ri-api-filescanning-file-scanning-proto" title="Permalink to this heading"></a></h1>
+<section id="version-version-not-set">
+<h2>Version: version not set<a class="headerlink" href="#version-version-not-set" title="Permalink to this heading"></a></h2>
+<section id="v1-beta-file-scans">
+<h3>/v1-beta/file-scans<a class="headerlink" href="#v1-beta-file-scans" title="Permalink to this heading"></a></h3>
+<section id="get">
+<h4>GET<a class="headerlink" href="#get" title="Permalink to this heading"></a></h4>
+<section id="summary">
+<h5>Summary:<a class="headerlink" href="#summary" title="Permalink to this heading"></a></h5>
+<p>ListFileScanResults</p>
+</section>
+<section id="description">
+<h5>Description:<a class="headerlink" href="#description" title="Permalink to this heading"></a></h5>
+<p>Returns a paginated list of all File Scan results.</p>
+</section>
+<section id="parameters">
+<h5>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pageSize</td>
+<td>query</td>
+<td>The maximum number of File Scan Result objects to return in a single page.</td>
+<td>No</td>
+<td>string (int64)</td>
+</tr>
+<tr>
+<td>pageToken</td>
+<td>query</td>
+<td>Specifies a page of the list returned by a ListFileScanResults query. The ListFileScanResults query returns a pageToken when there is more than one page of results.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="responses">
+<h5>Responses<a class="headerlink" href="#responses" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimelistfilescanresultsresponse">rimeListFileScanResultsResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="post">
+<h4>POST<a class="headerlink" href="#post" title="Permalink to this heading"></a></h4>
+<section id="id1">
+<h5>Summary:<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h5>
+<p>StartFileScan</p>
+</section>
+<section id="id2">
+<h5>Description:<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h5>
+<p>Starts a File Scanning Job for the specified file.</p>
+</section>
+<section id="id3">
+<h5>Parameters<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td></td>
+<td>Yes</td>
+<td><a href="#rimestartfilescanrequest">rimeStartFileScanRequest</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h5>Responses<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimestartfilescanresponse">rimeStartFileScanResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="models">
+<h3>Models<a class="headerlink" href="#models" title="Permalink to this heading"></a></h3>
+<section id="customimagepullsecret">
+<h4>CustomImagePullSecret<a class="headerlink" href="#customimagepullsecret" title="Permalink to this heading"></a></h4>
+<p>Description of the secret required to pull a custom image.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the Kubernetes pull secret that stores the required pull secret for the custom image.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunprogresstestbatchprogress">
+<h4>TestRunProgressTestBatchProgress<a class="headerlink" href="#testrunprogresstestbatchprogress" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>(test run ID, test batch type) are a unique ID of the test batch.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>status</td>
+<td><a href="#rimetesttaskstatus">rimeTestTaskStatus</a></td>
+<td>The status of each test batch is populated by the synthesizer.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="filescanningfilescanresult">
+<h4>filescanningFileScanResult<a class="headerlink" href="#filescanningfilescanresult" title="Permalink to this heading"></a></h4>
+<p>The results for a model scan run.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fileScanId</td>
+<td>string</td>
+<td>Uniquely specifies a File Scan.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>modelFileInfo</td>
+<td><a href="#filescanningmodelfileinfo">filescanningModelFileInfo</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>securityReport</td>
+<td><a href="#filescanningsecurityreport">filescanningSecurityReport</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="filescanninghuggingfacemodelinfo">
+<h4>filescanningHuggingfaceModelInfo<a class="headerlink" href="#filescanninghuggingfacemodelinfo" title="Permalink to this heading"></a></h4>
+<p>HuggingFace repository ID.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scanPath</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="filescanningmodelfileinfo">
+<h4>filescanningModelFileInfo<a class="headerlink" href="#filescanningmodelfileinfo" title="Permalink to this heading"></a></h4>
+<p>Specifies type of model file to scan.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pytorchFile</td>
+<td><a href="#filescanningpytorchmodelinfo">filescanningPytorchModelInfo</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>huggingfaceFile</td>
+<td><a href="#filescanninghuggingfacemodelinfo">filescanningHuggingfaceModelInfo</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="filescanningpytorchmodelinfo">
+<h4>filescanningPytorchModelInfo<a class="headerlink" href="#filescanningpytorchmodelinfo" title="Permalink to this heading"></a></h4>
+<p>Path to the Pytorch model file.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scanPath</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="filescanningsecurityreport">
+<h4>filescanningSecurityReport<a class="headerlink" href="#filescanningsecurityreport" title="Permalink to this heading"></a></h4>
+<p>A security report for a single model file.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scanPath</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>importsResults</td>
+<td>[ <a href="#filescanningsecurityreportimportresult">filescanningSecurityReportImportResult</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="filescanningsecurityreportimportresult">
+<h4>filescanningSecurityReportImportResult<a class="headerlink" href="#filescanningsecurityreportimportresult" title="Permalink to this heading"></a></h4>
+<p>Below are the messages used by the File Scan / Test Engine
+(on the DP side) to upload the results of a a model scan
+to the upload server / DB.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>filename</td>
+<td>string</td>
+<td>The name of the file that was scanned.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>extra</td>
+<td>[ string ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>unexpected</td>
+<td>[ string ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>unsafe</td>
+<td>[ string ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="googlerpcstatus">
+<h4>googlerpcStatus<a class="headerlink" href="#googlerpcstatus" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>code</td>
+<td>integer</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>message</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>details</td>
+<td>[ <a href="#protobufany">protobufAny</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="protobufany">
+<h4>protobufAny<a class="headerlink" href="#protobufany" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@type</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimearchivedjoblogs">
+<h4>rimeArchivedJobLogs<a class="headerlink" href="#rimearchivedjoblogs" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>url</td>
+<td><a href="#rimesafeurl">rimeSafeURL</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>expirationTime</td>
+<td>dateTime</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimecontinuoustestjobprogress">
+<h4>rimeContinuousTestJobProgress<a class="headerlink" href="#rimecontinuoustestjobprogress" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRuns</td>
+<td>[ <a href="#rimecontinuoustestrunprogress">rimeContinuousTestRunProgress</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimecontinuoustestrunprogress">
+<h4>rimeContinuousTestRunProgress<a class="headerlink" href="#rimecontinuoustestrunprogress" title="Permalink to this heading"></a></h4>
+<p>ContinuousTestRunProgress is a wrapper around TestRunProgress with
+added metadata about the bins.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRun</td>
+<td><a href="#rimetestrunprogress">rimeTestRunProgress</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>binStartTime</td>
+<td>dateTime</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>binEndTime</td>
+<td>dateTime</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimejobdata">
+<h4>rimeJobData<a class="headerlink" href="#rimejobdata" title="Permalink to this heading"></a></h4>
+<p>Note that progress may not be populated depending on the parameters of the
+request.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>stress</td>
+<td><a href="#rimejobdatastresstest">rimeJobDataStressTest</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>continuousInc</td>
+<td><a href="#rimejobdatacontinuousincrementaltest">rimeJobDataContinuousIncrementalTest</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>fileScan</td>
+<td>object</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimejobdatacontinuousincrementaltest">
+<h4>rimeJobDataContinuousIncrementalTest<a class="headerlink" href="#rimejobdatacontinuousincrementaltest" title="Permalink to this heading"></a></h4>
+<p>A continuous incremental test job runs <code class="docutils literal notranslate"><span class="pre">n</span></code> test runs, where <code class="docutils literal notranslate"><span class="pre">n</span></code> is the
+number of bins specified in the dataset.
+This is a production specific workflow and is used to monitor a model’s
+performance over time.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>firewallId</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>ctTestRunIds</td>
+<td>[ string ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>progress</td>
+<td><a href="#rimecontinuoustestjobprogress">rimeContinuousTestJobProgress</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimejobdatastresstest">
+<h4>rimeJobDataStressTest<a class="headerlink" href="#rimejobdatastresstest" title="Permalink to this heading"></a></h4>
+<p>A stress test job runs a single test run over a model and dataset.
+This is also known as offline testing; it is run before production
+deployment of the model.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>projectId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>testRunId</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>progress</td>
+<td><a href="#rimestresstestjobprogress">rimeStressTestJobProgress</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimejobmetadata">
+<h4>rimeJobMetadata<a class="headerlink" href="#rimejobmetadata" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jobId</td>
+<td>string</td>
+<td>The identifier within our job tracking system.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>terminationReason</td>
+<td><a href="#rimeterminationreason">rimeTerminationReason</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>jobType</td>
+<td><a href="#rimejobtype">rimeJobType</a></td>
+<td>The type of the job.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>status</td>
+<td><a href="#statedbjobstatus">statedbJobStatus</a></td>
+<td>The job's current status.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>startTime</td>
+<td>dateTime</td>
+<td>The start time of the job (when the job transitions in state to RUNNING). Note, this may not be populated immediately when the job is created.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>creationTime</td>
+<td>dateTime</td>
+<td>The time the job was created.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>runningTimeSecs</td>
+<td>double</td>
+<td>The total running time a job took to complete if the job is finished or the current running time if the job is still in progress (seconds).</td>
+<td>No</td>
+</tr>
+<tr>
+<td>jobData</td>
+<td><a href="#rimejobdata">rimeJobData</a></td>
+<td>Job-type specific data. e.g. for stress test jobs, this is populated with the project ID and the test run ID. The type of the job data payload must match the JobType in this message.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>jobProgressStr</td>
+<td>string</td>
+<td>Pretty-printed, human-readable representation of job progress. This will only be populated for Read methods with the FULL job view. To get schema for progress for each type of job, see the field inside that job's job data message (e.g. StressTestJobProgress). Note: this is unstable, do not rely on parsing this.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>cancellationRequested</td>
+<td>boolean</td>
+<td>Marked when the job has been requested to be cancelled by the user. This is declarative; once the user requests cancellation, the backend will conduct garbage collection on the job in the background and eventually update the status of the job to CANCELLED.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>agentId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>agent_id denotes the agent this job is run on.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>archivedJobLogs</td>
+<td><a href="#rimearchivedjoblogs">rimeArchivedJobLogs</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimejobtype">
+<h4>rimeJobType<a class="headerlink" href="#rimejobtype" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeJobType</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimelistfilescanresultsresponse">
+<h4>rimeListFileScanResultsResponse<a class="headerlink" href="#rimelistfilescanresultsresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>results</td>
+<td>[ <a href="#filescanningfilescanresult">filescanningFileScanResult</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>nextPageToken</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>hasMore</td>
+<td>boolean</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimesafeurl">
+<h4>rimeSafeURL<a class="headerlink" href="#rimesafeurl" title="Permalink to this heading"></a></h4>
+<p>SafeURL represents a URL that has been safely constructed.
+e.g. a user clicking on this link is guaranteed to land on the RIME web app.
+We use this instead of a raw str so that application code can generate
+SafeURL messages in certain ways -&gt; this provides stronger typing than just
+using a string.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>url</td>
+<td>string</td>
+<td>A safely constructed URL.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimestartfilescanrequest">
+<h4>rimeStartFileScanRequest<a class="headerlink" href="#rimestartfilescanrequest" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fileInfo</td>
+<td><a href="#filescanningmodelfileinfo">filescanningModelFileInfo</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>runTimeInfo</td>
+<td><a href="#runtimeinforuntimeinfo">runtimeinfoRunTimeInfo</a></td>
+<td>Specifies a custom image to use when running the file scan.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>workspaceId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>Uniquely specifies which workspace the file scanning job belongs to. If not specified, server will attempt to read the workspace from the request context.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimestartfilescanresponse">
+<h4>rimeStartFileScanResponse<a class="headerlink" href="#rimestartfilescanresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>job</td>
+<td><a href="#rimejobmetadata">rimeJobMetadata</a></td>
+<td>Details for the job that was started.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimestresstestjobprogress">
+<h4>rimeStressTestJobProgress<a class="headerlink" href="#rimestresstestjobprogress" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRun</td>
+<td><a href="#rimetestrunprogress">rimeTestRunProgress</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeterminationreason">
+<h4>rimeTerminationReason<a class="headerlink" href="#rimeterminationreason" title="Permalink to this heading"></a></h4>
+<ul class="simple">
+<li><p>TERMINATION_REASON_OOMKILLED: The job was terminated for using more memory than the amount assigned
+to the job.</p></li>
+<li><p>TERMINATION_REASON_GENERIC_ERROR: This is the catch-all error and is typically used for user errors.</p></li>
+<li><p>TERMINATION_REASON_INTERNAL_ERROR: Specifies a system error. Contact the support team.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeTerminationReason</td>
+<td>string</td>
+<td>- TERMINATION_REASON_OOMKILLED: The job was terminated for using more memory than the amount assigned to the job.  - TERMINATION_REASON_GENERIC_ERROR: This is the catch-all error and is typically used for user errors.  - TERMINATION_REASON_INTERNAL_ERROR: Specifies a system error. Contact the support team.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimetestrunprogress">
+<h4>rimeTestRunProgress<a class="headerlink" href="#rimetestrunprogress" title="Permalink to this heading"></a></h4>
+<p>TestRunProgress is a shared message for representing the progress of a
+single test run.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRunId</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>status</td>
+<td><a href="#rimetesttaskstatus">rimeTestTaskStatus</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>testBatches</td>
+<td>[ <a href="#testrunprogresstestbatchprogress">TestRunProgressTestBatchProgress</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimetesttaskstatus">
+<h4>rimeTestTaskStatus<a class="headerlink" href="#rimetesttaskstatus" title="Permalink to this heading"></a></h4>
+<p>Status of individual test units, e.g. test runs, test batches, test cases.
+This is different from job status because these are more abstract.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeTestTaskStatus</td>
+<td>string</td>
+<td>Status of individual test units, e.g. test runs, test batches, test cases. This is different from job status because these are more abstract.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeuuid">
+<h4>rimeUUID<a class="headerlink" href="#rimeuuid" title="Permalink to this heading"></a></h4>
+<p>Unique ID of an object in RIME.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uuid</td>
+<td>string</td>
+<td>String value of the object ID.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="runtimeinfocustomimage">
+<h4>runtimeinfoCustomImage<a class="headerlink" href="#runtimeinfocustomimage" title="Permalink to this heading"></a></h4>
+<p>CustomImage is an external image provided by the customer.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the custom image (e.g. a docker image name).</td>
+<td>No</td>
+</tr>
+<tr>
+<td>pullSecret</td>
+<td><a href="#customimagepullsecret">CustomImagePullSecret</a></td>
+<td>Secret used to pull the custom image.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="runtimeinfocustomimagetype">
+<h4>runtimeinfoCustomImageType<a class="headerlink" href="#runtimeinfocustomimagetype" title="Permalink to this heading"></a></h4>
+<p>CustomImageType is a union of all possible custom managed image and RI
+managed image.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>customImage</td>
+<td><a href="#runtimeinfocustomimage">runtimeinfoCustomImage</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>managedImageName</td>
+<td>string</td>
+<td>Name of the RI managed image.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="runtimeinforesourcerequest">
+<h4>runtimeinfoResourceRequest<a class="headerlink" href="#runtimeinforesourcerequest" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ramRequestMegabytes</td>
+<td>string (uint64)</td>
+<td>Megabytes of RAM requested for the stress test job.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>cpuRequestMillicores</td>
+<td>string (uint64)</td>
+<td>Millicores of CPU requested for the stress test job.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="runtimeinforuntimeinfo">
+<h4>runtimeinfoRunTimeInfo<a class="headerlink" href="#runtimeinforuntimeinfo" title="Permalink to this heading"></a></h4>
+<p>RuntimeInfo contains information about how a job should be run.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>agentId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>ID of the agent this job should be run on. If not specified, the default agent for the workspace is used.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>customImage</td>
+<td><a href="#runtimeinfocustomimagetype">runtimeinfoCustomImageType</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>resourceRequest</td>
+<td><a href="#runtimeinforesourcerequest">runtimeinfoResourceRequest</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>explicitErrors</td>
+<td>boolean</td>
+<td>If true, the job will not ignore silent errors.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>randomSeed</td>
+<td>string (int64)</td>
+<td>Random seed to use for the job, so that test job result will be deterministic.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="statedbjobstatus">
+<h4>statedbJobStatus<a class="headerlink" href="#statedbjobstatus" title="Permalink to this heading"></a></h4>
+<p>TODO(AIRS-764): redesign as part of Job Monitoring consolidation with
+StateDB effort.</p>
+<ul class="simple">
+<li><p>JOB_STATUS_PENDING: Resources have been created for the job but the job has not started yet.</p></li>
+<li><p>JOB_STATUS_FAILED: Blanket status for user or system-related job failure.
+Check the Termination Reason for details.</p></li>
+<li><p>JOB_STATUS_REQUESTED: The job descriptor exists but has no resources allocated.
+Jobs that remain in this status without moving to the PENDING status are
+at risk of entering the FAILED status.</p></li>
+<li><p>JOB_STATUS_CANCELLED: Job has been cancelled.
+Cancelled jobs cannot be recovered.</p></li>
+<li><p>JOB_STATUS_RECONCILING: Job is being reconciled by the operator.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>statedbJobStatus</td>
+<td>string</td>
+<td>TODO(AIRS-764): redesign as part of Job Monitoring consolidation with  StateDB effort.   - JOB_STATUS_PENDING: Resources have been created for the job but the job has not started yet.  - JOB_STATUS_FAILED: Blanket status for user or system-related job failure. Check the Termination Reason for details.  - JOB_STATUS_REQUESTED: The job descriptor exists but has no resources allocated. Jobs that remain in this status without moving to the PENDING status are at risk of entering the FAILED status.  - JOB_STATUS_CANCELLED: Job has been cancelled. Cancelled jobs cannot be recovered.  - JOB_STATUS_RECONCILING: Job is being reconciled by the operator.</td>
+<td></td>
+</tr>
+</tbody>
+</table></section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../featureflag/feature_flag.swagger.html" class="btn btn-neutral float-left" title="ri/api/featureflag/feature_flag.proto" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../fileupload/file_upload.swagger.html" class="btn btn-neutral float-right" title="ri/api/fileupload/file_upload.proto" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

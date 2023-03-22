@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ri/api/imageregistry/image_registry.proto &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ri/api/imageregistry/managed_image.proto" href="managed_image.swagger.html" />
+    <link rel="prev" title="ri/api/firewall/firewall.proto" href="../firewall/firewall.swagger.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                2.0.0-beta.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/modeltesting.html">RIME model testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/basic_tasks.html">Setting up and testing with RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/adv_tasks.html">Customization and troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/shostedinst.html">Self-Hosted</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REST API and SDK reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../python_library/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../rest-api.html">RI REST API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../agent/agent.swagger.html">ri/api/agent/agent.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datacollector/data_collector.swagger.html">ri/api/datacollector/data_collector.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../detection/detection.swagger.html">ri/api/detection/detection.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../featureflag/feature_flag.swagger.html">ri/api/featureflag/feature_flag.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../filescanning/file_scanning.swagger.html">ri/api/filescanning/file_scanning.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileupload/file_upload.swagger.html">ri/api/fileupload/file_upload.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../firewall/firewall.swagger.html">ri/api/firewall/firewall.proto</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ri/api/imageregistry/image_registry.proto</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#version-version-not-set">Version: version not set</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#v1-images">/v1/images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-images-list">/v1/images/list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-images-name">/v1/images/{name}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#models">Models</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="managed_image.swagger.html">ri/api/imageregistry/managed_image.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_manager.swagger.html">ri/api/jobs/job_manager.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_message.swagger.html">ri/api/jobs/job_message.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_reader.swagger.html">ri/api/jobs/job_reader.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modelcard/model_card.swagger.html">ri/api/modelcard/model_card.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modeltesting/model_testing.swagger.html">ri/api/modeltesting/model_testing.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../monitor/monitor.swagger.html">ri/api/monitor/monitor.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notification/notification.swagger.html">ri/api/notification/notification.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project/project.swagger.html">ri/api/project/project.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../registry/registry.swagger.html">ri/api/registry/registry.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resultsynthesizer/result_message.swagger.html">ri/api/resultsynthesizer/result_message.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rimeinfo/rime_info.swagger.html">ri/api/rimeinfo/rime_info.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testrunresults/test_run_results.swagger.html">ri/api/testrunresults/test_run_results.proto</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../rest-api.html">RI REST API</a></li>
+      <li class="breadcrumb-item active">ri/api/imageregistry/image_registry.proto</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/rest_api/imageregistry/image_registry.swagger.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ri-api-imageregistry-image-registry-proto">
+<h1>ri/api/imageregistry/image_registry.proto<a class="headerlink" href="#ri-api-imageregistry-image-registry-proto" title="Permalink to this heading"></a></h1>
+<section id="version-version-not-set">
+<h2>Version: version not set<a class="headerlink" href="#version-version-not-set" title="Permalink to this heading"></a></h2>
+<section id="v1-images">
+<h3>/v1/images<a class="headerlink" href="#v1-images" title="Permalink to this heading"></a></h3>
+<section id="get">
+<h4>GET<a class="headerlink" href="#get" title="Permalink to this heading"></a></h4>
+<section id="summary">
+<h5>Summary:<a class="headerlink" href="#summary" title="Permalink to this heading"></a></h5>
+<p>ListImages</p>
+</section>
+<section id="description">
+<h5>Description:<a class="headerlink" href="#description" title="Permalink to this heading"></a></h5>
+<p>List all images that match a specified set of constraints.</p>
+<p><span class="xref myst">Python pagination example</span></p>
+</section>
+<section id="parameters">
+<h5>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pageToken</td>
+<td>query</td>
+<td>Specifies a page of the list returned by a ListImages query. The ListImages query returns a pageToken when there is more than one page of results.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>query</td>
+<td>The maximum number of Image objects to return in a single page.</td>
+<td>No</td>
+<td>string (int64)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="responses">
+<h5>Responses<a class="headerlink" href="#responses" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimelistimagesresponse">rimeListImagesResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="post">
+<h4>POST<a class="headerlink" href="#post" title="Permalink to this heading"></a></h4>
+<section id="id1">
+<h5>Summary:<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h5>
+<p>CreateImage</p>
+</section>
+<section id="id2">
+<h5>Description:<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h5>
+<p>Creates a new managed image with a unique name.</p>
+</section>
+<section id="id3">
+<h5>Parameters<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td></td>
+<td>Yes</td>
+<td><a href="#rimecreateimagerequest">rimeCreateImageRequest</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h5>Responses<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimecreateimageresponse">rimeCreateImageResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-images-list">
+<h3>/v1/images/list<a class="headerlink" href="#v1-images-list" title="Permalink to this heading"></a></h3>
+<section id="id5">
+<h4>POST<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h4>
+<section id="id6">
+<h5>Summary:<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h5>
+<p>ListImages</p>
+</section>
+<section id="id7">
+<h5>Description:<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h5>
+<p>List all images that match a specified set of constraints.</p>
+<p><span class="xref myst">Python pagination example</span></p>
+</section>
+<section id="id8">
+<h5>Parameters<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td></td>
+<td>Yes</td>
+<td><a href="#rimelistimagesrequest">rimeListImagesRequest</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id9">
+<h5>Responses<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimelistimagesresponse">rimeListImagesResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-images-name">
+<h3>/v1/images/{name}<a class="headerlink" href="#v1-images-name" title="Permalink to this heading"></a></h3>
+<section id="id10">
+<h4>GET<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h4>
+<section id="id11">
+<h5>Summary:<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h5>
+<p>GetImage</p>
+</section>
+<section id="id12">
+<h5>Description:<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h5>
+<p>Returns the definition of a specified managed image.</p>
+</section>
+<section id="id13">
+<h5>Parameters<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>path</td>
+<td>Name of existing image.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id14">
+<h5>Responses<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimegetimageresponse">rimeGetImageResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="delete">
+<h4>DELETE<a class="headerlink" href="#delete" title="Permalink to this heading"></a></h4>
+<section id="id15">
+<h5>Summary:<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h5>
+<p>DeleteImage</p>
+</section>
+<section id="id16">
+<h5>Description:<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h5>
+<p>Deletes a specified managed image.</p>
+</section>
+<section id="id17">
+<h5>Parameters<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>path</td>
+<td>Name of existing image.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id18">
+<h5>Responses<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimedeleteimageresponse">rimeDeleteImageResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="models">
+<h3>Models<a class="headerlink" href="#models" title="Permalink to this heading"></a></h3>
+<section id="imagereferencereferencetype">
+<h4>ImageReferenceReferenceType<a class="headerlink" href="#imagereferencereferencetype" title="Permalink to this heading"></a></h4>
+<ul class="simple">
+<li><p>REFERENCE_TYPE_RIME_DOCKERHUB: Signifies an external image that is located in RIME’s Docker Hub
+repository.</p></li>
+<li><p>REFERENCE_TYPE_MANAGED: Signifies an image managed by the managed image registry.</p></li>
+<li><p>REFERENCE_TYPE_EXTERNAL_ECR: Signifies an external image located in an ECR repository.</p></li>
+<li><p>REFERENCE_TYPE_EXTERNAL_GAR: Signifies an external image located in a GAR repository.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ImageReferenceReferenceType</td>
+<td>string</td>
+<td>- REFERENCE_TYPE_RIME_DOCKERHUB: Signifies an external image that is located in RIME's Docker Hub repository.  - REFERENCE_TYPE_MANAGED: Signifies an image managed by the managed image registry.  - REFERENCE_TYPE_EXTERNAL_ECR: Signifies an external image located in an ECR repository.  - REFERENCE_TYPE_EXTERNAL_GAR: Signifies an external image located in a GAR repository.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="listimagesrequestpiplibraryfilter">
+<h4>ListImagesRequestPipLibraryFilter<a class="headerlink" href="#listimagesrequestpiplibraryfilter" title="Permalink to this heading"></a></h4>
+<p>Specification of a filter for a pip library.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the library.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>version</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="managedimagepackagerequirement">
+<h4>ManagedImagePackageRequirement<a class="headerlink" href="#managedimagepackagerequirement" title="Permalink to this heading"></a></h4>
+<p>A requirement specifying a system package to be installed on the image.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the package.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>versionSpecifier</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>packageType</td>
+<td><a href="#managedimagepackagetype">ManagedImagePackageType</a></td>
+<td>The type of system package, which specifies the package manager to use to install this package.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="managedimagepackagetype">
+<h4>ManagedImagePackageType<a class="headerlink" href="#managedimagepackagetype" title="Permalink to this heading"></a></h4>
+<p>The type of package manager used to install system packages.</p>
+<ul class="simple">
+<li><p>PACKAGE_TYPE_UNSPECIFIED: The default type that corresponds to an unspecified type error.</p></li>
+<li><p>PACKAGE_TYPE_APT: Specifies packages from the apt package manager available in
+distributions of Debian Linux.</p></li>
+<li><p>PACKAGE_TYPE_ROCKYLINUX: Specifies packages from the yum package manager available in
+distributions of Rocky Linux.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ManagedImagePackageType</td>
+<td>string</td>
+<td>The type of package manager used to install system packages.   - PACKAGE_TYPE_UNSPECIFIED: The default type that corresponds to an unspecified type error.  - PACKAGE_TYPE_APT: Specifies packages from the apt package manager available in distributions of Debian Linux.  - PACKAGE_TYPE_ROCKYLINUX: Specifies packages from the yum package manager available in distributions of Rocky Linux.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="managedimagepiplibrary">
+<h4>ManagedImagePipLibrary<a class="headerlink" href="#managedimagepiplibrary" title="Permalink to this heading"></a></h4>
+<p>A pip library to install on the managed image.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the library.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>version</td>
+<td>string</td>
+<td>Version of the library.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="managedimagepiprequirement">
+<h4>ManagedImagePipRequirement<a class="headerlink" href="#managedimagepiprequirement" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the library.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>versionSpecifier</td>
+<td>string</td>
+<td>Specifier for a version of the library, see: https://www.python.org/dev/peps/pep-0440/#version-specifiers or https://peps.python.org/pep-0440/ for reference.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="managedimageroletype">
+<h4>ManagedImageRoleType<a class="headerlink" href="#managedimageroletype" title="Permalink to this heading"></a></h4>
+<p>RoleType signifies the role the image plays within the registry and
+the permissions users have for executing actions on the image.</p>
+<ul class="simple">
+<li><p>ROLE_TYPE_UNSPECIFIED: The role type was not specified when the image was created, as is
+the case with legacy images. Treated as the <code class="docutils literal notranslate"><span class="pre">USER_DEFINED</span></code> role type.</p></li>
+<li><p>ROLE_TYPE_SYSTEM: The system role indicates that the image is generated and used by the
+managed image system and is critical to image building
+functionality. These images cannot be modified by users.
+System-level images are generated by the managed image system and are
+critical for building other images.</p></li>
+<li><p>ROLE_TYPE_USER_DEFINED: The user-defined role indicates that the image was created by users
+and that users can execute arbitrary actions on it.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ManagedImageRoleType</td>
+<td>string</td>
+<td>RoleType signifies the role the image plays within the registry and the permissions users have for executing actions on the image.   - ROLE_TYPE_UNSPECIFIED: The role type was not specified when the image was created, as is the case with legacy images. Treated as the <code>USER_DEFINED</code> role type.  - ROLE_TYPE_SYSTEM: The system role indicates that the image is generated and used by the managed image system and is critical to image building functionality. These images cannot be modified by users. System-level images are generated by the managed image system and are critical for building other images.  - ROLE_TYPE_USER_DEFINED: The user-defined role indicates that the image was created by users and that users can execute arbitrary actions on it.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testrunprogresstestbatchprogress">
+<h4>TestRunProgressTestBatchProgress<a class="headerlink" href="#testrunprogresstestbatchprogress" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>(test run ID, test batch type) are a unique ID of the test batch.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>status</td>
+<td><a href="#rimetesttaskstatus">rimeTestTaskStatus</a></td>
+<td>The status of each test batch is populated by the synthesizer.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="googlerpcstatus">
+<h4>googlerpcStatus<a class="headerlink" href="#googlerpcstatus" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>code</td>
+<td>integer</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>message</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>details</td>
+<td>[ <a href="#protobufany">protobufAny</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="protobufany">
+<h4>protobufAny<a class="headerlink" href="#protobufany" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@type</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimearchivedjoblogs">
+<h4>rimeArchivedJobLogs<a class="headerlink" href="#rimearchivedjoblogs" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>url</td>
+<td><a href="#rimesafeurl">rimeSafeURL</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>expirationTime</td>
+<td>dateTime</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimecontinuoustestjobprogress">
+<h4>rimeContinuousTestJobProgress<a class="headerlink" href="#rimecontinuoustestjobprogress" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRuns</td>
+<td>[ <a href="#rimecontinuoustestrunprogress">rimeContinuousTestRunProgress</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimecontinuoustestrunprogress">
+<h4>rimeContinuousTestRunProgress<a class="headerlink" href="#rimecontinuoustestrunprogress" title="Permalink to this heading"></a></h4>
+<p>ContinuousTestRunProgress is a wrapper around TestRunProgress with
+added metadata about the bins.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRun</td>
+<td><a href="#rimetestrunprogress">rimeTestRunProgress</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>binStartTime</td>
+<td>dateTime</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>binEndTime</td>
+<td>dateTime</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimecreateimagerequest">
+<h4>rimeCreateImageRequest<a class="headerlink" href="#rimecreateimagerequest" title="Permalink to this heading"></a></h4>
+<p>Request and response for a CreateImage RPC.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the image.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>pipRequirements</td>
+<td>[ <a href="#managedimagepiprequirement">ManagedImagePipRequirement</a> ]</td>
+<td>List of <code>pip</code> requirements that specify the customization used for this image.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>packageRequirements</td>
+<td>[ <a href="#managedimagepackagerequirement">ManagedImagePackageRequirement</a> ]</td>
+<td>List of system requirements that specify the customization used for this image.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>pythonVersion</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimecreateimageresponse">
+<h4>rimeCreateImageResponse<a class="headerlink" href="#rimecreateimageresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>image</td>
+<td><a href="#rimemanagedimage">rimeManagedImage</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>job</td>
+<td><a href="#rimejobmetadata">rimeJobMetadata</a></td>
+<td>Details for the image builder job that was launched.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimedeleteimageresponse">
+<h4>rimeDeleteImageResponse<a class="headerlink" href="#rimedeleteimageresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeDeleteImageResponse</td>
+<td>object</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeensureimageexistenceresponse">
+<h4>rimeEnsureImageExistenceResponse<a class="headerlink" href="#rimeensureimageexistenceresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeEnsureImageExistenceResponse</td>
+<td>object</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimegetimageresponse">
+<h4>rimeGetImageResponse<a class="headerlink" href="#rimegetimageresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>image</td>
+<td><a href="#rimemanagedimage">rimeManagedImage</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeimagereference">
+<h4>rimeImageReference<a class="headerlink" href="#rimeimagereference" title="Permalink to this heading"></a></h4>
+<p>A reference to another image, managed or not.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the image being referenced. For a managed image, this is the <code>name</code> record of the <code>ManagedImage</code> object. For an external image, this is the full name of that image.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>referenceType</td>
+<td><a href="#imagereferencereferencetype">ImageReferenceReferenceType</a></td>
+<td>The type of image being referenced.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimejobdata">
+<h4>rimeJobData<a class="headerlink" href="#rimejobdata" title="Permalink to this heading"></a></h4>
+<p>Note that progress may not be populated depending on the parameters of the
+request.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>stress</td>
+<td><a href="#rimejobdatastresstest">rimeJobDataStressTest</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>continuousInc</td>
+<td><a href="#rimejobdatacontinuousincrementaltest">rimeJobDataContinuousIncrementalTest</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>fileScan</td>
+<td>object</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimejobdatacontinuousincrementaltest">
+<h4>rimeJobDataContinuousIncrementalTest<a class="headerlink" href="#rimejobdatacontinuousincrementaltest" title="Permalink to this heading"></a></h4>
+<p>A continuous incremental test job runs <code class="docutils literal notranslate"><span class="pre">n</span></code> test runs, where <code class="docutils literal notranslate"><span class="pre">n</span></code> is the
+number of bins specified in the dataset.
+This is a production specific workflow and is used to monitor a model’s
+performance over time.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>firewallId</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>ctTestRunIds</td>
+<td>[ string ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>progress</td>
+<td><a href="#rimecontinuoustestjobprogress">rimeContinuousTestJobProgress</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimejobdatastresstest">
+<h4>rimeJobDataStressTest<a class="headerlink" href="#rimejobdatastresstest" title="Permalink to this heading"></a></h4>
+<p>A stress test job runs a single test run over a model and dataset.
+This is also known as offline testing; it is run before production
+deployment of the model.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>projectId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>testRunId</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>progress</td>
+<td><a href="#rimestresstestjobprogress">rimeStressTestJobProgress</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimejobmetadata">
+<h4>rimeJobMetadata<a class="headerlink" href="#rimejobmetadata" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jobId</td>
+<td>string</td>
+<td>The identifier within our job tracking system.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>terminationReason</td>
+<td><a href="#rimeterminationreason">rimeTerminationReason</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>jobType</td>
+<td><a href="#rimejobtype">rimeJobType</a></td>
+<td>The type of the job.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>status</td>
+<td><a href="#statedbjobstatus">statedbJobStatus</a></td>
+<td>The job's current status.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>startTime</td>
+<td>dateTime</td>
+<td>The start time of the job (when the job transitions in state to RUNNING). Note, this may not be populated immediately when the job is created.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>creationTime</td>
+<td>dateTime</td>
+<td>The time the job was created.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>runningTimeSecs</td>
+<td>double</td>
+<td>The total running time a job took to complete if the job is finished or the current running time if the job is still in progress (seconds).</td>
+<td>No</td>
+</tr>
+<tr>
+<td>jobData</td>
+<td><a href="#rimejobdata">rimeJobData</a></td>
+<td>Job-type specific data. e.g. for stress test jobs, this is populated with the project ID and the test run ID. The type of the job data payload must match the JobType in this message.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>jobProgressStr</td>
+<td>string</td>
+<td>Pretty-printed, human-readable representation of job progress. This will only be populated for Read methods with the FULL job view. To get schema for progress for each type of job, see the field inside that job's job data message (e.g. StressTestJobProgress). Note: this is unstable, do not rely on parsing this.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>cancellationRequested</td>
+<td>boolean</td>
+<td>Marked when the job has been requested to be cancelled by the user. This is declarative; once the user requests cancellation, the backend will conduct garbage collection on the job in the background and eventually update the status of the job to CANCELLED.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>agentId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>agent_id denotes the agent this job is run on.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>archivedJobLogs</td>
+<td><a href="#rimearchivedjoblogs">rimeArchivedJobLogs</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimejobtype">
+<h4>rimeJobType<a class="headerlink" href="#rimejobtype" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeJobType</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimelistimagesrequest">
+<h4>rimeListImagesRequest<a class="headerlink" href="#rimelistimagesrequest" title="Permalink to this heading"></a></h4>
+<p>Request and response for a ListImages RPC.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pageToken</td>
+<td>string</td>
+<td>Specifies a page of the list returned by a ListImages query. The ListImages query returns a pageToken when there is more than one page of results.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>string (int64)</td>
+<td>The maximum number of Image objects to return in a single page.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>pipLibraries</td>
+<td>[ <a href="#listimagesrequestpiplibraryfilter">ListImagesRequestPipLibraryFilter</a> ]</td>
+<td>Optional. Constrains which <code>pip</code> libraries are installed on the image. The filter will only be active if the list is nonempty. If specified, do not include a pageToken field in the request.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimelistimagesresponse">
+<h4>rimeListImagesResponse<a class="headerlink" href="#rimelistimagesresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>images</td>
+<td>[ <a href="#rimemanagedimage">rimeManagedImage</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>nextPageToken</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimemanagedimage">
+<h4>rimeManagedImage<a class="headerlink" href="#rimemanagedimage" title="Permalink to this heading"></a></h4>
+<p>A representation of a custom image whose tag or version is managed by the
+ImageRegistry.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The external name of the image. This name must match the /^[a-z][a-z0-9]<em>(?:[_-][a-z0-9]+)</em>$/ regular expression. See the naming rules in https://docs.docker.com/engine/reference/commandline/tag/#extended-description  protolint:disable:this MAX_LINE_LENGTH https://docs.aws.amazon.com/AmazonECR/latest/userguide/repository-create.html  protolint:disable:this MAX_LINE_LENGTH from which the naming convention derives. The above names are valid ECR or Docker image names.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>baseImage</td>
+<td><a href="#rimeimagereference">rimeImageReference</a></td>
+<td>A reference to the source image on which this image is built.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>roleType</td>
+<td><a href="#managedimageroletype">ManagedImageRoleType</a></td>
+<td>The role type of the image.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>childImages</td>
+<td>[ <a href="#rimeimagereference">rimeImageReference</a> ]</td>
+<td>The set of images that use this image as a source.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>rimeTag</td>
+<td>string</td>
+<td>The tag of the RIME wheel used to build the managed image.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>repoUri</td>
+<td>string</td>
+<td>The URI of the repository.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>status</td>
+<td><a href="#rimemanagedimagestatus">rimeManagedImageStatus</a></td>
+<td>Status of the managed image.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>packageRequirements</td>
+<td>[ <a href="#managedimagepackagerequirement">ManagedImagePackageRequirement</a> ]</td>
+<td>A list of all system package requirements used to build this image.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>pipRequirements</td>
+<td>[ <a href="#managedimagepiprequirement">ManagedImagePipRequirement</a> ]</td>
+<td>A list of all pip requirements used to build this image.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>pipLibraries</td>
+<td>[ <a href="#managedimagepiplibrary">ManagedImagePipLibrary</a> ]</td>
+<td>A list of all pip libraries installed on this image as obtained by running <code>pip list</code>.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>pythonVersion</td>
+<td>string</td>
+<td>The version of Python used to build the RIME image.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimemanagedimagestatus">
+<h4>rimeManagedImageStatus<a class="headerlink" href="#rimemanagedimagestatus" title="Permalink to this heading"></a></h4>
+<ul class="simple">
+<li><p>STATUS_BUILDING_FIRST_TIME: The building states distinguish initial
+builds from builds to synchronize a managed image to the most recent
+RIME version. This distinction is important because initial builds
+have a higher tendency to encounter errors.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeManagedImageStatus</td>
+<td>string</td>
+<td>- STATUS_BUILDING_FIRST_TIME: The building states distinguish initial builds from builds to synchronize a managed image to the most recent RIME version. This distinction is important because initial builds have a higher tendency to encounter errors.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimesafeurl">
+<h4>rimeSafeURL<a class="headerlink" href="#rimesafeurl" title="Permalink to this heading"></a></h4>
+<p>SafeURL represents a URL that has been safely constructed.
+e.g. a user clicking on this link is guaranteed to land on the RIME web app.
+We use this instead of a raw str so that application code can generate
+SafeURL messages in certain ways -&gt; this provides stronger typing than just
+using a string.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>url</td>
+<td>string</td>
+<td>A safely constructed URL.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimestresstestjobprogress">
+<h4>rimeStressTestJobProgress<a class="headerlink" href="#rimestresstestjobprogress" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRun</td>
+<td><a href="#rimetestrunprogress">rimeTestRunProgress</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimesyncimagetagresponse">
+<h4>rimeSyncImageTagResponse<a class="headerlink" href="#rimesyncimagetagresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>image</td>
+<td><a href="#rimemanagedimage">rimeManagedImage</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>job</td>
+<td><a href="#rimejobmetadata">rimeJobMetadata</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeterminationreason">
+<h4>rimeTerminationReason<a class="headerlink" href="#rimeterminationreason" title="Permalink to this heading"></a></h4>
+<ul class="simple">
+<li><p>TERMINATION_REASON_OOMKILLED: The job was terminated for using more memory than the amount assigned
+to the job.</p></li>
+<li><p>TERMINATION_REASON_GENERIC_ERROR: This is the catch-all error and is typically used for user errors.</p></li>
+<li><p>TERMINATION_REASON_INTERNAL_ERROR: Specifies a system error. Contact the support team.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeTerminationReason</td>
+<td>string</td>
+<td>- TERMINATION_REASON_OOMKILLED: The job was terminated for using more memory than the amount assigned to the job.  - TERMINATION_REASON_GENERIC_ERROR: This is the catch-all error and is typically used for user errors.  - TERMINATION_REASON_INTERNAL_ERROR: Specifies a system error. Contact the support team.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimetestrunprogress">
+<h4>rimeTestRunProgress<a class="headerlink" href="#rimetestrunprogress" title="Permalink to this heading"></a></h4>
+<p>TestRunProgress is a shared message for representing the progress of a
+single test run.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testRunId</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>status</td>
+<td><a href="#rimetesttaskstatus">rimeTestTaskStatus</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>testBatches</td>
+<td>[ <a href="#testrunprogresstestbatchprogress">TestRunProgressTestBatchProgress</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimetesttaskstatus">
+<h4>rimeTestTaskStatus<a class="headerlink" href="#rimetesttaskstatus" title="Permalink to this heading"></a></h4>
+<p>Status of individual test units, e.g. test runs, test batches, test cases.
+This is different from job status because these are more abstract.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeTestTaskStatus</td>
+<td>string</td>
+<td>Status of individual test units, e.g. test runs, test batches, test cases. This is different from job status because these are more abstract.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeuuid">
+<h4>rimeUUID<a class="headerlink" href="#rimeuuid" title="Permalink to this heading"></a></h4>
+<p>Unique ID of an object in RIME.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uuid</td>
+<td>string</td>
+<td>String value of the object ID.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeupdatebuildinforesponse">
+<h4>rimeUpdateBuildInfoResponse<a class="headerlink" href="#rimeupdatebuildinforesponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeUpdateBuildInfoResponse</td>
+<td>object</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="statedbjobstatus">
+<h4>statedbJobStatus<a class="headerlink" href="#statedbjobstatus" title="Permalink to this heading"></a></h4>
+<p>TODO(AIRS-764): redesign as part of Job Monitoring consolidation with
+StateDB effort.</p>
+<ul class="simple">
+<li><p>JOB_STATUS_PENDING: Resources have been created for the job but the job has not started yet.</p></li>
+<li><p>JOB_STATUS_FAILED: Blanket status for user or system-related job failure.
+Check the Termination Reason for details.</p></li>
+<li><p>JOB_STATUS_REQUESTED: The job descriptor exists but has no resources allocated.
+Jobs that remain in this status without moving to the PENDING status are
+at risk of entering the FAILED status.</p></li>
+<li><p>JOB_STATUS_CANCELLED: Job has been cancelled.
+Cancelled jobs cannot be recovered.</p></li>
+<li><p>JOB_STATUS_RECONCILING: Job is being reconciled by the operator.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>statedbJobStatus</td>
+<td>string</td>
+<td>TODO(AIRS-764): redesign as part of Job Monitoring consolidation with  StateDB effort.   - JOB_STATUS_PENDING: Resources have been created for the job but the job has not started yet.  - JOB_STATUS_FAILED: Blanket status for user or system-related job failure. Check the Termination Reason for details.  - JOB_STATUS_REQUESTED: The job descriptor exists but has no resources allocated. Jobs that remain in this status without moving to the PENDING status are at risk of entering the FAILED status.  - JOB_STATUS_CANCELLED: Job has been cancelled. Cancelled jobs cannot be recovered.  - JOB_STATUS_RECONCILING: Job is being reconciled by the operator.</td>
+<td></td>
+</tr>
+</tbody>
+</table></section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../firewall/firewall.swagger.html" class="btn btn-neutral float-left" title="ri/api/firewall/firewall.proto" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="managed_image.swagger.html" class="btn btn-neutral float-right" title="ri/api/imageregistry/managed_image.proto" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ri/api/featureflag/feature_flag.proto &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ri/api/filescanning/file_scanning.proto" href="../filescanning/file_scanning.swagger.html" />
+    <link rel="prev" title="ri/api/detection/detection.proto" href="../detection/detection.swagger.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                2.0.0-beta.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/modeltesting.html">RIME model testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/basic_tasks.html">Setting up and testing with RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/adv_tasks.html">Customization and troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/shostedinst.html">Self-Hosted</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REST API and SDK reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../python_library/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../rest-api.html">RI REST API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../agent/agent.swagger.html">ri/api/agent/agent.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datacollector/data_collector.swagger.html">ri/api/datacollector/data_collector.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../detection/detection.swagger.html">ri/api/detection/detection.proto</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ri/api/featureflag/feature_flag.proto</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#version-version-not-set">Version: version not set</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#v1-feature-flags-customername-features">/v1/feature-flags/{customerName}/features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-feature-flags-customername-limits-limit">/v1/feature-flags/{customerName}/limits/{limit}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#models">Models</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../filescanning/file_scanning.swagger.html">ri/api/filescanning/file_scanning.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileupload/file_upload.swagger.html">ri/api/fileupload/file_upload.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../firewall/firewall.swagger.html">ri/api/firewall/firewall.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../imageregistry/image_registry.swagger.html">ri/api/imageregistry/image_registry.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../imageregistry/managed_image.swagger.html">ri/api/imageregistry/managed_image.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_manager.swagger.html">ri/api/jobs/job_manager.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_message.swagger.html">ri/api/jobs/job_message.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_reader.swagger.html">ri/api/jobs/job_reader.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modelcard/model_card.swagger.html">ri/api/modelcard/model_card.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modeltesting/model_testing.swagger.html">ri/api/modeltesting/model_testing.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../monitor/monitor.swagger.html">ri/api/monitor/monitor.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notification/notification.swagger.html">ri/api/notification/notification.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project/project.swagger.html">ri/api/project/project.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../registry/registry.swagger.html">ri/api/registry/registry.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resultsynthesizer/result_message.swagger.html">ri/api/resultsynthesizer/result_message.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rimeinfo/rime_info.swagger.html">ri/api/rimeinfo/rime_info.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testrunresults/test_run_results.swagger.html">ri/api/testrunresults/test_run_results.proto</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../rest-api.html">RI REST API</a></li>
+      <li class="breadcrumb-item active">ri/api/featureflag/feature_flag.proto</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/rest_api/featureflag/feature_flag.swagger.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ri-api-featureflag-feature-flag-proto">
+<h1>ri/api/featureflag/feature_flag.proto<a class="headerlink" href="#ri-api-featureflag-feature-flag-proto" title="Permalink to this heading"></a></h1>
+<section id="version-version-not-set">
+<h2>Version: version not set<a class="headerlink" href="#version-version-not-set" title="Permalink to this heading"></a></h2>
+<section id="v1-feature-flags-customername-features">
+<h3>/v1/feature-flags/{customerName}/features<a class="headerlink" href="#v1-feature-flags-customername-features" title="Permalink to this heading"></a></h3>
+<section id="get">
+<h4>GET<a class="headerlink" href="#get" title="Permalink to this heading"></a></h4>
+<section id="summary">
+<h5>Summary:<a class="headerlink" href="#summary" title="Permalink to this heading"></a></h5>
+<p>ListEnabledFeatures</p>
+</section>
+<section id="description">
+<h5>Description:<a class="headerlink" href="#description" title="Permalink to this heading"></a></h5>
+<p>Returns all features enabled in license for a customer.</p>
+</section>
+<section id="parameters">
+<h5>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>customerName</td>
+<td>path</td>
+<td>Name of the customer to query.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="responses">
+<h5>Responses<a class="headerlink" href="#responses" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimelistenabledfeaturesresponse">rimeListEnabledFeaturesResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-feature-flags-customername-limits-limit">
+<h3>/v1/feature-flags/{customerName}/limits/{limit}<a class="headerlink" href="#v1-feature-flags-customername-limits-limit" title="Permalink to this heading"></a></h3>
+<section id="id1">
+<h4>GET<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h4>
+<section id="id2">
+<h5>Summary:<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h5>
+<p>GetLimitStatus</p>
+</section>
+<section id="id3">
+<h5>Description:<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h5>
+<p>Returns the status of a specified limit in this deployment’s license.</p>
+</section>
+<section id="id4">
+<h5>Parameters<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>customerName</td>
+<td>path</td>
+<td>Name of the customer to query.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>path</td>
+<td>Specifies which limit to query.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id5">
+<h5>Responses<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimegetlimitstatusresponse">rimeGetLimitStatusResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="models">
+<h3>Models<a class="headerlink" href="#models" title="Permalink to this heading"></a></h3>
+<section id="googlerpcstatus">
+<h4>googlerpcStatus<a class="headerlink" href="#googlerpcstatus" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>code</td>
+<td>integer</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>message</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>details</td>
+<td>[ <a href="#protobufany">protobufAny</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="protobufany">
+<h4>protobufAny<a class="headerlink" href="#protobufany" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@type</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimefeatureflags">
+<h4>rimeFeatureFlags<a class="headerlink" href="#rimefeatureflags" title="Permalink to this heading"></a></h4>
+<p>FeatureFlags defines all maintained flags/toggles.
+In DB storage, these are encoded in a JWT token to guarantee authenticity.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>customerName</td>
+<td>string</td>
+<td>Customer Name. We maintain 1 set per customer. We need this for multi-tenancy (N customers in 1 cluster).</td>
+<td>No</td>
+</tr>
+<tr>
+<td>subscriptionExpirationTime</td>
+<td>dateTime</td>
+<td>Subscription time.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>numProjects</td>
+<td>string (uint64)</td>
+<td>Num projects (not including deleted).</td>
+<td>No</td>
+</tr>
+<tr>
+<td>numTestRuns</td>
+<td>string (uint64)</td>
+<td>Num test runs (successful only).</td>
+<td>No</td>
+</tr>
+<tr>
+<td>uploadSizeBytes</td>
+<td>string (uint64)</td>
+<td>Upload data size.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>enableModelCards</td>
+<td>boolean</td>
+<td>Compliance model cards feature.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>numFirewalls</td>
+<td>string (uint64)</td>
+<td>Number of firewalls allowed.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimegetenabledfeatureresponse">
+<h4>rimeGetEnabledFeatureResponse<a class="headerlink" href="#rimegetenabledfeatureresponse" title="Permalink to this heading"></a></h4>
+<p>GetEnabledFeatureResponse specifies if a feature is enabled for a customer.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>feature</td>
+<td><a href="#rimelicensefeature">rimeLicenseFeature</a></td>
+<td>The feature that was requested.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>enabled</td>
+<td>boolean</td>
+<td>Whether the feature is enabled.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimegetfeatureflagjwtresponse">
+<h4>rimeGetFeatureFlagJwtResponse<a class="headerlink" href="#rimegetfeatureflagjwtresponse" title="Permalink to this heading"></a></h4>
+<p>GetFeatureFlagJwtResponse is the response to get the Feature Flag JWT token
+that returns the signed JWT token of the customer.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>signedJwtTokenStr</td>
+<td>string</td>
+<td>The signed JWT token of the customer.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimegetfeatureflagsresponse">
+<h4>rimeGetFeatureFlagsResponse<a class="headerlink" href="#rimegetfeatureflagsresponse" title="Permalink to this heading"></a></h4>
+<p>GetFeatureFlagsResponse contains the FeatureFlags of a customer.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>featureFlags</td>
+<td><a href="#rimefeatureflags">rimeFeatureFlags</a></td>
+<td>The set of feature flags for a customer.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimegetlimitstatusresponse">
+<h4>rimeGetLimitStatusResponse<a class="headerlink" href="#rimegetlimitstatusresponse" title="Permalink to this heading"></a></h4>
+<p>GetLimitStatusResponse contains the limit status of a requested limit
+for a customer.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>limitStatus</td>
+<td><a href="#rimelimitstatus">rimeLimitStatus</a></td>
+<td>The status of a feature limit for a customer.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimelicensefeature">
+<h4>rimeLicenseFeature<a class="headerlink" href="#rimelicensefeature" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeLicenseFeature</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimelicenselimit">
+<h4>rimeLicenseLimit<a class="headerlink" href="#rimelicenselimit" title="Permalink to this heading"></a></h4>
+<p>LicenseLimit contains all feature flags to enforce limit as an int.</p>
+<ul class="simple">
+<li><p>LICENSE_LIMIT_EXPIRATION: A UNIX timestamp that specifies the expiration date of the license.</p></li>
+<li><p>LICENSE_LIMIT_STRESS_TEST_RUNS: The number of stress tests run to date and the total number of
+stress tests enabled by the license.</p></li>
+<li><p>LICENSE_LIMIT_FIREWALL: The number of firewalls created and the total number of
+firewalls enabled by the license.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeLicenseLimit</td>
+<td>string</td>
+<td>LicenseLimit contains all feature flags to enforce limit as an int.   - LICENSE_LIMIT_EXPIRATION: A UNIX timestamp that specifies the expiration date of the license.  - LICENSE_LIMIT_STRESS_TEST_RUNS: The number of stress tests run to date and the total number of stress tests enabled by the license.  - LICENSE_LIMIT_FIREWALL: The number of firewalls created and the total number of firewalls enabled by the license.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimelimitstatus">
+<h4>rimeLimitStatus<a class="headerlink" href="#rimelimitstatus" title="Permalink to this heading"></a></h4>
+<p>LimitStatus contains the status of a limit in this deployment’s license.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>limit</td>
+<td><a href="#rimelicenselimit">rimeLicenseLimit</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>limitStatus</td>
+<td><a href="#rimelimitstatusstatus">rimeLimitStatusStatus</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>limitValue</td>
+<td>string (int64)</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>currentValue</td>
+<td>string (int64)</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimelimitstatusstatus">
+<h4>rimeLimitStatusStatus<a class="headerlink" href="#rimelimitstatusstatus" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeLimitStatusStatus</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimelistenabledfeaturesresponse">
+<h4>rimeListEnabledFeaturesResponse<a class="headerlink" href="#rimelistenabledfeaturesresponse" title="Permalink to this heading"></a></h4>
+<p>ListEnabledFeaturesResponse contains all enabled features for a customer.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>customerName</td>
+<td>string</td>
+<td>Tthe customer to retrieve feature flags for.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>enabledFeatures</td>
+<td>[ <a href="#rimelicensefeature">rimeLicenseFeature</a> ]</td>
+<td>The set of enabled features.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeupsertfeatureflagsresponse">
+<h4>rimeUpsertFeatureFlagsResponse<a class="headerlink" href="#rimeupsertfeatureflagsresponse" title="Permalink to this heading"></a></h4>
+<p>UpsertFeatureFlagsRequest is the response to UpsertFeatureFlags.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeUpsertFeatureFlagsResponse</td>
+<td>object</td>
+<td>UpsertFeatureFlagsRequest is the response to UpsertFeatureFlags.</td>
+<td></td>
+</tr>
+</tbody>
+</table></section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../detection/detection.swagger.html" class="btn btn-neutral float-left" title="ri/api/detection/detection.proto" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../filescanning/file_scanning.swagger.html" class="btn btn-neutral float-right" title="ri/api/filescanning/file_scanning.proto" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,1808 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ri/api/monitor/monitor.proto &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ri/api/notification/notification.proto" href="../notification/notification.swagger.html" />
+    <link rel="prev" title="ri/api/modeltesting/model_testing.proto" href="../modeltesting/model_testing.swagger.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                2.0.0-beta.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/modeltesting.html">RIME model testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/basic_tasks.html">Setting up and testing with RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/adv_tasks.html">Customization and troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/shostedinst.html">Self-Hosted</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REST API and SDK reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../python_library/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../rest-api.html">RI REST API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../agent/agent.swagger.html">ri/api/agent/agent.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datacollector/data_collector.swagger.html">ri/api/datacollector/data_collector.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../detection/detection.swagger.html">ri/api/detection/detection.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../featureflag/feature_flag.swagger.html">ri/api/featureflag/feature_flag.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../filescanning/file_scanning.swagger.html">ri/api/filescanning/file_scanning.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileupload/file_upload.swagger.html">ri/api/fileupload/file_upload.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../firewall/firewall.swagger.html">ri/api/firewall/firewall.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../imageregistry/image_registry.swagger.html">ri/api/imageregistry/image_registry.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../imageregistry/managed_image.swagger.html">ri/api/imageregistry/managed_image.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_manager.swagger.html">ri/api/jobs/job_manager.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_message.swagger.html">ri/api/jobs/job_message.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_reader.swagger.html">ri/api/jobs/job_reader.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modelcard/model_card.swagger.html">ri/api/modelcard/model_card.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modeltesting/model_testing.swagger.html">ri/api/modeltesting/model_testing.proto</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ri/api/monitor/monitor.proto</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#version-version-not-set">Version: version not set</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#v1-beta-custom-monitors-metrics-firewallid-uuid">/v1-beta/custom-monitors/metrics/{firewallId.uuid}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-beta-custom-monitors-monitorid-uuid">/v1-beta/custom-monitors/{monitorId.uuid}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-beta-custom-monitors-name">/v1-beta/custom-monitors/{name}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-beta-monitors-result-monitorid-uuid">/v1-beta/monitors/result/{monitorId.uuid}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-beta-monitors-firewallid-uuid">/v1-beta/monitors/{firewallId.uuid}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-beta-monitors-monitor-id-uuid">/v1-beta/monitors/{monitor.id.uuid}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#models">Models</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../notification/notification.swagger.html">ri/api/notification/notification.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project/project.swagger.html">ri/api/project/project.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../registry/registry.swagger.html">ri/api/registry/registry.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resultsynthesizer/result_message.swagger.html">ri/api/resultsynthesizer/result_message.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rimeinfo/rime_info.swagger.html">ri/api/rimeinfo/rime_info.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testrunresults/test_run_results.swagger.html">ri/api/testrunresults/test_run_results.proto</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../rest-api.html">RI REST API</a></li>
+      <li class="breadcrumb-item active">ri/api/monitor/monitor.proto</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/rest_api/monitor/monitor.swagger.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ri-api-monitor-monitor-proto">
+<h1>ri/api/monitor/monitor.proto<a class="headerlink" href="#ri-api-monitor-monitor-proto" title="Permalink to this heading"></a></h1>
+<section id="version-version-not-set">
+<h2>Version: version not set<a class="headerlink" href="#version-version-not-set" title="Permalink to this heading"></a></h2>
+<section id="v1-beta-custom-monitors-metrics-firewallid-uuid">
+<h3>/v1-beta/custom-monitors/metrics/{firewallId.uuid}<a class="headerlink" href="#v1-beta-custom-monitors-metrics-firewallid-uuid" title="Permalink to this heading"></a></h3>
+<section id="get">
+<h4>GET<a class="headerlink" href="#get" title="Permalink to this heading"></a></h4>
+<section id="summary">
+<h5>Summary:<a class="headerlink" href="#summary" title="Permalink to this heading"></a></h5>
+<p>ListMetricIdentifiers</p>
+</section>
+<section id="description">
+<h5>Description:<a class="headerlink" href="#description" title="Permalink to this heading"></a></h5>
+<p>List all possible Custom Monitor Metric Identifiers</p>
+</section>
+<section id="parameters">
+<h5>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>firewallId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="responses">
+<h5>Responses<a class="headerlink" href="#responses" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimelistmetricidentifiersresponse">rimeListMetricIdentifiersResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-beta-custom-monitors-monitorid-uuid">
+<h3>/v1-beta/custom-monitors/{monitorId.uuid}<a class="headerlink" href="#v1-beta-custom-monitors-monitorid-uuid" title="Permalink to this heading"></a></h3>
+<section id="delete">
+<h4>DELETE<a class="headerlink" href="#delete" title="Permalink to this heading"></a></h4>
+<section id="id1">
+<h5>Summary:<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h5>
+<p>DeleteCustomMonitor</p>
+</section>
+<section id="id2">
+<h5>Description:<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h5>
+<p>Delete a custom monitor</p>
+</section>
+<section id="id3">
+<h5>Parameters<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>monitorId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h5>Responses<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimedeletecustommonitorresponse">rimeDeleteCustomMonitorResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-beta-custom-monitors-name">
+<h3>/v1-beta/custom-monitors/{name}<a class="headerlink" href="#v1-beta-custom-monitors-name" title="Permalink to this heading"></a></h3>
+<section id="post">
+<h4>POST<a class="headerlink" href="#post" title="Permalink to this heading"></a></h4>
+<section id="id5">
+<h5>Summary:<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h5>
+<p>CreateCustomMonitor</p>
+</section>
+<section id="id6">
+<h5>Description:<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h5>
+<p>Create a new custom monitor</p>
+</section>
+<section id="id7">
+<h5>Parameters<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>path</td>
+<td>The name of the monitor.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>body</td>
+<td>body</td>
+<td></td>
+<td>Yes</td>
+<td>object</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id8">
+<h5>Responses<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimecreatecustommonitorresponse">rimeCreateCustomMonitorResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-beta-monitors-result-monitorid-uuid">
+<h3>/v1-beta/monitors/result/{monitorId.uuid}<a class="headerlink" href="#v1-beta-monitors-result-monitorid-uuid" title="Permalink to this heading"></a></h3>
+<section id="id9">
+<h4>GET<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h4>
+<section id="id10">
+<h5>Summary:<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h5>
+<p>GetMonitorResult</p>
+</section>
+<section id="id11">
+<h5>Description:<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h5>
+<p>Graph a monitor within a time range</p>
+</section>
+<section id="id12">
+<h5>Parameters<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>monitorId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>timeInterval.startTime</td>
+<td>query</td>
+<td></td>
+<td>No</td>
+<td>dateTime</td>
+</tr>
+<tr>
+<td>timeInterval.endTime</td>
+<td>query</td>
+<td></td>
+<td>No</td>
+<td>dateTime</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id13">
+<h5>Responses<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimegetmonitorresultresponse">rimeGetMonitorResultResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-beta-monitors-firewallid-uuid">
+<h3>/v1-beta/monitors/{firewallId.uuid}<a class="headerlink" href="#v1-beta-monitors-firewallid-uuid" title="Permalink to this heading"></a></h3>
+<section id="id14">
+<h4>GET<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h4>
+<section id="id15">
+<h5>Summary:<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h5>
+<p>ListMonitors</p>
+</section>
+<section id="id16">
+<h5>Description:<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h5>
+<p>lists monitors by firewall ID.</p>
+</section>
+<section id="id17">
+<h5>Parameters<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>firewallId.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>firstPageReq.includedMonitorTypes</td>
+<td>query</td>
+<td>Specifies a list of monitor types. Filters results to match the specified monitor types.</td>
+<td>No</td>
+<td>[ string ]</td>
+</tr>
+<tr>
+<td>firstPageReq.includedRiskCategoryTypes</td>
+<td>query</td>
+<td>Specifies a list of risk category types. Filters results to match the specified risk category types.</td>
+<td>No</td>
+<td>[ string ]</td>
+</tr>
+<tr>
+<td>firstPageReq.pinnedMonitorsOnly</td>
+<td>query</td>
+<td>When the value of this Boolean is True, this endpoint returns a list of pinned Monitors. Otherwise, this endpoint does not filter Monitors by pinned status.</td>
+<td>No</td>
+<td>boolean</td>
+</tr>
+<tr>
+<td>pageToken</td>
+<td>query</td>
+<td>Specifies a page of the list returned by a ListMonitors query. The ListMonitors query returns a pageToken when there is more than one page of results. Specify either this field or the firstPageReq field.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>query</td>
+<td>The maximum number of Monitor objects to return in a single page.</td>
+<td>No</td>
+<td>string (int64)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id18">
+<h5>Responses<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimelistmonitorsresponse">rimeListMonitorsResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-beta-monitors-monitor-id-uuid">
+<h3>/v1-beta/monitors/{monitor.id.uuid}<a class="headerlink" href="#v1-beta-monitors-monitor-id-uuid" title="Permalink to this heading"></a></h3>
+<section id="put">
+<h4>PUT<a class="headerlink" href="#put" title="Permalink to this heading"></a></h4>
+<section id="id19">
+<h5>Summary:<a class="headerlink" href="#id19" title="Permalink to this heading"></a></h5>
+<p>UpdateMonitor</p>
+</section>
+<section id="id20">
+<h5>Description:<a class="headerlink" href="#id20" title="Permalink to this heading"></a></h5>
+<p>Updates a monitor.</p>
+</section>
+<section id="id21">
+<h5>Parameters<a class="headerlink" href="#id21" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>monitor.id.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>body</td>
+<td>body</td>
+<td></td>
+<td>Yes</td>
+<td>object</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id22">
+<h5>Responses<a class="headerlink" href="#id22" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimeupdatemonitorresponse">rimeUpdateMonitorResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="models">
+<h3>Models<a class="headerlink" href="#models" title="Permalink to this heading"></a></h3>
+<section id="artifactidentifiercategorytestidentifier">
+<h4>ArtifactIdentifierCategoryTestIdentifier<a class="headerlink" href="#artifactidentifiercategorytestidentifier" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testCategory</td>
+<td><a href="#testruntestcategorytype">testrunTestCategoryType</a></td>
+<td>The Test Category Type.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>metric</td>
+<td>string</td>
+<td>The metric name.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="artifactidentifiersubsettestmetricidentifier">
+<h4>ArtifactIdentifierSubsetTestMetricIdentifier<a class="headerlink" href="#artifactidentifiersubsettestmetricidentifier" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testBatchId</td>
+<td>string</td>
+<td>Uniquely specifies a Test Batch.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>metric</td>
+<td>string</td>
+<td>The metric name.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>featureNames</td>
+<td>[ string ]</td>
+<td>Human-readable names of the features. Must be sorted lexicographically.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>subsetName</td>
+<td>string</td>
+<td>Human-readable name of the feature subset used for the <code>subset_name</code> field. This is used to display the subset name on the frontend.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="artifactidentifiertestcasemetricidentifier">
+<h4>ArtifactIdentifierTestCaseMetricIdentifier<a class="headerlink" href="#artifactidentifiertestcasemetricidentifier" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testBatchId</td>
+<td>string</td>
+<td>Uniquely specifies a Test Batch.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>metric</td>
+<td>string</td>
+<td>The metric name.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>featureNames</td>
+<td>[ string ]</td>
+<td>Human-readable names of the features. Must be sorted lexicographically.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="differencefromtargetdifference">
+<h4>DifferenceFromTargetDifference<a class="headerlink" href="#differencefromtargetdifference" title="Permalink to this heading"></a></h4>
+<p>The type of difference to calculate.</p>
+<ul class="simple">
+<li><p>DIFFERENCE_RAW: Raw difference between values (x - y)</p></li>
+<li><p>DIFFERENCE_ABSOLUTE: Absolute difference between values (|x - y|)</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DifferenceFromTargetDifference</td>
+<td>string</td>
+<td>The type of difference to calculate.   - DIFFERENCE_RAW: Raw difference between values (x - y)  - DIFFERENCE_ABSOLUTE: Absolute difference between values (</td>
+<td>x - y</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="differencefromtargettarget">
+<h4>DifferenceFromTargetTarget<a class="headerlink" href="#differencefromtargettarget" title="Permalink to this heading"></a></h4>
+<p>The target to compare against.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DifferenceFromTargetTarget</td>
+<td>string</td>
+<td>The target to compare against.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="listmetricidentifiersresponseaggregatedmetric">
+<h4>ListMetricIdentifiersResponseAggregatedMetric<a class="headerlink" href="#listmetricidentifiersresponseaggregatedmetric" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testCaseMetricId</td>
+<td><a href="#artifactidentifiertestcasemetricidentifier">ArtifactIdentifierTestCaseMetricIdentifier</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>categoryTestMetricId</td>
+<td><a href="#artifactidentifiercategorytestidentifier">ArtifactIdentifierCategoryTestIdentifier</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>excludedTransforms</td>
+<td><a href="#monitorexcludedtransforms">monitorExcludedTransforms</a></td>
+<td>The excluded transforms.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="listmetricidentifiersresponsefeaturemetricwithoutsubsets">
+<h4>ListMetricIdentifiersResponseFeatureMetricWithoutSubsets<a class="headerlink" href="#listmetricidentifiersresponsefeaturemetricwithoutsubsets" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testCaseMetricIdentifier</td>
+<td><a href="#artifactidentifiertestcasemetricidentifier">ArtifactIdentifierTestCaseMetricIdentifier</a></td>
+<td>The test metric identifier.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>excludedTransforms</td>
+<td><a href="#monitorexcludedtransforms">monitorExcludedTransforms</a></td>
+<td>The excluded transforms.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="listmetricidentifiersresponsefeaturemetrics">
+<h4>ListMetricIdentifiersResponseFeatureMetrics<a class="headerlink" href="#listmetricidentifiersresponsefeaturemetrics" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>featureMetricWithoutSubsets</td>
+<td>[ <a href="#listmetricidentifiersresponsefeaturemetricwithoutsubsets">ListMetricIdentifiersResponseFeatureMetricWithoutSubsets</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>subsetMetrics</td>
+<td>object</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="listmetricidentifiersresponsesubsetmetric">
+<h4>ListMetricIdentifiersResponseSubsetMetric<a class="headerlink" href="#listmetricidentifiersresponsesubsetmetric" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>metricId</td>
+<td><a href="#artifactidentifiersubsettestmetricidentifier">ArtifactIdentifierSubsetTestMetricIdentifier</a></td>
+<td>Uniquely specifies a Metric.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>excludedTransforms</td>
+<td><a href="#monitorexcludedtransforms">monitorExcludedTransforms</a></td>
+<td>The excluded transforms.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="listmetricidentifiersresponsesubsetmetrics">
+<h4>ListMetricIdentifiersResponseSubsetMetrics<a class="headerlink" href="#listmetricidentifiersresponsesubsetmetrics" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>metricIds</td>
+<td>[ <a href="#listmetricidentifiersresponsesubsetmetric">ListMetricIdentifiersResponseSubsetMetric</a> ]</td>
+<td>List of Metric IDs.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="listmonitorsrequestfilter">
+<h4>ListMonitorsRequestFilter<a class="headerlink" href="#listmonitorsrequestfilter" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>includedMonitorTypes</td>
+<td>[ <a href="#monitormonitortype">monitorMonitorType</a> ]</td>
+<td>Specifies a list of monitor types. Filters results to match the specified monitor types.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>includedRiskCategoryTypes</td>
+<td>[ <a href="#riskscoreriskcategorytype">riskscoreRiskCategoryType</a> ]</td>
+<td>Specifies a list of risk category types. Filters results to match the specified risk category types.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>pinnedMonitorsOnly</td>
+<td>boolean</td>
+<td>When the value of this Boolean is True, this endpoint returns a list of pinned Monitors. Otherwise, this endpoint does not filter Monitors by pinned status.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="googlerpcstatus">
+<h4>googlerpcStatus<a class="headerlink" href="#googlerpcstatus" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>code</td>
+<td>integer</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>message</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>details</td>
+<td>[ <a href="#protobufany">protobufAny</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitoraggregation">
+<h4>monitorAggregation<a class="headerlink" href="#monitoraggregation" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aggregationType</td>
+<td><a href="#monitoraggregationtype">monitorAggregationType</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>timeWindow</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitoraggregationtype">
+<h4>monitorAggregationType<a class="headerlink" href="#monitoraggregationtype" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>monitorAggregationType</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitoranomalyconfig">
+<h4>monitorAnomalyConfig<a class="headerlink" href="#monitoranomalyconfig" title="Permalink to this heading"></a></h4>
+<p>Anomaly Monitors track events over time that are not associated with
+metrics.
+For instance, attacks on a model constitute Anomalies.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>monitorAnomalyConfig</td>
+<td>object</td>
+<td>Anomaly Monitors track events over time that are not associated with metrics. For instance, attacks on a model constitute Anomalies.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitorartifactidentifier">
+<h4>monitorArtifactIdentifier<a class="headerlink" href="#monitorartifactidentifier" title="Permalink to this heading"></a></h4>
+<p>ArtifactIdentifier specifies the artifact a monitor tracks over time.
+Metrics exist in TestCases, TestBatches and CategoryTests.
+This is extendable to allow new kinds of metrics.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testCaseMetricIdentifier</td>
+<td><a href="#artifactidentifiertestcasemetricidentifier">ArtifactIdentifierTestCaseMetricIdentifier</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>categoryTestMetricIdentifier</td>
+<td><a href="#artifactidentifiercategorytestidentifier">ArtifactIdentifierCategoryTestIdentifier</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>subsetTestMetricIdentifier</td>
+<td><a href="#artifactidentifiersubsettestmetricidentifier">ArtifactIdentifierSubsetTestMetricIdentifier</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitordifferencefromtarget">
+<h4>monitorDifferenceFromTarget<a class="headerlink" href="#monitordifferencefromtarget" title="Permalink to this heading"></a></h4>
+<p>DifferenceFromTarget defines a transform that
+calculates the difference between the aggregated metric
+defined in the monitor and the same metric defined with the target.
+if no aggregation is specified, an average value is used.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>difference</td>
+<td><a href="#differencefromtargetdifference">DifferenceFromTargetDifference</a></td>
+<td>The difference function for this transform.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>target</td>
+<td><a href="#differencefromtargettarget">DifferenceFromTargetTarget</a></td>
+<td>The target for this transform.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitorexcludedtransforms">
+<h4>monitorExcludedTransforms<a class="headerlink" href="#monitorexcludedtransforms" title="Permalink to this heading"></a></h4>
+<p>ExcludedTransforms allows a metric to define which
+transforms cannot be applied to the metric.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>excludedTransforms</td>
+<td>[ <a href="#monitortransform">monitorTransform</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitormetricdegradationconfig">
+<h4>monitorMetricDegradationConfig<a class="headerlink" href="#monitormetricdegradationconfig" title="Permalink to this heading"></a></h4>
+<p>MetricDegradation Monitors track metrics over time.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aggregation</td>
+<td><a href="#monitoraggregation">monitorAggregation</a></td>
+<td>The aggregation for the metric.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>transform</td>
+<td><a href="#monitortransform">monitorTransform</a></td>
+<td>The transformation for the metric.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>threshold</td>
+<td><a href="#monitorthreshold">monitorThreshold</a></td>
+<td>The threshold needs to be same numerical range as the output of the transform func. Example: if the transform is a percentage difference, the threshold needs to be between (0, 100).</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitormonitor">
+<h4>monitorMonitor<a class="headerlink" href="#monitormonitor" title="Permalink to this heading"></a></h4>
+<p>Implied Comparison (CMP*): the implied comparison (GTE or LTE)</p>
+<ul class="simple">
+<li><p>This is implied because RI Platform knows which direction (+/-)
+represents a degradation for each metric.</p></li>
+</ul>
+<p>Aggregation (AGG):
+Aggregation Type: min, max, sum, avg
+Time Window: time window over which to aggregate</p>
+<p>Transform (FUNC): takes in the scalar metric value</p>
+<ul class="simple">
+<li><p>The only real function we defined for V20 is a difference calculation
+between metric in current time step and Baseline or Prev TimeWindow/ Bin</p></li>
+<li><p>Static monitors (compare metric directly to threshold) can be defined
+without specifying a transform</p></li>
+</ul>
+<p>Threshold (THRESHOLD): A Threshold</p>
+<ul class="simple">
+<li><p>The units for the threshold are implied by the transform function.</p></li>
+</ul>
+<p>MetricIdentifier: a metric to compare</p>
+<ul class="simple">
+<li><p>specifies how the metric should be extracted from the doc store.</p></li>
+</ul>
+<p>MonitorType: is monitor custom or default</p>
+<p>RiskCategoryType: the type of risk category the monitor is evaluating</p>
+<p>Category: the category of test to which the monitor belongs.</p>
+<ul class="simple">
+<li><p>e.g. “Drift”, “Model Performance”, or “Abnormal Inputs”</p></li>
+<li><p>This helps organize monitors into subgroups within a RiskCategoryType.</p></li>
+</ul>
+<p>Notify: whether CT monitoring notifications should be sent for this monitor.</p>
+<p>MonitorEventType: the type of events associated with this monitor.</p>
+<p>Examples of Custom Monitors defined by this API:
+{
+name : “cool-static-monitor”,
+metric: “MSE”,
+threshold: Threshold{
+low: 10,
+high: 12,
+},
+},
+{
+name : “cool-percentage-compare-to-baseline-monitor”,
+metric: “MSE”,
+Aggregation: Aggregation {
+aggregation: 1,
+TimeWindow: “1h”,
+},
+transform: DifferenceFromTarget {
+target : 1,
+difference_calc : 1,
+},
+threshold: Threshold{
+low: 10,
+high: 12,
+},
+},</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>Uniquely specifies a Monitor.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the monitor.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>firewallId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>Uniquely specifies a Firewall.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>monitorType</td>
+<td><a href="#monitormonitortype">monitorMonitorType</a></td>
+<td>The type of this monitor.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>riskCategoryType</td>
+<td><a href="#riskscoreriskcategorytype">riskscoreRiskCategoryType</a></td>
+<td>The risk category of this monitor.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>testCategory</td>
+<td><a href="#testruntestcategorytype">testrunTestCategoryType</a></td>
+<td>The test category of this monitor.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>artifactIdentifier</td>
+<td><a href="#monitorartifactidentifier">monitorArtifactIdentifier</a></td>
+<td>The artifact the monitor tracks.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>createdTime</td>
+<td>dateTime</td>
+<td>The time at which the monitor was created.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>notify</td>
+<td>boolean</td>
+<td>This field indicates whether the system should send CT monitoring notifications when this monitor is triggered. For default monitors, after the RIME engine creates a Monitor, this field should only be modified directly by the user. i.e. when we upsert the monitor in the Result synthesizer, we must not overwrite the value configured by the user.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>rcaRole</td>
+<td><a href="#rcarcarole">rcaRCARole</a></td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>config</td>
+<td><a href="#schemamonitorconfig">schemamonitorConfig</a></td>
+<td>The configuration of this type of Monitor.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>excludedTransforms</td>
+<td><a href="#monitorexcludedtransforms">monitorExcludedTransforms</a></td>
+<td>optional message to define which transforms do not apply to this metric.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>pinned</td>
+<td>boolean</td>
+<td>Option to pin a monitor. Pinned monitors are pinned for all users visiting the monitor's project.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitormonitortype">
+<h4>monitorMonitorType<a class="headerlink" href="#monitormonitortype" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>monitorMonitorType</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitorthreshold">
+<h4>monitorThreshold<a class="headerlink" href="#monitorthreshold" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>low</td>
+<td>double</td>
+<td>The threshold for warning.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>high</td>
+<td>double</td>
+<td>The threshold for alert.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>type</td>
+<td><a href="#monitorthresholdtype">monitorThresholdType</a></td>
+<td>The type of the threshold.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitorthresholdtype">
+<h4>monitorThresholdType<a class="headerlink" href="#monitorthresholdtype" title="Permalink to this heading"></a></h4>
+<ul class="simple">
+<li><p>TYPE_UPPER_BOUND: The threshold is violated when the metric’s value is greater than
+the upper bound.</p></li>
+<li><p>TYPE_LOWER_BOUND: The threshold is violated when the metric’s value is less than the
+lower bound.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>monitorThresholdType</td>
+<td>string</td>
+<td>- TYPE_UPPER_BOUND: The threshold is violated when the metric's value is greater than the upper bound.  - TYPE_LOWER_BOUND: The threshold is violated when the metric's value is less than the lower bound.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitortransform">
+<h4>monitorTransform<a class="headerlink" href="#monitortransform" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>differenceFromTarget</td>
+<td><a href="#monitordifferencefromtarget">monitorDifferenceFromTarget</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="protobufany">
+<h4>protobufAny<a class="headerlink" href="#protobufany" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@type</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rcarcarole">
+<h4>rcaRCARole<a class="headerlink" href="#rcarcarole" title="Permalink to this heading"></a></h4>
+<p>RCARole indicates the RCA role of a detection event or a monitor.
+Their use in the RCA algorithm depends on their role.
+For example, RCA will be computed for EFFECT monitors.
+We will examine all FEATURE_CAUSE and TEST_CAUSE monitors to determine
+which one is most relevant.
+TODO: document this.</p>
+<ul class="simple">
+<li><p>RCAROLE_UNSPECIFIED: Unspecified is an invalid value: do not use.</p></li>
+<li><p>RCAROLE_EFFECT: The given degradation is the “effect” of a low level failure.</p></li>
+<li><p>RCAROLE_FEATURE_CAUSE: The given degradation in a feature (e.g. drift) may have caused a high
+level failure in an “effect” monitor.</p></li>
+<li><p>RCAROLE_TEST_CAUSE: The given degradation in a test may have caused a high level failure.</p></li>
+<li><p>RCAROLE_EXCLUDED: All monitors with the excluded tag will be excluded from RCA analysis.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rcaRCARole</td>
+<td>string</td>
+<td>RCARole indicates the RCA role of a detection event or a monitor. Their use in the RCA algorithm depends on their role. For example, RCA will be computed for EFFECT monitors. We will examine all FEATURE_CAUSE and TEST_CAUSE monitors to determine which one is most relevant. TODO: document this.   - RCAROLE_UNSPECIFIED: Unspecified is an invalid value: do not use.  - RCAROLE_EFFECT: The given degradation is the "effect" of a low level failure.  - RCAROLE_FEATURE_CAUSE: The given degradation in a feature (e.g. drift) may have caused a high level failure in an "effect" monitor.  - RCAROLE_TEST_CAUSE: The given degradation in a test may have caused a high level failure.  - RCAROLE_EXCLUDED: All monitors with the excluded tag will be excluded from RCA analysis.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimecreatecustommonitorresponse">
+<h4>rimeCreateCustomMonitorResponse<a class="headerlink" href="#rimecreatecustommonitorresponse" title="Permalink to this heading"></a></h4>
+<p>CreateCustomMonitorResponse returns the created custom monitor.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>monitor</td>
+<td><a href="#monitormonitor">monitorMonitor</a></td>
+<td>The created monitor.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimedeletecustommonitorresponse">
+<h4>rimeDeleteCustomMonitorResponse<a class="headerlink" href="#rimedeletecustommonitorresponse" title="Permalink to this heading"></a></h4>
+<p>DeleteCustomMonitorResponse returns when a monitor is deleted.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeDeleteCustomMonitorResponse</td>
+<td>object</td>
+<td>DeleteCustomMonitorResponse returns when a monitor is deleted.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimegetmonitorresultresponse">
+<h4>rimeGetMonitorResultResponse<a class="headerlink" href="#rimegetmonitorresultresponse" title="Permalink to this heading"></a></h4>
+<p>GetMonitorResultResponse returns the results for a monitor within a time
+range.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>monitorId</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>Uniquely specifies a Monitor.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>monitorName</td>
+<td>string</td>
+<td>The name of the monitor.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>metricName</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>threshold</td>
+<td><a href="#monitorthreshold">monitorThreshold</a></td>
+<td>The threshold of the monitor.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>dataPoints</td>
+<td>[ <a href="#rimemonitordatapoint">rimeMonitorDataPoint</a> ]</td>
+<td>The monitor data points.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimelistmetricidentifiersresponse">
+<h4>rimeListMetricIdentifiersResponse<a class="headerlink" href="#rimelistmetricidentifiersresponse" title="Permalink to this heading"></a></h4>
+<p>ListMetricIdentifiersResponse returns metric identifiers grouped under
+features, subsets or neither.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aggregatedMetrics</td>
+<td>[ <a href="#listmetricidentifiersresponseaggregatedmetric">ListMetricIdentifiersResponseAggregatedMetric</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>featureMetrics</td>
+<td>object</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimelistmonitorsresponse">
+<h4>rimeListMonitorsResponse<a class="headerlink" href="#rimelistmonitorsresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>monitors</td>
+<td>[ <a href="#monitormonitor">monitorMonitor</a> ]</td>
+<td>The list of monitors.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>nextPageToken</td>
+<td>string</td>
+<td>The pagination token.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>hasMore</td>
+<td>boolean</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimemonitordatapoint">
+<h4>rimeMonitorDataPoint<a class="headerlink" href="#rimemonitordatapoint" title="Permalink to this heading"></a></h4>
+<p>MonitorDataPoint defines a single data point
+in the monitor time series. It identifies both
+a metric value and time interval.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>timeInterval</td>
+<td><a href="#rimetimeinterval">rimeTimeInterval</a></td>
+<td>The time interval of a data point.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>monitorValue</td>
+<td>double</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimetimeinterval">
+<h4>rimeTimeInterval<a class="headerlink" href="#rimetimeinterval" title="Permalink to this heading"></a></h4>
+<p>TimeInterval describes a time interval.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>startTime</td>
+<td>dateTime</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>endTime</td>
+<td>dateTime</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeuuid">
+<h4>rimeUUID<a class="headerlink" href="#rimeuuid" title="Permalink to this heading"></a></h4>
+<p>Unique ID of an object in RIME.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uuid</td>
+<td>string</td>
+<td>String value of the object ID.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeupdatemonitorresponse">
+<h4>rimeUpdateMonitorResponse<a class="headerlink" href="#rimeupdatemonitorresponse" title="Permalink to this heading"></a></h4>
+<p>UpdateMonitorResponse returns the updated monitor.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>monitor</td>
+<td><a href="#monitormonitor">monitorMonitor</a></td>
+<td>The updated monitor.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="riskscoreriskcategorytype">
+<h4>riskscoreRiskCategoryType<a class="headerlink" href="#riskscoreriskcategorytype" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>riskscoreRiskCategoryType</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="schemamonitorconfig">
+<h4>schemamonitorConfig<a class="headerlink" href="#schemamonitorconfig" title="Permalink to this heading"></a></h4>
+<p>Config defines a configuration for a monitor.
+There are different varities of monitors, such as metric degradation monitors
+and anomaly monitors.
+Metric degradation monitors track metrics over time and make up the vast
+majority of monitors in our system.
+Anomaly monitors track discrete events such as Security infractions.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>degradation</td>
+<td><a href="#monitormetricdegradationconfig">monitorMetricDegradationConfig</a></td>
+<td>The metric degradation configuration.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>anomaly</td>
+<td><a href="#monitoranomalyconfig">monitorAnomalyConfig</a></td>
+<td>The anomaly configuration.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="testruntestcategorytype">
+<h4>testrunTestCategoryType<a class="headerlink" href="#testruntestcategorytype" title="Permalink to this heading"></a></h4>
+<p>TestCategoryType contains all the possible values for test categories that
+can be run in RIME.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testrunTestCategoryType</td>
+<td>string</td>
+<td>TestCategoryType contains all the possible values for test categories that can be run in RIME.</td>
+<td></td>
+</tr>
+</tbody>
+</table></section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../modeltesting/model_testing.swagger.html" class="btn btn-neutral float-left" title="ri/api/modeltesting/model_testing.proto" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../notification/notification.swagger.html" class="btn btn-neutral float-right" title="ri/api/notification/notification.proto" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

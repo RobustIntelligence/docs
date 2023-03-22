@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ri/api/notification/notification.proto &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ri/api/project/project.proto" href="../project/project.swagger.html" />
+    <link rel="prev" title="ri/api/monitor/monitor.proto" href="../monitor/monitor.swagger.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                2.0.0-beta.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/modeltesting.html">RIME model testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/basic_tasks.html">Setting up and testing with RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/adv_tasks.html">Customization and troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/shostedinst.html">Self-Hosted</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REST API and SDK reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../python_library/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../rest-api.html">RI REST API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../agent/agent.swagger.html">ri/api/agent/agent.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datacollector/data_collector.swagger.html">ri/api/datacollector/data_collector.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../detection/detection.swagger.html">ri/api/detection/detection.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../featureflag/feature_flag.swagger.html">ri/api/featureflag/feature_flag.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../filescanning/file_scanning.swagger.html">ri/api/filescanning/file_scanning.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileupload/file_upload.swagger.html">ri/api/fileupload/file_upload.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../firewall/firewall.swagger.html">ri/api/firewall/firewall.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../imageregistry/image_registry.swagger.html">ri/api/imageregistry/image_registry.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../imageregistry/managed_image.swagger.html">ri/api/imageregistry/managed_image.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_manager.swagger.html">ri/api/jobs/job_manager.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_message.swagger.html">ri/api/jobs/job_message.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jobs/job_reader.swagger.html">ri/api/jobs/job_reader.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modelcard/model_card.swagger.html">ri/api/modelcard/model_card.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modeltesting/model_testing.swagger.html">ri/api/modeltesting/model_testing.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../monitor/monitor.swagger.html">ri/api/monitor/monitor.proto</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ri/api/notification/notification.proto</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#version-version-not-set">Version: version not set</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#v1-notif-settings">/v1/notif-settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-notif-settings-id-uuid">/v1/notif-settings/{id.uuid}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#v1-notif-settings-notification-id-uuid">/v1/notif-settings/{notification.id.uuid}</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#models">Models</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../project/project.swagger.html">ri/api/project/project.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../registry/registry.swagger.html">ri/api/registry/registry.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resultsynthesizer/result_message.swagger.html">ri/api/resultsynthesizer/result_message.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rimeinfo/rime_info.swagger.html">ri/api/rimeinfo/rime_info.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testrunresults/test_run_results.swagger.html">ri/api/testrunresults/test_run_results.proto</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../rest-api.html">RI REST API</a></li>
+      <li class="breadcrumb-item active">ri/api/notification/notification.proto</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/rest_api/notification/notification.swagger.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ri-api-notification-notification-proto">
+<h1>ri/api/notification/notification.proto<a class="headerlink" href="#ri-api-notification-notification-proto" title="Permalink to this heading"></a></h1>
+<section id="version-version-not-set">
+<h2>Version: version not set<a class="headerlink" href="#version-version-not-set" title="Permalink to this heading"></a></h2>
+<section id="v1-notif-settings">
+<h3>/v1/notif-settings<a class="headerlink" href="#v1-notif-settings" title="Permalink to this heading"></a></h3>
+<section id="get">
+<h4>GET<a class="headerlink" href="#get" title="Permalink to this heading"></a></h4>
+<section id="summary">
+<h5>Summary:<a class="headerlink" href="#summary" title="Permalink to this heading"></a></h5>
+<p>ListNotifications</p>
+</section>
+<section id="description">
+<h5>Description:<a class="headerlink" href="#description" title="Permalink to this heading"></a></h5>
+<p>Lists notification settings with options to filter by project or the
+type of notification.</p>
+</section>
+<section id="parameters">
+<h5>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>listNotificationsQuery.objectTypes</td>
+<td>query</td>
+<td>Specifies a set of object types. Filters results by the specified set of object types.   - OBJECT_TYPE_UNSPECIFIED: Unspecified is an invalid object type - do not use.  - OBJECT_TYPE_PROJECT: Used for notifications associated with an project. The Notification object ID is the Project ID.</td>
+<td>No</td>
+<td>[ string ]</td>
+</tr>
+<tr>
+<td>listNotificationsQuery.objectIds</td>
+<td>query</td>
+<td>Specifies a set of object IDs. Filters results by the specified set of object IDs.</td>
+<td>No</td>
+<td>[ string ]</td>
+</tr>
+<tr>
+<td>pageToken</td>
+<td>query</td>
+<td>Specifies a page of the list returned by a ListNotifications query. The ListNotifications query returns a pageToken when there is more than one page of results. Specify either this field or the listNotificationsQuery field.</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>query</td>
+<td>The maximum number of Notification objects to return in a single page.</td>
+<td>No</td>
+<td>string (int64)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="responses">
+<h5>Responses<a class="headerlink" href="#responses" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimelistnotificationsresponse">rimeListNotificationsResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="post">
+<h4>POST<a class="headerlink" href="#post" title="Permalink to this heading"></a></h4>
+<section id="id1">
+<h5>Summary:<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h5>
+<p>CreateNotification</p>
+</section>
+<section id="id2">
+<h5>Description:<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h5>
+<p>Creates a new notification setting.</p>
+</section>
+<section id="id3">
+<h5>Parameters<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td></td>
+<td>Yes</td>
+<td><a href="#rimecreatenotificationrequest">rimeCreateNotificationRequest</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h5>Responses<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimecreatenotificationresponse">rimeCreateNotificationResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-notif-settings-id-uuid">
+<h3>/v1/notif-settings/{id.uuid}<a class="headerlink" href="#v1-notif-settings-id-uuid" title="Permalink to this heading"></a></h3>
+<section id="delete">
+<h4>DELETE<a class="headerlink" href="#delete" title="Permalink to this heading"></a></h4>
+<section id="id5">
+<h5>Summary:<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h5>
+<p>DeleteNotification</p>
+</section>
+<section id="id6">
+<h5>Description:<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h5>
+<p>Hard-delete a notification setting.</p>
+</section>
+<section id="id7">
+<h5>Parameters<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id8">
+<h5>Responses<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td>object</td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="v1-notif-settings-notification-id-uuid">
+<h3>/v1/notif-settings/{notification.id.uuid}<a class="headerlink" href="#v1-notif-settings-notification-id-uuid" title="Permalink to this heading"></a></h3>
+<section id="put">
+<h4>PUT<a class="headerlink" href="#put" title="Permalink to this heading"></a></h4>
+<section id="id9">
+<h5>Summary:<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h5>
+<p>UpdateNotification</p>
+</section>
+<section id="id10">
+<h5>Description:<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h5>
+<p>Updates an existing notification setting.
+The ID in the provided notification is used to identify it.</p>
+</section>
+<section id="id11">
+<h5>Parameters<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>notification.id.uuid</td>
+<td>path</td>
+<td>String value of the object ID.</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>body</td>
+<td>body</td>
+<td></td>
+<td>Yes</td>
+<td>object</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id12">
+<h5>Responses<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>A successful response.</td>
+<td><a href="#rimeupdatenotificationresponse">rimeUpdateNotificationResponse</a></td>
+</tr>
+<tr>
+<td>default</td>
+<td>An unexpected error response.</td>
+<td><a href="#googlerpcstatus">googlerpcStatus</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="models">
+<h3>Models<a class="headerlink" href="#models" title="Permalink to this heading"></a></h3>
+<section id="digestconfigdigestfrequency">
+<h4>DigestConfigDigestFrequency<a class="headerlink" href="#digestconfigdigestfrequency" title="Permalink to this heading"></a></h4>
+<p>DigestFrequency determines the frequency under which digest notifications
+will be sent.</p>
+<ul class="simple">
+<li><p>DIGEST_FREQUENCY_UNSPECIFIED: Unspecified is an invalid digest frequency - do not use.</p></li>
+<li><p>DIGEST_FREQUENCY_DAILY: Daily is the frequency for sending digest notifications every day.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DigestConfigDigestFrequency</td>
+<td>string</td>
+<td>DigestFrequency determines the frequency under which digest notifications will be sent.   - DIGEST_FREQUENCY_UNSPECIFIED: Unspecified is an invalid digest frequency - do not use.  - DIGEST_FREQUENCY_DAILY: Daily is the frequency for sending digest notifications every day.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="listnotificationsrequestlistnotificationsquery">
+<h4>ListNotificationsRequestListNotificationsQuery<a class="headerlink" href="#listnotificationsrequestlistnotificationsquery" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>objectTypes</td>
+<td>[ <a href="#notificationobjecttype">NotificationObjectType</a> ]</td>
+<td>Specifies a set of object types. Filters results by the specified set of object types.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>objectIds</td>
+<td>[ string ]</td>
+<td>Specifies a set of object IDs. Filters results by the specified set of object IDs.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="monitoringconfigalertlevel">
+<h4>MonitoringConfigAlertLevel<a class="headerlink" href="#monitoringconfigalertlevel" title="Permalink to this heading"></a></h4>
+<p>AlertLevel allows users to configure their desired notification
+sensitivity.
+Low severity degradation events will only trigger notifications for
+the WARNING_AND_ALERTS level.</p>
+<ul class="simple">
+<li><p>ALERT_LEVEL_UNSPECIFIED: Note: ALERT_LEVEL_UNSPECIFIED defaults to ALERT_LEVEL_ONLY_ALERTS during
+notification creation.
+Notifications cannot have the value ALERT_LEVEL_UNSPECIFIED.</p></li>
+<li><p>ALERT_LEVEL_WARNINGS_AND_ALERTS: Receive notifications when there are events with Warning or Alert
+severity.</p></li>
+<li><p>ALERT_LEVEL_ONLY_ALERTS: Only receive notifications when there are events with Alert severity.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MonitoringConfigAlertLevel</td>
+<td>string</td>
+<td>AlertLevel allows users to configure their desired notification sensitivity. Low severity degradation events will only trigger notifications for the WARNING_AND_ALERTS level.   - ALERT_LEVEL_UNSPECIFIED: Note: ALERT_LEVEL_UNSPECIFIED defaults to ALERT_LEVEL_ONLY_ALERTS during notification creation. Notifications cannot have the value ALERT_LEVEL_UNSPECIFIED.  - ALERT_LEVEL_WARNINGS_AND_ALERTS: Receive notifications when there are events with Warning or Alert severity.  - ALERT_LEVEL_ONLY_ALERTS: Only receive notifications when there are events with Alert severity.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="notificationobjecttype">
+<h4>NotificationObjectType<a class="headerlink" href="#notificationobjecttype" title="Permalink to this heading"></a></h4>
+<ul class="simple">
+<li><p>OBJECT_TYPE_UNSPECIFIED: Unspecified is an invalid object type - do not use.</p></li>
+<li><p>OBJECT_TYPE_PROJECT: Used for notifications associated with an project.
+The Notification object ID is the Project ID.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NotificationObjectType</td>
+<td>string</td>
+<td>- OBJECT_TYPE_UNSPECIFIED: Unspecified is an invalid object type - do not use.  - OBJECT_TYPE_PROJECT: Used for notifications associated with an project. The Notification object ID is the Project ID.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="googlerpcstatus">
+<h4>googlerpcStatus<a class="headerlink" href="#googlerpcstatus" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>code</td>
+<td>integer</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>message</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+<tr>
+<td>details</td>
+<td>[ <a href="#protobufany">protobufAny</a> ]</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="notificationdigestconfig">
+<h4>notificationDigestConfig<a class="headerlink" href="#notificationdigestconfig" title="Permalink to this heading"></a></h4>
+<p>DigestConfig is a configuration for digest notifications.
+These notifications are helpful for receiving a succinct summary of activity
+under a given project.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>frequency</td>
+<td><a href="#digestconfigdigestfrequency">DigestConfigDigestFrequency</a></td>
+<td>The frequency at which digest notifications will be sent if the criteria is met.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>hourOffset</td>
+<td>integer</td>
+<td>The offset in the day when the digest starts. The offset is taken in the configured timezone for the workspace. Uses a default value of 08:00 when not provided.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>lastDigestTime</td>
+<td>dateTime</td>
+<td>The last time that the RI platform sent the digest. This timestamp is zero when no digests have ever been sent.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="notificationjobactionconfig">
+<h4>notificationJobActionConfig<a class="headerlink" href="#notificationjobactionconfig" title="Permalink to this heading"></a></h4>
+<p>JobActionConfig is a configuration for job action notifications.
+These notifications are helpful for tracking the status of jobs.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>notificationJobActionConfig</td>
+<td>object</td>
+<td>JobActionConfig is a configuration for job action notifications. These notifications are helpful for tracking the status of jobs.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="notificationmonitoringconfig">
+<h4>notificationMonitoringConfig<a class="headerlink" href="#notificationmonitoringconfig" title="Permalink to this heading"></a></h4>
+<p>MonitoringConfig is a configuration for Continuous Testing notifications.
+These notifications are triggered when certain Monitors detect abnormalities.
+For instance, if a model performance Monitor fails, the system will send a
+notification after the job completes.
+Turn on and off notifications for Monitors in the web application or the SDK.
+Only a subset of Monitors will have notifications on by default.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>level</td>
+<td><a href="#monitoringconfigalertlevel">MonitoringConfigAlertLevel</a></td>
+<td>Configure the alert sensitivity.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="notificationnotification">
+<h4>notificationNotification<a class="headerlink" href="#notificationnotification" title="Permalink to this heading"></a></h4>
+<p>Notification represents a single notification setting in the backend.
+It includes the configuration for when notifications should be sent as well
+as the list of receivers (emails, webhooks, etc.).</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>Uniquely specifies a Notification.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>objectType</td>
+<td><a href="#notificationobjecttype">NotificationObjectType</a></td>
+<td>The object that the notification is associated with; usually this will be a Project.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>objectId</td>
+<td>string</td>
+<td>Uniquely specifies the object for the notification.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>notificationType</td>
+<td><a href="#notificationnotificationtype">notificationNotificationType</a></td>
+<td>Notification type is the specific subtype of the notification.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>config</td>
+<td><a href="#schemanotificationconfig">schemanotificationConfig</a></td>
+<td>Configuration specifies user preferences for each type of notification setting. For most notification types, the configuration specifies the criteria under which a notification will be sent.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>webhooks</td>
+<td>[ <a href="#notificationwebhookconfig">notificationWebhookConfig</a> ]</td>
+<td>Webhooks are a list of destination webhooks to which notifications will be sent.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>emails</td>
+<td>[ string ]</td>
+<td>Emails specify the list of emails to which notifications will be sent.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>lastSendTime</td>
+<td>dateTime</td>
+<td>Last send time is the last time the notification was successfully sent.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="notificationnotificationtype">
+<h4>notificationNotificationType<a class="headerlink" href="#notificationnotificationtype" title="Permalink to this heading"></a></h4>
+<p>The type of the notification setting (e.g. Monitoring, Daily Digest, etc.)
+Each notification setting is triggered on a different cadence and different
+criteria.
+For example, daily digests are sent once a day and contain a summary of
+Stress Tests.</p>
+<ul class="simple">
+<li><p>NOTIFICATION_TYPE_UNSPECIFIED: Unspecified is an invalid notification type - do not use.</p></li>
+<li><p>NOTIFICATION_TYPE_DIGEST: Digest notifications will send a summary of activity for a given project
+on a given cadence.</p></li>
+<li><p>NOTIFICATION_TYPE_JOB_ACTION: Job action will send alerts to users for job events, such as completion or
+failure.
+Applies to jobs for stress testing and continuous testing.</p></li>
+<li><p>NOTIFICATION_TYPE_MONITORING: When a CT job completes, monitoring notifications trigger when bins contain
+degradation events.
+The sensitivity of these alerts is configurable to change alert frequency.</p></li>
+</ul>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>notificationNotificationType</td>
+<td>string</td>
+<td>The type of the notification setting (e.g. Monitoring, Daily Digest, etc.) Each notification setting is triggered on a different cadence and different criteria. For example, daily digests are sent once a day and contain a summary of Stress Tests.   - NOTIFICATION_TYPE_UNSPECIFIED: Unspecified is an invalid notification type - do not use.  - NOTIFICATION_TYPE_DIGEST: Digest notifications will send a summary of activity for a given project on a given cadence.  - NOTIFICATION_TYPE_JOB_ACTION: Job action will send alerts to users for job events, such as completion or failure. Applies to jobs for stress testing and continuous testing.  - NOTIFICATION_TYPE_MONITORING: When a CT job completes, monitoring notifications trigger when bins contain degradation events. The sensitivity of these alerts is configurable to change alert frequency.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="notificationwebhookconfig">
+<h4>notificationWebhookConfig<a class="headerlink" href="#notificationwebhookconfig" title="Permalink to this heading"></a></h4>
+<p>Configuration for an individual webhook.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>webhook</td>
+<td>string</td>
+<td>The URL of the destination webhook. It is not a strict requirement, but it is recommended that webhooks be preauthenticated by including a secure token in the URL.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="protobufany">
+<h4>protobufAny<a class="headerlink" href="#protobufany" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@type</td>
+<td>string</td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimecreatenotificationrequest">
+<h4>rimeCreateNotificationRequest<a class="headerlink" href="#rimecreatenotificationrequest" title="Permalink to this heading"></a></h4>
+<p>CreateNotificationRequest is a request for creating a new notification
+setting in the backend.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>objectType</td>
+<td><a href="#notificationobjecttype">NotificationObjectType</a></td>
+<td>The type of the object that the notification will be associated with (e.g. Project).</td>
+<td>No</td>
+</tr>
+<tr>
+<td>objectId</td>
+<td>string</td>
+<td>Uniquely specifies an object for the notification. This varies depending on the object type; for Projects, this should be the unique identifier of the project.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>emails</td>
+<td>[ string ]</td>
+<td>List of emails that notifications should be sent to - this can be empty.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>config</td>
+<td><a href="#schemanotificationconfig">schemanotificationConfig</a></td>
+<td>The configuration for the particular type of notificaton; this allows fine-grained control over when notifications will be sent.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>webhooks</td>
+<td>[ <a href="#notificationwebhookconfig">notificationWebhookConfig</a> ]</td>
+<td>List of webhooks that notifications should be sent to - this can be empty.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimecreatenotificationresponse">
+<h4>rimeCreateNotificationResponse<a class="headerlink" href="#rimecreatenotificationresponse" title="Permalink to this heading"></a></h4>
+<p>CreateNotificationResponse is the response from creating a notification.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td><a href="#rimeuuid">rimeUUID</a></td>
+<td>Unique identifier for the newly created notification setting.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimelistnotificationsresponse">
+<h4>rimeListNotificationsResponse<a class="headerlink" href="#rimelistnotificationsresponse" title="Permalink to this heading"></a></h4>
+<p>ListNotificationsResponse is a single page of notification settings.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>notifications</td>
+<td>[ <a href="#notificationnotification">notificationNotification</a> ]</td>
+<td>List of individual notification objects requested from the backend.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>nextPageToken</td>
+<td>string</td>
+<td>The page token to use in the next ListNotifications call.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>hasMore</td>
+<td>boolean</td>
+<td>Whether or not there are more notification settings in the DB.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeriemailrecipient">
+<h4>rimeRIEmailRecipient<a class="headerlink" href="#rimeriemailrecipient" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeRIEmailRecipient</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimesendriemailresponse">
+<h4>rimeSendRIEmailResponse<a class="headerlink" href="#rimesendriemailresponse" title="Permalink to this heading"></a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rimeSendRIEmailResponse</td>
+<td>object</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeuuid">
+<h4>rimeUUID<a class="headerlink" href="#rimeuuid" title="Permalink to this heading"></a></h4>
+<p>Unique ID of an object in RIME.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uuid</td>
+<td>string</td>
+<td>String value of the object ID.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rimeupdatenotificationresponse">
+<h4>rimeUpdateNotificationResponse<a class="headerlink" href="#rimeupdatenotificationresponse" title="Permalink to this heading"></a></h4>
+<p>UpdateNotificationResponse is returned after a successful update.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>notification</td>
+<td><a href="#notificationnotification">notificationNotification</a></td>
+<td></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="schemanotificationconfig">
+<h4>schemanotificationConfig<a class="headerlink" href="#schemanotificationconfig" title="Permalink to this heading"></a></h4>
+<p>Config is the configuration for a notification setting.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>digestConfig</td>
+<td><a href="#notificationdigestconfig">notificationDigestConfig</a></td>
+<td>Config for digest notifications.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>jobActionConfig</td>
+<td><a href="#notificationjobactionconfig">notificationJobActionConfig</a></td>
+<td>Config for job update notifications.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>monitoringConfig</td>
+<td><a href="#notificationmonitoringconfig">notificationMonitoringConfig</a></td>
+<td>Config for Continuous Testing notifications.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table></section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../monitor/monitor.swagger.html" class="btn btn-neutral float-left" title="ri/api/monitor/monitor.proto" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../project/project.swagger.html" class="btn btn-neutral float-right" title="ri/api/project/project.proto" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,140 @@
+# ri/api/fileupload/file_upload.proto
+## Version: version not set
+
+### /v1-beta/datasets/upload-url
+
+#### GET
+##### Summary:
+
+GetDatasetFileUploadURL
+
+##### Description:
+
+Returns a pre-signed upload URL for a dataset.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| fileName | query | Name of dataset file. | Yes | string |
+| uploadPath | query | Path to uploaded data. | No | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeGetDatasetFileUploadURLResponse](#rimegetdatasetfileuploadurlresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+#### DELETE
+##### Summary:
+
+DeleteUploadedFileURL
+
+##### Description:
+
+Returns a pre-signed upload URL for a dataset.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| uploadedUrl | query | Name of uploaded file. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeDeleteUploadedFileURLResponse](#rimedeleteuploadedfileurlresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1-beta/models/upload-url
+
+#### GET
+##### Summary:
+
+GetModelDirectoryUploadURL
+
+##### Description:
+
+Returns a pre-signed upload URL for a model directory.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| directoryName | query | Name of model directory. | Yes | string |
+| relativeFilePaths | query | Array of relative paths from model directory to model files. | Yes | [ string ] |
+| uploadPath | query | Path to uploaded data. | No | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeGetModelDirectoryUploadURLsResponse](#rimegetmodeldirectoryuploadurlsresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1-beta/uploaded-file-urls
+
+#### GET
+##### Summary:
+
+ListUploadedFileURLs
+
+##### Description:
+
+List URLs for all uploaded files
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeListUploadedFileURLsResponse](#rimelistuploadedfileurlsresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### Models
+
+
+#### googlerpcStatus
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| code | integer |  | No |
+| message | string |  | No |
+| details | [ [protobufAny](#protobufany) ] |  | No |
+
+#### protobufAny
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| @type | string |  | No |
+
+#### rimeDeleteUploadedFileURLResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeDeleteUploadedFileURLResponse | object |  |  |
+
+#### rimeGetDatasetFileUploadURLResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| uploadUrl | string |  | No |
+| doneFileUploadUrl | string |  | No |
+| destinationUrl | string |  | No |
+| uploadLimit | string (int64) |  | No |
+
+#### rimeGetModelDirectoryUploadURLsResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| uploadPathMap | object |  | No |
+| doneFileUploadUrl | string |  | No |
+| destinationUrl | string |  | No |
+| uploadLimit | string (int64) |  | No |
+
+#### rimeListUploadedFileURLsResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| fileUrls | [ string ] |  | No |

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tabular Data/Model Setup &mdash; RIME  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            RIME
+          </a>
+              <div class="version">
+                2.0.0-beta.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">RIME at a Glance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/product-overview.html">RIME and machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/workspace-overview.html">The RIME Workspace Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/modeltesting.html">RIME model testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and monitoring models with RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/get_started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/basic_tasks.html">Setting up and testing with RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/adv_tasks.html">Customization and troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_data_scientists/reference.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administering RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/userauthnz.html">Users, authorization, and authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/naviconf.html">Navigating and configuring RIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../for_admins/fixtrouble.html">Troubleshooting a RIME deployment</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installing RIME</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/cloudinst.html">Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/mcloudinst.html">Managed Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/shostedinst.html">Self-Hosted</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REST API and SDK reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rest_api/rest-api.html">RI REST API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RIME</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tabular Data/Model Setup</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/python_library/reference/setup.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-rime.tabular">
+<span id="tabular-data-model-setup"></span><h1>Tabular Data/Model Setup<a class="headerlink" href="#module-rime.tabular" title="Permalink to this heading"></a></h1>
+<p>Python package exposing core functionality of RIME.</p>
+<p>The RIME Library offers data scientists/developers a convenient way
+to use the full suite of RIME data/model tests directly within their python
+environment.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="rime.tabular.ModelTask">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rime.tabular.</span></span><span class="sig-name descname"><span class="pre">ModelTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rime.tabular.ModelTask" title="Permalink to this definition"></a></dt>
+<dd><p>Enum representing the different model tasks.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rime.tabular.DataContainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rime.tabular.</span></span><span class="sig-name descname"><span class="pre">DataContainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataProfile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Series</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">PredictionContainer</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Series</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred_profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">PredictionProfile</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">LabelProfile</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset_profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">SubsetPerformanceProfile</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Series</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_frac_above_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_image_fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Image</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rime.tabular.DataContainer" title="Permalink to this definition"></a></dt>
+<dd><p>Class to store all data artifacts for a given dataset.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rime.tabular.DataContainer.from_data">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parsed_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ParsedData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rime.tabular.ModelTask" title="rime.tabular.base.schema.ModelTask"><span class="pre">ModelTask</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">profiling_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ProfilingConfig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Metric</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#rime.tabular.DataContainer" title="rime.tabular.profiler.run_containers.DataContainer"><span class="pre">DataContainer</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_k_feats</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_image_fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Image</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime.tabular.DataContainer" title="rime.tabular.profiler.run_containers.DataContainer"><span class="pre">DataContainer</span></a></span></span><a class="headerlink" href="#rime.tabular.DataContainer.from_data" title="Permalink to this definition"></a></dt>
+<dd><p>Load data container from df.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parsed_data</strong> (<em>ParsedData</em>) – Tuple of required information.</p></li>
+<li><p><strong>model_task</strong> (<a class="reference internal" href="#rime.tabular.ModelTask" title="rime.tabular.ModelTask"><em>ModelTask</em></a>) – Model task.</p></li>
+<li><p><strong>profiling_config</strong> (<em>ProfilingConfig</em>) – Profiling config object.</p></li>
+<li><p><strong>ref_data</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#rime.tabular.DataContainer" title="rime.tabular.DataContainer"><em>rime.tabular.DataContainer</em></a><em>]</em>) – Reference data
+container (used for creating evaluation DataContainer).</p></li>
+<li><p><strong>top_k_feats</strong> (<em>Optional</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – List of top_k_feats if smart sampling</p></li>
+<li><p><strong>metrics</strong> – Optional list of metrics to use.</p></li>
+<li><p><strong>load_image_fn</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – Function used to load images into memory</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.DataContainer.query_ids">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">query_ids</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Series</span></em><a class="headerlink" href="#rime.tabular.DataContainer.query_ids" title="Permalink to this definition"></a></dt>
+<dd><p>Safely access the preds container.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.DataContainer.timestamps">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">timestamps</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Series</span></em><a class="headerlink" href="#rime.tabular.DataContainer.timestamps" title="Permalink to this definition"></a></dt>
+<dd><p>Safely access the timestamps.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.DataContainer.is_query_ids_none">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_query_ids_none</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#rime.tabular.DataContainer.is_query_ids_none" title="Permalink to this definition"></a></dt>
+<dd><p>Notifies user if this has query_ids.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.DataContainer.is_timestamps_none">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_timestamps_none</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#rime.tabular.DataContainer.is_timestamps_none" title="Permalink to this definition"></a></dt>
+<dd><p>Notifies user if this has timestamps.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.DataContainer.label_frac_above_threshold">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label_frac_above_threshold</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#rime.tabular.DataContainer.label_frac_above_threshold" title="Permalink to this definition"></a></dt>
+<dd><p>Check if fraction of non-null labels is above the configured threshold.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.DataContainer.text_cols">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">text_cols</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rime.tabular.DataContainer.text_cols" title="Permalink to this definition"></a></dt>
+<dd><p>Return names of text features.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.DataContainer.image_cols">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">image_cols</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rime.tabular.DataContainer.image_cols" title="Permalink to this definition"></a></dt>
+<dd><p>Return names of image features.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.DataContainer.embedding_cols">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">embedding_cols</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">EmbeddingColumn</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rime.tabular.DataContainer.embedding_cols" title="Permalink to this definition"></a></dt>
+<dd><p>Return names of embedding features.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime.tabular.DataContainer.get_loaded_datapoint">
+<span class="sig-name descname"><span class="pre">get_loaded_datapoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="headerlink" href="#rime.tabular.DataContainer.get_loaded_datapoint" title="Permalink to this definition"></a></dt>
+<dd><p>Get datapoint with all images loaded.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rime.tabular.</span></span><span class="sig-name descname"><span class="pre">TabularRunContainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rime.tabular.DataContainer" title="rime.tabular.profiler.run_containers.DataContainer"><span class="pre">DataContainer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rime.tabular.DataContainer" title="rime.tabular.profiler.run_containers.DataContainer"><span class="pre">DataContainer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">BaseModel</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ModelProfile</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rime.tabular.TabularRunContainer" title="Permalink to this definition"></a></dt>
+<dd><p>Class to store the testing state when a model is provided.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer.get_failing_row_details">
+<span class="sig-name descname"><span class="pre">get_failing_row_details</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Detail</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#rime.tabular.TabularRunContainer.get_failing_row_details" title="Permalink to this definition"></a></dt>
+<dd><p>Get failing row details.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer.protected_features">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">protected_features</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rime.tabular.TabularRunContainer.protected_features" title="Permalink to this definition"></a></dt>
+<dd><p>Return protected feature column names.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer.features_not_in_model">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">features_not_in_model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rime.tabular.TabularRunContainer.features_not_in_model" title="Permalink to this definition"></a></dt>
+<dd><p>Return feature names not included in model.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer.features_in_model">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">features_in_model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rime.tabular.TabularRunContainer.features_in_model" title="Permalink to this definition"></a></dt>
+<dd><p>Return feature names included in model.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer.protected_feature_pairs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">protected_feature_pairs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rime.tabular.TabularRunContainer.protected_feature_pairs" title="Permalink to this definition"></a></dt>
+<dd><p>Return protected feature pairs if they exist.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer.custom_intersection_names">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">custom_intersection_names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rime.tabular.TabularRunContainer.custom_intersection_names" title="Permalink to this definition"></a></dt>
+<dd><p>Return custom intersection columns if they exist.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer.custom_intersections">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">custom_intersections</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Column</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rime.tabular.TabularRunContainer.custom_intersections" title="Permalink to this definition"></a></dt>
+<dd><p>Return custom intersection columns if they exist.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer.projection_cols">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">projection_cols</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Column</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rime.tabular.TabularRunContainer.projection_cols" title="Permalink to this definition"></a></dt>
+<dd><p>Return projection columns if they exist.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer.common_profiled_columns">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">common_profiled_columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Column</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rime.tabular.TabularRunContainer.common_profiled_columns" title="Permalink to this definition"></a></dt>
+<dd><p>Return Common Profiled Columns between Ref and Test Data.</p>
+<p>Removes protected feature pair columns from the list of profiled columns,
+these are only used in a subset of tests.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer.common_profiled_columns_in_model">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">common_profiled_columns_in_model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Column</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rime.tabular.TabularRunContainer.common_profiled_columns_in_model" title="Permalink to this definition"></a></dt>
+<dd><p>Return Common Profiled Columns that are used in the model.</p>
+<p>Removes any columns not in the model from the list of profiled columns, as
+these should not be included in model-specific tests (like attacks).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer.common_projection_cols">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">common_projection_cols</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Column</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rime.tabular.TabularRunContainer.common_projection_cols" title="Permalink to this definition"></a></dt>
+<dd><p>Return common projection columns if ref and eval sets.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer.same_type_columns">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">same_type_columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rime.tabular.TabularRunContainer.same_type_columns" title="Permalink to this definition"></a></dt>
+<dd><p>Return columns that were profiled as the same Column type in ref and eval.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer.model_input_column_names">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model_input_column_names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rime.tabular.TabularRunContainer.model_input_column_names" title="Permalink to this definition"></a></dt>
+<dd><p>Return columns used by the model.</p>
+<p>Removes protected feature pairs, these are only used in a subset
+of tests.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer.summary_metric_list">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">summary_metric_list</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">Metric</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rime.tabular.TabularRunContainer.summary_metric_list" title="Permalink to this definition"></a></dt>
+<dd><p>Return summary metrics based on model task.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer.get_run_summary_metrics">
+<span class="sig-name descname"><span class="pre">get_run_summary_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_display_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#rime.tabular.TabularRunContainer.get_run_summary_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Return model performance metric information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer.get_comparison_cols">
+<span class="sig-name descname"><span class="pre">get_comparison_cols</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ModelPerformance</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#rime.tabular.TabularRunContainer.get_comparison_cols" title="Permalink to this definition"></a></dt>
+<dd><p>Get test run comparison columns.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer.scale_metric_thresholds">
+<span class="sig-name descname"><span class="pre">scale_metric_thresholds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric_cls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">Metric</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresholds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#rime.tabular.TabularRunContainer.scale_metric_thresholds" title="Permalink to this definition"></a></dt>
+<dd><p>Scale the default severity thresholds for a particular metric.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer.metrics">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Metric</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rime.tabular.TabularRunContainer.metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Return list of metrics in run container.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime.tabular.TabularRunContainer.class_names">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">class_names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#rime.tabular.TabularRunContainer.class_names" title="Permalink to this definition"></a></dt>
+<dd><p>Return class names in run container.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-rime.nlp">
+<span id="nlp-data-model-setup"></span><h1>NLP Data/Model Setup<a class="headerlink" href="#module-rime.nlp" title="Permalink to this heading"></a></h1>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

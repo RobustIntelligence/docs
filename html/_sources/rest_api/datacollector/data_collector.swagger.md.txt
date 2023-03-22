@@ -1,0 +1,235 @@
+# ri/api/datacollector/data_collector.proto
+## Version: version not set
+
+### /v1-beta/data-collector/data/{dataStreamId.uuid}
+
+#### PUT
+##### Summary:
+
+StoreDatapoints
+
+##### Description:
+
+Store multiple new datapoints into a data stream.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| dataStreamId.uuid | path | String value of the object ID. | Yes | string |
+| body | body |  | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeStoreDatapointsResponse](#rimestoredatapointsresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1-beta/data-collector/datapoints/{dataStreamId.uuid}
+
+#### GET
+##### Summary:
+
+GetDatapoints
+
+##### Description:
+
+GetDatapoints returns all datapoints from a time period.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| dataStreamId.uuid | path | String value of the object ID. | Yes | string |
+| timeInterval.startTime | query |  | No | dateTime |
+| timeInterval.endTime | query |  | No | dateTime |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response.(streaming responses) | object |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1-beta/data-collector/datastream/{projectId.uuid}
+
+#### POST
+##### Summary:
+
+RegisterDataStream
+
+##### Description:
+
+Registers a new data stream. A data stream is a location
+where data points are stored. All data points that are
+in the same registered data set must be stored in the same
+data stream.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+| body | body |  | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeRegisterDataStreamResponse](#rimeregisterdatastreamresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1-beta/data-collector/predictions/{modelId.uuid}
+
+#### PUT
+##### Summary:
+
+StorePredictions
+
+##### Description:
+
+Store multiple new predictions.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| modelId.uuid | path | String value of the object ID. | Yes | string |
+| body | body |  | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeStorePredictionsResponse](#rimestorepredictionsresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1-beta/data-collector/predictions/{modelId.uuid}/{dataStreamId.uuid}
+
+#### GET
+##### Summary:
+
+GetPredictions
+
+##### Description:
+
+GetPredictions returns all predictions from a time period
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| modelId.uuid | path | String value of the object ID. | Yes | string |
+| dataStreamId.uuid | path | String value of the object ID. | Yes | string |
+| timeInterval.startTime | query |  | No | dateTime |
+| timeInterval.endTime | query |  | No | dateTime |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response.(streaming responses) | object |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### Models
+
+
+#### datacollectorDatapoint
+
+Datapoint contains the DatapointRow and additional metadata.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| datapointId | [rimeUUID](#rimeuuid) |  | No |
+| dataStreamId | [rimeUUID](#rimeuuid) |  | No |
+| datapoint | [datacollectorDatapointRow](#datacollectordatapointrow) |  | No |
+
+#### datacollectorDatapointRow
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| inputData | byte |  | No |
+| label | byte |  | No |
+| timestamp | dateTime | If timestamp is not provided in request, the time when the datapoint is stored will be used. | No |
+| queryId | byte | Query ID is required for Ranking model tasks. | No |
+
+#### googlerpcStatus
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| code | integer |  | No |
+| message | string |  | No |
+| details | [ [protobufAny](#protobufany) ] |  | No |
+
+#### protobufAny
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| @type | string |  | No |
+
+#### rimeGetDatapointsResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| datapoints | [ [datacollectorDatapoint](#datacollectordatapoint) ] |  | No |
+
+#### rimeGetPredictionsResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| predictions | [ [schemadatacollectorPrediction](#schemadatacollectorprediction) ] |  | No |
+
+#### rimeRegisterDataStreamResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| dataStreamId | [rimeUUID](#rimeuuid) | Uniquely specifies a data stream. | No |
+
+#### rimeStoreDatapointsResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| datapointIds | [ [rimeUUID](#rimeuuid) ] |  | No |
+
+#### rimeStorePredictionsRequestPrediction
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| datapointId | [rimeUUID](#rimeuuid) | Uniquely specifies a Datapoint. | No |
+| prediction | byte | A JSON-encoded prediction dictionary. | Yes |
+
+#### rimeStorePredictionsResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeStorePredictionsResponse | object |  |  |
+
+#### rimeTimeInterval
+
+TimeInterval describes a time interval.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| startTime | dateTime |  | No |
+| endTime | dateTime |  | No |
+
+#### rimeUUID
+
+Unique ID of an object in RIME.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| uuid | string | String value of the object ID. | No |
+
+#### schemadatacollectorPrediction
+
+Prediction contains the prediction of a model for a datapoint.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| datapointId | [rimeUUID](#rimeuuid) |  | No |
+| modelId | [rimeUUID](#rimeuuid) |  | No |
+| dataStreamId | [rimeUUID](#rimeuuid) |  | No |
+| prediction | byte |  | No |
+| timestamp | dateTime | The timestamp of the datapoint is stored in the prediction for fast querying. | No |

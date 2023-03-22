@@ -1,0 +1,357 @@
+# ri/api/filescanning/file_scanning.proto
+## Version: version not set
+
+### /v1-beta/file-scans
+
+#### GET
+##### Summary:
+
+ListFileScanResults
+
+##### Description:
+
+Returns a paginated list of all File Scan results.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| pageSize | query | The maximum number of File Scan Result objects to return in a single page. | No | string (int64) |
+| pageToken | query | Specifies a page of the list returned by a ListFileScanResults query. The ListFileScanResults query returns a pageToken when there is more than one page of results. | No | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeListFileScanResultsResponse](#rimelistfilescanresultsresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+#### POST
+##### Summary:
+
+StartFileScan
+
+##### Description:
+
+Starts a File Scanning Job for the specified file.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| body | body |  | Yes | [rimeStartFileScanRequest](#rimestartfilescanrequest) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeStartFileScanResponse](#rimestartfilescanresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### Models
+
+
+#### CustomImagePullSecret
+
+Description of the secret required to pull a custom image.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| name | string | Name of the Kubernetes pull secret that stores the required pull secret for the custom image. | No |
+
+#### TestRunProgressTestBatchProgress
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| type | string | (test run ID, test batch type) are a unique ID of the test batch. | No |
+| status | [rimeTestTaskStatus](#rimetesttaskstatus) | The status of each test batch is populated by the synthesizer. | No |
+
+#### filescanningFileScanResult
+
+The results for a model scan run.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| fileScanId | string | Uniquely specifies a File Scan. | No |
+| modelFileInfo | [filescanningModelFileInfo](#filescanningmodelfileinfo) |  | No |
+| securityReport | [filescanningSecurityReport](#filescanningsecurityreport) |  | No |
+
+#### filescanningHuggingfaceModelInfo
+
+HuggingFace repository ID.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| scanPath | string |  | No |
+
+#### filescanningModelFileInfo
+
+Specifies type of model file to scan.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| pytorchFile | [filescanningPytorchModelInfo](#filescanningpytorchmodelinfo) |  | No |
+| huggingfaceFile | [filescanningHuggingfaceModelInfo](#filescanninghuggingfacemodelinfo) |  | No |
+
+#### filescanningPytorchModelInfo
+
+Path to the Pytorch model file.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| scanPath | string |  | No |
+
+#### filescanningSecurityReport
+
+A security report for a single model file.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| scanPath | string |  | No |
+| importsResults | [ [filescanningSecurityReportImportResult](#filescanningsecurityreportimportresult) ] |  | No |
+
+#### filescanningSecurityReportImportResult
+
+Below are the messages used by the File Scan / Test Engine
+(on the DP side) to upload the results of a a model scan
+to the upload server / DB.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| filename | string | The name of the file that was scanned. | No |
+| extra | [ string ] |  | No |
+| unexpected | [ string ] |  | No |
+| unsafe | [ string ] |  | No |
+
+#### googlerpcStatus
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| code | integer |  | No |
+| message | string |  | No |
+| details | [ [protobufAny](#protobufany) ] |  | No |
+
+#### protobufAny
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| @type | string |  | No |
+
+#### rimeArchivedJobLogs
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| url | [rimeSafeURL](#rimesafeurl) |  | No |
+| expirationTime | dateTime |  | No |
+
+#### rimeContinuousTestJobProgress
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testRuns | [ [rimeContinuousTestRunProgress](#rimecontinuoustestrunprogress) ] |  | No |
+
+#### rimeContinuousTestRunProgress
+
+ContinuousTestRunProgress is a wrapper around TestRunProgress with
+added metadata about the bins.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testRun | [rimeTestRunProgress](#rimetestrunprogress) |  | No |
+| binStartTime | dateTime |  | No |
+| binEndTime | dateTime |  | No |
+
+#### rimeJobData
+
+Note that progress may not be populated depending on the parameters of the
+request.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| stress | [rimeJobDataStressTest](#rimejobdatastresstest) |  | No |
+| continuousInc | [rimeJobDataContinuousIncrementalTest](#rimejobdatacontinuousincrementaltest) |  | No |
+| fileScan | object |  | No |
+
+#### rimeJobDataContinuousIncrementalTest
+
+A continuous incremental test job runs `n` test runs, where `n` is the
+number of bins specified in the dataset.
+This is a production specific workflow and is used to monitor a model's
+performance over time.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| firewallId | string |  | No |
+| ctTestRunIds | [ string ] |  | No |
+| progress | [rimeContinuousTestJobProgress](#rimecontinuoustestjobprogress) |  | No |
+
+#### rimeJobDataStressTest
+
+A stress test job runs a single test run over a model and dataset.
+This is also known as offline testing; it is run before production
+deployment of the model.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| projectId | [rimeUUID](#rimeuuid) |  | No |
+| testRunId | string |  | No |
+| progress | [rimeStressTestJobProgress](#rimestresstestjobprogress) |  | No |
+
+#### rimeJobMetadata
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| jobId | string | The identifier within our job tracking system. | No |
+| terminationReason | [rimeTerminationReason](#rimeterminationreason) |  | No |
+| jobType | [rimeJobType](#rimejobtype) | The type of the job. | No |
+| status | [statedbJobStatus](#statedbjobstatus) | The job's current status. | No |
+| startTime | dateTime | The start time of the job (when the job transitions in state to RUNNING). Note, this may not be populated immediately when the job is created. | No |
+| creationTime | dateTime | The time the job was created. | No |
+| runningTimeSecs | double | The total running time a job took to complete if the job is finished or the current running time if the job is still in progress (seconds). | No |
+| jobData | [rimeJobData](#rimejobdata) | Job-type specific data. e.g. for stress test jobs, this is populated with the project ID and the test run ID. The type of the job data payload must match the JobType in this message. | No |
+| jobProgressStr | string | Pretty-printed, human-readable representation of job progress. This will only be populated for Read methods with the FULL job view. To get schema for progress for each type of job, see the field inside that job's job data message (e.g. StressTestJobProgress). Note: this is unstable, do not rely on parsing this. | No |
+| cancellationRequested | boolean | Marked when the job has been requested to be cancelled by the user. This is declarative; once the user requests cancellation, the backend will conduct garbage collection on the job in the background and eventually update the status of the job to CANCELLED. | No |
+| agentId | [rimeUUID](#rimeuuid) | agent_id denotes the agent this job is run on. | No |
+| archivedJobLogs | [rimeArchivedJobLogs](#rimearchivedjoblogs) |  | No |
+
+#### rimeJobType
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeJobType | string |  |  |
+
+#### rimeListFileScanResultsResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| results | [ [filescanningFileScanResult](#filescanningfilescanresult) ] |  | No |
+| nextPageToken | string |  | No |
+| hasMore | boolean |  | No |
+
+#### rimeSafeURL
+
+SafeURL represents a URL that has been safely constructed.
+e.g. a user clicking on this link is guaranteed to land on the RIME web app.
+We use this instead of a raw str so that application code can generate
+SafeURL messages in certain ways -> this provides stronger typing than just
+using a string.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| url | string | A safely constructed URL. | No |
+
+#### rimeStartFileScanRequest
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| fileInfo | [filescanningModelFileInfo](#filescanningmodelfileinfo) |  | No |
+| runTimeInfo | [runtimeinfoRunTimeInfo](#runtimeinforuntimeinfo) | Specifies a custom image to use when running the file scan. | No |
+| workspaceId | [rimeUUID](#rimeuuid) | Uniquely specifies which workspace the file scanning job belongs to. If not specified, server will attempt to read the workspace from the request context. | No |
+
+#### rimeStartFileScanResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| job | [rimeJobMetadata](#rimejobmetadata) | Details for the job that was started. | No |
+
+#### rimeStressTestJobProgress
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testRun | [rimeTestRunProgress](#rimetestrunprogress) |  | No |
+
+#### rimeTerminationReason
+
+ - TERMINATION_REASON_OOMKILLED: The job was terminated for using more memory than the amount assigned
+to the job.
+ - TERMINATION_REASON_GENERIC_ERROR: This is the catch-all error and is typically used for user errors.
+ - TERMINATION_REASON_INTERNAL_ERROR: Specifies a system error. Contact the support team.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeTerminationReason | string |  - TERMINATION_REASON_OOMKILLED: The job was terminated for using more memory than the amount assigned to the job.  - TERMINATION_REASON_GENERIC_ERROR: This is the catch-all error and is typically used for user errors.  - TERMINATION_REASON_INTERNAL_ERROR: Specifies a system error. Contact the support team. |  |
+
+#### rimeTestRunProgress
+
+TestRunProgress is a shared message for representing the progress of a
+single test run.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testRunId | string |  | No |
+| status | [rimeTestTaskStatus](#rimetesttaskstatus) |  | No |
+| testBatches | [ [TestRunProgressTestBatchProgress](#testrunprogresstestbatchprogress) ] |  | No |
+
+#### rimeTestTaskStatus
+
+Status of individual test units, e.g. test runs, test batches, test cases.
+This is different from job status because these are more abstract.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeTestTaskStatus | string | Status of individual test units, e.g. test runs, test batches, test cases. This is different from job status because these are more abstract. |  |
+
+#### rimeUUID
+
+Unique ID of an object in RIME.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| uuid | string | String value of the object ID. | No |
+
+#### runtimeinfoCustomImage
+
+CustomImage is an external image provided by the customer.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| name | string | Name of the custom image (e.g. a docker image name). | No |
+| pullSecret | [CustomImagePullSecret](#customimagepullsecret) | Secret used to pull the custom image. | No |
+
+#### runtimeinfoCustomImageType
+
+CustomImageType is a union of all possible custom managed image and RI
+managed image.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| customImage | [runtimeinfoCustomImage](#runtimeinfocustomimage) |  | No |
+| managedImageName | string | Name of the RI managed image. | No |
+
+#### runtimeinfoResourceRequest
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| ramRequestMegabytes | string (uint64) | Megabytes of RAM requested for the stress test job. | No |
+| cpuRequestMillicores | string (uint64) | Millicores of CPU requested for the stress test job. | No |
+
+#### runtimeinfoRunTimeInfo
+
+RuntimeInfo contains information about how a job should be run.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| agentId | [rimeUUID](#rimeuuid) | ID of the agent this job should be run on. If not specified, the default agent for the workspace is used. | No |
+| customImage | [runtimeinfoCustomImageType](#runtimeinfocustomimagetype) |  | No |
+| resourceRequest | [runtimeinfoResourceRequest](#runtimeinforesourcerequest) |  | No |
+| explicitErrors | boolean | If true, the job will not ignore silent errors. | No |
+| randomSeed | string (int64) | Random seed to use for the job, so that test job result will be deterministic. | No |
+
+#### statedbJobStatus
+
+TODO(AIRS-764): redesign as part of Job Monitoring consolidation with 
+StateDB effort.
+
+ - JOB_STATUS_PENDING: Resources have been created for the job but the job has not started yet.
+ - JOB_STATUS_FAILED: Blanket status for user or system-related job failure.
+Check the Termination Reason for details.
+ - JOB_STATUS_REQUESTED: The job descriptor exists but has no resources allocated.
+Jobs that remain in this status without moving to the PENDING status are
+at risk of entering the FAILED status.
+ - JOB_STATUS_CANCELLED: Job has been cancelled.
+Cancelled jobs cannot be recovered.
+ - JOB_STATUS_RECONCILING: Job is being reconciled by the operator.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| statedbJobStatus | string | TODO(AIRS-764): redesign as part of Job Monitoring consolidation with  StateDB effort.   - JOB_STATUS_PENDING: Resources have been created for the job but the job has not started yet.  - JOB_STATUS_FAILED: Blanket status for user or system-related job failure. Check the Termination Reason for details.  - JOB_STATUS_REQUESTED: The job descriptor exists but has no resources allocated. Jobs that remain in this status without moving to the PENDING status are at risk of entering the FAILED status.  - JOB_STATUS_CANCELLED: Job has been cancelled. Cancelled jobs cannot be recovered.  - JOB_STATUS_RECONCILING: Job is being reconciled by the operator. |  |

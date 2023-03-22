@@ -1,0 +1,58 @@
+# ri/api/rimeinfo/rime_info.proto
+## Version: version not set
+
+### /v1/rime-info
+
+#### GET
+##### Summary:
+
+GetRIMEInfo
+
+##### Description:
+
+Returns information about the RIME cluster you are querying.
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeGetRIMEInfoResponse](#rimegetrimeinforesponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### Models
+
+
+#### googlerpcStatus
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| code | integer |  | No |
+| message | string |  | No |
+| details | [ [protobufAny](#protobufany) ] |  | No |
+
+#### protobufAny
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| @type | string |  | No |
+
+#### rimeGetRIMEInfoResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| clusterInfoVersion | string | Version of the RIME cluster control plane. | No |
+| customerName | string | Name of the customer who owns the license. | No |
+| expirationTime | dateTime | Expiration time of the license. | No |
+| gracePeriodEndTime | dateTime | After a license is expired, there is a grace period to allow a user to continue to use and update the license. | No |
+| riPlan | [rimeRIPlan](#rimeriplan) | RI customer plan. | No |
+| buildVersion | string | Annotated version of the RIME cluster control plane, including the timestamp corresponding to the build. | No |
+
+#### rimeRIPlan
+
+ - RIPLAN_DEFAULT: Default plan for Cloud enterprise customers.
+ - RIPLAN_SELF_SERVE: Self serve plan for Managed Cloud enterprise customers.
+ - RIPLAN_LOCAL_TRIAL: Local trial plan with limited functionality.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeRIPlan | string |  - RIPLAN_DEFAULT: Default plan for Cloud enterprise customers.  - RIPLAN_SELF_SERVE: Self serve plan for Managed Cloud enterprise customers.  - RIPLAN_LOCAL_TRIAL: Local trial plan with limited functionality. |  |

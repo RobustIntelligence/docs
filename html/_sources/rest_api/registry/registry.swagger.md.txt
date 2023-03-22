@@ -1,0 +1,753 @@
+# ri/api/registry/registry.proto
+## Version: version not set
+
+### /v1/registry/dataset
+
+#### GET
+##### Summary:
+
+GetDataset
+
+##### Description:
+
+Returns information about a registered Dataset.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| datasetId | query | Uniquely specifies a Dataset. | No | string |
+| datasetName | query | Unique name of a Dataset. | No | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeGetDatasetResponse](#rimegetdatasetresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/registry/dataset/{datasetId}
+
+#### DELETE
+##### Summary:
+
+DeleteDataset
+
+##### Description:
+
+Delete a Dataset from the Registry.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| datasetId | path | Uniquely specifies a Dataset. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeDeleteDatasetResponse](#rimedeletedatasetresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/registry/dataset/{projectId.uuid}
+
+#### POST
+##### Summary:
+
+RegisterDataset
+
+##### Description:
+
+Register a new Dataset for the specified Project.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+| body | body |  | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeRegisterDatasetResponse](#rimeregisterdatasetresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/registry/model
+
+#### GET
+##### Summary:
+
+GetModel
+
+##### Description:
+
+Returns information about a registered Model.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| modelId.uuid | query | String value of the object ID. | No | string |
+| modelName | query | Unique name of a Model. | No | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeGetModelResponse](#rimegetmodelresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/registry/model/{modelId.uuid}
+
+#### DELETE
+##### Summary:
+
+DeleteModel
+
+##### Description:
+
+Delete a Model from the Registry.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| modelId.uuid | path | String value of the object ID. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeDeleteModelResponse](#rimedeletemodelresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/registry/model/{projectId.uuid}
+
+#### POST
+##### Summary:
+
+RegisterModel
+
+##### Description:
+
+Register a new Model for the specified Project.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+| body | body |  | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeRegisterModelResponse](#rimeregistermodelresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/registry/prediction/{modelId.uuid}/{datasetId}
+
+#### GET
+##### Summary:
+
+GetPredictionSet
+
+##### Description:
+
+Returns information about a registered Prediction set.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| modelId.uuid | path | String value of the object ID. | Yes | string |
+| datasetId | path | Uniquely specifies a Dataset. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeGetPredictionSetResponse](#rimegetpredictionsetresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+#### DELETE
+##### Summary:
+
+DeletePredictionSet
+
+##### Description:
+
+Delete the Prediction set corresponding to a specified Model and Dataset.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| modelId.uuid | path | String value of the object ID. | Yes | string |
+| datasetId | path | Uniquely specifies a Dataset. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeDeletePredictionSetResponse](#rimedeletepredictionsetresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/registry/prediction/{projectId.uuid}/{modelId.uuid}/{datasetId}
+
+#### POST
+##### Summary:
+
+RegisterPredictionSet
+
+##### Description:
+
+Register a Prediction set corresponding to a specified Model and Dataset.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+| modelId.uuid | path | String value of the object ID. | Yes | string |
+| datasetId | path | Uniquely specifies a Dataset. | Yes | string |
+| body | body |  | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeRegisterPredictionSetResponse](#rimeregisterpredictionsetresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/registry/{projectId.uuid}/dataset
+
+#### GET
+##### Summary:
+
+ListDatasets
+
+##### Description:
+
+List all Datasets in the Registry with optional filters.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+| firstPageReq.firewallId | query | Uniquely specifies a Firewall. | No | string |
+| firstPageReq.scheduledCtIntervals.startTime | query |  | No | dateTime |
+| firstPageReq.scheduledCtIntervals.endTime | query |  | No | dateTime |
+| pageToken | query | Specifies a page of the list returned by a ListDatasets query. The ListDatasets query returns a pageToken when there is more than one page of results. Specify either this field or the firstPageReq field. | No | string |
+| pageSize | query | The maximum number of Dataset objects to return in a single page. | No | string (int64) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeListDatasetsResponse](#rimelistdatasetsresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+#### POST
+##### Summary:
+
+RegisterDataset
+
+##### Description:
+
+Register a new Dataset for the specified Project.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+| body | body |  | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeRegisterDatasetResponse](#rimeregisterdatasetresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/registry/{projectId.uuid}/model
+
+#### GET
+##### Summary:
+
+ListModels
+
+##### Description:
+
+List all Models in the Registry.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+| pageToken | query | Specifies a page of the list returned by a ListModels query. The ListModels query returns a pageToken when there is more than one page of results. Specify either this field or the firstPageReq field. | No | string |
+| pageSize | query | The maximum number of Model objects to return in a single page. | No | string (int64) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeListModelsResponse](#rimelistmodelsresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+#### POST
+##### Summary:
+
+RegisterModel
+
+##### Description:
+
+Register a new Model for the specified Project.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+| body | body |  | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeRegisterModelResponse](#rimeregistermodelresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/registry/{projectId.uuid}/prediction
+
+#### GET
+##### Summary:
+
+ListPredictionSet
+
+##### Description:
+
+List all Prediction sets in the Registry with optional filters.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+| firstPageReq.modelId | query | Uniquely specifies a Model. | No | string |
+| firstPageReq.datasetId | query | Uniquely specifies a Dataset. | No | string |
+| pageToken | query | Specifies a page of the list returned by a ListPredictions query. The ListPredictions query returns a pageToken when there is more than one page of results. Specify either this field or the firstPageReq field. | No | string |
+| pageSize | query | The maximum number of Prediction objects to return in a single page. | No | string (int64) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeListPredictionsResponse](#rimelistpredictionsresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/registry/{projectId.uuid}/prediction/{modelId.uuid}/{datasetId}
+
+#### POST
+##### Summary:
+
+RegisterPredictionSet
+
+##### Description:
+
+Register a Prediction set corresponding to a specified Model and Dataset.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId.uuid | path | String value of the object ID. | Yes | string |
+| modelId.uuid | path | String value of the object ID. | Yes | string |
+| datasetId | path | Uniquely specifies a Dataset. | Yes | string |
+| body | body |  | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [rimeRegisterPredictionSetResponse](#rimeregisterpredictionsetresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### Models
+
+
+#### DataInfoParamsFeatureIntersection
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| features | [ string ] |  | No |
+
+#### DataInfoParamsRankingInfo
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| queryCol | string | Name of column in dataset that contains the query ids. | No |
+| nqueries | string (int64) | Number of queries to consider. If null, will use all queries. | No |
+| nrowsPerQuery | string (int64) | Number of rows to use per query. If null, will use all rows. | No |
+| dropQueryId | boolean | Whether to drop the query ID column from the dataset to avoid  passing as a feature to the model. | No |
+
+#### ListDatasetsRequestDatasetsQuery
+
+DatasetsQuery is used to filter all datasets within 
+a specified time range and firewall ID.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| firewallId | string | Uniquely specifies a Firewall. | No |
+| scheduledCtIntervals | [rimeTimeInterval](#rimetimeinterval) |  | No |
+
+#### ListModelsRequestModelQuery
+
+Placeholder query message to avoid potential breaking 
+changes in the future. We want to make sure this
+message exists to setup the proper pagination format.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| ListModelsRequestModelQuery | object | Placeholder query message to avoid potential breaking  changes in the future. We want to make sure this message exists to setup the proper pagination format. |  |
+
+#### ListPredictionsRequestPredictionQuery
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| modelId | string | Uniquely specifies a Model. | No |
+| datasetId | string | Uniquely specifies a Dataset. | No |
+
+#### datasetCTInfo
+
+CTInfo represents information about the dataset and its use in CT runs.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| firewallId | [rimeUUID](#rimeuuid) | firewall_id is the firewall this dataset is associated with. | No |
+| startTime | dateTime | start and end time are the start and end time of this dataset. this should is used by scheduled ct when registering new datasets. | No |
+| endTime | dateTime |  | No |
+
+#### datasetDataset
+
+Dataset represents a full entry in the Data Registry, with
+info, metadata, and tags used to identify the data both internally
+and to an external user.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| name | string | Name and dataset_id are both enforced to be unique. Name is user specified. dataset_id is internally generated. It is semantically determined as firewall_id#start_time#end_time in the case the CTInfo is provided. | No |
+| datasetId | string |  | No |
+| projectIds | [ [rimeUUID](#rimeuuid) ] | For now, a dataset will only have one project_id associated with it. We make this an array to allow dataset's to be shared in the future. | No |
+| creatorId | [rimeUUID](#rimeuuid) | creator and created_time of the model will be automatically populated. | No |
+| creationTime | dateTime |  | No |
+| userMetadata | [schemaregistryMetadata](#schemaregistrymetadata) | User defined metadata such as searchable tags + extra information. | No |
+| integrationId | [rimeUUID](#rimeuuid) | Information about where the data is stored and how to access said data. IntegrationID is the name of the integration used to identify  where the data resides. DataInfo defines more granular information about how to access the data and its properties. | No |
+| dataInfo | [testrunSingleDataInfo](#testrunsingledatainfo) |  | No |
+| ctInfo | [datasetCTInfo](#datasetctinfo) |  | No |
+
+#### googlerpcStatus
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| code | integer |  | No |
+| message | string |  | No |
+| details | [ [protobufAny](#protobufany) ] |  | No |
+
+#### modelHuggingFaceModelInfo
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| modelUri | string |  | No |
+| kwargs | string | We are currently in the process of adding extra  huggingface params and separating use cases into tabular and nlp. Use a serialized json dictionary for other variables right now to ensure maximum flexibility. | No |
+
+#### modelModel
+
+Model represents a full entry in the Model Registry, with
+info, metadata, and tags used to identify the model both internally
+and to an external user.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| name | string | Name and model_id are both enforced to be unique. Name is user specified. Model_id is internally generated. | No |
+| modelId | [rimeUUID](#rimeuuid) |  | No |
+| projectIds | [ [rimeUUID](#rimeuuid) ] | For now, a model will only have one project_id associated with it. We make this an array to allow model's to be shared in the future. | No |
+| creatorId | [rimeUUID](#rimeuuid) | creator and created_time of the model will be automatically populated. | No |
+| creationTime | dateTime |  | No |
+| externalId | string | external_id is an optional way for a user to identify the model  with their own Model IDs. | No |
+| userMetadata | [schemaregistryMetadata](#schemaregistrymetadata) | User defined metadata such as searchable tags + extra information. | No |
+| modelInfo | [modelModelInfo](#modelmodelinfo) | Information about how the model is stored, and how to retrieve it. Used by the rime-engine to load the model. If no info is specified, this field is empty. | No |
+
+#### modelModelInfo
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| modelPath | [modelModelPathInfo](#modelmodelpathinfo) |  | No |
+| huggingFace | [modelHuggingFaceModelInfo](#modelhuggingfacemodelinfo) |  | No |
+
+#### modelModelPathInfo
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| path | string |  | No |
+
+#### projectOwnerDetails
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| name | string |  | No |
+| email | string |  | No |
+
+#### protobufAny
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| @type | string |  | No |
+
+#### registrypredictionPrediction
+
+Prediction represents a full entry in the Predictions Registry, with
+info, metadata, and tags used to identify the predictions both internally
+and to an external user.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| datasetId | string | The dataset_id and model_id are used to uniquely identify a prediction. These must be provided by the user. | No |
+| modelId | [rimeUUID](#rimeuuid) |  | No |
+| projectIds | [ [rimeUUID](#rimeuuid) ] | For now, a pred will only have one project_id associated with it. We make this an array to allow pred's to be shared in the future. | No |
+| creatorId | [rimeUUID](#rimeuuid) | creator and created_time of the model will be automatically populated. | No |
+| creationTime | dateTime |  | No |
+| userMetadata | [schemaregistryMetadata](#schemaregistrymetadata) | User defined metadata such as searchable tags + extra information. | No |
+| integrationId | [rimeUUID](#rimeuuid) | Information about where the predictions are stored and how to access said predictions. IntegrationID is the name of the integration specifying where the preds resides. PredInfo defines more granular information about how to access the preds and its properties. | No |
+| predInfo | [testrunPredInfo](#testrunpredinfo) |  | No |
+
+#### rimeDeleteDatasetResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeDeleteDatasetResponse | object |  |  |
+
+#### rimeDeleteModelResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeDeleteModelResponse | object |  |  |
+
+#### rimeDeletePredictionSetResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeDeletePredictionSetResponse | object |  |  |
+
+#### rimeGetDatasetResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| dataset | [datasetDataset](#datasetdataset) |  | No |
+
+#### rimeGetModelResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| model | [rimeModelWithOwnerDetails](#rimemodelwithownerdetails) |  | No |
+
+#### rimeGetPredictionSetResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| prediction | [registrypredictionPrediction](#registrypredictionprediction) |  | No |
+
+#### rimeListDatasetsResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| datasets | [ [datasetDataset](#datasetdataset) ] |  | No |
+| nextPageToken | string |  | No |
+| hasMore | boolean |  | No |
+
+#### rimeListModelsResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| models | [ [rimeModelWithOwnerDetails](#rimemodelwithownerdetails) ] |  | No |
+| nextPageToken | string |  | No |
+| hasMore | boolean |  | No |
+
+#### rimeListPredictionsResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| predictions | [ [registrypredictionPrediction](#registrypredictionprediction) ] |  | No |
+| nextPageToken | string |  | No |
+| hasMore | boolean |  | No |
+
+#### rimeModelWithOwnerDetails
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| model | [modelModel](#modelmodel) |  | No |
+| ownerDetails | [projectOwnerDetails](#projectownerdetails) | Information about the owner of the Project. | No |
+
+#### rimeRegisterDatasetResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| datasetId | string |  | No |
+
+#### rimeRegisterModelResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| modelId | [rimeUUID](#rimeuuid) |  | No |
+
+#### rimeRegisterPredictionSetResponse
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeRegisterPredictionSetResponse | object |  |  |
+
+#### rimeTimeInterval
+
+TimeInterval describes a time interval.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| startTime | dateTime |  | No |
+| endTime | dateTime |  | No |
+
+#### rimeUUID
+
+Unique ID of an object in RIME.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| uuid | string | String value of the object ID. | No |
+
+#### schemaregistryMetadata
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| tags | [ string ] | Tags are optional single strings used to identify and organize across a project. | No |
+| extraInfo | string | Metadata are optional json encoded information that users wish to associate. | No |
+
+#### testrunConnectionInfo
+
+ConnectionInfo specifies how to connect to a data source.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| dataFile | [testrunDataFileInfo](#testrundatafileinfo) | DataFileInfo provides the information needed to load a data file. | No |
+| dataLoading | [testrunDataLoadingInfo](#testrundataloadinginfo) | DataLoadingInfo provides the information needed to load a data file with extra parameters. | No |
+| dataCollector | [testrunDataCollectorInfo](#testrundatacollectorinfo) | DataCollectorInfo provides the information needed to load a data stream from a data collector. | No |
+| deltaLake | [testrunDeltaLakeInfo](#testrundeltalakeinfo) | DeltaLakeInfo provides the information needed to load a Delta Lake table. | No |
+| huggingFace | [testrunHuggingFaceDataInfo](#testrunhuggingfacedatainfo) | HuggingFaceDataInfo provides the information needed to load a HuggingFace dataset. | No |
+
+#### testrunDataCollectorInfo
+
+DataCollectorInfo provides the information needed to load a data stream from
+a data collector.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| dataStreamId | [rimeUUID](#rimeuuid) | Uniquely specifies a data stream. | No |
+| startTime | string (int64) | The start time in seconds. | Yes |
+| endTime | string (int64) | The end time in seconds. | Yes |
+
+#### testrunDataFileInfo
+
+DataFileInfo specifies how to connect to a data file.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| path | string | The path to the data file. | Yes |
+
+#### testrunDataInfoParams
+
+DataInfoParams specifies the parameters for a dataset.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| labelCol | string | Naming of special columns. | No |
+| predCol | string | Column to look at for predictions. | No |
+| timestampCol | string | Column to look at for CT timestamp. | No |
+| classNames | [ string ] | List of label class names. | No |
+| rankingInfo | [DataInfoParamsRankingInfo](#datainfoparamsrankinginfo) | Params relevant for ranking model task. | No |
+| nrows | string (int64) | Dataset size parameters. Number of rows of data to load and test. If null, will load all rows. | No |
+| nrowsPerTimeBin | string (int64) | Number of rows of data per time bin to load and test in CT. If null,  will load all rows. | No |
+| sample | boolean | Whether to sample rows in the data. Default is True. | No |
+| categoricalFeatures | [ string ] | Feature types and relations. | No |
+| protectedFeatures | [ string ] | Features that are protected attributes. If Bias and Fairness category is specified, these tests will run only over protected_features. | No |
+| featuresNotInModel | [ string ] |  | No |
+| textFeatures | [ string ] | Text features to run NLP tests over. | No |
+| imageFeatures | [ string ] | Image features to run CV tests over. | No |
+| intersections | [ [DataInfoParamsFeatureIntersection](#datainfoparamsfeatureintersection) ] | A list of arrays of features. Each array represents the intersection of features on which certain subset and fairness tests are run. | No |
+| loadingKwargs | string | Paths for external resources. Keyword arguments to be passed to the pandas loading function (either pd.read_CSV or pd.read_Parquet, depending on your data format). NOTE: if you wish to specify nrows, this should NOT be done with kwargs. | No |
+| featureTypePath | string | Path to a CSV file that specifies the data type of each feature.  The file should have two columns: FeatureName and FeatureType. | No |
+| predPath | string | Path to a CSV file or Parquet file containing the predictions. | No |
+| imageLoadPath | string | Path to a CSV file that contains images to load for image_features. | No |
+
+#### testrunDataLoadingInfo
+
+DataLoadingInfo provides the information needed to load a data file with
+extra parameters and loading function.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| path | string | The path to the data file. | Yes |
+| loadFuncName | string | The name of the function that loads the data. | Yes |
+| loaderKwargsJson | string | This is a JSON-serialized string from a map. | No |
+
+#### testrunDeltaLakeInfo
+
+DeltaLakeInfo provides the information needed to load a Delta Lake table.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| tableName | string | The database table name to use. | Yes |
+| startTime | string (int64) | The start time in seconds. | Yes |
+| endTime | string (int64) | The end time in seconds. | Yes |
+| timeCol | string | The column name that contains the timestamp of the last update. | Yes |
+
+#### testrunHuggingFaceDataInfo
+
+HuggingFaceDataInfo provides the information needed to load a HuggingFace
+dataset.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| datasetUri | string | The unique identifier of the dataset. | Yes |
+| splitName | string | The string that represents the name of a predefined subset of data. | Yes |
+| loadingParamsJson | string | This is a JSON-serialized string from a map. | No |
+
+#### testrunPredInfo
+
+PredInfo specifies the information needed for a prediction set.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| connectionInfo | [testrunConnectionInfo](#testrunconnectioninfo) | The connection information for the prediction set. | No |
+| predParams | [testrunPredictionParams](#testrunpredictionparams) | The parameters for the prediction set. | No |
+
+#### testrunPredictionParams
+
+PredictionParams specifies how to make predictions.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| predCol | string | Column used for predictions. | No |
+
+#### testrunSingleDataInfo
+
+SingleDataInfo specifies the information needed for a dataset.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| connectionInfo | [testrunConnectionInfo](#testrunconnectioninfo) | The connection information for the dataset. | No |
+| dataParams | [testrunDataInfoParams](#testrundatainfoparams) | The parameters for the dataset. | No |

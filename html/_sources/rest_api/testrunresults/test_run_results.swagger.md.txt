@@ -1,0 +1,935 @@
+# ri/api/testrunresults/test_run_results.proto
+## Version: version not set
+
+### /v1/batch-results
+
+#### GET
+##### Summary:
+
+ListBatchResults
+
+##### Description:
+
+Returns a paginated list of batch results from a test run.
+
+[Python pagination example](#tag/JobReader/operation/JobReader_ListJobs)
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| testRunId | query | The ID of the Test Run associated with batch results. Specify exactly one of the pageToken field or this field. | No | string |
+| pageToken | query | A token representing one page from the list returned by a ListBatchResults query. The ListBatchResults query returns a page_token when there is more than one page of results. Specify exactly one of the testRunId field or this field. | No | string |
+| pageSize | query | The maximum number of Batch Result objects to return in a single page. | No | string (int64) |
+| showDisplay | query | A Boolean that toggles whether to return display html info. | No | boolean |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [testrunresultListBatchResultsResponse](#testrunresultlistbatchresultsresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/feature-results
+
+#### GET
+##### Summary:
+
+ListFeatureResults
+
+##### Description:
+
+List all feature results from a test run.
+
+[Python pagination example](#tag/JobReader/operation/JobReader_ListJobs)
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| testRunId | query | The ID of the Test Run associated with feature results. Specify exactly one of the page_token field or this field. | No | string |
+| pageToken | query | A token representing one page from the list returned by a ListFeatureResults query. The ListFeatureResults query returns a page_token when there is more than one page of results. Specify exactly one of the testRunId field or this field. | No | string |
+| pageSize | query | The maximum number of Feature Result objects to return in a single page. | No | string (int64) |
+| showDisplay | query | A Boolean that specifies whether to return display HTML information. | No | boolean |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [testrunresultListFeatureResultsResponse](#testrunresultlistfeatureresultsresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/summary-tests
+
+#### GET
+##### Summary:
+
+ListSummaryTests
+
+##### Description:
+
+Returns a paginated list of the summary tests of a test run.
+
+[Python pagination example](#tag/JobReader/operation/JobReader_ListJobs)
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| query.testRunId | query | The ID of the test run associated with summary tests. Specify exactly one of the page_token field or this field. | No | string |
+| pageToken | query | A token representing one page from the list returned by a ListSummaryTests query. The ListSummaryTests query returns a page_token when there is more than one page of results. Specify exactly one of the query.testRunId field or this field. | No | string |
+| pageSize | query | The maximum number of Summary Test objects to return in a single page. | No | string (int64) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [testrunresultListSummaryTestsResponse](#testrunresultlistsummarytestsresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/test-cases
+
+#### GET
+##### Summary:
+
+ListTestCases
+
+##### Description:
+
+Returns a paginated list of the test cases in a test run. Specify a set of
+test types to filter the list by test types.
+
+[Python pagination example](#tag/JobReader/operation/JobReader_ListJobs)
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| listTestCasesQuery.testRunId | query | Uniquely specifies a Test Run associated with test cases. Specify exactly one of the page_token field or this field. | No | string |
+| listTestCasesQuery.testTypes | query | Optional filter for test types. | No | [ string ] |
+| listTestCasesQuery.urlSafeFeatureIds | query | Optional filter for features. | No | [ string ] |
+| pageToken | query | A token representing one page from the list returned by a ListTestCases query. The ListTestCases query returns a page_token when there is more than one page of results. Specify exactly one of the ListTestCasesQuery.testRunId field or this field. | No | string |
+| pageSize | query | The maximum number of Test Case objects to return in a single page. | No | string (int64) |
+| showDisplay | query | A Boolean flag that specifies whether to return display HTML information with the message. | No | boolean |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [testrunresultListTestCasesResponse](#testrunresultlisttestcasesresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/test-runs
+
+#### GET
+##### Summary:
+
+ListTestRuns
+
+##### Description:
+
+Lists all test runs belonging to a project.
+
+[Python pagination example](#tag/JobReader/operation/JobReader_ListJobs)
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| projectId | query | The ID of the project containing the requested test runs. Specify exactly one of the page_token field or this field. | No | string |
+| pageToken | query | A token representing one page from the list returned by a ListTestRuns query. The ListTestRuns query returns a page_token when there is more than one page of results. Specify exactly one of the projectId field or this field. | No | string |
+| pageSize | query | The maximum number of Test Run objects to return in a single page. | No | string (int64) |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [testrunresultListTestRunsResponse](#testrunresultlisttestrunsresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/test-runs/rename/{testRunId}
+
+#### POST
+##### Summary:
+
+RenameTestRun
+
+##### Description:
+
+Updates the name of a test run.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| testRunId | path | Uniquely specifies a Test Run to rename. | Yes | string |
+| body | body |  | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [testrunresultRenameTestRunResponse](#testrunresultrenametestrunresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/test-runs/{testRunId}
+
+#### GET
+##### Summary:
+
+GetTestRun
+
+##### Description:
+
+Returns the test run result detail for a given Test Run ID.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| testRunId | path | Uniquely specifies a test run. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [testrunresultGetTestRunResponse](#testrunresultgettestrunresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+#### DELETE
+##### Summary:
+
+DeleteTestRun
+
+##### Description:
+
+Deletes a specified test run.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| testRunId | path | Uniquely specifies a Test Run to delete. | Yes | string |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | object |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/test-runs/{testRunId}/batch-result/{testType}
+
+#### GET
+##### Summary:
+
+GetBatchResult
+
+##### Description:
+
+Gets the batch result for a given Test Run ID and a test type.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| testRunId | path | Uniquely specifies a Test Run. | Yes | string |
+| testType | path | The type of test, such as "Subset Accuracy" or "Overall Metrics". | Yes | string |
+| showDisplay | query | A Boolean flag that toggles whether to return display HTML. info with message. | No | boolean |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [testrunresultGetBatchResultResponse](#testrunresultgetbatchresultresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### /v1/test-runs/{testRunId}/feature-result/{urlSafeFeatureId}
+
+#### GET
+##### Summary:
+
+GetFeatureResult
+
+##### Description:
+
+Returns the feature result that matches the specified test run ID
+and feature ID.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| testRunId | path | Uniquely specifies a Test Run. | Yes | string |
+| urlSafeFeatureId | path | Uniquely specifies a Feature. | Yes | string |
+| showDisplay | query | A Boolean flag that specifies whether to return display HTML information. | No | boolean |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | A successful response. | [testrunresultGetFeatureResultResponse](#testrunresultgetfeatureresultresponse) |
+| default | An unexpected error response. | [googlerpcStatus](#googlerpcstatus) |
+
+### Models
+
+
+#### DifferenceFromTargetDifference
+
+The type of difference to calculate.
+
+ - DIFFERENCE_RAW: Raw difference between values (x - y)
+ - DIFFERENCE_ABSOLUTE: Absolute difference between values (|x - y|)
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| DifferenceFromTargetDifference | string | The type of difference to calculate.   - DIFFERENCE_RAW: Raw difference between values (x - y)  - DIFFERENCE_ABSOLUTE: Absolute difference between values (|x - y|) |  |
+
+#### DifferenceFromTargetTarget
+
+The target to compare against.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| DifferenceFromTargetTarget | string | The target to compare against. |  |
+
+#### ListSummaryTestsRequestListSummaryTestsQuery
+
+The resulting query is the intersection of the
+following constraints.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testRunId | string | The ID of the test run associated with summary tests. Specify exactly one of the page_token field or this field. | No |
+
+#### ListTestCasesRequestListTestCasesQuery
+
+The resulting query is the intersection of the
+following constraints.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testRunId | string | Uniquely specifies a Test Run associated with test cases. Specify exactly one of the page_token field or this field. | No |
+| testTypes | [ string ] | Optional filter for test types. | No |
+| urlSafeFeatureIds | [ string ] | Optional filter for features. | No |
+
+#### SecurityEventDetailsFlaggedDatapoint
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rowId | string (int64) |  | No |
+| rowTimestamp | dateTime |  | No |
+
+#### SecurityEventDetailsSecurityEventType
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| SecurityEventDetailsSecurityEventType | string |  |  |
+
+#### TestRunMetricsCategorySummaryMetric
+
+CategorySummaryMetric returns a summary metric across test
+batches for a particular category, such as the average severity
+for all "Drift" tests.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| categoryId | string | Uniquely specifies a Category. | No |
+| testCategory | [testrunTestCategoryType](#testruntestcategorytype) | The category of the test. | No |
+| name | string | The name of the category. | No |
+| value | double | The value of the metric over the specified category. | No |
+
+#### TestRunMetricsModelPerfMetric
+
+ModelPerfMetric returns the model performance for a metric
+over the reference and evaluation datasets.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| refMetric | double | Optional metric for the reference dataset. | No |
+| evalMetric | double | Optional metric for the evaluation dataset. | No |
+
+#### detectionSecurityEventDetails
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| type | [SecurityEventDetailsSecurityEventType](#securityeventdetailssecurityeventtype) |  | No |
+| effectOnModel | [ string ] |  | No |
+| possibleIntent | [ string ] |  | No |
+| evidence | [ string ] |  | No |
+| recommendations | [ string ] |  | No |
+| datapoints | [ [SecurityEventDetailsFlaggedDatapoint](#securityeventdetailsflaggeddatapoint) ] | Include descriptions of all the flagged datapoints for the attack. | No |
+
+#### googlerpcStatus
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| code | integer |  | No |
+| message | string |  | No |
+| details | [ [protobufAny](#protobufany) ] |  | No |
+
+#### monitorDifferenceFromTarget
+
+DifferenceFromTarget defines a transform that
+calculates the difference between the aggregated metric
+defined in the monitor and the same metric defined with the target.
+if no aggregation is specified, an average value is used.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| difference | [DifferenceFromTargetDifference](#differencefromtargetdifference) | The difference function for this transform. | No |
+| target | [DifferenceFromTargetTarget](#differencefromtargettarget) | The target for this transform. | No |
+
+#### monitorExcludedTransforms
+
+ExcludedTransforms allows a metric to define which
+transforms cannot be applied to the metric.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| excludedTransforms | [ [monitorTransform](#monitortransform) ] |  | No |
+
+#### monitorThreshold
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| low | double | The threshold for warning. | No |
+| high | double | The threshold for alert. | No |
+| type | [monitorThresholdType](#monitorthresholdtype) | The type of the threshold. | No |
+
+#### monitorThresholdType
+
+ - TYPE_UPPER_BOUND: The threshold is violated when the metric's value is greater than
+the upper bound.
+ - TYPE_LOWER_BOUND: The threshold is violated when the metric's value is less than the
+lower bound.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| monitorThresholdType | string |  - TYPE_UPPER_BOUND: The threshold is violated when the metric's value is greater than the upper bound.  - TYPE_LOWER_BOUND: The threshold is violated when the metric's value is less than the lower bound. |  |
+
+#### monitorTransform
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| differenceFromTarget | [monitorDifferenceFromTarget](#monitordifferencefromtarget) |  | No |
+
+#### protobufAny
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| @type | string |  | No |
+
+#### rcaRCARole
+
+RCARole indicates the RCA role of a detection event or a monitor.
+Their use in the RCA algorithm depends on their role.
+For example, RCA will be computed for EFFECT monitors.
+We will examine all FEATURE_CAUSE and TEST_CAUSE monitors to determine
+which one is most relevant.
+TODO: document this.
+
+ - RCAROLE_UNSPECIFIED: Unspecified is an invalid value: do not use.
+ - RCAROLE_EFFECT: The given degradation is the "effect" of a low level failure.
+ - RCAROLE_FEATURE_CAUSE: The given degradation in a feature (e.g. drift) may have caused a high
+level failure in an "effect" monitor.
+ - RCAROLE_TEST_CAUSE: The given degradation in a test may have caused a high level failure.
+ - RCAROLE_EXCLUDED: All monitors with the excluded tag will be excluded from RCA analysis.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rcaRCARole | string | RCARole indicates the RCA role of a detection event or a monitor. Their use in the RCA algorithm depends on their role. For example, RCA will be computed for EFFECT monitors. We will examine all FEATURE_CAUSE and TEST_CAUSE monitors to determine which one is most relevant. TODO: document this.   - RCAROLE_UNSPECIFIED: Unspecified is an invalid value: do not use.  - RCAROLE_EFFECT: The given degradation is the "effect" of a low level failure.  - RCAROLE_FEATURE_CAUSE: The given degradation in a feature (e.g. drift) may have caused a high level failure in an "effect" monitor.  - RCAROLE_TEST_CAUSE: The given degradation in a test may have caused a high level failure.  - RCAROLE_EXCLUDED: All monitors with the excluded tag will be excluded from RCA analysis. |  |
+
+#### rimeCategoryMetric
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| name | string |  | No |
+| value | double |  | No |
+| threshold | [monitorThreshold](#monitorthreshold) |  | No |
+| description | string |  | No |
+| riskCategoryType | [riskscoreRiskCategoryType](#riskscoreriskcategorytype) |  | No |
+
+#### rimeCategoryTestResult
+
+CategoryTestResult is a summary of a single category of tests in RIME.
+For instance, the "Drift" category includes specific tests such as Prediction
+Drift or Label Drift.
+The CategoryTestResult for Drift includes an overall severity and other
+details aggregated across those individual tests.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| id | string | When combined with the test run ID, this uniquely identifies a category test result. | No |
+| severity | [rimeSeverity](#rimeseverity) | Severity of the Category Test Result. | No |
+| suggestion | [rimeSuggestion](#rimesuggestion) | Suggestion includes insights on how to address test failures in the category. | No |
+| categoryMetrics | [ [rimeCategoryMetric](#rimecategorymetric) ] | Category metrics are aggregated or important metrics for the category. | No |
+| testBatchTypes | [ string ] | List of the tests in the category. | No |
+| description | string | Human-readable description of the category test result. | No |
+| severityCounts | [rimeSeverityCounts](#rimeseveritycounts) | Counts of tests that are passing or failing. | No |
+| failingTestTypes | [ string ] | List of all the failing test types. | No |
+| duration | double | Duration is the total time in seconds for tests in that category. | No |
+| categoryImportance | double | The relative importance of the category. | No |
+| riskCategory | [riskscoreRiskCategoryType](#riskscoreriskcategorytype) | The risk category to which the test category pertains. For example, "Drift" is under the Operational Risk category. | No |
+| testCategory | [testrunTestCategoryType](#testruntestcategorytype) | The type of the category. This is functionally equivalent to the ID field above. | No |
+
+#### rimeFailingRow
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rowId | string (int64) |  | No |
+| failingFeatures | [ string ] |  | No |
+| details | byte |  | No |
+
+#### rimeFailingRowsResult
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| failingRows | [ [rimeFailingRow](#rimefailingrow) ] |  | No |
+| topCount | string (int64) |  | No |
+| totalCount | string (int64) |  | No |
+| allIncluded | boolean |  | No |
+| description | string |  | No |
+
+#### rimeFeatureType
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeFeatureType | string |  |  |
+
+#### rimeFloatList
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| values | [ double ] |  | No |
+
+#### rimeIntList
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| values | [ string (int64) ] |  | No |
+
+#### rimeLongDescriptionTab
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| title | string |  | No |
+| contents | string |  | No |
+
+#### rimeModelTask
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeModelTask | string |  |  |
+
+#### rimeNamedDouble
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| name | string |  | No |
+| value | double |  | No |
+
+#### rimeSafeURL
+
+SafeURL represents a URL that has been safely constructed.
+e.g. a user clicking on this link is guaranteed to land on the RIME web app.
+We use this instead of a raw str so that application code can generate
+SafeURL messages in certain ways -> this provides stronger typing than just
+using a string.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| url | string | A safely constructed URL. | No |
+
+#### rimeSeverity
+
+Severity specifies the severity level of an event. Depending on the direction
+of degradation, a metric going below or above a threshold will trigger a
+higher severity level.
+
+ - SEVERITY_PASS: Indicates that the specified metric is lower than the low threshold
+in the case where the Monitor is configured to trigger on an increase of a
+metric.
+ - SEVERITY_WARNING: Indicates that the specified metric is higher than the low threshold
+but still lower than the high threshold, in the case that a Monitor is
+configured to trigger on an increase of a metric. Warning and Alert
+severity levels will trigger a Degradation event.
+ - SEVERITY_ALERT: Indicates that the specified metric is higher than the high threshold
+in the case that the Monitor is configured to trigger on an increase of a
+metric. Warning and Alert severity level will trigger a Degradation event.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeSeverity | string | Severity specifies the severity level of an event. Depending on the direction of degradation, a metric going below or above a threshold will trigger a higher severity level.   - SEVERITY_PASS: Indicates that the specified metric is lower than the low threshold in the case where the Monitor is configured to trigger on an increase of a metric.  - SEVERITY_WARNING: Indicates that the specified metric is higher than the low threshold but still lower than the high threshold, in the case that a Monitor is configured to trigger on an increase of a metric. Warning and Alert severity levels will trigger a Degradation event.  - SEVERITY_ALERT: Indicates that the specified metric is higher than the high threshold in the case that the Monitor is configured to trigger on an increase of a metric. Warning and Alert severity level will trigger a Degradation event. |  |
+
+#### rimeSeverityCounts
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| numNoneSeverity | string (int64) |  | No |
+| numLowSeverity | string (int64) |  | No |
+| numHighSeverity | string (int64) |  | No |
+
+#### rimeStrList
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| values | [ string ] |  | No |
+
+#### rimeSuggestion
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| details | byte |  | No |
+
+#### rimeTableColumn
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| name | string |  | No |
+| description | string |  | No |
+| type | [rimeTableColumnType](#rimetablecolumntype) |  | No |
+
+#### rimeTableColumnType
+
+ - TABLE_COLUMN_TYPE_PICKABLE: Used for columns that support selection, including multi-selection.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeTableColumnType | string |  - TABLE_COLUMN_TYPE_PICKABLE: Used for columns that support selection, including multi-selection. |  |
+
+#### rimeTestCaseMonitorInfo
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| threshold | [monitorThreshold](#monitorthreshold) |  | No |
+| isSubsetMetric | boolean |  | No |
+| rcaRole | [rcaRCARole](#rcarcarole) |  | No |
+| excludedTransforms | [monitorExcludedTransforms](#monitorexcludedtransforms) | optional message to define which transforms do not apply to this metric. | No |
+
+#### rimeTestCaseStatus
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeTestCaseStatus | string |  |  |
+
+#### rimeTestMetric
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| metric | string |  | No |
+| category | [rimeTestMetricCategory](#rimetestmetriccategory) |  | No |
+| intValue | string (int64) |  | No |
+| floatValue | double |  | No |
+| empty | object |  | No |
+| strValue | string |  | No |
+| intList | [rimeIntList](#rimeintlist) |  | No |
+| floatList | [rimeFloatList](#rimefloatlist) |  | No |
+| strList | [rimeStrList](#rimestrlist) |  | No |
+| testCaseMonitorInfo | [rimeTestCaseMonitorInfo](#rimetestcasemonitorinfo) | if metric is tracked as a default monitor specify TestCaseMonitorInfo. This is only relevant if the test has a corresponding CT instance. The FirewallID, TestBatchType, FeatureID, and metric will be used to construct a ri.schema.monitor.MetricIdentifier for this TestMetric which will function as a unique key for the default monitor. If this default monitor doesn't exist, BE will create it. If it already exists, the monitor will be updated with the threshold and risk category type. | No |
+
+#### rimeTestMetricCategory
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeTestMetricCategory | string |  |  |
+
+#### rimeTestTaskStatus
+
+Status of individual test units, e.g. test runs, test batches, test cases.
+This is different from job status because these are more abstract.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeTestTaskStatus | string | Status of individual test units, e.g. test runs, test batches, test cases. This is different from job status because these are more abstract. |  |
+
+#### rimeTestType
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| rimeTestType | string |  |  |
+
+#### rimeUUID
+
+Unique ID of an object in RIME.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| uuid | string | String value of the object ID. | No |
+
+#### riskscoreRiskCategoryType
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| riskscoreRiskCategoryType | string |  |  |
+
+#### riskscoreRiskScore
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| type | [riskscoreRiskCategoryType](#riskscoreriskcategorytype) |  | No |
+| severity | [rimeSeverity](#rimeseverity) |  | No |
+| score | double |  | No |
+
+#### testrunAnnotatedTestConfig
+
+AnnotatedTestConfig stores the configuration values
+for a single test, alongside descriptions of the
+configuration values.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| contents | byte |  | No |
+| description | string | A description of the configuration parameters for the test. | No |
+
+#### testrunTestCategoryType
+
+TestCategoryType contains all the possible values for test categories that
+can be run in RIME.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testrunTestCategoryType | string | TestCategoryType contains all the possible values for test categories that can be run in RIME. |  |
+
+#### testrunresultGetBatchResultResponse
+
+GetBatchResultResponse returns the batch result for a test run as requested.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testBatch | [testrunresultTestBatchResult](#testrunresulttestbatchresult) | The test batch that was requested. | No |
+
+#### testrunresultGetFeatureResultResponse
+
+GetFeatureResultResponse returns the feature result as requested.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| featureResult | [testrunresultTestFeatureResult](#testrunresulttestfeatureresult) | The feature result that was requested. | No |
+
+#### testrunresultGetTestConfigResponse
+
+GetTestConfigResponse returns the test config as requested.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| annotatedTestConfig | [testrunAnnotatedTestConfig](#testrunannotatedtestconfig) | The test config specified. | No |
+
+#### testrunresultGetTestRunResponse
+
+GetTestRunResponse returns the results of a test run.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testRun | [testrunresultTestRunDetail](#testrunresulttestrundetail) | The details of the test run. | No |
+
+#### testrunresultListBatchResultsResponse
+
+ListBatchResultsResponse returns all the batch results as requested.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testBatches | [ [testrunresultTestBatchResult](#testrunresulttestbatchresult) ] | The list of test batch results. | No |
+| nextPageToken | string | A token representing the next page from the list returned by a ListBatchResults query. | No |
+| hasMore | boolean | A Boolean that specifies whether there are more batch results to return. | No |
+
+#### testrunresultListFeatureResultsResponse
+
+ListFeatureResultsResponse returns a list of feature results as requested.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| featureResults | [ [testrunresultTestFeatureResult](#testrunresulttestfeatureresult) ] | The list of feature results. | No |
+| nextPageToken | string | A token representing the next page from the list returned by a ListFeatureResults query. | No |
+| hasMore | boolean | A Boolean flag that specifies whether there are more feature results to return. | No |
+
+#### testrunresultListSummaryTestsResponse
+
+ListSummaryTestsResponse returns the list of summary tests as requested.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| summaryTestResults | [ [rimeCategoryTestResult](#rimecategorytestresult) ] | The list of summary test results. | No |
+| nextPageToken | string | A token representing the next page from the list returned by a ListSummaryTests query. | No |
+| hasMore | boolean | A Boolean flag that specifies whether there are more summary tests to return. | No |
+
+#### testrunresultListTestCasesResponse
+
+ListTestCasesResponse returns the list of test cases requested.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testCases | [ [testrunresultTestCase](#testrunresulttestcase) ] | The list of test cases. | No |
+| nextPageToken | string | A token representing the next page from the list returned by a ListTestCases query. | No |
+| hasMore | boolean | A Boolean flag that specifies whether there are more test cases to return. | No |
+
+#### testrunresultListTestRunsResponse
+
+ListTestRunsResponse returns all the test runs as requested.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testRuns | [ [testrunresultTestRunDetail](#testrunresulttestrundetail) ] | The details of the test runs. | No |
+| nextPageToken | string | A token representing the next page from the list returned by a ListTestRuns query. | No |
+| hasMore | boolean | A Boolean that specifies whether there are more test runs to return. | No |
+
+#### testrunresultRenameTestRunResponse
+
+RenameTestRunResponse returns the renamed test run as requested.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testRun | [testrunresultTestRunDetail](#testrunresulttestrundetail) | The test run that is renamed. | No |
+
+#### testrunresultResultSummaryCounts
+
+ResultSummaryCounts returns the number of tests that have each status
+for a given test run.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| total | string (int64) | The total number of tests. | No |
+| pass | string (int64) | The number of tests that pass. | No |
+| warning | string (int64) | The number of tests that raise a warning. | No |
+| fail | string (int64) | The number of tests that fail. | No |
+| skip | string (int64) | The number of tests that are skipped. | No |
+
+#### testrunresultTestBatchResult
+
+TestBatchResult returns the test batch results.
+Similar to results_upload.proto but with separation of
+uploading and querying.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testRunId | string | Uniquely specifies a parent Test Run. | No |
+| testType | string |  | No |
+| testName | string | The display-friendly name; for example: 'Categorical Feature Drift'. | No |
+| description | string | The description of the test. Note: this is currently identical to the display.description_html field. | No |
+| category | string |  | No |
+| durationInMillis | string (int64) | The duration of the test run. | No |
+| severity | [rimeSeverity](#rimeseverity) | The severity raised from the test. | No |
+| summaryCounts | [testrunresultResultSummaryCounts](#testrunresultresultsummarycounts) | The summary counts from the test. | No |
+| failingFeatures | [ string ] | The list of failing features. | No |
+| metrics | [ [rimeTestMetric](#rimetestmetric) ] |  | No |
+| showInTestComparisons | boolean | A Boolean that specifies whether to include the test batch in the test comparison page in the web UI. | No |
+| display | [testrunresultTestBatchResultDisplay](#testrunresulttestbatchresultdisplay) | The display information for the test. WARNING: this is unstable, do not programmatically parse. | No |
+| failingRowsResult | [rimeFailingRowsResult](#rimefailingrowsresult) | A sample of the failing rows for the given test. The total number of failing rows is too large to send over gRPC. | No |
+| securityTestDetails | [detectionSecurityEventDetails](#detectionsecurityeventdetails) | Extra details required for security tests for model cards page. | No |
+
+#### testrunresultTestBatchResultDisplay
+
+Display contains information for displaying the test case in the
+RI web app.
+The contents of each field are unstable; it is not recommended to parse
+them programmatically.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| summaryDetails | byte | Summary details are marshalled JSON. | No |
+| tableColumnsToShow | [ [rimeTableColumn](#rimetablecolumn) ] |  | No |
+| longDescriptionTabs | [ [rimeLongDescriptionTab](#rimelongdescriptiontab) ] | More detailed information about the test batch. | No |
+| descriptionHtml | string | Description of the test batch result that may contain HTML. | No |
+
+#### testrunresultTestCase
+
+TestCase returns information for a given test case.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testRunId | string | Uniquely specifies a Test Run. | No |
+| features | [ string ] | The list of features used in the test case. | No |
+| testBatchType | string | The type of test batch. | No |
+| status | [rimeTestCaseStatus](#rimetestcasestatus) | The status of the test case. For example, pass, fail, warn, skip. | No |
+| severity | [rimeSeverity](#rimeseverity) | The severity of the test case. For example warning, alert. | No |
+| importanceScore | double | The model impact of the test case. | No |
+| category | string |  | No |
+| testCategory | [testrunTestCategoryType](#testruntestcategorytype) |  | No |
+| metrics | [ [rimeTestMetric](#rimetestmetric) ] |  | No |
+| urlSafeFeatureId | string | Optional URL-safe feature ID if the test case is associated with a feature. This may be empty for modalities that do not have features or test cases that pertain to two or more features, such as subset tests. | No |
+| testCaseId | string | Together with the Test Run ID and the test batch type, this forms the primary key for the test case. | No |
+| display | [testrunresultTestCaseDisplay](#testrunresulttestcasedisplay) | This contains additional information for displaying the test case in the RI web app. | No |
+
+#### testrunresultTestCaseDisplay
+
+Display contains information for displaying the test case in the
+web UI.
+The contents of each field are unstable; it is not recommended to parse
+them programmatically.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| tableInfo | byte | Table info contains information for displaying the test case in a table in the FE. | No |
+| details | byte | Details includes ML-specified details for the test case. This can include graphs, HTML, etc. | No |
+| detailsLayout | [ string (int64) ] |  | No |
+
+#### testrunresultTestFeatureResult
+
+TestFeatureResult returns the feature results for a given test.
+Similar to results_upload.proto but with separation of
+uploading and querying.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| urlSafeFeatureId | string | The URL-compatible (base 64) encoding of feature name. | No |
+| featureName | string | The human-readable feature name. | No |
+| featureType | [rimeFeatureType](#rimefeaturetype) | The type of feature. | No |
+| severity | [rimeSeverity](#rimeseverity) | The severity raised for the feature in the test. | No |
+| summaryCounts | [testrunresultResultSummaryCounts](#testrunresultresultsummarycounts) | The summary counts for the feature in the test. | No |
+| failingTests | [ string ] | The list of tests that fail for the feature. | No |
+| numFailingRows | string (int64) | The number of rows that fail. | No |
+| failingRowsHtml | string | The names of the rows that fail; may contain HTML. | No |
+| driftStatistic | [rimeNamedDouble](#rimenameddouble) | The drift statistic used for the feature result. | No |
+| modelImpact | [rimeNamedDouble](#rimenameddouble) | The model impact used for the feature result. | No |
+| featureInfos | [ string ] | The list of feature information used. | No |
+| display | [testrunresultTestFeatureResultDisplay](#testrunresulttestfeatureresultdisplay) | The display information for the test. WARNING: this is unstable, do not programmatically parse. | No |
+
+#### testrunresultTestFeatureResultDisplay
+
+Display contains information for displaying the feature result in the
+RI web app.
+The contents of each field are unstable; it is not recommended to parse
+them programmatically.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| summaryDetails | byte | Summary details are marshalled JSON. | No |
+| tableColumnsToShow | [ [rimeTableColumn](#rimetablecolumn) ] |  | No |
+
+#### testrunresultTestRunDetail
+
+TestRunDetail returns the details for a given test run.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| testRunId | string | Uniquely specifies a Test Run. | No |
+| name | string | The name of the Test Run. | No |
+| projectId | [rimeUUID](#rimeuuid) | Uniquely specifies a Project. | No |
+| testingType | [rimeTestType](#rimetesttype) | The type of test. e.g. stress testing, continuous testing. | No |
+| modelTask | [rimeModelTask](#rimemodeltask) | The model task for the test run. e.g. binary classification, regression, learning-to-rank, etc. | No |
+| refDataId | string | Uniquely specifies a reference dataset. | No |
+| evalDataId | string | Uniquely specifies an evaluation dataset. | No |
+| modelId | [rimeUUID](#rimeuuid) | Uniquely specifies a model. | No |
+| uploadTime | dateTime | The upload time of the test run. | No |
+| webAppUrl | [rimeSafeURL](#rimesafeurl) | The web app url for the test run. | No |
+| testCategories | [ [testrunTestCategoryType](#testruntestcategorytype) ] | The list of child references to the category tests belonging to this test run. | No |
+| metrics | [testrunresultTestRunMetrics](#testrunresulttestrunmetrics) | The metrics computed for the test run. | No |
+| status | [rimeTestTaskStatus](#rimetesttaskstatus) | The current status of the test run (e.g. SUCCEEDED, FAILED, RUNNING). | No |
+| progress | string | Human-readable succinct message about the progress of the test run. | No |
+| rimeVersion | string | The version of RIME that ran this test. | No |
+
+#### testrunresultTestRunMetrics
+
+TestRunMetrics returns metrics for a test run.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| modelPerf | object | The model performance over the test run as computed using various metrics. | No |
+| averagePrediction | double | The average prediction for the test run (only defined for a subset of tasks such as binary classification). | No |
+| numInputs | string (int64) | The number of inputs. For tabular data, an input is one row. | No |
+| numFailingInputs | string (int64) | The number of failing inputs. | No |
+| durationMillis | string (int64) | The duration of the test run in milliseconds. | No |
+| severityCounts | [rimeSeverityCounts](#rimeseveritycounts) | The number of tests with each severity level. | No |
+| summaryCounts | [testrunresultResultSummaryCounts](#testrunresultresultsummarycounts) | The number of tests with each status level. | No |
+| categorySummaryMetrics | [ [TestRunMetricsCategorySummaryMetric](#testrunmetricscategorysummarymetric) ] | The list of category summary metrics. | No |
+| riskScores | [ [riskscoreRiskScore](#riskscoreriskscore) ] | The list of risk scores. | No |
