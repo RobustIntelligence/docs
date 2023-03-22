@@ -8,15 +8,24 @@ these parameters only when RIME is not selecting appropriate values.
 ### Template
 
 Specify this configuration in the [Stress Testing configuration](stress_testing.md) 
-JSON file, under the `runtimeinfo` parameter.
+JSON file, under the `"run_time_info"` parameter.
 
 ```
 {
   ...,
-  "model_profiling": {
-    "agent_id": 1,
-    "custom_image": 2,
-    "resource_request": 3,
+  "run_time_info": {
+    "agent_id": "my_agent_id",
+    "custom_image": {
+       "custom_image": {
+          "name": "my custom image name",
+          "pull_secret": "my custom image pull secret",
+       },
+       "managed_image_name": "my managed image name",
+    },
+    "resource_request": {
+      "ram_request_megabytes": 1,
+      "cpu_request_millicores": 1,
+    },
     "explicit_errors": False,
     "random_seed": 5
   }
@@ -31,7 +40,9 @@ JSON file, under the `runtimeinfo` parameter.
 
 - `custom_image`: CustomImageType or `null`, *default* = `null`
 
-  Specifies a custom Docker image used by the job.
+  Specifies a custom Docker image used by the job. In the outer `custom_image`
+  dictionary, specify exactly one of `managed_image_name` or the inner `custom_image` 
+  dictionary.
 
 - `resource_request`: ResourceRequest or `null`, *default* = `null`
 

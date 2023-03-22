@@ -53,7 +53,7 @@
             RIME
           </a>
               <div class="version">
-                2.0.0-rc.1
+                2.0.0-beta.13
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -148,8 +148,10 @@
 <li><p>JSONL</p></li>
 <li><p>CSV</p></li>
 </ul>
-<p>The header columns of input files are used as feature names and must be strings.</p>
-<p>RIME is most effective when both label and prediction column are provided; however, neither are required for most tasks.</p>
+<p>The column headers of CSV, Parquet, and Delta Lake input files are used as feature names and must be strings. For JSON and JSONL files, the keys of each record is used as the feature name.</p>
+<p>Text features and image features must have string values. The value of the image feature string is the path to an image file. Specify text features and image features in the <a class="reference internal" href="data_source.html"><span class="doc std std-doc">data info configuration</span></a>.</p>
+<p>Providing labels and predictions increases the effectiveness of RIME, but most tasks do not require either.</p>
+<p>Specify predictions using the <a class="reference internal" href="../how_to_guides/registries.html"><span class="doc std std-doc">registry</span></a> functionality. Include labels with the datasets.</p>
 </section>
 <section id="requirements-by-task">
 <h2>Requirements By Task<a class="headerlink" href="#requirements-by-task" title="Permalink to this heading"></a></h2>
@@ -163,8 +165,15 @@
 <section id="multi-class-classification">
 <h3>Multi-Class Classification<a class="headerlink" href="#multi-class-classification" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p>Labels should be integers referring to class index</p></li>
-<li><p>Specify predictions using the <a class="reference internal" href="../how_to_guides/registries.html"><span class="doc std std-doc">registry</span></a> functionality.</p></li>
+<li><p>Labels must be integers referring to class index</p></li>
+<li><p>Predictions must be a list of floats summing to 1</p></li>
+</ul>
+</section>
+<section id="natural-language-inference">
+<h3>Natural Language Inference<a class="headerlink" href="#natural-language-inference" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Labels must be integers referring to class index</p></li>
+<li><p>Predictions must be lists of floats summing to 1</p></li>
 </ul>
 </section>
 <section id="ranking">
@@ -181,6 +190,21 @@
 <ul class="simple">
 <li><p>Labels can be any real number</p></li>
 <li><p>Predictions can be any real number</p></li>
+</ul>
+</section>
+<section id="named-entity-recognition">
+<h3>Named Entity Recognition<a class="headerlink" href="#named-entity-recognition" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Labels must be lists of dictionaries, with each dictionary corresponding to an entity.</p></li>
+<li><p>Predictions must be lists of dictionaries, with each dictionary corresponding to an entity.</p></li>
+<li><p>Each entity dictionary should have a <code class="docutils literal notranslate"><span class="pre">type</span></code> key (specifying the type of the entity) as well as a <code class="docutils literal notranslate"><span class="pre">mentions</span></code> key that contains all the mentions referring to this entity. Each mention itself a dictionary with two keys: a <code class="docutils literal notranslate"><span class="pre">start_offset</span></code> key and an <code class="docutils literal notranslate"><span class="pre">end_offset</span></code> key, which are integers referring respectively to the start and end indices of the mention in question.</p></li>
+</ul>
+</section>
+<section id="object-detection">
+<h3>Object Detection<a class="headerlink" href="#object-detection" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Labels must be lists of dictionaries, with each dictionary corresponding to an object. Each object dictionary must contain the four keys <code class="docutils literal notranslate"><span class="pre">x_min</span></code>, <code class="docutils literal notranslate"><span class="pre">x_max</span></code>, <code class="docutils literal notranslate"><span class="pre">y_min</span></code>, and <code class="docutils literal notranslate"><span class="pre">y_max</span></code> with float values defining the coordinates of the bounding box, along with a <code class="docutils literal notranslate"><span class="pre">class_id</span></code> key with the integer value of the class label.</p></li>
+<li><p>Predictions must be list of dictionaries, with each dictionary corresponding to an object. Each object dictionary must contain the four keys <code class="docutils literal notranslate"><span class="pre">x_min</span></code>, <code class="docutils literal notranslate"><span class="pre">x_max</span></code>, <code class="docutils literal notranslate"><span class="pre">y_min</span></code>, and <code class="docutils literal notranslate"><span class="pre">y_max</span></code> with float values defining the coordinates of the bounding box, along with a <code class="docutils literal notranslate"><span class="pre">probabilities</span></code> key with a list floats defining the predicted probability for each class.</p></li>
 </ul>
 </section>
 </section>
