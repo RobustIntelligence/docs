@@ -28,7 +28,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Tests Configuration" href="tabular/tests.html" />
+    <link rel="next" title="Test Suite Configuration" href="tabular/tests.html" />
     <link rel="prev" title="Smart Feature Sampling and Performance Profiling" href="performance_limitations.html" />
 <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
@@ -142,13 +142,22 @@ these parameters only when RIME is not selecting appropriate values.</p>
 <section id="template">
 <h2>Template<a class="headerlink" href="#template" title="Permalink to this heading"></a></h2>
 <p>Specify this configuration in the <a class="reference internal" href="stress_testing.html"><span class="doc std std-doc">Stress Testing configuration</span></a>
-JSON file, under the <code class="docutils literal notranslate"><span class="pre">runtimeinfo</span></code> parameter.</p>
+JSON file, under the <code class="docutils literal notranslate"><span class="pre">&quot;run_time_info&quot;</span></code> parameter.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="o">...</span><span class="p">,</span>
-  <span class="s2">&quot;model_profiling&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s2">&quot;agent_id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="s2">&quot;custom_image&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-    <span class="s2">&quot;resource_request&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="s2">&quot;run_time_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;agent_id&quot;</span><span class="p">:</span> <span class="s2">&quot;my_agent_id&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;custom_image&quot;</span><span class="p">:</span> <span class="p">{</span>
+       <span class="s2">&quot;custom_image&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;my custom image name&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;pull_secret&quot;</span><span class="p">:</span> <span class="s2">&quot;my custom image pull secret&quot;</span><span class="p">,</span>
+       <span class="p">},</span>
+       <span class="s2">&quot;managed_image_name&quot;</span><span class="p">:</span> <span class="s2">&quot;my managed image name&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;resource_request&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;ram_request_megabytes&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">&quot;cpu_request_millicores&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">},</span>
     <span class="s2">&quot;explicit_errors&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
     <span class="s2">&quot;random_seed&quot;</span><span class="p">:</span> <span class="mi">5</span>
   <span class="p">}</span>
@@ -163,7 +172,9 @@ JSON file, under the <code class="docutils literal notranslate"><span class="pre
 <p>The ID of the agent on which to run this job.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">custom_image</span></code>: CustomImageType or <code class="docutils literal notranslate"><span class="pre">null</span></code>, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
-<p>Specifies a custom Docker image used by the job.</p>
+<p>Specifies a custom Docker image used by the job. In the outer <code class="docutils literal notranslate"><span class="pre">custom_image</span></code>
+dictionary, specify exactly one of <code class="docutils literal notranslate"><span class="pre">managed_image_name</span></code> or the inner <code class="docutils literal notranslate"><span class="pre">custom_image</span></code>
+dictionary.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">resource_request</span></code>: ResourceRequest or <code class="docutils literal notranslate"><span class="pre">null</span></code>, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
 <p>The compute resources, such as RAM and CPU, that the job requires.</p>
@@ -183,7 +194,7 @@ JSON file, under the <code class="docutils literal notranslate"><span class="pre
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="performance_limitations.html" class="btn btn-neutral float-left" title="Smart Feature Sampling and Performance Profiling" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="tabular/tests.html" class="btn btn-neutral float-right" title="Tests Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="tabular/tests.html" class="btn btn-neutral float-right" title="Test Suite Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

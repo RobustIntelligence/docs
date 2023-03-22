@@ -16,23 +16,28 @@ This procedure presumes a model is already loaded into RIME and that all command
     >   ```
 2.  Register a reference dataset.
     >   ```
-    >   reference = rime_project.register_dataset( 
-    >       name="foo", data_params=dict 
+    >   reference_id = project.register_dataset(
+    >       name=DATASET_NAME,
+    >       data_params={
+    >           "connection_info": {"data_file": {"path": FILE_PATH}},
+    >           "data_params": {"label_col": LABEL_COL},
+    >       },
+    >       integration_id=INTEGRATION_ID,
     >   )
     >   ```
 
     >   The SDK returns the ID of the reference dataset.
 3.  Register an evaluation dataset.
     >   ```
-    >   evaluation = rime_project.register_dataset(
-    >       name="bar", data_params=dict
+    >   evaluation_id = project.register_dataset(
+    >       name="bar", data_config=dict
     >   )
     >   ```
 
     >   The SDK returns the ID of the evaluation dataset.
 4.  Register a model.
     >   ```
-    >   model = rime_project.register_model(
+    >   model = project.register_model(
     >       name="baz"
     >   )
     >   ```
@@ -75,7 +80,7 @@ This procedure presumes a model is already loaded into RIME and that all command
     >   )
     >   ```
 
-## Creating a new Continuous Test from the web UI
+<!-- ## Creating a new Continuous Test from the web UI
 
 1.  Sign in to an RI Platform instance.  
     >   The Workspaces page appears.
@@ -120,4 +125,4 @@ This procedure presumes a model is already loaded into RIME and that all command
 27. (Optional) Activate the *Predictions (optional)* toggle and enter a connection name, table name, optional timestamp column name, and prediction column name.
 28. Click *Next*.
 
-The wizard closes and the new Continuous Test begins initial processing.
+The wizard closes and the new Continuous Test begins initial processing. -->

@@ -145,30 +145,33 @@ vulnerability.</p>
 <li><p>(When a suitable <a class="reference internal" href="projects.html"><span class="doc std std-doc">project</span></a> does not already exist) Create a project
 using the following <a class="reference internal" href="../../../python_library/python-sdk.html"><span class="doc std std-doc">SDK command</span></a>.</p>
 <blockquote>
-<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;project&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;$DESC&quot;</span><span class="p">,</span> <span class="n">model_task</span><span class="o">=</span><span class="s1">&#39;MODEL_TASK_BINARY_CLASSIFICATION&#39;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
 <blockquote>
-<div><p>Replace <code class="docutils literal notranslate"><span class="pre">$DESC</span></code> with a description of the project or modeling application application.
-Valid values for <code class="docutils literal notranslate"><span class="pre">model_task</span></code> include:</p>
+<div><p>You can also access an existing project using its project ID:</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">get_project</span><span class="p">(</span><span class="n">MY_PROJECT_ID</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<blockquote>
+<div><p>Replace <code class="docutils literal notranslate"><span class="pre">$DESC</span></code> with a description of the project or modeling TASK_NATURAL_LANGUAGE_INFERENCE</p>
 <ul class="simple">
-<li><p>MODEL_TASK_REGRESSION</p></li>
-<li><p>MODEL_TASK_BINARY_CLASSIFICATION</p></li>
-<li><p>MODEL_TASK_MULTICLASS_CLASSIFICATION</p></li>
-<li><p>MODEL_TASK_NAMED_ENTITY_RECOGNITION</p></li>
-<li><p>MODEL_TASK_RANKING</p></li>
-<li><p>MODEL_TASK_OBJECT_DETECTION</p></li>
-<li><p>MODEL_TASK_NATURAL_LANGUAGE_INFERENCE</p></li>
 <li><p>MODEL_TASK_FILL_MASK</p></li>
 </ul>
 </div></blockquote>
 </li>
 <li><p>Register a reference dataset.</p>
 <blockquote>
-<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reference_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
+<div><p>This example registers a dataset from a file.</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">reference_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="n">DATASET_NAME</span><span class="p">,</span>
     <span class="n">data_params</span><span class="o">=</span><span class="p">{</span>
         <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;data_file&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">FILE_PATH</span><span class="p">}},</span>
@@ -178,12 +181,14 @@ Valid values for <code class="docutils literal notranslate"><span class="pre">mo
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>The SDK returns the ID of the reference dataset.</p>
+</div></blockquote>
+<blockquote>
+<div><p>The SDK returns the ID of the reference dataset.</p>
 </div></blockquote>
 </li>
 <li><p>Register an evaluation dataset.</p>
 <blockquote>
-<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">evaluation_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">evaluation_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="n">DATASET_NAME</span><span class="p">,</span>
     <span class="n">data_params</span><span class="o">=</span><span class="p">{</span>
         <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;data_file&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">FILE_PATH</span><span class="p">}},</span>
@@ -200,22 +205,32 @@ Valid values for <code class="docutils literal notranslate"><span class="pre">mo
 </li>
 <li><p>Register a model.</p>
 <blockquote>
-<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="n">MODEL_NAME</span><span class="p">,</span>
-    <span class="n">model_config</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;hugging_face&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;model_uri&quot;</span><span class="p">:</span> <span class="n">URI</span><span class="p">,</span>
-            <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;tokenizer_uri&quot;</span><span class="p">:</span> <span class="n">TOKENIZER_URI</span><span class="p">,</span>
-                <span class="s2">&quot;class_map&quot;</span><span class="p">:</span> <span class="n">MAP</span><span class="p">,</span>
-                <span class="s2">&quot;ignore_class_names&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-            <span class="p">},</span>
-        <span class="p">}</span>
-    <span class="p">},</span>
-    <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">MODEL_TAG</span><span class="p">],</span>
-    <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="n">KEY</span><span class="p">:</span> <span class="n">VALUE</span><span class="p">},</span>
-    <span class="n">external_id</span><span class="o">=</span><span class="n">EXTERNAL_ID</span><span class="p">,</span>
+<div><p>This example registers a model from a <code class="docutils literal notranslate"><span class="pre">model.py</span></code> file. The
+<a class="reference internal" href="../../reference/specify_model.html"><span class="doc std std-doc">Specify a Model</span></a> section has details on how to format <code class="docutils literal notranslate"><span class="pre">model.py</span></code> files.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">MODEL_NAME</span><span class="p">,</span>
+        <span class="n">remote_path</span><span class="o">=</span><span class="n">S3_PATH_TO_MODEL_PY</span>
 <span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<blockquote>
+<div><p>This example registers a Hugging Face model.</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>       <span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span>
+           <span class="n">name</span><span class="o">=</span><span class="n">MODEL_NAME</span><span class="p">,</span>
+           <span class="n">model_config</span><span class="o">=</span><span class="p">{</span>
+               <span class="s2">&quot;hugging_face&quot;</span><span class="p">:</span> <span class="p">{</span>
+                   <span class="s2">&quot;model_uri&quot;</span><span class="p">:</span> <span class="n">URI</span><span class="p">,</span>
+                   <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                       <span class="s2">&quot;tokenizer_uri&quot;</span><span class="p">:</span> <span class="n">TOKENIZER_URI</span><span class="p">,</span>
+                       <span class="s2">&quot;class_map&quot;</span><span class="p">:</span> <span class="n">MAP</span><span class="p">,</span>
+                       <span class="s2">&quot;ignore_class_names&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                   <span class="p">},</span>
+               <span class="p">}</span>
+           <span class="p">},</span>
+       <span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -223,14 +238,14 @@ Valid values for <code class="docutils literal notranslate"><span class="pre">mo
 <div><p>The SDK returns the model ID.</p>
 </div></blockquote>
 </li>
-<li><p>Create a <a class="reference internal" href="../../reference/tabular/tests.html"><span class="doc std std-doc">test run configuration</span></a> that uses the
+<li><p>Create a <a class="reference internal" href="../../reference/stress_testing.html"><span class="doc std std-doc">test run configuration</span></a> that uses the
 registered reference and evaluation datasets and the model, specifying a name and
 model task in addition to the IDs of the datasets and model registered earlier in
 this procedure.</p>
 <blockquote>
-<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="s2">&quot;bar&quot;</span><span class="p">},</span>
-    <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="s2">&quot;model_uuid&quot;</span><span class="p">,</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="n">reference_id</span><span class="p">,</span> <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="n">evaluation_id</span><span class="p">},</span>
+    <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span><span class="p">,</span>
     <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;My Stress Test Run&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
@@ -244,8 +259,8 @@ this procedure.</p>
 created in the previous step and the unique ID of the project that contains the
 Stress Test.</p>
 <blockquote>
-<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
-    <span class="n">test_run_config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="s2">&quot;123-445-981&quot;</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
+    <span class="n">test_run_config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -288,7 +303,8 @@ Stress Test.</p>
 22. Click *Next*.
 
 The wizard closes and the new Stress Test begins initial processing.
---></section>
+-->
+</section>
 </section>
 
 
