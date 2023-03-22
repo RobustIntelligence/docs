@@ -1,50 +1,18 @@
-# Test Suite Configuration
+# Tests Configuration
 
-All of the tests RIME runs are easily configurable via the `"test_suite_config"` key in the test run config. The `"test_suite_config"` key expects a dictionary as its value, the configuration options for which are presented below.
-
-## Test Suite Configuration Template
-```python
-{
-    "test_suite_config": {
-      "global_test_sensitivity": "TEST_SENSITIVITY_DEFAULT",
-      "custom_tests": [],
-      "categories": [],
-      "individual_tests_config": {...},
-    }
-}
-```
+RIME test configuration is specified in a JSON configuration.
 
 ## Global Configuration Options
 
-This dictionary contains several global configuration options, which, if specified, will apply to all relevant tests. All of these default to `null`, which means RIME will rely on the specific test configuration to provide this value. These are:
+This JSON file contains several global configuration options, which, if specified, will apply to all relevant tests. All of these default to `null`, which means RIME will rely on the specific test configuration to provide this value. These are:
 
-- **`categories`**: List[dict], *default* = ``[]``
+- **`categories`**: List[str], *default* = ``[]``
 
-    Test categories to run. Options include `Abnormal Inputs`, `Attacks`, `Bias and Fairness`, `Data Cleanliness`, `Data Poisoning Detection`, `Drift`, `Model Performance`, `Subset Performance`, and `Transformations`. If no categories are specified, the default categories are run. The default categories for Stress Testing are `Attacks`, `Model Performance`, `Subset Performance`, and `Transformations`, and the default categories for Continuous Testing are `Abnormal Inputs`, `Drift`, `Model Performance`, and `Subset Performance Degradation`. The format for each category configuration is a dictionary with the `"name"` of the category and `"run_st"`, `"run_ct"` boolean flags that specify whether to run that category in Stress Testing and Continuous Testing, respectively. For example, this categories configuration runs Model Performance in both Stress Testing and Continuous Testing, and Data Cleanliness in Continuous Testing only:
-
-```python
-{
-    # ...
-    "categories": [
-          {"name": "Model Performance", "run_st": True, "run_ct": True},
-          {"name": "Data Cleanliness", "run_st": False, "run_ct": True}
-      ]
-    }
-    # ...
-}
-```
-- **`global_test_sensitivity`**: str, *default* = ``"TEST_SENSITIVITY_DEFAULT"``
-  The global setting for [test sensitivity](../how_to_guides/common_use_cases/project_test_config.md) to be applied for all test. The options are are `"TEST_SENSITIVITY_LESS_SENSITIVE"`, `"TEST_SENSITIVITY_DEFAULT"`, and `"TEST_SENSITIVITY_MORE_SENSITIVE"`.
-  
-- **`custom_tests`**: List[dict], *default* = []
-  Specification for custom tests. For more information on custom test configuration, see [Custom Test Configuration](../how_to_guides/customization/custom_tests.md)
-
-- **`individual_tests_config`**: Optional[dict], *default* = ``null``
-  This is the part of the configuration where the user can specify configuration for individual tests run by RIME. The first few parameters are parameters that affect the global behavior of tests.
-  - **`global_exclude_columns`**: Optional[List[str]], *default* = `null`
+    Test categories to run. Options include `Abnormal Inputs`, `Attacks`, `Bias and Fairness`, `Data Cleanliness`, `Data Poisoning Detection`, `Drift`, `Model Performance`, `Subset Performance`, `Evasion Attack Detection`, `Adversarial`, `Subset Performance Degradation`, and `Transformations`.
+- **`global_exclude_columns`**: Optional[List[str]], *default* = `null`
 
     Columns to exclude from all tests.
-  - **`global_abnormal_inputs_performance_change_config`**: Optional[mapping], *default* = `null`
+- **`global_abnormal_inputs_performance_change_config`**: Optional[mapping], *default* = `null`
 
     Parameters for measuring the impact of abnormal inputs on model performance (applies to all abnormal input tests). The different values of this mapping should be:
     - `severity_thresholds`: List[float, float]
@@ -54,7 +22,7 @@ This dictionary contains several global configuration options, which, if specifi
   
       The minimum number of rows needed to reliably compute performance change. If there are fewer than this many abnormal inputs, the observed model performance change will not be taken into when determining test status and severity.
 
-  - **`global_transformation_performance_change_config`**: Optional[mapping], *default* = `null`
+- **`global_transformation_performance_change_config`**: Optional[mapping], *default* = `null`
 
     Parameters for measuring the impact of transformation on model performance (applies to all transformation tests). The different values of this mapping should be:
     - `severity_thresholds`: List[float, float]
@@ -67,14 +35,1067 @@ This dictionary contains several global configuration options, which, if specifi
   
       The number of clean rows to sample and perturb for the sake of measuring the simulated performance change.
 
-  - **`global_drift_scaling_factor`**: float
+- **`global_drift_scaling_factor`**: float
 
     Used for drift tests. How large of an estimated change in predictions is needed to increase the Model Impact Level by 1. Defaults to `0.005`.
 
-  Besides these global parameters in the `individual_tests_config`, there are also many individual tests that can be configured. See below for an example.
+- **`global_test_sensitivity`**: 
+
+    Specifies the sensitivity level of a test. Valid values are
+    TEST_SENSITIVITY_LESS_SENSITIVITY, TEST_SENSITIVITY_DEFAULT, or
+    TEST_SENSITIVITY_MORE_SENSITIVE. Sensitivity levels determine the severity threshold
+    levels. The severity threshold levels determine whether a given result
+    on a test is marked as Warning, Alert, or Pass.
+
+Besides these global parameters, there are also keys for configuration for individual tests.
 
 ## Default configuration
 
-The default configuration for all tests is available in the `rime_trial` bundle, at `examples/test_configs/default_test_config.json`. 
+Below is the default configuration for all tests. A copy of this can also be found in your `rime_trial` bundle (inside the `examples/test_configs/default_test_config.json`).
 
-To use such a configuration JSON object, load the configuration JSON into Python as a dictionary, for example by using `json.load`. Specify the dictionary as the value of the `"test_suite_config"` key in the test run configuration.
+```json
+{
+  "categories": {},
+  "custom_tests": null,
+  "global_test_sensitivity": "TEST_SENSITIVITY_DEFAULT",
+  "numeric_outlier": {
+    "exclude_columns": [],
+    "run": false,
+    "performance_change_config": {
+      "performance_thresholds": null,
+      "min_num_samples": 1
+    },
+    "bound_multiplier": 2.0
+  },
+  "unseen_categorical": {
+    "exclude_columns": [],
+    "run": false,
+    "performance_change_config": {
+      "performance_thresholds": null,
+      "min_num_samples": 1
+    }
+  },
+  "rare_categories": {
+    "exclude_columns": [],
+    "run": false,
+    "performance_change_config": {
+      "performance_thresholds": null,
+      "min_num_samples": 1
+    },
+    "include_columns": [],
+    "min_num_occurrences": 0,
+    "min_pct_occurrences": 0,
+    "min_ratio_rel_uniform": 0.005
+  },
+  "out_of_range": {
+    "exclude_columns": [],
+    "run": false,
+    "performance_change_config": {
+      "performance_thresholds": null,
+      "min_num_samples": 1
+    },
+    "std_factor": 3
+  },
+  "req_characters": {
+    "column_specific_params": {},
+    "exclude_columns": [],
+    "run": false,
+    "performance_change_config": {
+      "performance_thresholds": null,
+      "min_num_samples": 1
+    }
+  },
+  "inconsistencies": {
+    "exclude_columns": [],
+    "run": false,
+    "performance_change_config": {
+      "performance_thresholds": null,
+      "min_num_samples": 1
+    },
+    "freq_ratio_threshold": 0.02,
+    "min_correlation": 0.1,
+    "max_pairwise_tests": 200,
+    "max_unique_pairs_for_firewall": 15
+  },
+  "capitalization": {
+    "exclude_columns": [],
+    "run": false,
+    "performance_change_config": {
+      "performance_thresholds": null,
+      "min_num_samples": 1
+    }
+  },
+  "empty_string": {
+    "exclude_columns": [],
+    "run": false,
+    "performance_change_config": {
+      "performance_thresholds": null,
+      "min_num_samples": 1
+    }
+  },
+  "embedding_anomalies": {
+    "exclude_columns": [],
+    "run": false,
+    "performance_change_config": {
+      "performance_thresholds": null,
+      "min_num_samples": 1
+    },
+    "distance_quantile": 0.995
+  },
+  "correlation_feat_drift": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "correlation_drift_thresholds": null,
+    "p_value_threshold": 0.05,
+    "min_correlation": 0.1,
+    "max_pairwise_tests": 200
+  },
+  "correlation_label_drift": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "correlation_drift_thresholds": null,
+    "p_value_threshold": 0.05
+  },
+  "mutual_information_feat_drift": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "mutual_information_thresholds": null,
+    "min_mutual_information": 0.1,
+    "max_pairwise_tests": 200,
+    "min_sample_size": 100
+  },
+  "mutual_information_label_drift": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "mutual_information_thresholds": null
+  },
+  "categorical_label_drift": {
+    "run": false,
+    "drift_statistic": "Population Stability Index",
+    "params": {
+      "psi_thresholds": null
+    }
+  },
+  "multiclass_pred_label_drift": {
+    "run": false,
+    "drift_statistic": "Population Stability Index",
+    "params": {
+      "psi_thresholds": null
+    }
+  },
+  "regression_label_drift": {
+    "run": false,
+    "drift_statistic": "Population Stability Index",
+    "params": {
+      "psi_thresholds": null,
+      "num_bins": 100
+    }
+  },
+  "feature_drift": {
+    "exclude_columns": [],
+    "run": false,
+    "min_sample_size": 100,
+    "performance_change_thresholds": null,
+    "numeric_feature_params": {
+      "drift_statistic": "Population Stability Index",
+      "min_num_quantiles": 1000,
+      "num_bins": 100,
+      "psi_threshold": 0.2,
+      "kl_divergence_threshold": 0.1,
+      "js_divergence_threshold": 0.05,
+      "ks_test_p_value_threshold": 0.05,
+      "ks_test_min_sample_size": 100,
+      "ignore_nans": true
+    },
+    "categorical_feature_params": {
+      "drift_statistic": "Population Stability Index",
+      "chi_squared_p_value_threshold": 0.05,
+      "psi_threshold": 0.2,
+      "max_sample_size": null,
+      "ignore_nans": true
+    }
+  },
+  "prediction_drift": {
+    "run": false,
+    "drift_statistic": "Population Stability Index",
+    "params": {
+      "run": true,
+      "min_sample_size": 100,
+      "min_num_quantiles": 1000,
+      "psi_thresholds": null,
+      "num_bins": 100
+    }
+  },
+  "embedding_drift": {
+    "run": false,
+    "min_sample_size": 100,
+    "performance_change_thresholds": null,
+    "drift_statistic": "euclidean_distance",
+    "params": {
+      "distance_threshold": 0.1,
+      "normalize": true
+    }
+  },
+  "avg_confidence": {
+    "run": true,
+    "severity_thresholds": null
+  },
+  "atc": {
+    "run": true,
+    "severity_thresholds": null
+  },
+  "calibration_comparison": {
+    "run": true,
+    "num_bins": 10,
+    "severity_thresholds": null
+  },
+  "label_imbalance": {
+    "run": false,
+    "severity_thresholds": null,
+    "normalize": true
+  },
+  "global_exclude_columns": null,
+  "global_abnormal_inputs_performance_change_config": null,
+  "global_transformation_performance_change_config": null,
+  "out_of_range_substitution": {
+    "exclude_columns": [],
+    "run": false,
+    "performance_change_config": {
+      "ignore_errors": false,
+      "performance_thresholds": null,
+      "num_samples_to_simulate": 100
+    },
+    "std_factor": 3
+  },
+  "outlier_substitution": {
+    "exclude_columns": [],
+    "run": true,
+    "performance_change_config": {
+      "ignore_errors": false,
+      "performance_thresholds": null,
+      "num_samples_to_simulate": 100
+    },
+    "bound_multiplier": 2.0
+  },
+  "feature_type_change": {
+    "exclude_columns": [],
+    "run": true,
+    "performance_change_config": {
+      "ignore_errors": false,
+      "performance_thresholds": null,
+      "num_samples_to_simulate": 100
+    }
+  },
+  "empty_string_substitution": {
+    "exclude_columns": [],
+    "run": true,
+    "performance_change_config": {
+      "ignore_errors": false,
+      "performance_thresholds": null,
+      "num_samples_to_simulate": 100
+    }
+  },
+  "req_characters_deletion": {
+    "column_specific_params": {},
+    "exclude_columns": [],
+    "run": true,
+    "performance_change_config": {
+      "ignore_errors": false,
+      "performance_thresholds": null,
+      "num_samples_to_simulate": 100
+    }
+  },
+  "unseen_categorical_substitution": {
+    "exclude_columns": [],
+    "run": true,
+    "performance_change_config": {
+      "ignore_errors": false,
+      "performance_thresholds": null,
+      "num_samples_to_simulate": 100
+    }
+  },
+  "null_substitution": {
+    "exclude_columns": [],
+    "run": true,
+    "performance_change_config": {
+      "ignore_errors": false,
+      "performance_thresholds": null,
+      "num_samples_to_simulate": 100
+    }
+  },
+  "capitalization_change": {
+    "exclude_columns": [],
+    "run": true,
+    "performance_change_config": {
+      "ignore_errors": false,
+      "performance_thresholds": null,
+      "num_samples_to_simulate": 100
+    }
+  },
+  "text_upper_case": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20,
+    "max_str_len": 2000
+  },
+  "text_lower_case": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20,
+    "max_str_len": 2000
+  },
+  "text_remove_special_chars": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20,
+    "max_str_len": 2000
+  },
+  "text_ascii": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20,
+    "max_str_len": 2000
+  },
+  "text_char_substitution_attack": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20,
+    "max_str_len": 2000,
+    "attack_params": {
+      "min_char": 2,
+      "aug_char_max": 1,
+      "aug_char_min": 1,
+      "aug_char_p": 0.1,
+      "aug_word_min": 1,
+      "aug_word_max": null,
+      "aug_word_p": 0.05
+    }
+  },
+  "text_char_deletion_attack": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20,
+    "max_str_len": 2000,
+    "attack_params": {
+      "min_char": 2,
+      "aug_char_max": 1,
+      "aug_char_min": 1,
+      "aug_char_p": 0.1,
+      "aug_word_min": 1,
+      "aug_word_max": null,
+      "aug_word_p": 0.05
+    }
+  },
+  "text_char_insertion_attack": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20,
+    "max_str_len": 2000,
+    "attack_params": {
+      "min_char": 2,
+      "aug_char_max": 1,
+      "aug_char_min": 1,
+      "aug_char_p": 0.1,
+      "aug_word_min": 1,
+      "aug_word_max": null,
+      "aug_word_p": 0.05
+    }
+  },
+  "text_char_swap_attack": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20,
+    "max_str_len": 2000,
+    "attack_params": {
+      "min_char": 2,
+      "aug_char_max": 1,
+      "aug_char_min": 1,
+      "aug_char_p": 0.1,
+      "aug_word_min": 1,
+      "aug_word_max": null,
+      "aug_word_p": 0.05
+    }
+  },
+  "text_keyboard_aug_attack": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20,
+    "max_str_len": 2000,
+    "attack_params": {
+      "min_char": 2,
+      "aug_char_max": 1,
+      "aug_char_min": 1,
+      "aug_char_p": 0.1,
+      "aug_word_min": 1,
+      "aug_word_max": null,
+      "aug_word_p": 0.05
+    }
+  },
+  "text_common_misspelling_attack": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20,
+    "max_str_len": 2000,
+    "attack_params": null
+  },
+  "text_ocr_error_attack": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20,
+    "max_str_len": 2000,
+    "attack_params": null
+  },
+  "text_synonym_swap_attack": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20,
+    "max_str_len": 2000,
+    "attack_params": null
+  },
+  "text_lm_word_substitution_attack": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20,
+    "max_str_len": 2000,
+    "attack_params": {
+      "aug_min": 1,
+      "aug_max": null,
+      "aug_p": 0.05,
+      "model_path": "distilbert-base-cased"
+    }
+  },
+  "text_lm_word_insertion_attack": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20,
+    "max_str_len": 2000,
+    "attack_params": {
+      "aug_min": 1,
+      "aug_max": null,
+      "aug_p": 0.05,
+      "model_path": "distilbert-base-cased"
+    }
+  },
+  "entity_lower_case": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20
+  },
+  "entity_upper_case": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20
+  },
+  "entity_ampersand": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20
+  },
+  "entity_abbreviation": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20
+  },
+  "entity_white_space_special_chars": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20
+  },
+  "entity_ascii": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20
+  },
+  "entity_remove_special_chars": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20
+  },
+  "entity_swap_unseen": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 20
+  },
+  "gaussian_blur": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 50,
+    "kernel_size": [
+      19,
+      19
+    ],
+    "sigma": 5
+  },
+  "color_jitter": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 50,
+    "brightness": 0.1,
+    "contrast": 0.1,
+    "saturation": 0.1,
+    "hue": 0.1
+  },
+  "gaussian_noise": {
+    "severity_thresholds": [
+      0.01,
+      0.25
+    ],
+    "run": true,
+    "sample_size": 50,
+    "mean": 0,
+    "sigma": 0.03
+  },
+  "vertical_flip": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 50
+  },
+  "horizontal_flip": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 50
+  },
+  "randomize_pixels_with_mask": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 50,
+    "probability": 0.1
+  },
+  "contrast_increase": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 50,
+    "percent": 0.5
+  },
+  "contrast_decrease": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 50,
+    "percent": 0.5
+  },
+  "add_rain": {
+    "severity_thresholds": null,
+    "run": false,
+    "sample_size": 50,
+    "alpha": 0.5
+  },
+  "add_snow": {
+    "severity_thresholds": null,
+    "run": false,
+    "sample_size": 50,
+    "alpha": 0.5
+  },
+  "vulnerability": {
+    "exclude_columns": [],
+    "run": false,
+    "severity_level_thresholds": null,
+    "sample_size": 10,
+    "search_count": 10
+  },
+  "sensitivity": {
+    "exclude_columns": [],
+    "run": true,
+    "severity_level_thresholds": null,
+    "linf_constraint": 0.01,
+    "sample_size": 10
+  },
+  "multi_feat_vulnerability": {
+    "exclude_columns": [],
+    "run": false,
+    "severity_level_thresholds": null,
+    "l0_constraint": 3,
+    "sample_size": 10,
+    "search_count": 10
+  },
+  "multi_feat_sensitivity": {
+    "exclude_columns": [],
+    "run": true,
+    "severity_level_thresholds": null,
+    "l0_constraint": 3,
+    "sample_size": 10,
+    "linf_constraint": 0.01
+  },
+  "tabular_hopskipjump_attack": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "sample_size": 10,
+    "attack_params": {
+      "targeted": false,
+      "norm": 2,
+      "max_iter": 50,
+      "max_eval": 1000,
+      "init_eval": 100,
+      "init_size": 100
+    }
+  },
+  "images_hopskipjump_attack": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 5,
+    "attack_params": {
+      "targeted": false,
+      "norm": 2,
+      "max_iter": 30,
+      "max_eval": 50,
+      "init_eval": 20,
+      "init_size": 20
+    }
+  },
+  "square_attack": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 5,
+    "attack_params": {
+      "norm": "inf",
+      "max_iter": 100,
+      "eps": 0.02,
+      "p_init": 0.25,
+      "nb_restarts": 5,
+      "square": true
+    }
+  },
+  "text_invisible_chars_attack": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 5,
+    "attack_params": {
+      "max_iterations": 4,
+      "target_score": 0.0,
+      "max_queries": 200,
+      "population_size": 15,
+      "max_unsuccessful_iters": 2,
+      "max_consecutive_unsuccessful": null
+    },
+    "mutator_params": {
+      "aug_char_p": 0.01
+    },
+    "max_str_len": 2000
+  },
+  "text_deletion_chars_attack": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 5,
+    "attack_params": {
+      "max_iterations": 4,
+      "target_score": 0.0,
+      "max_queries": 200,
+      "population_size": 15,
+      "max_unsuccessful_iters": 2,
+      "max_consecutive_unsuccessful": null
+    },
+    "mutator_params": {
+      "aug_char_p": 0.01
+    },
+    "max_str_len": 2000
+  },
+  "text_intentional_homoglyph_attack": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 5,
+    "attack_params": {
+      "max_iterations": 4,
+      "target_score": 0.0,
+      "max_queries": 200,
+      "population_size": 15,
+      "max_unsuccessful_iters": 2,
+      "max_consecutive_unsuccessful": null
+    },
+    "mutator_params": {
+      "aug_char_p": 0.01
+    },
+    "max_str_len": 2000
+  },
+  "text_confusable_homoglyph_attack": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 5,
+    "attack_params": {
+      "max_iterations": 4,
+      "target_score": 0.0,
+      "max_queries": 200,
+      "population_size": 15,
+      "max_unsuccessful_iters": 2,
+      "max_consecutive_unsuccessful": null
+    },
+    "mutator_params": {
+      "aug_char_p": 0.01
+    },
+    "max_str_len": 2000
+  },
+  "text_hotflip_attack": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 5,
+    "attack_params": {
+      "max_iterations": 4,
+      "target_score": 0.0,
+      "max_queries": 200,
+      "population_size": 15,
+      "max_unsuccessful_iters": 2,
+      "max_consecutive_unsuccessful": null
+    },
+    "mutator_params": {},
+    "max_str_len": 2000,
+    "constraint_params": {
+      "stopwords": [],
+      "include_default_stopwords": true,
+      "max_tokens_perturbed": 3,
+      "min_cos_sim": 0.2
+    }
+  },
+  "universal_triggers_attack": {
+    "severity_thresholds": null,
+    "run": true,
+    "sample_size": 3,
+    "attack_params": {
+      "max_iterations": 4,
+      "target_score": 0.0,
+      "max_queries": 500,
+      "population_size": 2,
+      "max_unsuccessful_iters": 200,
+      "max_consecutive_unsuccessful": 10
+    },
+    "mutator_params": {
+      "prefix_len": 10,
+      "aug_word_p": 0.2
+    },
+    "max_str_len": 2000,
+    "batch_size": 10
+  },
+  "feature_type_check": {
+    "exclude_columns": [],
+    "run": false,
+    "performance_change_config": {
+      "performance_thresholds": null,
+      "min_num_samples": 1
+    }
+  },
+  "null_check": {
+    "exclude_columns": [],
+    "run": false,
+    "performance_change_config": {
+      "performance_thresholds": null,
+      "min_num_samples": 1
+    }
+  },
+  "null_proportion": {
+    "exclude_columns": [],
+    "run": false,
+    "min_sample_size": 100,
+    "performance_change_thresholds": null,
+    "p_value_threshold": 0.05
+  },
+  "row_null_proportion": {
+    "exclude_columns": [],
+    "run": false,
+    "min_sample_size": 100,
+    "performance_change_thresholds": null,
+    "drift_statistic": "Population Stability Index",
+    "params": {
+      "psi_threshold": 0.2
+    }
+  },
+  "required_features": {
+    "run": false,
+    "required_feats": null,
+    "allowed_feats": null,
+    "ordered": false,
+    "required_only": false
+  },
+  "duplicate_rows": {
+    "exclude_columns": [],
+    "run": false
+  },
+  "mi_decrease_feature_to_label": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "min_mutual_information_requirement": 0.2
+  },
+  "high_mi_feature_to_label": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false
+  },
+  "high_feature_correlation": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "max_pairwise_tests": 200,
+    "min_num_samples": 100
+  },
+  "protected_feature_drift": {
+    "exclude_columns": [],
+    "run": false,
+    "min_sample_size": 100,
+    "performance_change_thresholds": null,
+    "numeric_feature_params": {
+      "drift_statistic": "Population Stability Index",
+      "min_num_quantiles": 1000,
+      "num_bins": 100,
+      "psi_threshold": 0.2,
+      "kl_divergence_threshold": 0.1,
+      "js_divergence_threshold": 0.05,
+      "ks_test_p_value_threshold": 0.05,
+      "ks_test_min_sample_size": 100,
+      "ignore_nans": true
+    },
+    "categorical_feature_params": {
+      "drift_statistic": "Population Stability Index",
+      "chi_squared_p_value_threshold": 0.05,
+      "psi_threshold": 0.2,
+      "max_sample_size": null,
+      "ignore_nans": true
+    }
+  },
+  "protected_proxies": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false
+  },
+  "class_imbalance": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "equalized_odds": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "intersectional_group_fairness": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "group_fairness_avg_pred": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "group_fairness_avg_rank": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "demographic_parity": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "demographic_parity_avg_pred": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "demographic_parity_avg_rank": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "chi_squared_independence": {
+    "run": false,
+    "p_value_thresholds": null,
+    "min_sample_size": 100,
+    "min_subset_sample_size": 20
+  },
+  "predict_protected_features": {
+    "run": false,
+    "accuracy_thresholds": null,
+    "min_sample_size": 100,
+    "non_protected_train_features": null,
+    "max_protected_feature_cardinality": 100,
+    "max_categorical_train_feature_cardinality": 100,
+    "ref_data_split": 0.8
+  },
+  "subset_sensitivity_pos_pred": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "performance_thresholds": null,
+    "min_sample_size": 20,
+    "num_samples_to_simulate": 100
+  },
+  "subset_sensitivity_avg_pred": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "performance_thresholds": null,
+    "min_sample_size": 20,
+    "num_samples_to_simulate": 100
+  },
+  "subset_sensitivity_avg_rank": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "performance_thresholds": null,
+    "min_sample_size": 20,
+    "num_samples_to_simulate": 100
+  },
+  "equal_opportunity": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "equal_opp_macro_recall": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "predictive_equality": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "min_sample_size": 20,
+    "performance_change_thresholds": null
+  },
+  "text_swap_masc_to_fem": {
+    "severity_thresholds": null,
+    "run": false,
+    "sample_size": 20,
+    "max_str_len": 2000
+  },
+  "text_swap_fem_to_masc": {
+    "severity_thresholds": null,
+    "run": false,
+    "sample_size": 20,
+    "max_str_len": 2000
+  },
+  "text_swap_masc_name_to_fem_name": {
+    "severity_thresholds": null,
+    "run": false,
+    "sample_size": 20,
+    "max_str_len": 2000,
+    "source": null,
+    "target": null,
+    "case_invariant": true
+  },
+  "text_swap_fem_name_to_masc_name": {
+    "severity_thresholds": null,
+    "run": false,
+    "sample_size": 20,
+    "max_str_len": 2000,
+    "source": null,
+    "target": null,
+    "case_invariant": true
+  },
+  "text_swap_masc_to_plural": {
+    "severity_thresholds": null,
+    "run": false,
+    "sample_size": 20,
+    "max_str_len": 2000
+  },
+  "text_swap_fem_to_plural": {
+    "severity_thresholds": null,
+    "run": false,
+    "sample_size": 20,
+    "max_str_len": 2000
+  },
+  "text_swap_high_country_to_low_country": {
+    "severity_thresholds": null,
+    "run": false,
+    "sample_size": 20,
+    "max_str_len": 2000,
+    "source": null,
+    "target": null,
+    "case_invariant": true
+  },
+  "text_swap_low_country_to_high_country": {
+    "severity_thresholds": null,
+    "run": false,
+    "sample_size": 20,
+    "max_str_len": 2000,
+    "source": null,
+    "target": null,
+    "case_invariant": true
+  },
+  "text_swap_maj_name_to_min_name": {
+    "severity_thresholds": null,
+    "run": false,
+    "sample_size": 20,
+    "max_str_len": 2000,
+    "source": null,
+    "target": null,
+    "case_invariant": true
+  },
+  "text_swap_min_name_to_maj_name": {
+    "severity_thresholds": null,
+    "run": false,
+    "sample_size": 20,
+    "max_str_len": 2000,
+    "source": null,
+    "target": null,
+    "case_invariant": true
+  },
+  "gendered_pronoun_distribution": {
+    "exclude_columns": [],
+    "run": false,
+    "performance_change_thresholds": [
+      0.1,
+      0.3
+    ]
+  },
+  "fill_mask_invariance": {
+    "exclude_columns": [],
+    "run": false,
+    "performance_change_thresholds": [
+      0.4,
+      0.8
+    ]
+  },
+  "exact_match_label_flipping": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false
+  },
+  "near_match_label_flipping": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "vectorization_params": {
+      "image_projection_dim": 1024,
+      "text_vector_dim": 256,
+      "max_categories": 100,
+      "min_frequency": 0.01
+    }
+  },
+  "stateful_black_box_detection": {
+    "exclude_columns": [],
+    "severity_thresholds": null,
+    "run": false,
+    "window_size": 1000,
+    "num_neighbors": 50,
+    "vectorization_params": {
+      "image_projection_dim": 1024,
+      "text_vector_dim": 256,
+      "max_categories": 100,
+      "min_frequency": 0.01
+    }
+  }
+}
+```

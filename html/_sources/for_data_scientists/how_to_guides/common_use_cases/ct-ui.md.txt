@@ -5,7 +5,7 @@ vulnerability.
 
 ## Creating a new Continuous Test from the SDK
 
-This procedure presumes a model is already loaded into RIME and that all commands are issued in a Python environment.
+This procedure presumes a model is already [loaded](../../../python_library/how_to_guides/rime_data_model_setup.md) into RIME and that all commands are issued in a Python environment.
 
 1.  (When a suitable [project](projects.md) does not already exist) Create a project 
     using the following [SDK command](../../../python_library/python-sdk.rst).
@@ -16,28 +16,23 @@ This procedure presumes a model is already loaded into RIME and that all command
     >   ```
 2.  Register a reference dataset.
     >   ```
-    >   reference_id = project.register_dataset(
-    >       name=DATASET_NAME,
-    >       data_params={
-    >           "connection_info": {"data_file": {"path": FILE_PATH}},
-    >           "data_params": {"label_col": LABEL_COL},
-    >       },
-    >       integration_id=INTEGRATION_ID,
+    >   reference = rime_project.register_dataset( 
+    >       name="foo", data_params=dict 
     >   )
     >   ```
 
     >   The SDK returns the ID of the reference dataset.
 3.  Register an evaluation dataset.
     >   ```
-    >   evaluation_id = project.register_dataset(
-    >       name="bar", data_config=dict
+    >   evaluation = rime_project.register_dataset(
+    >       name="bar", data_params=dict
     >   )
     >   ```
 
     >   The SDK returns the ID of the evaluation dataset.
 4.  Register a model.
     >   ```
-    >   model = project.register_model(
+    >   model = rime_project.register_model(
     >       name="baz"
     >   )
     >   ```
