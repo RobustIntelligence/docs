@@ -1,0 +1,190 @@
+# Configuring Projects
+
+The project settings page enables you to modify the following configuration aspects:
+
+* Project configuration
+* Configuration of the model used by the project
+* Configuration of the test runs for the model
+* Configuration of the actual tests run on the model
+
+## Navigating to Project Settings
+
+1.  Sign in to a Robust Intelligence instance.
+    >   The Workspaces page appears.
+2.  Click a workspace.
+    >   The Workspaces summary page appears.
+3.  Select a project.
+    >   You can filter or sort the list of projects in a workspace with the
+    >   *Sort* and *Filter* controls in the upper right. Click the glyph to the
+    >   right of the *Filter* control to switch between list and card display
+    >   for projects. Type a string in *Search Projects...* to display only
+    >   projects that match the string.
+
+    >   The project overview page appears.
+4.  Click the *Project Settings* gear icon on the left navigation bar.
+    >   The project settings page appears.
+5.  Edit the project settings as required and click *Save*  .
+
+Robust Intelligence updates the project with the new settings.
+
+### List of Configurable Project Settings
+
+| Settings section | Setting name | Type |
+|------------------|--------------|------|
+| Project Info | Project Name | Text field |
+| | Project Description | Text field |
+| | Data Type | Text field |
+| | Model Task | Drop-down |
+| | Ethical Considerations | Text field |
+| | Intended Use Case | Text field |
+| | Project Tags | Text field |
+| Production Model Info | Model Architecture | Text field |
+| | Created Date | Date selector |
+| | Reference Dataset (training) | File path |
+| | Evaluation Dataset | File path |
+| | Model ID | Text field |
+| | External ID | Text field |
+| | Model Path | File path |
+| | Model Owner | Text field |
+| | Model Tester | Text field |
+| | Business Owner | Text field |
+| | Notes | Text field |
+
+## Configuring Test Category and Sensitivity
+
+Project-level test configuration affects Stress Tests and Continuous Tests that run in
+that project.
+
+1.  Sign in to a Robust Intelligence instance.
+    >   The Workspaces page appears.
+2.  Click a workspace.
+    >   The Workspaces summary page appears.
+3.  Select a project.
+    >   You can filter or sort the list of projects in a workspace with the
+    >   *Sort* and *Filter* controls in the upper right. Click the glyph to the
+    >   right of the *Filter* control to switch between list and card display
+    >   for projects. Type a string in *Search Projects...* to display only
+    >   projects that match the string.
+
+    >   The project overview page appears.
+4.  Click the *Project Settings* gear icon on the left navigation bar.
+    >   The project settings page appears.
+5.  Click the *Test Configuration* tab at the top.
+6.  The Test Configuration page opens at the Categories and Sensitivity pane.
+7.  Select a test type.
+    >   Both Stress and Continuous tests have the same configuration elements.
+8.  Select a set of tests.
+    >   | Risk category | Test types |
+        >   |---------------|------|
+    >   | Operational risks | Overall performance |
+    >   |   | Subset performance |
+    >   |   | Drift (continuous testing focus) |
+    >   |   | Transformations (stress testing focus) |
+    >   |   | Abnormal inputs (continuous testing focus) |
+    >   | Security risks | Security events |
+    >   |   | Data poisoning |
+    >   |   | Model evasion |
+    >   | Fairness risks | Compliance and fairness |
+9.  Select an overall test sensitivity level.
+10. Click *Save Settings*.
+
+The configuration for test category and sensitivity is saved.
+
+## Configuring Continuous Testing Data Sources and Scheduling
+
+This procedure assumes data sources have already been configured. Consult the section
+on configuring an [integration](../../administration/configuring_workspaces/integrations/configuring_integrations.md) for details.
+
+1.  Sign in to a Robust Intelligence instance.
+    >   The Workspaces page appears.
+2.  Click a workspace.
+    >   The Workspaces summary page appears.
+3.  Select a project.
+    >   You can filter or sort the list of projects in a workspace with the
+    >   *Sort* and *Filter* controls in the upper right. Click the glyph to the
+    >   right of the *Filter* control to switch between list and card display
+    >   for projects. Type a string in *Search Projects...* to display only
+    >   projects that match the string.
+
+    >   The project overview page appears.
+4.  Click the *Project Settings* gear icon on the left navigation bar.
+    >   The project settings page appears.
+5.  Click the *Test Configuration* tab at the top.
+6.  The Test Configuration page opens at the Categories and Sensitivity pane.
+7.  From the left sidebar, click *Continuous Test data and schedule*.
+    >   The Continuous Test data and schedule pane appears.
+8.  In *Connection*, choose a configured data source.
+9.  In *Table Name*, choose a table name.
+10. Select columns from the *Timestamp Column*, *Label Column*, and *Prediction Column*
+    drop-down selectors.
+11. In *Continuous Testing Schedule*, select a bin size, a rolling window, and a number
+    of bins.
+12. Click *Save Settings*.
+
+Robust Intelligence saves the configuration settings for data sources and scheduling.
+
+## Configuring Individual Tests
+
+You can configure individual tests within a project.
+
+1.  Sign in to a Robust Intelligence instance.
+    >   The Workspaces page appears.
+2.  Click a workspace.
+    >   The Workspaces summary page appears.
+3.  Select a project.
+    >   You can filter or sort the list of projects in a workspace with the
+    >   *Sort* and *Filter* controls in the upper right. Click the glyph to the
+    >   right of the *Filter* control to switch between list and card display
+    >   for projects. Type a string in *Search Projects...* to display only
+    >   projects that match the string.
+
+    >   The project overview page appears.
+4.  Click the *Project Settings* gear icon on the left navigation bar.
+    >   The project settings page appears.
+5.  Click the *Test Configuration* tab at the top.
+6.  The Test Configuration page opens at the Categories and Sensitivity pane.
+7.  From the left sidebar, click *Individual Test Config*.
+    >   The Individual Test Configuration pane appears.
+8.  Unfold one of the risk categories to display individual tests in that category.
+9.  Click the pencil icon next to a test.
+    >   The Advanced Configuration pane for that test displays. <!-- TKK might be a button labeled 'edit' or 'configured', watch for changes -->
+10. Choose where to run the test.
+    >   A specific test can run in Stress Testing, Continuous Testing, or both.
+11. In *Severity Thresholds*, enter values and define conditions for each alert level.
+    >   The Robust Intelligence instance generates an event each time the test result meets the value and condition.
+12. Select an on-save action.
+    >   Update Current Run Settings & Thresholds applies the new values to a testing run that is already in progress.
+
+    >   Update Project Settings saves the values to the project and applies the new values to any future test runs.
+13. Click *Save Updates*.
+    >   The Individual Test Configuration pane appears.
+14. Click *Save Settings*.
+
+Robust Intelligence saves the updated individual test configuration.
+
+## Configuring Data Profiling
+
+Robust Intelligence instances perform [data profiling](data_profiling.md) and
+modify test runs according to the results.
+
+1.  Sign in to a Robust Intelligence instance.
+    >   The Workspaces page appears.
+2.  Click a workspace.
+    >   The Workspaces summary page appears.
+3.  Select a project.
+    >   You can filter or sort the list of projects in a workspace with the
+    >   *Sort* and *Filter* controls in the upper right. Click the glyph to the
+    >   right of the *Filter* control to switch between list and card display
+    >   for projects. Type a string in *Search Projects...* to display only
+    >   projects that match the string.
+
+    >   The project overview page appears.
+4.  Click the *Project Settings* gear icon on the left navigation bar.
+    >   The project settings page appears.
+5.  Click the *Test Configuration* tab at the top.
+6.  The Test Configuration page opens at the Categories and Sensitivity pane.
+7.  In the Run Configuration section of the left navigation bar, click *Data Profiling*.
+    >   The Column Profiling page appears.
+8.  Change values and toggles as required and click *Save Settings*.
+
+Robust Intelligence updates the data profiling settings.

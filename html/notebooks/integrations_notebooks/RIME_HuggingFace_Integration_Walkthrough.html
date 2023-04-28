@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Robust Intelligence 🤝 🤗 Integration Walkthrough &mdash; Robust Intelligence  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Robust Intelligence 🤝 MLflow" href="../../testing_and_monitoring/integrating_mlops/platform/mlflow.html" />
+    <link rel="prev" title="Robust Intelligence + DataRobot Integration Walkthrough" href="RIME_DataRobot_Integration.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Robust Intelligence
+          </a>
+              <div class="version">
+                2.0.0-rc.14
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/querying_results.html">Querying Test Run Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/notifications_and_alerts.html">Notifications and Alerts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/model_governance.html">Managing Model Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/test_customization.html">Test Customization</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops.html">Integrating with MLOps</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops/data_integrations.html">Data Integrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops/model_integrations.html">Model Integrations</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops/platform_integrations.html">Platform Integrations</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops/platform/databricks.html">Robust Intelligence 🤝 Databricks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops/platform/datarobot.html">Robust Intelligence 🤝 DataRobot</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Robust Intelligence 🤝 🤗 Integration Walkthrough</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops/platform/mlflow.html">Robust Intelligence 🤝 MLflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops/platform/sagemaker.html">Robust Intelligence 🤝 SageMaker</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/organization_administration.html">Organization Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/configuring_workspaces.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/security_and_compliance.html">Security and Compliance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Robust Intelligence</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../testing_and_monitoring/integrating_mlops.html">Integrating with MLOps</a></li>
+          <li class="breadcrumb-item"><a href="../../testing_and_monitoring/integrating_mlops/platform_integrations.html">Platform Integrations</a></li>
+      <li class="breadcrumb-item active">Robust Intelligence 🤝 🤗 Integration Walkthrough</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Robust-Intelligence-🤝-🤗-Integration-Walkthrough">
+<h1>Robust Intelligence 🤝 🤗 Integration Walkthrough<a class="headerlink" href="#Robust-Intelligence-🤝-🤗-Integration-Walkthrough" title="Permalink to this heading"></a></h1>
+<p>RIME natively supports stress testing and monitoring of Hugging Face models through a native integration with their API’s. Below is an example run stress testing a sentiment classification transformer model on the <a class="reference external" href="https://huggingface.co/datasets/amazon_polarity">Amazon Polarity</a> dataset. For more information on how to connect with a <a class="reference external" href="https://robust-intelligence-inc-rime.readthedocs-hosted.com/en/latest/for_data_scientists/how_to_guides/integrations/huggingface.html?highlight=huggingface#huggingface-classification-model">Hugging Face
+Model</a> or <a class="reference external" href="https://robust-intelligence-inc-rime.readthedocs-hosted.com/en/latest/for_data_scientists/reference/configuration/nlp/data_source.html?highlight=huggingface#huggingface-dataset">Hugging Face Dataset</a>, check out the linked documentation.</p>
+<p>First, specify the URL and api token to connect with your cluster.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set these before beginning!</span>
+<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># e.g., rime.&lt;name&gt;.rime.dev</span>
+<span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Create a Managed Image</strong></p>
+<p>Since the Hugging Face integration requires a couple additional dependencies, we will first create a Docker image to be managed by RIME.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install rime-sdk &amp;&gt; /dev/null
+<span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
+
+<span class="n">image_name</span> <span class="o">=</span> <span class="s2">&quot;huggingface&quot;</span>
+
+<span class="c1"># connect to your cluster</span>
+<span class="n">rime_client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="n">API_TOKEN</span><span class="p">)</span>
+
+<span class="c1"># Specify pip requirements for the run. Some models require additional dependencies.</span>
+<span class="n">requirements</span> <span class="o">=</span> <span class="p">[</span>
+     <span class="n">rime_client</span><span class="o">.</span><span class="n">pip_requirement</span><span class="p">(</span><span class="s2">&quot;transformers&quot;</span><span class="p">),</span>
+     <span class="n">rime_client</span><span class="o">.</span><span class="n">pip_requirement</span><span class="p">(</span><span class="s2">&quot;datasets&quot;</span><span class="p">),</span>
+     <span class="c1"># Uncomment if you need sentencepiece</span>
+     <span class="c1"># rime_client.pip_requirement(&quot;sentencepiece&quot;),</span>
+   <span class="p">]</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">has_managed_image</span><span class="p">(</span><span class="n">image_name</span><span class="p">,</span> <span class="n">check_status</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="c1"># e.g., if the image build job failed</span>
+    <span class="k">if</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">has_managed_image</span><span class="p">(</span><span class="n">image_name</span><span class="p">):</span>
+        <span class="n">rime_client</span><span class="o">.</span><span class="n">delete_managed_image</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
+    <span class="c1"># Start a new image building job</span>
+    <span class="n">builder_job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_managed_image</span><span class="p">(</span><span class="n">image_name</span><span class="p">,</span> <span class="n">requirements</span><span class="p">)</span>
+
+    <span class="c1"># Wait until the job has finished and print out status information.</span>
+    <span class="c1"># Once this prints out the `READY` status, your image is available for use in stress tests.</span>
+    <span class="n">builder_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Run Stress Test</strong></p>
+<p>Now it’s time to kick off a stress testing run. We will synchronously monitor the job using the <code class="docutils literal notranslate"><span class="pre">get_status()</span></code> command.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Sentiment Classification&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;huggingface&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;dataset_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;amazon_polarity&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;text_key&quot;</span><span class="p">:</span> <span class="s2">&quot;content&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;prediction_info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;n_samples&quot;</span><span class="p">:</span> <span class="mi">5000</span><span class="p">},</span> <span class="c1"># limit to 5k predictions to speed up run.</span>
+    <span class="s2">&quot;model_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;huggingface_classification&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;BaxterAI/SentimentClassifier&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;model_task&quot;</span><span class="p">:</span> <span class="s2">&quot;Text Classification&quot;</span>
+<span class="p">}</span>
+
+
+<span class="n">job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="n">test_run_config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">data_type</span><span class="o">=</span><span class="s1">&#39;nlp&#39;</span><span class="p">,</span> <span class="n">rime_managed_image</span><span class="o">=</span><span class="n">image_name</span><span class="p">)</span>
+<span class="n">job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Review Results</strong></p>
+<p>Now that the test has completed, check out the test run results using the link below.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_run</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
+<span class="n">test_run</span>
+</pre></div>
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="RIME_DataRobot_Integration.html" class="btn btn-neutral float-left" title="Robust Intelligence + DataRobot Integration Walkthrough" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../testing_and_monitoring/integrating_mlops/platform/mlflow.html" class="btn btn-neutral float-right" title="Robust Intelligence 🤝 MLflow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

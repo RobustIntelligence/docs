@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registering your Model and Datasets &mdash; Robust Intelligence  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Data Configuration" href="data_source.html" />
+    <link rel="prev" title="Uploading to Cloud Storage (Optional)" href="upload_data.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Robust Intelligence
+          </a>
+              <div class="version">
+                2.0.0-rc.14
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../creating_projects.html">Creating Projects</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="preprocessing_your_datasets.html">Preprocessing your Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defining_model_interface.html">Defining a Model interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="upload_data.html">Uploading to Cloud Storage (Optional)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Registering your Model and Datasets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#registering-a-model-using-the-sdk">Registering a Model Using the SDK</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#register-your-model-with-a-model-config-or-with-a-path-to-a-model-artifact">Register your model with a model config or with a path to a model artifact.</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#registering-a-dataset-using-the-sdk">Registering a dataset using the SDK</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#registering-a-prediction-set-using-the-sdk">Registering a prediction set using the SDK</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data_source.html">Data Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_source.html">Model Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../querying_results.html">Querying Test Run Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notifications_and_alerts.html">Notifications and Alerts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_governance.html">Managing Model Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test_customization.html">Test Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integrating_mlops.html">Integrating with MLOps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/organization_administration.html">Organization Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/configuring_workspaces.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/security_and_compliance.html">Security and Compliance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Robust Intelligence</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../documentation_home/get_started.html">Get Started</a></li>
+          <li class="breadcrumb-item"><a href="../../documentation_home/notebooks.html">Tutorial Notebooks</a></li>
+          <li class="breadcrumb-item"><a href="../preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+      <li class="breadcrumb-item active">Registering your Model and Datasets</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="registering-your-model-and-datasets">
+<h1>Registering your Model and Datasets<a class="headerlink" href="#registering-your-model-and-datasets" title="Permalink to this heading"></a></h1>
+<p>Robust Intelligence provides registries to keep track of the models, datasets, and predictions files
+that have been uploaded to a Robust Intelligence instance. You can register these data objects from
+the RIME SDK or in the web UI during project configuration.</p>
+<p>Models are typically Python files in either <code class="docutils literal notranslate"><span class="pre">py</span></code> or <code class="docutils literal notranslate"><span class="pre">pkl</span></code> formats. Reference or
+evaluation datasets and prediction sets can be provided in several formats, most
+commonly CSV.</p>
+<p>Any of these data objects can be directly uploaded to the Robust Intelligence instance using the SDK
+or sourced from an <a class="reference internal" href="../../administration/configuring_workspaces/integrations/configuring_integrations.html"><span class="std std-doc">integration</span></a>. Register the data
+object after upload.</p>
+<p>Once a model, dataset, or prediction set has been registered with a Robust Intelligence instance,
+that data object is available for selection in the appropriate drop-down selectors
+during project configuration for either a <a class="reference internal" href="../validating_models/stress_tests_from_sdk.html"><span class="std std-doc">Stress test</span></a> or a <a class="reference internal" href="../monitoring_models/creating_new_continuous_test.html"><span class="std std-doc">Continuous test</span></a>.</p>
+<section id="registering-a-model-using-the-sdk">
+<h2>Registering a Model Using the SDK<a class="headerlink" href="#registering-a-model-using-the-sdk" title="Permalink to this heading"></a></h2>
+<p>Assuming the Robust Intelligence SDK is installed and available for use and that the relevant data objects have been
+uploaded to the Robust Intelligence instance, you can register a model using the following procedure. See the Python SDK
+documentation for full details on the SDK calls used in this procedure.</p>
+<section id="register-your-model-with-a-model-config-or-with-a-path-to-a-model-artifact">
+<h3>Register your model with a model config or with a path to a model artifact.<a class="headerlink" href="#register-your-model-with-a-model-config-or-with-a-path-to-a-model-artifact" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get your model config</span>
+<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span><span class="n">name</span><span class="o">=&lt;</span><span class="n">NAME</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">model_config</span><span class="o">=</span><span class="p">{</span>
+    <span class="s2">&quot;hugging_face&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;model_uri&quot;</span><span class="p">:</span> <span class="n">URI</span><span class="p">,</span>
+        <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;tokenizer_uri&quot;</span><span class="p">:</span> <span class="n">TOKENIZER_URI</span><span class="p">,</span>
+            <span class="s2">&quot;class_map&quot;</span><span class="p">:</span> <span class="n">MAP</span><span class="p">,</span>
+            <span class="s2">&quot;ignore_class_names&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<p>For more on model configuration, check out the <a class="reference internal" href="#../../testing_and_monitoring/preparing_your_models_and_datasets/model_source.html#model-configuration"><span class="xref myst">model configuration documentation</span></a>.</p>
+<section id="registering-a-model-with-a-path-to-a-model-artifact">
+<h4>Registering a model with a path to a model artifact:<a class="headerlink" href="#registering-a-model-with-a-path-to-a-model-artifact" title="Permalink to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span><span class="n">name</span><span class="o">=&lt;</span><span class="n">NAME</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">remote_path</span><span class="o">=&lt;</span><span class="n">MODEL_PATH</span><span class="o">&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Check out the SDK documentation for more on <a class="reference internal" href="#../../reference/python-sdk.html#rime_sdk.Project.register_model"><span class="xref myst">registering a model</span></a>.</p>
+</section>
+</section>
+</section>
+<section id="registering-a-dataset-using-the-sdk">
+<h2>Registering a dataset using the SDK<a class="headerlink" href="#registering-a-dataset-using-the-sdk" title="Permalink to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;data_file&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;PATH_TO_DATA_FILE&gt;&quot;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;is_fraud&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+<span class="n">dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&lt;DATASET_NAME&gt;&quot;</span><span class="p">,</span>
+    <span class="n">data_config</span><span class="o">=</span><span class="n">data_config</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>For more on dataset configuration, check out the <a class="reference internal" href="#../../testing_and_monitoring/preparing_your_models_and_datasets/dataset_source.html#data-configuration"><span class="xref myst">dataset configuration documentation</span></a>.</p>
+<p>Check out the SDK documentation for more on <a class="reference internal" href="#../../reference/python-sdk.html#rime_sdk.Project.register_dataset"><span class="xref myst">registering a dataset</span></a>.</p>
+</section>
+<section id="registering-a-prediction-set-using-the-sdk">
+<h2>Registering a prediction set using the SDK<a class="headerlink" href="#registering-a-prediction-set-using-the-sdk" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="upload_data.html" class="btn btn-neutral float-left" title="Uploading to Cloud Storage (Optional)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="data_source.html" class="btn btn-neutral float-right" title="Data Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

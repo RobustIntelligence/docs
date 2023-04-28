@@ -1,0 +1,83 @@
+# Configuring Data Profiling
+
+Robust Intelligence performs profiling of data in order to inform how its tests run. This involves inferring feature types,
+computing feature relationships, and restricting feature counts. Robust Intelligence uses safe default values and flags exceptions for each parameter,
+so all these parameters are optional.
+
+### Template
+Specify this configuration in the [AI Stress Testing Configuration](../validating_models/configuring_stress_tests.md) JSON file, under the `"data_profiling"` parameter of the `"profiling_config"` dictionary.
+```python
+{
+    #...,
+    "data_profiling": {
+        "num_quantiles": 1001,
+        "num_subsets": 10,
+        "column_type_info": {
+            "min_nunique_for_numeric": 10,
+            "numeric_violation_threshold": 0.01,
+            "categorical_violation_threshold": 0.05,
+            "min_unique_prop": 0.99,
+            "allow_float_unique": False,
+            "numeric_range_inference_threshold": 1.0,
+            "unseen_values_allowed_criteria": 0.25,
+        },
+        "feature_relationship_info": {
+            "num_feats_to_profile": 100,
+            "compute_feature_relationships": True,
+            "compute_numeric_feature_relationships": False,
+            "ignore_nan_for_feature_relationships": True,
+        },
+    }
+}
+```
+
+### Arguments
+
+- `num_quantiles`: int, *default* = 1001
+
+    The number of quantiles to store for numerical columns.
+
+- `num_subsets`: int, *default* =
+
+- `column_type_info`:
+
+    - `min_nunique_for_numeric`: int, *default* = 10
+
+        Minimum number of unique values in column for it to be considered a numeric column, otherwise the column is considered categorical.
+
+    - `numeric_violation_threshold`: float, *default* = 0.01,
+
+        Maximum fraction of violations when assigning numeric columns (not including missing values).
+
+    - `categorical_violation_threshold`: float, *default* = 0.05,
+
+        Maximum fraction of violations when assigning categorical subtypes (not including missing values).
+
+    - `min_unique_prop`: float, *default* = 0.99
+
+        If data has at least min_unique_prop proportion of unique values then classify as a column that must have unique values.
+
+    - `allow_float_unique`: bool, *default* = False
+
+        Allow float columns to be inferred as unique.
+    - `numeric_range_inference_threshold`:
+
+    - `unseen_values_allowed_criteria`:
+
+- `feature_relationship_info`:
+    - `num_feats_to_profile`: int or `null`, *default* = `null`
+
+        Number of features to profile for smart feature sampling.
+    - `compute_feature_relationships`: bool, *default* = True
+
+        Whether to compute feature relationships.
+    - `compute_numeric_feature_relationships`: bool, *default* = False
+
+        Whether to compute feature relationships for discretized numeric columns.
+    - `ignore_nan_for_feature_relationships`: bool, *default* = True
+
+        Whether to ignore nan when computing feature relationships.
+
+- `class_name`: List[str] or `null`, *default* = `null`
+
+    Optional list of label class names (in label order). For classification tasks only.

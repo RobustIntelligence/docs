@@ -1,0 +1,56 @@
+Deployment
+````````````````````````````````
+
+Once all prerequisites have been satisfied, you are ready to begin deploying Robust Intelligence.
+
+Cluster Creation
+===============================
+
+Based on your environment's constraints, your Solutions Architect (SA) will recommend deploying directly through `Helm`_ or with the automated `Terraform`_ modules (currently only for AWS, but support for other cloud providers is actively underway).
+
+To begin the deployment, please follow the instructions for your deployment methodology below.
+
+.. _Helm: https://helm.sh/
+
+.. _Terraform: https://www.terraform.io/
+
+.. tabs::
+
+   .. tab:: Helm
+
+      Deploying directly through `Helm`_ is the most flexible approach, but doing so requires you to take responsibility for provisioning resources (e.g., setting up an OIDC provider for your EKS cluster).
+
+      *To begin, follow the instructions for "Self-Hosted Installation" in the README here:* |helm_repo_url|
+
+      Once complete, **sign in to your Robust Intelligence domain** as an Administrator using the one-time credentials that you configured during deployment.
+      These credentials should be stored in the relevant Kubernetes secret (or Helm values), depending on your configuration.
+
+      You will be prompted to reset your password during the first sign-in.
+
+      Afterwards, proceed to **Data Integrations** below to begin configuring access from your Self-Hosted cluster to your data sources.
+
+      .. |helm_repo_url| raw:: html
+
+         <a href="https://github.com/RobustIntelligence/helm" target="_blank">Robust Intelligence Helm Repository</a>
+
+   .. tab:: Terraform (AWS only)
+
+      Deploying through the automated `Terraform`_ modules combines the steps of provisioning resources and installing Helm charts so that you need only execute one process to instantiate a Robust Intelligence cluster.
+
+      *To begin, follow the instructions in the README here:* |terraform_repo_url|
+
+      Once complete, **sign in to your Robust Intelligence domain** as an Administrator using the one-time credentials that you configured during deployment.
+      These credentials should be stored in the relevant secret in AWS Secrets Manager.
+
+      You will be prompted to reset your password during the first sign-in.
+
+      Afterwards, proceed to **Data Integrations** below to begin configuring access from your Self-Hosted cluster to your data sources.
+
+      .. |terraform_repo_url| raw:: html
+
+         <a href="https://github.com/RobustIntelligence/terraform" target="_blank">Robust Intelligence Terraform Repository</a>
+
+Data Integrations
+===============================
+
+Once your deployment is operational, your cluster should have a default Object Storage (e.g,. AWS S3 Bucket) data source configured. :ref:`Follow the instructions below to configure additional data sources for your team. <configuring_integrations>`

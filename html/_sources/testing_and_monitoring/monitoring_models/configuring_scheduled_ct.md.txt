@@ -1,0 +1,321 @@
+# Configuring your Scheduled Continuous Test
+
+Configuration of schedules for Continuous Tests is done through the SDK or the UI. This abstraction allows Robust Intelligence to 'pull' data into the platform at a regular cadence.
+
+See [Scheduled CT How-To-Guide](scheduling_ct_runs.rst) for instructions on how to activate and deactivate scheduling for Continuous Tests.
+
+## Arguments
+
+- **`location_type`**: string, ***required***
+
+    Type of location that data is housed in. Can be "data_collector", "delta_lake" or "custom_loader".
+
+- **`location_info`**: Dict or null, *default* = `null`, ***required for some location types***
+
+  Dict containing arguments needed to access the location provided in the `location_type` field.
+  While some types don't require extra arguments, others do.
+
+- **`data_params`**: Dict or null, *default* = `null`, ***required for some location types***
+
+  Dict containing arguments needed to process the data once loaded from the location eg. timestamp_col.
+
+- `reference_set_window`: Tuple[datetime, datetime] or null, *default* = `null`
+
+  Time range use to define the reference dataset for scheduled runs.
+- `rolling_window_duration`: datetime.timedelta or null, *default* = `null`
+
+  The length of the rolling window to use as a reference dataset in scheduled runs.
+
+## Templates for Data Location Types
+
+### Data Collector
+
+Data Collector does not take a location_info argument, since the service is internal.
+
+```python
+data_params_dict = {}
+# Arguments for activating a CT
+# Schedule with the Data Collector
+firewall.activate_ct_schedule(
+  data_stream_id = 1,
+)
+
+```
+
+### Delta Lake
+Delta Lake requires you to specify location details, since the service is external. See
+the section on [integrations](../../administration/configuring_workspaces/integrations/configuring_integrations.md) to configure
+Delta Lake.
+
+```python
+from datetime import timedelta
+firewall.activate_ct_scheduling(
+    data_location={
+        "integration_id": integration_id,
+        "location_args": {
+            "delta_lake_location": {
+                "table_name": "hive_metastore.default.fraud_data",
+            }
+        },
+        "location_params": {
+            "data_params": {
+                "label_col": "is_fraud",
+                "timestamp_col": "date",
+            }
+        },
+    },
+    prediction_location={
+        "integration_id": integration_id,
+        "location_args": {
+            "delta_lake_location": {
+                "table_name": "hive_metastore.default.fraud_preds",
+            },
+        },
+        "location_params": {"pred_params": {"pred_col": "is_fraud_preds"}},
+    },
+    rolling_window_size=timedelta(hours=1),
+)
+```
+
+### Custom Loader
+
+Our custom loader integration is designed to integrate with any location. This requires
+a `location_info` argument defining the path to your python data loading script and the
+name of the function that does the loading. For locations that require access
+credentials such as secrets or tokens, specify the value of those secrets as
+environment variables. The load function must accept as
+options the parameters `start_time`, `end_time`, which are integers that specify a
+timestamp as a number of seconds from the UNIX epoch. You will need to specify a data
+parameters dictionary with the `timestamp_col` parameter. You can also specify
+data parameters such as `pred_col`.
+
+```python
+from datetime import timedelta
+
+# Arguments for activating a CT
+# Schedule with Custom Loader
+firewall.activate_ct_schedule(
+    data_location={
+        "integration_id": "<YOUR_INTEGRATION_ID>",
+        "location_args": {
+            "custom_location": {
+                "path": "s3://bucket/path/to/loader.py",
+                "load_func_name": "custom_data_loader_func",
+                "loader_kwargs_json": "{\"some_param\": 5}",
+            },
+        },
+        "location_params": {
+            "data_params": {
+                "label_col": "is_fraud",
+                "timestamp_col": "date",
+            }
+        },
+    },
+    prediction_location={
+        "integration_id": "<YOUR_INTEGRATION_ID>",
+        "location_args": {
+            "custom_location": {
+                "path": "s3://bucket/path/to/loader.py",
+                "load_func_name": "custom_prediction_loader_func",
+                "loader_kwargs_json": "{\"some_param\": 5}",
+            },
+        },
+        "location_params": {"pred_params": {"pred_col": "is_fraud_preds"}},
+    },
+    rolling_window_size=timedelta(hours=1),
+)
+
+```
+
+## Templates for Configuring Data Params
+The dictionary below outlines all the keys you can specify for data params. If these are
+not provided, the defaults are taken from the reference dataset. For more info about the types
+see our [General Tabular Parameters Section](../preparing_your_models_and_datasets/data_source.md#general-parameters-for-single-data-info).
+```python
+data_params = {
+    "label_col": "",
+    "pred_col": "",
+    "timestamp_col": "",
+    "class_names": [],
+    "ranking_info": {
+        "query_col": "",
+        "nqueries": #,
+        "nrows_per_query": #,
+        "drop_query_id": True,
+    },
+    "embeddings": {
+        "name": "",
+        "cols": [],
+    },
+    "nrows": #,
+    "nrows_per_time_bin": #,
+    "sample": True,
+    "categorical_features": [],
+    "protected_features": [],
+    "features_not_in_model": [],
+    "text_features": [],
+    "image_features": [],
+    "intersections": {
+        "features": [],
+    },
+    "loading_kwargs": "",
+    "feature_type_path": "",
+    "pred_path": "",
+    "image_load_path": "",
+}
+
+```
+
+## Templates for Configuring Reference Sets
+When specifying a reference dataset you can choose to use the default value or change the dataset to a rolling window or specific time period.
+
+To choose the default value, you don't need to specify rolling_window_duration or reference_set_window:
+```python
+# Fill in the dictionaries
+# with the appropriate keys as below
+data_params_dict = {}
+location_info_dict= {}
+
+# General Arguments for Activating a Schedule
+# if using a default reference set
+firewall.activate_ct_schedule(
+    location_type="<YOUR_LOCATION_TYPE>",
+    location_info=location_info_dict,
+    data_params=data_params_dict,
+)
+
+```
+
+To choose a rolling window:
+```python
+from datetime import timedelta
+# Fill in the dictionaries
+# with the appropriate keys as below
+data_params_dict = {}
+location_info_dict= {}
+
+rolling_window_period = timedelta(days=1)
+# General Arguments for Activating a Schedule
+# if specifying a reference set with a rolling window
+firewall.activate_ct_schedule(
+    location_type="<YOUR_LOCATION_TYPE>",
+    location_info=location_info_dict,
+    rolling_window_duration=rolling_window_period,
+    data_params=data_params_dict,
+)
+
+```
+
+To choose a time period:
+```python
+from datetime import datetime
+# Fill in the dictionaries
+# with the appropriate keys as below
+data_params_dict = {}
+location_info_dict= {}
+
+reference_start_time = datetime(2022, 1, 3)
+reference_end_time = datetime(2021, 1, 3)
+reference_set_bin = (reference_start_time, reference_end_time)
+
+# General Arguments for Activating a Schedule
+# if specifying a reference set with a time period
+firewall.activate_ct_schedule(
+    location_type="<YOUR_LOCATION_TYPE>",
+    location_info=location_info_dict,
+    reference_set_window=reference_set_bin,
+    data_params=data_params_dict,
+)
+
+```
+
+## Specifying Continuous Testing Data Locations
+
+Each of the location types above can also be run independently through
+Continuous Testing configs. Additionally, the Delta Lake and Custom Loader
+types can be run in an offline setting as stress tests. To learn about how to specify the configurations, please visit
+the [Integrations](../integrating_mlops/data_integrations.rst) section.
+
+For Delta Lake configs specifically, you will need to specify a `data_source_name`
+when running a test. This is the name of the Delta Lake Data Source, which can be configured through the UI.
+
+For a continuous test, this might look like:
+```python
+import datetime
+import time
+ref_config = {
+    "connection_info":  {
+        "delta_lake": {
+            "table_name": "hive_metastore.default.fraud_ref_data_and_labels",
+            "time_col": "timestamp",
+            "start_time": datetime(year=2023, month=1, day=1),
+            "end_time": datetime(year=2024, month=1, day=1),
+        },
+    },
+    "data_params": {
+        "label_col": "label"
+    },
+}
+ref_dataset_id = project.register_dataset(
+    "<DATASET_NAME>",
+    ref_config,
+    integration_id="<YOUR_INTEGRATION_ID>",
+)
+
+```
+
+For a stress test, this might look like:
+
+```python
+from datetime import datetime
+ref_pred_config = {
+    "connection_info": {
+        "delta_lake": {
+            "table_name": "hive_metastore.default.fraud_ref_preds",
+            "time_col": "time",
+            "start_time": datetime(year=2023, month=1, day=1),
+            "end_time": datetime(year=2024, month=1, day=1),
+        }
+    },
+    "pred_params": {
+        "pred_col": "preds",
+    },
+}
+project.register_predictions(
+  dataset_id=ref_dataset_id,
+  model_id=model_id,
+  pred_config=ref_pred_config,
+  integration_id="<YOUR_INTEGRATION_ID>",
+)
+
+eval_data_location = {
+    "integration_id": "<YOUR_INTEGRATION_ID>",
+    "location_args": {
+        "delta_lake_location": {
+            "table_name": "hive_metastore.default.fraud_cur_inc_data_and_labels",
+            "time_col": "timestamp",
+        },
+    },
+    "location_params": {
+        "data_params": {
+            "label_col": "is_fraud",
+                "timestamp_col": "timestamp",
+            },
+        },
+}
+eval_preds_data_location = {
+    "integration_id": "<YOUR_INTEGRATION_ID>",
+    "location_args": {
+        "delta_lake_location": {
+            "table_name": "hive_metastore.default.fraud_cur_inc_preds",
+            "time_col": "timestamp",
+        },
+    },
+    "location_params": {
+        "data_params": {
+            "pred_col": "is_fraud_preds",
+        },
+    },
+}
+
+```

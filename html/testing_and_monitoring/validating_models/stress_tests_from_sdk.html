@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creating a new Stress Test &mdash; Robust Intelligence  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Creating a new Continuous Test" href="../monitoring_models/creating_new_continuous_test.html" />
+    <link rel="prev" title="Model Configuration" href="../preparing_your_models_and_datasets/model_source.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Robust Intelligence
+          </a>
+              <div class="version">
+                2.0.0-rc.14
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../creating_projects.html">Creating Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Creating a new Stress Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_stress_tests.html">Configuring Stress Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../querying_results.html">Querying Test Run Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notifications_and_alerts.html">Notifications and Alerts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_governance.html">Managing Model Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test_customization.html">Test Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integrating_mlops.html">Integrating with MLOps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/organization_administration.html">Organization Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/configuring_workspaces.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/security_and_compliance.html">Security and Compliance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Robust Intelligence</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../documentation_home/get_started.html">Get Started</a></li>
+          <li class="breadcrumb-item"><a href="../../documentation_home/notebooks.html">Tutorial Notebooks</a></li>
+      <li class="breadcrumb-item active">Creating a new Stress Test</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="creating-a-new-stress-test">
+<h1>Creating a new Stress Test<a class="headerlink" href="#creating-a-new-stress-test" title="Permalink to this heading"></a></h1>
+<p>This procedure presumes a model.py file is already registered to the RI Platform and that all commands are issued in a Python environment.</p>
+<ol class="arabic">
+<li><p>(When a suitable <a class="reference internal" href="../creating_projects/creating_a_project.html"><span class="std std-doc">project</span></a> does not already exist) Create a project
+using the following <a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">SDK command</span></a>.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;project&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;$DESC&quot;</span><span class="p">,</span> <span class="n">model_task</span><span class="o">=</span><span class="s1">&#39;MODEL_TASK_BINARY_CLASSIFICATION&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<blockquote>
+<div><p>You can also access an existing project using its project ID:</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">get_project</span><span class="p">(</span><span class="n">MY_PROJECT_ID</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<blockquote>
+<div><p>Replace <code class="docutils literal notranslate"><span class="pre">$DESC</span></code> with a description of the project or modeling TASK_NATURAL_LANGUAGE_INFERENCE</p>
+<ul class="simple">
+<li><p>MODEL_TASK_FILL_MASK</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Register a reference dataset.</p>
+<blockquote>
+<div><p>This example registers a dataset from a file.</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">reference_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="n">DATASET_NAME</span><span class="p">,</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;data_file&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">FILE_PATH</span><span class="p">}},</span>
+        <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="n">LABEL_COL</span><span class="p">},</span>
+    <span class="p">},</span>
+    <span class="n">integration_id</span><span class="o">=</span><span class="n">INTEGRATION_ID</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<blockquote>
+<div><p>The SDK returns the ID of the reference dataset.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Note that it is best to register a dataset once and then re-use the reference_id afterwards. The SDK commands <code class="docutils literal notranslate"><span class="pre">project.has_dataset</span></code> and <code class="docutils literal notranslate"><span class="pre">project.get_dataset</span></code> can be used to retrieve the dataset ID associated with a particular name.</p>
+</div></blockquote>
+</li>
+<li><p>Register an evaluation dataset.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">evaluation_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="n">DATASET_NAME</span><span class="p">,</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;data_file&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">FILE_PATH</span><span class="p">}},</span>
+        <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="n">LABEL_COL</span><span class="p">},</span>
+    <span class="p">},</span>
+    <span class="n">integration_id</span><span class="o">=</span><span class="n">INTEGRATION_ID</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<blockquote>
+<div><p>The SDK returns the ID of the evaluation dataset.</p>
+</div></blockquote>
+</li>
+<li><p>Register a model.</p>
+<blockquote>
+<div><p>This example registers a model from a <code class="docutils literal notranslate"><span class="pre">model.py</span></code> file. The
+<a class="reference internal" href="../preparing_your_models_and_datasets/defining_model_interface.html"><span class="std std-doc">Specify a Model</span></a> section has details on how to format <code class="docutils literal notranslate"><span class="pre">model.py</span></code> files.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">MODEL_NAME</span><span class="p">,</span>
+        <span class="n">remote_path</span><span class="o">=</span><span class="n">S3_PATH_TO_MODEL_PY</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<blockquote>
+<div><p>This example registers a Hugging Face model.</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span>       <span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span>
+           <span class="n">name</span><span class="o">=</span><span class="n">MODEL_NAME</span><span class="p">,</span>
+           <span class="n">model_config</span><span class="o">=</span><span class="p">{</span>
+               <span class="s2">&quot;hugging_face&quot;</span><span class="p">:</span> <span class="p">{</span>
+                   <span class="s2">&quot;model_uri&quot;</span><span class="p">:</span> <span class="n">URI</span><span class="p">,</span>
+                   <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                       <span class="s2">&quot;tokenizer_uri&quot;</span><span class="p">:</span> <span class="n">TOKENIZER_URI</span><span class="p">,</span>
+                       <span class="s2">&quot;class_map&quot;</span><span class="p">:</span> <span class="n">MAP</span><span class="p">,</span>
+                       <span class="s2">&quot;ignore_class_names&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                   <span class="p">},</span>
+               <span class="p">}</span>
+           <span class="p">},</span>
+       <span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<blockquote>
+<div><p>The SDK returns the model ID.</p>
+</div></blockquote>
+</li>
+<li><p>Create a <a class="reference internal" href="configuring_stress_tests.html"><span class="std std-doc">test run configuration</span></a> that uses the
+registered reference and evaluation datasets and the model, specifying a name and
+model task in addition to the IDs of the datasets and model registered earlier in
+this procedure.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="n">reference_id</span><span class="p">,</span> <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="n">evaluation_id</span><span class="p">},</span>
+    <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span><span class="p">,</span>
+    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;My Stress Test Run&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<blockquote>
+<div><p>You can also <a class="reference internal" href="../preparing_your_models_and_datasets/data_source.html"><span class="doc std std-doc">specify predictions</span></a> in the test run configuration.</p>
+</div></blockquote>
+</li>
+<li><p>Issue the following command to start the Stress Test, specifying the configuration
+created in the previous step and the unique ID of the project that contains the
+Stress Test.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
+    <span class="n">test_run_config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+<p><strong>Next Steps</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../querying_results.html"><span class="std std-doc">Querying Test Run Results</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../preparing_your_models_and_datasets/model_source.html" class="btn btn-neutral float-left" title="Model Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../monitoring_models/creating_new_continuous_test.html" class="btn btn-neutral float-right" title="Creating a new Continuous Test" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

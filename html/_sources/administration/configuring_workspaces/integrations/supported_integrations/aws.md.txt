@@ -1,0 +1,49 @@
+# AWS Data Stores
+
+Robust Intelligence supports loading data directly from AWS. Today, S3 is the only natively supported Cloud Store. Configure
+AWS Data Stores [using the UI.](../configuring_integrations.md)
+
+
+
+## Configuring AWS Data Stores Integration
+
+In order to configure the AWS Data Store Integration, there are 2 authentication methods:
+
+### Access Key Based Authentication
+
+### IAM Roles for Service Accounts Based Authentication
+
+## Using the AWS Integration
+
+After configuring the integration, use it to register datasets and models.
+
+```
+integration_id = "abe23******" #Choose the AWS Integraiton ID
+
+project.register_dataset(
+    name= f"ref_data_{dt}",
+    data_config= {
+        "connection_info": {
+            "data_file": {
+                "path": "s3://rime-blob-integration/data/fraud_ref.csv" #Enter the s3 file path
+            }
+        },
+        "data_params": {"label_col": "label"}
+    },
+    integration_id= integration_id
+)
+
+model_id = project.register_model(
+    name= f"model_{dt}",
+    model_config= {
+        "model_path": {
+            "path": "s3://rime-blob-integration/models/fraud_model.py" #Enter the s3 file path
+        }
+    },
+    integration_id= integration_id
+)
+```
+
+More information on defining
+the configurations is available in the
+[Data Configuration](../../../../testing_and_monitoring/preparing_your_models_and_datasets/data_source.md) section.

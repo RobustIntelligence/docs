@@ -1,0 +1,50 @@
+.. _deployment_faq:
+
+FAQ
+================================
+
+1 - Can the data plane be deployed on a *single machine* (e.g., for testing purposes)?
+   Yes --- if deploying the data plane on a single machine, refer to the **Local Agent** deployment guide below:
+
+   .. toctree::
+      :maxdepth: 1
+
+      local_agent.rst
+
+2 - Can Robust Intelligence be deployed entirely (i.e., *both planes*) in my cloud environment?
+   Yes --- if deploying *both* planes in your cloud environment, refer to the **Self-Hosted** deployment guide below.
+   Note that Self-Hosted deployments follow a longer release cadence than standard deployments (see note on upgrades below).
+
+   .. toctree::
+      :maxdepth: 1
+
+      self_hosted.rst
+
+3 - How are product upgrades executed?
+   Minor versions are released every six weeks, with routine patches implemented as necessary between releases.
+   Self-Hosted deployments are released every 12 weeks.
+
+   The upgrade process involves incrementing the versions of the Docker image(s), Helm chart(s), and Python SDK associated with your Robust Intelligence deployment.
+   Robust Intelligence will reach out beforehand to coordinate each upgrade.
+
+   API endpoints will be gracefully deprecated and released according to the API Versioning strategy (see below).
+
+   .. toctree::
+      :maxdepth: 1
+
+      ../reference/api_changelog.md
+
+4 - Which cloud providers does Robust Intelligence support?
+   Though we design our product to be cloud-agnostic, our official testing currently covers `AWS`_ (`EKS`_), `GCP`_ (`GKE`_), and `Azure`_ (`AKS`_).
+
+.. _AWS: https://aws.amazon.com/
+
+.. _EKS: https://aws.amazon.com/eks/
+
+.. _GCP: https://cloud.google.com/products/
+
+.. _GKE: https://cloud.google.com/kubernetes-engine/
+
+.. _Azure: https://azure.microsoft.com/en-us/
+
+.. _AKS: https://azure.microsoft.com/en-us/products/kubernetes-service/

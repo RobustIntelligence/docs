@@ -1,0 +1,75 @@
+# Registering your Model and Datasets
+
+Robust Intelligence provides registries to keep track of the models, datasets, and predictions files
+that have been uploaded to a Robust Intelligence instance. You can register these data objects from
+the RIME SDK or in the web UI during project configuration.
+
+Models are typically Python files in either `py` or `pkl` formats. Reference or
+evaluation datasets and prediction sets can be provided in several formats, most
+commonly CSV.
+
+Any of these data objects can be directly uploaded to the Robust Intelligence instance using the SDK
+or sourced from an [integration](../../administration/configuring_workspaces/integrations/configuring_integrations.md). Register the data
+object after upload.
+
+Once a model, dataset, or prediction set has been registered with a Robust Intelligence instance,
+that data object is available for selection in the appropriate drop-down selectors
+during project configuration for either a [Stress test](../validating_models/stress_tests_from_sdk.md) or a [Continuous test](../monitoring_models/creating_new_continuous_test.rst).
+
+## Registering a Model Using the SDK
+
+Assuming the Robust Intelligence SDK is installed and available for use and that the relevant data objects have been
+uploaded to the Robust Intelligence instance, you can register a model using the following procedure. See the Python SDK
+documentation for full details on the SDK calls used in this procedure.
+
+### Register your model with a model config or with a path to a model artifact.
+
+```python
+# Get your model config
+model_id = project.register_model(name=<NAME>, model_config={
+    "hugging_face": {
+        "model_uri": URI,
+        "kwargs": {
+            "tokenizer_uri": TOKENIZER_URI,
+            "class_map": MAP,
+            "ignore_class_names": True,
+        },
+    }
+})
+```
+
+For more on model configuration, check out the [model configuration documentation](../../testing_and_monitoring/preparing_your_models_and_datasets/model_source.html#model-configuration).
+
+#### Registering a model with a path to a model artifact:
+
+```python
+model_id = project.register_model_from_path(name=<NAME>, remote_path=<MODEL_PATH>)
+```
+
+Check out the SDK documentation for more on [registering a model](../../reference/python-sdk.html#rime_sdk.Project.register_model).
+
+## Registering a dataset using the SDK
+
+```python
+data_config = {
+    "connection_info": {
+        "data_file": {
+            "path": "<PATH_TO_DATA_FILE>"
+        }
+    },
+    "data_params": {
+        "label_col": "is_fraud",
+        "timestamp_col": "timestamp"
+    },
+}
+dataset_id = project.register_dataset(
+    name="<DATASET_NAME>",
+    data_config=data_config
+)
+```
+
+For more on dataset configuration, check out the [dataset configuration documentation](../../testing_and_monitoring/preparing_your_models_and_datasets/dataset_source.html#data-configuration).
+
+Check out the SDK documentation for more on [registering a dataset](../../reference/python-sdk.html#rime_sdk.Project.register_dataset).
+
+## Registering a prediction set using the SDK

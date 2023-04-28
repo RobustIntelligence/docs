@@ -1,0 +1,76 @@
+Configuring Stress Tests
+==========================
+
+Configuration of Stress Testing is done through a JSON configuration
+file that you pass as an argument to the Python SDK when running ST.
+
+### Template
+```python
+{
+  "run_name": "Run Name", (REQUIRED)
+  "data_info": {
+      "ref_dataset_id": "my_ref_dataset_id", (REQUIRED)
+      "eval_dataset_id": "my_eval_dataset_id" (REQUIRED)
+  },
+  "model_id": "my_model_id", (REQUIRED)
+  "profiling_config": {
+      "model_profiling": {...},
+      "data_profiling": {...}
+  },
+  "categories": [...],
+  "test_suite_config": {...},
+  "run_time_info": {...}
+}
+```
+
+### Arguments
+
+- **`run_name`**: string, ***required***
+
+    The name under which your run will appear in the UI.
+
+- **`data_info`**: Dict[string, string], ***required***
+
+   Specification of the `ref_dataset_id` and `eval_dataset_id` parameters, which determine the Reference and Evaluation Datasets to use, respectively. For documentation on how to register a Dataset and receive a Dataset ID, see [Robust Intelligence Registries](../preparing_your_models_and_datasets/registering_model_datasets.md)
+
+- **`model_id`**: string, ***required***
+
+    Configuration for the Model to use. For a reference on how to configure a
+    model, see [Robust Intelligence Registries](../preparing_your_models_and_datasets/registering_model_datasets.md). If you are not providing
+    a model, this should be `null`.
+
+- **`model_task`**: string, *default* = `"MODEL_TASK_BINARY_CLASSIFICATION"`
+
+    Specification of the model task. Currently accepted values are `"MODEL_TASK_REGRESSION"`, `"MODEL_TASK_BINARY_CLASSIFICATION"`, `"MODEL_TASK_MULTICLASS_CLASSIFICATION"`, `"MODEL_TASK_NAMED_ENTITY_RECOGNITION"`,`"MODEL_TASK_RANKING"`, `"MODEL_TASK_OBJECT_DETECTION"`, `"MODEL_TASK_NATURAL_LANGUAGE_INFERENCE"`, and `"MODEL_TASK_FILL_MASK"`.
+
+- **`profiling_config`**: ProfilingConfig, *default* = `ProfilingConfig()`
+
+    Specification of the configuration for profiling the model and data.
+    NOTE: this argument is optional. If it is not specified default parameters
+    will be used.
+
+  - **`model_profiling`**: ModelProfilingInfo, *default* = `ModelProfilingInfo()`
+
+      Optional. Specifies how to profile the model. [Model Profiling Configuration](../configuring_test_runs/configuring_model_profiling.md)
+      discusses how to configure model profiling. When this parameter is not specified, profiling uses
+      default parameters.
+
+  - **`data_profiling`**: DataProfilingInfo, *default* = `DataProfilingInfo()`
+
+      Optional. Specifies how to profile the data. [Data Profiling Configuration](../configuring_test_runs/configuring_data_profiling.md)
+      discusses how to configure data profiling. When this parameter is not specified, profiling uses
+      default parameters.
+
+  - **`categories`**: List[string], *default* = `["TEST_CATEGORY_TYPE_ADVERSARIAL", "TEST_CATEGORY_TYPE_MODEL_PERFORMANCE", "TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE", "TEST_CATEGORY_TYPE_TRANSFORMATIONS"]`
+
+      Optional. Specifies which test categories Robust Intelligence runs. [Categories Configuration](../configuring_test_runs/configuring_test_categories.md) discusses how to configure categories. When this parameter is not specified, the default test categories are used. The default categories for Stress Testing are `TEST_CATEGORY_TYPE_ADVERSARIAL`, `TEST_CATEGORY_TYPE_MODEL_PERFORMANCE`, `TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE`, and `TEST_CATEGORY_TYPE_TRANSFORMATIONS`.
+
+- **`test_suite_config`**: TestSuiteConfig, *default* = `TestSuiteConfig()`
+
+    Optional. Specifies which tests to run and what test parameters to use. [Test Suite Configuration](../configuring_test_runs/configuring_test_suite.md) discusses how to configure test settings.When this parameter is not specified, default tests run with default parameters.
+
+- **`run_time_info`**: RunTimeInfo, *default* = `RunTimeInfo()`
+
+    Optional. Specifies runtime-specific parameters associated with the Stress Test run.
+    See [Run Time Information](../configuring_test_runs/configuring_runtime.md) for details. When this argument is not specified, the
+    Stress Test run uses default parameters.

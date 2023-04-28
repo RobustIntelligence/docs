@@ -1,0 +1,64 @@
+.. _creating-project:
+
+Creating a Project
+===================
+
+A Robust Intelligence project collects test runs for a Stress Test or Continuous Test that relate to a shared machine learning task.
+Each model for the task is tested by an individual test run.
+
+You can use either the RIME SDK or the Robust Intelligence web UI to create a new project.
+
+.. tabs::
+
+   .. tab:: SDK
+
+      1.  Initialize the SDK client.
+
+            .. code-block:: python
+
+                from rime_sdk import Client
+                rime_client = Client("rime.<YOUR_ORG_NAME>.rbst.io", "<YOUR_API_TOKEN>")
+
+      2.  Create a project by calling the `create_project()` method, which returns a `Project` object. Model Task must be one of "MODEL_TASK_REGRESSION", "MODEL_TASK_BINARY_CLASSIFICATION", "MODEL_TASK_MULTICLASS_CLASSIFICATION","MODEL_TASK_NAMED_ENTITY_RECOGNITION", "MODEL_TASK_RANKING", "MODEL_TASK_OBJECT_DETECTION", "MODEL_TASK_NATURAL_LANGUAGE_INFERENCE", "MODEL_TASK_FILL_MASK".
+
+            .. code-block:: python
+
+                project = rime_client.create_project("<NAME>", "<DESCRIPTION>", "<MODEL TASK>")
+
+      3.  Retrieve the project ID by querying the `project_id` attribute of the `Project` object.
+
+            .. code-block:: python
+
+                project_id = project.project_id
+
+    For further documentation on using the SDK, see the :ref:`SDK documentation<rime-sdk>`.
+
+   .. tab:: Web UI
+
+      1.  Sign in to a Robust Intelligence instance.
+            >    The Workspaces page appears.
+      2.  Click a workspace.
+            >    The Workspace Overview page appears.
+      3.  Click *+ New Project*.
+            >   The Create New Project wizard appears.
+      4.  In *Name*, type a name for the new project.
+      5.  (Optional) In *Brief Description*, type a description of the new project.
+      6.  Select a project testing mode and click *Next*.
+            >   A new project can start in either the Stress or the Continuous testing mode.
+            >   The wizard advances to the next step.
+      7.  From the *Model Task* drop-down, select a task.
+            >   Enter a string in the *Search* field to filter the task list by that string.
+      8.  (Optional) In *Intended Use Case*, type a use case.
+      9.  (Optional) From the *Tags* drop-down, select a tag.
+            >   Enter a string in the field to create a new tag. Click the `x` in a selected tag to remove that tag.
+      10. (Optional) In *Ethical Considerations*, type any ethical considerations that apply.
+      11. Click *Next*.
+            >   The wizard advances to the next step.
+      12. (Optional) In *Sharing*, type the email addresses to share this project with.
+      13. (Optional) From the *View Access* drop-down, select a sharing privilege level.
+            >   The sharing privilege levels are *Edit Access*, *View Access*, and *No Access (Private)*.
+      14. Click *Create Project*.
+      15. Retrieve the project ID clicking the information icon next to the project name at the top of the page.
+            >   The project ID appears in a pop-up window under Project Details.
+
+      The new project appears in the Projects tab.

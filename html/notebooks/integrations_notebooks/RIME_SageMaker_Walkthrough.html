@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Robust Intelligence SageMaker Integration Walkthrough &mdash; Robust Intelligence  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Organization Administration" href="../../administration/organization_administration.html" />
+    <link rel="prev" title="Robust Intelligence 🤝 SageMaker" href="../../testing_and_monitoring/integrating_mlops/platform/sagemaker.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Robust Intelligence
+          </a>
+              <div class="version">
+                2.0.0-rc.14
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/querying_results.html">Querying Test Run Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/notifications_and_alerts.html">Notifications and Alerts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/model_governance.html">Managing Model Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/test_customization.html">Test Customization</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops.html">Integrating with MLOps</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops/data_integrations.html">Data Integrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops/model_integrations.html">Model Integrations</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops/platform_integrations.html">Platform Integrations</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops/platform/databricks.html">Robust Intelligence 🤝 Databricks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops/platform/datarobot.html">Robust Intelligence 🤝 DataRobot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RIME_HuggingFace_Integration_Walkthrough.html">Robust Intelligence 🤝 🤗 Integration Walkthrough</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops/platform/mlflow.html">Robust Intelligence 🤝 MLflow</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops/platform/sagemaker.html">Robust Intelligence 🤝 SageMaker</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Robust Intelligence SageMaker Integration Walkthrough</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/organization_administration.html">Organization Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/configuring_workspaces.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/security_and_compliance.html">Security and Compliance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Robust Intelligence</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../testing_and_monitoring/integrating_mlops.html">Integrating with MLOps</a></li>
+          <li class="breadcrumb-item"><a href="../../testing_and_monitoring/integrating_mlops/platform_integrations.html">Platform Integrations</a></li>
+          <li class="breadcrumb-item"><a href="../../testing_and_monitoring/integrating_mlops/platform/sagemaker.html">Robust Intelligence 🤝 SageMaker</a></li>
+      <li class="breadcrumb-item active">Robust Intelligence SageMaker Integration Walkthrough</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Robust-Intelligence-SageMaker-Integration-Walkthrough">
+<h1>Robust Intelligence SageMaker Integration Walkthrough<a class="headerlink" href="#Robust-Intelligence-SageMaker-Integration-Walkthrough" title="Permalink to this heading"></a></h1>
+<p>You are a data scientist at a Payment Processing Company. The data science team has been tasked with implementing a Fraud Detection service and monitoring how that model performs over time. The performance of this fraud detection model directly impacts the costs of the company. In order to ensure the data science team develops the best model and the performance of this model doesn’t degrade over time, the VP of Data Science purchases the RIME platform.</p>
+<p>Your team currently does all model development and serving on SageMaker’s intelligent cloud and already uses all of its MLOps tooling.</p>
+<p>In this Notebook Walkthrough, we will walkthrough 2 of RIME’s core products - <strong>AI Stress Testing</strong> and <strong>AI Firewall</strong> and demonstrate how they integrate with SageMaker’s core offerings to help you develop and maintain more robust AI models.</p>
+<ol class="arabic simple">
+<li><p><strong>AI Stress Testing</strong> is used in the model development stage. Using AI Stress Testing you can test the developed model. RIME goes beyond simply optimizing for basic model performance like accuracy and automatically discovers the model’s weaknesses.</p></li>
+<li><p><strong>AI Firewall</strong> is used after the model is deployed in production. Using AI Firewall, you can automate the monitoring, discovery and remediation of issues that occur post-deployment. Additionally it automatically flags, blocks, or imputes erroneous data in real-time.</p></li>
+</ol>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install rime-sdk &amp;&gt; /dev/null
+<span class="o">%</span><span class="k">pip</span> install catboost
+<span class="o">%</span><span class="k">pip</span> install ipython &amp;&gt; /dev/null
+<span class="o">%</span><span class="k">pip</span> install https://github.com/RobustIntelligence/ri-public-examples/archive/master.zip &amp;&gt; /dev/null
+<span class="o">%</span><span class="k">mkdir</span> -p model_training
+<span class="o">%</span><span class="k">mkdir</span> -p trained_models
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install dependencies and download example data</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">tarfile</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">tempfile</span> <span class="kn">import</span> <span class="n">TemporaryDirectory</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">gmtime</span><span class="p">,</span> <span class="n">strftime</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">boto3</span>
+<span class="kn">import</span> <span class="nn">botocore</span>
+<span class="kn">import</span> <span class="nn">joblib</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">sagemaker</span>
+<span class="kn">from</span> <span class="nn">ri_public_examples.download_files</span> <span class="kn">import</span> <span class="n">download_files</span>
+<span class="kn">from</span> <span class="nn">sagemaker</span> <span class="kn">import</span> <span class="n">ModelPackage</span><span class="p">,</span> <span class="n">get_execution_role</span><span class="p">,</span> <span class="n">image_uris</span>
+<span class="kn">from</span> <span class="nn">sagemaker.estimator</span> <span class="kn">import</span> <span class="n">Estimator</span>
+<span class="kn">from</span> <span class="nn">sagemaker.session</span> <span class="kn">import</span> <span class="n">ClientError</span><span class="p">,</span> <span class="n">Session</span>
+<span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">SimpleImputer</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span><span class="p">,</span> <span class="n">SGDClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="p">(</span><span class="n">accuracy_score</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span>
+                             <span class="n">recall_score</span><span class="p">,</span> <span class="n">roc_auc_score</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span><span class="p">,</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="s1">&#39;sklearn&#39;</span><span class="p">)</span>
+
+<span class="n">sagemaker_session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+<span class="n">sm_client</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">boto_session</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">&quot;sagemaker&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<section id="Define-S3-Helper-Functions-and-Prepare-Data">
+<h2>Define S3 Helper Functions and Prepare Data<a class="headerlink" href="#Define-S3-Helper-Functions-and-Prepare-Data" title="Permalink to this heading"></a></h2>
+<p>Before developing our model, we’ll define a few utility functions to help download and prepare the example dataset.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># S3 / File Utilities</span>
+<span class="k">def</span> <span class="nf">s3_file_exists</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">bucket</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="n">bucket</span> <span class="o">=</span> <span class="n">bucket</span> <span class="ow">or</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
+    <span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">resource</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">s3</span><span class="o">.</span><span class="n">Object</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">file</span><span class="p">))</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">botocore</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ClientError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;Error&#39;</span><span class="p">][</span><span class="s1">&#39;Code&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;404&quot;</span><span class="p">:</span>
+            <span class="c1"># The object does not exist.</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Something else has gone wrong.</span>
+            <span class="k">raise</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">def</span> <span class="nf">get_s3_path</span><span class="p">(</span><span class="n">relative_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">bucket</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the s3 bucket of a file.&quot;&quot;&quot;</span>
+    <span class="n">bucket</span> <span class="o">=</span> <span class="n">bucket</span> <span class="ow">or</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
+    <span class="n">bucket_uri</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;s3://</span><span class="si">{</span><span class="n">bucket</span><span class="si">}</span><span class="s2">/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">relative_path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">bucket_uri</span>
+
+<span class="k">def</span> <span class="nf">populate_s3_file</span><span class="p">(</span><span class="n">source_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">bucket</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Populate the s3 path.&quot;&quot;&quot;</span>
+    <span class="n">bucket_uri</span> <span class="o">=</span> <span class="n">get_s3_path</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">bucket</span><span class="p">)</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">source_uri</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">bucket_uri</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">download_s3_file</span><span class="p">(</span><span class="n">object_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">bucket</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Upload a local directory.&quot;&quot;&quot;</span>
+    <span class="n">bucket</span> <span class="o">=</span> <span class="n">bucket</span> <span class="ow">or</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
+    <span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">resource</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
+    <span class="n">bucket_obj</span> <span class="o">=</span> <span class="n">s3</span><span class="o">.</span><span class="n">Bucket</span><span class="p">(</span><span class="n">bucket</span><span class="p">)</span>
+    <span class="n">bucket_obj</span><span class="o">.</span><span class="n">download_file</span><span class="p">(</span><span class="n">object_name</span><span class="p">,</span> <span class="n">output_path</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">make_tarfile</span><span class="p">(</span><span class="n">output_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">source_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a tarfile of the specified source dir.&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">output_filename</span><span class="p">,</span> <span class="s2">&quot;w:gz&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tar</span><span class="p">:</span>
+        <span class="n">tar</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">source_dir</span><span class="p">,</span> <span class="n">arcname</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="n">source_dir</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">create_tarball_then_upload_to_s3</span><span class="p">(</span><span class="n">local_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">bucket</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert local directory to a *.tar.gz ball then upload to the specified bucket and target path.&quot;&quot;&quot;</span>
+    <span class="n">bucket</span> <span class="o">=</span> <span class="n">bucket</span> <span class="ow">or</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
+    <span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">resource</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
+    <span class="n">bucket_obj</span> <span class="o">=</span> <span class="n">s3</span><span class="o">.</span><span class="n">Bucket</span><span class="p">(</span><span class="n">bucket</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">tmp_dir</span><span class="p">:</span>
+        <span class="n">make_tarfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">,</span> <span class="s2">&quot;code.tar.gz&quot;</span><span class="p">),</span> <span class="n">local_dir</span><span class="p">)</span>
+        <span class="n">bucket_obj</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">,</span> <span class="s2">&quot;code.tar.gz&quot;</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">target_path</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;code.tar.gz&quot;</span><span class="p">))</span>
+
+
+<span class="c1"># Download the example data, then upload to S3 for training + evaluation</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;fraud_data&quot;</span><span class="p">)</span>
+<span class="n">path_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;ref&quot;</span><span class="p">:</span> <span class="n">data_dir</span> <span class="o">/</span> <span class="s2">&quot;ref.csv&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="n">data_dir</span> <span class="o">/</span> <span class="s2">&quot;eval.csv&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;incremental&quot;</span><span class="p">:</span> <span class="n">data_dir</span> <span class="o">/</span> <span class="s2">&quot;incremental.csv&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">download_files</span><span class="p">(</span><span class="s2">&quot;tabular/fraud&quot;</span><span class="p">,</span> <span class="s2">&quot;fraud_data&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ds_name</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">path_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">s3_file_exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="n">populate_s3_file</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;fraud_data/data/fraud_</span><span class="si">{</span><span class="n">ds_name</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">,</span> <span class="n">path</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Create-SageMaker-Training-Files">
+<h2>Create SageMaker Training Files<a class="headerlink" href="#Create-SageMaker-Training-Files" title="Permalink to this heading"></a></h2>
+<p>SageMaker <a class="reference external" href="https://sagemaker.readthedocs.io/en/stable/api/training/estimators.html">Estimators</a> require a training script. In our case, the image requires a couple additional dependencies, which will be uploaded in the tarball in a <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> model_training/requirements.txt
+<span class="n">catboost</span>
+<span class="n">sklearn</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> model_training/train.py
+<span class="sd">&quot;&quot;&quot;Training and serving file.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span> <span class="nn">joblib</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">catboost</span> <span class="kn">import</span> <span class="n">CatBoostClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">SimpleImputer</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span><span class="p">,</span> <span class="n">SGDClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="p">(</span><span class="n">accuracy_score</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span>
+                             <span class="n">recall_score</span><span class="p">,</span> <span class="n">roc_auc_score</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span><span class="p">,</span> <span class="n">StandardScaler</span>
+
+
+<span class="k">def</span> <span class="nf">extract_feature_types</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">label_col</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract categorical and continuous features (if not provided).&quot;&quot;&quot;</span>
+    <span class="n">dtypes</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dtypes</span>
+    <span class="n">dtypes</span> <span class="o">=</span> <span class="n">dtypes</span><span class="p">[</span><span class="o">~</span><span class="n">dtypes</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="n">label_col</span><span class="p">])]</span>
+    <span class="n">cat_features</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">dtypes</span><span class="p">[</span><span class="n">dtypes</span> <span class="o">==</span> <span class="nb">object</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">cont_features</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">dtypes</span><span class="p">[</span><span class="n">dtypes</span> <span class="o">!=</span> <span class="nb">object</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cat_features</span><span class="p">,</span> <span class="n">cont_features</span>
+
+<span class="k">def</span> <span class="nf">preprocess_df</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">cat_features</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">cont_features</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply string preprocessing to categorical features.&quot;&quot;&quot;</span>
+    <span class="n">cat_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">cat_features</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">cont_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">cont_features</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">cat_df</span><span class="p">,</span> <span class="n">cont_df</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_get_eval_metrics</span><span class="p">(</span><span class="n">actual</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">pred</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Metrics to for train and test to report in our training loop.&quot;&quot;&quot;</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">pred</span><span class="p">)</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">pred</span><span class="p">)</span>
+    <span class="n">prec</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">pred</span><span class="p">)</span>
+    <span class="n">recall</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">pred</span><span class="p">)</span>
+    <span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">pred</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">acc</span><span class="p">,</span> <span class="n">f1</span><span class="p">,</span> <span class="n">prec</span><span class="p">,</span> <span class="n">recall</span><span class="p">,</span> <span class="n">auc</span>
+
+
+<span class="k">def</span> <span class="nf">_get_pipeline</span><span class="p">(</span><span class="n">net_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cat_features</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Pipeline</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return pipeline for specified net_type.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">net_type</span> <span class="o">==</span> <span class="s2">&quot;catboost-classifier&quot;</span><span class="p">:</span>
+        <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span>
+            <span class="p">[(</span><span class="s2">&quot;clf&quot;</span><span class="p">,</span> <span class="n">CatBoostClassifier</span><span class="p">(</span><span class="n">cat_features</span><span class="o">=</span><span class="n">cat_features</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">))]</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">net_type</span> <span class="o">==</span> <span class="s2">&quot;sgd-classifier&quot;</span><span class="p">:</span>
+        <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;impute&quot;</span><span class="p">,</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">)),</span>
+                <span class="p">(</span><span class="s2">&quot;ohe&quot;</span><span class="p">,</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)),</span>
+                <span class="p">(</span><span class="s2">&quot;normalizer&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+                <span class="p">(</span><span class="s2">&quot;clf&quot;</span><span class="p">,</span> <span class="n">SGDClassifier</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s2">&quot;modified_huber&quot;</span><span class="p">)),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">net_type</span> <span class="o">==</span> <span class="s2">&quot;logistic-regression-classifier&quot;</span><span class="p">:</span>
+        <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;impute&quot;</span><span class="p">,</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">)),</span>
+                <span class="p">(</span><span class="s2">&quot;ohe&quot;</span><span class="p">,</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)),</span>
+                <span class="p">(</span><span class="s2">&quot;normalizer&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+                <span class="p">(</span><span class="s2">&quot;clf&quot;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">()),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported net_type </span><span class="si">{</span><span class="n">net_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pipeline</span>
+
+<span class="k">def</span> <span class="nf">train_net</span><span class="p">(</span>
+    <span class="n">net_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">train_x</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">train_y</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="n">test_x</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">test_y</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="n">label_col</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Pipeline</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Train specified pipeline.&quot;&quot;&quot;</span>
+    <span class="n">cat_features</span><span class="p">,</span> <span class="n">cont_features</span> <span class="o">=</span> <span class="n">extract_feature_types</span><span class="p">(</span><span class="n">train_x</span><span class="p">,</span> <span class="n">label_col</span><span class="p">)</span>
+    <span class="n">pipeline</span> <span class="o">=</span> <span class="n">_get_pipeline</span><span class="p">(</span><span class="n">net_type</span><span class="p">,</span> <span class="n">cat_features</span><span class="p">)</span>
+    <span class="n">_train_x</span> <span class="o">=</span> <span class="n">preprocess_df</span><span class="p">(</span><span class="n">train_x</span><span class="p">,</span> <span class="n">cat_features</span><span class="p">,</span> <span class="n">cont_features</span><span class="p">)</span>
+    <span class="n">pipeline</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">_train_x</span><span class="p">,</span> <span class="n">train_y</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+    <span class="n">_test_x</span> <span class="o">=</span> <span class="n">preprocess_df</span><span class="p">(</span><span class="n">test_x</span><span class="p">,</span> <span class="n">cat_features</span><span class="p">,</span> <span class="n">cont_features</span><span class="p">)</span>
+    <span class="n">preds</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">_test_x</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">acc</span><span class="p">,</span> <span class="n">f1</span><span class="p">,</span> <span class="n">prec</span><span class="p">,</span> <span class="n">recall</span><span class="p">,</span> <span class="n">auc</span><span class="p">)</span> <span class="o">=</span> <span class="n">_get_eval_metrics</span><span class="p">(</span><span class="n">test_y</span><span class="p">,</span> <span class="n">preds</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Performance metrics for net_type=</span><span class="si">{</span><span class="n">net_type</span><span class="si">}</span><span class="s2">: acc=</span><span class="si">{</span><span class="n">acc</span><span class="si">}</span><span class="s2">, f1=</span><span class="si">{</span><span class="n">f1</span><span class="si">}</span><span class="s2">, prec=</span><span class="si">{</span><span class="n">prec</span><span class="si">}</span><span class="s2">, recall=</span><span class="si">{</span><span class="n">recall</span><span class="si">}</span><span class="s2">, auc=</span><span class="si">{</span><span class="n">auc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pipeline</span>
+
+<span class="n">LABEL_COL</span> <span class="o">=</span> <span class="s2">&quot;label&quot;</span>
+<span class="n">PRED_COL</span> <span class="o">=</span> <span class="s2">&quot;pred&quot;</span>
+<span class="n">TIMESTAMP_COL</span> <span class="o">=</span> <span class="s2">&quot;timestamp&quot;</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># Pass in environment variables and hyperparameters</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--net-type&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SM_HP_NET_TYPE&quot;</span><span class="p">))</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--sm-model-dir&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SM_MODEL_DIR&quot;</span><span class="p">))</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--train&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SM_CHANNEL_TRAINING&quot;</span><span class="p">))</span>
+
+    <span class="n">args</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
+    <span class="n">training_dir</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">train</span>
+    <span class="c1"># Read in data</span>
+    <span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">training_dir</span> <span class="o">+</span> <span class="s2">&quot;/train.csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;preds&quot;</span><span class="p">])</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">training_dir</span> <span class="o">+</span> <span class="s2">&quot;/test.csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;preds&quot;</span><span class="p">])</span>
+
+    <span class="c1"># Get the data to prepare for training</span>
+    <span class="n">train_x</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">LABEL_COL</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">test_x</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">LABEL_COL</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">train_y</span> <span class="o">=</span> <span class="n">train</span><span class="p">[[</span><span class="n">LABEL_COL</span><span class="p">]]</span>
+    <span class="n">test_y</span> <span class="o">=</span> <span class="n">test</span><span class="p">[[</span><span class="n">LABEL_COL</span><span class="p">]]</span>
+    <span class="n">cat_features</span><span class="p">,</span> <span class="n">cont_features</span> <span class="o">=</span> <span class="n">extract_feature_types</span><span class="p">(</span><span class="n">train_x</span><span class="p">,</span> <span class="n">LABEL_COL</span><span class="p">)</span>
+    <span class="n">pipeline</span> <span class="o">=</span>  <span class="n">train_net</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">net_type</span><span class="p">,</span> <span class="n">train_x</span><span class="p">,</span> <span class="n">train_y</span><span class="p">,</span> <span class="n">test_x</span><span class="p">,</span> <span class="n">test_y</span><span class="p">,</span> <span class="n">LABEL_COL</span><span class="p">)</span>
+
+    <span class="c1"># Save model</span>
+    <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">sm_model_dir</span><span class="p">,</span> <span class="s2">&quot;model.joblib&quot;</span><span class="p">))</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">sm_model_dir</span><span class="p">,</span> <span class="s2">&quot;cat_features.pkl&quot;</span><span class="p">),</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">cat_features</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">sm_model_dir</span><span class="p">,</span> <span class="s2">&quot;cont_features.pkl&quot;</span><span class="p">),</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">cont_features</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+
+<span class="c1"># Model serving</span>
+<span class="k">def</span> <span class="nf">model_fn</span><span class="p">(</span><span class="n">model_dir</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Deserialize fitted model</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="s2">&quot;model.joblib&quot;</span><span class="p">))</span>
+    <span class="n">cat_features</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="s2">&quot;cat_features.pkl&quot;</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">))</span>
+    <span class="n">cont_features</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="s2">&quot;cont_features.pkl&quot;</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">model</span><span class="p">,</span> <span class="n">cat_features</span><span class="p">,</span> <span class="n">cont_features</span>
+
+
+<span class="k">def</span> <span class="nf">input_fn</span><span class="p">(</span><span class="n">request_body</span><span class="p">,</span> <span class="n">request_content_type</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    input_fn</span>
+<span class="sd">        request_body: The body of the request sent to the model.</span>
+<span class="sd">        request_content_type: (string) specifies the format/variable type of the request</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">request_content_type</span> <span class="o">==</span> <span class="s2">&quot;application/json&quot;</span><span class="p">:</span>
+        <span class="n">request_body</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">request_body</span><span class="p">)</span>
+        <span class="n">inpVar</span> <span class="o">=</span> <span class="n">request_body</span><span class="p">[</span><span class="s2">&quot;Input&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">inpVar</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;This model only supports application/json input&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">predict_fn</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">model_tuple</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    predict_fn</span>
+<span class="sd">        input_data: returned array from input_fn above</span>
+<span class="sd">        model (sklearn model) returned model loaded from model_fn above</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">cat_features</span><span class="p">,</span> <span class="n">cont_features</span> <span class="o">=</span> <span class="n">model_tuple</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">preprocess_df</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">cat_features</span><span class="p">,</span> <span class="n">cont_features</span><span class="p">)</span>
+    <span class="c1"># Index for binary classification</span>
+    <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">df</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">output_fn</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">content_type</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    output_fn</span>
+<span class="sd">        prediction: the returned value from predict_fn above</span>
+<span class="sd">        content_type: the content type the endpoint expects to be returned. Ex: JSON, string</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">respJSON</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Output&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">prediction</span><span class="p">)}</span>
+    <span class="k">return</span> <span class="n">respJSON</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Define-SageMaker-Training-and-Model-Registry-Helpers">
+<h2>Define SageMaker Training and Model Registry Helpers<a class="headerlink" href="#Define-SageMaker-Training-and-Model-Registry-Helpers" title="Permalink to this heading"></a></h2>
+<p>The following functions are unrelated to RIME. They specify how the SageMaker training jobs will be launched and provide functionality to register the resultant models in the model registry.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_estimator</span><span class="p">(</span><span class="n">net_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">training_instance_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ml.c4.xlarge&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Estimator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create an estimator of the specified net_type.&quot;&quot;&quot;</span>
+    <span class="n">role</span> <span class="o">=</span> <span class="n">get_execution_role</span><span class="p">()</span>
+    <span class="n">output_location</span> <span class="o">=</span> <span class="n">get_s3_path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sagemaker/models/</span><span class="si">{</span><span class="n">net_type</span><span class="si">}</span><span class="s2">/output&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Training artifacts will be uploaded to: </span><span class="si">{</span><span class="n">output_location</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">train_model_id</span><span class="p">,</span> <span class="n">train_model_version</span><span class="p">,</span> <span class="n">train_scope</span> <span class="o">=</span> <span class="s2">&quot;catboost-classification-model&quot;</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="s2">&quot;training&quot;</span>
+    <span class="n">train_source_uri</span> <span class="o">=</span> <span class="n">get_s3_path</span><span class="p">(</span><span class="s2">&quot;model_training_tar/code.tar.gz&quot;</span><span class="p">)</span>
+    <span class="n">train_image_uri</span> <span class="o">=</span> <span class="n">image_uris</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span>
+        <span class="n">region</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">framework</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">model_id</span><span class="o">=</span><span class="n">train_model_id</span><span class="p">,</span>
+        <span class="n">model_version</span><span class="o">=</span><span class="n">train_model_version</span><span class="p">,</span>
+        <span class="n">image_scope</span><span class="o">=</span><span class="n">train_scope</span><span class="p">,</span>
+        <span class="n">instance_type</span><span class="o">=</span><span class="n">training_instance_type</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="c1"># hyperparameters are passed to the training script as environment variables</span>
+    <span class="n">hyperparameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;NET_TYPE&#39;</span><span class="p">:</span> <span class="n">net_type</span><span class="p">}</span>
+    <span class="n">tabular_estimator</span> <span class="o">=</span> <span class="n">Estimator</span><span class="p">(</span>
+        <span class="n">role</span><span class="o">=</span><span class="n">role</span><span class="p">,</span>
+        <span class="n">image_uri</span><span class="o">=</span><span class="n">train_image_uri</span><span class="p">,</span>
+        <span class="n">source_dir</span><span class="o">=</span><span class="n">train_source_uri</span><span class="p">,</span>
+        <span class="n">entry_point</span><span class="o">=</span><span class="s2">&quot;train.py&quot;</span><span class="p">,</span>
+        <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">instance_type</span><span class="o">=</span><span class="n">training_instance_type</span><span class="p">,</span>
+        <span class="n">max_run</span><span class="o">=</span><span class="mi">360000</span><span class="p">,</span>
+        <span class="n">hyperparameters</span><span class="o">=</span><span class="n">hyperparameters</span><span class="p">,</span>
+        <span class="n">output_path</span><span class="o">=</span><span class="n">output_location</span><span class="p">,</span>
+        <span class="n">dependencies</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;code/requirements.txt&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">tabular_estimator</span>
+
+
+<span class="k">def</span> <span class="nf">create_model_package_group</span><span class="p">(</span><span class="n">model_package_group_name</span> <span class="o">=</span> <span class="s2">&quot;RIME-Fraud-Models&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create the model package group.&quot;&quot;&quot;</span>
+    <span class="n">model_package_group_input_dict</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s2">&quot;ModelPackageGroupName&quot;</span> <span class="p">:</span> <span class="n">model_package_group_name</span><span class="p">,</span>
+     <span class="s2">&quot;ModelPackageGroupDescription&quot;</span> <span class="p">:</span> <span class="s2">&quot;Group if fraud-detection models developed for the RIME-SageMaker example.&quot;</span>
+    <span class="p">}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">create_model_package_group_response</span> <span class="o">=</span> <span class="n">sm_client</span><span class="o">.</span><span class="n">describe_model_package_group</span><span class="p">(</span><span class="n">ModelPackageGroupName</span><span class="o">=</span><span class="s2">&quot;RIME-Fraud-Models&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">ClientError</span><span class="p">:</span>
+        <span class="n">create_model_package_group_response</span> <span class="o">=</span> <span class="n">sm_client</span><span class="o">.</span><span class="n">create_model_package_group</span><span class="p">(</span><span class="o">**</span><span class="n">model_package_group_input_dict</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">create_model_package_group_response</span><span class="p">[</span><span class="s1">&#39;ModelPackageGroupArn&#39;</span><span class="p">],</span> <span class="n">model_package_group_name</span>
+
+<span class="k">def</span> <span class="nf">register_model</span><span class="p">(</span><span class="n">net_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_tar_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">image_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_package_group_name</span><span class="p">:</span> <span class="nb">str</span> <span class="p">):</span>
+    <span class="c1"># Specify the model source</span>
+    <span class="n">modelpackage_inference_specification</span> <span class="o">=</span>  <span class="p">{</span>
+        <span class="s2">&quot;InferenceSpecification&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;Containers&quot;</span><span class="p">:</span> <span class="p">[</span>
+             <span class="p">{</span>
+                <span class="s2">&quot;Image&quot;</span><span class="p">:</span> <span class="n">image_uri</span><span class="p">,</span>
+                <span class="s2">&quot;ModelDataUrl&quot;</span><span class="p">:</span> <span class="n">model_tar_uri</span>
+             <span class="p">}</span>
+          <span class="p">],</span>
+          <span class="s2">&quot;SupportedContentTypes&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;text/csv&quot;</span> <span class="p">],</span>
+          <span class="s2">&quot;SupportedResponseMIMETypes&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;text/csv&quot;</span> <span class="p">],</span>
+       <span class="p">}</span>
+     <span class="p">}</span>
+
+    <span class="n">create_model_package_input_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;ModelPackageGroupName&quot;</span> <span class="p">:</span> <span class="n">model_package_group_name</span><span class="p">,</span>
+        <span class="s2">&quot;ModelPackageDescription&quot;</span> <span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Model of type </span><span class="si">{</span><span class="n">net_type</span><span class="si">}</span><span class="s2"> to detect fraud&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ModelApprovalStatus&quot;</span> <span class="p">:</span> <span class="s2">&quot;Approved&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;CustomerMetadataProperties&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;net_type&quot;</span><span class="p">:</span> <span class="n">net_type</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">create_model_package_input_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">modelpackage_inference_specification</span><span class="p">)</span>
+    <span class="n">create_model_package_response</span> <span class="o">=</span> <span class="n">sm_client</span><span class="o">.</span><span class="n">create_model_package</span><span class="p">(</span><span class="o">**</span><span class="n">create_model_package_input_dict</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">create_model_package_response</span><span class="p">[</span><span class="s2">&quot;ModelPackageArn&quot;</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">get_model_tar_uri</span><span class="p">(</span><span class="n">estimator</span><span class="p">:</span> <span class="n">Estimator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the trained model output.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">estimator</span><span class="o">.</span><span class="n">output_path</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">estimator</span><span class="o">.</span><span class="n">latest_training_job</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;/output/model.tar.gz&#39;</span>
+
+<span class="k">def</span> <span class="nf">train_net</span><span class="p">(</span><span class="n">net_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">logs</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Estimator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create and fit an estimator.&quot;&quot;&quot;</span>
+    <span class="n">tabular_estimator</span> <span class="o">=</span> <span class="n">create_estimator</span><span class="p">(</span><span class="n">net_type</span><span class="p">)</span>
+    <span class="n">training_dataset_s3_path</span> <span class="o">=</span> <span class="n">get_s3_path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+    <span class="n">timestamp_suffix</span> <span class="o">=</span> <span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">-%H-%M-%S&quot;</span><span class="p">,</span> <span class="n">gmtime</span><span class="p">())</span>
+    <span class="n">training_job_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">net_type</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">timestamp_suffix</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">tabular_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+            <span class="p">{</span><span class="s2">&quot;training&quot;</span><span class="p">:</span> <span class="n">training_dataset_s3_path</span><span class="p">},</span> <span class="n">logs</span><span class="o">=</span><span class="n">logs</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="n">wait</span><span class="p">,</span> <span class="n">job_name</span><span class="o">=</span><span class="n">training_job_name</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;net_type&#39;</span><span class="p">:</span> <span class="n">net_type</span><span class="p">,</span>
+            <span class="s1">&#39;estimator&#39;</span><span class="p">:</span> <span class="n">tabular_estimator</span><span class="p">,</span>
+        <span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">attach_to_estimator</span><span class="p">(</span><span class="n">estimator_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Attach to training job and update dict.&quot;&quot;&quot;</span>
+    <span class="n">tabular_estimator</span><span class="p">:</span> <span class="n">Estimator</span> <span class="o">=</span> <span class="n">estimator_dict</span><span class="p">[</span><span class="s1">&#39;estimator&#39;</span><span class="p">]</span>
+    <span class="n">net_type</span> <span class="o">=</span> <span class="n">estimator_dict</span><span class="p">[</span><span class="s1">&#39;net_type&#39;</span><span class="p">]</span>
+    <span class="n">tabular_estimator</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">tabular_estimator</span><span class="o">.</span><span class="n">latest_training_job</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">model_tar_uri</span> <span class="o">=</span> <span class="n">get_model_tar_uri</span><span class="p">(</span><span class="n">tabular_estimator</span><span class="p">)</span>
+    <span class="n">model_tar_file</span> <span class="o">=</span> <span class="n">model_tar_uri</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;s3://</span><span class="si">{</span><span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span><span class="si">}</span><span class="s2">/&quot;</span><span class="p">):]</span>
+    <span class="n">model_package_group_arn</span><span class="p">,</span> <span class="n">model_package_group_name</span> <span class="o">=</span> <span class="n">create_model_package_group</span><span class="p">()</span>
+    <span class="n">model_package_arn</span> <span class="o">=</span> <span class="n">register_model</span><span class="p">(</span><span class="n">net_type</span><span class="p">,</span> <span class="n">model_tar_uri</span><span class="p">,</span> <span class="n">tabular_estimator</span><span class="o">.</span><span class="n">image_uri</span><span class="p">,</span> <span class="n">model_package_group_name</span><span class="p">)</span>
+    <span class="n">estimator_dict</span><span class="p">[</span><span class="s1">&#39;model_tar_uri&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_tar_uri</span>
+    <span class="n">estimator_dict</span><span class="p">[</span><span class="s1">&#39;model_tar_file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_tar_file</span>
+    <span class="n">estimator_dict</span><span class="p">[</span><span class="s1">&#39;model_package_group_arn&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_package_group_arn</span>
+    <span class="n">estimator_dict</span><span class="p">[</span><span class="s1">&#39;model_package_arn&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_package_arn</span>
+    <span class="k">return</span> <span class="n">estimator_dict</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Train-Models">
+<h2>Train Models<a class="headerlink" href="#Train-Models" title="Permalink to this heading"></a></h2>
+<p>Now that we’ve uploaded our model and data to S3, we can asynchronously train models to be evaluated by RIME.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Upload the training scripts to be used by estimator</span>
+<span class="n">create_tarball_then_upload_to_s3</span><span class="p">(</span><span class="s1">&#39;model_training&#39;</span><span class="p">,</span> <span class="s1">&#39;model_training_tar&#39;</span><span class="p">)</span>
+
+<span class="n">net_types</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;catboost-classifier&quot;</span><span class="p">,</span> <span class="s2">&quot;sgd-classifier&quot;</span><span class="p">,</span> <span class="s2">&quot;logistic-regression-classifier&quot;</span><span class="p">]</span>
+<span class="n">estimators</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">net_type</span> <span class="ow">in</span> <span class="n">net_types</span><span class="p">:</span>
+    <span class="n">estimators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_net</span><span class="p">(</span><span class="n">net_type</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">data_dir</span><span class="p">),</span> <span class="n">logs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+<span class="c1"># Wait for training to complete, then update model registry</span>
+<span class="k">for</span> <span class="n">estimator_dict</span> <span class="ow">in</span> <span class="n">estimators</span><span class="p">:</span>
+    <span class="n">attach_to_estimator</span><span class="p">(</span><span class="n">estimator_dict</span><span class="p">)</span>
+
+<span class="c1"># Download trained models</span>
+<span class="k">for</span> <span class="n">estimator_dict</span> <span class="ow">in</span> <span class="n">estimators</span><span class="p">:</span>
+    <span class="n">training_job_name</span> <span class="o">=</span> <span class="n">estimator_dict</span><span class="p">[</span><span class="s1">&#39;estimator&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">latest_training_job</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;trained_models/</span><span class="si">{</span><span class="n">training_job_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">local_model_tar</span> <span class="o">=</span> <span class="s2">&quot;trained_models/&quot;</span> <span class="o">+</span> <span class="n">training_job_name</span> <span class="o">+</span> <span class="s1">&#39;/model.tar.gz&#39;</span>
+    <span class="n">download_s3_file</span><span class="p">(</span><span class="n">estimator_dict</span><span class="p">[</span><span class="s1">&#39;model_tar_file&#39;</span><span class="p">],</span> <span class="n">local_model_tar</span><span class="p">)</span>
+    <span class="n">estimator_dict</span><span class="p">[</span><span class="s1">&#39;local_model_tar&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">local_model_tar</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Connecting-to-RIME">
+<h2>Connecting to RIME<a class="headerlink" href="#Connecting-to-RIME" title="Permalink to this heading"></a></h2>
+<p>Now for the fun. To connect to RIME, create an API key and assign to the variable <code class="docutils literal notranslate"><span class="pre">API_KEY</span></code> below. You can generate a new API key within the ‘Workspace settings’ page on your RIME cluster’s website.</p>
+<p>Additionally, copy the url of the cluster (e.g., ‘<code class="docutils literal notranslate"><span class="pre">rime.&lt;cluster-name&gt;.rime.dev</span></code>’) to the <code class="docutils literal notranslate"><span class="pre">RIME_CLUSTER_URL</span></code> variable below.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">Firewall</span><span class="p">,</span> <span class="n">Job</span>
+
+<span class="n">RIME_CLUSTER_URL</span> <span class="o">=</span> <span class="s2">&quot;Add Cluster Here&quot;</span>
+<span class="n">API_KEY</span> <span class="o">=</span> <span class="s2">&quot;Add API Key Here&quot;</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">RIME_CLUSTER_URL</span><span class="p">,</span> <span class="n">API_KEY</span><span class="p">)</span>
+<span class="n">project</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;SageMaker Demo&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Creating an e2e RIME Demo using SageMaker.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define some constants to load / work with the data</span>
+<span class="c1"># There is no need to alter any of these</span>
+<span class="n">LABEL_COL</span> <span class="o">=</span> <span class="s2">&quot;label&quot;</span>
+<span class="n">PRED_COL</span> <span class="o">=</span> <span class="s2">&quot;pred&quot;</span>
+<span class="n">TIMESTAMP_COL</span> <span class="o">=</span> <span class="s2">&quot;timestamp&quot;</span>
+
+<span class="c1"># Get the data to prepare for training</span>
+<span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">get_s3_path</span><span class="p">(</span><span class="n">path_dict</span><span class="p">[</span><span class="s2">&quot;ref&quot;</span><span class="p">]))</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;preds&quot;</span><span class="p">])</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">get_s3_path</span><span class="p">(</span><span class="n">path_dict</span><span class="p">[</span><span class="s2">&quot;eval&quot;</span><span class="p">]))</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;preds&quot;</span><span class="p">])</span>
+<span class="n">train_x</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">LABEL_COL</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">test_x</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">LABEL_COL</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">train_y</span> <span class="o">=</span> <span class="n">train</span><span class="p">[[</span><span class="n">LABEL_COL</span><span class="p">]]</span>
+<span class="n">test_y</span> <span class="o">=</span> <span class="n">test</span><span class="p">[[</span><span class="n">LABEL_COL</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Prepare-RIME-Stress-Testing-Helper-Functions">
+<h2>Prepare RIME Stress Testing Helper Functions<a class="headerlink" href="#Prepare-RIME-Stress-Testing-Helper-Functions" title="Permalink to this heading"></a></h2>
+<p>Below, define the <code class="docutils literal notranslate"><span class="pre">fraud_model.py</span></code> file to be uploaded to the RIME testing cluster. Additionally, create helper functions to help: - Upload the model directory to the cluster - Upload a dataset to the cluster</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> fraud_model.py
+<span class="sd">&quot;&quot;&quot;This is an example model.py file.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">joblib</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">model_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;model_extras&quot;</span>
+<span class="k">if</span> <span class="n">model_dir</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="n">cat_features</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">model_dir</span> <span class="o">/</span> <span class="s2">&quot;cat_features.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">))</span>
+    <span class="n">cont_features</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">model_dir</span> <span class="o">/</span> <span class="s2">&quot;cont_features.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">))</span>
+    <span class="n">pipeline</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_dir</span> <span class="o">/</span> <span class="s2">&quot;model.joblib&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;model files do not exist in desired format&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">preprocess_df</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply string preprocessing to categorical features.&quot;&quot;&quot;</span>
+    <span class="n">cat_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">cat_features</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">cont_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">cont_features</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">cat_df</span><span class="p">,</span> <span class="n">cont_df</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">predict_df</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return predicted probabilities.&quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">preprocess_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="c1"># Index for binary classification</span>
+    <span class="k">return</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">df</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The following utilities help launch stress testing jobs</span>
+<span class="c1"># and log test results</span>
+
+<span class="k">def</span> <span class="nf">get_model_file_contents</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the example `fraud_model.py` contents.&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;fraud_model.py&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">upload_model_from_tarfile</span><span class="p">(</span>
+    <span class="n">local_model_tar</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">net_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Upload trained model to RIME cluster and return the resultant model directory path.&quot;&quot;&quot;</span>
+    <span class="n">upload_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;sagemaker_demo_</span><span class="si">{</span><span class="n">net_type</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+        <span class="n">_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="n">net_type</span>
+        <span class="n">extras_dir</span> <span class="o">=</span> <span class="n">_dir</span> <span class="o">/</span> <span class="s2">&quot;model_extras&quot;</span>
+        <span class="n">extras_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">local_model_tar</span><span class="p">,</span> <span class="s2">&quot;r:gz&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tar</span><span class="p">:</span>
+            <span class="n">tar</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">_dir</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;**/*&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">extras_dir</span> <span class="o">/</span> <span class="n">file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="s2">&quot;fraud_model.py&quot;</span><span class="p">,</span>  <span class="n">_dir</span> <span class="o">/</span> <span class="s2">&quot;model.py&quot;</span><span class="p">)</span>
+        <span class="n">uploaded_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">_dir</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">uploaded_path</span> <span class="o">+</span> <span class="s2">&quot;/model.py&quot;</span>
+
+<span class="k">def</span> <span class="nf">predict_from_tarfile</span><span class="p">(</span>
+    <span class="n">local_model_tar</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return predictions for model in the downloaded tarfile.&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">local_model_tar</span><span class="p">,</span> <span class="s2">&quot;r:gz&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tar</span><span class="p">:</span>
+            <span class="n">tar</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="n">model_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="c1"># / &quot;model&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">model_dir</span> <span class="o">/</span> <span class="s2">&quot;cat_features.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">cat_features</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">model_dir</span> <span class="o">/</span> <span class="s2">&quot;cont_features.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">cont_features</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">pipeline</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_dir</span> <span class="o">/</span> <span class="s2">&quot;model.joblib&quot;</span><span class="p">)</span>
+    <span class="n">cat_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">cat_features</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">cont_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">cont_features</span><span class="p">]</span>
+    <span class="n">preprocessed_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">cat_df</span><span class="p">,</span> <span class="n">cont_df</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">preprocessed_df</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">upload_dataset_file</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">split</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Upload dataframe to RIME cluster.&quot;&quot;&quot;</span>
+    <span class="n">upload_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;sagemaker_walkthrough_</span><span class="si">{</span><span class="n">split</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;data.csv&quot;</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">uploaded_name</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">resolve</span><span class="p">(),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">uploaded_name</span>
+
+
+<span class="k">def</span> <span class="nf">add_preds_and_upload_dataset_file</span><span class="p">(</span>
+    <span class="n">local_model_tar</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">net_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">pred_col</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">split</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Make predictions and upload.&quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">pred_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">predict_from_tarfile</span><span class="p">(</span><span class="n">local_model_tar</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+    <span class="n">dataset_split</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">net_type</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">split</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="n">upload_dataset_file</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">dataset_split</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">join_rime_stress_tests</span><span class="p">(</span>
+    <span class="n">stress_test_job</span><span class="p">:</span> <span class="n">Job</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initiate a RIME test run.&quot;&quot;&quot;</span>
+    <span class="n">stress_test_job_run</span> <span class="o">=</span> <span class="n">stress_test_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">poll_rate_sec</span><span class="o">=</span><span class="mi">15</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">stress_test_job_run</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;JOB_STATUS_SUCCEEDED&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">stress_test_job_run</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Stress test job run failing. </span><span class="si">{</span><span class="n">stress_test_job_run</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">evaluate_model</span><span class="p">(</span><span class="n">net_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">local_model_tar</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">test</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Job</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Train and Evaluate a Classifier.&quot;&quot;&quot;</span>
+    <span class="n">test_config</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">net_type</span><span class="si">}</span><span class="s2"> SageMaker Experiment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="n">LABEL_COL</span><span class="p">,</span>
+            <span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="n">PRED_COL</span><span class="p">,</span>
+            <span class="s2">&quot;ref_path&quot;</span><span class="p">:</span> <span class="n">add_preds_and_upload_dataset_file</span><span class="p">(</span><span class="n">local_model_tar</span><span class="p">,</span> <span class="n">net_type</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">PRED_COL</span><span class="p">,</span> <span class="s2">&quot;ref&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;eval_path&quot;</span><span class="p">:</span> <span class="n">add_preds_and_upload_dataset_file</span><span class="p">(</span><span class="n">local_model_tar</span><span class="p">,</span> <span class="n">net_type</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">PRED_COL</span><span class="p">,</span> <span class="s2">&quot;eval&quot;</span><span class="p">)</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;model_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">upload_model_from_tarfile</span><span class="p">(</span><span class="n">local_model_tar</span><span class="p">,</span> <span class="n">net_type</span><span class="p">,</span> <span class="n">client</span><span class="p">)</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;model_task&quot;</span><span class="p">:</span> <span class="s2">&quot;Binary Classification&quot;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
+            <span class="n">test_config</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Train-and-Evaluate-Models">
+<h2>Train and Evaluate Models<a class="headerlink" href="#Train-and-Evaluate-Models" title="Permalink to this heading"></a></h2>
+<p>After uploading the datasets to the testing cluster, train models and start stress test jobs to compare behavior.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Launch Stress Test Jobs</span>
+<span class="k">for</span> <span class="n">estimator_dict</span> <span class="ow">in</span> <span class="n">estimators</span><span class="p">:</span>
+    <span class="n">net_type</span><span class="p">,</span> <span class="n">local_model_tar</span> <span class="o">=</span> <span class="n">estimator_dict</span><span class="p">[</span><span class="s1">&#39;net_type&#39;</span><span class="p">],</span> <span class="n">estimator_dict</span><span class="p">[</span><span class="s1">&#39;local_model_tar&#39;</span><span class="p">]</span>
+    <span class="n">estimator_dict</span><span class="p">[</span><span class="s1">&#39;stress_job&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">evaluate_model</span><span class="p">(</span><span class="n">net_type</span><span class="p">,</span> <span class="n">local_model_tar</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="o">=</span><span class="n">test</span><span class="p">)</span>
+
+<span class="c1"># Wait for jobs to finish</span>
+<span class="k">for</span> <span class="n">estimator_dict</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">estimators</span><span class="p">):</span>
+    <span class="n">estimator_dict</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">join_rime_stress_tests</span><span class="p">(</span><span class="n">estimator_dict</span><span class="p">[</span><span class="s2">&quot;stress_job&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Reviewing-the-Stress-Tests">
+<h2>Reviewing the Stress Tests<a class="headerlink" href="#Reviewing-the-Stress-Tests" title="Permalink to this heading"></a></h2>
+<p>Stress tests are grouped into categories that measure various aspects of model robustness (model behavior, distribution drift, abnormal input, transformations, adversarial attacks, data cleanliness). Suggestions to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information.</p>
+<p>You can view the detailed results in the UI by running the below cell and redirecting to the generated links. This page shows granular results for a given AI Stress Test run.</p>
+<p>Additionally, you can compare the trained models by navigating to the project page and clicking the “Compare” button.</p>
+<p>We have also added the RIME metrics to the MLFlow experiments. To view, click the “Experiment” icon at the top right of this notebook or navigate to the appropriate experiments section using the command bar on the left.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estimators</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;stress_job&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estimators</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;stress_job&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estimators</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;stress_job&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Deploy-to-Production-and-Create-the-AI-Firewall">
+<h2><strong>Deploy to Production and Create the AI Firewall</strong><a class="headerlink" href="#Deploy-to-Production-and-Create-the-AI-Firewall" title="Permalink to this heading"></a></h2>
+<p>Suppose that we wish select the most “performant” model based on the number of RIME tests it passes. We will select and deploy the associated model wrapped with the AI Firewall. The AI Firewall operates on both a datapoint and batch level. It automatically protects your model in real-time from “bad” incoming data and also alerts on statistically significant distributional drift.</p>
+<p>In this scenario, the data scientist is short on time and decided to deploy the existing model to production. The data scientist also creates a firewall to monitor the model and data behavior. The AI Firewall is automatically configured based on the failures identified by AI Stress testing to protect the tested model in Production.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">select_model_with_highest_pass_rate</span><span class="p">(</span><span class="n">estimators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Select model naively using overall test pass rate.&quot;&quot;&quot;</span>
+    <span class="n">pass_rates</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">run_result</span> <span class="ow">in</span> <span class="n">estimators</span><span class="p">:</span>
+        <span class="n">result_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">run_result</span><span class="p">[</span><span class="s1">&#39;stress_job&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span><span class="o">.</span><span class="n">get_result_df</span><span class="p">()</span>
+        <span class="n">pass_rate</span> <span class="o">=</span> <span class="n">result_df</span><span class="p">[</span><span class="s1">&#39;metrics.summary_counts.pass&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">result_df</span><span class="p">[</span><span class="s1">&#39;metrics.summary_counts.total&#39;</span><span class="p">]</span>
+        <span class="n">pass_rates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pass_rate</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">estimators</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">pass_rates</span><span class="p">)]</span>
+
+<span class="k">def</span> <span class="nf">deploy_model</span><span class="p">(</span><span class="n">model_package_arn</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">role</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">instance_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ml.t2.medium&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Deploy a model from the registry.&quot;&quot;&quot;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">ModelPackage</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="n">role</span><span class="p">,</span>
+                         <span class="n">model_package_arn</span><span class="o">=</span><span class="n">model_package_arn</span><span class="p">,</span>
+                         <span class="n">sagemaker_session</span><span class="o">=</span><span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">())</span>
+    <span class="n">endpoint_name</span> <span class="o">=</span> <span class="s2">&quot;RIME-fraud-inference-pipeline-endpoint&quot;</span>
+    <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span><span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span> <span class="n">endpoint_name</span><span class="o">=</span><span class="n">endpoint_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Next, the data scientist creates the RIME Firewall to connect with the production endpoint.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_model_run</span> <span class="o">=</span> <span class="n">select_model_with_highest_pass_rate</span><span class="p">(</span><span class="n">estimators</span><span class="p">)</span>
+<span class="n">production_model</span> <span class="o">=</span> <span class="n">best_model_run</span><span class="p">[</span><span class="s2">&quot;local_model_tar&quot;</span><span class="p">]</span>
+<span class="n">test_run</span> <span class="o">=</span> <span class="n">best_model_run</span><span class="p">[</span><span class="s1">&#39;stress_job&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_model_run</span> <span class="o">=</span> <span class="n">select_model_with_highest_pass_rate</span><span class="p">(</span><span class="n">estimators</span><span class="p">)</span>
+<span class="n">production_model</span> <span class="o">=</span> <span class="n">best_model_run</span><span class="p">[</span><span class="s2">&quot;local_model_tar&quot;</span><span class="p">]</span>
+<span class="n">test_run</span> <span class="o">=</span> <span class="n">best_model_run</span><span class="p">[</span><span class="s1">&#39;stress_job&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">firewall</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_firewall</span><span class="p">(</span><span class="s2">&quot;SageMaker Firewall&quot;</span><span class="p">,</span> <span class="n">bin_size</span><span class="o">=</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">test_run_id</span><span class="o">=</span><span class="n">test_run</span><span class="o">.</span><span class="n">test_run_id</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Updating to target model from stress test </span><span class="si">{</span><span class="n">test_run</span><span class="o">.</span><span class="n">test_run_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">firewall</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">get_firewall</span><span class="p">()</span>
+    <span class="n">firewall</span><span class="o">.</span><span class="n">update_firewall_stress_test_run</span><span class="p">(</span><span class="n">test_run</span><span class="o">.</span><span class="n">test_run_id</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Deploy the model</span>
+<span class="c1"># SageMaker deployment is frequently too slow (&gt;1.5 hrs)</span>
+<span class="c1"># So we will continue to use the model files</span>
+<span class="n">do_deployment</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="k">if</span> <span class="n">do_deployment</span><span class="p">:</span>
+    <span class="n">role</span> <span class="o">=</span> <span class="n">get_execution_role</span><span class="p">()</span>
+    <span class="n">instance_type</span> <span class="o">=</span> <span class="s1">&#39;ml.t2.medium&#39;</span>
+    <span class="n">production_model</span> <span class="o">=</span> <span class="n">deploy_model</span><span class="p">(</span><span class="n">best_model_run</span><span class="p">[</span><span class="s1">&#39;model_package_arn&#39;</span><span class="p">],</span> <span class="n">role</span><span class="p">,</span> <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>## Uploading a Batch of Production Data &amp; Model Predictions to Firewall</p>
+<p>The fraud detection model has been in production for 30 days. Production data and model predictions have been collected and stored for the past 30 days. Now, we will use Firewall to track how the model performed across the last 30 days.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_firewall_on_bin</span><span class="p">(</span><span class="n">production_model_tar</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">firewall</span><span class="p">:</span> <span class="n">Firewall</span><span class="p">,</span> <span class="n">group_split</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Job</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the firewall on a bin of data.&quot;&quot;&quot;</span>
+    <span class="c1"># A real deployment would already have predictions associated with the data, but we will</span>
+    <span class="c1"># make the predictions here for the sake of convenience</span>
+    <span class="n">incremental_config</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;eval_path&quot;</span><span class="p">:</span> <span class="n">add_preds_and_upload_dataset_file</span><span class="p">(</span><span class="n">production_model_tar</span><span class="p">,</span> <span class="s2">&quot;prod&quot;</span><span class="p">,</span>  <span class="n">df</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">PRED_COL</span><span class="p">,</span> <span class="n">group_split</span><span class="p">),</span>
+        <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span>
+    <span class="p">}</span>
+    <span class="n">ct_job</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">test_run_config</span><span class="o">=</span><span class="n">incremental_config</span><span class="p">,</span> <span class="n">disable_firewall_events</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">poll_rate_sec</span><span class="o">=</span><span class="mf">15.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ct_job</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load production data</span>
+<span class="n">incremental_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">get_s3_path</span><span class="p">(</span><span class="n">path_dict</span><span class="p">[</span><span class="s2">&quot;incremental&quot;</span><span class="p">]))</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;preds&quot;</span><span class="p">])</span>
+
+<span class="c1"># Group by week to simulate running weekly batches</span>
+<span class="n">timestamps_dt</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">(</span><span class="n">incremental_df</span><span class="p">[</span><span class="n">TIMESTAMP_COL</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">incremental_df</span><span class="p">[</span><span class="n">TIMESTAMP_COL</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">timestamps_dt</span><span class="o">.</span><span class="n">to_period</span><span class="p">(</span><span class="s2">&quot;W-SUN&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_timestamp</span><span class="p">()):</span>
+    <span class="n">group_split</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running batch for week </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">batch_df</span> <span class="o">=</span> <span class="n">incremental_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">group</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+    <span class="n">job</span> <span class="o">=</span> <span class="n">run_firewall_on_bin</span><span class="p">(</span><span class="n">production_model</span><span class="p">,</span> <span class="n">batch_df</span><span class="p">,</span> <span class="n">firewall</span><span class="p">,</span> <span class="n">group_split</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Firewall-CT-Results">
+<h2><strong>Firewall CT Results</strong><a class="headerlink" href="#Firewall-CT-Results" title="Permalink to this heading"></a></h2>
+<p>The AI Firewall’s Continuous Tests operate at the batch level and provide a mechanism to monitor the health of ML deployments in production. They allow the user to understand when errors begin to occur and surface the underlying drivers of such errors.</p>
+<p>You can explore the results in the UI by running the below cell and redirecting to the generated link.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clean up any and all deployments if performed</span>
+<span class="n">endpoint_prefix</span> <span class="o">=</span> <span class="s2">&quot;RIME-fraud-inference-&quot;</span>
+<span class="n">sm_client</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">boto_session</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">&quot;sagemaker&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">endpoint</span> <span class="ow">in</span> <span class="n">sm_client</span><span class="o">.</span><span class="n">list_endpoints</span><span class="p">()[</span><span class="s1">&#39;Endpoints&#39;</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">endpoint</span><span class="p">[</span><span class="s1">&#39;EndpointName&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">endpoint_prefix</span><span class="p">):</span>
+        <span class="n">sm_client</span><span class="o">.</span><span class="n">delete_endpoint</span><span class="p">(</span><span class="n">EndpointName</span><span class="o">=</span><span class="n">endpoint</span><span class="p">[</span><span class="s1">&#39;EndpointName&#39;</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">endpoint_config</span> <span class="ow">in</span> <span class="n">sm_client</span><span class="o">.</span><span class="n">list_endpoint_configs</span><span class="p">()[</span><span class="s1">&#39;EndpointConfigs&#39;</span><span class="p">]:</span>
+    <span class="n">sm_client</span><span class="o">.</span><span class="n">delete_endpoint_config</span><span class="p">(</span><span class="n">EndpointConfigName</span><span class="o">=</span><span class="n">endpoint_config</span><span class="p">[</span><span class="s1">&#39;EndpointConfigName&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../../testing_and_monitoring/integrating_mlops/platform/sagemaker.html" class="btn btn-neutral float-left" title="Robust Intelligence 🤝 SageMaker" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../administration/organization_administration.html" class="btn btn-neutral float-right" title="Organization Administration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

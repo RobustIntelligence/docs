@@ -1,0 +1,64 @@
+# Overview
+
+## Architecture
+
+In this configuration, **both planes** are hosted in your organization’s private cloud.
+
+<img src="../../_static/diagrams/self_hosted.png" style="max-height:500px" />
+
+The Self-Hosted configuration provides complete control over the Robust Intelligence cluster's behavior, including routing rule configuration, storage management, and compute resource optimization for model testing jobs.
+
+Note that services may behave differently if alternative configurations are used.
+
+## System Requirements
+All resource specifications are approximate and will likely vary with your specific use case.
+- Virtual Network x 1
+  - Private Subnet x 2 (recommended at least 50 IP addresses per subnet)
+  - Public Subnet x 2 (recommended at least 10 IP addresses per subnet)
+    - (can optionally be left private)
+- Object Storage x 1
+    - (can add more as needed)
+- Virtual Machine x 6* (recommended with auto-scaling for up to at least 20 instances)
+  - 5 for **control plane** services
+    - recommended at least 16 GiB RAM (such as the AWS [`t3.xlarge` template](https://aws.amazon.com/ec2/instance-types/)) in an autoscaling Group (5 minimum, 5 desired, 10 maximum)
+  - 1 for **data plane** services
+    - recommended at least 64 GiB RAM (such as the AWS [`m4.4xlarge` template](https://aws.amazon.com/ec2/instance-types/)) in an autoscaling Group (1 minimum, 1 desired, 10 maximum)
+- Network Load Balancer* x 1
+  - (NOTE: this is auto-provisioned by the Ingress LoadBalancer service)
+- TLS Certificate x 1
+- Domain x 1
+
+## External Dependencies
+Connectivity to these external dependencies is needed for various components, such as DNS services for routing client connections to load balancer endpoint(s).
+
+### Cloud Provider Services
+- Kubernetes Services
+  - [AWS EKS](https://aws.amazon.com/eks/)
+  - [GCP GKE](https://cloud.google.com/kubernetes-engine/)
+  - [Azure AKS](https://azure.microsoft.com/en-us/products/kubernetes-service/)
+- Object Storage
+  - Default storage medium for datasets and model artifacts
+- IAM Services
+  - Manage privileges for internal services, which enable:
+    - Reading and writing data from object storage
+    - Automatically scaling cluster node groups
+    - Automatically configuring DNS records for external access
+    - Building images and pushing them to ECR (AWS only)
+- DNS Services
+  - Manage records for external access to the API layer, validated by TLS certificates
+- Certificate Manager (AWS only)
+  - Manage TLS certificates
+- Secrets Manager (AWS only)
+  - Used during installation to load setup credentials
+
+### 3rd Party Services
+- Robust Intelligence Container Registry
+  - Retrieve Robust Intelligence Docker images (can be mirrored to your private registry if desired)
+- [Velero](https://velero.io/) (recommended)
+  - Provides backup and disaster recovery
+- [DataDog](https://www.datadoghq.com/) (recommended)
+  - Provides cluster health monitoring
+- OIDC Authentication (optional)
+  - Integrates with your identity provider
+- SMTP Service (optional)
+  - Integrates with your SMTP server to send email notifications for model testing

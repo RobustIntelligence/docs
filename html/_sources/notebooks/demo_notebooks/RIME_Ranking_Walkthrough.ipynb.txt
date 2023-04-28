@@ -1,0 +1,627 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "wDInylzdEcsB",
+    "tags": []
+   },
+   "source": [
+    "# **RI Movie Ratings Ranking Data Walkthrough** 🎥\n",
+    "In this walkthrough, you are a data scientist tasked with training a recommendation system to predict whether or not a given user will upvote a movie. From experience, the team has found that the upstream data pipelines can be brittle, and want to use RIME to:\n",
+    "\n",
+    "1) Proactively test how vulnerable the model is to data failures during stress testing.\n",
+    "\n",
+    "2) To continuously monitor and track broken inputs in production."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "iU8NMTH-WPz6"
+   },
+   "source": [
+    "## **Install Dependencies, Import Libraries and Download Data**\n",
+    "Run the cell below to install libraries to receive data, install our SDK, and load analysis libraries."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "id": "Mcq3snDVExtE"
+   },
+   "outputs": [],
+   "source": [
+    "!pip install rime-sdk &> /dev/null\n",
+    "\n",
+    "import pandas as pd\n",
+    "from pathlib import Path\n",
+    "from rime_sdk import Client"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "!pip install https://github.com/RobustIntelligence/ri-public-examples/archive/master.zip\n",
+    "    \n",
+    "from ri_public_examples.download_files import download_files\n",
+    "\n",
+    "download_files('tabular-2.0/ranking', 'ranking')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "YilAj33W_5y-"
+   },
+   "source": [
+    "## **Establish the RIME Client**\n",
+    "\n",
+    "To get started, provide the API credentials and the base domain/address of the RIME service. You can generate and copy an API token from the API Access Tokens Page under Workspace settings. For the domian/address of the RIME service, contact your admin. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "90zo7hdkmKyW"
+   },
+   "source": [
+    "![img_1](https://drive.google.com/uc?id=1vMDhZii8yq22iuqSM8-Vqt3sZ2F3tPyz)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "id": "sPOXz25dEiDQ"
+   },
+   "outputs": [],
+   "source": [
+    "API_TOKEN = '' # PASTE API_KEY\n",
+    "CLUSTER_URL = '' # PASTE DEDICATED BACKEND ENDPOINT\n",
+    "client = Client(CLUSTER_URL, API_TOKEN)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "UePxMUdoAFOH"
+   },
+   "source": [
+    "## **Create a New Project**\n",
+    "\n",
+    "You can create projects in RIME to organize your test runs. Each project represents a workspace for a given machine learning task. It can contain multiple candidate models, but should only contain one promoted production model. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "id": "Of1LzaEOAGLz"
+   },
+   "outputs": [],
+   "source": [
+    "description = (\n",
+    "    \"Run Stress Testing and AI Continuous Testing on a point-wise\"\n",
+    "    \" tabular ranking model and dataset. Demonstration uses a\"\n",
+    "    \" movie ranking dataset.\"\n",
+    ")\n",
+    "project = client.create_project(\n",
+    "    name='Tabular Ranking Demo',\n",
+    "    description=description,\n",
+    "    model_task='MODEL_TASK_RANKING'\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "l4Z7t5FSAQLW"
+   },
+   "source": [
+    "**Go back to the UI to see the new Ranking Demo Project.**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## **Uploading the Model + Datasets**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "NctleDA3P05v"
+   },
+   "source": [
+    "Next, let's take a quick look at the training data (in this case, this was the data used to train the model):"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "id": "rS6ST9KhZPEp"
+   },
+   "outputs": [],
+   "source": [
+    "df = pd.read_csv(Path('ranking/data/ref.csv'))\n",
+    "df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "id": "KdCnsy-RNh8Q"
+   },
+   "outputs": [],
+   "source": [
+    "upload_path = \"ri_public_examples_ranking\"\n",
+    "\n",
+    "model_s3_dir = client.upload_directory(\n",
+    "    Path('ranking/models'), upload_path=upload_path\n",
+    ")\n",
+    "model_s3_path = model_s3_dir + \"/model_extras/model.py\"\n",
+    "\n",
+    "ref_s3_path = client.upload_file(\n",
+    "    Path('ranking/data/ref.csv'), upload_path=upload_path\n",
+    ")\n",
+    "eval_s3_path = client.upload_file(\n",
+    "    Path('ranking/data/eval.csv'), upload_path=upload_path\n",
+    ")\n",
+    "\n",
+    "ref_preds_s3_path = client.upload_file(\n",
+    "    Path(\"ranking/data/ref_preds.csv\"), upload_path=upload_path\n",
+    ")\n",
+    "eval_preds_s3_path = client.upload_file(\n",
+    "    Path(\"ranking/data/eval_preds.csv\"), upload_path=upload_path\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Once the data and model are uploaded to S3, we can register them to RIME. Once they're registered, we can refer to these resources using their RIME-generated ID's."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from datetime import datetime\n",
+    "\n",
+    "dt = str(datetime.now())\n",
+    "\n",
+    "# Note: models and datasets need to have unique names.\n",
+    "model_id = project.register_model_from_path(f\"model_{dt}\", model_s3_path)\n",
+    "\n",
+    "data_params = {\n",
+    "    \"label_col\": \"rank_label\",\n",
+    "    \"ranking_info\": {\n",
+    "      \"query_col\": \"query_id\"\n",
+    "    }\n",
+    "}\n",
+    "ref_dataset_id = project.register_dataset_from_file(\n",
+    "    f\"ref_dataset_{dt}\", ref_s3_path, data_params=data_params\n",
+    ")\n",
+    "eval_dataset_id = project.register_dataset_from_file(\n",
+    "    f\"eval_dataset_{dt}\", eval_s3_path, data_params=data_params\n",
+    ")\n",
+    "pred_params = {\"pred_col\": \"pred\"}\n",
+    "project.register_predictions_from_file(\n",
+    "    ref_dataset_id, model_id, ref_preds_s3_path, pred_params=pred_params\n",
+    ")\n",
+    "project.register_predictions_from_file(\n",
+    "    eval_dataset_id, model_id, eval_preds_s3_path, pred_params=pred_params\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "9vtJnRnBBqkp"
+   },
+   "source": [
+    "## **Running a Stress Test**\n",
+    "\n",
+    "AI Stress Tests allow you to test your data and model before deployment. They are a comprehensive suite of hundreds of tests that automatically identify implicit assumptions and weaknesses of pre-production models. Each stress test is run on a single model and its associated reference and evaluation datasets.\n",
+    "\n",
+    "Below is a sample configuration of how to setup and run a RIME Stress Test."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "id": "PfzT-SAhpi-x"
+   },
+   "outputs": [],
+   "source": [
+    "stress_test_config = {\n",
+    "    \"run_name\": \"Movie Ranking\", \n",
+    "    \"data_info\": {\n",
+    "        \"ref_dataset_id\": ref_dataset_id, \n",
+    "        \"eval_dataset_id\": eval_dataset_id,\n",
+    "    }, \n",
+    "    \"model_id\": model_id\n",
+    "}\n",
+    "stress_job =client.start_stress_test(\n",
+    "    stress_test_config, project.project_id\n",
+    ")\n",
+    "stress_job.get_status(verbose=True, wait_until_finish=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "S2x2K9h1B6oX"
+   },
+   "source": [
+    "## **Stress Test Results**\n",
+    "\n",
+    "Stress tests are grouped into categories that measure various aspects of model robustness (model behavior, distribution drift, abnormal input, transformations, adversarial attacks, data cleanliness). Suggestions to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information. \n",
+    "\n",
+    "\n",
+    "You can view the detailed results in the UI by running the below cell and redirecting to the generated link. This page shows granular results for a given AI Stress Test run. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "id": "DAfObkwHB0xy"
+   },
+   "outputs": [],
+   "source": [
+    "test_run = stress_job.get_test_run()\n",
+    "test_run"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "_8ajygi1E71f"
+   },
+   "source": [
+    "Stress testing should be used during model development to inform us about various issues with the data and model that we might want to address before the model is deployed. The information is presented in an incident management view."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "1zKDo7TOYYds",
+    "tags": []
+   },
+   "source": [
+    "### **Analyzing the Results**\n",
+    "\n",
+    "Below you can see a snapshot of the results. \n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "h2jQYUDmknsU"
+   },
+   "source": [
+    "![img_2](https://drive.google.com/uc?id=1DumIfeBuheUPYO4TnZ1CH9gAUAQCnfjH)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "1oO26DNFoJQV"
+   },
+   "source": [
+    "Here are the results of the Subset Performance tests. These tests can be thought as more detailed performance tests that identify subsets of underperformance. These tests help ensure that the model works equally well across different groups."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "Nc1TzYeqkn1k"
+   },
+   "source": [
+    "![img_3](https://drive.google.com/uc?id=1ATu9N3jjKm26nKUwehjrCG1yepzIOz9c)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "EfnKH70fpmmu"
+   },
+   "source": [
+    "Below we are exploring the \"Subset Mean Reciprocal Rank (MRR)\" test cases for the feature \"Votes\". We can see that even though the model has an overall MRR of 0.91, it performs poorly on certain subsets with low values of the \"Votes\" feature."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "g91I82zRkoH5"
+   },
+   "source": [
+    "![img_4](https://drive.google.com/uc?id=1Px7l7mc6W5MIdm1RJDY9Gfgg40amdVUi)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "AzP97mzuab3m"
+   },
+   "source": [
+    "## **Deploy to Production and Create the AI Firewall**\n",
+    "\n",
+    "Once you have identified the best stress test run, you can deploy the associated model and set up a RIME Firewall to run Continuous Testing in order to automatically detect “bad” incoming data and statistically significant distributional drift."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "id": "swErpZi1OE80"
+   },
+   "outputs": [],
+   "source": [
+    "from datetime import timedelta\n",
+    "\n",
+    "firewall = project.create_firewall(model_id, ref_dataset_id, timedelta(days=1))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "a0Lw2YBXBkb4"
+   },
+   "source": [
+    "## **Uploading a Batch of Production Data & Model Predictions to Firewall**\n",
+    "\n",
+    "The model has been in production for some time, and new production data and model predictions have been collected and stored. Now, we will use the Firewall to track how the model performed. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "g7McYwfDUztC"
+   },
+   "source": [
+    "**Upload the Latest Batch of Production Data**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "id": "zsmlbMIFUzAy"
+   },
+   "outputs": [],
+   "source": [
+    "dt = str(datetime.now())\n",
+    "prod_s3_path = client.upload_file(\n",
+    "    Path('ranking/data/test.csv'), \n",
+    "    upload_path=upload_path\n",
+    ")\n",
+    "prod_dataset_id = project.register_dataset_from_file(\n",
+    "    f\"prod_dataset_{dt}\", \n",
+    "    prod_s3_path, \n",
+    "    data_params={\"timestamp_col\": \"timestamp\", **data_params}\n",
+    ")\n",
+    "prod_preds_s3_path = client.upload_file(\n",
+    "    Path('ranking/data/test_preds.csv'), \n",
+    "    upload_path=upload_path\n",
+    ")\n",
+    "project.register_predictions_from_file(\n",
+    "    prod_dataset_id, \n",
+    "    model_id,\n",
+    "    prod_preds_s3_path, \n",
+    "    pred_params=pred_params\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "e-ooaBT-U4yr"
+   },
+   "source": [
+    "**Run Continuous Testing over Batch of Data**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "id": "EHxteK1gUklo"
+   },
+   "outputs": [],
+   "source": [
+    "ct_job = firewall.start_continuous_test(prod_dataset_id)\n",
+    "ct_job.get_status(verbose=True, wait_until_finish=True)\n",
+    "firewall"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "ifxKz_p6Uc63"
+   },
+   "source": [
+    "**Wait for a couple minutes and your results will appear in the UI.**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "tags": []
+   },
+   "source": [
+    "## **Querying Results from the Firewall**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "After a firewall has been created and data has been uploaded for processing, the user can query the results throughout the entire uploaded history."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Obtain All Detection Events**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "events = [d.to_dict() for m in firewall.list_monitors() for d in m.list_detected_events()]\n",
+    "events_df = pd.DataFrame(events).drop([\"id\", \"project_id\", \"firewall_id\", \"event_object_id\", \"description_html\", \"last_update_time\"], axis=1)\n",
+    "events_df.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "vmpxUnaLMn-u"
+   },
+   "source": [
+    "\n",
+    "## **Firewall Overview**\n",
+    "\n",
+    "The Overview page is the mission control for your model’s production deployment health. In it, you can see the status of firewall events, get notified when model performance degrades, and see the underlying causes of failure.  \n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "jwelJ7gcLqgV"
+   },
+   "source": [
+    "![img_6](https://drive.google.com/uc?id=1PrLb8GuWx9MI0nc_3osPnMPmPppJrK2S)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "MzMea8BUFOT1"
+   },
+   "source": [
+    "## **Firewall CT Results**\n",
+    "\n",
+    "The AI Firewall’s Continuous Tests operate at the batch level and provide a mechanism to monitor the health of ML deployments in production. They allow the user to understand when errors begin to occur and surface the underlying drivers of such errors. \n",
+    "\n",
+    "You can explore the results in the UI by running the below cell and redirecting to the generated link.\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "id": "Qndn2zUMLhJo"
+   },
+   "outputs": [],
+   "source": [
+    "firewall"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "ycu422woQkoA",
+    "tags": []
+   },
+   "source": [
+    "### **Analyzing CT Results**\n",
+    "\n",
+    "**Abnormality Rate stays steady (and low) over time** - In the below image, we can see that the Abnormality Rate remains fairly low (<15%) over time, and does not trend upward significantly."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "AFuGGg8uNtC2"
+   },
+   "source": [
+    "![img_5](https://drive.google.com/uc?id=13e9FhiwM_FhBapOlWwIP9BXtCgJ0B1yS)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "BMeR6Wd6OtqX"
+   },
+   "source": [
+    "**Average Rank decreases over time** In the below image, we can see that the Average Rank has decreased over time from when the model was first deployed. On 06/07 when the model was deployed, Average Rank was was 2.2. By 06/13, Average Rank had dropped to 0.0."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "NGg3VFtvLqNx"
+   },
+   "source": [
+    "![img_7](https://drive.google.com/uc?id=1UPkCDKggH3qYxwVTaEz2pFr-HlyZUgHo)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "qPAgDrQkEA8d",
+    "jp-MarkdownHeadingCollapsed": true,
+    "tags": []
+   },
+   "source": [
+    "## Summary:\n",
+    "In this Notebook, RIME and the SDK helped with ingesting and investigating tabular pointwise ranking information which:\n",
+    "\n",
+    "✅ Measured impact of failing tests on model performance\n",
+    "\n",
+    "✅ Assisted with modeling and experiment tracking\n",
+    "\n",
+    "✅ Identified root-cause analysis of underlying issues in data and model (e.g. Numerical Outliers and Bad Inputs)\n",
+    "\n",
+    "✅ Continuously testing production data and model which enforced better ml integrity and posture (e.g. Highlighting changes in data schema, data malformations, cardinality changes, out of range values, missing values)\n",
+    "\n",
+    "\n"
+   ]
+  }
+ ],
+ "metadata": {
+  "colab": {
+   "collapsed_sections": [],
+   "name": "RIME_Ranking_Walkthrough.ipynb",
+   "provenance": []
+  },
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

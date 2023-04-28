@@ -1,0 +1,52 @@
+# Preprocessing your Datasets
+
+## Supported File Formats
+
+Robust Intelligence currently supports the following formats:
+
+* [Parquet](https://parquet.apache.org/docs/file-format/)
+* Delta lake tables
+* JSON
+* JSONL
+* CSV
+
+The column headers of CSV, Parquet, and Delta Lake input files are used as feature names and must be strings. For JSON and JSONL files, the keys of each record is used as the feature name.
+
+Text features and image features must have string values. The value of the image feature string is the path to an image file. Specify text features and image features in the [data info configuration](data_source.md).
+
+Providing labels and predictions increases the effectiveness of Robust Intelligence, but most tasks do not require either.
+
+Specify predictions in a separate file, and register them using the [registry](registering_model_datasets.md) functionality. Include labels with the datasets.
+
+**Requirements By Task**
+
+### Binary Classification
+- Labels must be the integer values 0 or 1
+- Predictions must be float values between 0 and 1 that represent the positive class (label = 1) probability
+
+### Multi-Class Classification
+- Labels must be integers referring to class index
+- Predictions must be a list of floats summing to 1
+
+### Natural Language Inference
+- Labels must be integers referring to class index
+- Predictions must be lists of floats summing to 1
+
+### Ranking
+- **Labels are required**
+- Labels can be any real number
+- Predictions can be any real number
+- `ranking_info` must be provided in the [data configuration](data_source.md)
+
+### Regression
+- Labels can be any real number
+- Predictions can be any real number
+
+### Named Entity Recognition
+- Labels must be lists of dictionaries, with each dictionary corresponding to an entity.
+- Predictions must be lists of dictionaries, with each dictionary corresponding to an entity.
+- Each entity dictionary should have a `type` key (specifying the type of the entity) as well as a `mentions` key that contains all the mentions referring to this entity. Each mention itself a dictionary with two keys: a `start_offset` key and an `end_offset` key, which are integers referring respectively to the start and end indices of the mention in question.
+
+### Object Detection
+- Labels must be lists of dictionaries, with each dictionary corresponding to an object. Each object dictionary must contain the four keys `x_min`, `x_max`, `y_min`, and `y_max` with float values defining the coordinates of the bounding box, along with a `class_id` key with the integer value of the class label.
+- Predictions must be list of dictionaries, with each dictionary corresponding to an object. Each object dictionary must contain the four keys `x_min`, `x_max`, `y_min`, and `y_max` with float values defining the coordinates of the bounding box, along with a `probabilities` key with a list floats defining the predicted probability for each class.

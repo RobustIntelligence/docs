@@ -1,0 +1,116 @@
+# Validation
+Once deployment has concluded, use the following reference to smoke test your Robust Intelligence installation.
+
+## Infrastructure
+**NOTE:** Expected outputs for commands will differ depending on your cluster's configuration. Your SA will guide you through validation based on your specific configuration.
+
+1. Point your local `kubectl` to the newly-deployed cluster.
+    - [AWS EKS](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html)
+    - [GCP GKE](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl)
+    - [Azure AKS](https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-deploy-cli#connect-to-the-cluster)
+2. Inspect the initialization **Jobs**. All should be complete.
+   ```shell
+   > kubectl get jobs
+
+   NAME                                           COMPLETIONS   DURATION   AGE
+   rime-acme-init-cluster-metadata                1/1           4s         5m26s
+   rime-acme-init-indexes                         1/1           13s        5m26s
+   rime-acme-init-mongo-tls                       1/1           6s         5m26s
+   rime-acme-init-vault                           1/1           12s        5m26s
+   ...
+   ```
+3. Inspect the **Deployments**. All containers should be ready.
+   ```shell
+   > kubectl get deployments
+
+   NAME                                      READY   UP-TO-DATE   AVAILABLE   AGE
+   rime-agent-launcher                       1/1     1            1           5m26s
+   rime-agent-operator-controller-manager    1/1     1            1           5m26s
+   rime-acme-agent-manager-server            1/1     1            1           5m26s
+   rime-acme-auth-server                     1/1     1            1           5m26s
+   rime-acme-data-collector-server           1/1     1            1           5m26s
+   ...
+   ```
+4. Inspect the **Services**. There should be one of type `LoadBalancer` with a valid external IP address.
+   ``` shell
+   > kubectl get services
+
+   NAME                                 TYPE           CLUSTER-IP       EXTERNAL-IP    PORT(S)                       AGE
+   rime-acme-agent-manager-server       ClusterIP      172.22.16.173    <none>         5016/TCP,15016/TCP            5m26s
+   rime-acme-auth-server                ClusterIP      172.22.223.4     <none>         5012/TCP,5017/TCP,15017/TCP   5m26s
+   rime-acme-firewall-server            ClusterIP      172.22.73.161    <none>         5002/TCP,15002/TCP            5m26s
+   rime-acme-frontend-server            ClusterIP      172.22.134.130   <none>         80/TCP                        5m26s
+   rime-acme-ingress-nginx-controller   LoadBalancer   172.22.163.48    34.55.89.101   80:31938/TCP,443:32494/TCP    5m26s
+   ...
+   ```
+5. Inspect the **Pods**. All should be in a `Running` state.
+   ```shell
+   > kubectl get pods
+
+   NAME                                                      READY   STATUS       RESTARTS    AGE
+   rime-agent-launcher-6d84988c45-2l7hf                      1/1     Running      0           5m26s
+   rime-agent-operator-controller-manager-766d77dd9c-mm6g4   1/1     Running      0           5m26s
+   rime-acme-agent-manager-server-6cff586b77-jdjc7           1/1     Running      0           5m26s
+   rime-acme-auth-server-5f95f6c796-9jg22                    1/1     Running      0           5m26s
+   rime-acme-data-collector-server-6bb486f9d7-c65h2          1/1     Running      0           5m26s
+   rime-acme-dataset-manager-server-76d6c885d7-tvts4         1/1     Running      0           5m26s
+   rime-acme-feature-flag-server-6d5db47474-r9kzq            1/1     Running      0           5m26s
+   ...
+   ```
+
+## Web Client
+1. Verify that the web client is accessible at your specified domain (e.g., `https://rime.acme.com`).
+2. If configured, verify that SSO integration functions correctly.
+3. Verify that the license information displayed in the top-right corner is correct.
+4. Verify that API tokens can be created successfully. Instructions are in the [API Access Tokens](../../administration/security_and_compliance/api_tokens.md) guide.
+
+## Python SDK and REST API
+To fully validate the programmatic clients, try running one of the sample notebooks provided in [Tutorial Notebooks](../../documentation_home/notebooks.rst).
+
+A quick test test of the Python SDK is to instantiate the client and create a Project:
+```shell
+pip install rime-sdk
+```
+
+```python
+from rime_sdk import Client
+
+rime_client = Client("rime.<DOMAIN>.com", "<API_TOKEN>")
+project = rime_client.create_project(
+    name="Health Check (Python SDK)",
+    description="Testing the Python SDK's upstream connection.",
+    model_task="MODEL_TASK_BINARY_CLASSIFICATION"
+)
+```
+
+The same can be done for the REST API:
+```shell
+curl -X POST 'rime.$DOMAIN.com/v1/projects' \
+  --header "rime-api-key: $API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data-raw "{
+    \"name\": \"Health Check (REST API)\",
+    \"description\": \"Testing the REST API's upstream connection.\",
+    \"model_task\": \"MODEL_TASK_BINARY_CLASSIFICATIOn\"
+  }"
+```
+
+---
+
+## Configure Backups (Optional)
+Backups ensure that your team can restore your testing data in the event of a disaster.
+If you have deployed the Velero backup service in your cluster, you can configure backups using the steps below.
+
+1. Download [Velero](https://velero.io/).
+   ```shell
+   curl -fsSL -o velero-v1.6.3-linux-amd64.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v1.6.3/velero-v1.6.3-linux-amd64.tar.gz
+   tar -xvf velero-v1.6.3-linux-amd64.tar.gz
+   ```
+2. Ensure that your backups are scheduled properly.
+   ```shell
+   > # By default, VELERO_NAMESPACE will be "rime-extras"
+   > velero schedule get -n $VELERO_NAMESPACE
+
+   NAME                                STATUS    CREATED                         SCHEDULE     BACKUP TTL   LAST BACKUP   SELECTOR   PAUSED
+   rime-extras-velero-mongodb-backup   Enabled   2023-04-19 14:26:37 -0700 PDT   0 6 * * *    336h0m0s     16h ago       <none>     false
+   ```

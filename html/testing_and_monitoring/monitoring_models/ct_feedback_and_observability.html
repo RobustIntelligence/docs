@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Continuous Testing Feedback and Observability &mdash; Robust Intelligence  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Querying Test Run Results" href="../querying_results.html" />
+    <link rel="prev" title="Configuring your Scheduled Continuous Test" href="configuring_scheduled_ct.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Robust Intelligence
+          </a>
+              <div class="version">
+                2.0.0-rc.14
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../creating_projects.html">Creating Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="creating_new_continuous_test.html">Creating a new Continuous Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../notebooks/demo_notebooks/RIME_Firewall_Configuring.html">Updating your Continuous Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loading_data_for_scheduled_ct.html">Loading Data for Scheduled Continuous Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling_ct_runs.html">Scheduling Continuous Testing runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_scheduled_ct.html">Configuring your Scheduled Continuous Test</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Continuous Testing Feedback and Observability</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#model-monitors">Model monitors</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#viewing-the-ct-risk-pages">Viewing the CT risk pages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#monitors-and-risk-categories">Monitors and risk categories</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#events">Events</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#event-root-cause-analysis-and-actionability">Event root-cause analysis and actionability</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../querying_results.html">Querying Test Run Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notifications_and_alerts.html">Notifications and Alerts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_governance.html">Managing Model Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test_customization.html">Test Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integrating_mlops.html">Integrating with MLOps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/organization_administration.html">Organization Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/configuring_workspaces.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/security_and_compliance.html">Security and Compliance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Robust Intelligence</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+      <li class="breadcrumb-item active">Continuous Testing Feedback and Observability</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="continuous-testing-feedback-and-observability">
+<h1>Continuous Testing Feedback and Observability<a class="headerlink" href="#continuous-testing-feedback-and-observability" title="Permalink to this heading"></a></h1>
+<p>Once a model is in production, Robust Intelligence can provide detailed information on the model’s
+performance to enable you to identify and correct issues.</p>
+<section id="model-monitors">
+<h2>Model monitors<a class="headerlink" href="#model-monitors" title="Permalink to this heading"></a></h2>
+<p>A model under Continuous Testing displays summary information about model health on the
+Overview page of the project that contains the model. Robust Intelligence monitors machine learning
+model performance across the following three risk categories:</p>
+<ul class="simple">
+<li><p><strong>Operational</strong> tests a model’s overall performance and data stability of over time.</p></li>
+<li><p><strong>Security</strong> tests a model’s resilience against compromise from external attacks.</p></li>
+<li><p><strong>Fairness</strong> tests a model’s outcome for fair treatment among subsets in the data.</p></li>
+</ul>
+<section id="viewing-the-ct-risk-pages">
+<h3>Viewing the CT risk pages<a class="headerlink" href="#viewing-the-ct-risk-pages" title="Permalink to this heading"></a></h3>
+<ol class="arabic">
+<li><p>Sign in to a RI Platform instance.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click a workspace.</p>
+<blockquote>
+<div><p>The Workspaces summary page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Select a project.</p>
+<blockquote>
+<div><p>You can filter or sort the list of projects in a workspace with the
+<em>Sort</em> and <em>Filter</em> controls in the upper right. Click the glyph to the
+right of the <em>Filter</em> control to switch between list and card display
+for projects. Type a string in <em>Search Projects…</em> to display only
+projects that match the string.</p>
+</div></blockquote>
+</li>
+<li><p>Select the <strong>Continuous Testing</strong> tab in the left panel.</p>
+<blockquote>
+<div><p>The CT Overview page appears</p>
+</div></blockquote>
+</li>
+<li><p>Click on one of the risk category tabs at the top (<strong>Operational</strong>, <strong>Security</strong>, or <strong>Fairness</strong>).</p>
+<blockquote>
+<div><p>The corresponding CT risk page appears.</p>
+</div></blockquote>
+</li>
+</ol>
+</section>
+<section id="monitors-and-risk-categories">
+<h3>Monitors and risk categories<a class="headerlink" href="#monitors-and-risk-categories" title="Permalink to this heading"></a></h3>
+<p>Monitors of particular interest can be pinned to the top of the list by clicking the
+pushpin icon at the top left corner of the monitor. Pinned Operational risk monitors
+will also show up in the Continuous Testing Overview page. Use the <strong>Date Range</strong>
+controls to change your view of the monitor chart. Some monitors have feature or
+subset dropdown menus which allow you to view the monitored metric for a specific
+feature or subset(s) of a feature in your dataset.</p>
+<section id="enabling-or-disabling-notifications-for-a-monitor">
+<h4>Enabling or disabling notifications for a monitor<a class="headerlink" href="#enabling-or-disabling-notifications-for-a-monitor" title="Permalink to this heading"></a></h4>
+<p>You can enable or suppress notifications from a specified monitor.</p>
+<ol class="arabic">
+<li><p>Sign in to a RI Platform instance.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click a workspace.</p>
+<blockquote>
+<div><p>The Workspaces summary page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Select a project.</p>
+<blockquote>
+<div><p>You can filter or sort the list of projects in a workspace with the
+<em>Sort</em> and <em>Filter</em> controls in the upper right. Click the glyph to the
+right of the <em>Filter</em> control to switch between list and card display
+for projects. Type a string in <em>Search Projects…</em> to display only
+projects that match the string.
+The project overview page appears.</p>
+</div></blockquote>
+</li>
+<li><p>In the top right corner of a monitor, click <strong>Edit Monitor</strong>.</p>
+<blockquote>
+<div><p>The Edit Monitor wizard appears.</p>
+</div></blockquote>
+</li>
+<li><p>Toggle <strong>Add to Project Notifications</strong> and click Save Settings.</p></li>
+</ol>
+<p>Notifications for this monitor are added or removed from the project according to the
+position of the toggle.</p>
+<!-- Notification settings are managed from {TKK xref to notif/alert config} -->
+</section>
+<section id="operational-risk">
+<h4>Operational risk<a class="headerlink" href="#operational-risk" title="Permalink to this heading"></a></h4>
+<p>Tests for operational risk assess a model’s performance and accuracy. These tests are
+divided into tests for performance, drift, and abnormal input.</p>
+<section id="performance-tests">
+<h5>Performance tests<a class="headerlink" href="#performance-tests" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Performance monitor</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Accuracy</td>
+<td>Tests whether the model's accuracy changes relative to the reference dataset.</td>
+</tr>
+<tr>
+<td>Average Thresholded Confidence (ATC)</td>
+<td>Tests the variance of the ATC between reference and evaluation datasets. ATC estimates the accuracy of unlabeled examples.</td>
+</tr>
+<tr>
+<td>Average Confidence</td>
+<td>Tests the variance of average prediction confidence between the reference and evaluation datasets.</td>
+</tr>
+<tr>
+<td>Calibration Comparison</td>
+<td>Tests whether the calibration curve of the evaluation datset has changed relative to the reference datset.</td>
+</tr>
+<tr>
+<td>Precision</td>
+<td>Tests whether the model's precision changes relative to the reference dataset.</td>
+</tr>
+<tr>
+<td>Recall</td>
+<td>Tests whether the model's recall changes relative to the reference dataset.</td>
+</tr>
+<tr>
+<td>F1</td>
+<td>Tests whether the model's F1 score changes relative to the reference dataset.</td>
+</tr>
+<tr>
+<td>False Positive Rate</td>
+<td>Tests whether the model's false positive rate changes relative to the reference dataset.</td>
+</tr>
+<tr>
+<td>False Negative Rate</td>
+<td>Tests whether the model's false negative rate changes relative to the reference dataset.</td>
+</tr>
+<tr>
+<td>F1</td>
+<td>Tests whether the model's F1 score changes relative to the reference dataset.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="drift-tests">
+<h5>Drift tests<a class="headerlink" href="#drift-tests" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Drift monitor</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prediction Drift</td>
+<td>Tests the change in distribution between the prediction sets generated by the reference and evaluation datasets.</td>
+</tr>
+<tr>
+<td>Label Drift</td>
+<td>Tests the change in distribution in the model's output.</td>
+</tr>
+<tr>
+<td>Numeric Feature Drift</td>
+<td>Tests the change in distribution within a given numeric feature.</td>
+</tr>
+<tr>
+<td>Categorical Feature Drift</td>
+<td>Tests the change in distribution within a given categorical feature.</td>
+</tr>
+<tr>
+<td>Mutual Information Drift</td>
+<td>Tests the change in mutual information between pairs of features, or between a feature and the label.</td>
+</tr>
+<tr>
+<td>Correlation Information Drift</td>
+<td>Tests the change in correlation between pairs of features, or between a feature and the label.</td>
+</tr>
+<tr>
+<td>Embedding Drift</td>
+<td>Tests the change in embeddings distribution between the reference and evaluation datasets.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="abnormal-inputs-test">
+<h5>Abnormal inputs test<a class="headerlink" href="#abnormal-inputs-test" title="Permalink to this heading"></a></h5>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Abnormal inputs monitor</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unseen Categorical</td>
+<td>Tests the models response to data that contains categorical values that are never observed in the reference dataset.</td>
+</tr>
+<tr>
+<td>Rare Categories</td>
+<td>Tests the models response to data that contains categorical values that are rarely observed in the reference dataset.</td>
+</tr>
+<tr>
+<td>Numeric Outliers</td>
+<td>Tests the models response to data that contains numeric values outside the typical range for that feature in the reference dataset.</td>
+</tr>
+<tr>
+<td>Abnormality Rate</td>
+<td>Tests the total percent of rows with any abnormalities.</td>
+</tr>
+<tr>
+<td>Feature Type Check - Count</td>
+<td>Tests the number of feature values that are of the incorrect type.</td>
+</tr>
+<tr>
+<td>Null Check - Count</td>
+<td>Tests the number of null values for features that do no have nulls in the reference dataset.</td>
+</tr>
+<tr>
+<td>Empty String - Count</td>
+<td>Tests the number of empty or null strings for each string feature.</td>
+</tr>
+<tr>
+<td>Capitalization - Count</td>
+<td>Tests the number of string values that are capitalized differently from those observed in the reference set.</td>
+</tr>
+<tr>
+<td>Inconsistencies - Count</td>
+<td>Tests the number of data points with pairs of feature values that are inconsistent with each other.</td>
+</tr>
+<tr>
+<td>Required Characters - Count</td>
+<td>Tests the number of required characters in feature values.</td>
+</tr>
+</tbody>
+</table>
+<p>Note: the Unseen Categorical, Rare Categories, and Numeric Outliers tests each have 2 associated monitors</p>
+<ol class="arabic simple">
+<li><p>Performance impact which measures the model performance change attributed to the data with the abnormality.</p></li>
+<li><p>Count, which measures the number of occurrences of the abnormality in each bin.</p></li>
+</ol>
+</section>
+</section>
+<section id="security-risk">
+<h4>Security risk<a class="headerlink" href="#security-risk" title="Permalink to this heading"></a></h4>
+<p>Tests for security risk assess the security of the model and underlying dataset,
+providing alerts in cases of model evasion or subversion.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Security risk monitor</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data Poisoning</td>
+<td>Tests for corrupted input data.</td>
+</tr>
+<tr>
+<td>Model Evasion</td>
+<td>Tests for adversarial evasion attacks.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="fairness-and-compliance-risk">
+<h4>Fairness and Compliance risk<a class="headerlink" href="#fairness-and-compliance-risk" title="Permalink to this heading"></a></h4>
+<p>Tests for fairness and compliance risk assess a model’s outcome for fair treatment
+among subcategories in the data.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Fairness monitor</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Intersectional Group Fairness</td>
+<td>Tests for changes in the model performance over different slices of data from the intersection of two protected features.</td>
+</tr>
+<tr>
+<td>Positive Prediction Rate</td>
+<td>Tests whether the model's positive prediction rate differs significantly across different subsets of protected features.</td>
+</tr>
+<tr>
+<td>Predictive Equality</td>
+<td>Test whether model performance differs significantly across different subsets of protected features.</td>
+</tr>
+<tr>
+<td>Equal Opportunity Recall</td>
+<td>Tests whether model recall differs significantly across different subsets of protected features.</td>
+</tr>
+<tr>
+<td>Class imbalance</td>
+<td>Test if any subsets of a feature have high class imbalance bias as a result of having a significantly smaller sample size.</td>
+</tr>
+<tr>
+<td>Demographic Parity</td>
+<td>Tests how the model performance over subsets of protected features compare to the subset with highest performance.</td>
+</tr>
+<tr>
+<td>Protected Feature Drift</td>
+<td>Tests the change in distribution of protected features.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="events">
+<h2>Events<a class="headerlink" href="#events" title="Permalink to this heading"></a></h2>
+<p>The Overview page of a model under Continuous Testing displays a list of Active Events
+to the right of the active monitors.</p>
+<p>The Events list provides several filter selectors to focus on a specific set of events.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Filter</th>
+<th>Description</th>
+<th>Potential states</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Testing</td>
+<td>Test type</td>
+<td>Stress Test or Continuous Test</td>
+</tr>
+<tr>
+<td>Risk Categories</td>
+<td>Major risk category</td>
+<td>Operational, Security, Fairness</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>The status of a specific test</td>
+<td>Fail, Warning, Pass, Skip</td>
+</tr>
+<tr>
+<td>Level</td>
+<td>The importance level of the event</td>
+<td>None, Low, High</td>
+</tr>
+<tr>
+<td>Last Updated Time</td>
+<td>The time an event was last updated</td>
+<td>Within a time range</td>
+</tr>
+</tbody>
+</table>
+<section id="event-root-cause-analysis-and-actionability">
+<h3>Event root-cause analysis and actionability<a class="headerlink" href="#event-root-cause-analysis-and-actionability" title="Permalink to this heading"></a></h3>
+<p>Robust Intelligence can provide significant context and analysis of a detected event.
+This analysis includes the metric and threshold values defining the event and the time
+interval for which the metric fell below the thresholds. Events for degraded model
+performance monitors will show which data issue(s) may have lead to the detected event
+when applicable.</p>
+<ol class="arabic">
+<li><p>Sign in to a RI Platform instance.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click a workspace.</p>
+<blockquote>
+<div><p>The Workspaces summary page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Select a project.</p>
+<blockquote>
+<div><p>You can filter or sort the list of projects in a workspace with the
+<em>Sort</em> and <em>Filter</em> controls in the upper right. Click the glyph to the
+right of the <em>Filter</em> control to switch between list and card display
+for projects. Type a string in <em>Search Projects…</em> to display only
+projects that match the string.
+The project overview page appears.
+The project overview page contains both Stress Test and Continuous Test events</p>
+</div></blockquote>
+</li>
+<li><p>(Optional) Click <strong>Show Details</strong> (only for Continuous Test events).</p>
+<blockquote>
+<div><p>A description of the degradation event appears.
+Events with the <strong>RCA Available</strong> tag show additional context about
+feature drift which may have contributed to the degradation.</p>
+</div></blockquote>
+</li>
+<li><p>(Optional) Click <strong>Resolve</strong> to remove an event from the events list.</p>
+<blockquote>
+<div><p>A confirmation window will apear. Click <strong>Resolve Issue</strong> to confirm.</p>
+</div></blockquote>
+</li>
+<li><p>(Optional) Click a Continuous Test event.</p>
+<blockquote>
+<div><p>The CT risk page corresponding to the degraded monitor appears.</p>
+</div></blockquote>
+</li>
+</ol>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="configuring_scheduled_ct.html" class="btn btn-neutral float-left" title="Configuring your Scheduled Continuous Test" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../querying_results.html" class="btn btn-neutral float-right" title="Querying Test Run Results" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
