@@ -1,0 +1,33 @@
+# API Changelog
+
+## API Versioning
+Robust Intelligence aims to provide a stable API that is backwards compatible. To minimize the impact of any necessary breaking changes, we categorize our endpoints as either beta or versioned. The beta endpoints may be subject to breaking changes, while the versioned endpoints are guaranteed to be backwards compatible until deprecation. The version of an endpoint can be identified via the URI (v1/projects vs v1-beta/integrations).
+
+A v1-beta endpoint may be subject to breaking changes. These are typically new features, which may be subject to further optimization.
+
+A major version endpoint (v1, v2, etc.) will not be subject to breaking changes. Once an endpoint has a version upgrade, i.e. from v1 to v2, both versions will be supported for 6 months to allow time for transitioning to the upgraded endpoint. After these 6 months, the older version will be marked deprecated and removed.
+
+## 2.0 GA
+POST /v1-beta/jobs/cancel/{jobId} api path removed without deprecation. Use POST /v1/jobs/cancel/{jobId} instead.
+
+GET /v1-beta/jobs/{jobId} api path removed without deprecation. Use GET /v1/jobs/{jobId} instead.
+
+GET /v1-beta/jobs/{jobId}/project-id api path removed without deprecation. Use GET /v1/jobs/{jobId}/project-id instead.
+
+GET /v1-beta/jobs/{jobId}/test-run-id api path removed without deprecation. Use GET /v1/jobs/{jobId}/test-run-id instead.
+
+GET /v1-beta/jobs api path removed without deprecation. Use GET /v1/jobs instead.
+
+POST /v1/continuous-tests api path removed without deprecation. Use POST /v1/continuous-tests/{firewallId.uuid} instead.
+
+DELETE /v1/registry/dataset/{projectId.uuid} api path removed without deprecation. Use DELETE /v1/registry/{project_id.uuid}/dataset instead.
+
+POST /v1/registry/dataset/{projectId.uuid} api removed without deprecation. Use POST /v1/registry/{project_id.uuid}/dataset instead.
+
+POST /v1/registry/model/{projectId.uuid} api removed without deprecation. Use POST /v1/registry/{project_id.uuid}/model instead.
+
+DELETE /v1/registry/model/{projectId.uuid} api path removed without deprecation. Use DELETE /v1/registry/{project_id.uuid}/model instead.
+
+POST /v1/registry/prediction/{projectId.uuid}/{modelId.uuid}/{datasetId} api path removed without deprecation. Use POST /v1/registry/{project_id.uuid}/model/{model_id.uuid}/dataset/{dataset_id}/prediction instead.
+
+POST /v1/registry/{projectId.uuid}/prediction/{modelId.uuid}/{datasetId} api path removed without deprecation. Use POST /v1/registry/{project_id.uuid}/model/{model_id.uuid}/dataset/{dataset_id}/prediction instead.

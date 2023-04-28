@@ -1,0 +1,44 @@
+# HuggingFace
+
+Robust Intelligence natively integrates with [HuggingFace APIs](https://huggingface.co/docs/datasets/v2.3.2/en/package_reference/loading_methods#datasets.load_dataset).
+
+## Configuring HuggingFace Integration
+
+HuggingFace is a pre-configured integration across all workspaces. HuggingFace
+doesn't require any authentication details.
+
+## Using the HuggingFace Integration
+
+Use the HuggingFace integration to register datasets and models.
+
+```
+# Note HuggingFace doesn't require an integration ID since it doesn't require authentication.
+
+project.register_dataset(
+    name= f"ref_data_{dt}",
+    data_config= {
+        "connection_info": {
+            "hugging_face": {
+                "dataset_uri": "sst2" #Enter the HuggingFace dataset uri
+                "split_name": "" #Enter the name of a predefined subset of data
+                "loading_params_json": "" #A JSON serialized string that contains loading parameters
+
+            }
+        },
+        "data_params": {"label_col": "label"}
+    },
+)
+
+model_id = project.register_model(
+    name= f"model_{dt}",
+    model_config= {
+        "hugging_face": {
+            "model_uri": "distilbert-base-uncased-finetuned-sst-2-english" model_uri #Enter the HuggingFace model uri
+        }
+    },
+)
+```
+
+More information on defining
+the configurations is available in the
+[Data Configuration](../../../../testing_and_monitoring/preparing_your_models_and_datasets/data_source.md) section.

@@ -1,0 +1,34 @@
+# Release Notes
+
+For notes on upgrades and deprecations to the Robust Intelligence REST API, refer to the [API changelog](../reference/api_changelog.md).
+
+## 2.0 GA
+
+
+**Breaking Changes from 2.0 Beta to 2.0 GA**
+
+The location in the Test Suite Configuration to specify the `global_exclude_columns` parameter has changed.
+
+Before:
+```python
+stress_test_config = {
+    # other config params
+    "test_suite_config": {
+        "individual_tests_config": {
+            "global_exclude_columns": ["foo", "bar"]
+        }
+    }
+}
+```
+
+After:
+```python
+stress_test_config = {
+    # other config params
+    "test_suite_config": {
+        "global_exclude_columns": ["foo", "bar"]
+    }
+}
+```
+
+Any existing projects with this parameter specified in the project's Test Suite Configuration may need to be updated with this new version of the configuration.

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configuring Stress Tests &mdash; Robust Intelligence  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Monitor Models with Continuous Tests" href="../monitoring_models.html" />
+    <link rel="prev" title="Validate Models with Stress Tests" href="../validating_models.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Robust Intelligence
+          </a>
+              <div class="version">
+                2.0.0-rc.14
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../creating_projects.html">Creating Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="stress_tests_from_sdk.html">Creating a new Stress Test</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configuring Stress Tests</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#template">Template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../querying_results.html">Querying Test Run Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notifications_and_alerts.html">Notifications and Alerts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_governance.html">Managing Model Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test_customization.html">Test Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integrating_mlops.html">Integrating with MLOps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/organization_administration.html">Organization Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/configuring_workspaces.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/security_and_compliance.html">Security and Compliance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Robust Intelligence</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../validating_models.html">Validate Models with Stress Tests</a></li>
+      <li class="breadcrumb-item active">Configuring Stress Tests</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="configuring-stress-tests">
+<h1>Configuring Stress Tests<a class="headerlink" href="#configuring-stress-tests" title="Permalink to this heading"></a></h1>
+<p>Configuration of Stress Testing is done through a JSON configuration
+file that you pass as an argument to the Python SDK when running ST.</p>
+<section id="template">
+<h2>Template<a class="headerlink" href="#template" title="Permalink to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Run Name&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">REQUIRED</span><span class="p">)</span>
+  <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="s2">&quot;my_ref_dataset_id&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">REQUIRED</span><span class="p">)</span>
+      <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="s2">&quot;my_eval_dataset_id&quot;</span> <span class="p">(</span><span class="n">REQUIRED</span><span class="p">)</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="s2">&quot;my_model_id&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">REQUIRED</span><span class="p">)</span>
+  <span class="s2">&quot;profiling_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;model_profiling&quot;</span><span class="p">:</span> <span class="p">{</span><span class="o">...</span><span class="p">},</span>
+      <span class="s2">&quot;data_profiling&quot;</span><span class="p">:</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">],</span>
+  <span class="s2">&quot;test_suite_config&quot;</span><span class="p">:</span> <span class="p">{</span><span class="o">...</span><span class="p">},</span>
+  <span class="s2">&quot;run_time_info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="arguments">
+<h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this heading"></a></h2>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">run_name</span></code></strong>: string, <em><strong>required</strong></em></p>
+<p>The name under which your run will appear in the UI.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">data_info</span></code></strong>: Dict[string, string], <em><strong>required</strong></em></p>
+<p>Specification of the <code class="docutils literal notranslate"><span class="pre">ref_dataset_id</span></code> and <code class="docutils literal notranslate"><span class="pre">eval_dataset_id</span></code> parameters, which determine the Reference and Evaluation Datasets to use, respectively. For documentation on how to register a Dataset and receive a Dataset ID, see <a class="reference internal" href="../preparing_your_models_and_datasets/registering_model_datasets.html"><span class="std std-doc">Robust Intelligence Registries</span></a></p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">model_id</span></code></strong>: string, <em><strong>required</strong></em></p>
+<p>Configuration for the Model to use. For a reference on how to configure a
+model, see <a class="reference internal" href="../preparing_your_models_and_datasets/registering_model_datasets.html"><span class="std std-doc">Robust Intelligence Registries</span></a>. If you are not providing
+a model, this should be <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">model_task</span></code></strong>: string, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">&quot;MODEL_TASK_BINARY_CLASSIFICATION&quot;</span></code></p>
+<p>Specification of the model task. Currently accepted values are <code class="docutils literal notranslate"><span class="pre">&quot;MODEL_TASK_REGRESSION&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;MODEL_TASK_BINARY_CLASSIFICATION&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;MODEL_TASK_MULTICLASS_CLASSIFICATION&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;MODEL_TASK_NAMED_ENTITY_RECOGNITION&quot;</span></code>,<code class="docutils literal notranslate"><span class="pre">&quot;MODEL_TASK_RANKING&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;MODEL_TASK_OBJECT_DETECTION&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;MODEL_TASK_NATURAL_LANGUAGE_INFERENCE&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;MODEL_TASK_FILL_MASK&quot;</span></code>.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">profiling_config</span></code></strong>: ProfilingConfig, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">ProfilingConfig()</span></code></p>
+<p>Specification of the configuration for profiling the model and data.
+NOTE: this argument is optional. If it is not specified default parameters
+will be used.</p>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">model_profiling</span></code></strong>: ModelProfilingInfo, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">ModelProfilingInfo()</span></code></p>
+<p>Optional. Specifies how to profile the model. <a class="reference internal" href="../configuring_test_runs/configuring_model_profiling.html"><span class="std std-doc">Model Profiling Configuration</span></a>
+discusses how to configure model profiling. When this parameter is not specified, profiling uses
+default parameters.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">data_profiling</span></code></strong>: DataProfilingInfo, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">DataProfilingInfo()</span></code></p>
+<p>Optional. Specifies how to profile the data. <a class="reference internal" href="../configuring_test_runs/configuring_data_profiling.html"><span class="std std-doc">Data Profiling Configuration</span></a>
+discusses how to configure data profiling. When this parameter is not specified, profiling uses
+default parameters.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">categories</span></code></strong>: List[string], <em>default</em> = <code class="docutils literal notranslate"><span class="pre">[&quot;TEST_CATEGORY_TYPE_ADVERSARIAL&quot;,</span> <span class="pre">&quot;TEST_CATEGORY_TYPE_MODEL_PERFORMANCE&quot;,</span> <span class="pre">&quot;TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE&quot;,</span> <span class="pre">&quot;TEST_CATEGORY_TYPE_TRANSFORMATIONS&quot;]</span></code></p>
+<p>Optional. Specifies which test categories Robust Intelligence runs. <a class="reference internal" href="../configuring_test_runs/configuring_test_categories.html"><span class="std std-doc">Categories Configuration</span></a> discusses how to configure categories. When this parameter is not specified, the default test categories are used. The default categories for Stress Testing are <code class="docutils literal notranslate"><span class="pre">TEST_CATEGORY_TYPE_ADVERSARIAL</span></code>, <code class="docutils literal notranslate"><span class="pre">TEST_CATEGORY_TYPE_MODEL_PERFORMANCE</span></code>, <code class="docutils literal notranslate"><span class="pre">TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE</span></code>, and <code class="docutils literal notranslate"><span class="pre">TEST_CATEGORY_TYPE_TRANSFORMATIONS</span></code>.</p>
+</li>
+</ul>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_suite_config</span></code></strong>: TestSuiteConfig, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">TestSuiteConfig()</span></code></p>
+<p>Optional. Specifies which tests to run and what test parameters to use. <a class="reference internal" href="../configuring_test_runs/configuring_test_suite.html"><span class="std std-doc">Test Suite Configuration</span></a> discusses how to configure test settings.When this parameter is not specified, default tests run with default parameters.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">run_time_info</span></code></strong>: RunTimeInfo, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">RunTimeInfo()</span></code></p>
+<p>Optional. Specifies runtime-specific parameters associated with the Stress Test run.
+See <a class="reference internal" href="../configuring_test_runs/configuring_runtime.html"><span class="std std-doc">Run Time Information</span></a> for details. When this argument is not specified, the
+Stress Test run uses default parameters.</p>
+</li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../validating_models.html" class="btn btn-neutral float-left" title="Validate Models with Stress Tests" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../monitoring_models.html" class="btn btn-neutral float-right" title="Monitor Models with Continuous Tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

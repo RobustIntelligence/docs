@@ -1,0 +1,60 @@
+# Configuring Runtime Information
+
+You can configure specific details on how Robust Intelligence runs a particular job.
+
+By default, Robust Intelligence attempts to infer optimal values for all of these options. Manually set
+these parameters only when Robust Intelligence is not selecting appropriate values.
+
+### Template
+
+Specify this configuration in the [Stress Testing configuration](../validating_models/configuring_stress_tests.md)
+JSON file, under the `"run_time_info"` parameter.
+
+```python
+# values shown below are not defaults, but rather examples of how to specify configuration.
+{
+    #...,
+    "run_time_info": {
+      "agent_id": "my_agent_id",
+      "custom_image": {
+        # either this:
+        "custom_image": {
+          "name": "my custom image name",
+          "pull_secret": "my custom image pull secret",
+        },
+        # or this:
+        "managed_image_name": "my managed image name",
+      },
+      "resource_request": {
+        "ram_request_megabytes": 1,
+        "cpu_request_millicores": 1,
+      },
+      "explicit_errors": False,
+      "random_seed": 5
+    }
+}
+```
+
+### Arguments
+
+- `agent_id`: string, *default* = the ID of the default agent for the workspace.
+
+  The ID of the agent on which to run this job. If not specified, the job will run on the default agent for the workspace.
+
+- `custom_image`: dict, *default* = `null`
+
+  Specifies a custom Docker image used by the job. In the outer `custom_image`
+  dictionary, specify exactly one of `managed_image_name` or the inner `custom_image`
+  dictionary. For more information on specifying custom images, see [Running Tests on Managed Docker Images](../test_customization/run_tests_on_managed_images.md).
+
+- `resource_request`: dict, *default* = `null`
+
+  The compute resources, such as RAM and CPU, that the job requires. If not specified, Robust Intelligence will infer defaults for these parameters.
+
+- `explicit_errors`: boolean, *default* = `False`
+
+  Specifies whether runtime errors that occur within Robust Intelligence tests will be explicitly raised, interrupting the entire test run. By default, this parameter is set to false, meaning that errors within a single test will not stop the test run.
+
+- `random_seed`: int64, *default* = None
+
+  Random seed for the job to ensure deterministic results. If not specified, the random seed will not be set.

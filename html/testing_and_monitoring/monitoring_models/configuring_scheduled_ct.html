@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configuring your Scheduled Continuous Test &mdash; Robust Intelligence  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Continuous Testing Feedback and Observability" href="ct_feedback_and_observability.html" />
+    <link rel="prev" title="Scheduling Continuous Testing runs" href="scheduling_ct_runs.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Robust Intelligence
+          </a>
+              <div class="version">
+                2.0.0-rc.14
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../creating_projects.html">Creating Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="creating_new_continuous_test.html">Creating a new Continuous Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../notebooks/demo_notebooks/RIME_Firewall_Configuring.html">Updating your Continuous Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loading_data_for_scheduled_ct.html">Loading Data for Scheduled Continuous Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling_ct_runs.html">Scheduling Continuous Testing runs</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configuring your Scheduled Continuous Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#templates-for-data-location-types">Templates for Data Location Types</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#data-collector">Data Collector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#delta-lake">Delta Lake</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#custom-loader">Custom Loader</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#templates-for-configuring-data-params">Templates for Configuring Data Params</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#templates-for-configuring-reference-sets">Templates for Configuring Reference Sets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#specifying-continuous-testing-data-locations">Specifying Continuous Testing Data Locations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ct_feedback_and_observability.html">Continuous Testing Feedback and Observability</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../querying_results.html">Querying Test Run Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notifications_and_alerts.html">Notifications and Alerts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_governance.html">Managing Model Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test_customization.html">Test Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integrating_mlops.html">Integrating with MLOps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/organization_administration.html">Organization Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/configuring_workspaces.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/security_and_compliance.html">Security and Compliance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Robust Intelligence</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+      <li class="breadcrumb-item active">Configuring your Scheduled Continuous Test</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="configuring-your-scheduled-continuous-test">
+<h1>Configuring your Scheduled Continuous Test<a class="headerlink" href="#configuring-your-scheduled-continuous-test" title="Permalink to this heading"></a></h1>
+<p>Configuration of schedules for Continuous Tests is done through the SDK or the UI. This abstraction allows Robust Intelligence to ‘pull’ data into the platform at a regular cadence.</p>
+<p>See <a class="reference internal" href="scheduling_ct_runs.html"><span class="std std-doc">Scheduled CT How-To-Guide</span></a> for instructions on how to activate and deactivate scheduling for Continuous Tests.</p>
+<section id="arguments">
+<h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this heading"></a></h2>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">location_type</span></code></strong>: string, <em><strong>required</strong></em></p>
+<p>Type of location that data is housed in. Can be “data_collector”, “delta_lake” or “custom_loader”.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">location_info</span></code></strong>: Dict or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code>, <em><strong>required for some location types</strong></em></p>
+<p>Dict containing arguments needed to access the location provided in the <code class="docutils literal notranslate"><span class="pre">location_type</span></code> field.
+While some types don’t require extra arguments, others do.</p>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">data_params</span></code></strong>: Dict or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code>, <em><strong>required for some location types</strong></em></p>
+<p>Dict containing arguments needed to process the data once loaded from the location eg. timestamp_col.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reference_set_window</span></code>: Tuple[datetime, datetime] or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>Time range use to define the reference dataset for scheduled runs.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rolling_window_duration</span></code>: datetime.timedelta or null, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<p>The length of the rolling window to use as a reference dataset in scheduled runs.</p>
+</li>
+</ul>
+</section>
+<section id="templates-for-data-location-types">
+<h2>Templates for Data Location Types<a class="headerlink" href="#templates-for-data-location-types" title="Permalink to this heading"></a></h2>
+<section id="data-collector">
+<h3>Data Collector<a class="headerlink" href="#data-collector" title="Permalink to this heading"></a></h3>
+<p>Data Collector does not take a location_info argument, since the service is internal.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_params_dict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="c1"># Arguments for activating a CT</span>
+<span class="c1"># Schedule with the Data Collector</span>
+<span class="n">firewall</span><span class="o">.</span><span class="n">activate_ct_schedule</span><span class="p">(</span>
+  <span class="n">data_stream_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+
+</pre></div>
+</div>
+</section>
+<section id="delta-lake">
+<h3>Delta Lake<a class="headerlink" href="#delta-lake" title="Permalink to this heading"></a></h3>
+<p>Delta Lake requires you to specify location details, since the service is external. See
+the section on <a class="reference internal" href="../../administration/configuring_workspaces/integrations/configuring_integrations.html"><span class="std std-doc">integrations</span></a> to configure
+Delta Lake.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
+<span class="n">firewall</span><span class="o">.</span><span class="n">activate_ct_scheduling</span><span class="p">(</span>
+    <span class="n">data_location</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;integration_id&quot;</span><span class="p">:</span> <span class="n">integration_id</span><span class="p">,</span>
+        <span class="s2">&quot;location_args&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;delta_lake_location&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;hive_metastore.default.fraud_data&quot;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;location_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;is_fraud&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;date&quot;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="n">prediction_location</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;integration_id&quot;</span><span class="p">:</span> <span class="n">integration_id</span><span class="p">,</span>
+        <span class="s2">&quot;location_args&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;delta_lake_location&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;hive_metastore.default.fraud_preds&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;location_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;pred_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="s2">&quot;is_fraud_preds&quot;</span><span class="p">}},</span>
+    <span class="p">},</span>
+    <span class="n">rolling_window_size</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="custom-loader">
+<h3>Custom Loader<a class="headerlink" href="#custom-loader" title="Permalink to this heading"></a></h3>
+<p>Our custom loader integration is designed to integrate with any location. This requires
+a <code class="docutils literal notranslate"><span class="pre">location_info</span></code> argument defining the path to your python data loading script and the
+name of the function that does the loading. For locations that require access
+credentials such as secrets or tokens, specify the value of those secrets as
+environment variables. The load function must accept as
+options the parameters <code class="docutils literal notranslate"><span class="pre">start_time</span></code>, <code class="docutils literal notranslate"><span class="pre">end_time</span></code>, which are integers that specify a
+timestamp as a number of seconds from the UNIX epoch. You will need to specify a data
+parameters dictionary with the <code class="docutils literal notranslate"><span class="pre">timestamp_col</span></code> parameter. You can also specify
+data parameters such as <code class="docutils literal notranslate"><span class="pre">pred_col</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
+
+<span class="c1"># Arguments for activating a CT</span>
+<span class="c1"># Schedule with Custom Loader</span>
+<span class="n">firewall</span><span class="o">.</span><span class="n">activate_ct_schedule</span><span class="p">(</span>
+    <span class="n">data_location</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;integration_id&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;YOUR_INTEGRATION_ID&gt;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;location_args&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;custom_location&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://bucket/path/to/loader.py&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;load_func_name&quot;</span><span class="p">:</span> <span class="s2">&quot;custom_data_loader_func&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;loader_kwargs_json&quot;</span><span class="p">:</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">some_param</span><span class="se">\&quot;</span><span class="s2">: 5}&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;location_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;is_fraud&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;date&quot;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="n">prediction_location</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;integration_id&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;YOUR_INTEGRATION_ID&gt;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;location_args&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;custom_location&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://bucket/path/to/loader.py&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;load_func_name&quot;</span><span class="p">:</span> <span class="s2">&quot;custom_prediction_loader_func&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;loader_kwargs_json&quot;</span><span class="p">:</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">some_param</span><span class="se">\&quot;</span><span class="s2">: 5}&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;location_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;pred_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="s2">&quot;is_fraud_preds&quot;</span><span class="p">}},</span>
+    <span class="p">},</span>
+    <span class="n">rolling_window_size</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+<span class="p">)</span>
+
+</pre></div>
+</div>
+</section>
+</section>
+<section id="templates-for-configuring-data-params">
+<h2>Templates for Configuring Data Params<a class="headerlink" href="#templates-for-configuring-data-params" title="Permalink to this heading"></a></h2>
+<p>The dictionary below outlines all the keys you can specify for data params. If these are
+not provided, the defaults are taken from the reference dataset. For more info about the types
+see our <a class="reference internal" href="../preparing_your_models_and_datasets/data_source.html#general-parameters-for-single-data-info"><span class="std std-ref">General Tabular Parameters Section</span></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;class_names&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;ranking_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;query_col&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;nqueries&quot;</span><span class="p">:</span> <span class="c1">#,</span>
+        <span class="s2">&quot;nrows_per_query&quot;</span><span class="p">:</span> <span class="c1">#,</span>
+        <span class="s2">&quot;drop_query_id&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;embeddings&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cols&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;nrows&quot;</span><span class="p">:</span> <span class="c1">#,</span>
+    <span class="s2">&quot;nrows_per_time_bin&quot;</span><span class="p">:</span> <span class="c1">#,</span>
+    <span class="s2">&quot;sample&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;categorical_features&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;features_not_in_model&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;text_features&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;image_features&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;intersections&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;loading_kwargs&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;feature_type_path&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pred_path&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;image_load_path&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+</pre></div>
+</div>
+</section>
+<section id="templates-for-configuring-reference-sets">
+<h2>Templates for Configuring Reference Sets<a class="headerlink" href="#templates-for-configuring-reference-sets" title="Permalink to this heading"></a></h2>
+<p>When specifying a reference dataset you can choose to use the default value or change the dataset to a rolling window or specific time period.</p>
+<p>To choose the default value, you don’t need to specify rolling_window_duration or reference_set_window:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fill in the dictionaries</span>
+<span class="c1"># with the appropriate keys as below</span>
+<span class="n">data_params_dict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">location_info_dict</span><span class="o">=</span> <span class="p">{}</span>
+
+<span class="c1"># General Arguments for Activating a Schedule</span>
+<span class="c1"># if using a default reference set</span>
+<span class="n">firewall</span><span class="o">.</span><span class="n">activate_ct_schedule</span><span class="p">(</span>
+    <span class="n">location_type</span><span class="o">=</span><span class="s2">&quot;&lt;YOUR_LOCATION_TYPE&gt;&quot;</span><span class="p">,</span>
+    <span class="n">location_info</span><span class="o">=</span><span class="n">location_info_dict</span><span class="p">,</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="n">data_params_dict</span><span class="p">,</span>
+<span class="p">)</span>
+
+</pre></div>
+</div>
+<p>To choose a rolling window:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
+<span class="c1"># Fill in the dictionaries</span>
+<span class="c1"># with the appropriate keys as below</span>
+<span class="n">data_params_dict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">location_info_dict</span><span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">rolling_window_period</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># General Arguments for Activating a Schedule</span>
+<span class="c1"># if specifying a reference set with a rolling window</span>
+<span class="n">firewall</span><span class="o">.</span><span class="n">activate_ct_schedule</span><span class="p">(</span>
+    <span class="n">location_type</span><span class="o">=</span><span class="s2">&quot;&lt;YOUR_LOCATION_TYPE&gt;&quot;</span><span class="p">,</span>
+    <span class="n">location_info</span><span class="o">=</span><span class="n">location_info_dict</span><span class="p">,</span>
+    <span class="n">rolling_window_duration</span><span class="o">=</span><span class="n">rolling_window_period</span><span class="p">,</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="n">data_params_dict</span><span class="p">,</span>
+<span class="p">)</span>
+
+</pre></div>
+</div>
+<p>To choose a time period:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="c1"># Fill in the dictionaries</span>
+<span class="c1"># with the appropriate keys as below</span>
+<span class="n">data_params_dict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">location_info_dict</span><span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">reference_start_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">reference_end_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">reference_set_bin</span> <span class="o">=</span> <span class="p">(</span><span class="n">reference_start_time</span><span class="p">,</span> <span class="n">reference_end_time</span><span class="p">)</span>
+
+<span class="c1"># General Arguments for Activating a Schedule</span>
+<span class="c1"># if specifying a reference set with a time period</span>
+<span class="n">firewall</span><span class="o">.</span><span class="n">activate_ct_schedule</span><span class="p">(</span>
+    <span class="n">location_type</span><span class="o">=</span><span class="s2">&quot;&lt;YOUR_LOCATION_TYPE&gt;&quot;</span><span class="p">,</span>
+    <span class="n">location_info</span><span class="o">=</span><span class="n">location_info_dict</span><span class="p">,</span>
+    <span class="n">reference_set_window</span><span class="o">=</span><span class="n">reference_set_bin</span><span class="p">,</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="n">data_params_dict</span><span class="p">,</span>
+<span class="p">)</span>
+
+</pre></div>
+</div>
+</section>
+<section id="specifying-continuous-testing-data-locations">
+<h2>Specifying Continuous Testing Data Locations<a class="headerlink" href="#specifying-continuous-testing-data-locations" title="Permalink to this heading"></a></h2>
+<p>Each of the location types above can also be run independently through
+Continuous Testing configs. Additionally, the Delta Lake and Custom Loader
+types can be run in an offline setting as stress tests. To learn about how to specify the configurations, please visit
+the <a class="reference internal" href="../integrating_mlops/data_integrations.html"><span class="std std-doc">Integrations</span></a> section.</p>
+<p>For Delta Lake configs specifically, you will need to specify a <code class="docutils literal notranslate"><span class="pre">data_source_name</span></code>
+when running a test. This is the name of the Delta Lake Data Source, which can be configured through the UI.</p>
+<p>For a continuous test, this might look like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="n">ref_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span>  <span class="p">{</span>
+        <span class="s2">&quot;delta_lake&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;hive_metastore.default.fraud_ref_data_and_labels&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;time_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;start_time&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">2023</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="s2">&quot;end_time&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">2024</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+<span class="n">ref_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
+    <span class="s2">&quot;&lt;DATASET_NAME&gt;&quot;</span><span class="p">,</span>
+    <span class="n">ref_config</span><span class="p">,</span>
+    <span class="n">integration_id</span><span class="o">=</span><span class="s2">&quot;&lt;YOUR_INTEGRATION_ID&gt;&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+</pre></div>
+</div>
+<p>For a stress test, this might look like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="n">ref_pred_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;delta_lake&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;hive_metastore.default.fraud_ref_preds&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;time_col&quot;</span><span class="p">:</span> <span class="s2">&quot;time&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;start_time&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">2023</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="s2">&quot;end_time&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">2024</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;pred_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="s2">&quot;preds&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+<span class="n">project</span><span class="o">.</span><span class="n">register_predictions</span><span class="p">(</span>
+  <span class="n">dataset_id</span><span class="o">=</span><span class="n">ref_dataset_id</span><span class="p">,</span>
+  <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span>
+  <span class="n">pred_config</span><span class="o">=</span><span class="n">ref_pred_config</span><span class="p">,</span>
+  <span class="n">integration_id</span><span class="o">=</span><span class="s2">&quot;&lt;YOUR_INTEGRATION_ID&gt;&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">eval_data_location</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;integration_id&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;YOUR_INTEGRATION_ID&gt;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;location_args&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;delta_lake_location&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;hive_metastore.default.fraud_cur_inc_data_and_labels&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;time_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;location_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;is_fraud&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+<span class="p">}</span>
+<span class="n">eval_preds_data_location</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;integration_id&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;YOUR_INTEGRATION_ID&gt;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;location_args&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;delta_lake_location&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;hive_metastore.default.fraud_cur_inc_preds&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;time_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;location_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="s2">&quot;is_fraud_preds&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="scheduling_ct_runs.html" class="btn btn-neutral float-left" title="Scheduling Continuous Testing runs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ct_feedback_and_observability.html" class="btn btn-neutral float-right" title="Continuous Testing Feedback and Observability" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

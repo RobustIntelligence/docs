@@ -1,0 +1,27 @@
+# Notification Types
+
+All the following types of notifications are configured at the Project level via Project Settings.
+You are not limited to one notification type: any subset of the following types can be selected.
+
+## Monitoring Notifications
+* Preferred means of tracking model health over time.
+* Triggered when a Continuous Testing job completes and has detected Events for
+  the set of Monitors with enabled notifications.
+  * A Monitor tracks model degradations over time; Events are created when the Monitor
+  detects a serious problem. See the [reference](../monitoring_models/ct_feedback_and_observability.md) for
+  more information about Monitors and Events.
+  * By default, only an important subset of the Default Monitors have notifications enabled
+  to avoid spamming you.
+* Choose between receiving notifications at different Alert levels.
+  * `ONLY_ALERTS` will only send a notification if there are Events with Alert severity.
+  * `WARNINGS_AND_ALERTS` will send notification if any Events are detected.
+
+## Job Action Notifications
+* Triggered during key status changes in the life cycle of a testing job, such as completion or failure.
+* Useful for long-running jobs with large datasets / complex models.
+
+## Daily Digest Notifications
+* Include a summary of all Stress Test runs for the day.
+* Will NOT be sent if there are no Stress Tests for the day.
+* Sent out every day at 8am in the timezone configured
+  for the Organization (initialized to UTC).

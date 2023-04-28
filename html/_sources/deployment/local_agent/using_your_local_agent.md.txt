@@ -1,0 +1,25 @@
+# Using your Local Agent
+
+When specifying paths to data or model files in test run configurations, replace the path to the directory on your local filesystem that you mounted with `/ri-platform/local`.
+
+For example, if you mounted `/Users/name/Documents/my-data-directory`, and that directory contains:
+
+- `data/`
+    - `ref.csv`
+    - `eval.csv`
+- `model.py`
+
+You would specify those files in a test configuration as:
+```python
+config = {
+    "data_info": {
+        "ref_path": "/ri-platform/local/data/ref.csv",
+        "eval_path": "/ri-platform/local/data/eval.csv",
+        ...
+    },
+    "model_info": {
+        "path": "/ri-platform/local/model.py"
+    },
+    ...
+}
+```

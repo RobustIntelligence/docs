@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RI NLP Multiclass Classification Walkthrough &mdash; Robust Intelligence  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="RI Adversarial NLP Walkthrough" href="RIME_Adversarial_NLP_Walkthrough.html" />
+    <link rel="prev" title="RI Movie Ratings Ranking Data Walkthrough 🎥" href="RIME_Ranking_Walkthrough.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Robust Intelligence
+          </a>
+              <div class="version">
+                2.0.0-rc.14
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation Home</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../documentation_home/installation.html">Installation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../documentation_home/notebooks.html">Tutorial Notebooks</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../documentation_home/notebooks.html#tabular-notebooks">Tabular Notebooks</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../documentation_home/notebooks.html#nlp-notebooks">NLP Notebooks</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#"><strong>RI NLP Multiclass Classification Walkthrough</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="RIME_Adversarial_NLP_Walkthrough.html"><strong>RI Adversarial NLP Walkthrough</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation_home/notebooks.html#cv-notebooks">CV Notebooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation_home/notebooks.html#bias-and-fairness-notebooks">Bias and Fairness Notebooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation_home/notebooks.html#rest-api-notebooks">REST API Notebooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation_home/notebooks.html#set-up-your-own-test-run">Set Up Your Own Test Run</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/querying_results.html">Querying Test Run Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/notifications_and_alerts.html">Notifications and Alerts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/model_governance.html">Managing Model Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/test_customization.html">Test Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops.html">Integrating with MLOps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/organization_administration.html">Organization Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/configuring_workspaces.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/security_and_compliance.html">Security and Compliance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Robust Intelligence</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../documentation_home/get_started.html">Get Started</a></li>
+          <li class="breadcrumb-item"><a href="../../documentation_home/notebooks.html">Tutorial Notebooks</a></li>
+      <li class="breadcrumb-item active"><strong>RI NLP Multiclass Classification Walkthrough</strong></li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="RI-NLP-Multiclass-Classification-Walkthrough">
+<h1><strong>RI NLP Multiclass Classification Walkthrough</strong><a class="headerlink" href="#RI-NLP-Multiclass-Classification-Walkthrough" title="Permalink to this heading"></a></h1>
+<p>You are a data scientist working to maintain a large research library. The data science team has been tasked with implementing a research paper topic classification model and monitoring how that model performs over time. The performance of this model directly impacts the profits of the company. To ensure the data science team develops the best model and the performance of this model doesn’t degrade over time, the VP of Data Science purchases the RIME platform.</p>
+<p>In this Notebook Walkthrough, we will walkthrough 2 of RIME’s core products - <strong>AI Stress Testing</strong> and <strong>AI Continuous Testing</strong>.</p>
+<ol class="arabic simple">
+<li><p><strong>AI Stress Testing</strong> is used in the model development stage. Using AI Stress Testing you can test the developed model. RIME goes beyond simply optimizing for basic model performance like accuracy and automatically discovers the model’s weaknesses.</p></li>
+<li><p><strong>AI Continuous Testing</strong> is used after the model is deployed in production. Using AI Continuous Testing, you can automate the monitoring, discovery and remediation of issues that occur post-deployment.</p></li>
+</ol>
+<section id="Install-Dependencies,-Import-Libraries-and-Download-Data">
+<h2><strong>Install Dependencies, Import Libraries and Download Data</strong><a class="headerlink" href="#Install-Dependencies,-Import-Libraries-and-Download-Data" title="Permalink to this heading"></a></h2>
+<p>Run the cell below to install libraries to receive data, install our SDK, and load analysis libraries.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>rime-sdk<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>https://github.com/RobustIntelligence/ri-public-examples/archive/master.zip
+
+<span class="kn">from</span> <span class="nn">ri_public_examples.download_files</span> <span class="kn">import</span> <span class="n">download_files</span>
+
+<span class="n">download_files</span><span class="p">(</span><span class="s1">&#39;nlp/classification/arxiv-2.0&#39;</span><span class="p">,</span> <span class="s1">&#39;arxiv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Establish-the-RIME-Client">
+<h2><strong>Establish the RIME Client</strong><a class="headerlink" href="#Establish-the-RIME-Client" title="Permalink to this heading"></a></h2>
+<p>To get started, provide the API credentials and the base domain/address of the RIME Cluster. You can generate and copy an API token from the API Access Tokens Page under Workspace settings. For the domain/address of the RIME Cluster, contact your admin.</p>
+<img alt="api.jpeg" src="https://www.dropbox.com/s/bpz7vb8j6a7zgwu/img_1_api.jpeg?dl=0" />
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE API_KEY</span>
+<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">API_TOKEN</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Create-a-New-Project">
+<h2><strong>Create a New Project</strong><a class="headerlink" href="#Create-a-New-Project" title="Permalink to this heading"></a></h2>
+<p>You can create projects in RIME to organize your test runs. Each project represents a workspace for a given machine learning task. It can contain multiple candidate models, but should only contain one promoted production model.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">description</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Run Stress Testing, Continuous Testing and AI Firewall on a&quot;</span>
+    <span class="s2">&quot; text classification model and dataset. Demonstration uses &quot;</span>
+    <span class="s2">&quot; a dataset composed of ArXiv paper titles where the task is&quot;</span>
+    <span class="s2">&quot; to predict the paper topic.&quot;</span>
+<span class="p">)</span>
+<span class="n">project</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Text Classification Demo&#39;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+    <span class="n">model_task</span><span class="o">=</span><span class="s1">&#39;MODEL_TASK_MULTICLASS_CLASSIFICATION&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Go back to the UI to see the Arxiv Project</strong></p>
+</section>
+<section id="Uploading-the-Model-+-Datasets-+-Predictions">
+<h2><strong>Uploading the Model + Datasets + Predictions</strong><a class="headerlink" href="#Uploading-the-Model-+-Datasets-+-Predictions" title="Permalink to this heading"></a></h2>
+<p>For this demo, we are going to use the prediction logs of a text classification model for arxiv, a popular research database.</p>
+<p>The model classifies the research paper into a number of different categories such as -</p>
+<ol class="arabic simple">
+<li><p>Black Hole</p></li>
+<li><p>Neutron Star</p></li>
+<li><p>Dark Matter</p></li>
+</ol>
+<p>We now want to kick off RIME Stress Tests that will help us evaluate the model in further depth beyond basic performance metrics like accuracy, precision, recall. In order to do this, we will upload this pre-trained model, the reference dataset the model was trained on, and the evaluation dataset the model was evaluated on to an S3 bucket that can be accessed by RIME. Futhermore, we’ll need to register them with RIME.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">upload_path</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_arxiv&quot;</span>
+<span class="n">ref_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;arxiv/data/train.json.gz&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+<span class="p">)</span>
+<span class="n">eval_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;arxiv/data/val_0_with_label.json.gz&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+<span class="p">)</span>
+<span class="n">ref_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;arxiv/data/preds.train.jsonl.gz&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+<span class="p">)</span>
+<span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;arxiv/data/preds.val_0.jsonl.gz&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Once the data and model are uploaded to S3, we can register them to RIME. Once they’re registered, we can refer to these resources using their RIME-generated ID’s.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+
+<span class="c1"># Note: models and datasets need to have unique names.</span>
+<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">model_config</span><span class="o">=</span><span class="p">{</span>
+    <span class="s2">&quot;hugging_face&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;model_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;Wi/arxiv-distilbert-base-cased&quot;</span><span class="p">}</span>
+<span class="p">})</span>
+<span class="n">data_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;text_features&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;text&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span>
+<span class="p">}</span>
+<span class="n">ref_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;ref_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ref_s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="n">data_params</span>
+<span class="p">)</span>
+<span class="n">eval_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;eval_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">eval_s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="n">data_params</span>
+<span class="p">)</span>
+<span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
+    <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">ref_preds_s3_path</span>
+<span class="p">)</span>
+<span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
+    <span class="n">eval_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">eval_preds_s3_path</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Running-a-Stress-Test">
+<h2><strong>Running a Stress Test</strong><a class="headerlink" href="#Running-a-Stress-Test" title="Permalink to this heading"></a></h2>
+<p>AI Stress Tests allow you to test your data and model before deployment. They are a comprehensive suite of hundreds of tests that automatically identify implicit assumptions and weaknesses of pre-production models. Each stress test is run on a single model and its associated reference and evaluation datasets.</p>
+<p>First, we will create a customer image with pip requirements to run our model with. This will take some time to install and run.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">requirements</span> <span class="o">=</span> <span class="p">[</span>
+     <span class="n">client</span><span class="o">.</span><span class="n">pip_requirement</span><span class="p">(</span><span class="s2">&quot;datasets&quot;</span><span class="p">),</span>
+     <span class="n">client</span><span class="o">.</span><span class="n">pip_requirement</span><span class="p">(</span><span class="s2">&quot;sentencepiece&quot;</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">image_name</span> <span class="o">=</span> <span class="s2">&quot;arxiv_image&quot;</span>
+
+<span class="c1"># Start a new image building job if it doesn&#39;t exist</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">client</span><span class="o">.</span><span class="n">has_managed_image</span><span class="p">(</span><span class="n">image_name</span><span class="p">,</span> <span class="n">check_status</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="c1"># e.g., if the image build job failed</span>
+    <span class="k">if</span> <span class="n">client</span><span class="o">.</span><span class="n">has_managed_image</span><span class="p">(</span><span class="n">image_name</span><span class="p">):</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">delete_managed_image</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
+
+    <span class="n">builder_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_managed_image</span><span class="p">(</span><span class="n">image_name</span><span class="p">,</span> <span class="n">requirements</span><span class="p">)</span>
+
+    <span class="c1"># Wait until the job has finished and print out status information.</span>
+    <span class="c1"># Once this prints out the `READY` status, your image is available for use in stress tests.</span>
+    <span class="n">builder_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Now that we’ve built our custom image, we can run our tests. Below is a sample configuration of how to setup and run a RIME Stress Test for NLP.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stress_test_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;ArXiv Topic Classification&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="n">ref_dataset_id</span><span class="p">,</span>
+        <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="n">eval_dataset_id</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span><span class="p">,</span>
+    <span class="s2">&quot;run_time_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;random_seed&quot;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+        <span class="s2">&quot;custom_image&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;managed_image_name&quot;</span><span class="p">:</span> <span class="n">image_name</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">stress_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
+    <span class="n">test_run_config</span><span class="o">=</span><span class="n">stress_test_config</span><span class="p">,</span>
+    <span class="n">project_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span>
+<span class="p">)</span>
+<span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Stress-Test-Results">
+<h2><strong>Stress Test Results</strong><a class="headerlink" href="#Stress-Test-Results" title="Permalink to this heading"></a></h2>
+<p>Stress tests are grouped into categories that measure various aspects of model robustness (subset performance, distribution drift, abnormal input). Suggestions to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information.</p>
+<p>You can view the detailed results in the UI by running the below cell and redirecting to the generated link. This page shows granular results for a given AI Stress Test run.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_run</span> <span class="o">=</span> <span class="n">stress_job</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
+<span class="n">test_run</span>
+</pre></div>
+</div>
+</div>
+<section id="Analyzing-the-Results">
+<h3>Analyzing the Results<a class="headerlink" href="#Analyzing-the-Results" title="Permalink to this heading"></a></h3>
+<p>Below you can see a snapshot of the results and the different tests that we run. Some of these tests such as the Subset Performance Tests analyze how your model performs on different groups in the data, while others such as Transformations Tests analyze how your model reacts to augmented and malicious text data.</p>
+<img alt="stress.png" src="https://drive.google.com/uc?id=19Zvfn5oHsALb4n8BFbmqG0t2n_UOfKIX" />
+<section id="Subset-Performance-Tests">
+<h4>Subset Performance Tests<a class="headerlink" href="#Subset-Performance-Tests" title="Permalink to this heading"></a></h4>
+<p>Here are the results of the Subset Performance tests. These tests can be thought as more detailed performance tests that identify subsets of underperformance. These tests help ensure that the model works equally well across different groups.</p>
+<img alt="subset.png" src="https://drive.google.com/uc?id=1m-YaOEv7JJmxGRnaGUUZ-wT7Sy6D4k2F" />
+<p>Below we are exploring the “Subset Macro Precision” test cases for the text metadata feature “AverageTokenLength”. We can see that even though the model has a Macro Precision of 0.53, it performs poorly on certain subsets, especially those with lower average token lengths.</p>
+<img alt="precision.png" src="https://drive.google.com/uc?id=1tSBMtZy-6qEnsh2xV6u98Zr3YBqdmmCV" />
+</section>
+<section id="Transformation-Tests">
+<h4>Transformation Tests<a class="headerlink" href="#Transformation-Tests" title="Permalink to this heading"></a></h4>
+<p>Here are the results of the Transformation tests. These tests can be thought as ways to test your models response to augmented text data. They help to make sure that your model is invariant to such changes in your data.</p>
+<img alt="transform.png" src="https://drive.google.com/uc?id=1DIwzsn7lxm6DzkeYavLQVV1dmvDLdBUi" />
+<p>Below we are exploring a transformation test that changes the original text to upper-case text. We see that this transformation causes the original class’s predicted score to change by 0.70. As a result, the model predicts an entirely new class for the text and misclassifies it.</p>
+<img alt="replacement.png" src="https://drive.google.com/uc?id=1EwNbC9RPy2lhvUDiI2uswN5kKmkGn3Eo" />
+</section>
+</section>
+<section id="Programmatically-Querying-the-Results">
+<h3>Programmatically Querying the Results<a class="headerlink" href="#Programmatically-Querying-the-Results" title="Permalink to this heading"></a></h3>
+<p>RIME not only provides you with an intuitive UI to visualize and explore these results, but also allows you to programmatically query these results. This allows customers to integrate with their MLOps pipeline, log results to experiment management tools like MLFlow, bring automated decision making to their ML practices, or store these results for future references.</p>
+<p>Run the below cell to programmatically query the results. The results are outputted as a pandas dataframe.</p>
+<p><strong>Access results at the a test run overview level</strong></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_run_result</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_result_df</span><span class="p">()</span>
+<span class="n">test_run_result</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;Arxiv_Test_Run_Results.csv&quot;</span><span class="p">)</span>
+<span class="n">test_run_result</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Access detailed test results at each individual test cases level</strong></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_case_result</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_cases_df</span><span class="p">()</span>
+<span class="n">test_case_result</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;Arxiv_Test_Case_Results.csv&quot;</span><span class="p">)</span>
+<span class="n">test_case_result</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Access detailed test results for a given test batch</strong></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subset_macro_f1</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_batch</span><span class="p">(</span><span class="s2">&quot;subset_performance:subset_macro_f1&quot;</span><span class="p">)</span>
+<span class="n">subset_macro_f1</span><span class="o">.</span><span class="n">get_test_cases_df</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Deploy-to-Production-and-Create-the-AI-Firewall">
+<h2><strong>Deploy to Production and Create the AI Firewall</strong><a class="headerlink" href="#Deploy-to-Production-and-Create-the-AI-Firewall" title="Permalink to this heading"></a></h2>
+<p>Once you have identified the best stress test run, you can deploy the associated model and set up a RIME Firewall to run Continuous Testing in order to automatically detect “bad” incoming data and statistically significant distributional drift.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
+
+<span class="n">firewall</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_firewall</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Uploading-a-Batch-of-Production-Data-&amp;-Model-Predictions-to-Firewall">
+<h2><strong>Uploading a Batch of Production Data &amp; Model Predictions to Firewall</strong><a class="headerlink" href="#Uploading-a-Batch-of-Production-Data-&-Model-Predictions-to-Firewall" title="Permalink to this heading"></a></h2>
+<p>The text classification model has been in production for the past week. Production data and model predictions have been collected and stored for the past week. Now, we will use Firewall to track how the model performed across the last week.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+<span class="n">prod_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;arxiv/data/val_1.json.gz&#39;</span><span class="p">),</span>
+    <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+<span class="p">)</span>
+<span class="n">prod_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;prod_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">prod_s3_path</span><span class="p">,</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="n">data_params</span>
+<span class="p">)</span>
+<span class="n">prod_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;arxiv/data/preds.val_1.jsonl.gz&#39;</span><span class="p">),</span>
+    <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+<span class="p">)</span>
+<span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
+    <span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">prod_preds_s3_path</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Get the Firewall</strong></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">firewall</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_firewall_for_project</span><span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Run Continuous Testing over Batch of Data</strong></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">prod_dataset_id</span><span class="p">)</span>
+<span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">firewall</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Wait for a couple minutes and your results will appear in the UI</strong></p>
+</section>
+<section id="Querying-Results-from-the-Firewall">
+<h2><strong>Querying Results from the Firewall</strong><a class="headerlink" href="#Querying-Results-from-the-Firewall" title="Permalink to this heading"></a></h2>
+<p>After a firewall has been created and data has been uploaded for processing, the user can query the results throughout the entire uploaded history.</p>
+<p><strong>Obtain All Detection Events</strong></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">events</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">firewall</span><span class="o">.</span><span class="n">list_monitors</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">list_detected_events</span><span class="p">()]</span>
+<span class="n">events_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">events</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;project_id&quot;</span><span class="p">,</span> <span class="s2">&quot;firewall_id&quot;</span><span class="p">,</span> <span class="s2">&quot;event_object_id&quot;</span><span class="p">,</span> <span class="s2">&quot;description_html&quot;</span><span class="p">,</span> <span class="s2">&quot;last_update_time&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">events_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Firewall-Overview">
+<h2><strong>Firewall Overview</strong><a class="headerlink" href="#Firewall-Overview" title="Permalink to this heading"></a></h2>
+<p>The Overview page is the mission control for your model’s production deployment health. In it, you can see the status of firewall events, get notified when model performance degrades, and see the underlying causes of failure.</p>
+<img alt="img_5" src="https://drive.google.com/uc?id=14o9t1Upq_ZJACipy6e7YmhnIYSAT9Ahp" />
+</section>
+<section id="Firewall-CT-Results">
+<h2><strong>Firewall CT Results</strong><a class="headerlink" href="#Firewall-CT-Results" title="Permalink to this heading"></a></h2>
+<p>The AI Firewall’s Continuous Tests operate at the batch level and provide a mechanism to monitor the health of ML deployments in production. They allow the user to understand when errors begin to occur and surface the underlying drivers of such errors.</p>
+<p>You can explore the results in the UI by running the below cell and redirecting to the generated link.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">firewall</span>
+</pre></div>
+</div>
+</div>
+<section id="Analyzing-CT-Results">
+<h3><strong>Analyzing CT Results</strong><a class="headerlink" href="#Analyzing-CT-Results" title="Permalink to this heading"></a></h3>
+<p><strong>Model performance stays constant</strong> - In the below image, we can see that the Average Confidence (model performance) stays relatively constant, increasing slighlty from 71.5% on 06/19 to 74.3% on 06/24.</p>
+<img alt="img_7" src="https://drive.google.com/uc?id=1hSZ2QWz2DkRBmRDT9Dclc236MQl6_oME" />
+<p><strong>Abnormality Rate Increases For a Time Period</strong> - In the below image, we can see that the abnormality rate has increased in the middle of the week, from when the model was first deployed. On 06/19 when the model was deployed, the rate was 0.83%. By 06/22, it had increased to 1.81%.</p>
+<img alt="img_6" src="https://drive.google.com/uc?id=1ii21cmVjGVl0RRELki05xKJy08Ehpkw_" />
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="RIME_Ranking_Walkthrough.html" class="btn btn-neutral float-left" title="RI Movie Ratings Ranking Data Walkthrough 🎥" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="RIME_Adversarial_NLP_Walkthrough.html" class="btn btn-neutral float-right" title="RI Adversarial NLP Walkthrough" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

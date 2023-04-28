@@ -1,0 +1,47 @@
+# Databricks Delta Lake
+
+Robust Intelligence supports loading data directly from Databricks Delta Lake. Configure
+Databricks Delta Lake [using the UI.](../configuring_integrations.md)
+
+
+## Configuring Databricks Delta Lake Integration
+
+In order to configure the Databricks Delta Lake, you need to enter the following information:
+
+1. Server Hostname
+2. HTTP Path
+3. Databricks [Personal Access Token](https://docs.databricks.com/dev-tools/auth.html#pat)
+
+### Retrieving Server Hostname and HTTP Path Details
+
+1.  Log in to a Databricks Delta Lake instance.
+2.  Click the compute icon in the sidebar and connect to a cluster.
+3.  In Advanced Options, click the *JDBC/ODBC* tab.
+    >   The server hostname and http path appear.
+
+Note the connection details for future use.
+
+## Using the Databricks Delta Lake Integration
+
+After configuring the integration, use it to register datasets.
+
+```
+integration_id = "abe23******" #Choose the Databricks Deltalake Integration ID
+
+project.register_dataset(
+    name= f"ref_data_{dt}",
+    data_config= {
+        "connection_info": {
+            "delta_lake_info": {
+                "table_name": "delta_lake_table" #Enter the databricks deltalake name
+            }
+        },
+        "data_params": {"label_col": "label"}
+    },
+    integration_id= integration_id
+)
+```
+
+More information on defining
+the configurations is available in the
+[Data Configuration](../../../../testing_and_monitoring/preparing_your_models_and_datasets/data_source.md) section.

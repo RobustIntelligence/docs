@@ -1,0 +1,114 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "bdd9e79d",
+   "metadata": {},
+   "source": [
+    "## PART I: Ensure New Image Creation Works"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "83b10af9",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from rime_sdk import Client"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "14b37a49",
+   "metadata": {},
+   "source": [
+    "## Setup Experiment\n",
+    "\n",
+    "Please enter values for the cluster, its API token, and an image you want to create."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "d06552b3",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "API_TOKEN = \"\"                        # CREATE & PASTE API_KEY.\n",
+    "CLUSTER_URL = \"rime.staging.rbst.io\"  # PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rime.dev).\n",
+    "IMAGE_NAME = \"\"                       # SELECT A UNIQUE IMAGE NAME\n",
+    "REQ_NAME = \"pyjokes\"\n",
+    "REQ_VERSION_SPEC=\"==0.6.0\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "82953cb8",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "Python SDK package and server are on different versions. The Python SDK package is on version 2.0.0rc10.post0+git.22a34719.dirty, while the server is on version 2.0.0-rc.8. In order to make them be on the same version, please install the correct version of the Python SDK package with `pip install rime_sdk==2.0.0-rc.8`\n"
+     ]
+    }
+   ],
+   "source": [
+    "rime_client = Client(CLUSTER_URL, API_TOKEN)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "bc897c1f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "job = rime_client.create_managed_image(IMAGE_NAME, [Client.pip_requirement(name=REQ_NAME, version_specifier=REQ_VERSION_SPEC)])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e273ff59",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Querying for Managed Image 'blaine2':\n",
+      "Status: STATUS_BUILDING_FIRST_TIME, Poll Count: 140"
+     ]
+    }
+   ],
+   "source": [
+    "job.get_status(wait_until_finish=True, verbose=True)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "venv",
+   "language": "python",
+   "name": "venv"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.16"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

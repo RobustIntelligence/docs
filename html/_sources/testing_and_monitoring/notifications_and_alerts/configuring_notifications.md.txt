@@ -1,0 +1,96 @@
+# Configuring Notifications
+
+## Setting up Project Alerts
+
+1.  Sign in to a Robust Intelligence instance.
+    >   The Workspaces page appears.
+2.  Click a workspace.
+    >   The Workspaces summary page appears.
+3.  Select a project.
+    >   You can filter or sort the list of projects in a workspace with the
+    >   *Sort* and *Filter* controls in the upper right. Click the glyph to the
+    >   right of the *Filter* control to switch between list and card display
+    >   for projects. Type a string in *Search Projects...* to display only
+    >   projects that match the string.
+
+    >   The project overview page appears.
+4.  Click *Alerts* next to the project name.
+    >   The Project Alerts dialog box appears.
+6.  Choose an alert delivery model.
+    >   | Alert delivery | Configuration step                                             |
+    >   |----------------|----------------------------------------------------------------|
+    >   | Email          | In *Email Address*, type an email address and click *Add*.     |
+    >   | Slack          | In *Webhook URL*, paste the Slack webhook URL and click *Add*. |
+7.  Click *Done*.
+
+Alerts are configured for this project.
+
+## How to Configure Email Notifications
+
+* Email notifications depend on Robust Intelligence having a properly [configured SMTP server](../../administration/organization_administration/configuring_smtp.md).
+
+* Email addresses can be added by clicking on the alerts icon for a particular project in the web app or calling a method in the SDK.
+
+  ```python
+  project = rime_client.get_project("<your_project_id_here")
+  # Strings for the type of the notification to sign up for are:
+  # ["Job_Action", "Monitoring", "Daily_Digest"]
+  project.add_email("<your_email_here>", "Monitoring")
+  ```
+
+* Currently, Gmail and Outlook are the only officially supported email clients.
+
+* Email notifications are supported for Enterprise customers and Cloud Trial customers.
+
+    * Enterprise customers will need to configure SMTP with their own server. SMTP settings live under workspace settings.
+
+    * Cloud Trial customers will receive emails from “dev@robustintelligence.com”. Add this email address to your safe senders list to prevent it from going to spam.
+
+* Emails can be removed from a project in the web app or the SDK.
+
+  ```python
+  project = rime_client.get_project("<your_project_id_here")
+  project.remove_email("<your_email_here>")
+  ```
+
+## How to Configure Webhooks
+
+* Arbitrary webhook URLs may be added by clicking the alerts icon for a particular project on the web app or by calling a method in the SDK.
+
+  ```python
+  project = rime_client.get_project("<your_project_id_here")
+  # Strings for the type of the notification to sign up for are:
+  # ["Job_Action", "Monitoring", "Daily_Digest"]
+  project.add_webhook("<your_webhook_url_here", "Job_Action")
+  ```
+* Webhook URLs should be preauthenticated (i.e. include a security token as a URL parameter).
+  After you create a webhook from another application to copy-paste into the RI Platform, ensure
+  that you do not share that webhook publicly.
+
+* Webhooks can be removed from a project in the web app or the SDK.
+
+  ```python
+  project = rime_client.get_project("<your_project_id_here")
+  project.remove_webhook("<your_webhook_url_here")
+  ```
+
+## How to Configure Slack Notifications
+
+* Incoming webhooks are the preferred way to integrate Slack and Robust Intelligence.
+
+* Create an Incoming Webhook Slack App using the instructions [here](https://api.slack.com/messaging/webhooks).
+
+* Use the instructions for configuring webhooks above to add your created webhook to your project of choice.
+
+* Thresholds can also be modified in the SDK.
+
+  ```python
+  project = rime_client.get_project("<your_project_id_here")
+  firewall = project.get_firewall()
+
+  # Get a pd.DataFrame with the current thresholds.
+  df = firewall.get_metric_thresholds()
+
+  # Disable the threshold for "Abnormality Rate"
+  firewall.update_metric_thresholds("Abnormality Rate", disabled=True)
+  ```
