@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Get Test Run Results &mdash; Robust Intelligence  documentation</title>
+  <title>Fetching Test Run Results &mdash; Robust Intelligence  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
@@ -28,8 +28,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Notifications and Alerts" href="../notifications_and_alerts.html" />
-    <link rel="prev" title="Get Test Run Progress" href="test_run_progress.html" />
+    <link rel="next" title="Fetching Test Run Logs" href="fetching_test_run_logs.html" />
+    <link rel="prev" title="Viewing Test Run Progress" href="test_run_progress.html" />
 <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.0.0-rc.14
+                2.1.0-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -74,21 +74,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../querying_results.html">Querying Test Run Results</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="test_run_progress.html">Get Test Run Progress</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Get Test Run Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_run_progress.html">Viewing Test Run Progress</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Fetching Test Run Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fetching_test_run_logs.html">Fetching Test Run Logs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../notifications_and_alerts.html">Notifications and Alerts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../model_governance.html">Managing Model Governance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../test_customization.html">Test Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../integrating_mlops.html">Integrating with MLOps</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Administration</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../administration/organization_administration.html">Organization Administration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../administration/configuring_workspaces.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/workspace_configuration.html">Workspace Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../administration/security_and_compliance.html">Security and Compliance</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
@@ -122,7 +122,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../querying_results.html">Querying Test Run Results</a></li>
-      <li class="breadcrumb-item active">Get Test Run Results</li>
+      <li class="breadcrumb-item active">Fetching Test Run Results</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -131,10 +131,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="get-test-run-results">
-<h1>Get Test Run Results<a class="headerlink" href="#get-test-run-results" title="Permalink to this heading"></a></h1>
+  <section id="fetching-test-run-results">
+<h1>Fetching Test Run Results<a class="headerlink" href="#fetching-test-run-results" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p><strong>ⓘ</strong> Test run results can only be fetched for completed test runs. To get the progress of your test run, follow the instructions <a class="reference internal" href="test_run_progress.html"><span class="std std-doc">here</span></a>.</p>
+<div><p><strong>Note</strong>
+Test run results can only be fetched for completed test runs. To get the progress of your test run, follow the instructions <a class="reference internal" href="test_run_progress.html"><span class="std std-doc">here</span></a>.</p>
 </div></blockquote>
 <p>To begin, initialize the <code class="docutils literal notranslate"><span class="pre">Client</span></code> and point it to the location of your Robust Intelligence backend.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
@@ -189,8 +190,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="test_run_progress.html" class="btn btn-neutral float-left" title="Get Test Run Progress" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../notifications_and_alerts.html" class="btn btn-neutral float-right" title="Notifications and Alerts" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="test_run_progress.html" class="btn btn-neutral float-left" title="Viewing Test Run Progress" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="fetching_test_run_logs.html" class="btn btn-neutral float-right" title="Fetching Test Run Logs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

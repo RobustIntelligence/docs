@@ -28,7 +28,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Registering your Model and Datasets" href="registering_model_datasets.html" />
+    <link rel="next" title="Registering Models, Datasets, and Predictions" href="registering_model_datasets.html" />
     <link rel="prev" title="Defining a Model interface" href="defining_model_interface.html" />
 <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.0.0-rc.14
+                2.1.0-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -80,24 +80,23 @@
 <li class="toctree-l3"><a class="reference internal" href="#uploading-model-directories">Uploading Model Directories</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="registering_model_datasets.html">Registering your Model and Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registering_model_datasets.html">Registering Models,  Datasets, and Predictions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_source.html">Data Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="model_source.html">Model Configuration</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../querying_results.html">Querying Test Run Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notifications_and_alerts.html">Notifications and Alerts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../model_governance.html">Managing Model Governance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../test_customization.html">Test Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../integrating_mlops.html">Integrating with MLOps</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Administration</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../administration/organization_administration.html">Organization Administration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../administration/configuring_workspaces.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/workspace_configuration.html">Workspace Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../administration/security_and_compliance.html">Security and Compliance</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
@@ -155,7 +154,7 @@ All files uploaded will be stored in a subdirectory within the <code class="docu
 <span class="n">rime_client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;rime.&lt;YOUR_ORG_NAME&gt;.rbst.io&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;YOUR_API_TOKEN&gt;&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Afterwards, use the <code class="docutils literal notranslate"><span class="pre">upload_file(file_path,</span> <span class="pre">upload_path)</span></code> method to upload data.</p>
+<p>Afterwards, use the <code class="docutils literal notranslate"><span class="pre">rime_client.upload_file</span></code> method to upload data.</p>
 <p>When the <code class="docutils literal notranslate"><span class="pre">upload_path</span></code> is not specified, the path contains a random string as directory name.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ref_path</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="s2">&quot;./titanic/datasets/train.csv&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ref_path:&quot;</span><span class="p">,</span> <span class="n">ref_path</span><span class="p">)</span>
@@ -171,19 +170,19 @@ All files uploaded will be stored in a subdirectory within the <code class="docu
 </section>
 <section id="uploading-images">
 <h2>Uploading Images<a class="headerlink" href="#uploading-images" title="Permalink to this heading"></a></h2>
-<p>Robust Intelligence expects image dataset files as a list of JSON dictionaries with an <code class="docutils literal notranslate"><span class="pre">images_features</span></code> parameter that references an image by an absolute or relative path.
+<p>Robust Intelligence expects image dataset files as a list of JSON dictionaries with keys specified in the <code class="docutils literal notranslate"><span class="pre">image_features</span></code> parameter that each reference an image by an absolute or relative path.
 Each image in the dataset file is uploaded to the Robust Intelligence cluster’s storage.</p>
-<p>Use <code class="docutils literal notranslate"><span class="pre">upload_local_image_dataset_file</span></code> to upload an image dataset file. When your image paths already reference external blob storage, use <code class="docutils literal notranslate"><span class="pre">upload_file</span></code>.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">rime_client.upload_local_image_dataset_file</span></code> to upload an image dataset file containing paths to images stored locally. When your image paths already reference external blob storage, use <code class="docutils literal notranslate"><span class="pre">upload_file</span></code>.</p>
 <p>When the <code class="docutils literal notranslate"><span class="pre">upload_path</span></code> is not specified, the path contains a random string as directory name.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">img_dataset_dir</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_local_image_dataset_file</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="s2">&quot;./titanic/images.tgz&quot;</span><span class="p">,</span> <span class="n">image_features</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Image Path&quot;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ref_path:&quot;</span><span class="p">,</span> <span class="n">ref_path</span><span class="p">)</span>
-<span class="s2">&quot;ref_path: s3://rime-blob-c78976e9367daf-environment/files/84f82c37-0d8f-43af-8d05-76jknwefnjkm/data/images.tgz&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">img_dataset_path</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_local_image_dataset_file</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="s2">&quot;./titanic/images.tgz&quot;</span><span class="p">,</span> <span class="n">image_features</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Image Path&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;img_dataset_path:&quot;</span><span class="p">,</span> <span class="n">img_dataset_path</span><span class="p">)</span>
+<span class="s2">&quot;img_dataset_path: s3://rime-blob-c78976e9367daf-environment/files/84f82c37-0d8f-43af-8d05-76jknwefnjkm/data/images.tgz&quot;</span>
 </pre></div>
 </div>
 <p>When the <code class="docutils literal notranslate"><span class="pre">upload_path</span></code> is  specified, the path contains the <code class="docutils literal notranslate"><span class="pre">upload_path</span></code> string in place of the random string.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">img_dataset_dir</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_local_image_dataset_file</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="s2">&quot;./titanic/images.tgz&quot;</span><span class="p">,</span> <span class="n">image_features</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Image Path&quot;</span><span class="p">],</span> <span class="n">upload_path</span><span class="o">=</span><span class="s2">&quot;rime_tests/titanic_tests&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ref_path:&quot;</span><span class="p">,</span> <span class="n">ref_path</span><span class="p">)</span>
-<span class="s2">&quot;ref_path: s3://rime-blob-c78976e9367daf-environment/files/rime_tests/titanic_tests/data/images.tgz&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">img_dataset_path</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_local_image_dataset_file</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="s2">&quot;./titanic/images.tgz&quot;</span><span class="p">,</span> <span class="n">image_features</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Image Path&quot;</span><span class="p">],</span> <span class="n">upload_path</span><span class="o">=</span><span class="s2">&quot;rime_tests/titanic_tests&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;img_dataset_path:&quot;</span><span class="p">,</span> <span class="n">img_dataset_path</span><span class="p">)</span>
+<span class="s2">&quot;img_dataset_path: s3://rime-blob-c78976e9367daf-environment/files/rime_tests/titanic_tests/data/images.tgz&quot;</span>
 </pre></div>
 </div>
 </section>
@@ -191,7 +190,7 @@ Each image in the dataset file is uploaded to the Robust Intelligence cluster’
 <h2>Uploading Model Directories<a class="headerlink" href="#uploading-model-directories" title="Permalink to this heading"></a></h2>
 <p>The model directory is a directory containing the <code class="docutils literal notranslate"><span class="pre">model.py</span></code> file and any
 extras, such as pre-processing code or the pickle file, that the <code class="docutils literal notranslate"><span class="pre">model.py</span></code>  file depends on.</p>
-<p>Model directories can easily be uploaded using the <code class="docutils literal notranslate"><span class="pre">upload_directory(file_path,</span> <span class="pre">upload_hidden,</span> <span class="pre">upload_path)</span></code> method.</p>
+<p>Model directories can easily be uploaded using the <code class="docutils literal notranslate"><span class="pre">rime_client.upload_directory</span></code> method.</p>
 <p>When the <code class="docutils literal notranslate"><span class="pre">upload_path</span></code> is not specified, the path contains a random string as directory name.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_dir</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span><span class="n">dir_path</span><span class="o">=</span><span class="s2">&quot;./titanic/model&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;model_dir:&quot;</span><span class="p">,</span> <span class="n">model_dir</span><span class="p">)</span>
@@ -200,7 +199,7 @@ extras, such as pre-processing code or the pickle file, that the <code class="do
 </div>
 <p>When the <code class="docutils literal notranslate"><span class="pre">upload_path</span></code> is  specified, the path contains the <code class="docutils literal notranslate"><span class="pre">upload_path</span></code> string in place of the random string.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_dir</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span><span class="n">dir_path</span><span class="o">=</span><span class="s2">&quot;./titanic/model&quot;</span><span class="p">,</span> <span class="n">upload_path</span><span class="o">=</span><span class="s2">&quot;rime_tests/titanic_tests&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ref_path:&quot;</span><span class="p">,</span> <span class="n">ref_path</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;model_dir:&quot;</span><span class="p">,</span> <span class="n">model_dir</span><span class="p">)</span>
 <span class="s2">&quot;model_dir: s3://rime-blob-c78976e9367daf-environment/files/rime_tests/titanic_tests/model&quot;</span>
 </pre></div>
 </div>
@@ -212,7 +211,7 @@ extras, such as pre-processing code or the pickle file, that the <code class="do
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="defining_model_interface.html" class="btn btn-neutral float-left" title="Defining a Model interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="registering_model_datasets.html" class="btn btn-neutral float-right" title="Registering your Model and Datasets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="registering_model_datasets.html" class="btn btn-neutral float-right" title="Registering Models, Datasets, and Predictions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

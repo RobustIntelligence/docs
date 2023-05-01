@@ -1,18 +1,14 @@
 # Data Access Permissions
-
-The **data plane** agent uses a K8s service account for read access to the data and models you wish to use.
+The **data plane** agent uses a K8s service account called `rime-agent-model-tester` for read access to the data and models you wish to use.
 
 ## AWS EKS + S3
+Our recommended authentication approach for this pattern is [IAM roles for service accounts (IRSA)](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html).
 
-First, create an IAM role that the `rime-agent-model-tester` Kubernetes service account can assume.
-- [IAM roles for service accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html)
-
-If not already configured for your cluster, be sure to create an IAM OpenID Connect (OIDC) provider for your cluster to use IAM roles for service accounts.
-- [Creating an IAM OIDC provider for your cluster](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html)
-
-Additionally, be sure to connect the `rime-agent-model-tester` Kubernetes service account to an IAM role with following policy. This ensures the agent has read access to the appropriate S3 bucket(s).
-- [Configuring a Kubernetes service account to assume an IAM role](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html)
-- **data plane** agent S3 Bucket read policy:
+1. If not already configured for your cluster, be sure to create an IAM OpenID Connect (OIDC) provider for your cluster to use IAM roles for service accounts.
+    - [Creating an IAM OIDC provider for your cluster](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html)
+2. Create a designated S3 bucket for your Robust Intelligence cluster. This will serve as the agent's default data source.
+    - [Creating a bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html)
+3. Create the following read access policy for the designated S3 bucket(s).
     ```json
     {
       "Version": "2012-10-17",
@@ -34,19 +30,42 @@ Additionally, be sure to connect the `rime-agent-model-tester` Kubernetes servic
       ]
     }
     ```
+4. Create an IAM role that the `rime-agent-model-tester` K8s service account can assume, and associate it with the policy created in the previous step.
+    - **Save this ARN. You will need to specify this during the agent setup step.**
+5. Create a trust relationship to allow the K8s service account to assume the IAM role.
+    - [Configuring a K8s service account to assume an IAM role](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html)
 
 ## GCP GKE + GCS
+Our recommended authentication approach for this pattern is [Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity).
 
-Ensure that your GKE cluster has Workload Identity enabled.
-- [Enable Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#enable)
+1. Ensure that your GKE cluster has Workload Identity enabled.
+    - [Enable Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#enable)
+2. Create a designated GCS bucket for your Robust Intelligence cluster. This will serve as the agent's default data source.
+    - [Create buckets](https://cloud.google.com/storage/docs/creating-buckets)
+3. Create an IAM service account and grant it role(s) that have `storage.buckets.get` and `storage.objects.get` permissions.
+    - [IAM roles for Cloud Storage](https://cloud.google.com/storage/docs/access-control/iam-roles)
+    - **Save the service account email. You will need to specify this during the agent setup step.**
+4. Add IAM policy binding between the IAM service account and the K8s service account `rime-agent-model-tester` with role `roles/iam.workloadIdentityUser`.
+    - [Use Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#authenticating_to)
 
-Create IAM service account and grant it role(s) that have `storage.buckets.get` and `storage.objects.get` permissions.
-- [IAM roles for Cloud Storage](https://cloud.google.com/storage/docs/access-control/iam-roles)
+## Azure AKS + Blob Storage
+Our recommended authentication approach for this pattern is [Azure AD Workload Identity](https://learn.microsoft.com/en-us/azure/aks/workload-identity-overview).
 
-Add IAM policy binding between the IAM service account and the Kubernetes service account `rime-agent-model-tester` with role `roles/iam.workloadIdentityUser`. This will allow the Kubernetes service account to impersonate the IAM service account which possesses the appropriate read access for the GCS bucket(s).
-- [Use Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#authenticating_to)
-
+1. Ensure that your AKS cluster has Workload Identity enabled.
+    - [Enable Workload Identity](https://learn.microsoft.com/en-us/azure/aks/workload-identity-deploy-cluster)
+2. Create a designated blob container for your Robust Intelligence cluster. This will serve as the agent's default data source.
+    - [Manage containers](https://learn.microsoft.com/en-us/azure/storage/blobs/blob-containers-portal)
+3. Create a managed identity and associate it with the blob container from the previous step.
+    - [Create a managed identity](https://learn.microsoft.com/en-us/azure/aks/workload-identity-deploy-cluster#create-a-managed-identity)
+    - **Save the Client ID (and your [Tenant ID](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-how-to-find-tenant)). You will need to specify these during the agent setup step.**
+4. Create a role assignment to give your managed identity permissions to read from your blob storage container.
+    - A suitable Azure-provided role is `Storage Blob Data Reader`.
+        - [Assign an Azure role for access to blob data](https://learn.microsoft.com/en-us/azure/storage/blobs/assign-azure-role-data-access?tabs=portal)
+    - [Assign Azure roles to a managed identity](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal-managed-identity)
+5. Create a federated identity credential to associate the `rime-agent-model-tester` service account with your managed identity.
+    - [Establish federated identity credential](https://learn.microsoft.com/en-us/azure/aks/workload-identity-deploy-cluster#establish-federated-identity-credential)
 
 ## Other Cloud Providers
+If you are using a different cloud provider or want to specify the service account directly, you can specify other configurations via the `rimeAgent.modelTestJob.serviceAccount` Helm values.
 
-If you are using a different cloud provider or want to specify the service account directly, you can specify other configurations via the `rimeAgent.modelTestJob.serviceAccount` helm values. A Robust Intelligence team member can help you through this process.
+Your Solutions Architect can help you through this process.

@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.0.0-rc.14
+                2.1.0-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -74,17 +74,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/querying_results.html">Querying Test Run Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/notifications_and_alerts.html">Notifications and Alerts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/model_governance.html">Managing Model Governance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/test_customization.html">Test Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/integrating_mlops.html">Integrating with MLOps</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Administration</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../administration/organization_administration.html">Organization Administration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../administration/configuring_workspaces.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/workspace_configuration.html">Workspace Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../administration/security_and_compliance.html">Security and Compliance</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
@@ -157,6 +156,65 @@
 </pre></div>
 </div>
 <p>Any existing projects with this parameter specified in the project’s Test Suite Configuration may need to be updated with this new version of the configuration.</p>
+<p>The specification for the test categories that Robust Intelligence runs has changed, both at a project level and for individual Stress Tests.</p>
+<p>Before:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Update the project&#39;s Stress Testing, Continuous Testing categories</span>
+<span class="n">project</span><span class="o">.</span><span class="n">update_test_suite_config</span><span class="p">({</span>
+	<span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+	  <span class="p">{</span>
+	      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Model Performance&quot;</span><span class="p">,</span>
+	      <span class="s2">&quot;run_st&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+	      <span class="s2">&quot;run_ct&quot;</span><span class="p">:</span> <span class="kc">True</span>
+	  <span class="p">},</span>
+	  <span class="p">{</span>
+	      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Subset Performance&quot;</span><span class="p">,</span>
+	      <span class="s2">&quot;run_st&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+	      <span class="s2">&quot;run_ct&quot;</span><span class="p">:</span> <span class="kc">False</span>
+	  <span class="p">},</span>
+	  <span class="p">{</span>
+	      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Drift&quot;</span><span class="p">,</span>
+	      <span class="s2">&quot;run_st&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+	      <span class="s2">&quot;run_ct&quot;</span><span class="p">:</span> <span class="kc">True</span>
+	  <span class="p">}</span>
+	<span class="p">],</span>
+	<span class="c1"># ...</span>
+<span class="p">})</span>
+
+<span class="c1"># When running Stress Testing, user can override the project&#39;s Stress Testing categories:</span>
+<span class="n">stress_test_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># ... other params in stress test config</span>
+    <span class="s2">&quot;test_suite_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Bias and Fairness&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;run_st&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;run_ct&quot;</span><span class="p">:</span> <span class="kc">False</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+      <span class="c1"># ... other params in test suite config</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>After:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Update the project&#39;s Stress Testing, Continuous Testing categories</span>
+<span class="n">project</span><span class="o">.</span><span class="n">update_stress_testing_categories</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">&quot;TEST_CATEGORY_TYPE_MODEL_PERFORMANCE&quot;</span><span class="p">,</span> <span class="s2">&quot;TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">project</span><span class="o">.</span><span class="n">update_continuous_testing_categories</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">&quot;TEST_CATEGORY_TYPE_MODEL_PERFORMANCE&quot;</span><span class="p">,</span> <span class="s2">&quot;TEST_CATEGORY_TYPE_DRIFT&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># When running Stress Testing, user can override the project&#39;s Stress Testing categories:</span>
+<span class="n">stress_test_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># ... other params in stress test config</span>
+    <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS&quot;</span><span class="p">]</span>
+    <span class="s2">&quot;test_suite_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="c1"># ... other params in test suite config (if any)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </section>
 </section>
 

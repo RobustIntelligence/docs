@@ -1,0 +1,78 @@
+# Agents
+A model testing agent is a compute resource in your cloud environment (also referred to as the **Data Plane**) that runs testing jobs.
+These agents work in tandem with a Robust Intelligence management hub (also referred to as the **Control Plane**) to coordinate their workloads.
+
+For more details on architecture, see [Cloud Architecture](../../deployment/index.rst).
+
+Only users with the [Organization Administrator role](../security_and_compliance/user_account_roles.md) are able to configure agents for their Workspaces.
+
+---
+
+## Managing Agents for the Organization
+**NOTE: The following actions apply for the entire Organization, affecting all Workspaces at once.**
+
+### Creating an Agent
+Creating an agent is covered in the [Deployment](../../deployment/index.rst) section.
+
+### Deactivating an Agent for your Organization
+A deactivated agent is unable to execute workloads; however, it is still connected to your Robust Intelligence instance.
+
+1. Navigate to the Robust Intelligence homepage by clicking the logo in the top-left corner.
+    > The Workspace summary page appears.
+2. Select **Settings** > **Organization Settings** in the lower left corner.
+    > The Organization Settings page appears.
+3.  Click **Manage Agent Setup**.
+    > The Agents Setup pane appears.
+4.  From the three-dot menu to the right of an agent, select the **Deactivate** option.
+    > A confirmation dialog box appears.
+5.  Click the **Deactivate Agent** button to confirm.
+    > The agent's status will now be marked as `Deactivated`.
+
+### Removing an Agent from your Organization
+To completely remove an agent from your Robust Intelligence installation, follow the steps below.
+
+After disconnecting the agent from Robust Intelligence, you will have to manually uninstall it from the relevant Kubernetes cluster in your cloud environment.
+
+1. Navigate to the Robust Intelligence homepage by clicking the logo in the top-left corner.
+    > The Workspace summary page appears.
+2. Select **Settings** > **Organization Settings** in the lower left corner.
+    > The Organization Settings page appears.
+3.  Click **Manage Agent Setup**.
+    > The Agents Setup pane appears.
+4.  From the three-dot menu to the right of an agent, select the **Remove** option.
+    > A confirmation dialog box appears.
+5.  Click the **Remove Agent** button to confirm.
+    > The agent will no longer appear in the table.
+
+---
+
+## Managing Agents for Workspaces
+
+### Viewing the Agent Status Page
+The agent status page displays the current status of all agents assigned to the workspace.
+It is viewable by all members of a Workspace.
+
+1. Select a Workspace.
+    > The Workspace summary page appears.
+2. Select **Workspace Settings** under the **Settings** icon in the lower left corner.
+    > The Workspace Settings page appears.
+3. Click **Agent Status**.
+
+The list of agents assigned to this workspace appears, along with the status of each agent.
+
+### Adding an Agent to a Workspace
+Because agents have connectivity to data sources, they must be explicitly added to Workspaces to ensure that only approved users can utilize them.
+
+A Workspace must be assigned at least one agent, and a given agent can be assigned to multiple Workspaces.
+Jobs are run with the default agent unless otherwise specified in the request.
+
+1. Select a Workspace.
+    > The Workspace summary page appears.
+2. Select **Settings** > **Workspace Settings** in the lower left corner.
+    > The Workspace Settings page appears.
+3. Under **General** > **Select Agents**, select the agents you would like to configure.
+    > Selected agents will have a blue checkmark beside their name.
+4. Click the **Save** button to apply your changes.
+
+### Removing an Agent from a Workspace
+Follow the same process as above, but de-select the relevant agent(s) and then click **Save**.

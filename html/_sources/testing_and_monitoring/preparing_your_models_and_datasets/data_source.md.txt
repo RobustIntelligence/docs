@@ -1,11 +1,148 @@
 Data Configuration
 ==================
 
-To configure a data source, specify a mapping in the main Robust Intelligence JSON configuration file
-in the `data_params` argument.
+In order to register a reference and evaluation dataset, the user needs
+to configure `SingleDataInfo`. `SingleDataInfo` takes
+two elements, a `connection_info` object and a `data_params` object.
 
-The `data_params` configuration can take on different forms, offering a tradeoff between
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| connection_info | ConnectionInfo | Path to a ConnectionInfo object. |
+| data_params | DataInfoParams |  Path to a data_params object. |
+
+```
+data_info = {
+    "connection_info": {
+        .....
+    },
+    "data_params": {
+        .....
+    }
+}
+```
+
+## A) Connection Info
+
+This object how to connect to a data source. Specify exactly one of the parameters:
+
+### 1) Loads a data file from a Cloud Data store (eg: AWS S3, Azure Blob Storage)
+
+a) Parameter = data_file
+b) Type = DataFileInfo
+
+```
+{
+    "connection_info": {
+        "data_file": {
+            "path": ""
+        }
+    }
+    "data_params": ...,
+}
+```
+
+### 2) Loads a data file from a custom data loader.
+
+a) Parameter = data_loading
+b) Type = DataLoadingInfo
+
+```
+{
+    "connection_info": {
+        "data_loading": {
+            "path": ",
+            "load_func_name": "",
+            "loader_kwargs": {"file_path": s3_data_path, **loader_kwargs},
+        }
+    }
+    "data_params": ...,
+}
+```
+
+| Parameter | Type | Description |
+|-----------|--|-------------|
+| path | string | The path to the file. |
+| load_func_name | string | The function to call from the file at the path. |
+| loader_kwargs | string | A JSON String of keyword arguments to be passed into the load function. |
+
+### 3) Loads a data stream from a data collector.
+
+a) Parameter = delta_lake
+b) Type = DeltaLakeInfo
+
+
+
+```
+{
+    "connection_info": {
+        "data_collector": {
+            "data_stream_id": null,
+            "start_time": 0,
+            "end_time": 0
+        }
+    },
+    "data_params": ...,
+}
+```
+**Note:** This can only be specified as part of a Continuous Testing configuration.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| data_stream_id | rime.UUID | The unique identifier assigned by Robust Intelligence to a data stream. |
+| start_time | int64 | The start time in seconds from the UNIX epoch. |
+| end_time | int64 | The end time in seconds from the UNIX epoch. |
+
+### 4) Loads a Databricks Delta Lake table.
+
+a) parameter = delta_lake
+b) Type = DeltaLakeInfo
+
+```
+{
+    "connection_info": {
+        "delta_lake_info": {
+            "table_name": "Table",
+        }
+    },
+    "data_params": ...,
+}
+```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| table_name | String | The name of the Delta Lake table. |
+
+### 5) Loading a Hugging Face dataset
+
+a) Parameter = hugging_face
+b) Type = HuggingFace
+
+```
+{
+    "connection_info": {
+        "hugging_face": {
+            "dataset_uri": "",
+            "split_name": "",
+            "loading_params_json": ""
+        }
+    },
+    "data_params": ...,
+}
+```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| dataset_uri | String | The unique identifier of the dataset. |
+| split_name | String | The name of a predefined subset of data. |
+| loading_params_json | String | A JSON serialized string that contains loading parameters. |
+
+
+## B) Data Parameters
+
+To configure a data source, specify a mapping in the main Robust Intelligence JSON configuration file
+in the `data_params` argument. The `data_params` configuration can take on different forms, offering a tradeoff between
 simplicity and flexibility.
+
 
 ### Default Data Params Template
 
@@ -33,7 +170,6 @@ simplicity and flexibility.
         "features": null,
         "loading_kwargs": null,
         "feature_type_path": null,
-        "pred_path": null,
         "image_load_path": null
     },
     ...
@@ -87,155 +223,4 @@ simplicity and flexibility.
 |-----------|------|-------------|
 | loading_kwargs | String | Keyword arguments passed to the pandas loading function. Do not specify `nrows` here. |
 | feature_type_path | String | Deprecated. Path to a CSV file that specifies the data type of each feature. The file must have two columns, `FeatureName` and `FeatureType`. |
-| pred_path | String | Deprecated. Path to a CSV file or Parquet file that contains predictions. |
 | image_load_path | String | Path to a python file that contains a `load_image` function defining custom logic for loading an image from the file path provided in the dataset. |
-
-### Data Info template
-
-The `data_info` format supports separately specifying a reference and evaluation dataset.
-[Register](registering_model_datasets.md) your reference and evaluation datasets separately, then specify the unique
-IDs for each dataset in `data_info`.
-
-```
-{
-    "data_info": {
-        "ref_dataset_id": ...,
-        "eval_dataset_id": ...,
-    },
-    ...
-}
-```
-
-### Arguments
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| ref_dataset_id | String | Unique identifier of a reference dataset. |
-| eval_dataset_id | String | Unique identifier of an evaluation dataset. |
-
-### Single Data Info Templates
-
-Use `SingleDataInfo` to specify reference and evaluation datasets in a
-split approach, as seen in the previous template. `SingleDataInfo` takes
-two elements, a `connection_info` object and a `data_params` object, detailed
-following this section.
-
-All `SingleDataInfo` objects also take a set of parameters that enable you to specify
-additional data properties.
-
-Continuous Testing requires that you specify a prediction set by setting a value
-for either the `pred_col` or `pred_path` variables.
-
-```
-{
-    "connection_info": ...,
-    "data_params": ...,
-}
-```
-
-#### General Parameters for Single Data Info
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| connection_info | ConnectionInfo | Path to a ConnectionInfo object. |
-| data_params | DataInfoParams |  | Path to a data_params object. |
-
-#### Connection Info template
-
-Specifies how to connect to a data source. Specify exactly one of the parameters in
-the following table.
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| data_file | DataFileInfo | Information required by Robust Intelligence to load a data file. |
-| data_loading | DataLoadingInfo | Loads a data file with additional parameters |
-| data_collector | DataCollectorInfo | Loads a data stream from a data collector |
-| delta_lake | DeltaLakeInfo | Loads a Delta Lake table. |
-| hugging_face | HuggingFaceDataInfo | Loads a HuggingFace dataset. |
-
-#### File-based Single Data Info Template
-
-Uses `ConnectionInfo` and `DataInfoParams` objects, which are discussed earlier in this
-section.
-
-```
-{
-    "connection_info": {
-        "data_file": {
-            "path": ""
-        }
-    }
-    "data_params": ...,
-}
-```
-
-#### Data Collector Single Data Info Template
-
-This can only be specified as part of a Continuous Testing configuration.
-
-```
-{
-    "connection_info": {
-        "data_collector": {
-            "data_stream_id": null,
-            "start_time": 0,
-            "end_time": 0
-        }
-    },
-    "data_params": {},
-}
-```
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| data_stream_id | rime.UUID | The unique identifier assigned by Robust Intelligence to a data stream. |
-| start_time | int64 | The start time in seconds from the UNIX epoch. |
-| end_time | int64 | The end time in seconds from the UNIX epoch. |
-
-#### Delta Lake Single Data Info Template
-
-Loads a Delta Lake table.
-
-```
-{
-    "connection_info": {
-        "delta_lake_info": {
-            "table_name": "Table",
-            "start_time": "1970-01-01 00:00:01",
-            "end_time": "1970-01-01 00:00:02",
-            "time_col": "Updated",
-        }
-    },
-    "data_params": {},
-}
-```
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| table_name | String | The name of the Delta Lake table. |
-| start_time | int64 | The start time in seconds from the UNIX epoch. |
-| end_time | int64 | The end time in seconds from the UNIX epoch. |
-| time_col | string | The name of the column that contains the timestamp of the last update. |
-
-#### HuggingFace Single Data Info Template
-
-Specifies how to load a HuggingFace dataset.
-
-```
-{
-    "connection_info": {
-        "hugging_face": {
-            "dataset_uri": "",
-            "split_name": "",
-            "loading_params_json": ""
-        }
-    },
-    "data_params": {}
-}
-```
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| dataset_uri | String | The unique identifier of the dataset. |
-| split_name | String | The name of a predefined subset of data. |
-| loading_params_json | String | A JSON serialized string that contains loading parameters. |

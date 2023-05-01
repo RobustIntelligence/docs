@@ -32,3 +32,65 @@ stress_test_config = {
 ```
 
 Any existing projects with this parameter specified in the project's Test Suite Configuration may need to be updated with this new version of the configuration.
+
+The specification for the test categories that Robust Intelligence runs has changed, both at a project level and for individual Stress Tests.
+
+Before:
+```python
+# Update the project's Stress Testing, Continuous Testing categories
+project.update_test_suite_config({
+	"categories": [
+	  {
+	      "name": "Model Performance",
+	      "run_st": True,
+	      "run_ct": True
+	  },
+	  {
+	      "name": "Subset Performance",
+	      "run_st": True,
+	      "run_ct": False
+	  },
+	  {
+	      "name": "Drift",
+	      "run_st": False,
+	      "run_ct": True
+	  }
+	],
+	# ...
+})
+
+# When running Stress Testing, user can override the project's Stress Testing categories:
+stress_test_config = {
+    # ... other params in stress test config
+    "test_suite_config": {
+        "categories": [
+            {
+                "name": "Bias and Fairness",
+                "run_st": True,
+                "run_ct": False
+            }
+        ],
+      # ... other params in test suite config
+    }
+}
+```
+
+After:
+```python
+# Update the project's Stress Testing, Continuous Testing categories
+project.update_stress_testing_categories(
+    ["TEST_CATEGORY_TYPE_MODEL_PERFORMANCE", "TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE"]
+)
+project.update_continuous_testing_categories(
+    ["TEST_CATEGORY_TYPE_MODEL_PERFORMANCE", "TEST_CATEGORY_TYPE_DRIFT"]
+)
+
+# When running Stress Testing, user can override the project's Stress Testing categories:
+stress_test_config = {
+    # ... other params in stress test config
+    "categories": ["TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS"]
+    "test_suite_config": {
+      # ... other params in test suite config (if any)
+    }
+}
+```

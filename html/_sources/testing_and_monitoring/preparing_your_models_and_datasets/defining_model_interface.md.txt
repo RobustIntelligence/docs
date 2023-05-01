@@ -3,19 +3,22 @@
 Robust Intelligence expects models to be passed in as Python files that expose one of the following functions:
 
 - `predict_dict`: the input is a single row in dictionary form (e.g. `x = {'Age': 15,
-  'Animal': 'Cat', ...}`). For binary classification and regression, the output should
-  be a float prediction - for binary classification it should be between 0 and 1,
-  for regression it can be unbounded. The function signature should look like:
-  `predict_dict(x: dict) ->
-  float`. For multi-class classification the output
-  should be a numpy array where the ith dimension represents the predicted
-  probability for the ith class. The function signature
-  changes slightly to look like: `predict_dict(x: dict) -> np.ndarray`.
-- `predict_df`: the input is a Pandas DataFrame. If the model task is multi-class
-  classification, the output should be a NumPy array of floats of shape `(len(df),
-  num_classes)`. For all other model tasks, the output
-  should be a NumPy array of floats of shape `(len(df),)`.
-In either case, the function signature should look like: `predict_df(df: pd.DataFrame)
+  'Animal': 'Cat', ...}`). The return type will depend on the model task. For example,
+  the output for binary classification should be a float value between 0 and 1, and
+  for regression it can be an unbounded float. The function signature for either case
+  should look like: `predict_dict(x: dict) -> float`. For multi-class classification
+  the output should be a numpy array where the i'th element represents the predicted
+  probability for the i;th class. The function signature
+  changes slightly to look like: `predict_dict(x: dict) -> np.ndarray`. For details on
+  the prediction formats for all model tasks, see the
+  [Preprocessing your Datasets](preprocessing_your_datasets.md) page.
+- `predict_df`: the input is a Pandas DataFrame, and the output is a NumPy array.
+  If the model task is multi-class classification or natural language inference, the
+  output should be a NumPy array of floats of shape `(len(df), num_classes)`. For all
+  other model tasks, the output should be a NumPy array of floats of shape `(len(df),)`,
+  with each element satisfying the prediction format specifies in
+    [Preprocessing your Datasets](preprocessing_your_datasets.md).
+  In any case, the function signature should look like: `predict_df(df: pd.DataFrame)
   -> np.ndarray`
 
     NOTE: for binary classification the return type should be a single float per row which represents the probability for the positive class. It should not be an array of probabilities for each class. E.g. `predict_df` should return `[0.7, 0.1, ...]` NOT `[[0.3, 0.7], [0.9, 0.1], ...]`.
@@ -66,7 +69,7 @@ def preprocessing(x: dict) -> ModelInputType:
 ```
 
 ## Step 5: Implement a predict function
-Implement either the `predict_dict` function or the `predict_df` function. This should look something like:
+Implement either the `predict_dict` function or the `predict_df` function. For binary classification, this should look something like:
 
 (NOTE: whichever you choose to implement, it must match one of the function names and signatures below.)
 ```
@@ -82,44 +85,4 @@ def predict_df(df: pd.DataFrame) -> np.ndarray:
     array_input = preprocessing(df)
     model_output = model.predict_proba(array_input)
     return model_output[:, 1]
-```
-
-## Loading Models from Pickle Files
-
-We then load the model as well as the preprocessing helper from their corresponding pickle files:
-```python
-import catboost as catb
-import pickle
-
-model = catb.CatBoostClassifier()
-model.load_model(str(RIME_PATH + "examples/fraud/fraud.catb"))
-with open(RIME_PATH + "examples/fraud/null_impute.pkl", "rb") as f:
-    null_impute = pickle.load(f)
-
-def preprocess(x: dict):
-    """Null impute categoricals."""
-    for col_name in x.keys():
-        if pd.isnull(x[col_name]) and col_name in null_impute.keys():
-            x[col_name] = null_impute[col_name]
-    return x
-
-def preprocess_df(df: pd.DataFrame):
-    """Null impute categoricals."""
-    new_df = df.copy()
-    for col_name in df.columns:
-        if col_name in null_impute.keys():
-            new_df.loc[new_df[col_name].isnull(), col_name] = null_impute[col_name]
-    return new_df
-```
-
-We now define the inference function we want to use. We can either define a `predict_dict` or `predict_df` function.
-
-NOTE: We recommend using `predict_df` to speed up profiling and testing.
-```python
-# We now define our interface.
-def predict_dict(x: dict):
-    """Predict dict function."""
-    new_x = preprocess(x)
-    new_x = pd.DataFrame(new_x, index=[0])
-    return model.predict_proba(new_x)[0][1]
 ```

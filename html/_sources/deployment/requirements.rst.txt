@@ -1,25 +1,51 @@
 .. _deployment_requirements:
 
 Requirements
-================================
+===============================
 
-These are requirements for installing the **data plane** agent into your organization's cloud.
-Instructions for installing a local agent can be found :ref:`here<deployment_local_agent>`.
+Cloud Resources
+-------------------------------
 
-Before beginning, ensure that you have both `Helm <https://helm.sh/docs/intro/install/>`_ and `Kubectl <https://kubernetes.io/docs/tasks/tools/>`_ installed.
-These tools will be needed to interact with the Kubernetes cluster where your agent will be installed.
+The model testing agent is installed through a `Helm`_ chart into a Kubernetes namespace.
 
-Next, ensure that your Kubernetes Cluster satisfies the following requirements:
+Robust Intelligence Cloud Environment
+   - Control Plane x 1 (will be provisioned by Robust Intelligence)
+
+      - (Your Solutions Architect will assist you with enabling connectivity from your enterprise network)
+
+Your Cloud Environment
+   - Kubernetes Cluster x 1
+
+      - Namespace x 1
+
+      - Node Group x 1
+
+         - Recommended at least 64 GiB RAM (such as the AWS `m4.4xlarge`_ template) in an autoscaling group (1 minimum, 1 desired, 10 maximum)
+
+   - Object Storage x 1
+
+     - Default storage medium for datasets and model artifacts
+
+If not already installed, you will need `kubectl`_ and `Helm`_ to execute deployment commands against your Kubernetes cluster.
+
+.. _m4.4xlarge: https://aws.amazon.com/ec2/instance-types/
+
+.. _kubectl: https://kubernetes.io/docs/tasks/tools/
+
+.. _Helm: https://helm.sh/
+
+
+Data Access Permissions
+-------------------------------
+
+Prior to executing the Helm installation commands, you will need to enable appropriate access permissions to your object storage data source.
+
+Follow the steps for your cloud provider + object storage below.
+
+After the initial deployment, additional data sources can be configured through :ref:`Integrations <configuring_integrations>`.
+
 
 .. toctree::
-   :maxdepth: 1
-
-   requirements/kubernetes_cluster.md
-
-Finally, you will need to set up the appropriate data permissions for the agent so that it can access your data and models
-during testing.
-
-.. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    requirements/data_access_permissions.md

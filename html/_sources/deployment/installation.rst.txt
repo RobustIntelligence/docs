@@ -1,22 +1,119 @@
 .. _deploying_an_agent:
 
 Installation
-================================
+===============================
 
-Once you've completed the steps in the :ref:`Requirements<deployment_requirements>` section, you can now install the agent in your cluster and begin
-running Stress and Continuous Tests.
+Be sure to complete the prerequisites from :ref:`Requirements<deployment_requirements>` before proceeding.
 
-To begin, an organization admin should follow the below guide to create a new agent through the Web UI.
+Particularly, make sure you have your data access credentials (e.g., IAM Role ARN for AWS EKS + S3) ready before going through the Agent Setup below.
 
-.. toctree::
-   :maxdepth: 1
+Agent Setup
+-------------------------------
 
-   installation/agent_configuration.md
+Robust Intelligence provides a self-guided installation process through the web client, which will automatically generate a pre-filled Helm values file for your agent based on your cloud configuration.
 
-Once the agent has been configured in the UI, you will need to install the agent's Helm Chart into your cluster. The
-following instructions will guide you through the process of installing and validating the agent.
+To begin, sign in to your Administrator account, navigate to the **Organization Settings** page, and click on the **Manage Agent Setup** tab.
 
-.. toctree::
-   :maxdepth: 1
+From there, clicking on the **Create Agent** button will launch a modal that walks you through the self-guided installation.
 
-   installation/helm_installation.md
+.. raw:: html
+
+   <img src="../_static/agent-setup.png" style="max-height:400px"/>
+
+Select a unique name to identify your agent, and input the data access credentials generated during the :ref:`Requirements<deployment_requirements>` phase.
+
+Upon completing the setup, you will receive the following:
+
+   1. A pre-filled ``*_values.yaml`` file for the ``rime-agent`` Helm chart
+
+   2. Helm commands to install the chart
+
+Helm Installation
+```````````````````````````````
+
+1. Point your local ``kubectl`` to your data plane K8s cluster and namespace.
+
+2. Execute the provided Helm commands to install the agent in your K8s cluster. They will look like this:
+
+   .. code-block::
+
+      helm repo add robustintelligence https://robustintelligence.github.io/helm --force-update
+
+      helm upgrade -i rime-agent robustintelligence/rime-agent \
+         --version $RI_VERSION \
+         --values $PATH_TO_VALUES_FILE
+
+.. _AWS EKS: https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html
+
+.. _GCP GKE: https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl
+
+.. _Azure AKS: https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-deploy-cli#connect-to-the-cluster
+
+Validation
+-------------------------------
+
+After performing the Helm installation, use the following reference to should smoke test your agent installation.
+
+Infrastructure
+```````````````````````````````
+
+1. Point your local ``kubectl`` to your data plane K8s cluster and namespace.
+
+2. Inspect the **Deployments**. All containers should be ready.
+
+   .. code-block::
+
+      > kubectl get deployments
+
+      NAME                                     READY   UP-TO-DATE   AVAILABLE   AGE
+      rime-agent-launcher                      1/1     1            1           5m26s
+      rime-agent-operator-controller-manager   1/1     1            1           5m26s
+
+
+Web Client
+```````````````````````````````
+
+The status of the agent is regularly updated on the **Agents Setup** page of **Organization Settings** (as well as the **Agent Status** page of **Workspace Settings**).
+
+1. Verify that the new agent has a status of ``Active`` in the web client.
+
+   .. raw:: html
+
+      <img src="../_static/agent-status.png" style="max-height:180px"/>
+
+   **Make note of the new agent's ID, as you will need to reference it for the other steps.**
+
+2. Connect the agent to at least one Workspace via the :ref:`Workspace Agent Configuration <workspace_configuration>` steps.
+
+Python SDK and REST API
+```````````````````````````````
+
+The following commands should each return a list of the agents currently assigned to your Workspace.
+Be sure to use an :ref:`API Token <userauth>` from a Workspace that you connected to the new agent.
+
+Verify that the outputs of the commands contain a ``uuid`` matching that of the newly-deployed agent.
+
+Python SDK
+   .. code-block::
+
+      from rime_sdk import Client
+
+      rime_client = Client("rime.<DOMAIN>.com", "<API_TOKEN>")
+
+      [print(x) for x in client.list_agents()]
+
+   .. code-block::
+
+      {'agent_id': {'uuid': ... }
+
+
+REST API
+   .. code-block::
+
+      curl -X GET 'rime.$DOMAIN.com/v1/agents' \
+         --header "rime-api-key: $API_TOKEN" \
+         --header "Content-Type: application/json"
+
+   .. code-block::
+
+      {"agents":[{"agentId":{"uuid:": ... }%

@@ -29,7 +29,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Installation" href="../installation.html" />
-    <link rel="prev" title="Kubernetes Cluster" href="kubernetes_cluster.html" />
+    <link rel="prev" title="Requirements" href="../requirements.html" />
 <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.0.0-rc.14
+                2.1.0-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -74,28 +74,31 @@
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/querying_results.html">Querying Test Run Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/notifications_and_alerts.html">Notifications and Alerts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/model_governance.html">Managing Model Governance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/test_customization.html">Test Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops.html">Integrating with MLOps</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Administration</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../administration/organization_administration.html">Organization Administration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../administration/configuring_workspaces.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/workspace_configuration.html">Workspace Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../administration/security_and_compliance.html">Security and Compliance</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Overview</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../requirements.html">Requirements</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="kubernetes_cluster.html">Kubernetes Cluster</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Data Access Permissions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#aws-eks-s3">AWS EKS + S3</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#gcp-gke-gcs">GCP GKE + GCS</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#other-cloud-providers">Other Cloud Providers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../requirements.html#cloud-resources">Cloud Resources</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../requirements.html#data-access-permissions">Data Access Permissions</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Data Access Permissions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#aws-eks-s3">AWS EKS + S3</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gcp-gke-gcs">GCP GKE + GCS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#azure-aks-blob-storage">Azure AKS + Blob Storage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#other-cloud-providers">Other Cloud Providers</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -138,21 +141,22 @@
              
   <section id="data-access-permissions">
 <h1>Data Access Permissions<a class="headerlink" href="#data-access-permissions" title="Permalink to this heading"></a></h1>
-<p>The <strong>data plane</strong> agent uses a K8s service account for read access to the data and models you wish to use.</p>
+<p>The <strong>data plane</strong> agent uses a K8s service account called <code class="docutils literal notranslate"><span class="pre">rime-agent-model-tester</span></code> for read access to the data and models you wish to use.</p>
 <section id="aws-eks-s3">
 <h2>AWS EKS + S3<a class="headerlink" href="#aws-eks-s3" title="Permalink to this heading"></a></h2>
-<p>First, create an IAM role that the <code class="docutils literal notranslate"><span class="pre">rime-agent-model-tester</span></code> Kubernetes service account can assume.</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html">IAM roles for service accounts</a></p></li>
-</ul>
-<p>If not already configured for your cluster, be sure to create an IAM OpenID Connect (OIDC) provider for your cluster to use IAM roles for service accounts.</p>
+<p>Our recommended authentication approach for this pattern is <a class="reference external" href="https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html">IAM roles for service accounts (IRSA)</a>.</p>
+<ol class="arabic">
+<li><p>If not already configured for your cluster, be sure to create an IAM OpenID Connect (OIDC) provider for your cluster to use IAM roles for service accounts.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html">Creating an IAM OIDC provider for your cluster</a></p></li>
 </ul>
-<p>Additionally, be sure to connect the <code class="docutils literal notranslate"><span class="pre">rime-agent-model-tester</span></code> Kubernetes service account to an IAM role with following policy. This ensures the agent has read access to the appropriate S3 bucket(s).</p>
-<ul>
-<li><p><a class="reference external" href="https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html">Configuring a Kubernetes service account to assume an IAM role</a></p></li>
-<li><p><strong>data plane</strong> agent S3 Bucket read policy:</p>
+</li>
+<li><p>Create a designated S3 bucket for your Robust Intelligence cluster. This will serve as the agent’s default data source.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html">Creating a bucket</a></p></li>
+</ul>
+</li>
+<li><p>Create the following read access policy for the designated S3 bucket(s).</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;Version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;Statement&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -175,26 +179,86 @@
 </pre></div>
 </div>
 </li>
+<li><p>Create an IAM role that the <code class="docutils literal notranslate"><span class="pre">rime-agent-model-tester</span></code> K8s service account can assume, and associate it with the policy created in the previous step.</p>
+<ul class="simple">
+<li><p><strong>Save this ARN. You will need to specify this during the agent setup step.</strong></p></li>
 </ul>
+</li>
+<li><p>Create a trust relationship to allow the K8s service account to assume the IAM role.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html">Configuring a K8s service account to assume an IAM role</a></p></li>
+</ul>
+</li>
+</ol>
 </section>
 <section id="gcp-gke-gcs">
 <h2>GCP GKE + GCS<a class="headerlink" href="#gcp-gke-gcs" title="Permalink to this heading"></a></h2>
-<p>Ensure that your GKE cluster has Workload Identity enabled.</p>
+<p>Our recommended authentication approach for this pattern is <a class="reference external" href="https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity">Workload Identity</a>.</p>
+<ol class="arabic simple">
+<li><p>Ensure that your GKE cluster has Workload Identity enabled.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#enable">Enable Workload Identity</a></p></li>
 </ul>
-<p>Create IAM service account and grant it role(s) that have <code class="docutils literal notranslate"><span class="pre">storage.buckets.get</span></code> and <code class="docutils literal notranslate"><span class="pre">storage.objects.get</span></code> permissions.</p>
+</li>
+<li><p>Create a designated GCS bucket for your Robust Intelligence cluster. This will serve as the agent’s default data source.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://cloud.google.com/storage/docs/creating-buckets">Create buckets</a></p></li>
+</ul>
+</li>
+<li><p>Create an IAM service account and grant it role(s) that have <code class="docutils literal notranslate"><span class="pre">storage.buckets.get</span></code> and <code class="docutils literal notranslate"><span class="pre">storage.objects.get</span></code> permissions.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://cloud.google.com/storage/docs/access-control/iam-roles">IAM roles for Cloud Storage</a></p></li>
+<li><p><strong>Save the service account email. You will need to specify this during the agent setup step.</strong></p></li>
 </ul>
-<p>Add IAM policy binding between the IAM service account and the Kubernetes service account <code class="docutils literal notranslate"><span class="pre">rime-agent-model-tester</span></code> with role <code class="docutils literal notranslate"><span class="pre">roles/iam.workloadIdentityUser</span></code>. This will allow the Kubernetes service account to impersonate the IAM service account which possesses the appropriate read access for the GCS bucket(s).</p>
+</li>
+<li><p>Add IAM policy binding between the IAM service account and the K8s service account <code class="docutils literal notranslate"><span class="pre">rime-agent-model-tester</span></code> with role <code class="docutils literal notranslate"><span class="pre">roles/iam.workloadIdentityUser</span></code>.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#authenticating_to">Use Workload Identity</a></p></li>
 </ul>
+</li>
+</ol>
+</section>
+<section id="azure-aks-blob-storage">
+<h2>Azure AKS + Blob Storage<a class="headerlink" href="#azure-aks-blob-storage" title="Permalink to this heading"></a></h2>
+<p>Our recommended authentication approach for this pattern is <a class="reference external" href="https://learn.microsoft.com/en-us/azure/aks/workload-identity-overview">Azure AD Workload Identity</a>.</p>
+<ol class="arabic simple">
+<li><p>Ensure that your AKS cluster has Workload Identity enabled.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/aks/workload-identity-deploy-cluster">Enable Workload Identity</a></p></li>
+</ul>
+</li>
+<li><p>Create a designated blob container for your Robust Intelligence cluster. This will serve as the agent’s default data source.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/storage/blobs/blob-containers-portal">Manage containers</a></p></li>
+</ul>
+</li>
+<li><p>Create a managed identity and associate it with the blob container from the previous step.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/aks/workload-identity-deploy-cluster#create-a-managed-identity">Create a managed identity</a></p></li>
+<li><p><strong>Save the Client ID (and your <a class="reference external" href="https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-how-to-find-tenant">Tenant ID</a>). You will need to specify these during the agent setup step.</strong></p></li>
+</ul>
+</li>
+<li><p>Create a role assignment to give your managed identity permissions to read from your blob storage container.</p>
+<ul class="simple">
+<li><p>A suitable Azure-provided role is <code class="docutils literal notranslate"><span class="pre">Storage</span> <span class="pre">Blob</span> <span class="pre">Data</span> <span class="pre">Reader</span></code>.</p>
+<ul>
+<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/storage/blobs/assign-azure-role-data-access?tabs=portal">Assign an Azure role for access to blob data</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal-managed-identity">Assign Azure roles to a managed identity</a></p></li>
+</ul>
+</li>
+<li><p>Create a federated identity credential to associate the <code class="docutils literal notranslate"><span class="pre">rime-agent-model-tester</span></code> service account with your managed identity.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/aks/workload-identity-deploy-cluster#establish-federated-identity-credential">Establish federated identity credential</a></p></li>
+</ul>
+</li>
+</ol>
 </section>
 <section id="other-cloud-providers">
 <h2>Other Cloud Providers<a class="headerlink" href="#other-cloud-providers" title="Permalink to this heading"></a></h2>
-<p>If you are using a different cloud provider or want to specify the service account directly, you can specify other configurations via the <code class="docutils literal notranslate"><span class="pre">rimeAgent.modelTestJob.serviceAccount</span></code> helm values. A Robust Intelligence team member can help you through this process.</p>
+<p>If you are using a different cloud provider or want to specify the service account directly, you can specify other configurations via the <code class="docutils literal notranslate"><span class="pre">rimeAgent.modelTestJob.serviceAccount</span></code> Helm values.</p>
+<p>Your Solutions Architect can help you through this process.</p>
 </section>
 </section>
 
@@ -202,7 +266,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="kubernetes_cluster.html" class="btn btn-neutral float-left" title="Kubernetes Cluster" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../requirements.html" class="btn btn-neutral float-left" title="Requirements" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="../installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

@@ -1,0 +1,76 @@
+# Azure Data Stores
+
+Robust Intelligence supports loading data directly from Azure. Today, Azure Blob Storage is the only natively supported Cloud Store. Configure
+Azure Data Stores [using the UI.](../configuring_integrations.md)
+
+
+
+## Configuring Azure Data Stores Integration
+In order to configure the Azure Data Store Integration, there are 2 authentication methods:
+
+### Client Secret Based Authentication
+
+In order to configure Azure Data Stores via client secret based authentication,
+you need to enter the following information:
+
+1. Tenant ID
+2. Client ID
+3. Client Secret
+4.
+You can find more information by the following this [Microsoft Azure Guide.](https://learn.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#get-tenant-and-app-id-values-for-signing-in)
+
+### Workload Identity Based Authentication
+
+Integrations support authenticating using Azure Workload Identity in the same way
+when deploying the [Agent.](../../../../deployment/requirements.rst)
+
+To enable the integration using Workload Identity, you only need to associate the
+service accounts `rime-agent-model-tester` with agents where you intend to use
+the integration.
+
+Steps to set up the workload identity based integration:
+
+1. Create a managed identity and associate it with the blob stores which you want to allow access for
+2. Use the az identity federated-credential create command to create the federated
+identity credential between the managed identity, the service account issuer, and the subject.
+
+You can find more information by following this
+[Microsoft Azure Guide.](https://learn.microsoft.com/en-us/azure/aks/learn/tutorial-kubernetes-workload-identity)
+
+**Note:** You do not need to update the service account `rime-agent-model-tester`
+with the client ID as this will be updated during runtime when the integration is used.
+
+## Using the Azure Integration
+
+After configuring the integration, use it to register datasets and models.
+
+```
+integration_id = "abe23******" #Choose the Azure Integraiton ID
+
+project.register_dataset(
+    name= f"ref_data_{dt}",
+    data_config= {
+        "connection_info": {
+            "data_file": {
+                "path": "myaccount.blob.core.windows.net/myblob/data/fraud_ref.csv" #Enter the azure blobstore file path
+            }
+        },
+        "data_params": {"label_col": "label"}
+    },
+    integration_id= integration_id
+)
+
+model_id = project.register_model(
+    name= f"model_{dt}",
+    model_config= {
+        "model_path": {
+            "path": "myaccount.blob.core.windows.net/myblob/models/fraud_model.py" #Enter the azure blobstore file path
+        }
+    },
+    integration_id= integration_id
+)
+```
+
+More information on defining
+the configurations is available in the
+[Data Configuration](../../../../testing_and_monitoring/preparing_your_models_and_datasets/data_source.md) section.

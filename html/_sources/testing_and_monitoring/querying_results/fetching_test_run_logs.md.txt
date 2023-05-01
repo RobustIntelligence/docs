@@ -1,0 +1,15 @@
+# Fetching Test Run Logs
+
+Robust Intelligence can be deployed with a log archival solution that uses blob
+storage. If your instance was deployed with log archival configured, when a
+job fails, the control plane will push the job logs to the blob storage configured.
+The logs are then accessible through a presigned url which can be retrieved using
+the Python SDK. These logs are stored in blob storage for 7 days by default, although the
+presigned url may expire before that depending on the configuration of the blob storage.
+
+In order to view your logs, you can use the following commands on a completed job:
+
+```python
+    job.get_status()
+    job.get_job_debug_logs_link()
+```
