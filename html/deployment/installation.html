@@ -28,7 +28,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Agent Configuration" href="installation/agent_configuration.html" />
+    <link rel="next" title="FAQ" href="faq.html" />
     <link rel="prev" title="Data Access Permissions" href="requirements/data_access_permissions.html" />
 <link href="../_static/style.css" rel="stylesheet" type="text/css">
 
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.0.0-rc.14
+                2.1.0-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -74,17 +74,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/querying_results.html">Querying Test Run Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/notifications_and_alerts.html">Notifications and Alerts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/model_governance.html">Managing Model Governance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/test_customization.html">Test Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/integrating_mlops.html">Integrating with MLOps</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Administration</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../administration/organization_administration.html">Organization Administration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../administration/configuring_workspaces.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/workspace_configuration.html">Workspace Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../administration/security_and_compliance.html">Security and Compliance</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
@@ -92,8 +91,16 @@
 <li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation/agent_configuration.html">Agent Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation/helm_installation.html">Helm Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#agent-setup">Agent Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#helm-installation">Helm Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#validation">Validation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#infrastructure">Infrastructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#web-client">Web Client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python-sdk-and-rest-api">Python SDK and REST API</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
@@ -132,21 +139,94 @@
              
   <section id="installation">
 <span id="deploying-an-agent"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h1>
-<p>Once you’ve completed the steps in the <a class="reference internal" href="requirements.html#deployment-requirements"><span class="std std-ref">Requirements</span></a> section, you can now install the agent in your cluster and begin
-running Stress and Continuous Tests.</p>
-<p>To begin, an organization admin should follow the below guide to create a new agent through the Web UI.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="installation/agent_configuration.html">Agent Configuration</a></li>
-</ul>
+<p>Be sure to complete the prerequisites from <a class="reference internal" href="requirements.html#deployment-requirements"><span class="std std-ref">Requirements</span></a> before proceeding.</p>
+<p>Particularly, make sure you have your data access credentials (e.g., IAM Role ARN for AWS EKS + S3) ready before going through the Agent Setup below.</p>
+<section id="agent-setup">
+<h2>Agent Setup<a class="headerlink" href="#agent-setup" title="Permalink to this heading"></a></h2>
+<p>Robust Intelligence provides a self-guided installation process through the web client, which will automatically generate a pre-filled Helm values file for your agent based on your cloud configuration.</p>
+<p>To begin, sign in to your Administrator account, navigate to the <strong>Organization Settings</strong> page, and click on the <strong>Manage Agent Setup</strong> tab.</p>
+<p>From there, clicking on the <strong>Create Agent</strong> button will launch a modal that walks you through the self-guided installation.</p>
+<img src="../_static/agent-setup.png" style="max-height:400px"/><p>Select a unique name to identify your agent, and input the data access credentials generated during the <a class="reference internal" href="requirements.html#deployment-requirements"><span class="std std-ref">Requirements</span></a> phase.</p>
+<p>Upon completing the setup, you will receive the following:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>A pre-filled <code class="docutils literal notranslate"><span class="pre">*_values.yaml</span></code> file for the <code class="docutils literal notranslate"><span class="pre">rime-agent</span></code> Helm chart</p></li>
+<li><p>Helm commands to install the chart</p></li>
+</ol>
+</div></blockquote>
+<section id="helm-installation">
+<h3>Helm Installation<a class="headerlink" href="#helm-installation" title="Permalink to this heading"></a></h3>
+<ol class="arabic">
+<li><p>Point your local <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> to your data plane K8s cluster and namespace.</p></li>
+<li><p>Execute the provided Helm commands to install the agent in your K8s cluster. They will look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>helm repo add robustintelligence https://robustintelligence.github.io/helm --force-update
+
+helm upgrade -i rime-agent robustintelligence/rime-agent \
+   --version $RI_VERSION \
+   --values $PATH_TO_VALUES_FILE
+</pre></div>
 </div>
-<p>Once the agent has been configured in the UI, you will need to install the agent’s Helm Chart into your cluster. The
-following instructions will guide you through the process of installing and validating the agent.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="installation/helm_installation.html">Helm Installation</a></li>
-</ul>
+</li>
+</ol>
+</section>
+</section>
+<section id="validation">
+<h2>Validation<a class="headerlink" href="#validation" title="Permalink to this heading"></a></h2>
+<p>After performing the Helm installation, use the following reference to should smoke test your agent installation.</p>
+<section id="infrastructure">
+<h3>Infrastructure<a class="headerlink" href="#infrastructure" title="Permalink to this heading"></a></h3>
+<ol class="arabic">
+<li><p>Point your local <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> to your data plane K8s cluster and namespace.</p></li>
+<li><p>Inspect the <strong>Deployments</strong>. All containers should be ready.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">kubectl</span> <span class="n">get</span> <span class="n">deployments</span>
+
+<span class="n">NAME</span>                                     <span class="n">READY</span>   <span class="n">UP</span><span class="o">-</span><span class="n">TO</span><span class="o">-</span><span class="n">DATE</span>   <span class="n">AVAILABLE</span>   <span class="n">AGE</span>
+<span class="n">rime</span><span class="o">-</span><span class="n">agent</span><span class="o">-</span><span class="n">launcher</span>                      <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="mi">1</span>            <span class="mi">1</span>           <span class="mi">5</span><span class="n">m26s</span>
+<span class="n">rime</span><span class="o">-</span><span class="n">agent</span><span class="o">-</span><span class="n">operator</span><span class="o">-</span><span class="n">controller</span><span class="o">-</span><span class="n">manager</span>   <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="mi">1</span>            <span class="mi">1</span>           <span class="mi">5</span><span class="n">m26s</span>
+</pre></div>
 </div>
+</li>
+</ol>
+</section>
+<section id="web-client">
+<h3>Web Client<a class="headerlink" href="#web-client" title="Permalink to this heading"></a></h3>
+<p>The status of the agent is regularly updated on the <strong>Agents Setup</strong> page of <strong>Organization Settings</strong> (as well as the <strong>Agent Status</strong> page of <strong>Workspace Settings</strong>).</p>
+<ol class="arabic">
+<li><p>Verify that the new agent has a status of <code class="docutils literal notranslate"><span class="pre">Active</span></code> in the web client.</p>
+<img src="../_static/agent-status.png" style="max-height:180px"/><p><strong>Make note of the new agent’s ID, as you will need to reference it for the other steps.</strong></p>
+</li>
+<li><p>Connect the agent to at least one Workspace via the <a class="reference internal" href="../administration/workspace_configuration.html#workspace-configuration"><span class="std std-ref">Workspace Agent Configuration</span></a> steps.</p></li>
+</ol>
+</section>
+<section id="python-sdk-and-rest-api">
+<h3>Python SDK and REST API<a class="headerlink" href="#python-sdk-and-rest-api" title="Permalink to this heading"></a></h3>
+<p>The following commands should each return a list of the agents currently assigned to your Workspace.
+Be sure to use an <a class="reference internal" href="../administration/security_and_compliance.html#userauth"><span class="std std-ref">API Token</span></a> from a Workspace that you connected to the new agent.</p>
+<p>Verify that the outputs of the commands contain a <code class="docutils literal notranslate"><span class="pre">uuid</span></code> matching that of the newly-deployed agent.</p>
+<dl>
+<dt>Python SDK</dt><dd><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
+
+<span class="n">rime_client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;rime.&lt;DOMAIN&gt;.com&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;API_TOKEN&gt;&quot;</span><span class="p">)</span>
+
+<span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">list_agents</span><span class="p">()]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;agent_id&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;uuid&#39;</span><span class="p">:</span> <span class="o">...</span> <span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+<dt>REST API</dt><dd><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">X</span> <span class="n">GET</span> <span class="s1">&#39;rime.$DOMAIN.com/v1/agents&#39;</span> \
+   <span class="o">--</span><span class="n">header</span> <span class="s2">&quot;rime-api-key: $API_TOKEN&quot;</span> \
+   <span class="o">--</span><span class="n">header</span> <span class="s2">&quot;Content-Type: application/json&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;agents&quot;</span><span class="p">:[{</span><span class="s2">&quot;agentId&quot;</span><span class="p">:{</span><span class="s2">&quot;uuid:&quot;</span><span class="p">:</span> <span class="o">...</span> <span class="p">}</span><span class="o">%</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</section>
+</section>
 </section>
 
 
@@ -154,7 +234,7 @@ following instructions will guide you through the process of installing and vali
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="requirements/data_access_permissions.html" class="btn btn-neutral float-left" title="Data Access Permissions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="installation/agent_configuration.html" class="btn btn-neutral float-right" title="Agent Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="faq.html" class="btn btn-neutral float-right" title="FAQ" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

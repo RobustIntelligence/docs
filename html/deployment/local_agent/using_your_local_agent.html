@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.0.0-rc.14
+                2.1.0-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -74,17 +74,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/querying_results.html">Querying Test Run Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/notifications_and_alerts.html">Notifications and Alerts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/model_governance.html">Managing Model Governance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/test_customization.html">Test Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops.html">Integrating with MLOps</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Administration</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../administration/organization_administration.html">Organization Administration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../administration/configuring_workspaces.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/workspace_configuration.html">Workspace Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../administration/security_and_compliance.html">Security and Compliance</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
@@ -153,18 +152,46 @@
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">model.py</span></code></p></li>
 </ul>
-<p>You would specify those files in a test configuration as:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+<p>Use the below script to register the model, register the data and run a test.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_project</span><span class="p">(</span><span class="n">project_id</span><span class="o">=&lt;</span><span class="n">PROJECT_ID</span><span class="o">&gt;</span><span class="p">)</span>
+
+<span class="c1"># Register Reference Dataset</span>
+<span class="n">ref_data_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;ref_data_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">remote_path</span><span class="o">=</span>  <span class="s2">&quot;/ri-platform/local/data/ref.csv&quot;</span><span class="p">,</span> <span class="c1">#Enter the local file path</span>
+    <span class="n">data_params</span><span class="o">=</span> <span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1"># Register Evaluation Dataset</span>
+<span class="n">eval_data_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;eval_data_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">remote_path</span><span class="o">=</span>  <span class="s2">&quot;/ri-platform/local/data/eval.csv&quot;</span><span class="p">,</span> <span class="c1">#Enter the local file path</span>
+    <span class="n">data_params</span><span class="o">=</span> <span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1"># Register Model</span>
+<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">remote_path</span><span class="o">=</span> <span class="s2">&quot;/ri-platform/local/model.py&quot;</span> <span class="c1">#Enter the local file path</span>
+<span class="p">)</span>
+
+<span class="c1"># Once your data and model have been registered, use the agent ID to start a stress test</span>
+<span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;ref_path&quot;</span><span class="p">:</span> <span class="s2">&quot;/ri-platform/local/data/ref.csv&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;eval_path&quot;</span><span class="p">:</span> <span class="s2">&quot;/ri-platform/local/data/eval.csv&quot;</span><span class="p">,</span>
-        <span class="o">...</span>
+        <span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="n">ref_data_id</span><span class="p">,</span>
+        <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="n">eval_data_id</span>
     <span class="p">},</span>
-    <span class="s2">&quot;model_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/ri-platform/local/model.py&quot;</span>
-    <span class="p">},</span>
-    <span class="o">...</span>
+    <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span><span class="p">,</span>
+    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;My Stress Test Run&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;run_time_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;agent_id&quot;</span><span class="p">:</span> <span class="s2">&quot;ajne*****&quot;</span> <span class="c1">#Copy and paste the local agent&#39;s ID from the agent status page</span>
+    <span class="p">}</span>
 <span class="p">}</span>
+
+<span class="n">job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
+    <span class="n">test_run_config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+    <span class="n">project_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </section>

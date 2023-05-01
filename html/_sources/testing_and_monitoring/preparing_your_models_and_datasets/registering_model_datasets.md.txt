@@ -1,20 +1,43 @@
-# Registering your Model and Datasets
+# Registering Models,  Datasets, and Predictions
 
-Robust Intelligence provides registries to keep track of the models, datasets, and predictions files
-that have been uploaded to a Robust Intelligence instance. You can register these data objects from
-the RIME SDK or in the web UI during project configuration.
+Contextual information (e.g., the name of a label column in a dataset) is necessary to compute many of the statistical
+measures powering the Robust Intelligence testing suite.
 
-Models are typically Python files in either `py` or `pkl` formats. Reference or
-evaluation datasets and prediction sets can be provided in several formats, most
-commonly CSV.
+Registries provide you with a way to store this context alongside your models, datasets, and prediction files. Once a
+data object is registered, Robust Intelligence will reference the artifact by its unique ID, which can be reused for
+repeated references to the data object (e.g., a training set used in both
+[Stress Testing](../../testing_and_monitoring/validating_models.rst) and
+[Continuous Testing](../../testing_and_monitoring/monitoring_models.rst)).
 
-Any of these data objects can be directly uploaded to the Robust Intelligence instance using the SDK
-or sourced from an [integration](../../administration/configuring_workspaces/integrations/configuring_integrations.md). Register the data
-object after upload.
+Registration can be performed with a single Python SDK call, as illustrated below.
 
-Once a model, dataset, or prediction set has been registered with a Robust Intelligence instance,
-that data object is available for selection in the appropriate drop-down selectors
-during project configuration for either a [Stress test](../validating_models/stress_tests_from_sdk.md) or a [Continuous test](../monitoring_models/creating_new_continuous_test.rst).
+Once a model, dataset, or prediction set has been registered with a Robust Intelligence instance, that data object is
+available for selection in the appropriate drop-down selectors during project configuration for either a
+[Stress test](../validating_models/stress_tests_from_sdk.md) or a [Continuous test](../monitoring_models/creating_new_continuous_test.rst).
+
+To get started, make sure you've [installed the Python SDK](../../documentation_home/installation.md)
+and initialized your client:
+
+```python
+from rime_sdk import Client
+client = Client(domain=<CLUSTER_URL>, api_key=<API_KEY>)
+```
+
+and get your project object where you want to register your model, dataset, or prediction set by first
+[grabbing your project ID]() and then use the SDK:
+
+```python
+project = client.get_project(project_id=<PROJECT_ID>)
+```
+
+You may also create a new project using the SDK:
+
+```python
+project = client.create_project(name="<PROJECT_NAME>", description="<DESCRIPTION>", model_task="MODEL_TASK_BINARY_CLASSIFICATION")
+```
+
+See the [Python SDK documentation](../../reference/python-sdk.rst) for details on how
+to do this.
 
 ## Registering a Model Using the SDK
 
@@ -23,6 +46,8 @@ uploaded to the Robust Intelligence instance, you can register a model using the
 documentation for full details on the SDK calls used in this procedure.
 
 ### Register your model with a model config or with a path to a model artifact.
+
+#### Example of registering a Hugging Face model:
 
 ```python
 # Get your model config
@@ -38,7 +63,7 @@ model_id = project.register_model(name=<NAME>, model_config={
 })
 ```
 
-For more on model configuration, check out the [model configuration documentation](../../testing_and_monitoring/preparing_your_models_and_datasets/model_source.html#model-configuration).
+For more on model configuration, check out the [model configuration documentation](../../testing_and_monitoring/preparing_your_models_and_datasets/model_source.md).
 
 #### Registering a model with a path to a model artifact:
 
@@ -46,9 +71,11 @@ For more on model configuration, check out the [model configuration documentatio
 model_id = project.register_model_from_path(name=<NAME>, remote_path=<MODEL_PATH>)
 ```
 
-Check out the SDK documentation for more on [registering a model](../../reference/python-sdk.html#rime_sdk.Project.register_model).
+Check out the SDK documentation for more on [registering a model](../../reference/python-sdk.rst).
 
-## Registering a dataset using the SDK
+## Registering a Dataset Using the SDK
+
+### Register your dataset with a dataset configuration.
 
 ```python
 data_config = {
@@ -68,8 +95,45 @@ dataset_id = project.register_dataset(
 )
 ```
 
-For more on dataset configuration, check out the [dataset configuration documentation](../../testing_and_monitoring/preparing_your_models_and_datasets/dataset_source.html#data-configuration).
+For more on dataset configuration, check out the [dataset configuration documentation](../../testing_and_monitoring/preparing_your_models_and_datasets/data_source.md).
 
-Check out the SDK documentation for more on [registering a dataset](../../reference/python-sdk.html#rime_sdk.Project.register_dataset).
+Check out the SDK documentation for more on [registering a dataset](../../reference/python-sdk.rst).
 
-## Registering a prediction set using the SDK
+## Registering a Prediction Set Using the SDK
+```python
+
+dataset_id = project.register_dataset(
+    name="<DATASET_NAME>",
+    data_config=<DATASET_CONFIG>
+)
+
+model_id = project.register_model(
+    name="<MODEL_NAME>",
+    model_config=<MODEL_CONFIG>
+)
+```
+
+See above for more information on registering a dataset or model.
+
+2. Register your predictions with a predictions configuration.
+
+```python
+prediction_config={
+    "connection_info": {
+        "data_file": {
+            "path": "<PATH_TO_DATA_FILE>"
+        }
+    },
+    "pred_params": {
+        "pred_col": "<PREDICTION_COLUMN_NAME>",
+    },
+}
+
+predictions_id = project.register_predictions(
+    dataset_id=dataset_id,
+    model_id=model_id,
+    pred_config=prediction_config
+)
+```
+
+Check out the SDK documentation for more on [registering predictions](../../reference/python-sdk.rst).

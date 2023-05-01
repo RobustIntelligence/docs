@@ -3,24 +3,48 @@
 Overview
 ================================
 
+Cloud Architecture
+--------------------------------
+
 Robust Intelligence runs on Kubernetes.
 
-To isolate data source access and reduce maintenance burden, core services are split into two separate planes: a **control plane** and a **data plane**.
+To isolate data source access and reduce maintenance burden, core services are split into two separate planes: a **Control Plane** in the Robust Intelligence cloud and a **Data Plane** in your cloud.
 
 .. raw:: html
 
    <img src="../_static/diagrams/cloud.png" style="max-height:451px"/>
 
-The **control plane** handles all client interactions, hosting application services like the web server and user management.
+Control Plane
+   This is the central management hub for your Robust Intelligence application.
 
-The control plane is managed for you on dedicated infrastructure in the Robust Intelligence cloud.
+   All user interactions go through the Control Plane.
 
-The **data plane** hosts the model testing agent, which fulfills requests submitted by the control plane.
-This agent queries your models and data sources to execute the Robust Intelligence testing suite.
-Test results are sent to the control plane, where users can view them.
+   Administrative actions (e.g., adding new users) are served directly by the Control Plane; however, model testing requests are relayed to the Data Plane, where they are executed by a model testing agent deployed in your cloud environment.
 
-The data plane is deployed within your cloud Kubernetes environment; however, a fully-managed option is available as well.
+Data Plane
+   This plane isolates access to models and data sources to your cloud environment.
 
-Your RI Solutions Architect will guide you through deploying the data plane and integrating Robust Intelligence with your MLOps pipelines.
+   The model testing agent deployed here uses its access to fulfill model testing requests posted by the Control Plane.
 
-**To begin, navigate to the Requirements section in the left-hand side navigation bar.**
+   During a testing job, the agent queries your models and data sources to execute the Robust Intelligence testing suite, returning test results to the Control Plane upon completion.
+
+Deployment Process
+-------------------------------
+
+Your Solutions Architect (SA) will lead the deployment with your MLOps team.
+
+Phase 1: Scoping
+   *Estimated Duration: 1 session with an RI Solutions Architect and your DevOps Administrator(s)*
+
+   Your SA will guide you through the system requirements so that you can prepare resources with your internal teams in advance.
+
+   Prior to deployment, Robust Intelligence will provision your **control plane** on dedicated infrastructure in our cloud.
+
+Phase 2: Deployment and Validation
+   *Estimated Duration: 1-2 sessions with an RI Solutions Architect and your DevOps Engineer(s)*
+
+   Your SA will assist you with the self-guided Helm installation and subsequent validation.
+
+After the initial deployment, your administrator(s) can configure additional agents using the same self-guided installation process.
+
+This documentation is available for your reference --- begin with **Requirements**.

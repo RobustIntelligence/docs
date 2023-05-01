@@ -1,27 +1,40 @@
 # Model Configuration
 
-Configuring a model source can be done by specifying a mapping in the Robust Intelligence JSON
-configuration file. [Specify a Model](defining_model_interface.md) discusses how to create a
-Python model file.
+Configuring a model source can be done by specifying a mapping with a python object.  It allows you to point to specific
+models you have created or gives the ability to access hugging face models.  
+[Specify a Model](defining_model_interface.md) discusses how to create a Python model file.
 
-For an example of how to use this config in the model registry, please see the "Register a Model" step in [Stress Tests walkthrough](../validating_models/stress_tests_from_sdk.md).
+For an example of how to use this config in the model registry, please see the "Register a Model" step in
+[Stress Tests walkthrough](../validating_models/stress_tests_from_sdk.md).
 
 ## Template
+
+### Model Path
+
+```python
+{
+    "model_path": "/path/to/model.py",
+}
+```
+
+### Huggingface
 
 ```python
 {
     "hugging_face" :{
         "model_uri": "cross-encoder/nli-MiniLM2-L6-H768",
+        "kwargs": "{\"tokenizer_uri\": \"cross-encoder/nli-MiniLM2-L6-H768\", \"class_map\": {\"0\": \"contradiction\", \"1\": \"entailment\", \"2\": \"neutral\"}, \"ignore_class_names\": true}"
+
     }
 }
 ```
 
 ## Arguments
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| model_path | String | Path to the Python model file.  |
-| hugging_face | String | The URI to a HuggingFace model. |
-| &nbsp;&nbsp;&nbsp;&nbsp; kwargs | String | Arguments to pass to HuggingFace along with the URI. |
+| Parameter | Type | Description                                              |
+|-----------|------|----------------------------------------------------------|
+| model_path | String | Path to the Python model file.                           |
+| hugging_face | String | The URI to a HuggingFace model.                          |
+| &nbsp;&nbsp;&nbsp;&nbsp; kwargs | String | A JSON String of arguments to pass to HuggingFace model. |
 
 Specify exactly one of `model_path` or `hugging_face`.

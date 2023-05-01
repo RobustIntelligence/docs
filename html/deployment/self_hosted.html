@@ -28,7 +28,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Overview" href="self_hosted/overview.html" />
+    <link rel="next" title="Requirements" href="self_hosted/requirements.html" />
     <link rel="prev" title="Using your Local Agent" href="local_agent/using_your_local_agent.html" />
 <link href="../_static/style.css" rel="stylesheet" type="text/css">
 
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.0.0-rc.14
+                2.1.0-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -74,17 +74,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/querying_results.html">Querying Test Run Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/notifications_and_alerts.html">Notifications and Alerts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/model_governance.html">Managing Model Governance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/test_customization.html">Test Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/integrating_mlops.html">Integrating with MLOps</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Administration</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../administration/organization_administration.html">Organization Administration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../administration/configuring_workspaces.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/workspace_configuration.html">Workspace Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../administration/security_and_compliance.html">Security and Compliance</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
@@ -95,9 +94,13 @@
 <li class="toctree-l1 current"><a class="reference internal" href="faq.html">FAQ</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="local_agent.html">Local Agent</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Self-Hosted</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="self_hosted/overview.html">Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="self_hosted/deployment.html">Deployment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="self_hosted/validation.html">Validation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#self-hosted-architecture">Self-Hosted Architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deployment-process">Deployment Process</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="self_hosted/requirements.html">Requirements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="self_hosted/deployment.html">Deployment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="self_hosted/validation.html">Validation</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../reference/api_changelog.html">API Changelog</a></li>
@@ -139,7 +142,14 @@
              
   <section id="self-hosted">
 <h1>Self-Hosted<a class="headerlink" href="#self-hosted" title="Permalink to this heading"></a></h1>
+<section id="self-hosted-architecture">
+<h2>Self-Hosted Architecture<a class="headerlink" href="#self-hosted-architecture" title="Permalink to this heading"></a></h2>
 <p>In this configuration, <strong>both planes</strong> are hosted in your organization’s private cloud.</p>
+<img src="../_static/diagrams/self_hosted.png" style="max-height:451px"/><p>The Self-Hosted configuration provides complete control over the Robust Intelligence cluster’s behavior, including network routing, storage management, and compute resource optimization for model testing jobs.</p>
+<p>Note that services may behave differently if alternative configurations are used.</p>
+</section>
+<section id="deployment-process">
+<h2>Deployment Process<a class="headerlink" href="#deployment-process" title="Permalink to this heading"></a></h2>
 <p>Your Solutions Architect (SA) will lead the deployment with your MLOps team.</p>
 <dl>
 <dt>Phase 1: Scoping</dt><dd><p><em>Estimated Duration:  1 session with an RI Solutions Architect and your DevOps Administrator(s)</em></p>
@@ -155,13 +165,12 @@
 </dd>
 </dl>
 <hr class="docutils" />
-<p>This documentation is available for your reference — begin with <strong>Overview</strong> below.</p>
+<p>This documentation is available for your reference — begin with <strong>Requirements</strong> below.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="self_hosted/overview.html">Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="self_hosted/overview.html#architecture">Architecture</a></li>
-<li class="toctree-l2"><a class="reference internal" href="self_hosted/overview.html#system-requirements">System Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="self_hosted/overview.html#external-dependencies">External Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_hosted/requirements.html">Requirements</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="self_hosted/requirements.html#system-requirements">System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="self_hosted/requirements.html#external-dependencies">External Dependencies</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="self_hosted/deployment.html">Deployment</a><ul>
@@ -179,13 +188,14 @@
 </ul>
 </div>
 </section>
+</section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="local_agent/using_your_local_agent.html" class="btn btn-neutral float-left" title="Using your Local Agent" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="self_hosted/overview.html" class="btn btn-neutral float-right" title="Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="self_hosted/requirements.html" class="btn btn-neutral float-right" title="Requirements" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

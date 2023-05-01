@@ -28,7 +28,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Kubernetes Cluster" href="requirements/kubernetes_cluster.html" />
+    <link rel="next" title="Data Access Permissions" href="requirements/data_access_permissions.html" />
     <link rel="prev" title="Overview" href="index.html" />
 <link href="../_static/style.css" rel="stylesheet" type="text/css">
 
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.0.0-rc.14
+                2.1.0-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -74,25 +74,27 @@
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/querying_results.html">Querying Test Run Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/notifications_and_alerts.html">Notifications and Alerts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/model_governance.html">Managing Model Governance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/test_customization.html">Test Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/integrating_mlops.html">Integrating with MLOps</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Administration</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../administration/organization_administration.html">Organization Administration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../administration/configuring_workspaces.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/workspace_configuration.html">Workspace Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../administration/security_and_compliance.html">Security and Compliance</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Requirements</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="requirements/kubernetes_cluster.html">Kubernetes Cluster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="requirements/data_access_permissions.html">Data Access Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cloud-resources">Cloud Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-access-permissions">Data Access Permissions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="requirements/data_access_permissions.html">Data Access Permissions</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
@@ -132,23 +134,62 @@
              
   <section id="requirements">
 <span id="deployment-requirements"></span><h1>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h1>
-<p>These are requirements for installing the <strong>data plane</strong> agent into your organization’s cloud.
-Instructions for installing a local agent can be found <a class="reference internal" href="local_agent.html#deployment-local-agent"><span class="std std-ref">here</span></a>.</p>
-<p>Before beginning, ensure that you have both <a class="reference external" href="https://helm.sh/docs/intro/install/">Helm</a> and <a class="reference external" href="https://kubernetes.io/docs/tasks/tools/">Kubectl</a> installed.
-These tools will be needed to interact with the Kubernetes cluster where your agent will be installed.</p>
-<p>Next, ensure that your Kubernetes Cluster satisfies the following requirements:</p>
+<section id="cloud-resources">
+<h2>Cloud Resources<a class="headerlink" href="#cloud-resources" title="Permalink to this heading"></a></h2>
+<p>The model testing agent is installed through a <a class="reference external" href="https://helm.sh/">Helm</a> chart into a Kubernetes namespace.</p>
+<dl>
+<dt>Robust Intelligence Cloud Environment</dt><dd><ul>
+<li><p>Control Plane x 1 (will be provisioned by Robust Intelligence)</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(Your Solutions Architect will assist you with enabling connectivity from your enterprise network)</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</dd>
+<dt>Your Cloud Environment</dt><dd><ul>
+<li><p>Kubernetes Cluster x 1</p>
+<blockquote>
+<div><ul>
+<li><p>Namespace x 1</p></li>
+<li><p>Node Group x 1</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Recommended at least 64 GiB RAM (such as the AWS <a class="reference external" href="https://aws.amazon.com/ec2/instance-types/">m4.4xlarge</a> template) in an autoscaling group (1 minimum, 1 desired, 10 maximum)</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Object Storage x 1</p>
+<ul class="simple">
+<li><p>Default storage medium for datasets and model artifacts</p></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+<p>If not already installed, you will need <a class="reference external" href="https://kubernetes.io/docs/tasks/tools/">kubectl</a> and <a class="reference external" href="https://helm.sh/">Helm</a> to execute deployment commands against your Kubernetes cluster.</p>
+</section>
+<section id="data-access-permissions">
+<h2>Data Access Permissions<a class="headerlink" href="#data-access-permissions" title="Permalink to this heading"></a></h2>
+<p>Prior to executing the Helm installation commands, you will need to enable appropriate access permissions to your object storage data source.</p>
+<p>Follow the steps for your cloud provider + object storage below.</p>
+<p>After the initial deployment, additional data sources can be configured through <a class="reference internal" href="../administration/workspace_configuration/integrations.html#configuring-integrations"><span class="std std-ref">Integrations</span></a>.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="requirements/kubernetes_cluster.html">Kubernetes Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requirements/data_access_permissions.html">Data Access Permissions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="requirements/data_access_permissions.html#aws-eks-s3">AWS EKS + S3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="requirements/data_access_permissions.html#gcp-gke-gcs">GCP GKE + GCS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="requirements/data_access_permissions.html#azure-aks-blob-storage">Azure AKS + Blob Storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="requirements/data_access_permissions.html#other-cloud-providers">Other Cloud Providers</a></li>
+</ul>
+</li>
 </ul>
 </div>
-<p>Finally, you will need to set up the appropriate data permissions for the agent so that it can access your data and models
-during testing.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="requirements/data_access_permissions.html">Data Access Permissions</a></li>
-</ul>
-</div>
+</section>
 </section>
 
 
@@ -156,7 +197,7 @@ during testing.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="requirements/kubernetes_cluster.html" class="btn btn-neutral float-right" title="Kubernetes Cluster" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="requirements/data_access_permissions.html" class="btn btn-neutral float-right" title="Data Access Permissions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

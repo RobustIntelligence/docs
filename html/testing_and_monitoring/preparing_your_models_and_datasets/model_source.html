@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.0.0-rc.14
+                2.1.0-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -75,10 +75,14 @@
 <li class="toctree-l2"><a class="reference internal" href="preprocessing_your_datasets.html">Preprocessing your Datasets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="defining_model_interface.html">Defining a Model interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="upload_data.html">Uploading to Cloud Storage (Optional)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="registering_model_datasets.html">Registering your Model and Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registering_model_datasets.html">Registering Models,  Datasets, and Predictions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_source.html">Data Configuration</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Model Configuration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#template">Template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#template">Template</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#model-path">Model Path</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#huggingface">Huggingface</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a></li>
 </ul>
 </li>
@@ -86,17 +90,16 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../querying_results.html">Querying Test Run Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notifications_and_alerts.html">Notifications and Alerts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../model_governance.html">Managing Model Governance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../test_customization.html">Test Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../integrating_mlops.html">Integrating with MLOps</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Administration</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../administration/organization_administration.html">Organization Administration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../administration/configuring_workspaces.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/workspace_configuration.html">Workspace Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../administration/security_and_compliance.html">Security and Compliance</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
@@ -143,19 +146,33 @@
              
   <section id="model-configuration">
 <h1>Model Configuration<a class="headerlink" href="#model-configuration" title="Permalink to this heading"></a></h1>
-<p>Configuring a model source can be done by specifying a mapping in the Robust Intelligence JSON
-configuration file. <a class="reference internal" href="defining_model_interface.html"><span class="std std-doc">Specify a Model</span></a> discusses how to create a
-Python model file.</p>
-<p>For an example of how to use this config in the model registry, please see the “Register a Model” step in <a class="reference internal" href="../validating_models/stress_tests_from_sdk.html"><span class="std std-doc">Stress Tests walkthrough</span></a>.</p>
+<p>Configuring a model source can be done by specifying a mapping with a python object.  It allows you to point to specific
+models you have created or gives the ability to access hugging face models.<br />
+<a class="reference internal" href="defining_model_interface.html"><span class="std std-doc">Specify a Model</span></a> discusses how to create a Python model file.</p>
+<p>For an example of how to use this config in the model registry, please see the “Register a Model” step in
+<a class="reference internal" href="../validating_models/stress_tests_from_sdk.html"><span class="std std-doc">Stress Tests walkthrough</span></a>.</p>
 <section id="template">
 <h2>Template<a class="headerlink" href="#template" title="Permalink to this heading"></a></h2>
+<section id="model-path">
+<h3>Model Path<a class="headerlink" href="#model-path" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;model_path&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/model.py&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="huggingface">
+<h3>Huggingface<a class="headerlink" href="#huggingface" title="Permalink to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="s2">&quot;hugging_face&quot;</span> <span class="p">:{</span>
         <span class="s2">&quot;model_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;cross-encoder/nli-MiniLM2-L6-H768&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">tokenizer_uri</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="s2">cross-encoder/nli-MiniLM2-L6-H768</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">class_map</span><span class="se">\&quot;</span><span class="s2">: {</span><span class="se">\&quot;</span><span class="s2">0</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="s2">contradiction</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">1</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="s2">entailment</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">2</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="s2">neutral</span><span class="se">\&quot;</span><span class="s2">}, </span><span class="se">\&quot;</span><span class="s2">ignore_class_names</span><span class="se">\&quot;</span><span class="s2">: true}&quot;</span>
+
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+</section>
 </section>
 <section id="arguments">
 <h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this heading"></a></h2>
@@ -181,7 +198,7 @@ Python model file.</p>
 <tr>
 <td>&nbsp;&nbsp;&nbsp;&nbsp; kwargs</td>
 <td>String</td>
-<td>Arguments to pass to HuggingFace along with the URI.</td>
+<td>A JSON String of arguments to pass to HuggingFace model.</td>
 </tr>
 </tbody>
 </table>

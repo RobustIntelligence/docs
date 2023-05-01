@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Running Tests on Managed Docker Images &mdash; Robust Intelligence  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Custom Metrics" href="custom_metrics.html" />
+    <link rel="prev" title="Configuring Runtime Information" href="configuring_runtime.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Robust Intelligence
+          </a>
+              <div class="version">
+                2.1.0-rc.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../creating_projects.html">Creating Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../configuring_test_runs.html#configuring-at-the-project-level">Configuring at the Project Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuring_test_runs.html#data-and-model-profiling">Data and Model Profiling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuring_test_runs.html#categories">Categories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuring_test_runs.html#test-suite">Test Suite</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../configuring_test_runs.html#runtime">Runtime</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="configuring_runtime.html">Configuring Runtime Information</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Running Tests on Managed Docker Images</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#building-a-managed-docker-image">Building a Managed Docker Image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#start-a-stress-test-on-a-managed-docker-image">Start a Stress Test on a Managed Docker Image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#querying-for-existing-managed-docker-images">Querying for existing Managed Docker Images</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../configuring_test_runs.html#custom-metrics">Custom Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../querying_results.html">Querying Test Run Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notifications_and_alerts.html">Notifications and Alerts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_governance.html">Managing Model Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integrating_mlops.html">Integrating with MLOps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/organization_administration.html">Organization Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/workspace_configuration.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/security_and_compliance.html">Security and Compliance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Robust Intelligence</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
+      <li class="breadcrumb-item active">Running Tests on Managed Docker Images</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="running-tests-on-managed-docker-images">
+<h1>Running Tests on Managed Docker Images<a class="headerlink" href="#running-tests-on-managed-docker-images" title="Permalink to this heading"></a></h1>
+<p>There may be circumstances when you need to run Robust Intelligence with a model which requires additional dependencies that are not specified in the provided base testing engine image.</p>
+<p>This guide will cover how to run Robust Intelligence with a custom Docker image when you need a particular version of a library or any additional dependencies to run your model.</p>
+<p>This guide assumes that your administrator has enabled the <a class="reference internal" href="../../administration/organization_administration/managed_images.html"><span class="std std-doc">Managed Images</span></a> feature in your Robust Intelligence deployment.
+This feature allows you to create Docker images directly from the SDK without needing to manually write Dockerfiles.
+You can also use this feature to query for existing Managed Images so that you can easily find images with the requirements you need and use the same images across teams.
+Finally, when you upgrade your version of Robust Intelligence, your old managed images will still be usable because the backend will upgrade them to be compatible with the latest version.</p>
+<p><em>Note: The following assumes you have instantiated Client, and that you are familiar with running Robust Intelligence with the RIME SDK. To learn more about the RIME SDK, please refer to the <a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">SDK Reference</span></a> for more information.</em></p>
+<section id="building-a-managed-docker-image">
+<h2>Building a Managed Docker Image<a class="headerlink" href="#building-a-managed-docker-image" title="Permalink to this heading"></a></h2>
+<p>The Managed Images feature allows you to build custom Docker images directly from the SDK.
+You only need to specify the name of the image to use as an alias, the list of additional package requirements to be installed, and, optionally, the type of base image you want (all, images, nlp, or tabular).
+If not given, the image type will default to use the most general ‘all’ image type.</p>
+<p>Say you have a Tabular model that requires <code class="docutils literal notranslate"><span class="pre">xgboost</span></code> at version <code class="docutils literal notranslate"><span class="pre">1.0.2</span></code> and <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> at a flexible version.
+You can call this image <code class="docutils literal notranslate"><span class="pre">&quot;xgboost102_tensorflow&quot;</span></code> as an alias to remember it later.</p>
+<p>To begin, initialize the <code class="docutils literal notranslate"><span class="pre">Client</span></code> and point it to the location of your RIME backend.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
+
+<span class="n">rime_client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;rime.&lt;YOUR_ORG_NAME&gt;.rbst.io&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;YOUR_API_TOKEN&gt;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Next, you may use the helper method <code class="docutils literal notranslate"><span class="pre">Client.pip_requirement(library_name:</span> <span class="pre">str,</span> <span class="pre">version_spec:</span> <span class="pre">Optional[str])</span></code> to construct
+a list of pip requirements for your image.
+The first argument is the name of the library (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;tensorflow&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;xgboost&quot;</span></code>) and the second argument is a valid pip
+<a class="reference external" href="https://www.python.org/dev/peps/pep-0440/#version-specifiers">version specifier</a> (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;&gt;=0.1.2&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;==1.0.2&quot;</span></code>).
+Omitting the version specifier is equivalent to not fixing the version.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">requirements</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="c1"># Fix the version of `xgboost` to `1.0.2`.</span>
+  <span class="n">rime_client</span><span class="o">.</span><span class="n">pip_requirement</span><span class="p">(</span><span class="s2">&quot;xgboost&quot;</span><span class="p">,</span> <span class="s2">&quot;==1.0.2&quot;</span><span class="p">),</span>
+  <span class="c1"># We do not care about the installed version of `tensorflow`.</span>
+  <span class="n">rime_client</span><span class="o">.</span><span class="n">pip_requirement</span><span class="p">(</span><span class="s2">&quot;tensorflow&quot;</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>To start the job that will build your custom image, use <code class="docutils literal notranslate"><span class="pre">rime_client.create_managed_image(name:</span> <span class="pre">str,</span> <span class="pre">requirements:</span> <span class="pre">List[ManagedImage.PipRequirement])</span></code>.
+The return value will be a Python class that you can use to track the status of the image building job.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Start a new image building job</span>
+<span class="n">builder_job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_managed_image</span><span class="p">(</span><span class="s2">&quot;xgboost102_tensorflow&quot;</span><span class="p">,</span> <span class="n">requirements</span><span class="p">)</span>
+
+<span class="c1"># Wait until the job has finished and print out status information.</span>
+<span class="c1"># Once this prints out the `READY` status, your image is available for use in stress tests.</span>
+<span class="n">builder_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As an experimental customization, we also now offer the ability to specify additional
+<a class="reference external" href="https://dl.rockylinux.org/pub/rocky/8.7/AppStream/x86_64/os/Packages/"><code class="docutils literal notranslate"><span class="pre">linux</span></code></a> packages that are required for your image.
+As with pip, we provide a helper method <code class="docutils literal notranslate"><span class="pre">os_requirement(name:</span> <span class="pre">str,</span> <span class="pre">version_specifier:</span> <span class="pre">Optional[str])</span></code> to
+apply a list of operating system packages.
+The first argument is the name of the package (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;texlive&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;vim&quot;</span></code>) and the second optional argument is a valid version.
+Omitting the version specifier is equivalent to taking the system default version.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">os_requirements</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="c1"># Fix the version of `texlive` to `20200406`.</span>
+  <span class="n">rime_client</span><span class="o">.</span><span class="n">os_requirement</span><span class="p">(</span><span class="s2">&quot;texlive&quot;</span><span class="p">,</span> <span class="s2">&quot;20200406&quot;</span><span class="p">),</span>
+  <span class="c1"># We do not care about the installed version of `vim`.</span>
+  <span class="n">rime_client</span><span class="o">.</span><span class="n">os_requirement</span><span class="p">(</span><span class="s2">&quot;vim&quot;</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>You can add these linux requirements to your <code class="docutils literal notranslate"><span class="pre">create_managed_image</span></code> request with the optional parameter <code class="docutils literal notranslate"><span class="pre">package_requirements</span></code>.
+For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">builder_job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_managed_image</span><span class="p">(</span><span class="s2">&quot;xgboost102_tensorflow&quot;</span><span class="p">,</span> <span class="n">requirements</span><span class="p">,</span> <span class="n">package_requirements</span><span class="o">=</span><span class="n">os_requirements</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="start-a-stress-test-on-a-managed-docker-image">
+<h2>Start a Stress Test on a Managed Docker Image<a class="headerlink" href="#start-a-stress-test-on-a-managed-docker-image" title="Permalink to this heading"></a></h2>
+<p>Once the image has been built successfully (this will take a few minutes), you may start stress tests using
+your managed image.
+The following code snippet shows how you can use your <code class="docutils literal notranslate"><span class="pre">&quot;xgboost102_tensorflow&quot;</span></code> image.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Insert your own stress testing configuration here.</span>
+<span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># rest of configuration goes here...</span>
+    <span class="s2">&quot;custom_image&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;managed_image_name&quot;</span><span class="p">:</span> <span class="s2">&quot;xgboost102_tensorflow&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1"># Kick off a stress test on the &quot;xgboost102_tensorflow&quot; image.</span>
+<span class="n">stress_test_job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="n">test_run_config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+
+<span class="c1"># Wait until the job has finished and print out status information.</span>
+<span class="n">stress_test_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="querying-for-existing-managed-docker-images">
+<h2>Querying for existing Managed Docker Images<a class="headerlink" href="#querying-for-existing-managed-docker-images" title="Permalink to this heading"></a></h2>
+<p>The true power of the Managed Images feature is that it allows you to query for existing images with desired requirements.
+Instead of building a new custom Docker image for each stress test, you can query the backend
+for existing images that have the desired requirements.
+That makes managed images much easier to use across a team.</p>
+<p>Say you want an image with <code class="docutils literal notranslate"><span class="pre">catboost</span></code> at version <code class="docutils literal notranslate"><span class="pre">1.0.3</span></code>.
+Perhaps one of your teammates has worked on a model with the same requirement or you previously built a catboost image.
+To recover those images, you can first construct filters using the helper method <code class="docutils literal notranslate"><span class="pre">Client.pip_library_filter(library_name:</span> <span class="pre">str,</span> <span class="pre">fixed_version:</span> <span class="pre">Optional[str])</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">filters</span> <span class="o">=</span> <span class="p">[</span><span class="n">rime_client</span><span class="o">.</span><span class="n">pip_library_filter</span><span class="p">(</span><span class="s2">&quot;catboost&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0.3&quot;</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>Then, you can provide the filters as an argument to <code class="docutils literal notranslate"><span class="pre">Client.list_managed_images()</span></code>.
+This is a paginated call so you can limit the number of images returned.</p>
+<p><em>Note: <code class="docutils literal notranslate"><span class="pre">list_managed_images</span></code> returns a tuple of (<code class="docutils literal notranslate"><span class="pre">images</span></code>, <code class="docutils literal notranslate"><span class="pre">next_page_token</span></code>). See the reference for more detail on the function’s behavior</em>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">images</span><span class="p">,</span> <span class="n">next_page_token</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">list_managed_images</span><span class="p">(</span><span class="n">pip_library_filters</span><span class="o">=</span><span class="n">filters</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Each element of <code class="docutils literal notranslate"><span class="pre">images</span></code> is a dictionary that contains information about all the installed pip libraries, the alias of the image, etc.
+Here is a code snippet to get all the names of the images in the first page of the query result.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">list_managed_images</span><span class="p">(</span><span class="n">pip_library_filters</span><span class="o">=</span><span class="n">filters</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="configuring_runtime.html" class="btn btn-neutral float-left" title="Configuring Runtime Information" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="custom_metrics.html" class="btn btn-neutral float-right" title="Custom Metrics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

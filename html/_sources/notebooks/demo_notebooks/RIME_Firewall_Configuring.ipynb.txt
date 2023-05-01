@@ -57,20 +57,14 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "download_files('tabular/fraud', 'fraud')\n",
+    "download_files('tabular-2.0/fraud', 'fraud')\n",
     "ct_data = pd.read_csv(\"fraud/data/fraud_incremental.csv\")\n",
     "ct_data[:len(ct_data)//2].to_csv(\"fraud/data/fraud_incremental_0.csv\", index=False)\n",
     "ct_data[len(ct_data)//2:].to_csv(\"fraud/data/fraud_incremental_1.csv\", index=False)\n",
     "\n",
-    "def sep_preds(path):\n",
-    "    df = pd.read_csv(path)\n",
-    "    df.drop(\"preds\", axis=1).to_csv(path, index=False)\n",
-    "    preds_path = path.replace(\".csv\", \"_preds.csv\")\n",
-    "    df[\"preds\"].to_csv(preds_path, index=False)\n",
-    "    \n",
-    "for dataset in [\"ref\", \"eval\", \"incremental_0\", \"incremental_1\"]:\n",
-    "    path = f\"fraud/data/fraud_{dataset}.csv\"\n",
-    "    sep_preds(path)\n"
+    "ct_preds = pd.read_csv(\"fraud/data/fraud_incremental_preds.csv\")\n",
+    "ct_preds[:len(ct_preds)//2].to_csv(\"fraud/data/fraud_incremental_0_preds.csv\", index=False)\n",
+    "ct_preds[len(ct_preds)//2:].to_csv(\"fraud/data/fraud_incremental_1_preds.csv\", index=False)"
    ]
   },
   {
