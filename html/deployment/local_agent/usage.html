@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Setting up your Local Cluster &mdash; Robust Intelligence  documentation</title>
+  <title>Using the Local Agent &mdash; Robust Intelligence  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
@@ -28,8 +28,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Using your Local Agent" href="using_your_local_agent.html" />
-    <link rel="prev" title="Local Agent" href="../local_agent.html" />
+    <link rel="next" title="Self-Hosted" href="../self_hosted.html" />
+    <link rel="prev" title="Deployment" href="deployment.html" />
 <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -93,11 +93,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../faq.html">FAQ</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../local_agent.html">Local Agent</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="../local_agent.html#reasons-to-use-a-local-agent">Reasons to Use a Local Agent</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">Setting up your Local Cluster</a></li>
-<li class="toctree-l4"><a class="reference internal" href="using_your_local_agent.html">Using your Local Agent</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="deployment.html">Deployment</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Using the Local Agent</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../self_hosted.html">Self-Hosted</a></li>
@@ -130,7 +127,7 @@
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../faq.html">FAQ</a></li>
           <li class="breadcrumb-item"><a href="../local_agent.html">Local Agent</a></li>
-      <li class="breadcrumb-item active">Setting up your Local Cluster</li>
+      <li class="breadcrumb-item active">Using the Local Agent</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -139,83 +136,69 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="setting-up-your-local-cluster">
-<h1>Setting up your Local Cluster<a class="headerlink" href="#setting-up-your-local-cluster" title="Permalink to this heading"></a></h1>
-<section id="prerequisites">
-<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading"></a></h2>
-<ul class="simple">
-<li><p>Directory on your local file system that will contain all the model and data files you wish to use with your local agent. You can put more files into this directory at any time, but you must decide on the path of the directory before installing the agent. For example: <code class="docutils literal notranslate"><span class="pre">/Users/name/Documents/my-data-directory</span></code>.</p></li>
-<li><p><a class="reference external" href="https://docs.docker.com/engine/install/">Docker</a></p>
-<ul>
-<li><p>Agent deployment requires docker to have access to 8GB+ of memory. This can be set via Docker Desktop in Preferences &gt; Resources &gt; Advanced &gt; Memory.</p></li>
-<li><p>Include the absolute path of the directory containing the data and model files you intend to use with the local agent in Docker’s File Sharing. This can be set via Docker Desktop in Preferences &gt; Resources &gt; File Sharing.</p></li>
-</ul>
-</li>
-<li><p><a class="reference external" href="https://helm.sh/docs/intro/install/">Helm</a></p></li>
-<li><p><a class="reference external" href="https://kubernetes.io/docs/tasks/tools/">kubectl</a></p></li>
-</ul>
-<p>The local agent can run on any K8s cluster. We recommend using Kind or Minikube for simplicity and easy mounting of your local files to the virtual nodes.</p>
-</section>
-<section id="kind">
-<h2>Kind<a class="headerlink" href="#kind" title="Permalink to this heading"></a></h2>
-<ol class="arabic simple">
-<li><p>Install <a class="reference external" href="https://kind.sigs.k8s.io/docs/user/quick-start/#installation">Kind</a>.</p></li>
-<li><p>Create a configuration file for your Kind cluster that mounts the directory containing your data and models to <code class="docutils literal notranslate"><span class="pre">/ri-platform/local/</span></code> on the virtual nodes.</p></li>
-</ol>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cluster</span>
-<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kind.x-k8s.io/v1alpha4</span>
-<span class="nt">nodes</span><span class="p">:</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">control-plane</span>
-<span class="w">  </span><span class="nt">extraMounts</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;ABSOLUTE PATH ON LOCAL FILESYSTEM&gt;</span>
-<span class="w">      </span><span class="nt">containerPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/ri-platform/local</span>
+  <section id="using-the-local-agent">
+<h1>Using the Local Agent<a class="headerlink" href="#using-the-local-agent" title="Permalink to this heading"></a></h1>
+<p>The designated directory that has been mounted to Docker and the local Kubernetes cluster is accessible via the alias <code class="docutils literal notranslate"><span class="pre">/ri-platform/local</span></code>.</p>
+<p>For example, suppose you mounted <code class="docutils literal notranslate"><span class="pre">/Users/name/Documents/my-data-directory</span></code> with the following contents.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.
+└── /Users/name/Documents/my-data-directory/
+    ├── data/
+    │   ├── ref.csv
+    │   └── eval.csv
+    └── model.py
 </pre></div>
 </div>
-<ol class="arabic simple" start="3">
-<li><p>With docker running, create the cluster:</p>
-<ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">kind</span> <span class="pre">create</span> <span class="pre">cluster</span> <span class="pre">--config</span> <span class="pre">&lt;above</span> <span class="pre">config</span> <span class="pre">file&gt;</span></code></p></li>
-</ol>
-</li>
-<li><p>Ensure your <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> context is set to the cluster you created:</p>
-<ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">config</span> <span class="pre">use-context</span> <span class="pre">kind</span></code></p></li>
-</ol>
-</li>
-<li><p>Follow the steps in <a class="reference internal" href="../installation.html"><span class="std std-doc">Helm Installation</span></a> to deploy an agent onto your Kind cluster.</p></li>
-</ol>
-</section>
-<section id="minikube">
-<h2>Minikube<a class="headerlink" href="#minikube" title="Permalink to this heading"></a></h2>
-<ol class="arabic simple">
-<li><p>Install <a class="reference external" href="https://minikube.sigs.k8s.io/docs/start/">Minikube</a></p></li>
-<li><p>With docker running, create the cluster:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">minikube</span> <span class="pre">start</span></code></p></li>
-</ul>
-</li>
-<li><p>Ensure your <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> context is set to the cluster you created:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">config</span> <span class="pre">use-context</span> <span class="pre">minikube</span></code></p></li>
-</ul>
-</li>
-<li><p>In a separate terminal, use a <a class="reference external" href="https://minikube.sigs.k8s.io/docs/handbook/mount/">9P mount</a> to mount the directory containing your data and models to <code class="docutils literal notranslate"><span class="pre">/ri-platform/local</span></code> on the virtual nodes.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">minikube</span> <span class="pre">mount</span> <span class="pre">&lt;ABSOLUTE</span> <span class="pre">PATH</span> <span class="pre">ON</span> <span class="pre">LOCAL</span> <span class="pre">FILESYSTEM&gt;:/ri-platform/local</span></code></p></li>
-<li><p>This will create a long running process that must be kept alive in order for the mount to work properly.</p></li>
-</ul>
-</li>
-<li><p>Follow the steps in <a class="reference internal" href="../installation.html"><span class="std std-doc">Helm Installation</span></a> to deploy an agent onto your Minikube cluster.</p></li>
-</ol>
-</section>
+<p>The below script can be used to register the data objects and run a Stress Test.</p>
+<p>Notice that references are made using the alias <code class="docutils literal notranslate"><span class="pre">/ri-platform/local</span></code> instead of <code class="docutils literal notranslate"><span class="pre">/Users/name/Documents/my-data-directory</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_project</span><span class="p">(</span><span class="n">project_id</span><span class="o">=&lt;</span><span class="n">PROJECT_ID</span><span class="o">&gt;</span><span class="p">)</span>
+
+<span class="c1"># Register Reference Dataset</span>
+<span class="n">ref_data_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;ref_data_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">remote_path</span><span class="o">=</span>  <span class="s2">&quot;/ri-platform/local/data/ref.csv&quot;</span><span class="p">,</span> <span class="c1"># Enter the local file path</span>
+    <span class="n">data_params</span><span class="o">=</span> <span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1"># Register Evaluation Dataset</span>
+<span class="n">eval_data_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;eval_data_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">remote_path</span><span class="o">=</span>  <span class="s2">&quot;/ri-platform/local/data/eval.csv&quot;</span><span class="p">,</span> <span class="c1"># Enter the local file path</span>
+    <span class="n">data_params</span><span class="o">=</span> <span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1"># Register Model</span>
+<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">remote_path</span><span class="o">=</span> <span class="s2">&quot;/ri-platform/local/model.py&quot;</span> <span class="c1"># Enter the local file path</span>
+<span class="p">)</span>
+
+<span class="c1"># Once your data and model have been registered, use the agent ID to start a stress test</span>
+<span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="n">ref_data_id</span><span class="p">,</span>
+        <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="n">eval_data_id</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span><span class="p">,</span>
+    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;My Stress Test Run&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;run_time_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;agent_id&quot;</span><span class="p">:</span> <span class="s2">&quot;ajne*****&quot;</span> <span class="c1"># Copy and paste the local agent&#39;s ID from the agent status page</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
+    <span class="n">test_run_config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+    <span class="n">project_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span>
+<span class="p">)</span>
+</pre></div>
+</div>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../local_agent.html" class="btn btn-neutral float-left" title="Local Agent" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="using_your_local_agent.html" class="btn btn-neutral float-right" title="Using your Local Agent" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="deployment.html" class="btn btn-neutral float-left" title="Deployment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../self_hosted.html" class="btn btn-neutral float-right" title="Self-Hosted" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

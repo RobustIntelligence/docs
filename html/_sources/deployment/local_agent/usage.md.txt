@@ -1,0 +1,57 @@
+# Using the Local Agent
+The designated directory that has been mounted to Docker and the local Kubernetes cluster is accessible via the alias `/ri-platform/local`.
+
+For example, suppose you mounted `/Users/name/Documents/my-data-directory` with the following contents.
+```
+.
+└── /Users/name/Documents/my-data-directory/
+    ├── data/
+    │   ├── ref.csv
+    │   └── eval.csv
+    └── model.py
+```
+
+The below script can be used to register the data objects and run a Stress Test.
+
+Notice that references are made using the alias `/ri-platform/local` instead of `/Users/name/Documents/my-data-directory`.
+```python
+project = client.get_project(project_id=<PROJECT_ID>)
+
+# Register Reference Dataset
+ref_data_id = project.register_dataset_from_file(
+    name= f"ref_data_{dt}",
+    remote_path=  "/ri-platform/local/data/ref.csv", # Enter the local file path
+    data_params= {"label_col": "label"}
+)
+
+# Register Evaluation Dataset
+eval_data_id = project.register_dataset_from_file(
+    name= f"eval_data_{dt}",
+    remote_path=  "/ri-platform/local/data/eval.csv", # Enter the local file path
+    data_params= {"label_col": "label"}
+)
+
+# Register Model
+model_id = project.register_model_from_path(
+    name= f"model_{dt}",
+    remote_path= "/ri-platform/local/model.py" # Enter the local file path
+)
+
+# Once your data and model have been registered, use the agent ID to start a stress test
+config = {
+    "data_info": {
+        "ref_dataset_id": ref_data_id,
+        "eval_dataset_id": eval_data_id
+    },
+    "model_id": model_id,
+    "run_name": "My Stress Test Run",
+    "run_time_info": {
+        "agent_id": "ajne*****" # Copy and paste the local agent's ID from the agent status page
+    }
+}
+
+job = client.start_stress_test(
+    test_run_config=config,
+    project_id=project.project_id
+)
+```
