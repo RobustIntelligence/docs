@@ -37,7 +37,7 @@
 <body class="wy-body-for-nav">
 <div class="ge_header no-print">
     <a id="header-logo" href="../../index.html">
-        <img src="../../_static/header-logo.png" alt="logo" />
+        <img src="../../_static/images/header-logo.png" alt="logo" />
     </a>
 </div>
 
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.1.0-rc.0
+                2.1.0-rc.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -158,28 +158,28 @@ Test run results can only be fetched for completed test runs. To get the progres
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">high_level_results</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_result_df</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_static/queryability_high_level_results.png">
+<img src="../../_static/images/queryability_high_level_results.png">
 <p>If we want to dig into a specific test batch (i.e. look at the <code class="docutils literal notranslate"><span class="pre">unseen</span> <span class="pre">categorical</span></code> test specifically), we can do the following to get a results overview as a Pandas Series:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">test_batch</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_batch</span><span class="p">(</span><span class="s2">&quot;unseen_categorical&quot;</span><span class="p">)</span>
 <span class="n">high_level_test_batch_results</span> <span class="o">=</span> <span class="n">test_batch</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_static/queryability_high_level_batch_results.png">
+<img src="../../_static/images/queryability_high_level_batch_results.png">
 <p>If we want more granularity, we can retrieve all the individual test cases for the given test batch (e.g. the results of <code class="docutils literal notranslate"><span class="pre">unseen</span> <span class="pre">categorical</span></code> over each feature) as a Pandas DataFrame:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">granular_test_batch_results</span> <span class="o">=</span> <span class="n">test_batch</span><span class="o">.</span><span class="n">get_test_cases_df</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_static/queryability_granular_test_batch_results.png">
+<img src="../../_static/images/queryability_granular_test_batch_results.png">
 <p>In general, we can retrieve this granular information for all tests at once as a Pandas DataFrame:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">all_granular_test_batch_results</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_cases_df</span><span class="p">(</span><span class="n">show_test_case_metrics</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_static/queryability_all_granular_test_batch_results.png">
+<img src="../../_static/images/queryability_all_granular_test_batch_results.png">
 <p>At the test-case level, Robust Intelligence returns information that can be test-specific. If we are placing the test cases for all tests into the same table, this could result in a sparse table with columns that are empty for most rows. If the user wants to avoid this sparsity and only retrieve common columns across all tests the user can simply leave the <code class="docutils literal notranslate"><span class="pre">show_test_case_metrics</span></code> flag unspecified as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">limited_all_granular_test_batch_results</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_cases_df</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_static/queryability_limited_all_granular_test_batch_results.png">
+<img src="../../_static/images/queryability_limited_all_granular_test_batch_results.png">
 <p>The user can also get an iterator representing all of the test batches. This can be useful if the user does not know the name of the test batch they want to query or if the user has a custom use case which involves iterating over all test batch objects:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">iterator_over_all_test_batches</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_batches</span><span class="p">()</span>
 </pre></div>

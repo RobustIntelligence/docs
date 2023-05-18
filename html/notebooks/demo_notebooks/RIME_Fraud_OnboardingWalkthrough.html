@@ -40,7 +40,7 @@
 <body class="wy-body-for-nav">
 <div class="ge_header no-print">
     <a id="header-logo" href="../../index.html">
-        <img src="../../_static/header-logo.png" alt="logo" />
+        <img src="../../_static/images/header-logo.png" alt="logo" />
     </a>
 </div>
 
@@ -56,7 +56,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.1.0-rc.0
+                2.1.0-rc.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -570,7 +570,7 @@ some threshold.</p>
 <span class="kn">from</span> <span class="nn">rime.core.test</span> <span class="kn">import</span> <span class="n">BaseTest</span><span class="p">,</span> <span class="n">TestExtraInfo</span>
 <span class="kn">from</span> <span class="nn">rime.core.stress_tests.batch_runner</span> <span class="kn">import</span> <span class="n">DataTestBatchRunner</span>
 <span class="kn">from</span> <span class="nn">rime.core.stress_tests.schema.result</span> <span class="kn">import</span> <span class="n">DataTestBatchResult</span><span class="p">,</span> <span class="n">DataTestOutput</span>
-<span class="kn">from</span> <span class="nn">rime.core.profiler.run_containers</span> <span class="kn">import</span> <span class="n">TabularRunContainer</span>
+<span class="kn">from</span> <span class="nn">rime.core.profiler.run_containers</span> <span class="kn">import</span> <span class="n">RunContainer</span>
 
 
 <span class="c1"># Signature should not be changed.</span>
@@ -583,7 +583,7 @@ some threshold.</p>
     <span class="c1"># Signature should not be changed.</span>
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">run_container</span><span class="p">:</span> <span class="n">TabularRunContainer</span><span class="p">,</span>
+        <span class="n">run_container</span><span class="p">:</span> <span class="n">RunContainer</span><span class="p">,</span>
         <span class="n">silent_errors</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">TestOutput</span><span class="p">,</span> <span class="n">TestExtraInfo</span><span class="p">]:</span>
         <span class="n">ref_data_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">run_container</span><span class="o">.</span><span class="n">ref_data</span><span class="o">.</span><span class="n">df</span><span class="p">)</span>
@@ -607,7 +607,7 @@ some threshold.</p>
     <span class="c1"># Signature should not be changed.</span>
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">_from_config</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span> <span class="n">run_container</span><span class="p">:</span> <span class="n">TabularRunContainer</span><span class="p">,</span>  <span class="n">config</span><span class="p">:</span> <span class="n">CustomConfig</span><span class="p">,</span> <span class="n">category</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">run_container</span><span class="p">:</span> <span class="n">RunContainer</span><span class="p">,</span>  <span class="n">config</span><span class="p">:</span> <span class="n">CustomConfig</span><span class="p">,</span> <span class="n">category</span><span class="p">:</span> <span class="nb">str</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;DataTestBatchRunner&quot;</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">delta</span> <span class="o">=</span> <span class="mi">0</span>
@@ -619,7 +619,7 @@ some threshold.</p>
     <span class="c1"># Signature should not be changed.</span>
     <span class="k">def</span> <span class="nf">_outputs_to_batch_res</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">run_container</span><span class="p">:</span> <span class="n">TabularRunContainer</span><span class="p">,</span>
+        <span class="n">run_container</span><span class="p">:</span> <span class="n">RunContainer</span><span class="p">,</span>
         <span class="n">outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DataTestOutput</span><span class="p">],</span>
         <span class="n">extra_infos</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span>
         <span class="n">duration</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
