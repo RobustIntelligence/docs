@@ -1,0 +1,65 @@
+# Run Robust Intelligence on Custom Docker Images
+
+There may be circumstances when you need to run Robust Intelligence with a model which requires additional dependencies that are not specified in the provided base image.
+
+This guide will cover how to run Robust Intelligence with a custom Docker image when you need a particular version of a library or any additional dependencies to run your model.
+
+### Building a Custom Docker Image
+First, you need to construct a new Docker image built from the Robust Intelligence-provided base image for model testing.
+If the custom image already exists, skip to [how to run Robust Intelligence stress tests with a custom image](#running-rime-with-a-custom-image).
+
+#### Requirements
+To build the custom image, you will need to have:
+   * Docker installed
+   * Access to the Robust Intelligence base image (either through Docker Hub or a mirrored image). Your Solutions Architect can provide you with an access token for the Robust Intelligence registry.
+   * A remote Docker registry to push to. Your cluster will also need to have access permissions for pulling these images from said registry (through pull secret or cloud permissions).
+### Building the Image
+1. Navigate to a new directory and create your Dockerfile by running `touch Dockerfile`, then open it in an editor.
+2. Copy the following Dockerfile specification, which builds on top of the `rime-wheel` base image.
+
+    ```docker
+    ARG BASE_VERSION=<version>
+    FROM robustintelligencehq/rime-wheel:${BASE_VERSION}
+
+    # Install additional model requirements.
+    COPY requirements.txt /rime/
+    RUN pip install -r /rime/requirements.txt
+
+    WORKDIR /rime
+    ```
+
+3. In that Dockerfile, specify the `<version>` according to the version of Robust Intelligence you have installed; e.g. `2.1.0`. If you are using a mirrored version of the Robust Intelligence base image, you will need to specify the full image name, e.g. `robustintelligencehq/rime-wheel:2.1.0`.
+
+4. Create your `requirements.txt` file with your additional model requirements. This will probably be something simple like
+    ```python
+    # All python requirements for models.
+    tensorflow==2.1.0
+    ```
+    Add all Python packages required by your models to this requirements file; see [requirements file format](https://pip.pypa.io/en/stable/reference/requirements-file-format/#requirements-file-format).
+
+5. Now run the following on the command line to build your image: `docker build . -t <custom-image-name>`.
+
+6. Finally, run `docker push <custom-image-name>` to push the image to your Docker registry.
+
+7. You can then use this image to stress test your models using the process describe below.
+
+## Running RIME with a custom image:
+The following assumes you have instantiated the SDK, and that you are familiar with running Robust Intelligence with the RIME SDK.
+
+The following is an example of how to specify a custom image when starting a test run with the RIME SDK:
+
+```python
+# Set custom image to use for test run
+config = {
+   "run_time_info": {
+         "custom_image": {
+             "custom_image": {
+                 "name": "<custom-image-name>",
+                 "pull_secret": {"name": "<pull-secret-name>"} # If required to pull from a different registry. This will need to be a secret that is already created on your cluster.
+         }
+     },
+    **test_cli_config, #Rest of config
+}
+}
+job = client.start_stress_test(test_run_config=config, project_id="foo")
+```

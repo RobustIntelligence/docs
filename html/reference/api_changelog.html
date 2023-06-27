@@ -37,7 +37,7 @@
 <body class="wy-body-for-nav">
 <div class="ge_header no-print">
     <a id="header-logo" href="../index.html">
-        <img src="../_static/header-logo.png" alt="logo" />
+        <img src="../_static/images/header-logo.png" alt="logo" />
     </a>
 </div>
 
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.1.0-rc.0
+                2.2.0-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -91,6 +91,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../deployment/index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/requirements.html">Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/upgrade.html">Upgrade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/faq.html">FAQ</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
@@ -101,6 +102,7 @@
 <li class="toctree-l1"><a class="reference internal" href="model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API Changelog</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#api-versioning">API Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">2.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ga">2.0 GA</a></li>
 </ul>
 </li>
@@ -138,8 +140,48 @@
 <p>A v1-beta endpoint may be subject to breaking changes. These are typically new features, which may be subject to further optimization.</p>
 <p>A major version endpoint (v1, v2, etc.) will not be subject to breaking changes. Once an endpoint has a version upgrade, i.e. from v1 to v2, both versions will be supported for 6 months to allow time for transitioning to the upgraded endpoint. After these 6 months, the older version will be marked deprecated and removed.</p>
 </section>
+<section id="id1">
+<h2>2.1<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">delta_lake</span></code> connection_info has been renamed to <code class="docutils literal notranslate"><span class="pre">databricks</span></code>. This loads a Databricks Delta Lake Table.
+Before:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;delta_lake&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Table&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>After:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;databricks&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Table&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Non breaking changes from 2.0 GA to 2.1</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">data_file</span></code> type <code class="docutils literal notranslate"><span class="pre">connection_info</span></code> now supports reading a Delta Table from S3. The path to the table and its data type can be specified in a <code class="docutils literal notranslate"><span class="pre">connection_info</span></code> as:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stress_test_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># other config params</span>
+    <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;data_file&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://path/to/table&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;data_type&quot;</span><span class="p">:</span> <span class="s2">&quot;DATA_TYPE_DELTA_TABLE&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
 <section id="ga">
 <h2>2.0 GA<a class="headerlink" href="#ga" title="Permalink to this heading"></a></h2>
+<p>GET /v1/logs/{jobId} api path removed without deprecation. Use GET /v1/jobs/{job_id} and use the archived_job_logs field instead.</p>
 <p>POST /v1-beta/jobs/cancel/{jobId} api path removed without deprecation. Use POST /v1/jobs/cancel/{jobId} instead.</p>
 <p>GET /v1-beta/jobs/{jobId} api path removed without deprecation. Use GET /v1/jobs/{jobId} instead.</p>
 <p>GET /v1-beta/jobs/{jobId}/project-id api path removed without deprecation. Use GET /v1/jobs/{jobId}/project-id instead.</p>

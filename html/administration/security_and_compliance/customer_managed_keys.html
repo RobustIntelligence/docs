@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Managed Keys for Data Encryption &mdash; Robust Intelligence  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Overview" href="../../deployment/index.html" />
+    <link rel="prev" title="Test Results Data Retention" href="data_retention.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/images/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Robust Intelligence
+          </a>
+              <div class="version">
+                2.2.0-rc.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/querying_results.html">Querying Test Run Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/notifications_and_alerts.html">Notifications and Alerts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/model_governance.html">Managing Model Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops.html">Integrating with MLOps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administration</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../organization_administration.html">Organization Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workspace_configuration.html">Workspace Configuration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../security_and_compliance.html">Security and Compliance</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../security_and_compliance.html#authentication">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../security_and_compliance.html#access-control">Access Control</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../security_and_compliance.html#data-security">Data Security</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="data_retention.html">Test Results Data Retention</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Customer Managed Keys for Data Encryption</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#creating-a-customer-managed-key-in-robust-intelligence">Creating a Customer Managed Key in Robust Intelligence</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#deleting-a-customer-managed-key-in-robust-intelligence">Deleting a Customer Managed Key in Robust Intelligence</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/upgrade.html">Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Robust Intelligence</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../security_and_compliance.html">Security and Compliance</a></li>
+      <li class="breadcrumb-item active">Customer Managed Keys for Data Encryption</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="customer-managed-keys-for-data-encryption">
+<h1>Customer Managed Keys for Data Encryption<a class="headerlink" href="#customer-managed-keys-for-data-encryption" title="Permalink to this heading"></a></h1>
+<p>While all data in your instance is encrypted at rest, Robust Intelligence allows you to use your own AWS KMS encryption keys to encrypt customer data. This feature enables you to manage access to your data in Robust Intelligence, and includes the ability to revoke access to cluster data at any time by disabling the managed key. When a customer managed key is disabled, Robust Intelligence will no longer be able to decrypt data for that cluster. There may be a delay of up to 20 minutes before data access is revoked for Robust Intelligence. If a customer managed key is deleted in Robust Intelligence, the data in the cluster will be re-encrypted with a Robust Intelligence-managed AWS encryption key.</p>
+<p>Only one key may be created per deployment. To manually change the key used to encrypt your data, please delete the old key before creating a new one.</p>
+<p>The key must be created in the same region (for example us-west-1) as your deployment.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading"></a></h2>
+<p>Before you can create a customer managed key, you must have an AWS KMS customer managed key with a correctly configured key policy created in your AWS account. Please contact Robust Intelligence support for required information on how to create a key and configure your key policy.</p>
+<p>For more information, see <a class="reference external" href="https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html">Creating keys</a> and <a class="reference external" href="https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-modifying-external-accounts.html">Allowing users in other accounts to use a KMS key</a> in the AWS KMS Developer Guide.</p>
+</section>
+<section id="creating-a-customer-managed-key-in-robust-intelligence">
+<h2>Creating a Customer Managed Key in Robust Intelligence<a class="headerlink" href="#creating-a-customer-managed-key-in-robust-intelligence" title="Permalink to this heading"></a></h2>
+<p>Once you have followed the instructions in <a class="reference internal" href="#prerequisites">Prerequisites</a> and have a correctly configured AWS KMS key, a customer managed key can be configured in Organization Settings.</p>
+<ol class="arabic">
+<li><p>Sign in to a user account.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click the <em>Settings</em> icon in the lower left corner.</p>
+<blockquote>
+<div><p>The Organization Settings page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click <em>Data Encryption</em>.</p>
+<blockquote>
+<div><p>The Data Encryption page appears.</p>
+</div></blockquote>
+</li>
+<li><p>In the <em>KMS Key ARN</em> field, enter the ARN of the customer managed key to encrypt your data.</p>
+<blockquote>
+<div><p>The ARN of the customer managed key can be found in your AWS console.</p>
+</div></blockquote>
+</li>
+<li><p>Click <em>Activate Key</em>.</p>
+<blockquote>
+<div><p>The customer managed key will be activated and used to encrypt data at rest. This step may take a few minutes to complete.</p>
+</div></blockquote>
+</li>
+</ol>
+</section>
+<section id="deleting-a-customer-managed-key-in-robust-intelligence">
+<h2>Deleting a Customer Managed Key in Robust Intelligence<a class="headerlink" href="#deleting-a-customer-managed-key-in-robust-intelligence" title="Permalink to this heading"></a></h2>
+<p>Once you have created a customer managed key in Organization Settings, the key can be deleted on the same settings page, using the <em>Delete Key</em> button.</p>
+<ol class="arabic">
+<li><p>Sign in to a user account.</p>
+<blockquote>
+<div><p>The Workspaces page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click the <em>Settings</em> icon in the lower left corner.</p>
+<blockquote>
+<div><p>The Organization Settings page appears.</p>
+</div></blockquote>
+</li>
+<li><p>Click <em>Data Encryption</em>.</p>
+<blockquote>
+<div><p>The Data Encryption page appears.</p>
+</div></blockquote>
+</li>
+<li><p>In the <em>KMS Key ARN</em> field, enter the ARN of the customer managed key you wish to delete.</p>
+<blockquote>
+<div><p>You must specify the ARN in order to delete the key to prevent accidental deletion.</p>
+</div></blockquote>
+</li>
+<li><p>Click <em>Delete Key</em>.</p>
+<blockquote>
+<div><p>The customer managed key will be deleted and the default Robust Intelligence managed KMS key will be used to encrypt data at rest. This step may take a few minutes to complete.</p>
+</div></blockquote>
+</li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="data_retention.html" class="btn btn-neutral float-left" title="Test Results Data Retention" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../deployment/index.html" class="btn btn-neutral float-right" title="Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

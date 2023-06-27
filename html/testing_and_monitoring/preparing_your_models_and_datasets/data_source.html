@@ -37,7 +37,7 @@
 <body class="wy-body-for-nav">
 <div class="ge_header no-print">
     <a id="header-logo" href="../../index.html">
-        <img src="../../_static/header-logo.png" alt="logo" />
+        <img src="../../_static/images/header-logo.png" alt="logo" />
     </a>
 </div>
 
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.1.0-rc.0
+                2.2.0-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -114,6 +114,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/upgrade.html">Upgrade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
@@ -177,13 +178,11 @@ two elements, a <code class="docutils literal notranslate"><span class="pre">con
 </tr>
 </tbody>
 </table>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data_info</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="o">.....</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="o">.....</span>
-    <span class="p">}</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;data_info&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;connection_info&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">    </span><span class="nt">&quot;data_params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -192,32 +191,51 @@ two elements, a <code class="docutils literal notranslate"><span class="pre">con
 <p>This object how to connect to a data source. Specify exactly one of the parameters:</p>
 <section id="loads-a-data-file-from-a-cloud-data-store-eg-aws-s3-azure-blob-storage">
 <h3>1) Loads a data file from a Cloud Data store (eg: AWS S3, Azure Blob Storage)<a class="headerlink" href="#loads-a-data-file-from-a-cloud-data-store-eg-aws-s3-azure-blob-storage" title="Permalink to this heading"></a></h3>
-<p>a) Parameter = data_file
-b) Type = DataFileInfo</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;data_file&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+<p>a) Parameter = data_file</p>
+<p>b) Type = DataFileInfo</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;connection_info&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;data_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>path</td>
+<td>string</td>
+<td>The path to the file.</td>
+</tr>
+<tr>
+<td>data_type</td>
+<td>string</td>
+<td>Default value is <code>"DATA_TYPE_UNSPECIFIED"</code>. Should be set to <code>"DATA_TYPE_DELTA_TABLE"</code> when the <code>path</code> points to a Delta Table on S3.</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="loads-a-data-file-from-a-custom-data-loader">
 <h3>2) Loads a data file from a custom data loader.<a class="headerlink" href="#loads-a-data-file-from-a-custom-data-loader" title="Permalink to this heading"></a></h3>
-<p>a) Parameter = data_loading
-b) Type = DataLoadingInfo</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;data_loading&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;,</span>
-            <span class="s2">&quot;load_func_name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;loader_kwargs&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;file_path&quot;</span><span class="p">:</span> <span class="n">s3_data_path</span><span class="p">,</span> <span class="o">**</span><span class="n">loader_kwargs</span><span class="p">},</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+<p>a) Parameter = data_loading</p>
+<p>b) Type = DataLoadingInfo</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;connection_info&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;data_loading&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;load_func_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;loader_kwargs_json&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -250,17 +268,16 @@ b) Type = DataLoadingInfo</p>
 </section>
 <section id="loads-a-data-stream-from-a-data-collector">
 <h3>3) Loads a data stream from a data collector.<a class="headerlink" href="#loads-a-data-stream-from-a-data-collector" title="Permalink to this heading"></a></h3>
-<p>a) Parameter = delta_lake
-b) Type = DeltaLakeInfo</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;data_collector&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;data_stream_id&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-            <span class="s2">&quot;start_time&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s2">&quot;end_time&quot;</span><span class="p">:</span> <span class="mi">0</span>
-        <span class="p">}</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+<p>a) Parameter = data_collector</p>
+<p>b) Type = DataCollectorInfo</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;connection_info&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;data_collector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;data_stream_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;start_time&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;end_time&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -294,15 +311,14 @@ b) Type = DeltaLakeInfo</p>
 </section>
 <section id="loads-a-databricks-delta-lake-table">
 <h3>4) Loads a Databricks Delta Lake table.<a class="headerlink" href="#loads-a-databricks-delta-lake-table" title="Permalink to this heading"></a></h3>
-<p>a) parameter = delta_lake
-b) Type = DeltaLakeInfo</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;delta_lake_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Table&quot;</span><span class="p">,</span>
-        <span class="p">}</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+<p>a) parameter = databricks</p>
+<p>b) Type = DatabricksInfo</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;connection_info&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;databricks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;table_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Table&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -325,17 +341,16 @@ b) Type = DeltaLakeInfo</p>
 </section>
 <section id="loading-a-hugging-face-dataset">
 <h3>5) Loading a Hugging Face dataset<a class="headerlink" href="#loading-a-hugging-face-dataset" title="Permalink to this heading"></a></h3>
-<p>a) Parameter = hugging_face
-b) Type = HuggingFace</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;hugging_face&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;dataset_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;split_name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;loading_params_json&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
-        <span class="p">}</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+<p>a) Parameter = hugging_face</p>
+<p>b) Type = HuggingFaceDataInfo</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;connection_info&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;hugging_face&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;dataset_uri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;split_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;loading_params_json&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -374,32 +389,32 @@ in the <code class="docutils literal notranslate"><span class="pre">data_params<
 simplicity and flexibility.</p>
 <section id="default-data-params-template">
 <h3>Default Data Params Template<a class="headerlink" href="#default-data-params-template" title="Permalink to this heading"></a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;class_names&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;ranking_info&quot;</span><span class="p">:{</span>
-            <span class="s2">&quot;query_col&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;nqueries&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-            <span class="s2">&quot;nrows_per_query&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-            <span class="s2">&quot;drop_query_id&quot;</span><span class="p">:</span> <span class="n">null</span>
-        <span class="p">},</span>
-
-        <span class="s2">&quot;nrows&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-        <span class="s2">&quot;nrows_per_time_bin&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-        <span class="s2">&quot;sample&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-        <span class="s2">&quot;categorical_features&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-        <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-        <span class="s2">&quot;features_not_in_model&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-        <span class="s2">&quot;text_features&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-        <span class="s2">&quot;image_features&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-        <span class="s2">&quot;loading_kwargs&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-        <span class="s2">&quot;feature_type_path&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-        <span class="s2">&quot;image_load_path&quot;</span><span class="p">:</span> <span class="n">null</span>
-    <span class="p">},</span>
-    <span class="o">...</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;data_params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;label_col&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;timestamp_col&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;class_names&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;ranking_info&quot;</span><span class="p">:{</span>
+<span class="w">      </span><span class="nt">&quot;query_col&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;nqueries&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;nrows_per_query&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;drop_query_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;nrows&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;nrows_per_time_bin&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;categorical_features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;protected_features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;features_not_in_model&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;text_features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;image_features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;intersections&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;loading_kwargs&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;feature_type_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;image_load_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -475,7 +490,7 @@ simplicity and flexibility.</p>
 <tr>
 <td>nrows</td>
 <td>Optional int64</td>
-<td>Number of rows of data to load and test. Loads all rows when null and <code>sample</code> is not specified. Infers the maximum number rows possible when null and <code>sample</code> is specified.</td>
+<td>Number of rows of data to load and test. Loads all rows when null and <code>sample</code> is not specified. Infers the maximum number of rows possible when null and <code>sample</code> is true.</td>
 </tr>
 <tr>
 <td>nrows_per_time_bin</td>
@@ -541,9 +556,26 @@ simplicity and flexibility.</p>
 </thead>
 <tbody>
 <tr>
+<td>intersections</td>
+<td>Repeated FeatureIntersection</td>
+<td>A list of arrays of features, where each array represents the intersection of features on which certain subset and fairness tests are run.</td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate"><span class="pre">FeatureIntersection</span></code> message is defined as follows:</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
 <td>features</td>
-<td>Intersections</td>
-<td>A list of features to run tabular tests over.</td>
+<td>Repeated string</td>
+<td>A list of feature names over which subgroups are generated.</td>
 </tr>
 </tbody>
 </table>

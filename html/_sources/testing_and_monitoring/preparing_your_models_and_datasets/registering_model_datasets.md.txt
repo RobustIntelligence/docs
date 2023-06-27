@@ -15,6 +15,22 @@ Once a model, dataset, or prediction set has been registered with a Robust Intel
 available for selection in the appropriate drop-down selectors during project configuration for either a
 [Stress test](../validating_models/stress_tests_from_sdk.md) or a [Continuous test](../monitoring_models/creating_new_continuous_test.rst).
 
+> **Note:** Once you have registered your data and initiated stress testing, the data is cached according to the
+pre-established configuration settings. It's crucial to understand that the Robust Intelligence systems
+maintain a reference to the original data location specified during the setup.
+<br><br>
+If any changes are made to the data at this source location after caching, these modifications will not be
+recognized or reflected in subsequent stress tests. This is because the systems are designed to work with the
+state of data at the point of caching and do not dynamically update to account for any changes at the source
+location.
+<br><br>
+To ensure the integrity and accuracy of your stress tests, avoid making changes to the data at the referenced
+locations after the initial setup. If modifications are necessary, you'll need to re-register your data and
+reconfigure your stress testing settings accordingly.
+<br><br>
+This includes files, Hugging Face integrations, Databricks integrations, and any other sources referenced in
+your settings.
+
 To get started, make sure you've [installed the Python SDK](../../documentation_home/installation.md)
 and initialized your client:
 
@@ -71,6 +87,11 @@ For more on model configuration, check out the [model configuration documentatio
 model_id = project.register_model_from_path(name=<NAME>, remote_path=<MODEL_PATH>)
 ```
 
+**Note**: Registering your model will run validation on it to ensure it works with Robust Intelligence's systems.  This
+may take a few seconds.  If you wish to skip validation, set the `skip_validation` parameter to `True`
+(not recommended).
+
+
 Check out the SDK documentation for more on [registering a model](../../reference/python-sdk.rst).
 
 ## Registering a Dataset Using the SDK
@@ -97,11 +118,17 @@ dataset_id = project.register_dataset(
 
 For more on dataset configuration, check out the [dataset configuration documentation](../../testing_and_monitoring/preparing_your_models_and_datasets/data_source.md).
 
+**Note**: Registering a dataset will run validation on it to ensure it works with Robust Intelligence's systems.  This
+may take a few seconds.  If you wish to skip validation, set the `skip_validation` parameter to `True`
+(not recommended).
+
 Check out the SDK documentation for more on [registering a dataset](../../reference/python-sdk.rst).
 
-## Registering a Prediction Set Using the SDK
-```python
+## Registering Predictions Using the SDK
 
+### Grab your dataset and model IDs or register new ones
+
+```python
 dataset_id = project.register_dataset(
     name="<DATASET_NAME>",
     data_config=<DATASET_CONFIG>
@@ -115,7 +142,7 @@ model_id = project.register_model(
 
 See above for more information on registering a dataset or model.
 
-2. Register your predictions with a predictions configuration.
+### Register your predictions with a predictions configuration.
 
 ```python
 prediction_config={
@@ -135,5 +162,9 @@ predictions_id = project.register_predictions(
     pred_config=prediction_config
 )
 ```
+
+**Note**: Registering predictions will run validation on it to ensure it works with Robust Intelligence's systems.  This
+may take a few seconds.  If you wish to skip validation, set the `skip_validation` parameter to `True`
+(not recommended).
 
 Check out the SDK documentation for more on [registering predictions](../../reference/python-sdk.rst).

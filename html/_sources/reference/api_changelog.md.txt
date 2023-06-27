@@ -7,7 +7,51 @@ A v1-beta endpoint may be subject to breaking changes. These are typically new f
 
 A major version endpoint (v1, v2, etc.) will not be subject to breaking changes. Once an endpoint has a version upgrade, i.e. from v1 to v2, both versions will be supported for 6 months to allow time for transitioning to the upgraded endpoint. After these 6 months, the older version will be marked deprecated and removed.
 
+## 2.1
+
+The `delta_lake` connection_info has been renamed to `databricks`. This loads a Databricks Delta Lake Table.
+Before:
+```python
+{
+    "connection_info": {
+        "delta_lake": {
+            "table_name": "Table",
+        }
+    },
+    "data_params": ...,
+}
+```
+After:
+```python
+{
+    "connection_info": {
+        "databricks": {
+            "table_name": "Table",
+        }
+    },
+    "data_params": ...,
+}
+```
+
+**Non breaking changes from 2.0 GA to 2.1**
+
+`data_file` type `connection_info` now supports reading a Delta Table from S3. The path to the table and its data type can be specified in a `connection_info` as:
+```python
+stress_test_config = {
+    # other config params
+    "connection_info": {
+        "data_file": {
+            "path": "s3://path/to/table",
+            "data_type": "DATA_TYPE_DELTA_TABLE",
+        }
+    }
+}
+```
+
 ## 2.0 GA
+
+GET /v1/logs/{jobId} api path removed without deprecation. Use GET /v1/jobs/{job_id} and use the archived_job_logs field instead.
+
 POST /v1-beta/jobs/cancel/{jobId} api path removed without deprecation. Use POST /v1/jobs/cancel/{jobId} instead.
 
 GET /v1-beta/jobs/{jobId} api path removed without deprecation. Use GET /v1/jobs/{jobId} instead.

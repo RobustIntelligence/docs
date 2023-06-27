@@ -10,7 +10,7 @@ Continuous Tests run on a Firewall.
 
    .. tab:: SDK
 
-      1.  (When a suitable [project](../creating_projects/creating_a_project.rst) does not already exist) Create a project using the following :ref:`SDK command<rime-sdk>`.
+      1.  Create a project using the following :ref:`SDK command<rime-sdk>`.
 
             .. code-block:: python
 
@@ -19,7 +19,7 @@ Continuous Tests run on a Firewall.
                 )
 
 
-      2.  Register a reference dataset. Depending on where you are looking to pull data from you may need to :ref:`create a data integration <data-integrations>`: for all data sources except data collector, you will need to create a data integration.
+      2.  Register a reference dataset. Depending on where you are looking to pull data from you may need to :ref:`create a data integration <configuring-integrations>`: for all data sources except data collector, you will need to create a data integration.
 
             .. code-block:: python
 
@@ -59,16 +59,16 @@ Continuous Tests run on a Firewall.
                                 "path": PREDICTION_FILE_PATH,
                             },
                         },
-                        "pred_params": {"pred_col": PREDICTION_COL
+                        "pred_params": {"pred_col": PREDICTION_COL}
                     },
                 )
 
-      4.  Create a new Firewall object in the project. You may choose to create a Firewall with [Scheduled CT](scheduling_ct_runs.rst) parameters or leave those parameters blank. If Scheduled CT is set, the Firewall will run Continuous Tests automatically for you by pulling the data from the data sources you specify. Otherwise, you will need to manually run Continuous Tests over an evaluation dataset that you provide. This guide will provide an example of the latter case.
+      4.  Create a new Firewall object in the project. You may choose to create a Firewall with :ref:`Scheduled CT <scheduling-continuous-test>` parameters or leave those parameters blank. If Scheduled CT is set, the Firewall will run Continuous Tests automatically for you by pulling the data from the data sources you specify. Otherwise, you will need to manually run Continuous Tests over an evaluation dataset that you provide. This guide will provide an example of the latter case.
 
             .. code-block:: python
 
                 project.create_firewall(
-                    model_id=model_id ref_data_id=reference_id,bin_size=timedelta(hours=3)
+                    model_id=model_id, ref_data_id=reference_id, bin_size=timedelta(hours=3)
                 )
 
       5.  Register an evaluation dataset. This dataset must have the ``timestamp_col`` field in the ``data_params`` dictionary.
@@ -101,7 +101,7 @@ Continuous Tests run on a Firewall.
                                 "path": PREDICTION_FILE_PATH,
                             },
                         },
-                        "pred_params": {"pred_col": PREDICTION_COL
+                        "pred_params": {"pred_col": PREDICTION_COL}
                     },
                 )
 

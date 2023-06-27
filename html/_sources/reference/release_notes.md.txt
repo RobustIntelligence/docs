@@ -2,10 +2,60 @@
 
 For notes on upgrades and deprecations to the Robust Intelligence REST API, refer to the [API changelog](../reference/api_changelog.md).
 
+Unless noted otherwise, you must [upgrade](../deployment/upgrade.rst)
+all Robust Intelligence components to take advantage of the changes
+listed here.
+
+
+## 2.1
+
+### Category field deprecated
+
+The string `category` field is deprecated in favor of the `test_category` enum field. The string `category` field will be removed in v2.3.
+`category` is currently a sub-field of `TestBatchResult`, `TestCase`, and `CategorySummaryMetric`.
+
+
+### Python 3.7 no longer supported
+
+Robust Intelligence now supports Python 3.8 through Python 3.11. As of
+Robust Intelligence 2.1, projects using Python 3.7 are no longer
+supported. Projects based on Python 3.7 should be migrated to Python
+3.8 or later.
+
+
+### delta_lake connection_info renamed
+
+The `delta_lake` connection_info has been renamed to `databricks`. This loads a Databricks Delta Lake Table.
+
+Before:
+```python
+{
+    "connection_info": {
+        "delta_lake": {
+            "table_name": "Table",
+        }
+    },
+    "data_params": ...,
+}
+```
+
+After:
+```python
+{
+    "connection_info": {
+        "databricks": {
+            "table_name": "Table",
+        }
+    },
+    "data_params": ...,
+}
+```
+
+
 ## 2.0 GA
 
 
-**Breaking Changes from 2.0 Beta to 2.0 GA**
+### global_exclude_columns parameter has moved
 
 The location in the Test Suite Configuration to specify the `global_exclude_columns` parameter has changed.
 

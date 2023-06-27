@@ -38,7 +38,7 @@
 <body class="wy-body-for-nav">
 <div class="ge_header no-print">
     <a id="header-logo" href="../../index.html">
-        <img src="../../_static/header-logo.png" alt="logo" />
+        <img src="../../_static/images/header-logo.png" alt="logo" />
     </a>
 </div>
 
@@ -54,7 +54,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.1.0-rc.0
+                2.2.0-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -100,6 +100,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/upgrade.html">Upgrade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
@@ -142,7 +143,7 @@
 Continuous Tests run on a Firewall.</p>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">SDK</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><ol class="arabic">
-<li><p>(When a suitable [project](../creating_projects/creating_a_project.rst) does not already exist) Create a project using the following <a class="reference internal" href="../../reference/python-sdk.html#rime-sdk"><span class="std std-ref">SDK command</span></a>.</p>
+<li><p>Create a project using the following <a class="reference internal" href="../../reference/python-sdk.html#rime-sdk"><span class="std std-ref">SDK command</span></a>.</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">model_task</span><span class="o">=</span><span class="s2">&quot;MODEL_TASK_BINARY_CLASSIFICATION&quot;</span>
@@ -151,7 +152,7 @@ Continuous Tests run on a Firewall.</p>
 </div>
 </div></blockquote>
 </li>
-<li><p>Register a reference dataset. Depending on where you are looking to pull data from you may need to <a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/custom_integration.html#data-integrations"><span class="std std-ref">create a data integration</span></a>: for all data sources except data collector, you will need to create a data integration.</p>
+<li><p>Register a reference dataset. Depending on where you are looking to pull data from you may need to <a class="reference internal" href="../../administration/workspace_configuration/integrations/configuring_integrations.html#configuring-integrations"><span class="std std-ref">create a data integration</span></a>: for all data sources except data collector, you will need to create a data integration.</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">reference_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="n">DATASET_NAME</span><span class="p">,</span>
@@ -187,17 +188,17 @@ If you do not provide the information to query the model, you must register pred
                 <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">PREDICTION_FILE_PATH</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">},</span>
-        <span class="s2">&quot;pred_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="n">PREDICTION_COL</span>
+        <span class="s2">&quot;pred_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="n">PREDICTION_COL</span><span class="p">}</span>
     <span class="p">},</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
-<li><p>Create a new Firewall object in the project. You may choose to create a Firewall with [Scheduled CT](scheduling_ct_runs.rst) parameters or leave those parameters blank. If Scheduled CT is set, the Firewall will run Continuous Tests automatically for you by pulling the data from the data sources you specify. Otherwise, you will need to manually run Continuous Tests over an evaluation dataset that you provide. This guide will provide an example of the latter case.</p>
+<li><p>Create a new Firewall object in the project. You may choose to create a Firewall with <a class="reference internal" href="scheduling_ct_runs.html#scheduling-continuous-test"><span class="std std-ref">Scheduled CT</span></a> parameters or leave those parameters blank. If Scheduled CT is set, the Firewall will run Continuous Tests automatically for you by pulling the data from the data sources you specify. Otherwise, you will need to manually run Continuous Tests over an evaluation dataset that you provide. This guide will provide an example of the latter case.</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span><span class="o">.</span><span class="n">create_firewall</span><span class="p">(</span>
-    <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span> <span class="n">ref_data_id</span><span class="o">=</span><span class="n">reference_id</span><span class="p">,</span><span class="n">bin_size</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_data_id</span><span class="o">=</span><span class="n">reference_id</span><span class="p">,</span> <span class="n">bin_size</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -231,7 +232,7 @@ If you do not provide the information to query the model, you must register pred
                 <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">PREDICTION_FILE_PATH</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">},</span>
-        <span class="s2">&quot;pred_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="n">PREDICTION_COL</span>
+        <span class="s2">&quot;pred_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="n">PREDICTION_COL</span><span class="p">}</span>
     <span class="p">},</span>
 <span class="p">)</span>
 </pre></div>

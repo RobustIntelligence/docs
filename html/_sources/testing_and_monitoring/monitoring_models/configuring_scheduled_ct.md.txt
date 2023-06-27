@@ -68,8 +68,8 @@ firewall.activate_ct_scheduling(
 
 ```
 
-### Delta Lake
-Delta Lake requires you to specify **`connection_info.delta_lake.table_name`** in **`data_info`** and **`pred_info`**. See
+### Databricks
+Delta Lake on Databricks requires you to specify **`connection_info.databricks.table_name`** in **`data_info`** and **`pred_info`**. See
 the section on [integrations](../../administration/workspace_configuration/integrations/configuring_integrations.md) to configure
 Delta Lake.
 
@@ -78,7 +78,7 @@ from datetime import timedelta
 firewall.activate_ct_scheduling(
     data_info={
         "connection_info": {
-            "delta_lake": {
+            "databricks": {
                 "table_name": "hive_metastore.default.system_test_ref",
             }
         },
@@ -91,7 +91,7 @@ firewall.activate_ct_scheduling(
     pred_integration_id="<YOUR_PREDICTION_INTEGRATION_ID>",
     pred_info={
         "connection_info": {
-            "delta_lake": {
+            "databricks": {
                 "table_name": "hive_metastore.default.system_test_ref_pred",
             }
         },
@@ -206,10 +206,6 @@ data_params = {
         "nqueries": None,  # int or None (default). If None, all queries are used.
         "nrows_per_query": None,  # int or None (default). If None, all rows are used.
         "drop_query_id": True,
-    },
-    "embeddings": {
-        "name": "",
-        "cols": [],
     },
     "nrows": None,  # int or None (default). If None, all rows are used.
     "nrows_per_time_bin": None,  # int or None (default). If None, all rows are used.
