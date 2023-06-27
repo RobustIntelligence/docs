@@ -37,7 +37,7 @@
 <body class="wy-body-for-nav">
 <div class="ge_header no-print">
     <a id="header-logo" href="../../index.html">
-        <img src="../../_static/header-logo.png" alt="logo" />
+        <img src="../../_static/images/header-logo.png" alt="logo" />
     </a>
 </div>
 
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.1.0-rc.0
+                2.2.0-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -107,6 +107,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/upgrade.html">Upgrade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
@@ -155,20 +156,21 @@ models you have created or gives the ability to access hugging face models.<br /
 <h2>Template<a class="headerlink" href="#template" title="Permalink to this heading"></a></h2>
 <section id="model-path">
 <h3>Model Path<a class="headerlink" href="#model-path" title="Permalink to this heading"></a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;model_path&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/model.py&quot;</span><span class="p">,</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;model_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;path/to/model.py&quot;</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </section>
 <section id="huggingface">
 <h3>Huggingface<a class="headerlink" href="#huggingface" title="Permalink to this heading"></a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;hugging_face&quot;</span> <span class="p">:{</span>
-        <span class="s2">&quot;model_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;cross-encoder/nli-MiniLM2-L6-H768&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">tokenizer_uri</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="s2">cross-encoder/nli-MiniLM2-L6-H768</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">class_map</span><span class="se">\&quot;</span><span class="s2">: {</span><span class="se">\&quot;</span><span class="s2">0</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="s2">contradiction</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">1</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="s2">entailment</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">2</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="s2">neutral</span><span class="se">\&quot;</span><span class="s2">}, </span><span class="se">\&quot;</span><span class="s2">ignore_class_names</span><span class="se">\&quot;</span><span class="s2">: true}&quot;</span>
-
-    <span class="p">}</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;hugging_face&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;model_uri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cross-encoder/nli-MiniLM2-L6-H768&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;kwargs&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{\&quot;tokenizer_uri\&quot;: \&quot;cross-encoder/nli-MiniLM2-L6-H768\&quot;, \&quot;class_map\&quot;: {\&quot;0\&quot;: \&quot;contradiction\&quot;, \&quot;1\&quot;: \&quot;entailment\&quot;, \&quot;2\&quot;: \&quot;neutral\&quot;}, \&quot;ignore_class_names\&quot;: true}&quot;</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -187,11 +189,21 @@ models you have created or gives the ability to access hugging face models.<br /
 <tbody>
 <tr>
 <td>model_path</td>
+<td>JSON object</td>
+<td>Specification for a model provided via a model file.</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp; path</td>
 <td>String</td>
 <td>Path to the Python model file.</td>
 </tr>
 <tr>
 <td>hugging_face</td>
+<td>JSON object</td>
+<td>Specification for a huggingface model.</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp; model_uri</td>
 <td>String</td>
 <td>The URI to a HuggingFace model.</td>
 </tr>

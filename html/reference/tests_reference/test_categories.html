@@ -37,7 +37,7 @@
 <body class="wy-body-for-nav">
 <div class="ge_header no-print">
     <a id="header-logo" href="../../index.html">
-        <img src="../../_static/header-logo.png" alt="logo" />
+        <img src="../../_static/images/header-logo.png" alt="logo" />
     </a>
 </div>
 
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.1.0-rc.0
+                2.2.0-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -91,6 +91,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/upgrade.html">Upgrade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
@@ -112,12 +113,14 @@
 <li class="toctree-l4"><a class="reference internal" href="#subset-performance-degradation">Subset Performance Degradation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#data-poisoning-detection">Data Poisoning Detection</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#evasion-attack-detection">Evasion Attack Detection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model-alignment">Model Alignment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#factual-awareness">Factual Awareness</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="tests.html">Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../model_tests_reference.html#supplementary-literature">Supplementary Literature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../model_tests_reference.html#standards-mapping-and-supplementary-literature">Standards Mapping and Supplementary Literature</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api_changelog.html">API Changelog</a></li>
@@ -151,11 +154,11 @@
 <h1>Summary Tests<a class="headerlink" href="#summary-tests" title="Permalink to this heading"></a></h1>
 <section id="drift">
 <h2>Drift<a class="headerlink" href="#drift" title="Permalink to this heading"></a></h2>
-<p>Test for differences in the distribution of the reference dataset versus the evaluation dataset.If predictions and labels are provided, measure the performance degradation caused by shifting data as well as drift in predictions and labels themselves.<br><b>Data Requirements:</b> Labels and predictions are not required but they improve results.</p>
+<p>Test for differences in the distribution of the reference dataset versus the evaluation dataset. If predictions and labels are provided, measure the performance degradation caused by shifting data as well as drift in predictions and labels themselves.<br><b>Data Requirements:</b> Labels and predictions are not required but they improve results.</p>
 </section>
 <section id="abnormal-inputs">
 <h2>Abnormal Inputs<a class="headerlink" href="#abnormal-inputs" title="Permalink to this heading"></a></h2>
-<p>Check the evaluation dataset for abnormal values commonly encountered in production.If model predictions are provided, test if the observed abnormal values cause a degradation in your model’s performance.<br><b>Data Requirements:</b> Labels and predictions are not required but they improve results.</p>
+<p>Check the evaluation dataset for abnormal values commonly encountered in production. If model predictions are provided, test if the observed abnormal values cause a degradation in your model’s performance.<br><b>Data Requirements:</b> Labels and predictions are not required but they improve results.</p>
 </section>
 <section id="subset-performance">
 <h2>Subset Performance<a class="headerlink" href="#subset-performance" title="Permalink to this heading"></a></h2>
@@ -187,11 +190,19 @@
 </section>
 <section id="data-poisoning-detection">
 <h2>Data Poisoning Detection<a class="headerlink" href="#data-poisoning-detection" title="Permalink to this heading"></a></h2>
-<p>Test for the presence of potentially corrupted samples in your data.<br>Note that the default behavior of this test category in Continuous Testing depends on the quality of data used for the initial stress test.If corrupted samples were detected in the stress test, then the continuous test will be more  permissive.<br><b>Data Requirements:</b> This category requires input data with labels and timestamps.</p>
+<p>Test for the presence of potentially corrupted samples in your data.<br>Note that the default behavior of this test category in Continuous Testing depends on the quality of data used for the initial stress test. If corrupted samples were detected in the stress test, then the continuous test will be more permissive.<br><b>Data Requirements:</b> This category requires input data with labels and timestamps.</p>
 </section>
 <section id="evasion-attack-detection">
 <h2>Evasion Attack Detection<a class="headerlink" href="#evasion-attack-detection" title="Permalink to this heading"></a></h2>
 <p>Test for the presence of adversarial evasion attacks against your model.<br><b>Data Requirements:</b> This category only requires input data with timestamps.</p>
+</section>
+<section id="model-alignment">
+<h2>Model Alignment<a class="headerlink" href="#model-alignment" title="Permalink to this heading"></a></h2>
+<p>Test that your model is aligned: helpful, honest, and harmless.<br><b>Data Requirements:</b> Most tests in this category require a generative text model to be provided, though providing only predictions is sufficient for any row-wise test.</p>
+</section>
+<section id="factual-awareness">
+<h2>Factual Awareness<a class="headerlink" href="#factual-awareness" title="Permalink to this heading"></a></h2>
+<p>Test that your model is producing factually correct outputs.<br><b>Data Requirements:</b> Most tests in this category require a generative text model to be provided, though providing only predictions is sufficient for any row-wise test.</p>
 </section>
 </section>
 

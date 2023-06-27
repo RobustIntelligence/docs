@@ -10,14 +10,12 @@ two elements, a `connection_info` object and a `data_params` object.
 | connection_info | ConnectionInfo | Path to a ConnectionInfo object. |
 | data_params | DataInfoParams |  Path to a data_params object. |
 
-```
-data_info = {
-    "connection_info": {
-        .....
-    },
-    "data_params": {
-        .....
-    }
+```json
+{
+  "data_info": {
+    "connection_info": {},
+    "data_params": {}
+  }
 }
 ```
 
@@ -28,34 +26,39 @@ This object how to connect to a data source. Specify exactly one of the paramete
 ### 1) Loads a data file from a Cloud Data store (eg: AWS S3, Azure Blob Storage)
 
 a) Parameter = data_file
+
 b) Type = DataFileInfo
 
-```
+```json
 {
-    "connection_info": {
-        "data_file": {
-            "path": ""
-        }
+  "connection_info": {
+    "data_file": {
+      "path": ""
     }
-    "data_params": ...,
+  }
 }
 ```
+
+| Parameter | Type | Description                                                                                                                           |
+|-----------|--|---------------------------------------------------------------------------------------------------------------------------------------|
+| path | string | The path to the file.                                                                                                                 |
+| data_type | string | Default value is `"DATA_TYPE_UNSPECIFIED"`. Should be set to `"DATA_TYPE_DELTA_TABLE"` when the `path` points to a Delta Table on S3. |
 
 ### 2) Loads a data file from a custom data loader.
 
 a) Parameter = data_loading
+
 b) Type = DataLoadingInfo
 
-```
+```json
 {
-    "connection_info": {
-        "data_loading": {
-            "path": ",
-            "load_func_name": "",
-            "loader_kwargs": {"file_path": s3_data_path, **loader_kwargs},
-        }
+  "connection_info": {
+    "data_loading": {
+      "path": "",
+      "load_func_name": "",
+      "loader_kwargs_json": ""
     }
-    "data_params": ...,
+  }
 }
 ```
 
@@ -67,21 +70,21 @@ b) Type = DataLoadingInfo
 
 ### 3) Loads a data stream from a data collector.
 
-a) Parameter = delta_lake
-b) Type = DeltaLakeInfo
+a) Parameter = data_collector
+
+b) Type = DataCollectorInfo
 
 
 
-```
+```json
 {
-    "connection_info": {
-        "data_collector": {
-            "data_stream_id": null,
-            "start_time": 0,
-            "end_time": 0
-        }
-    },
-    "data_params": ...,
+  "connection_info": {
+    "data_collector": {
+      "data_stream_id": null,
+      "start_time": 0,
+      "end_time": 0
+    }
+  }
 }
 ```
 **Note:** This can only be specified as part of a Continuous Testing configuration.
@@ -94,17 +97,17 @@ b) Type = DeltaLakeInfo
 
 ### 4) Loads a Databricks Delta Lake table.
 
-a) parameter = delta_lake
-b) Type = DeltaLakeInfo
+a) parameter = databricks
 
-```
+b) Type = DatabricksInfo
+
+```json
 {
-    "connection_info": {
-        "delta_lake_info": {
-            "table_name": "Table",
-        }
-    },
-    "data_params": ...,
+  "connection_info": {
+    "databricks": {
+      "table_name": "Table"
+    }
+  }
 }
 ```
 
@@ -115,18 +118,18 @@ b) Type = DeltaLakeInfo
 ### 5) Loading a Hugging Face dataset
 
 a) Parameter = hugging_face
-b) Type = HuggingFace
 
-```
+b) Type = HuggingFaceDataInfo
+
+```json
 {
-    "connection_info": {
-        "hugging_face": {
-            "dataset_uri": "",
-            "split_name": "",
-            "loading_params_json": ""
-        }
-    },
-    "data_params": ...,
+  "connection_info": {
+    "hugging_face": {
+      "dataset_uri": "",
+      "split_name": "",
+      "loading_params_json": ""
+    }
+  }
 }
 ```
 
@@ -146,33 +149,33 @@ simplicity and flexibility.
 
 ### Default Data Params Template
 
-```
+```json
 {
-    "data_params": {
-        "label_col": "",
-        "timestamp_col": "",
-        "class_names": [],
-        "ranking_info":{
-            "query_col":"",
-            "nqueries": null,
-            "nrows_per_query": null,
-            "drop_query_id": null
-        },
-
-        "nrows": null,
-        "nrows_per_time_bin": null,
-        "sample": null,
-        "categorical_features": null,
-        "protected_features": null,
-        "features_not_in_model": null,
-        "text_features": null,
-        "image_features": null,
-        "features": null,
-        "loading_kwargs": null,
-        "feature_type_path": null,
-        "image_load_path": null
+  "data_params": {
+    "label_col": "",
+    "timestamp_col": "",
+    "class_names": [],
+    "ranking_info":{
+      "query_col":"",
+      "nqueries": null,
+      "nrows_per_query": null,
+      "drop_query_id": null
     },
-    ...
+    "nrows": null,
+    "nrows_per_time_bin": null,
+    "sample": true,
+    "categorical_features": [],
+    "protected_features": [],
+    "features_not_in_model": [],
+    "text_features": [],
+    "image_features": [],
+    "intersections": {
+      "features": []
+    },
+    "loading_kwargs": "",
+    "feature_type_path": "",
+    "image_load_path": ""
+  }
 }
 ```
 
@@ -195,11 +198,11 @@ simplicity and flexibility.
 
 #### Dataset sizing
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| nrows | Optional int64 | Number of rows of data to load and test. Loads all rows when null and `sample` is not specified. Infers the maximum number rows possible when null and `sample` is specified. |
-| nrows_per_time_bin | Optional int64 | Number of rows of data per time bin to load and test in CT. Loads all rows when null. |
-| sample | Optional Boolean | Specifies whether to sample rows in the data. Default is True. |
+| Parameter | Type | Description                                                                                                                                                                 |
+|-----------|------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| nrows | Optional int64 | Number of rows of data to load and test. Loads all rows when null and `sample` is not specified. Infers the maximum number of rows possible when null and `sample` is true. |
+| nrows_per_time_bin | Optional int64 | Number of rows of data per time bin to load and test in CT. Loads all rows when null.                                                                                       |
+| sample | Optional Boolean | Specifies whether to sample rows in the data. Default is True.                                                                                                              |
 
 #### Feature types and relations
 
@@ -213,9 +216,15 @@ simplicity and flexibility.
 
 #### Feature intersections
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| features | Intersections | A list of features to run tabular tests over. |
+| Parameter     | Type                         | Description                                                                              |
+|---------------|------------------------------|------------------------------------------------------------------------------------------|
+| intersections | Repeated FeatureIntersection | A list of arrays of features, where each array represents the intersection of features on which certain subset and fairness tests are run. |
+
+The `FeatureIntersection` message is defined as follows:
+
+| Parameter | Type            | Description               |
+|-----------|-----------------|---------------------------|
+| features  | Repeated string | A list of feature names over which subgroups are generated. |
 
 #### External resources
 

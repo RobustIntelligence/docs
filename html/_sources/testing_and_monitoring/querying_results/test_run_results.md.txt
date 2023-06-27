@@ -33,7 +33,7 @@ Now the user can analyze the results of the test run at varying levels of granul
 high_level_results = test_run.get_result_df()
 ```
 
-<img src="../../_static/queryability_high_level_results.png">
+<img src="../../_static/images/queryability_high_level_results.png">
 
 If we want to dig into a specific test batch (i.e. look at the `unseen categorical` test specifically), we can do the following to get a results overview as a Pandas Series:
 
@@ -42,7 +42,7 @@ test_batch = test_run.get_test_batch("unseen_categorical")
 high_level_test_batch_results = test_batch.summary()
 ```
 
-<img src="../../_static/queryability_high_level_batch_results.png">
+<img src="../../_static/images/queryability_high_level_batch_results.png">
 
 If we want more granularity, we can retrieve all the individual test cases for the given test batch (e.g. the results of `unseen categorical` over each feature) as a Pandas DataFrame:
 
@@ -50,7 +50,7 @@ If we want more granularity, we can retrieve all the individual test cases for t
 granular_test_batch_results = test_batch.get_test_cases_df()
 ```
 
-<img src="../../_static/queryability_granular_test_batch_results.png">
+<img src="../../_static/images/queryability_granular_test_batch_results.png">
 
 In general, we can retrieve this granular information for all tests at once as a Pandas DataFrame:
 
@@ -58,7 +58,7 @@ In general, we can retrieve this granular information for all tests at once as a
 all_granular_test_batch_results = test_run.get_test_cases_df(show_test_case_metrics=True)
 ```
 
-<img src="../../_static/queryability_all_granular_test_batch_results.png">
+<img src="../../_static/images/queryability_all_granular_test_batch_results.png">
 
 At the test-case level, Robust Intelligence returns information that can be test-specific. If we are placing the test cases for all tests into the same table, this could result in a sparse table with columns that are empty for most rows. If the user wants to avoid this sparsity and only retrieve common columns across all tests the user can simply leave the `show_test_case_metrics` flag unspecified as follows:
 
@@ -66,7 +66,7 @@ At the test-case level, Robust Intelligence returns information that can be test
 limited_all_granular_test_batch_results = test_run.get_test_cases_df()
 ```
 
-<img src="../../_static/queryability_limited_all_granular_test_batch_results.png">
+<img src="../../_static/images/queryability_limited_all_granular_test_batch_results.png">
 
 The user can also get an iterator representing all of the test batches. This can be useful if the user does not know the name of the test batch they want to query or if the user has a custom use case which involves iterating over all test batch objects:
 

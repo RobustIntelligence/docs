@@ -37,7 +37,7 @@
 <body class="wy-body-for-nav">
 <div class="ge_header no-print">
     <a id="header-logo" href="../../index.html">
-        <img src="../../_static/header-logo.png" alt="logo" />
+        <img src="../../_static/images/header-logo.png" alt="logo" />
     </a>
 </div>
 
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.1.0-rc.0
+                2.2.0-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -82,7 +82,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#templates-for-data-location-types">Templates for Data Location Types</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#data-collector">Data Collector</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#delta-lake">Delta Lake</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#databricks">Databricks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#custom-loader">Custom Loader</a></li>
 </ul>
 </li>
@@ -110,6 +110,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/upgrade.html">Upgrade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
@@ -208,16 +209,16 @@
 </pre></div>
 </div>
 </section>
-<section id="delta-lake">
-<h3>Delta Lake<a class="headerlink" href="#delta-lake" title="Permalink to this heading"></a></h3>
-<p>Delta Lake requires you to specify <strong><code class="docutils literal notranslate"><span class="pre">connection_info.delta_lake.table_name</span></code></strong> in <strong><code class="docutils literal notranslate"><span class="pre">data_info</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">pred_info</span></code></strong>. See
+<section id="databricks">
+<h3>Databricks<a class="headerlink" href="#databricks" title="Permalink to this heading"></a></h3>
+<p>Delta Lake on Databricks requires you to specify <strong><code class="docutils literal notranslate"><span class="pre">connection_info.databricks.table_name</span></code></strong> in <strong><code class="docutils literal notranslate"><span class="pre">data_info</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">pred_info</span></code></strong>. See
 the section on <a class="reference internal" href="../../administration/workspace_configuration/integrations/configuring_integrations.html"><span class="std std-doc">integrations</span></a> to configure
 Delta Lake.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
 <span class="n">firewall</span><span class="o">.</span><span class="n">activate_ct_scheduling</span><span class="p">(</span>
     <span class="n">data_info</span><span class="o">=</span><span class="p">{</span>
         <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;delta_lake&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;databricks&quot;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;hive_metastore.default.system_test_ref&quot;</span><span class="p">,</span>
             <span class="p">}</span>
         <span class="p">},</span>
@@ -230,7 +231,7 @@ Delta Lake.</p>
     <span class="n">pred_integration_id</span><span class="o">=</span><span class="s2">&quot;&lt;YOUR_PREDICTION_INTEGRATION_ID&gt;&quot;</span><span class="p">,</span>
     <span class="n">pred_info</span><span class="o">=</span><span class="p">{</span>
         <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;delta_lake&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;databricks&quot;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;hive_metastore.default.system_test_ref_pred&quot;</span><span class="p">,</span>
             <span class="p">}</span>
         <span class="p">},</span>
@@ -345,10 +346,6 @@ see our <a class="reference internal" href="../preparing_your_models_and_dataset
         <span class="s2">&quot;nqueries&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># int or None (default). If None, all queries are used.</span>
         <span class="s2">&quot;nrows_per_query&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># int or None (default). If None, all rows are used.</span>
         <span class="s2">&quot;drop_query_id&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;embeddings&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;cols&quot;</span><span class="p">:</span> <span class="p">[],</span>
     <span class="p">},</span>
     <span class="s2">&quot;nrows&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># int or None (default). If None, all rows are used.</span>
     <span class="s2">&quot;nrows_per_time_bin&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># int or None (default). If None, all rows are used.</span>

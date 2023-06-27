@@ -19,11 +19,7 @@ This dictionary contains several global configuration options, which, if specifi
 - **`individual_tests_config`**: Optional[dict], *default* = ``null``
   Specification for configurations on individual tests run by Robust Intelligence. Each test's configuration will be specified under a unique key within `"individual_tests_config"`; for example, the Correlation Label Drift test will be configured under the `"correlation_label_drift"` key. See below for an example.
 
-## Default configuration
-
-The default configuration for all tests is available in the `rime_trial` bundle, at `examples/_test_configs/default_test_config.json`.
-
-To use such a configuration JSON object, load the configuration JSON into Python as a dictionary, for example by using `json.load`. Specify the dictionary as the value of the `"test_suite_config"` key in the test run configuration.
+To use a configuration JSON object, load the configuration JSON into Python as a dictionary, for example by using `json.load`. Specify the dictionary as the value of the `"test_suite_config"` key in the test run configuration.
 
 ## Test Suite Configuration Template
 ```json
@@ -191,7 +187,6 @@ To use such a configuration JSON object, load the configuration JSON into Python
           0.1
         ],
         "ks_test_p_value_threshold": 0.05,
-        "ks_test_min_sample_size": 100,
         "ignore_nans": true
       },
       "categorical_feature_params": {
@@ -426,21 +421,37 @@ To use such a configuration JSON object, load the configuration JSON into Python
       "run": true,
       "sample_size": 20,
       "max_str_len": 2000,
-      "attack_params": null
+      "attack_params": {
+        "aug_min": 1,
+        "aug_max": null,
+        "aug_p": 0.05
+      }
     },
     "text_ocr_error_attack": {
       "severity_thresholds": null,
       "run": true,
       "sample_size": 20,
       "max_str_len": 2000,
-      "attack_params": null
+      "attack_params": {
+        "min_char": 2,
+        "aug_char_max": 1,
+        "aug_char_min": 1,
+        "aug_char_p": 0.1,
+        "aug_word_min": 1,
+        "aug_word_max": null,
+        "aug_word_p": 0.05
+      }
     },
     "text_synonym_swap_attack": {
       "severity_thresholds": null,
       "run": true,
       "sample_size": 20,
       "max_str_len": 2000,
-      "attack_params": null
+      "attack_params": {
+        "aug_min": 1,
+        "aug_max": null,
+        "aug_p": 0.05
+      }
     },
     "text_lm_word_substitution_attack": {
       "severity_thresholds": null,
@@ -641,8 +652,7 @@ To use such a configuration JSON object, load the configuration JSON into Python
         "max_iter": 100,
         "eps": 0.02,
         "p_init": 0.25,
-        "nb_restarts": 5,
-        "square": true
+        "nb_restarts": 5
       }
     },
     "pixel_attack": {
@@ -850,7 +860,6 @@ To use such a configuration JSON object, load the configuration JSON into Python
           0.1
         ],
         "ks_test_p_value_threshold": 0.05,
-        "ks_test_min_sample_size": 100,
         "ignore_nans": true
       },
       "categorical_feature_params": {
@@ -872,9 +881,7 @@ To use such a configuration JSON object, load the configuration JSON into Python
     "class_imbalance": {
       "exclude_columns": [],
       "severity_thresholds": null,
-      "run": true,
-      "min_sample_size": 20,
-      "performance_change_thresholds": null
+      "run": true
     },
     "equalized_odds": {
       "exclude_columns": [],
@@ -1107,6 +1114,202 @@ To use such a configuration JSON object, load the configuration JSON into Python
         "max_categories": 100,
         "min_frequency": 0.01
       }
+    },
+    "row_wise_data_leakage_check": {
+      "severity_thresholds": null,
+      "run": true,
+      "sensitive_terms_file": null
+    },
+    "row_wise_pii_detection": {
+      "severity_thresholds": null,
+      "run": true
+    },
+    "row_wise_toxicity": {
+      "severity_thresholds": null,
+      "run": true
+    },
+    "row_wise_prompt_injection_detection": {
+      "severity_thresholds": null,
+      "run": true
+    },
+    "row_wise_prompt_extraction_detection": {
+      "severity_thresholds": null,
+      "run": true
+    },
+    "row_wise_factual_inconsistency": {
+      "severity_thresholds": null,
+      "run": true,
+      "fact_sheet_path": null
+    },
+    "generative_upper_case": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20
+    },
+    "generative_lower_case": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20
+    },
+    "generative_remove_special_chars": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20
+    },
+    "generative_ascii": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20
+    },
+    "generative_char_substitution_attack": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20,
+      "attack_params": {
+        "min_char": 2,
+        "aug_char_max": 1,
+        "aug_char_min": 1,
+        "aug_char_p": 0.1,
+        "aug_word_min": 1,
+        "aug_word_max": null,
+        "aug_word_p": 0.05
+      }
+    },
+    "generative_char_deletion_attack": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20,
+      "attack_params": {
+        "min_char": 2,
+        "aug_char_max": 1,
+        "aug_char_min": 1,
+        "aug_char_p": 0.1,
+        "aug_word_min": 1,
+        "aug_word_max": null,
+        "aug_word_p": 0.05
+      }
+    },
+    "generative_char_insertion_attack": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20,
+      "attack_params": {
+        "min_char": 2,
+        "aug_char_max": 1,
+        "aug_char_min": 1,
+        "aug_char_p": 0.1,
+        "aug_word_min": 1,
+        "aug_word_max": null,
+        "aug_word_p": 0.05
+      }
+    },
+    "generative_char_swap_attack": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20,
+      "attack_params": {
+        "min_char": 2,
+        "aug_char_max": 1,
+        "aug_char_min": 1,
+        "aug_char_p": 0.1,
+        "aug_word_min": 1,
+        "aug_word_max": null,
+        "aug_word_p": 0.05
+      }
+    },
+    "generative_keyboard_aug_attack": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20,
+      "attack_params": {
+        "min_char": 2,
+        "aug_char_max": 1,
+        "aug_char_min": 1,
+        "aug_char_p": 0.1,
+        "aug_word_min": 1,
+        "aug_word_max": null,
+        "aug_word_p": 0.05
+      }
+    },
+    "generative_common_misspelling_attack": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20,
+      "attack_params": {}
+    },
+    "generative_ocr_error_attack": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20,
+      "attack_params": {}
+    },
+    "generative_synonym_swap_attack": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20,
+      "attack_params": {
+        "aug_min": 1,
+        "aug_max": null,
+        "aug_p": 0.05
+      }
+    },
+    "generative_lm_word_substitution_attack": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20,
+      "attack_params": {
+        "aug_min": 1,
+        "aug_max": null,
+        "aug_p": 0.05,
+        "model_path": "distilbert-base-cased"
+      }
+    },
+    "generative_lm_word_insertion_attack": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20,
+      "attack_params": {
+        "aug_min": 1,
+        "aug_max": null,
+        "aug_p": 0.05,
+        "model_path": "distilbert-base-cased"
+      }
+    },
+    "generative_text_char_insertion_japanese_attack": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20,
+      "attack_params": {
+        "aug_word_ratio": 0.05
+      }
+    },
+    "generative_text_char_deletion_japanese_attack": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20,
+      "attack_params": {
+        "aug_word_ratio": 0.05
+      }
+    },
+    "generative_text_char_swap_japanese_attack": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20,
+      "attack_params": {
+        "aug_word_ratio": 0.05
+      }
+    },
+    "zero_shot_prompt_injection": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 10,
+      "target_token": "haha pwned"
+    },
+    "zero_shot_prompt_injection_japanese": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 10,
+      "target_token": "XXX\uff08\u4f8b\uff1a\u30e2\u30c7\u30eb\u306e\u5236\u5fa1\u306a\u3069\u306e\u30d1\u30e9\u30e1\u30fc\u30bf\u30fc\uff09"
     }
   }
 }

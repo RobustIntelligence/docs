@@ -37,7 +37,7 @@
 <body class="wy-body-for-nav">
 <div class="ge_header no-print">
     <a id="header-logo" href="../index.html">
-        <img src="../_static/header-logo.png" alt="logo" />
+        <img src="../_static/images/header-logo.png" alt="logo" />
     </a>
 </div>
 
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.1.0-rc.0
+                2.2.0-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -91,12 +91,22 @@
 <li class="toctree-l1"><a class="reference internal" href="../deployment/index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/requirements.html">Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/upgrade.html">Upgrade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/faq.html">FAQ</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#ga">2.0 GA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">2.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#category-field-deprecated">Category field deprecated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python-3-7-no-longer-supported">Python 3.7 no longer supported</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#delta-lake-connection-info-renamed">delta_lake connection_info renamed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ga">2.0 GA</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#global-exclude-columns-parameter-has-moved">global_exclude_columns parameter has moved</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="python-sdk.html">Python SDK reference</a></li>
@@ -131,9 +141,54 @@
   <section id="release-notes">
 <h1>Release Notes<a class="headerlink" href="#release-notes" title="Permalink to this heading"></a></h1>
 <p>For notes on upgrades and deprecations to the Robust Intelligence REST API, refer to the <a class="reference internal" href="api_changelog.html"><span class="std std-doc">API changelog</span></a>.</p>
+<p>Unless noted otherwise, you must <a class="reference internal" href="../deployment/upgrade.html"><span class="std std-doc">upgrade</span></a>
+all Robust Intelligence components to take advantage of the changes
+listed here.</p>
+<section id="id1">
+<h2>2.1<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<section id="category-field-deprecated">
+<h3>Category field deprecated<a class="headerlink" href="#category-field-deprecated" title="Permalink to this heading"></a></h3>
+<p>The string <code class="docutils literal notranslate"><span class="pre">category</span></code> field is deprecated in favor of the <code class="docutils literal notranslate"><span class="pre">test_category</span></code> enum field. The string <code class="docutils literal notranslate"><span class="pre">category</span></code> field will be removed in v2.3.
+<code class="docutils literal notranslate"><span class="pre">category</span></code> is currently a sub-field of <code class="docutils literal notranslate"><span class="pre">TestBatchResult</span></code>, <code class="docutils literal notranslate"><span class="pre">TestCase</span></code>, and <code class="docutils literal notranslate"><span class="pre">CategorySummaryMetric</span></code>.</p>
+</section>
+<section id="python-3-7-no-longer-supported">
+<h3>Python 3.7 no longer supported<a class="headerlink" href="#python-3-7-no-longer-supported" title="Permalink to this heading"></a></h3>
+<p>Robust Intelligence now supports Python 3.8 through Python 3.11. As of
+Robust Intelligence 2.1, projects using Python 3.7 are no longer
+supported. Projects based on Python 3.7 should be migrated to Python
+3.8 or later.</p>
+</section>
+<section id="delta-lake-connection-info-renamed">
+<h3>delta_lake connection_info renamed<a class="headerlink" href="#delta-lake-connection-info-renamed" title="Permalink to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">delta_lake</span></code> connection_info has been renamed to <code class="docutils literal notranslate"><span class="pre">databricks</span></code>. This loads a Databricks Delta Lake Table.</p>
+<p>Before:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;delta_lake&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Table&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>After:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;databricks&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Table&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
 <section id="ga">
 <h2>2.0 GA<a class="headerlink" href="#ga" title="Permalink to this heading"></a></h2>
-<p><strong>Breaking Changes from 2.0 Beta to 2.0 GA</strong></p>
+<section id="global-exclude-columns-parameter-has-moved">
+<h3>global_exclude_columns parameter has moved<a class="headerlink" href="#global-exclude-columns-parameter-has-moved" title="Permalink to this heading"></a></h3>
 <p>The location in the Test Suite Configuration to specify the <code class="docutils literal notranslate"><span class="pre">global_exclude_columns</span></code> parameter has changed.</p>
 <p>Before:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stress_test_config</span> <span class="o">=</span> <span class="p">{</span>
@@ -215,6 +270,7 @@
 <span class="p">}</span>
 </pre></div>
 </div>
+</section>
 </section>
 </section>
 

@@ -37,7 +37,7 @@
 <body class="wy-body-for-nav">
 <div class="ge_header no-print">
     <a id="header-logo" href="../../../../index.html">
-        <img src="../../../../_static/header-logo.png" alt="logo" />
+        <img src="../../../../_static/images/header-logo.png" alt="logo" />
     </a>
 </div>
 
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.1.0-rc.0
+                2.2.0-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -107,6 +107,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../deployment/index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../deployment/requirements.html">Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../deployment/upgrade.html">Upgrade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../deployment/faq.html">FAQ</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
@@ -175,7 +176,7 @@ with the new Role ARN as this will be updated during runtime when the integratio
 </section>
 <section id="using-the-aws-integration">
 <h2>Using the AWS Integration<a class="headerlink" href="#using-the-aws-integration" title="Permalink to this heading"></a></h2>
-<p>After configuring the integration, use it to register datasets and models.</p>
+<p>After configuring the integration, use it to register datasets and models. When registering datasets, the <code class="docutils literal notranslate"><span class="pre">path</span></code> field can point to files of type <code class="docutils literal notranslate"><span class="pre">csv</span></code>, Parquet, <code class="docutils literal notranslate"><span class="pre">jsonl</span></code>, <code class="docutils literal notranslate"><span class="pre">jsonl.gz</span></code>, and <code class="docutils literal notranslate"><span class="pre">json.gz</span></code>. In this case, <code class="docutils literal notranslate"><span class="pre">data_type</span></code> does not need to be specified and defaults to <code class="docutils literal notranslate"><span class="pre">&quot;DATA_TYPE_UNSPECIFIED&quot;</span></code>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">integration_id</span> <span class="o">=</span> <span class="s2">&quot;abe23******&quot;</span> <span class="c1">#Choose the AWS Integraiton ID</span>
 
 <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
@@ -197,6 +198,24 @@ with the new Role ARN as this will be updated during runtime when the integratio
         <span class="s2">&quot;model_path&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://rime-blob-integration/models/fraud_model.py&quot;</span> <span class="c1">#Enter the s3 file path</span>
         <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">integration_id</span><span class="o">=</span> <span class="n">integration_id</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The AWS integration can also be used to register a Delta lake table on S3. The path mush point to the S3 folder where the Delta lake table exists and the <code class="docutils literal notranslate"><span class="pre">&quot;data_type&quot;:</span> <span class="pre">&quot;DATA_TYPE_DELTA_TABLE&quot;</span></code> must be specified.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">integration_id</span> <span class="o">=</span> <span class="s2">&quot;abe23******&quot;</span> <span class="c1">#Choose the AWS Integraiton ID</span>
+
+<span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;ref_data_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">data_config</span><span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;data_file&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://rime-blob-integration/data/delta_table/fraud_ref&quot;</span><span class="p">,</span> <span class="c1">#Enter the delta table path on s3</span>
+                <span class="s2">&quot;data_type&quot;</span><span class="p">:</span> <span class="s2">&quot;DATA_TYPE_DELTA_TABLE&quot;</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">}</span>
     <span class="p">},</span>
     <span class="n">integration_id</span><span class="o">=</span> <span class="n">integration_id</span>
 <span class="p">)</span>

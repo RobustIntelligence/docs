@@ -1,0 +1,44 @@
+# Customer Managed Keys for Data Encryption
+
+While all data in your instance is encrypted at rest, Robust Intelligence allows you to use your own AWS KMS encryption keys to encrypt customer data. This feature enables you to manage access to your data in Robust Intelligence, and includes the ability to revoke access to cluster data at any time by disabling the managed key. When a customer managed key is disabled, Robust Intelligence will no longer be able to decrypt data for that cluster. There may be a delay of up to 20 minutes before data access is revoked for Robust Intelligence. If a customer managed key is deleted in Robust Intelligence, the data in the cluster will be re-encrypted with a Robust Intelligence-managed AWS encryption key.
+
+Only one key may be created per deployment. To manually change the key used to encrypt your data, please delete the old key before creating a new one.
+
+The key must be created in the same region (for example us-west-1) as your deployment.
+
+## Prerequisites
+
+Before you can create a customer managed key, you must have an AWS KMS customer managed key with a correctly configured key policy created in your AWS account. Please contact Robust Intelligence support for required information on how to create a key and configure your key policy.
+
+For more information, see [Creating keys](https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html) and [Allowing users in other accounts to use a KMS key](https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-modifying-external-accounts.html) in the AWS KMS Developer Guide.
+
+
+## Creating a Customer Managed Key in Robust Intelligence
+
+Once you have followed the instructions in [Prerequisites](#prerequisites) and have a correctly configured AWS KMS key, a customer managed key can be configured in Organization Settings.
+
+1.  Sign in to a user account.
+    >   The Workspaces page appears.
+2.  Click the *Settings* icon in the lower left corner.
+    >   The Organization Settings page appears.
+3.  Click *Data Encryption*.
+    >   The Data Encryption page appears.
+4.  In the *KMS Key ARN* field, enter the ARN of the customer managed key to encrypt your data.
+    >   The ARN of the customer managed key can be found in your AWS console.
+5.  Click *Activate Key*.
+    >   The customer managed key will be activated and used to encrypt data at rest. This step may take a few minutes to complete.
+
+## Deleting a Customer Managed Key in Robust Intelligence
+
+Once you have created a customer managed key in Organization Settings, the key can be deleted on the same settings page, using the *Delete Key* button.
+
+1.  Sign in to a user account.
+    >   The Workspaces page appears.
+2.  Click the *Settings* icon in the lower left corner.
+    >   The Organization Settings page appears.
+3.  Click *Data Encryption*.
+    >   The Data Encryption page appears.
+4.  In the *KMS Key ARN* field, enter the ARN of the customer managed key you wish to delete.
+    >   You must specify the ARN in order to delete the key to prevent accidental deletion.
+5.  Click *Delete Key*.
+    >   The customer managed key will be deleted and the default Robust Intelligence managed KMS key will be used to encrypt data at rest. This step may take a few minutes to complete.

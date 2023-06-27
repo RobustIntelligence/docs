@@ -11,30 +11,33 @@ For an example of how to use this config in the model registry, please see the "
 
 ### Model Path
 
-```python
+```json
 {
-    "model_path": "/path/to/model.py",
+  "model_path": {
+    "path": "path/to/model.py"
+  }
 }
 ```
 
 ### Huggingface
 
-```python
+```json
 {
-    "hugging_face" :{
-        "model_uri": "cross-encoder/nli-MiniLM2-L6-H768",
-        "kwargs": "{\"tokenizer_uri\": \"cross-encoder/nli-MiniLM2-L6-H768\", \"class_map\": {\"0\": \"contradiction\", \"1\": \"entailment\", \"2\": \"neutral\"}, \"ignore_class_names\": true}"
-
-    }
+  "hugging_face" : {
+    "model_uri": "cross-encoder/nli-MiniLM2-L6-H768",
+    "kwargs": "{\"tokenizer_uri\": \"cross-encoder/nli-MiniLM2-L6-H768\", \"class_map\": {\"0\": \"contradiction\", \"1\": \"entailment\", \"2\": \"neutral\"}, \"ignore_class_names\": true}"
+  }
 }
 ```
 
 ## Arguments
 
-| Parameter | Type | Description                                              |
-|-----------|------|----------------------------------------------------------|
-| model_path | String | Path to the Python model file.                           |
-| hugging_face | String | The URI to a HuggingFace model.                          |
-| &nbsp;&nbsp;&nbsp;&nbsp; kwargs | String | A JSON String of arguments to pass to HuggingFace model. |
+| Parameter                     | Type        | Description                                              |
+|-------------------------------|-------------|----------------------------------------------------------|
+| model_path                    | JSON object | Specification for a model provided via a model file.     |
+| &nbsp;&nbsp;&nbsp;&nbsp; path | String      | Path to the Python model file.                           |
+| hugging_face                  | JSON object | Specification for a huggingface model.                   |
+| &nbsp;&nbsp;&nbsp;&nbsp; model_uri | String      | The URI to a HuggingFace model. |
+| &nbsp;&nbsp;&nbsp;&nbsp; kwargs | String      | A JSON String of arguments to pass to HuggingFace model. |
 
 Specify exactly one of `model_path` or `hugging_face`.

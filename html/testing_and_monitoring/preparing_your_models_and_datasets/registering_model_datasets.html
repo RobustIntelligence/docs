@@ -37,7 +37,7 @@
 <body class="wy-body-for-nav">
 <div class="ge_header no-print">
     <a id="header-logo" href="../../index.html">
-        <img src="../../_static/header-logo.png" alt="logo" />
+        <img src="../../_static/images/header-logo.png" alt="logo" />
     </a>
 </div>
 
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.1.0-rc.0
+                2.2.0-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -84,7 +84,11 @@
 <li class="toctree-l4"><a class="reference internal" href="#register-your-dataset-with-a-dataset-configuration">Register your dataset with a dataset configuration.</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#registering-a-prediction-set-using-the-sdk">Registering a Prediction Set Using the SDK</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#registering-predictions-using-the-sdk">Registering Predictions Using the SDK</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#grab-your-dataset-and-model-ids-or-register-new-ones">Grab your dataset and model IDs or register new ones</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#register-your-predictions-with-a-predictions-configuration">Register your predictions with a predictions configuration.</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="data_source.html">Data Configuration</a></li>
@@ -110,6 +114,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/upgrade.html">Upgrade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
@@ -160,6 +165,23 @@ repeated references to the data object (e.g., a training set used in both
 <p>Once a model, dataset, or prediction set has been registered with a Robust Intelligence instance, that data object is
 available for selection in the appropriate drop-down selectors during project configuration for either a
 <a class="reference internal" href="../validating_models/stress_tests_from_sdk.html"><span class="std std-doc">Stress test</span></a> or a <a class="reference internal" href="../monitoring_models/creating_new_continuous_test.html"><span class="std std-doc">Continuous test</span></a>.</p>
+<blockquote>
+<div><p><strong>Note:</strong> Once you have registered your data and initiated stress testing, the data is cached according to the
+pre-established configuration settings. It’s crucial to understand that the Robust Intelligence systems
+maintain a reference to the original data location specified during the setup.
+<br><br>
+If any changes are made to the data at this source location after caching, these modifications will not be
+recognized or reflected in subsequent stress tests. This is because the systems are designed to work with the
+state of data at the point of caching and do not dynamically update to account for any changes at the source
+location.
+<br><br>
+To ensure the integrity and accuracy of your stress tests, avoid making changes to the data at the referenced
+locations after the initial setup. If modifications are necessary, you’ll need to re-register your data and
+reconfigure your stress testing settings accordingly.
+<br><br>
+This includes files, Hugging Face integrations, Databricks integrations, and any other sources referenced in
+your settings.</p>
+</div></blockquote>
 <p>To get started, make sure you’ve <a class="reference internal" href="../../documentation_home/installation.html"><span class="std std-doc">installed the Python SDK</span></a>
 and initialized your client:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
@@ -206,6 +228,9 @@ documentation for full details on the SDK calls used in this procedure.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span><span class="n">name</span><span class="o">=&lt;</span><span class="n">NAME</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">remote_path</span><span class="o">=&lt;</span><span class="n">MODEL_PATH</span><span class="o">&gt;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p><strong>Note</strong>: Registering your model will run validation on it to ensure it works with Robust Intelligence’s systems.  This
+may take a few seconds.  If you wish to skip validation, set the <code class="docutils literal notranslate"><span class="pre">skip_validation</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">True</span></code>
+(not recommended).</p>
 <p>Check out the SDK documentation for more on <a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">registering a model</span></a>.</p>
 </section>
 </section>
@@ -232,13 +257,17 @@ documentation for full details on the SDK calls used in this procedure.</p>
 </pre></div>
 </div>
 <p>For more on dataset configuration, check out the <a class="reference internal" href="data_source.html"><span class="std std-doc">dataset configuration documentation</span></a>.</p>
+<p><strong>Note</strong>: Registering a dataset will run validation on it to ensure it works with Robust Intelligence’s systems.  This
+may take a few seconds.  If you wish to skip validation, set the <code class="docutils literal notranslate"><span class="pre">skip_validation</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">True</span></code>
+(not recommended).</p>
 <p>Check out the SDK documentation for more on <a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">registering a dataset</span></a>.</p>
 </section>
 </section>
-<section id="registering-a-prediction-set-using-the-sdk">
-<h2>Registering a Prediction Set Using the SDK<a class="headerlink" href="#registering-a-prediction-set-using-the-sdk" title="Permalink to this heading"></a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
-<span class="n">dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
+<section id="registering-predictions-using-the-sdk">
+<h2>Registering Predictions Using the SDK<a class="headerlink" href="#registering-predictions-using-the-sdk" title="Permalink to this heading"></a></h2>
+<section id="grab-your-dataset-and-model-ids-or-register-new-ones">
+<h3>Grab your dataset and model IDs or register new ones<a class="headerlink" href="#grab-your-dataset-and-model-ids-or-register-new-ones" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&lt;DATASET_NAME&gt;&quot;</span><span class="p">,</span>
     <span class="n">data_config</span><span class="o">=&lt;</span><span class="n">DATASET_CONFIG</span><span class="o">&gt;</span>
 <span class="p">)</span>
@@ -250,9 +279,9 @@ documentation for full details on the SDK calls used in this procedure.</p>
 </pre></div>
 </div>
 <p>See above for more information on registering a dataset or model.</p>
-<ol class="arabic simple" start="2">
-<li><p>Register your predictions with a predictions configuration.</p></li>
-</ol>
+</section>
+<section id="register-your-predictions-with-a-predictions-configuration">
+<h3>Register your predictions with a predictions configuration.<a class="headerlink" href="#register-your-predictions-with-a-predictions-configuration" title="Permalink to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prediction_config</span><span class="o">=</span><span class="p">{</span>
     <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;data_file&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -271,7 +300,11 @@ documentation for full details on the SDK calls used in this procedure.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
+<p><strong>Note</strong>: Registering predictions will run validation on it to ensure it works with Robust Intelligence’s systems.  This
+may take a few seconds.  If you wish to skip validation, set the <code class="docutils literal notranslate"><span class="pre">skip_validation</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">True</span></code>
+(not recommended).</p>
 <p>Check out the SDK documentation for more on <a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">registering predictions</span></a>.</p>
+</section>
 </section>
 </section>
 

@@ -34,7 +34,7 @@ with the new Role ARN as this will be updated during runtime when the integratio
 
 ## Using the AWS Integration
 
-After configuring the integration, use it to register datasets and models.
+After configuring the integration, use it to register datasets and models. When registering datasets, the `path` field can point to files of type `csv`, Parquet, `jsonl`, `jsonl.gz`, and `json.gz`. In this case, `data_type` does not need to be specified and defaults to `"DATA_TYPE_UNSPECIFIED"`.
 
 ```
 integration_id = "abe23******" #Choose the AWS Integraiton ID
@@ -58,6 +58,26 @@ model_id = project.register_model(
         "model_path": {
             "path": "s3://rime-blob-integration/models/fraud_model.py" #Enter the s3 file path
         }
+    },
+    integration_id= integration_id
+)
+```
+
+The AWS integration can also be used to register a Delta lake table on S3. The path mush point to the S3 folder where the Delta lake table exists and the `"data_type": "DATA_TYPE_DELTA_TABLE"` must be specified.
+
+```
+integration_id = "abe23******" #Choose the AWS Integraiton ID
+
+project.register_dataset(
+    name= f"ref_data_{dt}",
+    data_config= {
+        "connection_info": {
+            "data_file": {
+                "path": "s3://rime-blob-integration/data/delta_table/fraud_ref", #Enter the delta table path on s3
+                "data_type": "DATA_TYPE_DELTA_TABLE"
+            }
+        },
+        "data_params": {"label_col": "label"}
     },
     integration_id= integration_id
 )
