@@ -11,18 +11,25 @@ Upgrade
 3. Edit the ``values.yaml`` file by changing the image version in the fields ``rimeAgent.images.agentImage.name`` and ``rimeAgent.images.agentImage.name`` to the new version. To find the version value, navigate to **Organization Settings** page, and click on the **Manage Agent Setup** tab. The Control Plane version will be displayed at the top of the pane. The version value to be used in the ``values.yaml`` file will be the Control Plane version without the prefix ``v``.
 4. Follow the version specific upgrades.
 
+Upgrading from v2.1 to v2.2
+---------------------------------------
+1. Update helm chart:
+
+   .. code-block::
+
+      helm repo update
+      helm upgrade rime-agent robustintelligence/rime-agent --version $RI_VERSION --values ./values.yaml
+
 Upgrading from v2.0 to v2.1
 ---------------------------------------
-1. Update cloud provider's IAM setting used for accessing Datasets and Models to support providing permission for the service account ``rime-agent-rime-cross-plane-server``.
-2. In the ``values.yaml`` file, create the section ``rimeAgent.rimeCrossPlaneServer`` with the same IAM related annotations, and in some cases also labels, as the ``rimeAgent.operator.modelTestJob`` section.
-3. Update helm chart:
+1. Navigate to **Orgainzation Settings** page, and click on the **Manage Agent Setup** tab. Deactivate and delete the agent.
+2. Uninstall the agent in your environment:
 
    .. code-block::
 
       helm uninstall rime-agent
-      helm repo update
-      helm install rime-agent robustintelligence/rime-agent --version $RI_VERSION --values ./values.yaml
 
+3. Create the new agent using the create agent button on the **Manage Agent Setup** page. Select the agent type and follow the instructions. If permission related inputs are needed, you can find the same inputs you used in v2.0 in the ``values.yaml`` file under the ``rimeAgent.operator.modelTestJob`` section.
 
 Verify Upgrade
 ---------------------------------------

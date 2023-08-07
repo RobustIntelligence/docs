@@ -31,7 +31,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Preparing your Models and Datasets" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html" />
+    <link rel="next" title="Preparing Your Models and Datasets" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html" />
     <link rel="prev" title="RI Bias and Fairness Lending Classification Walkthrough" href="RIME_Bias_and_Fairness_Walkthrough_Lending.html" />
 <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
@@ -56,7 +56,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -89,7 +89,7 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
@@ -115,10 +115,11 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -148,13 +149,13 @@
              
   <section id="RI-NLP-Walkthrough-using-REST-API">
 <h1><strong>RI NLP Walkthrough using REST API</strong><a class="headerlink" href="#RI-NLP-Walkthrough-using-REST-API" title="Permalink to this heading"></a></h1>
+<blockquote>
+<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_NLP_REST_WALKTHROUGH.ipynb">RI NLP REST Walkthrough in Google Colab</a>.</p>
+</div></blockquote>
 <p>In this Notebook Walkthrough, we will walkthrough one of RIME’s core products using our REST API - AI Stress Testing.</p>
 <p>AI Stress Testing is used in the model development stage. Using AI Stress Testing you can test the developed model. RIME goes beyond simply optimizing for basic model performance like accuracy and automatically discovers the model’s weaknesses.</p>
-<blockquote>
-<div><p>Latest Colab version of this notebook available <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_NLP_REST_WALKTHROUGH.ipynb">here</a></p>
-</div></blockquote>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
@@ -170,7 +171,7 @@
 <h2><strong>Establish the RIME Client.</strong><a class="headerlink" href="#Establish-the-RIME-Client." title="Permalink to this heading"></a></h2>
 <p>To get started, provide the API credentials and the base domain/address of the RIME service. You can generate and copy an API token from the API Access Tokens Page under Workspace settings. For the domain/address of the RIME service, contact your admin.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># Paste API_KEY</span>
@@ -178,6 +179,8 @@
 
 <span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># PASTE DOMAIN OF RIME SERVICE (eg: rime.example.rbst.io)</span>
 <span class="n">API_URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://</span><span class="si">{</span><span class="n">CLUSTER_URL</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
 </pre></div>
 </div>
 </div>
@@ -186,7 +189,7 @@
 <h2><strong>Create a New Project.</strong><a class="headerlink" href="#Create-a-New-Project." title="Permalink to this heading"></a></h2>
 <p>You can create Projects in RIME to organize your Test Runs. Each Project represents a workspace for a given machine learning task. It can contain multiple candidate models, but should only contain one promoted production model.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Project for the Natural Language Inference model task.</span>
@@ -212,7 +215,7 @@
 <h2><strong>Optional: Create Job Tracker.</strong><a class="headerlink" href="#Optional:-Create-Job-Tracker." title="Permalink to this heading"></a></h2>
 <p>Once a Stress Test request or Managed Image request has been sent, we have to wait until the Job completes before checking for results. The following helper functions track the status of a job by blocking until the Job has status “Succeeded”.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Helper function for displaying Job Status.</span>
@@ -249,7 +252,7 @@
 <h2><strong>Create Managed Image.</strong><a class="headerlink" href="#Create-Managed-Image." title="Permalink to this heading"></a></h2>
 <p>In order to run a Stress Test against a huggingface model, we have to create a Managed Image with the model’s pip requirements pre-installed. The following snippet checks if a huggingface Managed Image exists, and if not, creates one.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">managed_image_name</span> <span class="o">=</span> <span class="s2">&quot;huggingface_image&quot;</span>
@@ -275,7 +278,7 @@
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># These are the URIs of the model that we want to Stress Test, and an associated dataset.</span>
@@ -289,7 +292,7 @@
 <h2><strong>Register Dataset</strong><a class="headerlink" href="#Register-Dataset" title="Permalink to this heading"></a></h2>
 <p>Now that we have the huggingface model URIs, we can register them and the dataset to RIME. Once they’re registed, we can refer to these resources using their RIME-generated ID’s.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
@@ -316,6 +319,8 @@
             <span class="p">},</span>
         <span class="p">},</span>
     <span class="p">}</span>
+    <span class="k">if</span> <span class="n">AGENT_ID</span><span class="p">:</span>
+        <span class="n">req</span><span class="p">[</span><span class="s2">&quot;agent_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">AGENT_ID</span><span class="p">}</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">req</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;datasetId&quot;</span><span class="p">]</span>
 
@@ -329,7 +334,7 @@
 <section id="Register-Model">
 <h2><strong>Register Model</strong><a class="headerlink" href="#Register-Model" title="Permalink to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/v1/registry/</span><span class="si">{</span><span class="n">project_id</span><span class="p">[</span><span class="s1">&#39;uuid&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">/model&quot;</span>
@@ -342,6 +347,8 @@
         <span class="p">},</span>
     <span class="p">},</span>
 <span class="p">}</span>
+<span class="k">if</span> <span class="n">AGENT_ID</span><span class="p">:</span>
+    <span class="n">req</span><span class="p">[</span><span class="s2">&quot;agent_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">AGENT_ID</span><span class="p">}</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">req</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 <span class="n">model_id</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;modelId&quot;</span><span class="p">]</span>
 </pre></div>
@@ -352,7 +359,7 @@
 <h2><strong>Create Test Run Config</strong><a class="headerlink" href="#Create-Test-Run-Config" title="Permalink to this heading"></a></h2>
 <p>Below is a sample configuration of how to setup and run a RIME Stress Test. The configuration includes important information, such as the IDs of the model, reference dataset, evaluation dataset and the name of a Managed Image to use (optional).</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
@@ -371,7 +378,7 @@
         <span class="s2">&quot;global_exclude_columns&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
     <span class="p">},</span>
 <span class="p">}</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -383,6 +390,8 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">req</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;test_run_config&quot;</span><span class="p">:</span> <span class="n">config</span><span class="p">}</span>
+<span class="k">if</span> <span class="n">AGENT_ID</span><span class="p">:</span>
+    <span class="n">req</span><span class="p">[</span><span class="s2">&quot;agent_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">AGENT_ID</span><span class="p">}</span>
 <span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/v1/stress-tests/</span><span class="si">{</span><span class="n">project_id</span><span class="p">[</span><span class="s1">&#39;uuid&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">req</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 <span class="n">job_id</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;job&quot;</span><span class="p">][</span><span class="s2">&quot;jobId&quot;</span><span class="p">]</span>
@@ -424,7 +433,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="RIME_Bias_and_Fairness_Walkthrough_Lending.html" class="btn btn-neutral float-left" title="RI Bias and Fairness Lending Classification Walkthrough" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../../testing_and_monitoring/preparing_your_models_and_datasets.html" class="btn btn-neutral float-right" title="Preparing your Models and Datasets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../../testing_and_monitoring/preparing_your_models_and_datasets.html" class="btn btn-neutral float-right" title="Preparing Your Models and Datasets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

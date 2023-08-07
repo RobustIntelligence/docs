@@ -56,7 +56,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -90,7 +90,7 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
@@ -116,10 +116,11 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -149,6 +150,9 @@
              
   <section id="RI-Adversarial-NLP-Walkthrough">
 <h1><strong>RI Adversarial NLP Walkthrough</strong><a class="headerlink" href="#RI-Adversarial-NLP-Walkthrough" title="Permalink to this heading"></a></h1>
+<blockquote>
+<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_Adversarial_NLP_Walkthrough.ipynb">RI Adversarial NLP Walkthrough in Google Colab</a>.</p>
+</div></blockquote>
 <p>You are the AI Risk Officer at a Consumer Social Company. The NLP team has been tasked with implementing a text classification model to predict the top-level “sentiment” of posts on the app. These predictions will later be consumed by multiple models throughout the company, such as recommendation, lead prediction, and the core advertisement models. You want to verify your models are sufficiently robust to adversaries seeking to exploit model vulnerabilities and boost content that your user base
 does not actually like.</p>
 <p>In this Notebook Walkthrough, we will review our core product of <strong>AI Stress Testing</strong> of NLP models in an <em>adversarial setting</em>. RIME AI Stress Testing allows you to test any text classification model on any dataset. In this way, you will be able to quantify your model’s vulnerability to attacks and noisy data.</p>
@@ -156,14 +160,11 @@ does not actually like.</p>
 <p>For more information on how to connect with a <a class="reference external" href="https://robust-intelligence-inc-rime.readthedocs-hosted.com/en/latest/for_data_scientists/how_to_guides/integrations/huggingface.html?highlight=huggingface#huggingface-classification-model">Hugging Face Model</a> or <a class="reference external" href="https://robust-intelligence-inc-rime.readthedocs-hosted.com/en/latest/for_data_scientists/reference/configuration/nlp/data_source.html?highlight=huggingface#huggingface-dataset">Hugging Face Dataset</a>, check out the linked
 documentation.</p>
 <p>To begin, please specify your RIME cluster’s URL and personal access token.</p>
-<blockquote>
-<div><p>Latest Colab version of this notebook available <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_Adversarial_NLP_Walkthrough.ipynb">here</a></p>
-</div></blockquote>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>rime-sdk<span class="o">==</span><span class="m">2</span>.0.0rc0<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>rime-sdk<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
 <span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>seaborn
 
 <span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
@@ -180,6 +181,7 @@ documentation.</p>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE API_KEY</span>
 <span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
+<span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
 </pre></div>
 </div>
 </div>
@@ -262,7 +264,8 @@ documentation.</p>
         <span class="s2">&quot;hugging_face&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;model_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;distilbert-base-uncased-finetuned-sst-2-english&quot;</span>
         <span class="p">}</span>
-    <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="k">def</span> <span class="nf">_register_dataset</span><span class="p">(</span><span class="n">split_name</span><span class="p">):</span>
     <span class="n">data_info</span> <span class="o">=</span> <span class="p">{</span>
@@ -279,7 +282,7 @@ documentation.</p>
             <span class="s2">&quot;nrows&quot;</span><span class="p">:</span> <span class="mi">100</span>
         <span class="p">},</span>
     <span class="p">}</span>
-    <span class="k">return</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">split_name</span><span class="si">}</span><span class="s1">_datset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">data_info</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">split_name</span><span class="si">}</span><span class="s1">_datset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">data_info</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 
 
 <span class="n">ref_dataset_id</span> <span class="o">=</span> <span class="n">_register_dataset</span><span class="p">(</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
@@ -312,7 +315,7 @@ documentation.</p>
     <span class="p">}</span>
 <span class="p">}</span>
 <span class="n">stress_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
-    <span class="n">stress_test_config</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">project_id</span>
+    <span class="n">stress_test_config</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>

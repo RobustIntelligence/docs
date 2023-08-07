@@ -17,20 +17,15 @@
     "id": "139eb33d"
    },
    "source": [
+    "\n",
+    "> ▶️ **Try this in Colab!** Run the [RI NLP Multiclass Classification Walkthrough in Google Colab](https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_NLP_Walkthrough.ipynb). \n",
+    "\n",
     "You are a data scientist working to maintain a large research library. The data science team has been tasked with implementing a research paper topic classification model and monitoring how that model performs over time. The performance of this model directly impacts the profits of the company. To ensure the data science team develops the best model and the performance of this model doesn't degrade over time, the VP of Data Science purchases the RIME platform.\n",
     "\n",
     "In this Notebook Walkthrough, we will walkthrough 2 of RIME's core products - **AI Stress Testing** and **AI Continuous Testing**.\n",
     "\n",
     "1. **AI Stress Testing** is used in the model development stage. Using AI Stress Testing you can test the developed model. RIME goes beyond simply optimizing for basic model performance like accuracy and automatically discovers the model's weaknesses.\n",
     "2. **AI Continuous Testing** is used after the model is deployed in production. Using AI Continuous Testing, you can automate the monitoring, discovery and remediation of issues that occur post-deployment."
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "9427463e",
-   "metadata": {},
-   "source": [
-    "> Latest Colab version of this notebook available [here](https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_NLP_Walkthrough.ipynb)"
    ]
   },
   {
@@ -123,7 +118,8 @@
    "outputs": [],
    "source": [
     "API_TOKEN = '' # PASTE API_KEY \n",
-    "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE\n",
+    "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)\n",
+    "AGENT_ID = '' # PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT\n",
     "client = Client(CLUSTER_URL, API_TOKEN)"
    ]
   },
@@ -132,7 +128,6 @@
    "id": "bce4684d",
    "metadata": {
     "id": "bce4684d",
-    "jp-MarkdownHeadingCollapsed": true,
     "tags": []
    },
    "source": [
@@ -253,9 +248,11 @@
     "dt = str(datetime.now())\n",
     "\n",
     "# Note: models and datasets need to have unique names.\n",
-    "model_id = project.register_model(f'model_{dt}', model_config={\n",
-    "    \"hugging_face\": {\"model_uri\": \"Wi/arxiv-distilbert-base-cased\"}\n",
-    "})\n",
+    "model_id = project.register_model(\n",
+    "    f'model_{dt}',\n",
+    "    model_config={\"hugging_face\": {\"model_uri\": \"Wi/arxiv-distilbert-base-cased\"}},\n",
+    "    agent_id=AGENT_ID\n",
+    ")\n",
     "data_params = {\n",
     "    \"label_col\": \"label\",\n",
     "    \"text_features\": [\n",
@@ -264,16 +261,16 @@
     "    \"timestamp_col\": \"timestamp\"\n",
     "}\n",
     "ref_dataset_id = project.register_dataset_from_file(\n",
-    "    f\"ref_dataset_{dt}\", ref_s3_path, data_params=data_params\n",
+    "    f\"ref_dataset_{dt}\", ref_s3_path, data_params=data_params, agent_id=AGENT_ID\n",
     ")\n",
     "eval_dataset_id = project.register_dataset_from_file(\n",
-    "    f\"eval_dataset_{dt}\", eval_s3_path, data_params=data_params\n",
+    "    f\"eval_dataset_{dt}\", eval_s3_path, data_params=data_params, agent_id=AGENT_ID\n",
     ")\n",
     "project.register_predictions_from_file(\n",
-    "    ref_dataset_id, model_id, ref_preds_s3_path\n",
+    "    ref_dataset_id, model_id, ref_preds_s3_path, agent_id=AGENT_ID\n",
     ")\n",
     "project.register_predictions_from_file(\n",
-    "    eval_dataset_id, model_id, eval_preds_s3_path\n",
+    "    eval_dataset_id, model_id, eval_preds_s3_path, agent_id=AGENT_ID\n",
     ")"
    ]
   },
@@ -372,8 +369,9 @@
     "    }\n",
     "}\n",
     "stress_job = client.start_stress_test(\n",
-    "    test_run_config=stress_test_config, \n",
-    "    project_id=project.project_id\n",
+    "    test_run_config=stress_test_config,\n",
+    "    project_id=project.project_id,\n",
+    "    agent_id=AGENT_ID\n",
     ")\n",
     "stress_job.get_status(verbose=True, wait_until_finish=True)"
    ]
@@ -438,7 +436,7 @@
    "id": "9b503ab6",
    "metadata": {},
    "source": [
-    "![stress.png](https://drive.google.com/uc?id=19Zvfn5oHsALb4n8BFbmqG0t2n_UOfKIX)"
+    "![stress.png](https://drive.google.com/uc?id=1TZMaQ9vcHvObNqLy86bdXozI_aFPk874)"
    ]
   },
   {
@@ -684,6 +682,12 @@
    "outputs": [],
    "source": [
     "dt = str(datetime.now())\n",
+    "data_params = {\n",
+    "    \"text_features\": [\n",
+    "        \"text\"\n",
+    "    ],\n",
+    "    \"timestamp_col\": \"timestamp\"\n",
+    "}\n",
     "prod_s3_path = client.upload_file(\n",
     "    Path('arxiv/data/val_1.json.gz'), \n",
     "    upload_path=upload_path\n",
@@ -691,14 +695,15 @@
     "prod_dataset_id = project.register_dataset_from_file(\n",
     "    f\"prod_dataset_{dt}\", \n",
     "    prod_s3_path, \n",
-    "    data_params=data_params\n",
+    "    data_params=data_params,\n",
+    "    agent_id=AGENT_ID\n",
     ")\n",
     "prod_preds_s3_path = client.upload_file(\n",
     "    Path('arxiv/data/preds.val_1.jsonl.gz'), \n",
-    "    upload_path=upload_path\n",
+    "    upload_path=upload_path,\n",
     ")\n",
     "project.register_predictions_from_file(\n",
-    "    prod_dataset_id, model_id, prod_preds_s3_path\n",
+    "    prod_dataset_id, model_id, prod_preds_s3_path, agent_id=AGENT_ID\n",
     ")"
    ]
   },
@@ -743,7 +748,7 @@
    },
    "outputs": [],
    "source": [
-    "ct_job = firewall.start_continuous_test(prod_dataset_id)\n",
+    "ct_job = firewall.start_continuous_test(prod_dataset_id, agent_id=AGENT_ID)\n",
     "ct_job.get_status(verbose=True, wait_until_finish=True)\n",
     "firewall"
    ]
@@ -804,9 +809,9 @@
    },
    "source": [
     "\n",
-    "## **Firewall Overview**\n",
+    "## **Firewall CT Overview**\n",
     "\n",
-    "The Overview page is the mission control for your model’s production deployment health. In it, you can see the status of firewall events, get notified when model performance degrades, and see the underlying causes of failure.  \n"
+    "The Overview page is the mission control for your model’s production deployment health. In it, you can see the status of continuous test runs and their metrics change over time.\n"
    ]
   },
   {
@@ -816,7 +821,7 @@
     "id": "AFuGGg8uNtC2"
    },
    "source": [
-    "![img_5](https://drive.google.com/uc?id=14o9t1Upq_ZJACipy6e7YmhnIYSAT9Ahp)"
+    "![img_5](https://drive.google.com/uc?id=1bd17xeRw81iziUZJqxeFyVP9T-O1LljZ)"
    ]
   },
   {
@@ -847,35 +852,14 @@
   },
   {
    "cell_type": "markdown",
-   "id": "d8099f6a-1bab-4868-9d04-034aa86f7f0e",
-   "metadata": {
-    "id": "ycu422woQkoA",
-    "tags": []
-   },
-   "source": [
-    "### **Analyzing CT Results**\n",
-    "\n",
-    "**Model performance stays constant** - In the below image, we can see that the Average Confidence (model performance) stays relatively constant, increasing slighlty from 71.5% on 06/19 to 74.3% on 06/24."
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "28dfa09b-118b-4993-9e17-c9d5cd9d015a",
-   "metadata": {
-    "id": "NGg3VFtvLqNx"
-   },
-   "source": [
-    "![img_7](https://drive.google.com/uc?id=1hSZ2QWz2DkRBmRDT9Dclc236MQl6_oME)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
    "id": "02564b07-2987-4dc0-b72d-e0334e7cae32",
    "metadata": {
     "id": "719bad4b"
    },
    "source": [
-    "**Abnormality Rate Increases For a Time Period** - In the below image, we can see that the abnormality rate has increased in the middle of the week, from when the model was first deployed. On 06/19 when the model was deployed, the rate was 0.83%. By 06/22, it had increased to 1.81%."
+    "### **Analyzing CT Results**\n",
+    "\n",
+    "**Failing Rows Rate Increases For a Time Period** - In the below image, we can see that the failing rows rate has increased in the middle of the week, from when the model was first deployed."
    ]
   },
   {
@@ -885,7 +869,7 @@
     "id": "jwelJ7gcLqgV"
    },
    "source": [
-    "![img_6](https://drive.google.com/uc?id=1ii21cmVjGVl0RRELki05xKJy08Ehpkw_)"
+    "![img_6](https://drive.google.com/uc?id=1ebqpuNvMwp9eMCJ7PX9FWf_dpj3FAtFn)"
    ]
   }
  ],
@@ -913,7 +897,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.8.15"
+   "version": "3.10.3"
   },
   "vscode": {
    "interpreter": {

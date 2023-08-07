@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SSO configuration &mdash; Robust Intelligence  documentation</title>
+  <title>SSO Configuration &mdash; Robust Intelligence  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
@@ -28,7 +28,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="API access tokens" href="api_tokens.html" />
+    <link rel="next" title="API Access Tokens" href="api_tokens.html" />
     <link rel="prev" title="Native user authentication" href="user_authentication.html" />
 <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -71,7 +71,7 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
@@ -87,12 +87,13 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../security_and_compliance.html">Security and Compliance</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../security_and_compliance.html#authentication">Authentication</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="user_authentication.html">Native user authentication</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">SSO configuration</a><ul>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">SSO Configuration</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#configuring-sso">Configuring SSO</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#identity-provider-setup">Identity Provider Setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#related-topics">Related Topics</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="api_tokens.html">API access tokens</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_tokens.html">API Access Tokens</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../security_and_compliance.html#access-control">Access Control</a></li>
@@ -111,10 +112,11 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -132,7 +134,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../security_and_compliance.html">Security and Compliance</a></li>
-      <li class="breadcrumb-item active">SSO configuration</li>
+      <li class="breadcrumb-item active">SSO Configuration</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -142,26 +144,28 @@
            <div itemprop="articleBody">
              
   <section id="sso-configuration">
-<h1>SSO configuration<a class="headerlink" href="#sso-configuration" title="Permalink to this heading"></a></h1>
+<h1>SSO Configuration<a class="headerlink" href="#sso-configuration" title="Permalink to this heading"></a></h1>
 <p>A user with administrative privileges on Robust Intelligence can configure single sign-on (SSO) to integrate with an external identity provider.
 Robust Intelligence supports the <a class="reference external" href="https://openid.net/connect/">OpenID Connect (OIDC)</a> authentication protocol.</p>
-<p><strong>Note</strong>: Administrative operations cannot be performed while logged in using SSO.</p>
-<p>User accounts configured to use SSO cannot be <a class="reference internal" href="rbac.html"><span class="std std-doc">assigned membership</span></a> in a workspace before logging in with SSO once.</p>
+<p>Note the following limitations on SSO users:</p>
+<ul class="simple">
+<li><p>You cannot perform administrative operations while logged as an SSO
+user. Use a Robust Intelligence administrator account, instead.</p></li>
+<li><p>SSO users must log in at least once before you can
+<a class="reference internal" href="rbac.html"><span class="std std-doc">assign them membership</span></a> in a workspace.</p></li>
+</ul>
 <section id="configuring-sso">
 <h2>Configuring SSO<a class="headerlink" href="#configuring-sso" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
-<li><p>Sign in to a user account that has administrative privileges.
-}    The Workspaces page appears.</p></li>
-<li><p>Click the <em>Settings</em> icon in the lower left.
-}    The Organization Settings page appears.</p></li>
-<li><p>Click <em>SSO Configuration</em>.
-}   The SSO Configuration pane appears.</p></li>
-<li><p>In <em>Client ID</em>, type the client ID for OIDC.</p></li>
-<li><p>In <em>Client Secret</em>, type the client secret for OIDC.</p></li>
+<li><p>Sign in with a user account that has administrative privileges.</p></li>
+<li><p>In the Workspaces page, click the <em>Settings</em> icon in the lower left.</p></li>
+<li><p>In the Organization Settings page, click <em>SSO Configuration</em>.</p></li>
+<li><p>In the SSO Configuration pane, type the <em>Client ID</em> OIDC.</p></li>
+<li><p>Type the <em>Client Secret</em> for OIDC.</p></li>
 <li><p>In <em>Issuer URL</em>, type the URL of the OIDC issuer.</p></li>
 <li><p>Click <em>Save</em>.</p></li>
 </ol>
-<p>After completing these steps, your Robust Intelligence instance should now be configured to use SSO authentication.</p>
+<p>After completing these steps, your Robust Intelligence instance is configured to use SSO authentication.</p>
 </section>
 <section id="identity-provider-setup">
 <h2>Identity Provider Setup<a class="headerlink" href="#identity-provider-setup" title="Permalink to this heading"></a></h2>
@@ -203,6 +207,10 @@ Under <strong>Advanced app client settings</strong>, select the following settin
 <p>For more information, see the <a class="reference external" href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-getting-started.html">AWS Cognito documentation</a>.</p>
 </section>
 </section>
+<section id="related-topics">
+<h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
+<p><a class="reference internal" href="rbac.html"><span class="std std-doc">Role-Based Access Control</span></a></p>
+</section>
 </section>
 
 
@@ -210,7 +218,7 @@ Under <strong>Advanced app client settings</strong>, select the following settin
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="user_authentication.html" class="btn btn-neutral float-left" title="Native user authentication" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="api_tokens.html" class="btn btn-neutral float-right" title="API access tokens" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="api_tokens.html" class="btn btn-neutral float-right" title="API Access Tokens" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

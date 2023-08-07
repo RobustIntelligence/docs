@@ -7,6 +7,12 @@ A v1-beta endpoint may be subject to breaking changes. These are typically new f
 
 A major version endpoint (v1, v2, etc.) will not be subject to breaking changes. Once an endpoint has a version upgrade, i.e. from v1 to v2, both versions will be supported for 6 months to allow time for transitioning to the upgraded endpoint. After these 6 months, the older version will be marked deprecated and removed.
 
+## 2.2
+
+PUT /v1/agents/deactivate/{agentId.uuid} api path removed without deprecation. Use DELETE /v1/agents/{agentId.uuid} directly instead.
+
+/v1/firewall api paths are deprecated. They will not be supported from Robust Intelligence v2.4 onwards.
+
 ## 2.1
 
 The `delta_lake` connection_info has been renamed to `databricks`. This loads a Databricks Delta Lake Table.
@@ -75,3 +81,17 @@ DELETE /v1/registry/model/{projectId.uuid} api path removed without deprecation.
 POST /v1/registry/prediction/{projectId.uuid}/{modelId.uuid}/{datasetId} api path removed without deprecation. Use POST /v1/registry/{project_id.uuid}/model/{model_id.uuid}/dataset/{dataset_id}/prediction instead.
 
 POST /v1/registry/{projectId.uuid}/prediction/{modelId.uuid}/{datasetId} api path removed without deprecation. Use POST /v1/registry/{project_id.uuid}/model/{model_id.uuid}/dataset/{dataset_id}/prediction instead.
+
+<!---
+HIDDEN FIELDS
+
+These are needed when the oasdiff tool produces error messages which do not make sense to the end user. Instead of directly exposing these in the docs, we hide them and write a custom message for the end user.
+
+GET /v1-beta/firewall/{firewallId.uuid}/url api sunset date '' can't be parsed for deprecated API: sunset header not found
+PUT /v1/firewall/{firewall.firewallId.uuid} api sunset date '' can't be parsed for deprecated API: sunset header not found
+
+DELETE /v1/firewall/{firewallId.uuid} api sunset date '' can't be parsed for deprecated API: sunset header not found
+
+GET /v1/firewall/{firewallId.uuid} api sunset date '' can't be parsed for deprecated API: sunset header not found
+POST /v1/firewall api sunset date '' can't be parsed for deprecated API: sunset header not found
+-->

@@ -8,19 +8,14 @@
    "source": [
     "# **RI Bias and Fairness Income Classification Walkthrough**\n",
     "\n",
+    "> ▶️ **Try this in Colab!** Run the [RI Bias and Fairness Income Classification Walkthrough in Google Colab](https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_Bias_and_Fairness_Walkthrough_Income.ipynb). \n",
+    "\n",
     "You are a data scientist at the Census Bureau. The data science team has been tasked with implementing a classification model to predict whether an individual's income is above $50k USD. The primary goal of this project is to test the hypothesis that income inequality is _not_ dependent on protected attributes. One could imagine such models being used downstream for various purposes, such as loan approval or funding allocation. A biased model could yield disadvantageous outcomes for protected groups. For instance, we may find that an individual with a specific race or race/gender combination causes the model to consistently predict a low income, causing a higher rate of loan rejection. \n",
     "    \n",
     "\n",
     "In this Notebook Walkthrough, we will walkthrough our core product of **AI Stress Testing** in a fairness setting. RIME AI Stress Testing allows you to test the developed model and datasets. With this bias and fairness setting, you will be able to verify your AI model for compliance-related issues. \n",
     "\n",
     "\n"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "> Latest Colab version of this notebook available [here](https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_Bias_and_Fairness_Walkthrough_Income.ipynb)"
    ]
   },
   {
@@ -82,7 +77,8 @@
    "outputs": [],
    "source": [
     "API_TOKEN = '' # PASTE API_KEY \n",
-    "CLUSTER_URL = ''# PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)\n",
+    "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)\n",
+    "AGENT_ID = '' # PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT\n",
     "client = Client(CLUSTER_URL, API_TOKEN)"
    ]
   },
@@ -227,22 +223,26 @@
     "dt = str(datetime.now())\n",
     "\n",
     "# Note: models and datasets need to have unique names.\n",
-    "model_id = project.register_model_from_path(f\"model_{dt}\", model_s3_path)\n",
+    "model_id = project.register_model_from_path(f\"model_{dt}\", model_s3_path, agent_id=AGENT_ID)\n",
     "\n",
     "ref_dataset_id = project.register_dataset_from_file(\n",
-    "    f\"ref_dataset_{dt}\", ref_s3_path, data_params={\"label_col\": \"income\",\n",
-    "                                                  \"protected_features\": [\"sex\", \"race\", \"education\", \"age\", \"native.country\"]}\n",
+    "    f\"ref_dataset_{dt}\",\n",
+    "    ref_s3_path,\n",
+    "    data_params={\"label_col\": \"income\", \"protected_features\": [\"sex\", \"race\", \"education\", \"age\", \"native.country\"]},\n",
+    "    agent_id=AGENT_ID\n",
     ")\n",
     "eval_dataset_id = project.register_dataset_from_file(\n",
-    "    f\"eval_dataset_{dt}\", eval_s3_path, data_params={\"label_col\": \"income\",\n",
-    "                                                    \"protected_features\": [\"sex\", \"race\", \"education\", \"age\", \"native.country\"]}\n",
+    "    f\"eval_dataset_{dt}\",\n",
+    "    eval_s3_path,\n",
+    "    data_params={\"label_col\": \"income\", \"protected_features\": [\"sex\", \"race\", \"education\", \"age\", \"native.country\"]},\n",
+    "    agent_id=AGENT_ID\n",
     ")\n",
     "\n",
     "project.register_predictions_from_file(\n",
-    "    ref_dataset_id, model_id, ref_preds_s3_path\n",
+    "    ref_dataset_id, model_id, ref_preds_s3_path, agent_id=AGENT_ID\n",
     ")\n",
     "project.register_predictions_from_file(\n",
-    "    eval_dataset_id, model_id, eval_preds_s3_path\n",
+    "    eval_dataset_id, model_id, eval_preds_s3_path, agent_id=AGENT_ID\n",
     ")"
    ]
   },
@@ -289,8 +289,7 @@
     "    \"model_id\": model_id,\n",
     "    \"categories\": [\"TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS\", \"TEST_CATEGORY_TYPE_MODEL_PERFORMANCE\", \"TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE\"],\n",
     "}\n",
-    "\n",
-    "stress_job = client.start_stress_test(test_run_config=stress_test_config, project_id=project.project_id)\n",
+    "stress_job = client.start_stress_test(test_run_config=stress_test_config, project_id=project.project_id, agent_id=AGENT_ID)\n",
     "stress_job.get_status(verbose=True, wait_until_finish=True)\n"
    ]
   },
@@ -530,7 +529,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.8.15"
+   "version": "3.10.3"
   }
  },
  "nbformat": 4,

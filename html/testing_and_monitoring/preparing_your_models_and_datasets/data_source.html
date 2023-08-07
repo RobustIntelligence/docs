@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -71,16 +71,16 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="preprocessing_your_datasets.html">Preprocessing your Datasets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="defining_model_interface.html">Defining a Model interface</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="preprocessing_your_datasets.html">Preprocessing Your Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defining_model_interface.html">Defining a Model Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="upload_data.html">Uploading to Cloud Storage (Optional)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="registering_model_datasets.html">Registering Models,  Datasets, and Predictions</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Data Configuration</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#a-connection-info">A) Connection Info</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#loads-a-data-file-from-a-cloud-data-store-eg-aws-s3-azure-blob-storage">1) Loads a data file from a Cloud Data store (eg: AWS S3, Azure Blob Storage)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#loads-a-data-file-from-a-custom-data-loader">2) Loads a data file from a custom data loader.</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#loads-a-data-stream-from-a-data-collector">3) Loads a data stream from a data collector.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#loads-a-data-stream-from-a-data-collector-deprecated">3) Loads a data stream from a data collector (deprecated).</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#loads-a-databricks-delta-lake-table">4) Loads a Databricks Delta Lake table.</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#loading-a-hugging-face-dataset">5) Loading a Hugging Face dataset</a></li>
 </ul>
@@ -90,6 +90,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#parameters-for-the-data-params-object">Parameters for the <code class="docutils literal notranslate"><span class="pre">data_params</span></code> object</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#related-topics">Related Topics</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="model_source.html">Model Configuration</a></li>
@@ -120,10 +121,11 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -142,7 +144,7 @@
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../documentation_home/get_started.html">Get Started</a></li>
           <li class="breadcrumb-item"><a href="../../documentation_home/notebooks.html">Tutorial Notebooks</a></li>
-          <li class="breadcrumb-item"><a href="../preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+          <li class="breadcrumb-item"><a href="../preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
       <li class="breadcrumb-item active">Data Configuration</li>
       <li class="wy-breadcrumbs-aside">
       </li>
@@ -233,7 +235,8 @@ two elements, a <code class="docutils literal notranslate"><span class="pre">con
 <span class="w">    </span><span class="nt">&quot;data_loading&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;load_func_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;loader_kwargs_json&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="w">      </span><span class="nt">&quot;loader_kwargs_json&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;data_endpoint_integration_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
@@ -263,11 +266,16 @@ two elements, a <code class="docutils literal notranslate"><span class="pre">con
 <td>string</td>
 <td>A JSON String of keyword arguments to be passed into the load function.</td>
 </tr>
+<tr>
+<td>data_endpoint_integration_id</td>
+<td>Optional string</td>
+<td>The UUID for an integration that has scerets as key/value pairs, that will be provided to the custom loader at runtime.</td>
+</tr>
 </tbody>
 </table>
 </section>
-<section id="loads-a-data-stream-from-a-data-collector">
-<h3>3) Loads a data stream from a data collector.<a class="headerlink" href="#loads-a-data-stream-from-a-data-collector" title="Permalink to this heading"></a></h3>
+<section id="loads-a-data-stream-from-a-data-collector-deprecated">
+<h3>3) Loads a data stream from a data collector (deprecated).<a class="headerlink" href="#loads-a-data-stream-from-a-data-collector-deprecated" title="Permalink to this heading"></a></h3>
 <p>a) Parameter = data_collector</p>
 <p>b) Type = DataCollectorInfo</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -338,6 +346,7 @@ two elements, a <code class="docutils literal notranslate"><span class="pre">con
 </tr>
 </tbody>
 </table>
+<p>See the <a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/databricks_deltalake.html"><span class="std std-doc">Databricks Delta Lake example</span></a>.</p>
 </section>
 <section id="loading-a-hugging-face-dataset">
 <h3>5) Loading a Hugging Face dataset<a class="headerlink" href="#loading-a-hugging-face-dataset" title="Permalink to this heading"></a></h3>
@@ -607,8 +616,13 @@ simplicity and flexibility.</p>
 <td>Path to a python file that contains a <code>load_image</code> function defining custom logic for loading an image from the file path provided in the dataset.</td>
 </tr>
 </tbody>
-</table></section>
+</table>
 </section>
+</section>
+</section>
+<section id="related-topics">
+<h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
+<p><a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/databricks_deltalake.html"><span class="std std-doc">Databricks Delta Lake</span></a></p>
 </section>
 </section>
 

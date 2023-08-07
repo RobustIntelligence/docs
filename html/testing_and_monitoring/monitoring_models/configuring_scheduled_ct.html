@@ -29,7 +29,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Continuous Testing Feedback and Observability" href="ct_feedback_and_observability.html" />
-    <link rel="prev" title="Scheduling Continuous Testing runs" href="scheduling_ct_runs.html" />
+    <link rel="prev" title="Scheduling Continuous Testing Runs" href="scheduling_ct_runs.html" />
 <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -71,26 +71,28 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="creating_new_continuous_test.html">Creating a new Continuous Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="creating_new_continuous_test.html">Creating a New Continuous Test</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../notebooks/demo_notebooks/RIME_Firewall_Configuring.html">Updating your Continuous Test</a></li>
 <li class="toctree-l2"><a class="reference internal" href="loading_data_for_scheduled_ct.html">Loading Data for Scheduled Continuous Testing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="scheduling_ct_runs.html">Scheduling Continuous Testing runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling_ct_runs.html">Scheduling Continuous Testing Runs</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Configuring your Scheduled Continuous Test</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#templates-for-data-location-types">Templates for Data Location Types</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#data-collector">Data Collector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#data-collector-deprecated">Data Collector (deprecated)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#databricks">Databricks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#custom-loader">Custom Loader</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#templates-for-configuring-data-params">Templates for Configuring Data Params</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#templates-for-configuring-reference-sets">Templates for Configuring Reference Sets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#related-topics">Related Topics</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="ct_feedback_and_observability.html">Continuous Testing Feedback and Observability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitors/monitors.html">Model Monitors</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
@@ -116,10 +118,11 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -174,8 +177,8 @@
 </section>
 <section id="templates-for-data-location-types">
 <h2>Templates for Data Location Types<a class="headerlink" href="#templates-for-data-location-types" title="Permalink to this heading"></a></h2>
-<section id="data-collector">
-<h3>Data Collector<a class="headerlink" href="#data-collector" title="Permalink to this heading"></a></h3>
+<section id="data-collector-deprecated">
+<h3>Data Collector (deprecated)<a class="headerlink" href="#data-collector-deprecated" title="Permalink to this heading"></a></h3>
 <p>Data Collector requires you to specify <strong><code class="docutils literal notranslate"><span class="pre">connection_info.data_collector.data_stream_id</span></code></strong> in <strong><code class="docutils literal notranslate"><span class="pre">data_info</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">pred_info</span></code></strong>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Arguments for activating a CT</span>
 <span class="c1"># Schedule with the Data Collector</span>
@@ -249,13 +252,14 @@ Delta Lake.</p>
 <h3>Custom Loader<a class="headerlink" href="#custom-loader" title="Permalink to this heading"></a></h3>
 <p>Our custom loader integration is designed to integrate with any location. Configuring the
 custom loader requires you to specify <strong><code class="docutils literal notranslate"><span class="pre">data_info.connection_info.custom_location</span></code></strong>
-in <strong><code class="docutils literal notranslate"><span class="pre">data_info</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">pred_info</span></code></strong>. <strong><code class="docutils literal notranslate"><span class="pre">The</span> <span class="pre">custom_location</span></code></strong> field includes the
+in <strong><code class="docutils literal notranslate"><span class="pre">data_info</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">pred_info</span></code></strong>. The <strong><code class="docutils literal notranslate"><span class="pre">custom_location</span></code></strong> field includes the
 path to the loading script and the name of the function that does the loading. You can
-specify additional arguments in <strong><code class="docutils literal notranslate"><span class="pre">loader_kwargs_json</span></code></strong>. For
-locations that require access credentials such as secrets or tokens, specify the value
-of those secrets as environment variables. The load function must accept as
+specify additional arguments in <strong><code class="docutils literal notranslate"><span class="pre">loader_kwargs_json</span></code></strong>. If the custom loader is at a
+location that require access credentials such as secrets or tokens, specify the value
+of those secrets as an integration. The load function must accept as
 options the parameters <code class="docutils literal notranslate"><span class="pre">start_time</span></code>, <code class="docutils literal notranslate"><span class="pre">end_time</span></code>, which are integers that specify a
-timestamp as a number of seconds from the UNIX epoch.</p>
+timestamp as a number of seconds from the UNIX epoch. It may also accept an optional
+parameter <code class="docutils literal notranslate"><span class="pre">integration_dict</span></code>, which would be populated with any key/value pairs specified in the <code class="docutils literal notranslate"><span class="pre">data_endpoint_integration</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
 
 <span class="c1"># Arguments for activating a CT</span>
@@ -267,6 +271,7 @@ timestamp as a number of seconds from the UNIX epoch.</p>
                 <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://bucket/path/to/loader.py&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;load_func_name&quot;</span><span class="p">:</span> <span class="s2">&quot;custom_data_loader_func&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;loader_kwargs_json&quot;</span><span class="p">:</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">some_param</span><span class="se">\&quot;</span><span class="s2">: 5}&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;data_endpoint_integration_id&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;integration_uuid&gt;&quot;</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">},</span>
         <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -282,6 +287,7 @@ timestamp as a number of seconds from the UNIX epoch.</p>
                 <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://bucket/path/to/loader.py&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;load_func_name&quot;</span><span class="p">:</span> <span class="s2">&quot;custom_prediction_loader_func&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;loader_kwargs_json&quot;</span><span class="p">:</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">some_param</span><span class="se">\&quot;</span><span class="s2">: 5}&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;data_endpoint_integration_id&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;integration_uuid&quot;</span><span class="o">&gt;</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">},</span>
         <span class="s2">&quot;pred_params&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -297,9 +303,12 @@ timestamp as a number of seconds from the UNIX epoch.</p>
 <p>For scheduled CT, the loader function must accept as options the parameters <code class="docutils literal notranslate"><span class="pre">start_time</span></code>, <code class="docutils literal notranslate"><span class="pre">end_time</span></code>, which are Python <code class="docutils literal notranslate"><span class="pre">datetime.datetime</span></code> objects.
 These arguments are not required outside of scheduled CT.
 Type hints must be specified for the loader function.
-The return type must be either <code class="docutils literal notranslate"><span class="pre">pd.DataFrame</span></code> or an <code class="docutils literal notranslate"><span class="pre">Iterable[pd.DataFrame]</span></code>.
-The loader function may use integration variables stored in the corresponding <code class="docutils literal notranslate"><span class="pre">data_integration_id</span></code>/<code class="docutils literal notranslate"><span class="pre">pred_integration_id</span></code>, and these are available as environment variables..
-With the example above, the following could be valid contents of <code class="docutils literal notranslate"><span class="pre">&quot;s3://bucket/path/to/loader.py&quot;</span></code>, where this example retrieves the data from a Delta Lake table all the data entries between the given start and end times.</p>
+The return type must be either <code class="docutils literal notranslate"><span class="pre">pd.DataFrame</span></code> or an <code class="docutils literal notranslate"><span class="pre">Iterable[pd.DataFrame]</span></code>.</p>
+<p>The loader file will be fetched using integration variables stored in the corresponding
+<code class="docutils literal notranslate"><span class="pre">data_integration_id</span></code>/<code class="docutils literal notranslate"><span class="pre">pred_integration_id</span></code>. The loader func may use integration key/value
+pairs stored in the corresponding <code class="docutils literal notranslate"><span class="pre">data_endpoint_integration_id</span></code>. These will be made
+available via the <code class="docutils literal notranslate"><span class="pre">integration_dict</span></code> parameter.</p>
+<p>With the example above, the following could be valid contents of <code class="docutils literal notranslate"><span class="pre">&quot;s3://bucket/path/to/loader.py&quot;</span></code>, where this example retrieves the data from a Delta Lake table all the data entries between the given start and end times.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Custom loader file with Delta Lake.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
@@ -309,13 +318,13 @@ With the example above, the following could be valid contents of <code class="do
 
 
 <span class="k">def</span> <span class="nf">custom_data_loader_func</span><span class="p">(</span>
-    <span class="n">start_time</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">end_time</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">some_param</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">start_time</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">end_time</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">some_param</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">integration_dict</span><span class="p">:</span> <span class="nb">dict</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Load the data.&quot;&quot;&quot;</span>
   <span class="n">connection</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-    <span class="n">server_hostname</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DATABRICKS_SERVER_HOSTNAME&quot;</span><span class="p">],</span>
-    <span class="n">http_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DATABRICKS_HTTP_PATH&quot;</span><span class="p">],</span>
-    <span class="n">access_token</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DATABRICKS_ACCESS_TOKEN&quot;</span><span class="p">],</span>
+    <span class="n">server_hostname</span><span class="o">=</span><span class="n">integration_dict</span><span class="p">[</span><span class="s2">&quot;DATABRICKS_SERVER_HOSTNAME&quot;</span><span class="p">],</span>
+    <span class="n">http_path</span><span class="o">=</span><span class="n">integration_dict</span><span class="p">[</span><span class="s2">&quot;DATABRICKS_HTTP_PATH&quot;</span><span class="p">],</span>
+    <span class="n">access_token</span><span class="o">=</span><span class="n">integration_dict</span><span class="p">[</span><span class="s2">&quot;DATABRICKS_ACCESS_TOKEN&quot;</span><span class="p">],</span>
   <span class="p">)</span>
   <span class="n">query</span> <span class="o">=</span> <span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;SELECT * FROM hivemetastore.default.my_table WHERE &quot;</span>
@@ -328,7 +337,7 @@ With the example above, the following could be valid contents of <code class="do
     <span class="k">return</span> <span class="n">results</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>For data sources that require authentication other than Databricks, you may use our (custom integrations)[../../administration/configuring_workspaces/integrations/configuring_integrations.md#custom-integrations] feature to store the arbitrary credentials as environment variables.</p>
+<p>For data sources that require authentication other than Databricks, you may use our <a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/custom_integration.html"><span class="std std-doc">custom integrations</span></a> feature to store the arbitrary credentials as environment variables.</p>
 </section>
 </section>
 <section id="templates-for-configuring-data-params">
@@ -408,13 +417,20 @@ see our <a class="reference internal" href="../preparing_your_models_and_dataset
 </pre></div>
 </div>
 </section>
+<section id="related-topics">
+<h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
+<p><a class="reference internal" href="../../administration/workspace_configuration/integrations/configuring_integrations.html"><span class="std std-doc">Configuring Integrations</span></a><br />
+<a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/custom_integration.html"><span class="std std-doc">Custom Integrations</span></a><br />
+<a class="reference internal" href="../preparing_your_models_and_datasets/data_source.html"><span class="std std-doc">Data Configuration</span></a><br />
+<a class="reference internal" href="scheduling_ct_runs.html"><span class="std std-doc">Scheduling Continuous Testing Runs</span></a></p>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="scheduling_ct_runs.html" class="btn btn-neutral float-left" title="Scheduling Continuous Testing runs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="scheduling_ct_runs.html" class="btn btn-neutral float-left" title="Scheduling Continuous Testing Runs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="ct_feedback_and_observability.html" class="btn btn-neutral float-right" title="Continuous Testing Feedback and Observability" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

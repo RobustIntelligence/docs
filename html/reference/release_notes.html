@@ -28,7 +28,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Python SDK reference" href="python-sdk.html" />
+    <link rel="next" title="Python SDK Reference" href="python-sdk.html" />
     <link rel="prev" title="API Changelog" href="api_changelog.html" />
 <link href="../_static/style.css" rel="stylesheet" type="text/css">
 
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -71,7 +71,7 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
@@ -97,7 +97,12 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">2.1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">2.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cleaner-separation-of-continuous-test-results-from-monitored-event-results">Cleaner separation of continuous test results from monitored event results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#firewall-api-deprecated">Firewall API deprecated</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2.1</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#category-field-deprecated">Category field deprecated</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#python-3-7-no-longer-supported">Python 3.7 no longer supported</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#delta-lake-connection-info-renamed">delta_lake connection_info renamed</a></li>
@@ -107,12 +112,14 @@
 <li class="toctree-l3"><a class="reference internal" href="#global-exclude-columns-parameter-has-moved">global_exclude_columns parameter has moved</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#related-topics">Related Topics</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -145,7 +152,28 @@
 all Robust Intelligence components to take advantage of the changes
 listed here.</p>
 <section id="id1">
-<h2>2.1<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<h2>2.2<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<section id="cleaner-separation-of-continuous-test-results-from-monitored-event-results">
+<h3>Cleaner separation of continuous test results from monitored event results<a class="headerlink" href="#cleaner-separation-of-continuous-test-results-from-monitored-event-results" title="Permalink to this heading"></a></h3>
+<p>Version 2.2 simplifies the way Robust Intelligence shows Continuous
+Test results. Continuous Tests are tests that run on a regular
+schedule to track model risk and compliance. These now appear in the
+<a class="reference internal" href="../testing_and_monitoring/monitoring_models/ct_feedback_and_observability.html"><span class="std std-doc">Continuous Testing</span></a>
+sections of the UI and API. In contrast, we now handle scheduled model
+performance tests and scheduled custom tests as Monitors. These
+results now appear in the
+<a class="reference internal" href="../testing_and_monitoring/monitoring_models/monitors/monitors.html"><span class="std std-doc">Monitors</span></a>
+section of the UI.</p>
+<p>Model performance results are no longer used in calculating the
+risk severity measures that appear in Continuous Test results.</p>
+</section>
+<section id="firewall-api-deprecated">
+<h3>Firewall API deprecated<a class="headerlink" href="#firewall-api-deprecated" title="Permalink to this heading"></a></h3>
+<p>The v1/firewall API and the associated python SDK methods have been deprecated. The endpoints and SDK methods will not be supported from Robust Intelligence v2.4 onwards.</p>
+</section>
+</section>
+<section id="id2">
+<h2>2.1<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
 <section id="category-field-deprecated">
 <h3>Category field deprecated<a class="headerlink" href="#category-field-deprecated" title="Permalink to this heading"></a></h3>
 <p>The string <code class="docutils literal notranslate"><span class="pre">category</span></code> field is deprecated in favor of the <code class="docutils literal notranslate"><span class="pre">test_category</span></code> enum field. The string <code class="docutils literal notranslate"><span class="pre">category</span></code> field will be removed in v2.3.
@@ -272,6 +300,13 @@ supported. Projects based on Python 3.7 should be migrated to Python
 </div>
 </section>
 </section>
+<section id="related-topics">
+<h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
+<p><a class="reference internal" href="api_changelog.html"><span class="std std-doc">API Changelog</span></a><br />
+<a class="reference internal" href="../testing_and_monitoring/monitoring_models/ct_feedback_and_observability.html"><span class="std std-doc">Continuous Testing Feedback and Observability</span></a><br />
+<a class="reference internal" href="../testing_and_monitoring/monitoring_models/monitors/monitors.html"><span class="std std-doc">Model Monitors</span></a><br />
+<a class="reference internal" href="../deployment/upgrade.html"><span class="std std-doc">Upgrade</span></a></p>
+</section>
 </section>
 
 
@@ -279,7 +314,7 @@ supported. Projects based on Python 3.7 should be migrated to Python
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="api_changelog.html" class="btn btn-neutral float-left" title="API Changelog" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="python-sdk.html" class="btn btn-neutral float-right" title="Python SDK reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="python-sdk.html" class="btn btn-neutral float-right" title="Python SDK Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
