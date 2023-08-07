@@ -56,7 +56,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -91,7 +91,7 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
@@ -117,10 +117,11 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -150,14 +151,14 @@
              
   <section id="RI-Movie-Ratings-Ranking-Data-Walkthrough-🎥">
 <h1><strong>RI Movie Ratings Ranking Data Walkthrough</strong> 🎥<a class="headerlink" href="#RI-Movie-Ratings-Ranking-Data-Walkthrough-🎥" title="Permalink to this heading"></a></h1>
+<blockquote>
+<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_Ranking_Walkthrough.ipynb">RI Movie Ratings Ranking Data Walkthrough in Google Colab</a>.</p>
+</div></blockquote>
 <p>In this walkthrough, you are a data scientist tasked with training a recommendation system to predict whether or not a given user will upvote a movie. From experience, the team has found that the upstream data pipelines can be brittle, and want to use RIME to:</p>
 <ol class="arabic simple">
 <li><p>Proactively test how vulnerable the model is to data failures during stress testing.</p></li>
 <li><p>To continuously monitor and track broken inputs in production.</p></li>
 </ol>
-<blockquote>
-<div><p>Latest Colab version of this notebook available <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_Ranking_Walkthrough.ipynb">here</a></p>
-</div></blockquote>
 <section id="Install-Dependencies,-Import-Libraries-and-Download-Data">
 <h2><strong>Install Dependencies, Import Libraries and Download Data</strong><a class="headerlink" href="#Install-Dependencies,-Import-Libraries-and-Download-Data" title="Permalink to this heading"></a></h2>
 <p>Run the cell below to install libraries to receive data, install our SDK, and load analysis libraries.</p>
@@ -195,7 +196,8 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE API_KEY</span>
-<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED BACKEND ENDPOINT</span>
+<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
+<span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">API_TOKEN</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -272,7 +274,7 @@
 <span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
 
 <span class="c1"># Note: models and datasets need to have unique names.</span>
-<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">model_s3_path</span><span class="p">)</span>
+<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">model_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 
 <span class="n">data_params</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;rank_label&quot;</span><span class="p">,</span>
@@ -281,17 +283,17 @@
     <span class="p">}</span>
 <span class="p">}</span>
 <span class="n">ref_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;ref_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ref_s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="n">data_params</span>
+    <span class="sa">f</span><span class="s2">&quot;ref_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ref_s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="n">data_params</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">eval_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;eval_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">eval_s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="n">data_params</span>
+    <span class="sa">f</span><span class="s2">&quot;eval_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">eval_s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="n">data_params</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">pred_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="s2">&quot;pred&quot;</span><span class="p">}</span>
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
-    <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">ref_preds_s3_path</span><span class="p">,</span> <span class="n">pred_params</span><span class="o">=</span><span class="n">pred_params</span>
+    <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">ref_preds_s3_path</span><span class="p">,</span> <span class="n">pred_params</span><span class="o">=</span><span class="n">pred_params</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
-    <span class="n">eval_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">eval_preds_s3_path</span><span class="p">,</span> <span class="n">pred_params</span><span class="o">=</span><span class="n">pred_params</span>
+    <span class="n">eval_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">eval_preds_s3_path</span><span class="p">,</span> <span class="n">pred_params</span><span class="o">=</span><span class="n">pred_params</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -313,8 +315,8 @@
     <span class="p">},</span>
     <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span>
 <span class="p">}</span>
-<span class="n">stress_job</span> <span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
-    <span class="n">stress_test_config</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">project_id</span>
+<span class="n">stress_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
+    <span class="n">stress_test_config</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
@@ -338,7 +340,7 @@
 <section id="Analyzing-the-Results">
 <h3><strong>Analyzing the Results</strong><a class="headerlink" href="#Analyzing-the-Results" title="Permalink to this heading"></a></h3>
 <p>Below you can see a snapshot of the results.</p>
-<img alt="img_2" src="https://drive.google.com/uc?id=1DumIfeBuheUPYO4TnZ1CH9gAUAQCnfjH" />
+<img alt="img_2" src="https://drive.google.com/uc?id=1oaJjWVN18Yu6KqiJ9XGFq4RVcLSE_bLk" />
 <p>Here are the results of the Subset Performance tests. These tests can be thought as more detailed performance tests that identify subsets of underperformance. These tests help ensure that the model works equally well across different groups.</p>
 <img alt="img_3" src="https://drive.google.com/uc?id=1ATu9N3jjKm26nKUwehjrCG1yepzIOz9c" />
 <p>Below we are exploring the “Subset Mean Reciprocal Rank (MRR)” test cases for the feature “Votes”. We can see that even though the model has an overall MRR of 0.91, it performs poorly on certain subsets with low values of the “Votes” feature.</p>
@@ -370,22 +372,24 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
 <span class="n">prod_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
     <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;ranking/data/test.csv&#39;</span><span class="p">),</span>
-    <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+    <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">prod_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;prod_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
     <span class="n">prod_s3_path</span><span class="p">,</span>
-    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">data_params</span><span class="p">}</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">data_params</span><span class="p">},</span>
+    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">prod_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
     <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;ranking/data/test_preds.csv&#39;</span><span class="p">),</span>
-    <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+    <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
     <span class="n">prod_dataset_id</span><span class="p">,</span>
     <span class="n">model_id</span><span class="p">,</span>
     <span class="n">prod_preds_s3_path</span><span class="p">,</span>
-    <span class="n">pred_params</span><span class="o">=</span><span class="n">pred_params</span>
+    <span class="n">pred_params</span><span class="o">=</span><span class="n">pred_params</span><span class="p">,</span>
+    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -395,7 +399,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">prod_dataset_id</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">firewall</span>
 </pre></div>
@@ -418,11 +422,6 @@
 </div>
 </div>
 </section>
-<section id="Firewall-Overview">
-<h2><strong>Firewall Overview</strong><a class="headerlink" href="#Firewall-Overview" title="Permalink to this heading"></a></h2>
-<p>The Overview page is the mission control for your model’s production deployment health. In it, you can see the status of firewall events, get notified when model performance degrades, and see the underlying causes of failure.</p>
-<img alt="img_6" src="https://drive.google.com/uc?id=1PrLb8GuWx9MI0nc_3osPnMPmPppJrK2S" />
-</section>
 <section id="Firewall-CT-Results">
 <h2><strong>Firewall CT Results</strong><a class="headerlink" href="#Firewall-CT-Results" title="Permalink to this heading"></a></h2>
 <p>The AI Firewall’s Continuous Tests operate at the batch level and provide a mechanism to monitor the health of ML deployments in production. They allow the user to understand when errors begin to occur and surface the underlying drivers of such errors.</p>
@@ -437,10 +436,8 @@
 </div>
 <section id="Analyzing-CT-Results">
 <h3><strong>Analyzing CT Results</strong><a class="headerlink" href="#Analyzing-CT-Results" title="Permalink to this heading"></a></h3>
-<p><strong>Abnormality Rate stays steady (and low) over time</strong> - In the below image, we can see that the Abnormality Rate remains fairly low (&lt;15%) over time, and does not trend upward significantly.</p>
-<img alt="img_5" src="https://drive.google.com/uc?id=13e9FhiwM_FhBapOlWwIP9BXtCgJ0B1yS" />
-<p><strong>Average Rank decreases over time</strong> In the below image, we can see that the Average Rank has decreased over time from when the model was first deployed. On 06/07 when the model was deployed, Average Rank was was 2.2. By 06/13, Average Rank had dropped to 0.0.</p>
-<img alt="img_7" src="https://drive.google.com/uc?id=1UPkCDKggH3qYxwVTaEz2pFr-HlyZUgHo" />
+<p><strong>Failing Rows Rate stays steady (and low) over time</strong> - In the below image, we can see that the Failing Rows Rate remains fairly low (&lt;15%) over time, and does not trend upward significantly.</p>
+<img alt="img_5" src="https://drive.google.com/uc?id=15Q5bmKWTmoG9tE0TovW0AM9t2j7kARQS" />
 </section>
 </section>
 <section id="Summary:">

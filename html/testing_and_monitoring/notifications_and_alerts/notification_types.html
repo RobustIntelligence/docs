@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -71,16 +71,17 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../querying_results.html">Querying Test Run Results</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../notifications_and_alerts.html">Notifications and Alerts</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Notification Types</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#monitoring-notifications">Monitoring Notifications</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#job-action-notifications">Job Action Notifications</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#daily-digest-notifications">Daily Digest Notifications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#events-monitoring-notifications">Events (Monitoring) Notifications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#related-topics">Related Topics</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="configuring_notifications.html">Configuring Notifications</a></li>
@@ -106,10 +107,11 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -140,14 +142,33 @@
 <h1>Notification Types<a class="headerlink" href="#notification-types" title="Permalink to this heading"></a></h1>
 <p>All the following types of notifications are configured at the Project level via Project Settings.
 You are not limited to one notification type: any subset of the following types can be selected.</p>
-<section id="monitoring-notifications">
-<h2>Monitoring Notifications<a class="headerlink" href="#monitoring-notifications" title="Permalink to this heading"></a></h2>
+<section id="job-action-notifications">
+<h2>Job Action Notifications<a class="headerlink" href="#job-action-notifications" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>Triggered during key status changes in the life cycle of a testing job, such as completion or failure.</p></li>
+<li><p>Useful for long-running test runs, Stress Tests or Continuous Tests, with large datasets / complex models</p></li>
+</ul>
+</section>
+<section id="daily-digest-notifications">
+<h2>Daily Digest Notifications<a class="headerlink" href="#daily-digest-notifications" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>Include a summary of all Stress Test runs for the day.</p></li>
+<li><p>Will NOT be sent if there are no Stress Tests for the day.</p></li>
+<li><p>Sent out every day at 8am in the timezone configured
+for the Organization (initialized to UTC).</p></li>
+</ul>
+</section>
+<section id="events-monitoring-notifications">
+<h2>Events (Monitoring) Notifications<a class="headerlink" href="#events-monitoring-notifications" title="Permalink to this heading"></a></h2>
+<blockquote>
+<div><p>Note: please check with your admin if the Monitoring feature is turned on for your organization</p>
+</div></blockquote>
 <ul class="simple">
 <li><p>Preferred means of tracking model health over time.</p></li>
 <li><p>Triggered when a Continuous Testing job completes and has detected Events for
 the set of Monitors with enabled notifications.</p>
 <ul>
-<li><p>A Monitor tracks model degradations over time; Events are created when the Monitor
+<li><p>A Monitor tracks model degradations over time; events are created when the Monitor
 detects a serious problem. See the <a class="reference internal" href="../monitoring_models/ct_feedback_and_observability.html"><span class="std std-doc">reference</span></a> for
 more information about Monitors and Events.</p></li>
 <li><p>By default, only an important subset of the Default Monitors have notifications enabled
@@ -162,21 +183,9 @@ to avoid spamming you.</p></li>
 </li>
 </ul>
 </section>
-<section id="job-action-notifications">
-<h2>Job Action Notifications<a class="headerlink" href="#job-action-notifications" title="Permalink to this heading"></a></h2>
-<ul class="simple">
-<li><p>Triggered during key status changes in the life cycle of a testing job, such as completion or failure.</p></li>
-<li><p>Useful for long-running jobs with large datasets / complex models.</p></li>
-</ul>
-</section>
-<section id="daily-digest-notifications">
-<h2>Daily Digest Notifications<a class="headerlink" href="#daily-digest-notifications" title="Permalink to this heading"></a></h2>
-<ul class="simple">
-<li><p>Include a summary of all Stress Test runs for the day.</p></li>
-<li><p>Will NOT be sent if there are no Stress Tests for the day.</p></li>
-<li><p>Sent out every day at 8am in the timezone configured
-for the Organization (initialized to UTC).</p></li>
-</ul>
+<section id="related-topics">
+<h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
+<p><a class="reference internal" href="../monitoring_models/ct_feedback_and_observability.html"><span class="std std-doc">Continuous Testing Feedback and Observability</span></a></p>
 </section>
 </section>
 

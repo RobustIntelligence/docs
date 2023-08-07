@@ -56,7 +56,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -90,7 +90,7 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
@@ -116,10 +116,11 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -149,12 +150,12 @@
              
   <section id="RI-Bias-and-Fairness-Income-Classification-Walkthrough">
 <h1><strong>RI Bias and Fairness Income Classification Walkthrough</strong><a class="headerlink" href="#RI-Bias-and-Fairness-Income-Classification-Walkthrough" title="Permalink to this heading"></a></h1>
+<blockquote>
+<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_Bias_and_Fairness_Walkthrough_Income.ipynb">RI Bias and Fairness Income Classification Walkthrough in Google Colab</a>.</p>
+</div></blockquote>
 <p>You are a data scientist at the Census Bureau. The data science team has been tasked with implementing a classification model to predict whether an individual’s income is above $50k USD. The primary goal of this project is to test the hypothesis that income inequality is <em>not</em> dependent on protected attributes. One could imagine such models being used downstream for various purposes, such as loan approval or funding allocation. A biased model could yield disadvantageous outcomes for protected
 groups. For instance, we may find that an individual with a specific race or race/gender combination causes the model to consistently predict a low income, causing a higher rate of loan rejection.</p>
 <p>In this Notebook Walkthrough, we will walkthrough our core product of <strong>AI Stress Testing</strong> in a fairness setting. RIME AI Stress Testing allows you to test the developed model and datasets. With this bias and fairness setting, you will be able to verify your AI model for compliance-related issues.</p>
-<blockquote>
-<div><p>Latest Colab version of this notebook available <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_Bias_and_Fairness_Walkthrough_Income.ipynb">here</a></p>
-</div></blockquote>
 <section id="Install-Dependencies,-Import-Libraries-and-Download-Data">
 <h2><strong>Install Dependencies, Import Libraries and Download Data</strong><a class="headerlink" href="#Install-Dependencies,-Import-Libraries-and-Download-Data" title="Permalink to this heading"></a></h2>
 <p>Run the cell below to install libraries to receive data, install our SDK, and load analysis libraries.</p>
@@ -190,7 +191,8 @@ groups. For instance, we may find that an individual with a specific race or rac
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE API_KEY</span>
-<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
+<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
+<span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">API_TOKEN</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -281,22 +283,26 @@ groups. For instance, we may find that an individual with a specific race or rac
 <span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
 
 <span class="c1"># Note: models and datasets need to have unique names.</span>
-<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">model_s3_path</span><span class="p">)</span>
+<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">model_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 
 <span class="n">ref_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;ref_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ref_s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;income&quot;</span><span class="p">,</span>
-                                                  <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;education&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;native.country&quot;</span><span class="p">]}</span>
+    <span class="sa">f</span><span class="s2">&quot;ref_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">ref_s3_path</span><span class="p">,</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;income&quot;</span><span class="p">,</span> <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;education&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;native.country&quot;</span><span class="p">]},</span>
+    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">eval_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;eval_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">eval_s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;income&quot;</span><span class="p">,</span>
-                                                    <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;education&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;native.country&quot;</span><span class="p">]}</span>
+    <span class="sa">f</span><span class="s2">&quot;eval_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">eval_s3_path</span><span class="p">,</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;income&quot;</span><span class="p">,</span> <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;education&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;native.country&quot;</span><span class="p">]},</span>
+    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
-    <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">ref_preds_s3_path</span>
+    <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">ref_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
-    <span class="n">eval_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">eval_preds_s3_path</span>
+    <span class="n">eval_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">eval_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -328,8 +334,7 @@ as such is necessary:</p>
     <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span><span class="p">,</span>
     <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS&quot;</span><span class="p">,</span> <span class="s2">&quot;TEST_CATEGORY_TYPE_MODEL_PERFORMANCE&quot;</span><span class="p">,</span> <span class="s2">&quot;TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE&quot;</span><span class="p">],</span>
 <span class="p">}</span>
-
-<span class="n">stress_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="n">test_run_config</span><span class="o">=</span><span class="n">stress_test_config</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">)</span>
+<span class="n">stress_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="n">test_run_config</span><span class="o">=</span><span class="n">stress_test_config</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <br/></pre></div>
 </div>

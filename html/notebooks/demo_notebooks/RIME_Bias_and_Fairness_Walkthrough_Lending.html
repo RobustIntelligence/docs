@@ -56,7 +56,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -90,7 +90,7 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
@@ -116,10 +116,11 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -149,12 +150,12 @@
              
   <section id="RI-Bias-and-Fairness-Lending-Classification-Walkthrough">
 <h1><strong>RI Bias and Fairness Lending Classification Walkthrough</strong><a class="headerlink" href="#RI-Bias-and-Fairness-Lending-Classification-Walkthrough" title="Permalink to this heading"></a></h1>
+<blockquote>
+<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_Bias_and_Fairness_Walkthrough_Lending.ipynb">RI Bias and Fairness Lending Classification Walkthrough in Google Colab</a>.</p>
+</div></blockquote>
 <p>You are a data scientist at a Bank. The data science team has been tasked with implementing a binary classification model to predict whether an individual will default on a loan. The primary goal of this project is to test if the model is compliant with financial regulations. Part of this will be testing whether the model is biased against certain protected features. One could imagine such models being used downstream for various purposes, such as loan approval or funding allocation. A biased
 model could yield disadvantageous outcomes for protected groups. For instance, we may find that an individual with a specific race or race/gender combination causes the model to consistently predict a higher probability of them defaulting, causing a higher rate of loan rejection.</p>
 <p>In this Notebook Walkthrough, we will walkthrough our core products of <strong>AI Stress Testing</strong> and <strong>AI Firewall</strong> in a <em>Bias and Fairness</em> setting. RIME AI Stress Testing allows you to test the developed model and datasets. With this compliance-focused setting, you will be able to verify your AI model for bias and fairness issues. RIME AI Firewall allows you to continue monitoring your deployed model for bias.</p>
-<blockquote>
-<div><p>Latest Colab version of this notebook available <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_Bias_and_Fairness_Walkthrough_Lending.ipynb">here</a></p>
-</div></blockquote>
 <section id="Install-Dependencies,-Import-Libraries-and-Download-Data">
 <h2><strong>Install Dependencies, Import Libraries and Download Data</strong><a class="headerlink" href="#Install-Dependencies,-Import-Libraries-and-Download-Data" title="Permalink to this heading"></a></h2>
 <p>Run the cell below to install libraries to recieve data, install our SDK, and load analysis libraries.</p>
@@ -197,7 +198,15 @@ model could yield disadvantageous outcomes for protected groups. For instance, w
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE API_KEY</span>
 <span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">API_TOKEN</span><span class="p">)</span>
+<span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">API_TOKEN</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -284,15 +293,23 @@ model could yield disadvantageous outcomes for protected groups. For instance, w
 <span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
 
 <span class="c1"># Note: models and datasets need to have unique names.</span>
-<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">model_s3_path</span><span class="p">)</span>
+<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">model_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 
-<span class="n">ref_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ref_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ref_s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;loan_status&quot;</span><span class="p">,</span>
-                                                                                                   <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;addr_state&quot;</span><span class="p">]})</span>
-<span class="n">eval_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;eval_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">eval_s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;loan_status&quot;</span><span class="p">,</span>
-                                                                                                    <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;addr_state&quot;</span><span class="p">]})</span>
-<span class="n">ref_pred_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span><span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">ref_preds_s3_path</span><span class="p">)</span>
+<span class="n">ref_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ref_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                                                    <span class="n">ref_s3_path</span><span class="p">,</span>
+                                                    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;loan_status&quot;</span><span class="p">,</span>
+                                                                 <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;addr_state&quot;</span><span class="p">]</span>
+                                                                <span class="p">},</span>
+                                                   <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
+<span class="n">eval_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;eval_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                                                     <span class="n">eval_s3_path</span><span class="p">,</span>
+                                                     <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;loan_status&quot;</span><span class="p">,</span>
+                                                                  <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;addr_state&quot;</span><span class="p">]</span>
+                                                                 <span class="p">},</span>
+                                                    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
+<span class="n">ref_pred_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span><span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">ref_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 
-<span class="n">eval_pred_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span><span class="n">eval_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">eval_preds_s3_path</span><span class="p">)</span>
+<span class="n">eval_pred_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span><span class="n">eval_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">eval_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <br/></pre></div>
 </div>
 </div>
@@ -323,7 +340,7 @@ as such is necessary:</p>
     <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Loan Default Prediction - Lending Club&quot;</span><span class="p">,</span>
     <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS&quot;</span><span class="p">]</span>
 <span class="p">}</span>
-<span class="n">stress_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="n">test_run_config</span><span class="o">=</span><span class="n">stress_test_config</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">)</span>
+<span class="n">stress_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="n">test_run_config</span><span class="o">=</span><span class="n">stress_test_config</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -333,7 +350,7 @@ as such is necessary:</p>
 <section id="Bias-and-Fairness-Stress-Test-Results">
 <h2><strong>Bias and Fairness Stress Test Results</strong><a class="headerlink" href="#Bias-and-Fairness-Stress-Test-Results" title="Permalink to this heading"></a></h2>
 <p>The stress tests are organized around a central “Bias and Fairness” tab. You can view the detailed results in the UI by running the above cell and redirecting to the generated link. This page shows granular results for a given AI Stress Test run.</p>
-<img alt="img_3" src="https://drive.google.com/uc?id=1nhOnwVnJD9plM-WcJJoiwywgz1IRC0Ps" />
+<img alt="img_3" src="https://drive.google.com/uc?id=1-pg7NhGUDDGzLx7DGogOrj1xWqOhw6s5" />
 <p>Similar to running RIME Stress Tests in the default setting, we surface an overall distribution of test severities, model metrics, as well as key insights to the right. This test suite comprises a selection of Bias and Fairness tests over any protected features, Attack tests over all features, and Abnormal Inputs tests over all features. These tests align with financial regulatory standards. Lets take a closer look at the Demographic Parity test:</p>
 <img alt="img_4" src="https://drive.google.com/uc?id=1sBlvaUHu_Gwut_hmFN0tR_WJmcbpfTLZ" />
 <p>This test is commonly known as the demographic parity or statistical parity test in fairness literature. This test checks whether the model performs equally well across a given subset of rows as it does across the whole dataset. The key detail displays the performance difference between the lowest performing subset and the overall population. The test first splits the dataset into various subsets depending on the quantiles of a given feature column. If the feature is categorical, the data is
@@ -416,9 +433,9 @@ split based on the feature values. We then test whether the Positive Prediction 
 <span class="n">prod_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;prod_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
     <span class="n">prod_s3_path</span><span class="p">,</span>
-    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;loan_status&quot;</span><span class="p">,</span>
                  <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;addr_state&quot;</span><span class="p">],</span>
-                 <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">}</span>
+                 <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">},</span>
 <span class="p">)</span>
 <span class="n">prod_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
     <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;lending/data/incremental_preds.csv&#39;</span><span class="p">),</span>
@@ -430,12 +447,21 @@ split based on the feature values. We then test whether the Positive Prediction 
 </pre></div>
 </div>
 </div>
+<p>To run the Bias and Fairness category in Continuous Testing, you will want to specify the Bias and Fairness Category as a continuous test category. This category does not run by default so specifying as such is necessary:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">project</span><span class="o">.</span><span class="n">update_continuous_test_categories</span><span class="p">([</span><span class="s2">&quot;TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
 <p><strong>Run Continuous Testing over Batch of Data</strong></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">prod_dataset_id</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">firewall</span>
 </pre></div>
@@ -443,11 +469,11 @@ split based on the feature values. We then test whether the Positive Prediction 
 </div>
 <p><strong>Wait for a couple minutes and your results will appear in the UI.</strong></p>
 </section>
-<section id="Firewall-Overview">
-<h2><strong>Firewall Overview</strong><a class="headerlink" href="#Firewall-Overview" title="Permalink to this heading"></a></h2>
-<p>The Overview page is the mission control for your model’s production deployment health. In it, you can see the status of firewall events, get notified when model performance degrades, and see the underlying causes of failure.</p>
-<img alt="img_5" src="https://drive.google.com/uc?id=1kk6OmDFwiBlVXMDynOHzpMM781qMA8jQ" />
-<!-- ![img_5](https://www.dropbox.com/s/ehvidl8y283iwxd/img_5_fw_overview.png?dl=1) --></section>
+<section id="Firewall-CT-Overview">
+<h2><strong>Firewall CT Overview</strong><a class="headerlink" href="#Firewall-CT-Overview" title="Permalink to this heading"></a></h2>
+<p>The page is the mission control for your model’s production deployment health. In it, you can see the status of continuous test runs, and see their metrics changes over time.</p>
+<img alt="img_5" src="https://drive.google.com/uc?id=1uT3q4pakoQSPhRf9HfxS5tyL16c3dDpx" />
+</section>
 <section id="Firewall-CT-Results">
 <h2><strong>Firewall CT Results</strong><a class="headerlink" href="#Firewall-CT-Results" title="Permalink to this heading"></a></h2>
 <p>The AI Firewall’s Continuous Tests operate at the batch level and provide a mechanism to monitor the health of ML deployments in production. They allow the user to understand when errors begin to occur and surface the underlying drivers of such errors.</p>
@@ -460,12 +486,6 @@ split based on the feature values. We then test whether the Positive Prediction 
 </pre></div>
 </div>
 </div>
-<section id="Analyzing-CT-Results">
-<h3><strong>Analyzing CT Results</strong><a class="headerlink" href="#Analyzing-CT-Results" title="Permalink to this heading"></a></h3>
-<p><strong>Average performance dips over time</strong> - In the below image, we can see that the average confidence dips slightly in the bin, hitting the first threshold of 0.75.</p>
-<!-- ![img_6](https://www.dropbox.com/s/kr9zmm14gvntqst/img_6_fw_ct.png?dl=1) --><img alt="img_6" src="https://drive.google.com/uc?id=1MQsrKmSvcC1PLb-6MJorU0MnP0m73ctc" />
-<!-- ![img_9](https://www.dropbox.com/s/3e35na786clvmxd/img_9_browser_version_pred.png?dl=1) --><p>Using the AI Firewall can help the data science team continue to monitor the performance of their production model.</p>
-</section>
 </section>
 </section>
 

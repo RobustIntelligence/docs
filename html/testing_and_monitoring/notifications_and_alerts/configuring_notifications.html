@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -71,7 +71,7 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
@@ -83,6 +83,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#how-to-configure-email-notifications">How to Configure Email Notifications</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#how-to-configure-webhooks">How to Configure Webhooks</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#how-to-configure-slack-notifications">How to Configure Slack Notifications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#related-topics">Related Topics</a></li>
 </ul>
 </li>
 </ul>
@@ -107,10 +108,11 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -202,6 +204,7 @@ projects that match the string.</p>
 <span class="c1"># Strings for the type of the notification to sign up for are:</span>
 <span class="c1"># [&quot;Job_Action&quot;, &quot;Monitoring&quot;, &quot;Daily_Digest&quot;]</span>
 <span class="n">project</span><span class="o">.</span><span class="n">add_email</span><span class="p">(</span><span class="s2">&quot;&lt;your_email_here&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;Monitoring&quot;</span><span class="p">)</span>
+<span class="c1">#note: please check with your admin if the Monitoring feature is turned on for your organization first</span>
 </pre></div>
 </div>
 </li>
@@ -228,6 +231,7 @@ projects that match the string.</p>
 <span class="c1"># Strings for the type of the notification to sign up for are:</span>
 <span class="c1"># [&quot;Job_Action&quot;, &quot;Monitoring&quot;, &quot;Daily_Digest&quot;]</span>
 <span class="n">project</span><span class="o">.</span><span class="n">add_webhook</span><span class="p">(</span><span class="s2">&quot;&lt;your_webhook_url_here&quot;</span><span class="p">,</span> <span class="s2">&quot;Job_Action&quot;</span><span class="p">)</span>
+<span class="c1">#note: please check with your admin if the Monitoring feature is turned on for your organization first</span>
 </pre></div>
 </div>
 </li>
@@ -248,7 +252,7 @@ that you do not share that webhook publicly.</p></li>
 <li><p>Incoming webhooks are the preferred way to integrate Slack and Robust Intelligence.</p></li>
 <li><p>Create an Incoming Webhook Slack App using the instructions <a class="reference external" href="https://api.slack.com/messaging/webhooks">here</a>.</p></li>
 <li><p>Use the instructions for configuring webhooks above to add your created webhook to your project of choice.</p></li>
-<li><p>Thresholds can also be modified in the SDK.</p>
+<li><p>If you have the Monitoring feature turned on for your organization, thresholds can also be modified in the SDK.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">get_project</span><span class="p">(</span><span class="s2">&quot;&lt;your_project_id_here&quot;</span><span class="p">)</span>
 <span class="n">firewall</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">get_firewall</span><span class="p">()</span>
 
@@ -261,6 +265,10 @@ that you do not share that webhook publicly.</p></li>
 </div>
 </li>
 </ul>
+</section>
+<section id="related-topics">
+<h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
+<p><a class="reference internal" href="../../administration/organization_administration/configuring_smtp.html"><span class="std std-doc">Configuring SMTP for Alerts</span></a></p>
 </section>
 </section>
 

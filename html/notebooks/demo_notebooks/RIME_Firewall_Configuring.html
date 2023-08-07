@@ -56,7 +56,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -74,15 +74,16 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models/creating_new_continuous_test.html">Creating a new Continuous Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models/creating_new_continuous_test.html">Creating a New Continuous Test</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Updating your Continuous Test</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models/loading_data_for_scheduled_ct.html">Loading Data for Scheduled Continuous Testing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models/scheduling_ct_runs.html">Scheduling Continuous Testing runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models/scheduling_ct_runs.html">Scheduling Continuous Testing Runs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models/configuring_scheduled_ct.html">Configuring your Scheduled Continuous Test</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models/ct_feedback_and_observability.html">Continuous Testing Feedback and Observability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models/monitors/monitors.html">Model Monitors</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
@@ -108,10 +109,11 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -191,6 +193,7 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE API_KEY</span>
 <span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
+<span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
 </pre></div>
 </div>
 </div>
@@ -228,7 +231,7 @@
 
 <span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
 <span class="c1"># Note: models and datasets need to have unique names.</span>
-<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;fraud_model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;fraud_model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -247,10 +250,10 @@
         <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;fraud/data/fraud_</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">_preds.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
     <span class="p">)</span>
     <span class="n">dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">}</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">},</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
     <span class="p">)</span>
     <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
-        <span class="n">dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">preds_s3_path</span>
+        <span class="n">dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">dataset_id</span>
 
@@ -276,8 +279,7 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_data_0_id</span> <span class="o">=</span> <span class="n">upload_and_register_data</span><span class="p">(</span><span class="s2">&quot;incremental_0&quot;</span><span class="p">,</span> <span class="n">timestamp_col</span><span class="o">=</span><span class="s2">&quot;timestamp&quot;</span><span class="p">)</span>
-
-<span class="n">ct_job</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">ct_data_0_id</span><span class="p">)</span>
+<span class="n">ct_job</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">ct_data_0_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -303,7 +305,7 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_data_1_id</span> <span class="o">=</span> <span class="n">upload_and_register_data</span><span class="p">(</span><span class="s2">&quot;incremental_1&quot;</span><span class="p">,</span> <span class="n">timestamp_col</span><span class="o">=</span><span class="s2">&quot;timestamp&quot;</span><span class="p">)</span>
-<span class="n">ct_job</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">ct_data_1_id</span><span class="p">,</span> <span class="n">override_existing_bins</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ct_job</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">ct_data_1_id</span><span class="p">,</span> <span class="n">override_existing_bins</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>

@@ -1,26 +1,25 @@
-# SSO configuration
+# SSO Configuration
 
 A user with administrative privileges on Robust Intelligence can configure single sign-on (SSO) to integrate with an external identity provider.
 Robust Intelligence supports the [OpenID Connect (OIDC)](https://openid.net/connect/) authentication protocol.
 
-**Note**: Administrative operations cannot be performed while logged in using SSO.
-
-User accounts configured to use SSO cannot be [assigned membership](rbac.md) in a workspace before logging in with SSO once.
+Note the following limitations on SSO users:
+- You cannot perform administrative operations while logged as an SSO
+  user. Use a Robust Intelligence administrator account, instead.
+- SSO users must log in at least once before you can
+  [assign them membership](rbac.md) in a workspace.
 
 ## Configuring SSO
 
-1.  Sign in to a user account that has administrative privileges.
-    }    The Workspaces page appears.
-2.  Click the *Settings* icon in the lower left.
-    }    The Organization Settings page appears.
-3.  Click *SSO Configuration*.
-    }   The SSO Configuration pane appears.
-4.  In *Client ID*, type the client ID for OIDC.
-5.  In *Client Secret*, type the client secret for OIDC.
+1.  Sign in with a user account that has administrative privileges.
+2.  In the Workspaces page, click the *Settings* icon in the lower left.
+3.  In the Organization Settings page, click *SSO Configuration*.
+4.  In the SSO Configuration pane, type the *Client ID* OIDC.
+5.  Type the *Client Secret* for OIDC.
 6.  In *Issuer URL*, type the URL of the OIDC issuer.
 7.  Click *Save*.
 
-After completing these steps, your Robust Intelligence instance should now be configured to use SSO authentication.
+After completing these steps, your Robust Intelligence instance is configured to use SSO authentication.
 
 ## Identity Provider Setup
 
@@ -64,3 +63,6 @@ After creating the user pool, retrieve the Client ID and Client secret from the 
 The Issuer URL for Robust Intelligence takes the form `https://cognito-idp.{region}.amazonaws.com/{user-pool-id}` ([reference](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-userpools-server-contract-reference.html)).
 
 For more information, see the [AWS Cognito documentation](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-getting-started.html).
+
+## Related Topics  
+[Role-Based Access Control](rbac.md)  

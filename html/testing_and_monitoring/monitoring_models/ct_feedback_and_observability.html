@@ -28,7 +28,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Configuring your Test Runs" href="../configuring_test_runs.html" />
+    <link rel="next" title="Model Monitors" href="monitors/monitors.html" />
     <link rel="prev" title="Configuring your Scheduled Continuous Test" href="configuring_scheduled_ct.html" />
 <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -71,26 +71,31 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="creating_new_continuous_test.html">Creating a new Continuous Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="creating_new_continuous_test.html">Creating a New Continuous Test</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../notebooks/demo_notebooks/RIME_Firewall_Configuring.html">Updating your Continuous Test</a></li>
 <li class="toctree-l2"><a class="reference internal" href="loading_data_for_scheduled_ct.html">Loading Data for Scheduled Continuous Testing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="scheduling_ct_runs.html">Scheduling Continuous Testing runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling_ct_runs.html">Scheduling Continuous Testing Runs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="configuring_scheduled_ct.html">Configuring your Scheduled Continuous Test</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Continuous Testing Feedback and Observability</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#model-monitors">Model monitors</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#viewing-the-ct-risk-pages">Viewing the CT risk pages</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#monitors-and-risk-categories">Monitors and risk categories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#viewing-the-ct-risk-pages">Viewing the CT risk pages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#continuous-testing-overview-panel">Continuous Testing overview panel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#filter-events-in-the-continuous-testing-overview-panel">Filter events in the Continuous Testing overview panel</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#events">Events</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#event-root-cause-analysis-and-actionability">Event root-cause analysis and actionability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tests">Tests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#abnormal-inputs-test">Abnormal inputs test</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#security-risk">Security risk</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fairness-and-compliance-risk">Fairness and Compliance risk</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model-monitors">Model monitors</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#related-topics">Related Topics</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="monitors/monitors.html">Model Monitors</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
@@ -116,10 +121,11 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -150,10 +156,8 @@
 <h1>Continuous Testing Feedback and Observability<a class="headerlink" href="#continuous-testing-feedback-and-observability" title="Permalink to this heading"></a></h1>
 <p>Once a model is in production, Robust Intelligence can provide detailed information on the model’s
 performance to enable you to identify and correct issues.</p>
-<section id="model-monitors">
-<h2>Model monitors<a class="headerlink" href="#model-monitors" title="Permalink to this heading"></a></h2>
 <p>A model under Continuous Testing displays summary information about model health on the
-Overview page of the project that contains the model. Robust Intelligence monitors machine learning
+overview panel of the project that contains the model. Robust Intelligence monitors machine learning
 model performance across the following three risk categories:</p>
 <ul class="simple">
 <li><p><strong>Operational</strong> tests a model’s overall performance and data stability of over time.</p></li>
@@ -161,18 +165,10 @@ model performance across the following three risk categories:</p>
 <li><p><strong>Fairness</strong> tests a model’s outcome for fair treatment among subsets in the data.</p></li>
 </ul>
 <section id="viewing-the-ct-risk-pages">
-<h3>Viewing the CT risk pages<a class="headerlink" href="#viewing-the-ct-risk-pages" title="Permalink to this heading"></a></h3>
+<h2>Viewing the CT risk pages<a class="headerlink" href="#viewing-the-ct-risk-pages" title="Permalink to this heading"></a></h2>
 <ol class="arabic">
-<li><p>Sign in to a RI Platform instance.</p>
-<blockquote>
-<div><p>The Workspaces page appears.</p>
-</div></blockquote>
-</li>
-<li><p>Click a workspace.</p>
-<blockquote>
-<div><p>The Workspaces summary page appears.</p>
-</div></blockquote>
-</li>
+<li><p>Sign in to the Robust Intelligence UI. The Workspaces page appears.</p></li>
+<li><p>Click a workspace. The Workspaces summary page appears.</p></li>
 <li><p>Select a project.</p>
 <blockquote>
 <div><p>You can filter or sort the list of projects in a workspace with the
@@ -182,161 +178,83 @@ for projects. Type a string in <em>Search Projects…</em> to display only
 projects that match the string.</p>
 </div></blockquote>
 </li>
-<li><p>Select the <strong>Continuous Testing</strong> tab in the left panel.</p>
-<blockquote>
-<div><p>The CT Overview page appears</p>
-</div></blockquote>
-</li>
-<li><p>Click on one of the risk category tabs at the top (<strong>Operational</strong>, <strong>Security</strong>, or <strong>Fairness</strong>).</p>
-<blockquote>
-<div><p>The corresponding CT risk page appears.</p>
-</div></blockquote>
-</li>
+<li><p>Select the <strong>Continuous Testing</strong> tab in the left panel. This shows
+the <strong>Continuous Testing</strong> overview panel for the project you selected.</p></li>
 </ol>
+<section id="continuous-testing-overview-panel">
+<h3>Continuous Testing overview panel<a class="headerlink" href="#continuous-testing-overview-panel" title="Permalink to this heading"></a></h3>
+<p>The <strong>Continuous Testing</strong> overview panel shows, for this project:</p>
+<ul class="simple">
+<li><p>a graph of test results over time; and</p></li>
+<li><p>a list of events list summarizing the results of each test run with respect to
+measures of <strong>Operational</strong>, <strong>Security</strong>, and <strong>Fairness</strong> risk.</p>
+<ul>
+<li><p>Click the <strong>Filter</strong> button at the upper right to help find an event.
+See the next section for help with filters.</p></li>
+<li><p>Click on a row to inspect an event. This displays the inspection
+page for the continuous testing run, including a list of all tests
+that ran. Click on a test to see its measures, <strong>Key Insights</strong>,
+and any features that were flagged in this test run.</p></li>
+</ul>
+</li>
+</ul>
 </section>
-<section id="monitors-and-risk-categories">
-<h3>Monitors and risk categories<a class="headerlink" href="#monitors-and-risk-categories" title="Permalink to this heading"></a></h3>
-<p>Monitors of particular interest can be pinned to the top of the list by clicking the
-pushpin icon at the top left corner of the monitor. Pinned Operational risk monitors
-will also show up in the Continuous Testing Overview page. Use the <strong>Date Range</strong>
-controls to change your view of the monitor chart. Some monitors have feature or
-subset dropdown menus which allow you to view the monitored metric for a specific
-feature or subset(s) of a feature in your dataset.</p>
-<section id="enabling-or-disabling-notifications-for-a-monitor">
-<h4>Enabling or disabling notifications for a monitor<a class="headerlink" href="#enabling-or-disabling-notifications-for-a-monitor" title="Permalink to this heading"></a></h4>
-<p>You can enable or suppress notifications from a specified monitor.</p>
-<ol class="arabic">
-<li><p>Sign in to a RI Platform instance.</p>
-<blockquote>
-<div><p>The Workspaces page appears.</p>
-</div></blockquote>
-</li>
-<li><p>Click a workspace.</p>
-<blockquote>
-<div><p>The Workspaces summary page appears.</p>
-</div></blockquote>
-</li>
-<li><p>Select a project.</p>
-<blockquote>
-<div><p>You can filter or sort the list of projects in a workspace with the
-<em>Sort</em> and <em>Filter</em> controls in the upper right. Click the glyph to the
-right of the <em>Filter</em> control to switch between list and card display
-for projects. Type a string in <em>Search Projects…</em> to display only
-projects that match the string.
-The project overview page appears.</p>
-</div></blockquote>
-</li>
-<li><p>In the top right corner of a monitor, click <strong>Edit Monitor</strong>.</p>
-<blockquote>
-<div><p>The Edit Monitor wizard appears.</p>
-</div></blockquote>
-</li>
-<li><p>Toggle <strong>Add to Project Notifications</strong> and click Save Settings.</p></li>
-</ol>
-<p>Notifications for this monitor are added or removed from the project according to the
-position of the toggle.</p>
-<!-- Notification settings are managed from {TKK xref to notif/alert config} -->
-</section>
-<section id="operational-risk">
-<h4>Operational risk<a class="headerlink" href="#operational-risk" title="Permalink to this heading"></a></h4>
-<p>Tests for operational risk assess a model’s performance and accuracy. These tests are
-divided into tests for performance, drift, and abnormal input.</p>
-<section id="performance-tests">
-<h5>Performance tests<a class="headerlink" href="#performance-tests" title="Permalink to this heading"></a></h5>
+<section id="filter-events-in-the-continuous-testing-overview-panel">
+<h3>Filter events in the Continuous Testing overview panel<a class="headerlink" href="#filter-events-in-the-continuous-testing-overview-panel" title="Permalink to this heading"></a></h3>
+<p>Use the <strong>Filter</strong> button at the upper right to help find an event.
+See the filter criteria explanations, below.</p>
 <table border="1" class="docutils">
 <thead>
 <tr>
-<th>Performance monitor</th>
+<th>Filter</th>
 <th>Description</th>
+<th>Example states</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Accuracy</td>
-<td>Tests whether the model's accuracy changes relative to the reference dataset.</td>
+<td>Bin date</td>
+<td>Show only events generated from data points whose dates fall within the range you specify.</td>
+<td>Last 7 days</td>
 </tr>
 <tr>
-<td>Average Thresholded Confidence (ATC)</td>
-<td>Tests the variance of the ATC between reference and evaluation datasets. ATC estimates the accuracy of unlabeled examples.</td>
+<td>Run date</td>
+<td>Show only events generated from test runs that were completed within the range you specify.</td>
+<td>Last 7 days</td>
 </tr>
 <tr>
-<td>Average Confidence</td>
-<td>Tests the variance of average prediction confidence between the reference and evaluation datasets.</td>
+<td>Model</td>
+<td>Model name</td>
+<td>"My image classification"</td>
 </tr>
 <tr>
-<td>Calibration Comparison</td>
-<td>Tests whether the calibration curve of the evaluation datset has changed relative to the reference datset.</td>
+<td>Status</td>
+<td>Run status of the continuous test run.</td>
+<td>Completed, Failed, In Progress</td>
 </tr>
 <tr>
-<td>Precision</td>
-<td>Tests whether the model's precision changes relative to the reference dataset.</td>
+<td>Operational</td>
+<td>Operational risk result of the test run.</td>
+<td>Alert, Warning, Pass</td>
 </tr>
 <tr>
-<td>Recall</td>
-<td>Tests whether the model's recall changes relative to the reference dataset.</td>
+<td>Fairness</td>
+<td>Fairness risk result of the test run.</td>
+<td>Alert, Warning, Pass</td>
 </tr>
 <tr>
-<td>F1</td>
-<td>Tests whether the model's F1 score changes relative to the reference dataset.</td>
-</tr>
-<tr>
-<td>False Positive Rate</td>
-<td>Tests whether the model's false positive rate changes relative to the reference dataset.</td>
-</tr>
-<tr>
-<td>False Negative Rate</td>
-<td>Tests whether the model's false negative rate changes relative to the reference dataset.</td>
-</tr>
-<tr>
-<td>F1</td>
-<td>Tests whether the model's F1 score changes relative to the reference dataset.</td>
+<td>Security</td>
+<td>Security risk result of the test run.</td>
+<td>Alert, Warning, Pass</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="drift-tests">
-<h5>Drift tests<a class="headerlink" href="#drift-tests" title="Permalink to this heading"></a></h5>
-<table border="1" class="docutils">
-<thead>
-<tr>
-<th>Drift monitor</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Prediction Drift</td>
-<td>Tests the change in distribution between the prediction sets generated by the reference and evaluation datasets.</td>
-</tr>
-<tr>
-<td>Label Drift</td>
-<td>Tests the change in distribution in the model's output.</td>
-</tr>
-<tr>
-<td>Numeric Feature Drift</td>
-<td>Tests the change in distribution within a given numeric feature.</td>
-</tr>
-<tr>
-<td>Categorical Feature Drift</td>
-<td>Tests the change in distribution within a given categorical feature.</td>
-</tr>
-<tr>
-<td>Mutual Information Drift</td>
-<td>Tests the change in mutual information between pairs of features, or between a feature and the label.</td>
-</tr>
-<tr>
-<td>Correlation Information Drift</td>
-<td>Tests the change in correlation between pairs of features, or between a feature and the label.</td>
-</tr>
-<tr>
-<td>Embedding Drift</td>
-<td>Tests the change in embeddings distribution between the reference and evaluation datasets.</td>
-</tr>
-</tbody>
-</table>
 </section>
+<section id="tests">
+<h2>Tests<a class="headerlink" href="#tests" title="Permalink to this heading"></a></h2>
 <section id="abnormal-inputs-test">
-<h5>Abnormal inputs test<a class="headerlink" href="#abnormal-inputs-test" title="Permalink to this heading"></a></h5>
+<h3>Abnormal inputs test<a class="headerlink" href="#abnormal-inputs-test" title="Permalink to this heading"></a></h3>
 <table border="1" class="docutils">
 <thead>
 <tr>
@@ -387,15 +305,9 @@ divided into tests for performance, drift, and abnormal input.</p>
 </tr>
 </tbody>
 </table>
-<p>Note: the Unseen Categorical, Rare Categories, and Numeric Outliers tests each have 2 associated monitors</p>
-<ol class="arabic simple">
-<li><p>Performance impact which measures the model performance change attributed to the data with the abnormality.</p></li>
-<li><p>Count, which measures the number of occurrences of the abnormality in each bin.</p></li>
-</ol>
-</section>
 </section>
 <section id="security-risk">
-<h4>Security risk<a class="headerlink" href="#security-risk" title="Permalink to this heading"></a></h4>
+<h3>Security risk<a class="headerlink" href="#security-risk" title="Permalink to this heading"></a></h3>
 <p>Tests for security risk assess the security of the model and underlying dataset,
 providing alerts in cases of model evasion or subversion.</p>
 <table border="1" class="docutils">
@@ -418,7 +330,7 @@ providing alerts in cases of model evasion or subversion.</p>
 </table>
 </section>
 <section id="fairness-and-compliance-risk">
-<h4>Fairness and Compliance risk<a class="headerlink" href="#fairness-and-compliance-risk" title="Permalink to this heading"></a></h4>
+<h3>Fairness and Compliance risk<a class="headerlink" href="#fairness-and-compliance-risk" title="Permalink to this heading"></a></h3>
 <p>Tests for fairness and compliance risk assess a model’s outcome for fair treatment
 among subcategories in the data.</p>
 <table border="1" class="docutils">
@@ -460,97 +372,16 @@ among subcategories in the data.</p>
 </tbody>
 </table>
 </section>
+<section id="model-monitors">
+<h3>Model monitors<a class="headerlink" href="#model-monitors" title="Permalink to this heading"></a></h3>
+<p>Monitors are an optional Robust Intelligence feature that work with
+continuous tests to alert you when a test fails. Learn more about
+optional <a class="reference internal" href="monitors/monitors.html"><span class="std std-doc">Monitors</span></a>.</p>
 </section>
 </section>
-<section id="events">
-<h2>Events<a class="headerlink" href="#events" title="Permalink to this heading"></a></h2>
-<p>The Overview page of a model under Continuous Testing displays a list of Active Events
-to the right of the active monitors.</p>
-<p>The Events list provides several filter selectors to focus on a specific set of events.</p>
-<table border="1" class="docutils">
-<thead>
-<tr>
-<th>Filter</th>
-<th>Description</th>
-<th>Potential states</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Testing</td>
-<td>Test type</td>
-<td>Stress Test or Continuous Test</td>
-</tr>
-<tr>
-<td>Risk Categories</td>
-<td>Major risk category</td>
-<td>Operational, Security, Fairness</td>
-</tr>
-<tr>
-<td>Status</td>
-<td>The status of a specific test</td>
-<td>Fail, Warning, Pass, Skip</td>
-</tr>
-<tr>
-<td>Level</td>
-<td>The importance level of the event</td>
-<td>None, Low, High</td>
-</tr>
-<tr>
-<td>Last Updated Time</td>
-<td>The time an event was last updated</td>
-<td>Within a time range</td>
-</tr>
-</tbody>
-</table>
-<section id="event-root-cause-analysis-and-actionability">
-<h3>Event root-cause analysis and actionability<a class="headerlink" href="#event-root-cause-analysis-and-actionability" title="Permalink to this heading"></a></h3>
-<p>Robust Intelligence can provide significant context and analysis of a detected event.
-This analysis includes the metric and threshold values defining the event and the time
-interval for which the metric fell below the thresholds. Events for degraded model
-performance monitors will show which data issue(s) may have lead to the detected event
-when applicable.</p>
-<ol class="arabic">
-<li><p>Sign in to a RI Platform instance.</p>
-<blockquote>
-<div><p>The Workspaces page appears.</p>
-</div></blockquote>
-</li>
-<li><p>Click a workspace.</p>
-<blockquote>
-<div><p>The Workspaces summary page appears.</p>
-</div></blockquote>
-</li>
-<li><p>Select a project.</p>
-<blockquote>
-<div><p>You can filter or sort the list of projects in a workspace with the
-<em>Sort</em> and <em>Filter</em> controls in the upper right. Click the glyph to the
-right of the <em>Filter</em> control to switch between list and card display
-for projects. Type a string in <em>Search Projects…</em> to display only
-projects that match the string.
-The project overview page appears.
-The project overview page contains both Stress Test and Continuous Test events</p>
-</div></blockquote>
-</li>
-<li><p>(Optional) Click <strong>Show Details</strong> (only for Continuous Test events).</p>
-<blockquote>
-<div><p>A description of the degradation event appears.
-Events with the <strong>RCA Available</strong> tag show additional context about
-feature drift which may have contributed to the degradation.</p>
-</div></blockquote>
-</li>
-<li><p>(Optional) Click <strong>Resolve</strong> to remove an event from the events list.</p>
-<blockquote>
-<div><p>A confirmation window will apear. Click <strong>Resolve Issue</strong> to confirm.</p>
-</div></blockquote>
-</li>
-<li><p>(Optional) Click a Continuous Test event.</p>
-<blockquote>
-<div><p>The CT risk page corresponding to the degraded monitor appears.</p>
-</div></blockquote>
-</li>
-</ol>
-</section>
+<section id="related-topics">
+<h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
+<p><a class="reference internal" href="monitors/monitors.html"><span class="std std-doc">Model Monitors</span></a></p>
 </section>
 </section>
 
@@ -559,7 +390,7 @@ feature drift which may have contributed to the degradation.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="configuring_scheduled_ct.html" class="btn btn-neutral float-left" title="Configuring your Scheduled Continuous Test" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../configuring_test_runs.html" class="btn btn-neutral float-right" title="Configuring your Test Runs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="monitors/monitors.html" class="btn btn-neutral float-right" title="Model Monitors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

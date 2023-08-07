@@ -7,16 +7,12 @@
    },
    "source": [
     "# **RI NYC Taxi and Limousine Data Walkthrough** 🚖\n",
+    "\n",
+    "> ▶️ **Try this in Colab!** Run the [RI NYC Taxi and Limousine Data Walkthrough in Google Colab](https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_Regression_Walkthrough.ipynb). \n",
+    "\n",
     "In this walkthrough, we'll run AI Stress Testing and AI Continuous Testing on public NYC Taxi and Limousine Commission data (https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page) to demonstrate how RIME can be used with regression models. This data consists of information such as the pickup and dropoff locations, pickup and dropoff times, fare amounts and the number of passengers for every taxi trip that happens in New York City. We'll be predicting the duration of each trip given a bunch of other information about the trip.\n",
     "\n",
     "As you might imagine, the COVID-19 pandemic caused a significant change in the number and nature of the taxi rides that occur in New York City. We've included data from 2018 to 2021 for this walkthrough to demonstrate how AI Continuous Testing can help you identify and understand such distribution drifts.\n"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "> Latest Colab version of this notebook available [here](https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_Regression_Walkthrough.ipynb)"
    ]
   },
   {
@@ -36,8 +32,9 @@
    },
    "outputs": [],
    "source": [
-    "API_TOKEN = '' # PASTE API_KEY RECIEVED IN EMAIL\n",
-    "CLUSTER_URL = '' # PASTE DEDICATED BACKEND ENDPOINT"
+    "API_TOKEN = '' # PASTE API_KEY \n",
+    "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)\n",
+    "AGENT_ID = '' # PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT"
    ]
   },
   {
@@ -177,13 +174,13 @@
     "upload_path = \"ri_public_examples_nyc_tlc\"\n",
     "\n",
     "model_s3_path = client.upload_directory(Path(\"nyc_tlc/models\"), upload_path=upload_path)\n",
-    "model_id = project.register_model_from_path(f\"model_{dt}\", model_s3_path + \"/model.py\")\n",
+    "model_id = project.register_model_from_path(f\"model_{dt}\", model_s3_path + \"/model.py\", agent_id=AGENT_ID)\n",
     "\n",
     "def upload_and_register_data(dataset, **kwargs):\n",
     "    s3_path = client.upload_file(Path(f\"nyc_tlc/data/{dataset}.csv\"), upload_path=upload_path)\n",
-    "    dataset_id = project.register_dataset_from_file(f\"{dataset}_{dt}\", s3_path, {\"label_col\": \"TripDuration\", **kwargs})\n",
+    "    dataset_id = project.register_dataset_from_file(f\"{dataset}_{dt}\", s3_path, {\"label_col\": \"TripDuration\", **kwargs}, agent_id=AGENT_ID)\n",
     "    preds_s3_path = client.upload_file(Path(f\"nyc_tlc/data/{dataset}_preds.csv\"), upload_path=upload_path)\n",
-    "    project.register_predictions_from_file(dataset_id, model_id, preds_s3_path)\n",
+    "    project.register_predictions_from_file(dataset_id, model_id, preds_s3_path, agent_id=AGENT_ID)\n",
     "    return dataset_id\n",
     "\n",
     "ref_id = upload_and_register_data(\"ref\")\n",
@@ -229,6 +226,7 @@
     "stress_test_job = client.start_stress_test(\n",
     "    stress_test_config, \n",
     "    project.project_id,\n",
+    "    agent_id=AGENT_ID,\n",
     ")\n",
     "stress_test_job.get_status(verbose=True, wait_until_finish=True)"
    ]
@@ -265,7 +263,7 @@
     "id": "nidRlmx8Po9G"
    },
    "source": [
-    "![img_1](https://drive.google.com/uc?id=1fVdk5_KJzMXNT1YLsmCfu_V2UQqahFmD)"
+    "![img_1](https://drive.google.com/uc?id=1x0JI2ddEZdUoYTA683uMBUCT1HizEK6z)"
    ]
   },
   {
@@ -310,7 +308,7 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "test_id = upload_and_register_data(\"test\", timestamp_col=\"PickupDatetime\")"
+    "prod_dataset_id = upload_and_register_data(\"test\", timestamp_col=\"PickupDatetime\")"
    ]
   },
   {
@@ -325,7 +323,7 @@
    },
    "outputs": [],
    "source": [
-    "ct_job = firewall.start_continuous_test(test_id)\n",
+    "ct_job = firewall.start_continuous_test(prod_dataset_id, agent_id=AGENT_ID)\n",
     "ct_job.get_status(verbose=True, wait_until_finish=True)\n",
     "firewall"
    ]
@@ -336,7 +334,7 @@
     "id": "eFkrep_aUswK"
    },
    "source": [
-    "Time to see how our model is doing! Navigate to the \"Continuous Tests\" tab on the left nav. Here, you'll see some of the key metrics that are being tracked over time along with active monitoring alerts."
+    "Time to see how our model is doing! Navigate to the \"Continuous Tests\" tab on the left nav. Here, you'll see some of the key metrics that are being tracked over time."
    ]
   },
   {
@@ -345,41 +343,7 @@
     "id": "0_f7cTHfWcEv"
    },
    "source": [
-    "![img_2](https://drive.google.com/uc?id=1wdr1UFy6CN7RR0UCGp9MUQJNcZ1mREqe)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "id": "ZV8fW1Ywb3_v"
-   },
-   "source": [
-    "If we head to the \"Operational Risk\" page we can see all of the metrics and alerting related to the operational health of our model and data pipelines. In the \"Model Performance\" category (available when labels are provided) we can take a look at the Mean Absolute Error plotted over time and we see a significant increase in this error around the spring of 2020 when the COVID-19 pandemic caused a substantial decrease in the number of taxi rides in New York City. "
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "id": "YbzPy5MQfJvt"
-   },
-   "source": [
-    "![img_5](https://drive.google.com/uc?id=1Pnm_rRvaICRn2j3htbhIC1KrnBLBHb_1)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "If labels weren't available (as is often the case with production data) we could look at changes in prediction distributions as a proxy for changes in model performance. "
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "id": "KSFyoP4bfZN3"
-   },
-   "source": [
-    "![img_6](https://drive.google.com/uc?id=10r8M99urYXRlao0gFVT8Fk0cFAMaIOht)"
+    "![img_2](https://drive.google.com/uc?id=1VndxEZrTFEck5x2XtX17kto8ss8uNB0s)"
    ]
   },
   {
@@ -388,23 +352,14 @@
     "id": "N939LDZ_fmna"
    },
    "source": [
-    "We can also inspect the input data for abnormal values. The overall abnormality rate shows the percent of abnormal inputs (for all types of abnormalities including outliers, missing values, unseen categories) over time. We can see that there's a spike in the abnormality rate in November of 2019 after which it remains high. Further exploration reveals that much of this comes from Numeric Outlier values in the `TripDistance` feature. "
+    "We can inspect the input data for failing input values. The overall failing rows rate shows the percent of failing inputs (for all types of failing tests including outliers, missing values, unseen categories) over time. We can see that there's a spike in the failing rows rate in early 2021 after which it remains high."
    ]
   },
   {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "![abnormality_rate](https://drive.google.com/uc?id=19sAuug-L5aJv2xlhpQF2CNvYRs7-aTiX)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "id": "xxApkNpRj7tN"
-   },
-   "source": [
-    "![img_7](https://drive.google.com/uc?id=14GKLjAxr0N1wSVMUVNhZU_SQUN5cFVVV)"
+    "![abnormality_rate](https://drive.google.com/uc?id=1L7WYbJIzuYbdZk_IOAiWoj2Fouh5knar)"
    ]
   }
  ],
@@ -429,7 +384,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.8.15"
+   "version": "3.10.3"
   }
  },
  "nbformat": 4,

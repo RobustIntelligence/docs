@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -71,13 +71,14 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="preprocessing_your_datasets.html">Preprocessing your Datasets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="defining_model_interface.html">Defining a Model interface</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="preprocessing_your_datasets.html">Preprocessing Your Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defining_model_interface.html">Defining a Model Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="upload_data.html">Uploading to Cloud Storage (Optional)</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Registering Models,  Datasets, and Predictions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#registering-a-model-using-the-sdk">Registering a Model Using the SDK</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#register-your-model-with-a-model-config-or-with-a-path-to-a-model-artifact">Register your model with a model config or with a path to a model artifact.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#passing-secrets-to-the-model">Passing secrets to the model</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#registering-a-dataset-using-the-sdk">Registering a Dataset Using the SDK</a><ul>
@@ -89,6 +90,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#register-your-predictions-with-a-predictions-configuration">Register your predictions with a predictions configuration.</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#related-topics">Related Topics</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="data_source.html">Data Configuration</a></li>
@@ -120,10 +122,11 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -142,7 +145,7 @@
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../documentation_home/get_started.html">Get Started</a></li>
           <li class="breadcrumb-item"><a href="../../documentation_home/notebooks.html">Tutorial Notebooks</a></li>
-          <li class="breadcrumb-item"><a href="../preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+          <li class="breadcrumb-item"><a href="../preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
       <li class="breadcrumb-item active">Registering Models,  Datasets, and Predictions</li>
       <li class="wy-breadcrumbs-aside">
       </li>
@@ -209,16 +212,19 @@ documentation for full details on the SDK calls used in this procedure.</p>
 <section id="example-of-registering-a-hugging-face-model">
 <h4>Example of registering a Hugging Face model:<a class="headerlink" href="#example-of-registering-a-hugging-face-model" title="Permalink to this heading"></a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get your model config</span>
-<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span><span class="n">name</span><span class="o">=&lt;</span><span class="n">NAME</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">model_config</span><span class="o">=</span><span class="p">{</span>
-    <span class="s2">&quot;hugging_face&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;model_uri&quot;</span><span class="p">:</span> <span class="n">URI</span><span class="p">,</span>
-        <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;tokenizer_uri&quot;</span><span class="p">:</span> <span class="n">TOKENIZER_URI</span><span class="p">,</span>
-            <span class="s2">&quot;class_map&quot;</span><span class="p">:</span> <span class="n">MAP</span><span class="p">,</span>
-            <span class="s2">&quot;ignore_class_names&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&lt;NAME&gt;&quot;</span><span class="p">,</span>
+    <span class="n">model_config</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;hugging_face&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;model_uri&quot;</span><span class="p">:</span> <span class="n">URI</span><span class="p">,</span>
+            <span class="s2">&quot;kwargs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;tokenizer_uri&quot;</span><span class="p">:</span> <span class="n">TOKENIZER_URI</span><span class="p">,</span>
+                <span class="s2">&quot;class_map&quot;</span><span class="p">:</span> <span class="n">MAP</span><span class="p">,</span>
+                <span class="s2">&quot;ignore_class_names&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="p">},</span>
         <span class="p">},</span>
-    <span class="p">}</span>
-<span class="p">})</span>
+    <span class="p">},</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 <p>For more on model configuration, check out the <a class="reference internal" href="model_source.html"><span class="std std-doc">model configuration documentation</span></a>.</p>
@@ -231,8 +237,24 @@ documentation for full details on the SDK calls used in this procedure.</p>
 <p><strong>Note</strong>: Registering your model will run validation on it to ensure it works with Robust Intelligence’s systems.  This
 may take a few seconds.  If you wish to skip validation, set the <code class="docutils literal notranslate"><span class="pre">skip_validation</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">True</span></code>
 (not recommended).</p>
-<p>Check out the SDK documentation for more on <a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">registering a model</span></a>.</p>
 </section>
+</section>
+<section id="passing-secrets-to-the-model">
+<h3>Passing secrets to the model<a class="headerlink" href="#passing-secrets-to-the-model" title="Permalink to this heading"></a></h3>
+<p>If access credentials are required by your model at runtime, you can pass them in as model endpoint integration. A model endpoint integration specifies secrets as key-value pairs, that are made available to the model during runtime, when it is making a prediction.</p>
+<p>To do so, you would need to first create an integration in RIME UI and specify the secrets there. Then, the integration’s uuid must be passed as the <code class="docutils literal notranslate"><span class="pre">model_endpoint_integration_id</span></code> parameter when registering the model. The model’s <a class="reference internal" href="defining_model_interface.html#step-6-passing-secrets-to-the-model"><span class="std std-ref">predict interface</span></a> would then need to specify an <code class="docutils literal notranslate"><span class="pre">integration_dict</span></code> parameter, which would receive the secrets as key-value pairs.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&lt;NAME&gt;&quot;</span><span class="p">,</span>
+    <span class="n">model_config</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;model_path&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;path/to/model.py&quot;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">model_endpoint_integration_id</span><span class="o">=</span><span class="s2">&quot;&lt;Integration UUID&gt;&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Check out the SDK documentation for more on <a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">registering a model</span></a>.</p>
 </section>
 </section>
 <section id="registering-a-dataset-using-the-sdk">
@@ -305,6 +327,17 @@ may take a few seconds.  If you wish to skip validation, set the <code class="do
 (not recommended).</p>
 <p>Check out the SDK documentation for more on <a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">registering predictions</span></a>.</p>
 </section>
+</section>
+<section id="related-topics">
+<h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
+<p><a class="reference internal" href="../monitoring_models/creating_new_continuous_test.html"><span class="std std-doc">Creating a New Continuous Test</span></a><br />
+<a class="reference internal" href="../validating_models/stress_tests_from_sdk.html"><span class="std std-doc">Creating a New Stress Test</span></a><br />
+<a class="reference internal" href="data_source.html"><span class="std std-doc">Data Configuration</span></a><br />
+<a class="reference internal" href="../../documentation_home/installation.html"><span class="std std-doc">Installation</span></a><br />
+<a class="reference internal" href="model_source.html"><span class="std std-doc">Model Configuration</span></a><br />
+<a class="reference internal" href="../monitoring_models.html"><span class="std std-doc">Monitor Models with Continuous Tests</span></a><br />
+<a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">Python SDK Reference</span></a><br />
+<a class="reference internal" href="../validating_models.html"><span class="std std-doc">Validate Models with Stress Tests</span></a></p>
 </section>
 </section>
 

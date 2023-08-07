@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -71,7 +71,7 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
@@ -92,6 +92,7 @@
 <li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Upgrade</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#upgrading-from-v2-1-to-v2-2">Upgrading from v2.1 to v2.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#upgrading-from-v2-0-to-v2-1">Upgrading from v2.0 to v2.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#verify-upgrade">Verify Upgrade</a></li>
 </ul>
@@ -101,10 +102,11 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../reference/release_notes.html">Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -142,18 +144,27 @@
 <li><p>Edit the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file by changing the image version in the fields <code class="docutils literal notranslate"><span class="pre">rimeAgent.images.agentImage.name</span></code> and <code class="docutils literal notranslate"><span class="pre">rimeAgent.images.agentImage.name</span></code> to the new version. To find the version value, navigate to <strong>Organization Settings</strong> page, and click on the <strong>Manage Agent Setup</strong> tab. The Control Plane version will be displayed at the top of the pane. The version value to be used in the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file will be the Control Plane version without the prefix <code class="docutils literal notranslate"><span class="pre">v</span></code>.</p></li>
 <li><p>Follow the version specific upgrades.</p></li>
 </ol>
-<section id="upgrading-from-v2-0-to-v2-1">
-<h2>Upgrading from v2.0 to v2.1<a class="headerlink" href="#upgrading-from-v2-0-to-v2-1" title="Permalink to this heading"></a></h2>
+<section id="upgrading-from-v2-1-to-v2-2">
+<h2>Upgrading from v2.1 to v2.2<a class="headerlink" href="#upgrading-from-v2-1-to-v2-2" title="Permalink to this heading"></a></h2>
 <ol class="arabic">
-<li><p>Update cloud provider’s IAM setting used for accessing Datasets and Models to support providing permission for the service account <code class="docutils literal notranslate"><span class="pre">rime-agent-rime-cross-plane-server</span></code>.</p></li>
-<li><p>In the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file, create the section <code class="docutils literal notranslate"><span class="pre">rimeAgent.rimeCrossPlaneServer</span></code> with the same IAM related annotations, and in some cases also labels, as the <code class="docutils literal notranslate"><span class="pre">rimeAgent.operator.modelTestJob</span></code> section.</p></li>
 <li><p>Update helm chart:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>helm uninstall rime-agent
-helm repo update
-helm install rime-agent robustintelligence/rime-agent --version $RI_VERSION --values ./values.yaml
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>helm repo update
+helm upgrade rime-agent robustintelligence/rime-agent --version $RI_VERSION --values ./values.yaml
 </pre></div>
 </div>
 </li>
+</ol>
+</section>
+<section id="upgrading-from-v2-0-to-v2-1">
+<h2>Upgrading from v2.0 to v2.1<a class="headerlink" href="#upgrading-from-v2-0-to-v2-1" title="Permalink to this heading"></a></h2>
+<ol class="arabic">
+<li><p>Navigate to <strong>Orgainzation Settings</strong> page, and click on the <strong>Manage Agent Setup</strong> tab. Deactivate and delete the agent.</p></li>
+<li><p>Uninstall the agent in your environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">uninstall</span> <span class="n">rime</span><span class="o">-</span><span class="n">agent</span>
+</pre></div>
+</div>
+</li>
+<li><p>Create the new agent using the create agent button on the <strong>Manage Agent Setup</strong> page. Select the agent type and follow the instructions. If permission related inputs are needed, you can find the same inputs you used in v2.0 in the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file under the <code class="docutils literal notranslate"><span class="pre">rimeAgent.operator.modelTestJob</span></code> section.</p></li>
 </ol>
 </section>
 <section id="verify-upgrade">

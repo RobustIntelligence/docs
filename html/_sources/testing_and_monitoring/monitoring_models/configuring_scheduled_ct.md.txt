@@ -32,7 +32,7 @@ See [Scheduled CT How-To-Guide](scheduling_ct_runs.rst) for instructions on how 
 
 ## Templates for Data Location Types
 
-### Data Collector
+### Data Collector (deprecated)
 
 Data Collector requires you to specify **`connection_info.data_collector.data_stream_id`** in **`data_info`** and **`pred_info`**.
 
@@ -108,13 +108,14 @@ firewall.activate_ct_scheduling(
 
 Our custom loader integration is designed to integrate with any location. Configuring the
 custom loader requires you to specify **`data_info.connection_info.custom_location`**
-in **`data_info`** and **`pred_info`**. **`The custom_location`** field includes the
+in **`data_info`** and **`pred_info`**. The **`custom_location`** field includes the
 path to the loading script and the name of the function that does the loading. You can
-specify additional arguments in **`loader_kwargs_json`**. For
-locations that require access credentials such as secrets or tokens, specify the value
-of those secrets as environment variables. The load function must accept as
+specify additional arguments in **`loader_kwargs_json`**. If the custom loader is at a
+location that require access credentials such as secrets or tokens, specify the value
+of those secrets as an integration. The load function must accept as
 options the parameters `start_time`, `end_time`, which are integers that specify a
-timestamp as a number of seconds from the UNIX epoch.
+timestamp as a number of seconds from the UNIX epoch. It may also accept an optional
+parameter `integration_dict`, which would be populated with any key/value pairs specified in the `data_endpoint_integration`.
 
 ```python
 from datetime import timedelta
@@ -128,6 +129,7 @@ firewall.activate_ct_scheduling(
                 "path": "s3://bucket/path/to/loader.py",
                 "load_func_name": "custom_data_loader_func",
                 "loader_kwargs_json": "{\"some_param\": 5}",
+                "data_endpoint_integration_id": "<integration_uuid>",
             },
         },
         "data_params": {
@@ -143,6 +145,7 @@ firewall.activate_ct_scheduling(
                 "path": "s3://bucket/path/to/loader.py",
                 "load_func_name": "custom_prediction_loader_func",
                 "loader_kwargs_json": "{\"some_param\": 5}",
+                "data_endpoint_integration_id": "<integration_uuid">,
             },
         },
         "pred_params": {
@@ -159,7 +162,12 @@ For scheduled CT, the loader function must accept as options the parameters `sta
 These arguments are not required outside of scheduled CT.
 Type hints must be specified for the loader function.
 The return type must be either `pd.DataFrame` or an `Iterable[pd.DataFrame]`.
-The loader function may use integration variables stored in the corresponding `data_integration_id`/`pred_integration_id`, and these are available as environment variables..
+
+The loader file will be fetched using integration variables stored in the corresponding
+`data_integration_id`/`pred_integration_id`. The loader func may use integration key/value
+pairs stored in the corresponding `data_endpoint_integration_id`. These will be made
+available via the `integration_dict` parameter.
+
 With the example above, the following could be valid contents of `"s3://bucket/path/to/loader.py"`, where this example retrieves the data from a Delta Lake table all the data entries between the given start and end times.
 ```python
 """Custom loader file with Delta Lake."""
@@ -171,13 +179,13 @@ from databricks import sql
 
 
 def custom_data_loader_func(
-    start_time: datetime, end_time: datetime, some_param: int
+    start_time: datetime, end_time: datetime, some_param: int, integration_dict: dict
 ) -> pd.DataFrame:
   """Load the data."""
   connection = sql.connect(
-    server_hostname=os.environ["DATABRICKS_SERVER_HOSTNAME"],
-    http_path=os.environ["DATABRICKS_HTTP_PATH"],
-    access_token=os.environ["DATABRICKS_ACCESS_TOKEN"],
+    server_hostname=integration_dict["DATABRICKS_SERVER_HOSTNAME"],
+    http_path=integration_dict["DATABRICKS_HTTP_PATH"],
+    access_token=integration_dict["DATABRICKS_ACCESS_TOKEN"],
   )
   query = (
     f"SELECT * FROM hivemetastore.default.my_table WHERE "
@@ -189,7 +197,7 @@ def custom_data_loader_func(
     results = cursor.fetchmany_arrow(1000)
     return results.to_pandas()
 ```
-For data sources that require authentication other than Databricks, you may use our (custom integrations)[../../administration/configuring_workspaces/integrations/configuring_integrations.md#custom-integrations] feature to store the arbitrary credentials as environment variables.
+For data sources that require authentication other than Databricks, you may use our [custom integrations](../../administration/workspace_configuration/integrations/supported_integrations/custom_integration.md) feature to store the arbitrary credentials as environment variables.
 
 ## Templates for Configuring Data Params
 The dictionary below outlines all the keys you can specify for data params. If these are
@@ -267,3 +275,9 @@ firewall.activate_ct_scheduling(
 )
 
 ```
+
+## Related Topics  
+[Configuring Integrations](../../administration/workspace_configuration/integrations/configuring_integrations.md)  
+[Custom Integrations](../../administration/workspace_configuration/integrations/supported_integrations/custom_integration.md)  
+[Data Configuration](../preparing_your_models_and_datasets/data_source.md)  
+[Scheduling Continuous Testing Runs](scheduling_ct_runs.rst)  

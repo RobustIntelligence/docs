@@ -1,4 +1,4 @@
-# Defining a Model interface
+# Defining a Model Interface
 
 Robust Intelligence expects models to be passed in as Python files that expose one of the following functions:
 
@@ -24,6 +24,8 @@ Robust Intelligence expects models to be passed in as Python files that expose o
     NOTE: for binary classification the return type should be a single float per row which represents the probability for the positive class. It should not be an array of probabilities for each class. E.g. `predict_df` should return `[0.7, 0.1, ...]` NOT `[[0.3, 0.7], [0.9, 0.1], ...]`.
 
 The following shows how to set up the Python interface Robust Intelligence expects for a model that can be called via loading a model binary.
+
+> **As of v2.1, Robust Intelligence supports models written in Python 3.8 to 3.11. Any model files written in Python 3.7 should be migrated to Python 3.8 or later.**
 
 ## Step 1: Specify model path
 Put your model binary, and any other relevant model artifacts, in the same folder as this file.
@@ -86,3 +88,24 @@ def predict_df(df: pd.DataFrame) -> np.ndarray:
     model_output = model.predict_proba(array_input)
     return model_output[:, 1]
 ```
+
+## Step 6: Passing secrets to the model
+If your model file expects to receive secrets for using during runtime, you can specify them as model endpoint integrations. As an example, you might need secrets in case the model file queries an authenticated endpoint to make predictions.
+
+You may specify a `model_endpoint_integration_id` when registering the model, as described [here](registering_model_datasets.md#passing-secrets-to-the-model). The secrets specified in the model endpoint integration would be made available to the predict function as an `integration_dict` dict parameter. The predict function signatures would then change as follows:
+```
+def predict_dict(x: dict, integration_dict: dict) -> float:
+    """predict logic"""
+    API_KEY = integration_dict['SECRET_API_KEY']
+    pass
+```
+OR
+```
+def predict_df(df: pd.DataFrame, integration_dict: dict) -> np.ndarray:
+    """predict logic"""
+    API_KEY = integration_dict['SECRET_API_KEY']
+    pass
+```
+
+## Related Topics  
+[Preprocessing Your Datasets](preprocessing_your_datasets.md)  

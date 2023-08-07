@@ -88,7 +88,8 @@
    "outputs": [],
    "source": [
     "API_TOKEN = '' # PASTE API_KEY \n",
-    "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)"
+    "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)\n",
+    "AGENT_ID = '' # PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT"
    ]
   },
   {
@@ -135,7 +136,7 @@
     "\n",
     "dt = str(datetime.now())\n",
     "# Note: models and datasets need to have unique names.\n",
-    "model_id = project.register_model(f\"fraud_model_{dt}\", None)"
+    "model_id = project.register_model(f\"fraud_model_{dt}\", None, agent_id=AGENT_ID)"
    ]
   },
   {
@@ -155,10 +156,10 @@
     "        Path(f\"fraud/data/fraud_{dataset_name}_preds.csv\"), upload_path=upload_path\n",
     "    )\n",
     "    dataset_id = project.register_dataset_from_file(\n",
-    "        f\"{dataset_name}_dataset_{dt}\", s3_path, data_params={\"label_col\": \"label\", **kwargs}\n",
+    "        f\"{dataset_name}_dataset_{dt}\", s3_path, data_params={\"label_col\": \"label\", **kwargs}, agent_id=AGENT_ID\n",
     "    )\n",
     "    project.register_predictions_from_file(\n",
-    "        dataset_id, model_id, preds_s3_path\n",
+    "        dataset_id, model_id, preds_s3_path, agent_id=AGENT_ID\n",
     "    )\n",
     "    return dataset_id\n",
     "\n",
@@ -204,8 +205,7 @@
    "outputs": [],
    "source": [
     "ct_data_0_id = upload_and_register_data(\"incremental_0\", timestamp_col=\"timestamp\")\n",
-    "\n",
-    "ct_job = firewall.start_continuous_test(ct_data_0_id)\n",
+    "ct_job = firewall.start_continuous_test(ct_data_0_id, agent_id=AGENT_ID)\n",
     "ct_job.get_status(verbose=True, wait_until_finish=True)"
    ]
   },
@@ -247,7 +247,7 @@
    "outputs": [],
    "source": [
     "ct_data_1_id = upload_and_register_data(\"incremental_1\", timestamp_col=\"timestamp\")\n",
-    "ct_job = firewall.start_continuous_test(ct_data_1_id, override_existing_bins=True)\n",
+    "ct_job = firewall.start_continuous_test(ct_data_1_id, override_existing_bins=True, agent_id=AGENT_ID)\n",
     "ct_job.get_status(verbose=True, wait_until_finish=True)"
    ]
   }
@@ -273,7 +273,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.8.15"
+   "version": "3.10.3"
   }
  },
  "nbformat": 4,

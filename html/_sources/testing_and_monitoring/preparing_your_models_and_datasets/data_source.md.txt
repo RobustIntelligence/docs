@@ -1,5 +1,4 @@
-Data Configuration
-==================
+# Data Configuration
 
 In order to register a reference and evaluation dataset, the user needs
 to configure `SingleDataInfo`. `SingleDataInfo` takes
@@ -56,19 +55,21 @@ b) Type = DataLoadingInfo
     "data_loading": {
       "path": "",
       "load_func_name": "",
-      "loader_kwargs_json": ""
+      "loader_kwargs_json": "",
+      "data_endpoint_integration_id": ""
     }
   }
 }
 ```
 
-| Parameter | Type | Description |
-|-----------|--|-------------|
-| path | string | The path to the file. |
-| load_func_name | string | The function to call from the file at the path. |
-| loader_kwargs | string | A JSON String of keyword arguments to be passed into the load function. |
+| Parameter | Type            | Description                                                                                                             |
+|-----------|-----------------|-------------------------------------------------------------------------------------------------------------------------|
+| path | string          | The path to the file.                                                                                                   |
+| load_func_name | string          | The function to call from the file at the path.                                                                         |
+| loader_kwargs | string          | A JSON String of keyword arguments to be passed into the load function.                                                 |
+| data_endpoint_integration_id | Optional string | The UUID for an integration that has scerets as key/value pairs, that will be provided to the custom loader at runtime. |
 
-### 3) Loads a data stream from a data collector.
+### 3) Loads a data stream from a data collector (deprecated).
 
 a) Parameter = data_collector
 
@@ -114,6 +115,9 @@ b) Type = DatabricksInfo
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | table_name | String | The name of the Delta Lake table. |
+
+See the [Databricks Delta Lake example](../../administration/workspace_configuration/integrations/supported_integrations/databricks_deltalake.md).
+
 
 ### 5) Loading a Hugging Face dataset
 
@@ -233,3 +237,6 @@ The `FeatureIntersection` message is defined as follows:
 | loading_kwargs | String | Keyword arguments passed to the pandas loading function. Do not specify `nrows` here. |
 | feature_type_path | String | Deprecated. Path to a CSV file that specifies the data type of each feature. The file must have two columns, `FeatureName` and `FeatureType`. |
 | image_load_path | String | Path to a python file that contains a `load_image` function defining custom logic for loading an image from the file path provided in the dataset. |
+
+## Related Topics  
+[Databricks Delta Lake](../../administration/workspace_configuration/integrations/supported_integrations/databricks_deltalake.md)  

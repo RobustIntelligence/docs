@@ -3,98 +3,58 @@
 Once a model is in production, Robust Intelligence can provide detailed information on the model's
 performance to enable you to identify and correct issues.
 
-## Model monitors
-
 A model under Continuous Testing displays summary information about model health on the
-Overview page of the project that contains the model. Robust Intelligence monitors machine learning
+overview panel of the project that contains the model. Robust Intelligence monitors machine learning
 model performance across the following three risk categories:
 
 * **Operational** tests a model's overall performance and data stability of over time.
 * **Security** tests a model's resilience against compromise from external attacks.
 * **Fairness** tests a model's outcome for fair treatment among subsets in the data.
 
-### Viewing the CT risk pages
-1.  Sign in to a RI Platform instance.
-    >   The Workspaces page appears.
-2.  Click a workspace.
-    >   The Workspaces summary page appears.
-3.  Select a project.
+## Viewing the CT risk pages
+1.  Sign in to the Robust Intelligence UI. The Workspaces page appears.
+1.  Click a workspace. The Workspaces summary page appears.
+1.  Select a project.
     >   You can filter or sort the list of projects in a workspace with the
     >   *Sort* and *Filter* controls in the upper right. Click the glyph to the
     >   right of the *Filter* control to switch between list and card display
     >   for projects. Type a string in *Search Projects...* to display only
     >   projects that match the string.
-4. Select the **Continuous Testing** tab in the left panel.
-    > The CT Overview page appears
-4. Click on one of the risk category tabs at the top (**Operational**, **Security**, or **Fairness**).
-    > The corresponding CT risk page appears.
+1. Select the **Continuous Testing** tab in the left panel. This shows
+   the **Continuous Testing** overview panel for the project you selected.
 
-### Monitors and risk categories
+### Continuous Testing overview panel
 
-Monitors of particular interest can be pinned to the top of the list by clicking the
-pushpin icon at the top left corner of the monitor. Pinned Operational risk monitors
-will also show up in the Continuous Testing Overview page. Use the **Date Range**
-controls to change your view of the monitor chart. Some monitors have feature or
-subset dropdown menus which allow you to view the monitored metric for a specific
-feature or subset(s) of a feature in your dataset.
+The **Continuous Testing** overview panel shows, for this project:
+- a graph of test results over time; and
+- a list of events list summarizing the results of each test run with respect to
+  measures of **Operational**, **Security**, and **Fairness** risk.
+  - Click the **Filter** button at the upper right to help find an event.
+    See the next section for help with filters.
+  - Click on a row to inspect an event. This displays the inspection
+    page for the continuous testing run, including a list of all tests
+    that ran. Click on a test to see its measures, **Key Insights**,
+    and any features that were flagged in this test run.
 
-#### Enabling or disabling notifications for a monitor
+### Filter events in the Continuous Testing overview panel
 
-You can enable or suppress notifications from a specified monitor.
+Use the **Filter** button at the upper right to help find an event.
+See the filter criteria explanations, below.
 
-1.  Sign in to a RI Platform instance.
-    >   The Workspaces page appears.
-2.  Click a workspace.
-    >   The Workspaces summary page appears.
-3.  Select a project.
-    >   You can filter or sort the list of projects in a workspace with the
-    >   *Sort* and *Filter* controls in the upper right. Click the glyph to the
-    >   right of the *Filter* control to switch between list and card display
-    >   for projects. Type a string in *Search Projects...* to display only
-    >   projects that match the string.
-    >   The project overview page appears.
-4.  In the top right corner of a monitor, click **Edit Monitor**.
-    >   The Edit Monitor wizard appears.
-5.  Toggle **Add to Project Notifications** and click Save Settings.
+| Filter      | Description                                                                                          | Example states                 |
+|-------------|------------------------------------------------------------------------------------------------------|--------------------------------|
+| Bin date    | Show only events generated from data points whose dates fall within the range you specify.           | Last 7 days                    |
+| Run date    | Show only events generated from test runs that were completed within the range you specify.          | Last 7 days                    |
+| Model       | Model name                                                                                           | "My image classification"      |
+| Status      | Run status of the continuous test run.                                                               | Completed, Failed, In Progress |
+| Operational | Operational risk result of the test run.                                                             | Alert, Warning, Pass           |
+| Fairness    | Fairness risk result of the test run.                                                                | Alert, Warning, Pass           |
+| Security    | Security risk result of the test run.                                                                | Alert, Warning, Pass           |
 
-Notifications for this monitor are added or removed from the project according to the
-position of the toggle.
 
-<!-- Notification settings are managed from {TKK xref to notif/alert config} -->
+## Tests
 
-#### Operational risk
-
-Tests for operational risk assess a model's performance and accuracy. These tests are
-divided into tests for performance, drift, and abnormal input.
-
-##### Performance tests
-
-| Performance monitor                  | Description                                                                                                                |
-|--------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
-| Accuracy                             | Tests whether the model's accuracy changes relative to the reference dataset.                                              |
-| Average Thresholded Confidence (ATC) | Tests the variance of the ATC between reference and evaluation datasets. ATC estimates the accuracy of unlabeled examples. |
-| Average Confidence                   | Tests the variance of average prediction confidence between the reference and evaluation datasets.                         |
-| Calibration Comparison               | Tests whether the calibration curve of the evaluation datset has changed relative to the reference datset.                 |
-| Precision                            | Tests whether the model's precision changes relative to the reference dataset.                                             |
-| Recall                               | Tests whether the model's recall changes relative to the reference dataset.                                                |
-| F1                                   | Tests whether the model's F1 score changes relative to the reference dataset.                                              |
-| False Positive Rate                  | Tests whether the model's false positive rate changes relative to the reference dataset.                                   |
-| False Negative Rate                  | Tests whether the model's false negative rate changes relative to the reference dataset.                                   |
-| F1                                   | Tests whether the model's F1 score changes relative to the reference dataset.                                              |
-
-##### Drift tests
-
-| Drift monitor                 | Description                                                                                                      |
-|-------------------------------|------------------------------------------------------------------------------------------------------------------|
-| Prediction Drift              | Tests the change in distribution between the prediction sets generated by the reference and evaluation datasets. |
-| Label Drift                   | Tests the change in distribution in the model's output.                                                          |
-| Numeric Feature Drift         | Tests the change in distribution within a given numeric feature.                                                 |
-| Categorical Feature Drift     | Tests the change in distribution within a given categorical feature.                                             |
-| Mutual Information Drift      | Tests the change in mutual information between pairs of features, or between a feature and the label.            |
-| Correlation Information Drift | Tests the change in correlation between pairs of features, or between a feature and the label.                   |
-| Embedding Drift               | Tests the change in embeddings distribution between the reference and evaluation datasets.                       |
-
-##### Abnormal inputs test
+### Abnormal inputs test
 
 | Abnormal inputs monitor     | Description                                                                                                                         |
 |-----------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
@@ -109,11 +69,7 @@ divided into tests for performance, drift, and abnormal input.
 | Inconsistencies - Count     | Tests the number of data points with pairs of feature values that are inconsistent with each other.                                 |
 | Required Characters - Count | Tests the number of required characters in feature values.                                                                          |
 
-Note: the Unseen Categorical, Rare Categories, and Numeric Outliers tests each have 2 associated monitors
-1. Performance impact which measures the model performance change attributed to the data with the abnormality.
-2. Count, which measures the number of occurrences of the abnormality in each bin.
-
-#### Security risk
+### Security risk
 
 Tests for security risk assess the security of the model and underlying dataset,
 providing alerts in cases of model evasion or subversion.
@@ -123,7 +79,7 @@ providing alerts in cases of model evasion or subversion.
 | Data Poisoning        | Tests for corrupted input data.                                                                                                                               |
 | Model Evasion         | Tests for adversarial evasion attacks.                                                                                                                        |
 
-#### Fairness and Compliance risk
+### Fairness and Compliance risk
 
 Tests for fairness and compliance risk assess a model's outcome for fair treatment
 among subcategories in the data.
@@ -138,46 +94,12 @@ among subcategories in the data.
 | Demographic Parity            | Tests how the model performance over subsets of protected features compare to the subset with highest performance.         |
 | Protected Feature Drift       | Tests the change in distribution of protected features.                                                                    |
 
-## Events
 
-The Overview page of a model under Continuous Testing displays a list of Active Events
-to the right of the active monitors.
+### Model monitors
 
-The Events list provides several filter selectors to focus on a specific set of events.
+Monitors are an optional Robust Intelligence feature that work with
+continuous tests to alert you when a test fails. Learn more about
+optional [Monitors](monitors/monitors.md).
 
-| Filter            | Description                        | Potential states                |
-|-------------------|------------------------------------|---------------------------------|
-| Testing           | Test type                          | Stress Test or Continuous Test  |
-| Risk Categories   | Major risk category                | Operational, Security, Fairness |
-| Status            | The status of a specific test      | Fail, Warning, Pass, Skip       |
-| Level             | The importance level of the event  | None, Low, High                 |
-| Last Updated Time | The time an event was last updated | Within a time range             |
-
-### Event root-cause analysis and actionability
-
-Robust Intelligence can provide significant context and analysis of a detected event.
-This analysis includes the metric and threshold values defining the event and the time
-interval for which the metric fell below the thresholds. Events for degraded model
-performance monitors will show which data issue(s) may have lead to the detected event
-when applicable.
-
-1.  Sign in to a RI Platform instance.
-    >   The Workspaces page appears.
-2.  Click a workspace.
-    >   The Workspaces summary page appears.
-3.  Select a project.
-    >   You can filter or sort the list of projects in a workspace with the
-    >   *Sort* and *Filter* controls in the upper right. Click the glyph to the
-    >   right of the *Filter* control to switch between list and card display
-    >   for projects. Type a string in *Search Projects...* to display only
-    >   projects that match the string.
-    >   The project overview page appears.
-    >   The project overview page contains both Stress Test and Continuous Test events
-4.  (Optional) Click **Show Details** (only for Continuous Test events).
-    > A description of the degradation event appears.
-    > Events with the **RCA Available** tag show additional context about
-    > feature drift which may have contributed to the degradation.
-5.  (Optional) Click **Resolve** to remove an event from the events list.
-    >   A confirmation window will apear. Click **Resolve Issue** to confirm.
-6.  (Optional) Click a Continuous Test event.
-    >   The CT risk page corresponding to the degraded monitor appears.
+## Related Topics  
+[Model Monitors](monitors/monitors.md)  

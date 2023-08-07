@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Python SDK reference &mdash; Robust Intelligence  documentation</title>
+  <title>Python SDK Reference &mdash; Robust Intelligence  documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -71,7 +71,7 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
@@ -97,7 +97,7 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Python SDK reference</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Python SDK Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#rime_sdk.Client"><code class="docutils literal notranslate"><span class="pre">Client</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Client.create_project"><code class="docutils literal notranslate"><span class="pre">Client.create_project()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Client.get_project"><code class="docutils literal notranslate"><span class="pre">Client.get_project()</span></code></a></li>
@@ -144,8 +144,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.remove_webhook"><code class="docutils literal notranslate"><span class="pre">Project.remove_webhook()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.register_dataset"><code class="docutils literal notranslate"><span class="pre">Project.register_dataset()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.register_dataset_from_file"><code class="docutils literal notranslate"><span class="pre">Project.register_dataset_from_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.upload_and_register_dataset_from_file"><code class="docutils literal notranslate"><span class="pre">Project.upload_and_register_dataset_from_file()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.register_model"><code class="docutils literal notranslate"><span class="pre">Project.register_model()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.register_model_from_path"><code class="docutils literal notranslate"><span class="pre">Project.register_model_from_path()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.upload_and_register_model_from_path"><code class="docutils literal notranslate"><span class="pre">Project.upload_and_register_model_from_path()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.register_predictions"><code class="docutils literal notranslate"><span class="pre">Project.register_predictions()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.register_predictions_from_file"><code class="docutils literal notranslate"><span class="pre">Project.register_predictions_from_file()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.list_datasets"><code class="docutils literal notranslate"><span class="pre">Project.list_datasets()</span></code></a></li>
@@ -170,6 +172,23 @@
 <li class="toctree-l2"><a class="reference internal" href="#rime_sdk.Job"><code class="docutils literal notranslate"><span class="pre">Job</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Job.get_test_run_id"><code class="docutils literal notranslate"><span class="pre">Job.get_test_run_id()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Job.get_test_run"><code class="docutils literal notranslate"><span class="pre">Job.get_test_run()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Job.cancel"><code class="docutils literal notranslate"><span class="pre">Job.cancel()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Job.get_agent_id"><code class="docutils literal notranslate"><span class="pre">Job.get_agent_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Job.get_job_debug_logs_link"><code class="docutils literal notranslate"><span class="pre">Job.get_job_debug_logs_link()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Job.get_status"><code class="docutils literal notranslate"><span class="pre">Job.get_status()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Job.job_id"><code class="docutils literal notranslate"><span class="pre">Job.job_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Job.job_type"><code class="docutils literal notranslate"><span class="pre">Job.job_type</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#rime_sdk.ContinuousTestJob"><code class="docutils literal notranslate"><span class="pre">ContinuousTestJob</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.ContinuousTestJob.get_test_run_ids"><code class="docutils literal notranslate"><span class="pre">ContinuousTestJob.get_test_run_ids()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.ContinuousTestJob.get_test_runs"><code class="docutils literal notranslate"><span class="pre">ContinuousTestJob.get_test_runs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.ContinuousTestJob.cancel"><code class="docutils literal notranslate"><span class="pre">ContinuousTestJob.cancel()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.ContinuousTestJob.get_agent_id"><code class="docutils literal notranslate"><span class="pre">ContinuousTestJob.get_agent_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.ContinuousTestJob.get_job_debug_logs_link"><code class="docutils literal notranslate"><span class="pre">ContinuousTestJob.get_job_debug_logs_link()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.ContinuousTestJob.get_status"><code class="docutils literal notranslate"><span class="pre">ContinuousTestJob.get_status()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.ContinuousTestJob.job_id"><code class="docutils literal notranslate"><span class="pre">ContinuousTestJob.job_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.ContinuousTestJob.job_type"><code class="docutils literal notranslate"><span class="pre">ContinuousTestJob.job_type</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#rime_sdk.TestRun"><code class="docutils literal notranslate"><span class="pre">TestRun</span></code></a><ul>
@@ -179,6 +198,17 @@
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.TestRun.get_test_batch"><code class="docutils literal notranslate"><span class="pre">TestRun.get_test_batch()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.TestRun.get_test_batches"><code class="docutils literal notranslate"><span class="pre">TestRun.get_test_batches()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.TestRun.get_summary_tests_df"><code class="docutils literal notranslate"><span class="pre">TestRun.get_summary_tests_df()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#rime_sdk.ContinuousTestRun"><code class="docutils literal notranslate"><span class="pre">ContinuousTestRun</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.ContinuousTestRun.start_time"><code class="docutils literal notranslate"><span class="pre">ContinuousTestRun.start_time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.ContinuousTestRun.end_time"><code class="docutils literal notranslate"><span class="pre">ContinuousTestRun.end_time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.ContinuousTestRun.get_link"><code class="docutils literal notranslate"><span class="pre">ContinuousTestRun.get_link()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.ContinuousTestRun.get_result_df"><code class="docutils literal notranslate"><span class="pre">ContinuousTestRun.get_result_df()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.ContinuousTestRun.get_summary_tests_df"><code class="docutils literal notranslate"><span class="pre">ContinuousTestRun.get_summary_tests_df()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.ContinuousTestRun.get_test_batch"><code class="docutils literal notranslate"><span class="pre">ContinuousTestRun.get_test_batch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.ContinuousTestRun.get_test_batches"><code class="docutils literal notranslate"><span class="pre">ContinuousTestRun.get_test_batches()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.ContinuousTestRun.get_test_cases_df"><code class="docutils literal notranslate"><span class="pre">ContinuousTestRun.get_test_cases_df()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#rime_sdk.TestBatch"><code class="docutils literal notranslate"><span class="pre">TestBatch</span></code></a><ul>
@@ -242,6 +272,7 @@
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -258,7 +289,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Python SDK reference</li>
+      <li class="breadcrumb-item active">Python SDK Reference</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -268,7 +299,7 @@
            <div itemprop="articleBody">
              
   <section id="module-rime_sdk">
-<span id="python-sdk-reference"></span><span id="rime-sdk"></span><h1>Python SDK reference<a class="headerlink" href="#module-rime_sdk" title="Permalink to this heading"></a></h1>
+<span id="python-sdk-reference"></span><span id="rime-sdk"></span><h1>Python SDK Reference<a class="headerlink" href="#module-rime_sdk" title="Permalink to this heading"></a></h1>
 <p>Python package providing access to Robust Intelligence.</p>
 <p>The RIME SDK provides a programmatic interface to a Robust Intelligence
 instance, allowing you to create projects, start stress tests, query the
@@ -278,7 +309,7 @@ functions.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="rime_sdk.Client">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rime_sdk.</span></span><span class="sig-name descname"><span class="pre">Client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">180.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disable_tls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ssl_ca_cert</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cert_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assert_hostname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rime_sdk.Client" title="Permalink to this definition"></a></dt>
-<dd><p>A Client object provides an interface to RIME’s         services for creating Projects, starting Stress Test Jobs,        and querying the backend for current Stress Test Jobs.</p>
+<dd><p>A Client object provides an interface to RIME’s services for creating Projects, starting Stress Test Jobs, and querying the backend for current Stress Test Jobs.</p>
 <p>To initialize the Client, provide the address of your RIME instance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -402,13 +433,16 @@ a confirmation is required.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Client.create_managed_image">
 <span class="sig-name descname"><span class="pre">create_managed_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requirements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ManagedImagePipRequirement</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ManagedImagePackageRequirement</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">python_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.ImageBuilder" title="rime_sdk.image_builder.ImageBuilder"><span class="pre">ImageBuilder</span></a></span></span><a class="headerlink" href="#rime_sdk.Client.create_managed_image" title="Permalink to this definition"></a></dt>
-<dd><p>Create a new managed Docker image with the desired        custom requirements to run RIME on.</p>
+<dd><p>Create a new managed Docker image with the desired custom requirements to run RIME on.</p>
 <p>These managed Docker images are managed by the RIME cluster and
 automatically upgrade when the installed version of RIME upgrades.
 Note: Images take a few minutes to be built.</p>
 <p>This method returns an object that can be used to track the progress of the
 image building job. The new custom image is only available for use in a stress
 test once it has status <code class="docutils literal notranslate"><span class="pre">READY</span></code>.</p>
+<p><strong>Managed images are not currently supported in a Cloud deployment.
+Please reach out to Robust Intelligence for support if this functionality is required
+for your deployment.</strong></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -652,7 +686,7 @@ a single Managed Image.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Client.start_stress_test">
-<span class="sig-name descname"><span class="pre">start_stress_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_run_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">exp_fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.Job" title="rime_sdk.job.Job"><span class="pre">Job</span></a></span></span><a class="headerlink" href="#rime_sdk.Client.start_stress_test" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">start_stress_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_run_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">exp_fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.Job" title="rime_sdk.job.Job"><span class="pre">Job</span></a></span></span><a class="headerlink" href="#rime_sdk.Client.start_stress_test" title="Permalink to this definition"></a></dt>
 <dd><p>Start a Stress Testing run.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -663,6 +697,9 @@ locate the model and datasets to be used for the test.</p></li>
 <li><p><strong>project_id</strong> – str
 Identifier for the Project where the resulting test run will be stored.
 When not specified, stores the results in the default Project.</p></li>
+<li><p><strong>agent_id</strong> – Optional[str]
+ID for the Agent where the Stress Test will be run.
+Uses the default Agent for the workspace when not specified.</p></li>
 <li><p><strong>exp_fields</strong> – Dict[str, object]
 [BETA] Fields for experimental features.</p></li>
 </ul>
@@ -726,6 +763,8 @@ ID of the test run to query for</p>
 <p>Query the backend for an active <cite>Firewall</cite> in a specified Project which
 can be used to perform Firewall operations. If there is no active
 Firewall for the Project, this call will error.</p>
+<p><strong>Note that the Firewall is deprecated in Robust Intelligence v2.2 and will
+not be supported from v2.4.</strong></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>project_id</strong> – ID of the Project which contains a Firewall.</p>
@@ -754,6 +793,8 @@ Firewall for the Project, this call will error.</p>
 <dd><p>Upload a file to make it accessible to the RIME cluster.</p>
 <p>The uploaded file is stored in the RIME cluster in a blob store
 using its file name.</p>
+<p><strong>File uploading is not currently supported in a Cloud deployment.
+Please use an external data source instead.</strong></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -802,6 +843,8 @@ Every image within the file is also uploaded to blob store,
 and the final file is also uploaded.
 If your image paths already reference an external blob storage,
 then use <cite>upload_file</cite> instead to upload the dataset file.</p>
+<p><strong>File uploading is not currently supported in a Cloud deployment.
+Please use an external data source instead.</strong></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -843,6 +886,8 @@ Please store this reference for future access to the file.</p>
 <dd><p>Upload a pandas DataFrame to make it accessible to the RIME cluster.</p>
 <p>The uploaded file is stored in the RIME cluster in a blob store
 using its file name.</p>
+<p><strong>File uploading is not currently supported in a Cloud deployment.
+Please use an external data source instead.</strong></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -888,6 +933,8 @@ All files contained within <code class="docutils literal notranslate"><span clas
 according to their relative paths within <code class="docutils literal notranslate"><span class="pre">dir_path</span></code>. When
 <cite>upload_hidden</cite> is set to False, all hidden files and subdirectories
 that begin with a ‘.’ are not uploaded.</p>
+<p><strong>File uploading is not currently supported in a Cloud deployment.
+Please use an external data source instead.</strong></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1145,25 +1192,34 @@ These are not guaranteed to be in any sorted order.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Project.list_test_runs">
-<span class="sig-name descname"><span class="pre">list_test_runs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#rime_sdk.TestRun" title="rime_sdk.test_run.TestRun"><span class="pre">TestRun</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#rime_sdk.Project.list_test_runs" title="Permalink to this definition"></a></dt>
-<dd><p>List the Stress Test Runs associated with this Project.</p>
+<span class="sig-name descname"><span class="pre">list_test_runs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RimeTestType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#rime_sdk.TestRun" title="rime_sdk.test_run.TestRun"><span class="pre">TestRun</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#rime_sdk.Project.list_test_runs" title="Permalink to this definition"></a></dt>
+<dd><p>List the Test Runs associated with this Project.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An iterator of <code class="docutils literal notranslate"><span class="pre">TestRun</span></code> objects.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>test_type</strong> – Optional[RimeTestType] = None.
+Filter for selecting test runs by RimeTestType.
+If omitted, stress test runs are returned, excluding continuous test runs.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Iterator[<a class="reference internal" href="#rime_sdk.TestRun" title="rime_sdk.TestRun">TestRun</a>]</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An iterator of <code class="docutils literal notranslate"><span class="pre">TestRun</span></code> objects.</p>
 </dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – This error is generated when the request to the
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Iterator[<a class="reference internal" href="#rime_sdk.TestRun" title="rime_sdk.TestRun">TestRun</a>]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – This error is generated when the request to the
     ResultsReader Service fails.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># List all test runs in the Project.</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># List all stress test runs in the Project.</span>
 <span class="n">test_runs</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">list_test_runs</span><span class="p">()</span>
-<span class="c1"># Get the IDs of all the test runs.</span>
+<span class="c1"># Get the IDs of the test runs.</span>
 <span class="p">[</span><span class="n">test_run</span><span class="o">.</span><span class="n">test_run_id</span> <span class="k">for</span> <span class="n">test_run</span> <span class="ow">in</span> <span class="n">test_runs</span><span class="p">]</span>
+
+
+<span class="c1"># List all continuous test runs in the Project.</span>
+<span class="n">test_runs</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">list_test_runs</span><span class="p">(</span><span class="n">RimeTestType</span><span class="o">.</span><span class="n">CONTINUOUS_TESTING</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1172,6 +1228,8 @@ These are not guaranteed to be in any sorted order.</p>
 <dt class="sig sig-object py" id="rime_sdk.Project.create_firewall">
 <span class="sig-name descname"><span class="pre">create_firewall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_data_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">timedelta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduled_ct_eval_data_integration_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduled_ct_eval_data_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduled_ct_eval_pred_integration_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduled_ct_eval_pred_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduled_ct_rolling_window_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">timedelta</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.Firewall" title="rime_sdk.firewall.Firewall"><span class="pre">Firewall</span></a></span></span><a class="headerlink" href="#rime_sdk.Project.create_firewall" title="Permalink to this definition"></a></dt>
 <dd><p>Create a Firewall in the current Project.</p>
+<p><strong>Note that the Firewall is deprecated in Robust Intelligence v2.2 and will
+not be supported from v2.4.</strong></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1219,6 +1277,8 @@ The size of the rolling window to be used for Scheduled CT evaluation.</p></li>
 <dt class="sig sig-object py" id="rime_sdk.Project.get_firewall">
 <span class="sig-name descname"><span class="pre">get_firewall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.Firewall" title="rime_sdk.firewall.Firewall"><span class="pre">Firewall</span></a></span></span><a class="headerlink" href="#rime_sdk.Project.get_firewall" title="Permalink to this definition"></a></dt>
 <dd><p>Return the active Firewall for a Project if one exists.</p>
+<p><strong>Note that the Firewall is deprecated in Robust Intelligence v2.2 and will
+not be supported from v2.4.</strong></p>
 <p>Query the backend for an active <cite>Firewall</cite> in this Project which
 can be used to perform Firewall operations. If there is no active
 Firewall for the project, this call will return an error.</p>
@@ -1245,12 +1305,16 @@ Firewall for the project, this call will return an error.</p>
 <dt class="sig sig-object py" id="rime_sdk.Project.has_firewall">
 <span class="sig-name descname"><span class="pre">has_firewall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#rime_sdk.Project.has_firewall" title="Permalink to this definition"></a></dt>
 <dd><p>Check whether a Project has a Firewall.</p>
+<p><strong>Note that the Firewall is deprecated in Robust Intelligence v2.2 and will
+not be supported from v2.4.</strong></p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Project.delete_firewall">
 <span class="sig-name descname"><span class="pre">delete_firewall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.Project.delete_firewall" title="Permalink to this definition"></a></dt>
 <dd><p>Delete the Firewall for this Project if one exists.</p>
+<p><strong>Note that the Firewall is deprecated in Robust Intelligence v2.2 and will
+not be supported from v2.4.</strong></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>force</strong> – Optional[bool] = False
@@ -1402,10 +1466,72 @@ agent will be used.</p></li>
 The chosen name of the dataset.</p></li>
 <li><p><strong>remote_path</strong> – str
 The path to the dataset artifact.</p></li>
+<li><p><strong>data_params</strong> – dict
+A dictionary that contains the data parameters.
+The data parameters must match the API specification
+of the <cite>data_info.data_params</cite> field in the <cite>RegisterDataset</cite> request.</p></li>
 <li><p><strong>tags</strong> – Optional[List[str]] = None,
 An optional list of tags to associate with the dataset.</p></li>
 <li><p><strong>metadata</strong> – Optional[dict] = None,
 An optional dictionary of metadata to associate with the dataset.</p></li>
+<li><p><strong>ct_info</strong> – Optional[dict] = None,
+An optional dictionary that contains the CT info.
+The CT info must match the API specification of the <cite>ct_info</cite>
+field in the <cite>RegisterDataset</cite> request.</p></li>
+<li><p><strong>skip_validation</strong> – Optional[bool] = False,
+An optional boolean that indicates whether to skip validation.
+Validation ensures that the dataset is valid for Robust
+Intelligence’s systems.</p></li>
+<li><p><strong>agent_id</strong> – Optional[str] = None,
+Agent for running validation. If omitted the workspace’s default
+agent will be used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The ID of the newly registered dataset.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – This error is generated when the request to the Registry
+    service fails.</p></li>
+<li><p><strong>DatasetValidationError</strong> – This error is generated when the dataset is invalid.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.Project.upload_and_register_dataset_from_file">
+<span class="sig-name descname"><span class="pre">upload_and_register_dataset_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upload_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ct_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_validation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.Project.upload_and_register_dataset_from_file" title="Permalink to this definition"></a></dt>
+<dd><p>Upload, register and validate a new dataset in this Project.</p>
+<p>The uploaded file is stored in the Robust Intelligence cluster in a blob store
+using its file name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – str
+The chosen name of the dataset.</p></li>
+<li><p><strong>file_path</strong> – Union[Path, str]
+The local path to the dataset artifact, to be uploaded to Robust
+Intelligence’s blob store.</p></li>
+<li><p><strong>upload_path</strong> – Optional[str] = None,
+Name of the directory in the blob store file system. If omitted,
+a unique random string will be the directory.</p></li>
+<li><p><strong>data_params</strong> – Optional[dict] = None,
+A dictionary that contains the data parameters.
+The data parameters must match the API specification
+of the <cite>data_info.data_params</cite> field in the <cite>RegisterDataset</cite> request.</p></li>
+<li><p><strong>tags</strong> – Optional[List[str]] = None,
+An optional list of tags to associate with the dataset.</p></li>
+<li><p><strong>metadata</strong> – Optional[dict] = None,
+An optional dictionary of metadata to associate with the dataset.</p></li>
+<li><p><strong>ct_info</strong> – Optional[dict] = None,
+An optional dictionary that contains the CT info.
+The CT info must match the API specification of the <cite>ct_info</cite>
+field in the <cite>RegisterDataset</cite> request.</p></li>
 <li><p><strong>skip_validation</strong> – Optional[bool] = False,
 An optional boolean that indicates whether to skip validation.
 Validation ensures that the dataset is valid for Robust
@@ -1433,7 +1559,7 @@ agent will be used.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Project.register_model">
-<span class="sig-name descname"><span class="pre">register_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integration_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_validation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.Project.register_model" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">register_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integration_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_endpoint_integration_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_validation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.Project.register_model" title="Permalink to this definition"></a></dt>
 <dd><p>Register and validate a new model in this Project.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1453,7 +1579,10 @@ An optional dictionary of metadata to associate with the model.</p></li>
 An optional external ID that can be used to identify the model.</p></li>
 <li><p><strong>integration_id</strong> – Optional[str] = None,
 Provide the integration ID for models that require an
-integration for access.</p></li>
+integration for accessing the model.</p></li>
+<li><p><strong>model_endpoint_integration_id</strong> – Optional[str] = None,
+Provide the integration ID for models that require an
+integration when running the model.</p></li>
 <li><p><strong>skip_validation</strong> – Optional[bool] = False,
 An optional boolean that indicates whether to skip validation.
 Validation ensures that the model is valid for Robust
@@ -1501,7 +1630,7 @@ agent will be used.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Project.register_model_from_path">
-<span class="sig-name descname"><span class="pre">register_model_from_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integration_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_validation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.Project.register_model_from_path" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">register_model_from_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integration_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_endpoint_integration_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_validation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.Project.register_model_from_path" title="Permalink to this definition"></a></dt>
 <dd><p>Register and validate a new model in this Project.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1510,6 +1639,75 @@ agent will be used.</p></li>
 The chosen name of the model.</p></li>
 <li><p><strong>remote_path</strong> – str
 The path to the model artifact.</p></li>
+<li><p><strong>tags</strong> – Optional[List[str]] = None,
+An optional list of tags to associate with the model.</p></li>
+<li><p><strong>metadata</strong> – Optional[dict] = None,
+An optional dictionary of metadata to associate with the model.</p></li>
+<li><p><strong>external_id</strong> – Optional[str] = None,
+An optional external ID that can be used to identify the model.</p></li>
+<li><p><strong>integration_id</strong> – Optional[str] = None,
+Provide the integration ID for models that require an
+integration for access.</p></li>
+<li><p><strong>model_endpoint_integration_id</strong> – Optional[str] = None,
+Provide the integration ID for models that require an
+integration when running the model.</p></li>
+<li><p><strong>skip_validation</strong> – Optional[bool] = False,
+An optional boolean that indicates whether to skip validation.
+Validation ensures that the model is valid for Robust
+Intelligence’s systems.</p></li>
+<li><p><strong>agent_id</strong> – Optional[str] = None,
+Agent for running validation. If omitted the workspace’s default
+agent will be used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The ID of the newly registered model.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – This error is generated when the request to the Registry
+    service fails.</p></li>
+<li><p><strong>ModelValidationError</strong> – This error is generated when the model is invalid.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="n">MODEL_NAME</span><span class="p">,</span>
+    <span class="n">remote_path</span><span class="o">=</span><span class="n">MODEL_PATH</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.Project.upload_and_register_model_from_path">
+<span class="sig-name descname"><span class="pre">upload_and_register_model_from_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upload_model_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upload_hidden</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upload_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integration_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_validation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.Project.upload_and_register_model_from_path" title="Permalink to this definition"></a></dt>
+<dd><p>Upload, register and validate a new model in this Project.</p>
+<p>The uploaded file is stored in the Robust Intelligence cluster in a blob store
+using its file name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – str
+The chosen name of the model.</p></li>
+<li><p><strong>file_path</strong> – Union[Path, str]
+The local path to the model artifact, to be uploaded to Robust
+Intelligence’s blob store.</p></li>
+<li><p><strong>upload_model_dir</strong> – bool = False
+Whether to upload the directory containing the model artifact, in
+addition to the model artifact itself. Note that if set to True, this
+method will upload <em>everything</em> in the model’s containing directory, so
+only place files required to run the model in the directory.</p></li>
+<li><p><strong>upload_hidden</strong> – bool = False
+Whether or not to upload hidden files or subdirectories
+(ie. those beginning with a ‘.’) in dir_path.</p></li>
+<li><p><strong>upload_path</strong> – Optional[str] = None,
+Name of the directory in the blob store file system. If omitted,
+a unique random string will be the directory.</p></li>
 <li><p><strong>tags</strong> – Optional[List[str]] = None,
 An optional list of tags to associate with the model.</p></li>
 <li><p><strong>metadata</strong> – Optional[dict] = None,
@@ -1543,9 +1741,9 @@ agent will be used.</p></li>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_path</span><span class="p">(</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">upload_and_register_model_from_path</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="n">MODEL_NAME</span><span class="p">,</span>
-    <span class="n">remote_path</span><span class="o">=</span><span class="n">MODEL_PATH</span><span class="p">,</span>
+    <span class="n">file_path</span><span class="o">=</span><span class="n">MODEL_PATH</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -2057,6 +2255,198 @@ Test suite configuration with which to update the project.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.Job.cancel">
+<span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.Job.cancel" title="Permalink to this definition"></a></dt>
+<dd><p>Request to cancel the Job.</p>
+<p>The RIME cluster will mark the Job with “Cancellation Requested” and then clean
+up the Job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.Job.get_agent_id">
+<span class="sig-name descname"><span class="pre">get_agent_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.Job.get_agent_id" title="Permalink to this definition"></a></dt>
+<dd><p>Return the Agent ID running the Job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.Job.get_job_debug_logs_link">
+<span class="sig-name descname"><span class="pre">get_job_debug_logs_link</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.Job.get_job_debug_logs_link" title="Permalink to this definition"></a></dt>
+<dd><p>Return a link to the archived logs for a failed Job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.Job.get_status">
+<span class="sig-name descname"><span class="pre">get_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_until_finish</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poll_rate_sec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="headerlink" href="#rime_sdk.Job.get_status" title="Permalink to this definition"></a></dt>
+<dd><p>Return the current status of the Job.</p>
+<p>Includes flags for blocking until the job is complete and printing
+information to <code class="docutils literal notranslate"><span class="pre">stdout</span></code>. This method displays the progress and
+running time of jobs.</p>
+<p>If the job has failed, the logs of the testing engine will be dumped
+to <code class="docutils literal notranslate"><span class="pre">stdout</span></code> for debugging.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>verbose</strong> – bool
+Specifies whether to print diagnostic information such as progress.</p></li>
+<li><p><strong>wait_until_finish</strong> – bool
+Specifies whether to block until the job has succeeded or failed.
+If <cite>verbose</cite> is enabled too, information about the job including
+running time and progress will be printed to <code class="docutils literal notranslate"><span class="pre">stdout</span></code> every
+<code class="docutils literal notranslate"><span class="pre">poll_rate_sec</span></code>.</p></li>
+<li><p><strong>poll_rate_sec</strong> – float
+The frequency in seconds with which to poll the job’s status.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>A dictionary representing the job’s state.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="s2">&quot;start_time_secs&quot;</span><span class="p">:</span> <span class="n">int64</span>
+<span class="s2">&quot;running_time_secs&quot;</span><span class="p">:</span> <span class="n">double</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Block until this job is finished and dump monitoring info to stdout.</span>
+<span class="n">job_status</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime_sdk.Job.job_id">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">job_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#rime_sdk.Job.job_id" title="Permalink to this definition"></a></dt>
+<dd><p>Return the ID of the Job.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime_sdk.Job.job_type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">job_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#rime_sdk.Job.job_type" title="Permalink to this definition"></a></dt>
+<dd><p>Return the type of the Job.</p>
+<p>The valid Job types are:
+MODEL_STRESS_TEST, FIREWALL_BATCH_TEST, IMAGE_BUILDER, FILE_SCAN</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rime_sdk.ContinuousTestJob">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rime_sdk.</span></span><span class="sig-name descname"><span class="pre">ContinuousTestJob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ApiClient</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rime_sdk.ContinuousTestJob" title="Permalink to this definition"></a></dt>
+<dd><p>This object provides an interface for monitoring a Continuous Test Job in the RIME backend.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.ContinuousTestJob.get_test_run_ids">
+<span class="sig-name descname"><span class="pre">get_test_run_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.ContinuousTestJob.get_test_run_ids" title="Permalink to this definition"></a></dt>
+<dd><p>Get the set of Test Run IDs corresponding to a successful Continuous Test Job.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – This error is generated when the job does not have state ‘SUCCEEDED’
+    or when the request to the Job Reader service fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.ContinuousTestJob.get_test_runs">
+<span class="sig-name descname"><span class="pre">get_test_runs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#rime_sdk.TestRun" title="rime_sdk.test_run.TestRun"><span class="pre">TestRun</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#rime_sdk.ContinuousTestJob.get_test_runs" title="Permalink to this definition"></a></dt>
+<dd><p>Get the list of Test Run objects corresponding to a successful Continuous Test Job.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – This error is generated when the job does not have state ‘SUCCEEDED’
+    or if the request to the Job Reader service fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.ContinuousTestJob.cancel">
+<span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.ContinuousTestJob.cancel" title="Permalink to this definition"></a></dt>
+<dd><p>Request to cancel the Job.</p>
+<p>The RIME cluster will mark the Job with “Cancellation Requested” and then clean
+up the Job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.ContinuousTestJob.get_agent_id">
+<span class="sig-name descname"><span class="pre">get_agent_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.ContinuousTestJob.get_agent_id" title="Permalink to this definition"></a></dt>
+<dd><p>Return the Agent ID running the Job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.ContinuousTestJob.get_job_debug_logs_link">
+<span class="sig-name descname"><span class="pre">get_job_debug_logs_link</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.ContinuousTestJob.get_job_debug_logs_link" title="Permalink to this definition"></a></dt>
+<dd><p>Return a link to the archived logs for a failed Job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.ContinuousTestJob.get_status">
+<span class="sig-name descname"><span class="pre">get_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_until_finish</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poll_rate_sec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="headerlink" href="#rime_sdk.ContinuousTestJob.get_status" title="Permalink to this definition"></a></dt>
+<dd><p>Return the current status of the Job.</p>
+<p>Includes flags for blocking until the job is complete and printing
+information to <code class="docutils literal notranslate"><span class="pre">stdout</span></code>. This method displays the progress and
+running time of jobs.</p>
+<p>If the job has failed, the logs of the testing engine will be dumped
+to <code class="docutils literal notranslate"><span class="pre">stdout</span></code> for debugging.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>verbose</strong> – bool
+Specifies whether to print diagnostic information such as progress.</p></li>
+<li><p><strong>wait_until_finish</strong> – bool
+Specifies whether to block until the job has succeeded or failed.
+If <cite>verbose</cite> is enabled too, information about the job including
+running time and progress will be printed to <code class="docutils literal notranslate"><span class="pre">stdout</span></code> every
+<code class="docutils literal notranslate"><span class="pre">poll_rate_sec</span></code>.</p></li>
+<li><p><strong>poll_rate_sec</strong> – float
+The frequency in seconds with which to poll the job’s status.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>A dictionary representing the job’s state.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="s2">&quot;start_time_secs&quot;</span><span class="p">:</span> <span class="n">int64</span>
+<span class="s2">&quot;running_time_secs&quot;</span><span class="p">:</span> <span class="n">double</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Block until this job is finished and dump monitoring info to stdout.</span>
+<span class="n">job_status</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime_sdk.ContinuousTestJob.job_id">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">job_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#rime_sdk.ContinuousTestJob.job_id" title="Permalink to this definition"></a></dt>
+<dd><p>Return the ID of the Job.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime_sdk.ContinuousTestJob.job_type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">job_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#rime_sdk.ContinuousTestJob.job_type" title="Permalink to this definition"></a></dt>
+<dd><p>Return the type of the Job.</p>
+<p>The valid Job types are:
+MODEL_STRESS_TEST, FIREWALL_BATCH_TEST, IMAGE_BUILDER, FILE_SCAN</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -2066,7 +2456,7 @@ Test suite configuration with which to update the project.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.TestRun.get_link">
 <span class="sig-name descname"><span class="pre">get_link</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.TestRun.get_link" title="Permalink to this definition"></a></dt>
-<dd><p>Return the web app URL for the Firewall Continuous Tests page.</p>
+<dd><p>Return the web app URL for the Test Run page.</p>
 <p>This page contains results for all Test Runs. To jump to the view which
 shows results for this specific Test Run, click on the corresponding time
 bin in the UI.</p>
@@ -2075,7 +2465,7 @@ bin in the UI.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.TestRun.get_result_df">
 <span class="sig-name descname"><span class="pre">get_result_df</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#rime_sdk.TestRun.get_result_df" title="Permalink to this definition"></a></dt>
-<dd><p>Return high level summary information for a complete stress Test Run in a        single-row dataframe.</p>
+<dd><p>Return high level summary information for a complete stress Test Run in a single-row dataframe.</p>
 <p>This dataframe includes information such as model metrics on the reference and        evaluation datasets, overall RIME results such as severity across tests,        and high level metadata such as the project ID and model task.</p>
 <p>Place these rows together to build a table of test to build a table of test
 run results for comparison. This only works for stress test jobs that
@@ -2225,6 +2615,184 @@ Here is a selected list of columns in the output:
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="rime_sdk.ContinuousTestRun">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rime_sdk.</span></span><span class="sig-name descname"><span class="pre">ContinuousTestRun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ApiClient</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_run_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_bin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">datetime</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">datetime</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rime_sdk.ContinuousTestRun" title="Permalink to this definition"></a></dt>
+<dd><p>An interface for an individual RIME continuous Test Run.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="rime_sdk.ContinuousTestRun.start_time">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">start_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span></em><a class="headerlink" href="#rime_sdk.ContinuousTestRun.start_time" title="Permalink to this definition"></a></dt>
+<dd><p>Return the start time.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="rime_sdk.ContinuousTestRun.end_time">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">end_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span></em><a class="headerlink" href="#rime_sdk.ContinuousTestRun.end_time" title="Permalink to this definition"></a></dt>
+<dd><p>Return the end time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.ContinuousTestRun.get_link">
+<span class="sig-name descname"><span class="pre">get_link</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.ContinuousTestRun.get_link" title="Permalink to this definition"></a></dt>
+<dd><p>Return the web app URL which points to the Continuous Tests page.</p>
+<p>This page contains results for all Test Runs. To jump to the view which
+shows results for this specific Test Run, click on the corresponding time
+bin in the UI.</p>
+<p>Note: this is a string that should be copy-pasted into a browser.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.ContinuousTestRun.get_result_df">
+<span class="sig-name descname"><span class="pre">get_result_df</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#rime_sdk.ContinuousTestRun.get_result_df" title="Permalink to this definition"></a></dt>
+<dd><p>Return high level summary information for a complete stress Test Run in a single-row dataframe.</p>
+<p>This dataframe includes information such as model metrics on the reference and        evaluation datasets, overall RIME results such as severity across tests,        and high level metadata such as the project ID and model task.</p>
+<p>Place these rows together to build a table of test to build a table of test
+run results for comparison. This only works for stress test jobs that
+have succeeded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A <cite>pandas.DataFrame</cite> object containing the Test Run result.
+Use the <cite>.columns</cite> method on the returned dataframe to see what columns
+represent. Generally, these columns have information
+about the model and datasets as well as summary statistics such as the
+number of failing Test Cases or number of high severity Test Cases.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">test_run</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">(</span><span class="n">some_test_run_id</span><span class="p">)</span>
+<span class="n">test_run_result_df</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_result_df</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.ContinuousTestRun.get_summary_tests_df">
+<span class="sig-name descname"><span class="pre">get_summary_tests_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">show_summary_test_metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#rime_sdk.ContinuousTestRun.get_summary_tests_df" title="Permalink to this definition"></a></dt>
+<dd><p>Get summary tests for a completed stress Test Run in a dataframe.</p>
+<p>This gives you the ability to perform granular queries on summary tests.
+This only works on stress test jobs that have succeeded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> object containing the Test Case results.
+Here is a selected list of columns in the output:
+1. <code class="docutils literal notranslate"><span class="pre">id</span></code>: ID of the parent Test Run.
+2. <code class="docutils literal notranslate"><span class="pre">name</span></code>: name of the summary test.
+3. <code class="docutils literal notranslate"><span class="pre">severity</span></code>: Denotes the severity of the failure of the test.
+4. <code class="docutils literal notranslate"><span class="pre">test_batch_types</span></code>: List of tests that this summary tests uses.
+5. <code class="docutils literal notranslate"><span class="pre">failing_test_types</span></code>: List of tests in this summary test that fail.
+6. <code class="docutils literal notranslate"><span class="pre">num_none_severity</span></code>: Count of tests with NONE severity.
+7. <code class="docutils literal notranslate"><span class="pre">num_low_severity</span></code>: Count of tests with LOW severity.
+9. <code class="docutils literal notranslate"><span class="pre">num_high_severity</span></code>: Count of tests with HIGH severity.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wait until the job has finished, since this method only works on</span>
+<span class="c1"># SUCCEEDED jobs.</span>
+<span class="n">job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Get the Test Run result.</span>
+<span class="n">test_run</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
+<span class="c1"># Dump the Test Cases in dataframe ``df``.</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_summary_tests_df</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.ContinuousTestRun.get_test_batch">
+<span class="sig-name descname"><span class="pre">get_test_batch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.TestBatch" title="rime_sdk.test_batch.TestBatch"><span class="pre">TestBatch</span></a></span></span><a class="headerlink" href="#rime_sdk.ContinuousTestRun.get_test_batch" title="Permalink to this definition"></a></dt>
+<dd><p>Return the Test Batch object for the specified test type on this Test Run.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">TestBatch</span></code> object allows a user to query the results
+for the corresponding test. For example, the <code class="docutils literal notranslate"><span class="pre">TestBatch</span></code>
+object representing <code class="docutils literal notranslate"><span class="pre">subset_performance:subset_accuracy</span></code> allows a user
+to understand the results of the <code class="docutils literal notranslate"><span class="pre">subset_performance:subset_accuracy</span></code>
+test to varying levels of granularity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>test_type</strong> – str
+Name of the test. Structured as <code class="docutils literal notranslate"><span class="pre">test_type:test_name</span></code>, e.g.
+<code class="docutils literal notranslate"><span class="pre">subset_performance:subset_accuracy</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">TestBatch</span></code> representing <code class="docutils literal notranslate"><span class="pre">test_type</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rime_sdk.TestBatch" title="rime_sdk.TestBatch">TestBatch</a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">batch</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_batch</span><span class="p">(</span><span class="s2">&quot;unseen_categorical&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.ContinuousTestRun.get_test_batches">
+<span class="sig-name descname"><span class="pre">get_test_batches</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#rime_sdk.TestBatch" title="rime_sdk.test_batch.TestBatch"><span class="pre">TestBatch</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#rime_sdk.ContinuousTestRun.get_test_batches" title="Permalink to this definition"></a></dt>
+<dd><p>Return all <code class="docutils literal notranslate"><span class="pre">TestBatch</span></code> objects for the Test Run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An iterator of <code class="docutils literal notranslate"><span class="pre">TestBatch</span></code> objects.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Iterator[<a class="reference internal" href="#rime_sdk.TestBatch" title="rime_sdk.TestBatch">TestBatch</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.ContinuousTestRun.get_test_cases_df">
+<span class="sig-name descname"><span class="pre">get_test_cases_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">show_test_case_metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#rime_sdk.ContinuousTestRun.get_test_cases_df" title="Permalink to this definition"></a></dt>
+<dd><p>Return all the Test Cases for a completed stress Test Run in a dataframe.</p>
+<p>This enables you to perform granular queries on Test Cases.
+For example, if you only care about subset performance tests and want to see
+the results on each feature, you can fetch all the Test Cases in a dataframe,
+then query on that dataframe by test type. This only works on stress test jobs
+that have succeeded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>show_test_case_metrics</strong> – bool = False
+Whether to show Test Case specific metrics. This could result in a
+sparse dataframe that is returned, since Test Cases return different
+metrics. Defaults to False.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>A <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> object containing the Test Case results.
+Here is a selected list of columns in the output:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">test_run_id</span></code>: ID of the parent Test Run.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">features</span></code>: List of features that the Test Case ran on.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test_batch_type</span></code>: Type of test that was run (e.g. Subset AUC).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">status</span></code>: Status of the Test Case (e.g. Pass, Fail, etc.).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">severity</span></code>: Denotes the severity of the failure of the test.</p></li>
+</ol>
+</div></blockquote>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wait until the job has finished, since this method only works on</span>
+<span class="c1"># SUCCEEDED jobs.</span>
+<span class="n">job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Get the Test Run result.</span>
+<span class="n">test_run</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
+<span class="c1"># Dump the Test Cases in dataframe ``df``.</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_cases_df</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="rime_sdk.TestBatch">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rime_sdk.</span></span><span class="sig-name descname"><span class="pre">TestBatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ApiClient</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_run_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rime_sdk.TestBatch" title="Permalink to this definition"></a></dt>
 <dd><p>An interface for a Test Batch object in a RIME Test Run.</p>
@@ -2297,12 +2865,15 @@ the number of failing rows.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="rime_sdk.Firewall">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rime_sdk.</span></span><span class="sig-name descname"><span class="pre">Firewall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ApiClient</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">firewall_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rime_sdk.Firewall" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rime_sdk.</span></span><span class="sig-name descname"><span class="pre">Firewall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rime_sdk.Firewall" title="Permalink to this definition"></a></dt>
 <dd><p>An interface to a RIME Firewall.</p>
+<p><strong>This class is deprecated in Robust Intelligence v2.2 and will be removed in v2.4.</strong></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Firewall.update_firewall">
 <span class="sig-name descname"><span class="pre">update_firewall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_data_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduled_ct_eval_data_integration_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduled_ct_eval_data_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduled_ct_eval_pred_integration_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduled_ct_eval_pred_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_rolling_window</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduled_ct_rolling_window_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">timedelta</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disable_scheduled_ct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">RimeUpdateFirewallResponse</span></span></span><a class="headerlink" href="#rime_sdk.Firewall.update_firewall" title="Permalink to this definition"></a></dt>
 <dd><p>Update the Firewall with specified model and reference data.</p>
+<p><strong>Note that the Firewall is deprecated in Robust Intelligence v2.2 and will
+not be supported from v2.4.</strong></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -2350,6 +2921,8 @@ Specifies whether to disable continuous testing</p></li>
 <dt class="sig sig-object py" id="rime_sdk.Firewall.activate_ct_scheduling">
 <span class="sig-name descname"><span class="pre">activate_ct_scheduling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_integration_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred_integration_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rolling_window_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">timedelta</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.Firewall.activate_ct_scheduling" title="Permalink to this definition"></a></dt>
 <dd><p>Activate scheduled CT.</p>
+<p><strong>Note that the Firewall is deprecated in Robust Intelligence v2.2 and will
+not be supported from v2.4.</strong></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -2373,6 +2946,8 @@ the reference set for scheduled CT.</p></li>
 <dt class="sig sig-object py" id="rime_sdk.Firewall.update_scheduled_ct_info">
 <span class="sig-name descname"><span class="pre">update_scheduled_ct_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_integration_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred_integration_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.Firewall.update_scheduled_ct_info" title="Permalink to this definition"></a></dt>
 <dd><p>Update scheduled CT.</p>
+<p><strong>Note that the Firewall is deprecated in Robust Intelligence v2.2 and will
+not be supported from v2.4.</strong></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -2396,48 +2971,64 @@ If <cite>pred_info</cite> is not <cite>None</cite>, the Firewall will use it for
 <dt class="sig sig-object py" id="rime_sdk.Firewall.deactivate_ct_scheduling">
 <span class="sig-name descname"><span class="pre">deactivate_ct_scheduling</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.Firewall.deactivate_ct_scheduling" title="Permalink to this definition"></a></dt>
 <dd><p>Deactivate scheduled CT.</p>
+<p><strong>Note that the Firewall is deprecated in Robust Intelligence v2.2 and will
+not be supported from v2.4.</strong></p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Firewall.get_link">
 <span class="sig-name descname"><span class="pre">get_link</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.Firewall.get_link" title="Permalink to this definition"></a></dt>
 <dd><p>Return a URL to the Firewall.</p>
+<p><strong>Note that the Firewall is deprecated in Robust Intelligence v2.2 and will
+not be supported from v2.4.</strong></p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Firewall.get_bin_size">
 <span class="sig-name descname"><span class="pre">get_bin_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">timedelta</span></span></span><a class="headerlink" href="#rime_sdk.Firewall.get_bin_size" title="Permalink to this definition"></a></dt>
 <dd><p>Return the bin size of this Firewall.</p>
+<p><strong>Note that the Firewall is deprecated in Robust Intelligence v2.2 and will
+not be supported from v2.4.</strong></p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Firewall.get_ref_data_id">
 <span class="sig-name descname"><span class="pre">get_ref_data_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.Firewall.get_ref_data_id" title="Permalink to this definition"></a></dt>
 <dd><p>Return the ID of the Firewall’s current reference set.</p>
+<p><strong>Note that the Firewall is deprecated in Robust Intelligence v2.2 and will
+not be supported from v2.4.</strong></p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Firewall.get_model_id">
 <span class="sig-name descname"><span class="pre">get_model_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.Firewall.get_model_id" title="Permalink to this definition"></a></dt>
 <dd><p>Return the ID of the Firewall’s current model.</p>
+<p><strong>Note that the Firewall is deprecated in Robust Intelligence v2.2 and will
+not be supported from v2.4.</strong></p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Firewall.get_scheduled_ct_info">
 <span class="sig-name descname"><span class="pre">get_scheduled_ct_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">FirewallScheduledCTInfo</span></span></span><a class="headerlink" href="#rime_sdk.Firewall.get_scheduled_ct_info" title="Permalink to this definition"></a></dt>
 <dd><p>Return the scheduled continuous testing info of this Firewall.</p>
+<p><strong>Note that the Firewall is deprecated in Robust Intelligence v2.2 and will
+not be supported from v2.4.</strong></p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Firewall.is_scheduled_ct_enabled">
 <span class="sig-name descname"><span class="pre">is_scheduled_ct_enabled</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#rime_sdk.Firewall.is_scheduled_ct_enabled" title="Permalink to this definition"></a></dt>
 <dd><p>Return whether scheduled continuous testing is enabled for this Firewall.</p>
+<p><strong>Note that the Firewall is deprecated in Robust Intelligence v2.2 and will
+not be supported from v2.4.</strong></p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Firewall.get_events_df">
 <span class="sig-name descname"><span class="pre">get_events_df</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#rime_sdk.Firewall.get_events_df" title="Permalink to this definition"></a></dt>
 <dd><p>Get a dataframe of Detected Events for the given Firewall.</p>
+<p><strong>Note that the Firewall is deprecated in Robust Intelligence v2.2 and will
+not be supported from v2.4.</strong></p>
 <p>Monitors detect Events when degradations occur.
 For example, a Monitor for the metric “Accuracy” will detect an Event
 when the value of the model performance metric drops below a threshold.</p>
@@ -2447,6 +3038,8 @@ when the value of the model performance metric drops below a threshold.</p>
 <dt class="sig sig-object py" id="rime_sdk.Firewall.list_monitors">
 <span class="sig-name descname"><span class="pre">list_monitors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">monitor_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">risk_category_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#rime_sdk.Monitor" title="rime_sdk.monitor.Monitor"><span class="pre">Monitor</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#rime_sdk.Firewall.list_monitors" title="Permalink to this definition"></a></dt>
 <dd><p>List Monitors for the given Firewall.</p>
+<p><strong>Note that the Firewall is deprecated in Robust Intelligence v2.2 and will
+not be supported from v2.4.</strong></p>
 <p>Monitors examine time-sequenced data in RIME. Built-in Monitors track model
 health metrics such as degradations in model performance metrics or attacks
 on your model. This method can optionally filter by Monitor types or Risk
@@ -2487,8 +3080,10 @@ Accepted values:                 [“Operational”, “Bias_and_Fairness”, �
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Firewall.start_continuous_test">
-<span class="sig-name descname"><span class="pre">start_continuous_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eval_data_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">override_existing_bins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ram_request_megabytes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_request_millicores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rime_managed_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RuntimeinfoCustomImage</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">exp_fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ContinuousTestJob</span></span></span><a class="headerlink" href="#rime_sdk.Firewall.start_continuous_test" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">start_continuous_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eval_data_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">override_existing_bins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ram_request_megabytes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_request_millicores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rime_managed_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RuntimeinfoCustomImage</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">exp_fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.ContinuousTestJob" title="rime_sdk.job.ContinuousTestJob"><span class="pre">ContinuousTestJob</span></a></span></span><a class="headerlink" href="#rime_sdk.Firewall.start_continuous_test" title="Permalink to this definition"></a></dt>
 <dd><p>Start a Continuous Testing run.</p>
+<p><strong>Note that the Firewall is deprecated in Robust Intelligence v2.2 and will
+not be supported from v2.4.</strong></p>
 <p>Runs a Continuous Testing job on a batch of data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -2503,6 +3098,9 @@ Job. The default is 4000MB.</p></li>
 <li><p><strong>cpu_request_millicores</strong> – Optional[int]
 Millicores of CPU set as the Kubernetes pod limit for the Stress Test
 Job. The default is 1500mi.</p></li>
+<li><p><strong>random_seed</strong> – Optional[int]
+Random seed to use for the Job, so that Test Job result will be
+deterministic.</p></li>
 <li><p><strong>agent_id</strong> – Optional[str]
 ID for the Agent where the Continuous Test will be run.
 Uses the default Agent for the workspace when not specified.</p></li>
@@ -2525,7 +3123,7 @@ Fields for experimental features.</p></li>
 <dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">Job</span></code> object corresponding to the model Continuous Test Job.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>ContinuousTestJob</p>
+<dd class="field-odd"><p><a class="reference internal" href="#rime_sdk.ContinuousTestJob" title="rime_sdk.ContinuousTestJob">ContinuousTestJob</a></p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>ValueError</strong> – This error is generated when the request to the ModelTesting service
@@ -2757,7 +3355,7 @@ agent will be used.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Registry.register_model">
-<span class="sig-name descname"><span class="pre">register_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integration_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_validation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.Registry.register_model" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">register_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integration_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_endpoint_integration_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_validation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.Registry.register_model" title="Permalink to this definition"></a></dt>
 <dd><p>Register and validate a new model in a Project.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -2780,6 +3378,9 @@ An optional external ID that can be used to identify the model.</p></li>
 <li><p><strong>integration_id</strong> – Optional[str] = None,
 Provide the integration ID for models that require an
 integration for access.</p></li>
+<li><p><strong>model_endpoint_integration_id</strong> – Optional[str] = None,
+Provide the integration ID for models that require an
+integration when running the model.</p></li>
 <li><p><strong>skip_validation</strong> – Optional[bool] = False,
 An optional boolean that indicates whether to skip validation.
 Validation ensures that the model is valid for Robust

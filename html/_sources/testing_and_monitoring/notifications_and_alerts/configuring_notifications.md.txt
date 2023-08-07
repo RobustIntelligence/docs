@@ -37,6 +37,7 @@ Alerts are configured for this project.
   # Strings for the type of the notification to sign up for are:
   # ["Job_Action", "Monitoring", "Daily_Digest"]
   project.add_email("<your_email_here>", "Monitoring")
+  #note: please check with your admin if the Monitoring feature is turned on for your organization first
   ```
 
 * Currently, Gmail and Outlook are the only officially supported email clients.
@@ -63,6 +64,7 @@ Alerts are configured for this project.
   # Strings for the type of the notification to sign up for are:
   # ["Job_Action", "Monitoring", "Daily_Digest"]
   project.add_webhook("<your_webhook_url_here", "Job_Action")
+  #note: please check with your admin if the Monitoring feature is turned on for your organization first
   ```
 * Webhook URLs should be preauthenticated (i.e. include a security token as a URL parameter).
   After you create a webhook from another application to copy-paste into the RI Platform, ensure
@@ -83,7 +85,7 @@ Alerts are configured for this project.
 
 * Use the instructions for configuring webhooks above to add your created webhook to your project of choice.
 
-* Thresholds can also be modified in the SDK.
+* If you have the Monitoring feature turned on for your organization, thresholds can also be modified in the SDK.
 
   ```python
   project = rime_client.get_project("<your_project_id_here")
@@ -95,3 +97,6 @@ Alerts are configured for this project.
   # Disable the threshold for "Abnormality Rate"
   firewall.update_metric_thresholds("Abnormality Rate", disabled=True)
   ```
+
+## Related Topics  
+[Configuring SMTP for Alerts](../../administration/organization_administration/configuring_smtp.md)  

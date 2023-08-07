@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -71,15 +71,16 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Monitor Models with Continuous Tests</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="monitoring_models/creating_new_continuous_test.html">Creating a new Continuous Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitoring_models/creating_new_continuous_test.html">Creating a New Continuous Test</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../notebooks/demo_notebooks/RIME_Firewall_Configuring.html">Updating your Continuous Test</a></li>
 <li class="toctree-l2"><a class="reference internal" href="monitoring_models/loading_data_for_scheduled_ct.html">Loading Data for Scheduled Continuous Testing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="monitoring_models/scheduling_ct_runs.html">Scheduling Continuous Testing runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitoring_models/scheduling_ct_runs.html">Scheduling Continuous Testing Runs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="monitoring_models/configuring_scheduled_ct.html">Configuring your Scheduled Continuous Test</a></li>
 <li class="toctree-l2"><a class="reference internal" href="monitoring_models/ct_feedback_and_observability.html">Continuous Testing Feedback and Observability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitoring_models/monitors/monitors.html">Model Monitors</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="configuring_test_runs.html">Configuring your Test Runs</a></li>
@@ -105,10 +106,11 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../reference/release_notes.html">Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -136,13 +138,13 @@
              
   <section id="monitor-models-with-continuous-tests">
 <h1>Monitor Models with Continuous Tests<a class="headerlink" href="#monitor-models-with-continuous-tests" title="Permalink to this heading"></a></h1>
-<p>Continuous Testing monitors your model and alerts on issues such as data drift and performance degradation. When things go wrong, it also offers automated root cause analysis of the underlying driver of performance change.</p>
+<p>Continuous Testing allows you to schedule your stress tests and get alerted on vulnerabilities in your model is a continuous fashion.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="monitoring_models/creating_new_continuous_test.html">Creating a new Continuous Test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="monitoring_models/creating_new_continuous_test.html">Creating a New Continuous Test</a></li>
 </ul>
 </div>
-<p>A production AI service often requires regular maintenance to support model upgrades, new training data, and other improvements. This notebook demonstrates how to update your Continuous Test, configure how tests are run, and update the alerts and notifications settings.</p>
+<p>A production AI service often requires regular maintenance to support model upgrades, new training data, and other improvements. This section demonstrates how to update your Continuous Test, configure how tests are run, and update the alerts and notifications settings.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../notebooks/demo_notebooks/RIME_Firewall_Configuring.html">Updating your Continuous Test</a></li>
@@ -153,15 +155,17 @@ Below are walkthroughs and guides on loading data into your CT instance for prod
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="monitoring_models/loading_data_for_scheduled_ct.html">Loading Data for Scheduled Continuous Testing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="monitoring_models/scheduling_ct_runs.html">Scheduling Continuous Testing runs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="monitoring_models/scheduling_ct_runs.html">Scheduling Continuous Testing Runs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="monitoring_models/configuring_scheduled_ct.html">Configuring your Scheduled Continuous Test</a></li>
 </ul>
 </div>
-<p>Continuous Testing continually checks whether pre-configured tests are failing by creating a monitor over each test. If one such test does fail, the monitor creates an event that signifies continuous periods of abnormal model behavior. For example, if the test for data drift fails, the monitor will create an event indicating that the model’s performance has declined. Further, it will outline the reason for this decline by linking this performance change to the underlying root cause by referencing the concurrently failing tests.
-Further detail regarding the above abstractions can be found in the links below.</p>
+<p>Continuous tests run at your desired interval to identify model risk.
+Test results appear in the Continuous Testing panel of the Robust
+Intelligence UI.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="monitoring_models/ct_feedback_and_observability.html">Continuous Testing Feedback and Observability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="monitoring_models/monitors/monitors.html">Model Monitors</a></li>
 </ul>
 </div>
 </section>

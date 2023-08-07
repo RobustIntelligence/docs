@@ -67,16 +67,19 @@ documentation for full details on the SDK calls used in this procedure.
 
 ```python
 # Get your model config
-model_id = project.register_model(name=<NAME>, model_config={
-    "hugging_face": {
-        "model_uri": URI,
-        "kwargs": {
-            "tokenizer_uri": TOKENIZER_URI,
-            "class_map": MAP,
-            "ignore_class_names": True,
+model_id = project.register_model(
+    name="<NAME>",
+    model_config={
+        "hugging_face": {
+            "model_uri": URI,
+            "kwargs": {
+                "tokenizer_uri": TOKENIZER_URI,
+                "class_map": MAP,
+                "ignore_class_names": True,
+            },
         },
-    }
-})
+    },
+)
 ```
 
 For more on model configuration, check out the [model configuration documentation](../../testing_and_monitoring/preparing_your_models_and_datasets/model_source.md).
@@ -90,6 +93,23 @@ model_id = project.register_model_from_path(name=<NAME>, remote_path=<MODEL_PATH
 **Note**: Registering your model will run validation on it to ensure it works with Robust Intelligence's systems.  This
 may take a few seconds.  If you wish to skip validation, set the `skip_validation` parameter to `True`
 (not recommended).
+
+### Passing secrets to the model
+If access credentials are required by your model at runtime, you can pass them in as model endpoint integration. A model endpoint integration specifies secrets as key-value pairs, that are made available to the model during runtime, when it is making a prediction.
+
+To do so, you would need to first create an integration in RIME UI and specify the secrets there. Then, the integration's uuid must be passed as the `model_endpoint_integration_id` parameter when registering the model. The model's [predict interface](defining_model_interface.md#step-6-passing-secrets-to-the-model) would then need to specify an `integration_dict` parameter, which would receive the secrets as key-value pairs.
+
+```python
+model_id = project.register_model(
+    name="<NAME>",
+    model_config={
+        "model_path": {
+            "path": "path/to/model.py"
+        }
+    },
+    model_endpoint_integration_id="<Integration UUID>",
+)
+```
 
 
 Check out the SDK documentation for more on [registering a model](../../reference/python-sdk.rst).
@@ -168,3 +188,13 @@ may take a few seconds.  If you wish to skip validation, set the `skip_validatio
 (not recommended).
 
 Check out the SDK documentation for more on [registering predictions](../../reference/python-sdk.rst).
+
+## Related Topics  
+[Creating a New Continuous Test](../monitoring_models/creating_new_continuous_test.rst)  
+[Creating a New Stress Test](../validating_models/stress_tests_from_sdk.md)  
+[Data Configuration](../../testing_and_monitoring/preparing_your_models_and_datasets/data_source.md)  
+[Installation](../../documentation_home/installation.md)  
+[Model Configuration](../../testing_and_monitoring/preparing_your_models_and_datasets/model_source.md)  
+[Monitor Models with Continuous Tests](../../testing_and_monitoring/monitoring_models.rst)  
+[Python SDK Reference](../../reference/python-sdk.rst)  
+[Validate Models with Stress Tests](../../testing_and_monitoring/validating_models.rst)  

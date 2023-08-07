@@ -28,7 +28,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Using a Data Collector for Scheduled Continuous Testing" href="../../notebooks/demo_notebooks/RIME_DataCollector_Configuring.html" />
+    <link rel="next" title="Scheduling Continuous Testing Runs" href="scheduling_ct_runs.html" />
     <link rel="prev" title="Updating your Continuous Test" href="../../notebooks/demo_notebooks/RIME_Firewall_Configuring.html" />
 <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -71,23 +71,21 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="creating_new_continuous_test.html">Creating a new Continuous Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="creating_new_continuous_test.html">Creating a New Continuous Test</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../notebooks/demo_notebooks/RIME_Firewall_Configuring.html">Updating your Continuous Test</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Loading Data for Scheduled Continuous Testing</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#databricks">Databricks</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#data-collector">Data Collector</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../notebooks/demo_notebooks/RIME_DataCollector_Configuring.html">Using a Data Collector for Scheduled Continuous Testing</a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="#custom-loader">Custom Loader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-collector-deprecated">Data Collector (deprecated)</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="scheduling_ct_runs.html">Scheduling Continuous Testing runs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling_ct_runs.html">Scheduling Continuous Testing Runs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="configuring_scheduled_ct.html">Configuring your Scheduled Continuous Test</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ct_feedback_and_observability.html">Continuous Testing Feedback and Observability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitors/monitors.html">Model Monitors</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
@@ -113,10 +111,11 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -151,22 +150,16 @@
 If your data is stored in Deltalake, you can easily register an integration by providing the necessary credentials in the workspace settings page.
 Once this integration is set up, you can specify the location of your data stored in Deltalake and schedule a Continuous Test to pull the data from this configured source as required.</p>
 </section>
-<section id="data-collector">
-<h2>Data Collector<a class="headerlink" href="#data-collector" title="Permalink to this heading"></a></h2>
-<p>When running a production AI service, it is important to keep records of your inputs and associated outputs via some form of logging.
-Once you have deployed a Continuous Testing instance for your production model, you can log datapoints to the Robust Intelligence Data Collector and schedule routine or manual runs on your data.
-Using the Data Collector enables to abstract away the collection of these logs and enables RI to easily analyze these logs in production using Continuous Testing.
-The example notebook provided demonstrates this in action.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../notebooks/demo_notebooks/RIME_DataCollector_Configuring.html">Using a Data Collector for Scheduled Continuous Testing</a></li>
-</ul>
-</div>
-</section>
 <section id="custom-loader">
 <h2>Custom Loader<a class="headerlink" href="#custom-loader" title="Permalink to this heading"></a></h2>
 <p>Users of Robust Intelligence may have unique data storage patterns that require customized integration. To support these use cases, Robust Intelligence provides a custom loader format that allows users to specify logic for loading data from a generic location in a Python file.
 This custom loader can then be used to pull data for scheduled Continuous Tests. Using the custom loader to connect to an external data source allows for easy integration into any widely available commercial cloud storage framework.</p>
+</section>
+<section id="data-collector-deprecated">
+<h2>Data Collector (deprecated)<a class="headerlink" href="#data-collector-deprecated" title="Permalink to this heading"></a></h2>
+<p>When running a production AI service, it is important to keep records of your inputs and associated outputs via some form of logging.
+Once you have deployed a Continuous Testing instance for your production model, you can log datapoints to the Robust Intelligence Data Collector and schedule routine or manual runs on your data.
+Using the Data Collector enables to abstract away the collection of these logs and enables RI to easily analyze these logs in production using Continuous Testing.</p>
 </section>
 </section>
 
@@ -175,7 +168,7 @@ This custom loader can then be used to pull data for scheduled Continuous Tests.
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../../notebooks/demo_notebooks/RIME_Firewall_Configuring.html" class="btn btn-neutral float-left" title="Updating your Continuous Test" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../../notebooks/demo_notebooks/RIME_DataCollector_Configuring.html" class="btn btn-neutral float-right" title="Using a Data Collector for Scheduled Continuous Testing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="scheduling_ct_runs.html" class="btn btn-neutral float-right" title="Scheduling Continuous Testing Runs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

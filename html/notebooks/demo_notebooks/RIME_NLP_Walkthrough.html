@@ -56,7 +56,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -90,7 +90,7 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
@@ -116,10 +116,11 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -149,15 +150,15 @@
              
   <section id="RI-NLP-Multiclass-Classification-Walkthrough">
 <h1><strong>RI NLP Multiclass Classification Walkthrough</strong><a class="headerlink" href="#RI-NLP-Multiclass-Classification-Walkthrough" title="Permalink to this heading"></a></h1>
+<blockquote>
+<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_NLP_Walkthrough.ipynb">RI NLP Multiclass Classification Walkthrough in Google Colab</a>.</p>
+</div></blockquote>
 <p>You are a data scientist working to maintain a large research library. The data science team has been tasked with implementing a research paper topic classification model and monitoring how that model performs over time. The performance of this model directly impacts the profits of the company. To ensure the data science team develops the best model and the performance of this model doesn’t degrade over time, the VP of Data Science purchases the RIME platform.</p>
 <p>In this Notebook Walkthrough, we will walkthrough 2 of RIME’s core products - <strong>AI Stress Testing</strong> and <strong>AI Continuous Testing</strong>.</p>
 <ol class="arabic simple">
 <li><p><strong>AI Stress Testing</strong> is used in the model development stage. Using AI Stress Testing you can test the developed model. RIME goes beyond simply optimizing for basic model performance like accuracy and automatically discovers the model’s weaknesses.</p></li>
 <li><p><strong>AI Continuous Testing</strong> is used after the model is deployed in production. Using AI Continuous Testing, you can automate the monitoring, discovery and remediation of issues that occur post-deployment.</p></li>
 </ol>
-<blockquote>
-<div><p>Latest Colab version of this notebook available <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_NLP_Walkthrough.ipynb">here</a></p>
-</div></blockquote>
 <section id="Install-Dependencies,-Import-Libraries-and-Download-Data">
 <h2><strong>Install Dependencies, Import Libraries and Download Data</strong><a class="headerlink" href="#Install-Dependencies,-Import-Libraries-and-Download-Data" title="Permalink to this heading"></a></h2>
 <p>Run the cell below to install libraries to receive data, install our SDK, and load analysis libraries.</p>
@@ -195,7 +196,8 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE API_KEY</span>
-<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE</span>
+<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
+<span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">API_TOKEN</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -264,9 +266,11 @@
 <span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
 
 <span class="c1"># Note: models and datasets need to have unique names.</span>
-<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">model_config</span><span class="o">=</span><span class="p">{</span>
-    <span class="s2">&quot;hugging_face&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;model_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;Wi/arxiv-distilbert-base-cased&quot;</span><span class="p">}</span>
-<span class="p">})</span>
+<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">&#39;model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+    <span class="n">model_config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;hugging_face&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;model_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;Wi/arxiv-distilbert-base-cased&quot;</span><span class="p">}},</span>
+    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
 <span class="n">data_params</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span>
     <span class="s2">&quot;text_features&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -275,16 +279,16 @@
     <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span>
 <span class="p">}</span>
 <span class="n">ref_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;ref_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ref_s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="n">data_params</span>
+    <span class="sa">f</span><span class="s2">&quot;ref_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ref_s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="n">data_params</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">eval_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;eval_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">eval_s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="n">data_params</span>
+    <span class="sa">f</span><span class="s2">&quot;eval_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">eval_s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="n">data_params</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
-    <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">ref_preds_s3_path</span>
+    <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">ref_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
-    <span class="n">eval_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">eval_preds_s3_path</span>
+    <span class="n">eval_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">eval_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -340,7 +344,8 @@
 <span class="p">}</span>
 <span class="n">stress_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
     <span class="n">test_run_config</span><span class="o">=</span><span class="n">stress_test_config</span><span class="p">,</span>
-    <span class="n">project_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span>
+    <span class="n">project_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span>
+    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
@@ -363,7 +368,7 @@
 <section id="Analyzing-the-Results">
 <h3>Analyzing the Results<a class="headerlink" href="#Analyzing-the-Results" title="Permalink to this heading"></a></h3>
 <p>Below you can see a snapshot of the results and the different tests that we run. Some of these tests such as the Subset Performance Tests analyze how your model performs on different groups in the data, while others such as Transformations Tests analyze how your model reacts to augmented and malicious text data.</p>
-<img alt="stress.png" src="https://drive.google.com/uc?id=19Zvfn5oHsALb4n8BFbmqG0t2n_UOfKIX" />
+<img alt="stress.png" src="https://drive.google.com/uc?id=1TZMaQ9vcHvObNqLy86bdXozI_aFPk874" />
 <section id="Subset-Performance-Tests">
 <h4>Subset Performance Tests<a class="headerlink" href="#Subset-Performance-Tests" title="Permalink to this heading"></a></h4>
 <p>Here are the results of the Subset Performance tests. These tests can be thought as more detailed performance tests that identify subsets of underperformance. These tests help ensure that the model works equally well across different groups.</p>
@@ -439,6 +444,12 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+<span class="n">data_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;text_features&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;text&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span>
+<span class="p">}</span>
 <span class="n">prod_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
     <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;arxiv/data/val_1.json.gz&#39;</span><span class="p">),</span>
     <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
@@ -446,14 +457,15 @@
 <span class="n">prod_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;prod_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
     <span class="n">prod_s3_path</span><span class="p">,</span>
-    <span class="n">data_params</span><span class="o">=</span><span class="n">data_params</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="n">data_params</span><span class="p">,</span>
+    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">prod_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
     <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;arxiv/data/preds.val_1.jsonl.gz&#39;</span><span class="p">),</span>
-    <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+    <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
-    <span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">prod_preds_s3_path</span>
+    <span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">prod_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -472,7 +484,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">prod_dataset_id</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">firewall</span>
 </pre></div>
@@ -495,10 +507,10 @@
 </div>
 </div>
 </section>
-<section id="Firewall-Overview">
-<h2><strong>Firewall Overview</strong><a class="headerlink" href="#Firewall-Overview" title="Permalink to this heading"></a></h2>
-<p>The Overview page is the mission control for your model’s production deployment health. In it, you can see the status of firewall events, get notified when model performance degrades, and see the underlying causes of failure.</p>
-<img alt="img_5" src="https://drive.google.com/uc?id=14o9t1Upq_ZJACipy6e7YmhnIYSAT9Ahp" />
+<section id="Firewall-CT-Overview">
+<h2><strong>Firewall CT Overview</strong><a class="headerlink" href="#Firewall-CT-Overview" title="Permalink to this heading"></a></h2>
+<p>The Overview page is the mission control for your model’s production deployment health. In it, you can see the status of continuous test runs and their metrics change over time.</p>
+<img alt="img_5" src="https://drive.google.com/uc?id=1bd17xeRw81iziUZJqxeFyVP9T-O1LljZ" />
 </section>
 <section id="Firewall-CT-Results">
 <h2><strong>Firewall CT Results</strong><a class="headerlink" href="#Firewall-CT-Results" title="Permalink to this heading"></a></h2>
@@ -514,10 +526,8 @@
 </div>
 <section id="Analyzing-CT-Results">
 <h3><strong>Analyzing CT Results</strong><a class="headerlink" href="#Analyzing-CT-Results" title="Permalink to this heading"></a></h3>
-<p><strong>Model performance stays constant</strong> - In the below image, we can see that the Average Confidence (model performance) stays relatively constant, increasing slighlty from 71.5% on 06/19 to 74.3% on 06/24.</p>
-<img alt="img_7" src="https://drive.google.com/uc?id=1hSZ2QWz2DkRBmRDT9Dclc236MQl6_oME" />
-<p><strong>Abnormality Rate Increases For a Time Period</strong> - In the below image, we can see that the abnormality rate has increased in the middle of the week, from when the model was first deployed. On 06/19 when the model was deployed, the rate was 0.83%. By 06/22, it had increased to 1.81%.</p>
-<img alt="img_6" src="https://drive.google.com/uc?id=1ii21cmVjGVl0RRELki05xKJy08Ehpkw_" />
+<p><strong>Failing Rows Rate Increases For a Time Period</strong> - In the below image, we can see that the failing rows rate has increased in the middle of the week, from when the model was first deployed.</p>
+<img alt="img_6" src="https://drive.google.com/uc?id=1ebqpuNvMwp9eMCJ7PX9FWf_dpj3FAtFn" />
 </section>
 </section>
 </section>

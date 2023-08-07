@@ -1,0 +1,146 @@
+# Model Monitors
+
+ℹ️ *Check with your admin to find out if the model monitors feature is
+available in your organization.*
+
+If your Robust Intelligence license includes model monitors, you can
+use Monitors with your continuous tests to alert you when a continuous
+test or other monitor test fails. You manage these alerts and their
+associated tests in the Monitors section of the UI.
+
+## Get monitor alerts
+
+When a monitor test reveals a failure, the monitor creates an event
+that signifies a continuous period of abnormal model behavior,
+and an alert appears in the Monitors section of the UI. For
+example, if the test for data drift fails, the monitor creates an
+event indicating that the model's performance has declined. The
+monitor output indicates the reason for the decline, referencing the
+concurrently failing tests that help show the cause.
+
+## Choose tests and data for monitors
+
+To create a test whose results will be included in your monitors,
+create the test as you would any other continuous test.
+See [Creating a new continuous test](../creating_new_continuous_test.rst).
+
+Loading data for monitor tests is done in the same way as for any
+continuous test. See
+[Loading data for scheduled continuous testing](../loading_data_for_scheduled_ct.rst)
+
+## View Monitors
+
+1.  Sign in to your Robust Intelligence UI. The Workspaces page appears.
+
+2.  Click a workspace to see its Workspaces summary page.
+
+3.  Select a project.
+
+    You can filter or sort the list of projects in a workspace with the
+    *Sort* and *Filter* controls in the upper right. Click the glyph to the
+    right of the *Filter* control to switch between list and card display
+    for projects. Type a string in *Search Projects...* to display only
+    projects that match the string.
+
+4. Select the **Monitors** icon in the left panel to open the Monitors page.
+
+5. Click the desired tab at the top of the panel:
+   - **Overview** shows currently active events and your pinned monitors
+   - **Monitoring Events** allows you to filter the list of monitor events
+     and resolve events
+   - **Monitors** shows you all of you defined monitors and their history,
+     and allows you to edit their notification settings.
+   - **Custom** shows custom monitors and lets you create them.
+
+## Monitor event analysis and actionability
+
+The Monitors page provides analysis of a detected event. This
+includes the metric and threshold values defining the event and the
+time interval for which the metric fell below the thresholds. Events
+for degraded model performance monitors will show which data issue(s)
+may have lead to the detected event when applicable.
+
+1. Sign in to the Robust Intelligence UI. In the Workspaces page, click
+   the desired workspace.
+1. In the Workspaces summary page, select a project.
+1. Select the **Monitors** icon in the left panel to open the Monitors page.
+1. Click the **Monitoring Events** tab at the top.
+1. In the Monitors list that appears, click the monitor event you wish
+   to investigate.
+1. For more information, click **Show Details**.
+1. To remove the event from the list of alerts, click **Resolve**. A
+   confirmation window will appear. Click **Resolve Issue** to
+   confirm.
+
+## Monitors and risk categories
+
+Monitors of particular interest can be pinned to the top of the list
+by clicking the pushpin icon at the top left corner of the monitor.
+Pinned Operational risk monitors will also show up in the Continuous
+Testing Overview page.
+
+Use the **Date Range** controls to change your view of the monitor
+chart. Some monitors have feature or subset dropdown menus that let
+you view the monitored metric for a specific feature or subset(s)
+of a feature in your dataset.
+
+
+### Enabling or disabling notifications for a monitor
+
+You can enable or suppress notifications from a specified monitor.
+
+1. Sign in to your Robust Intelligence UI. The Workspaces page appears.
+1. Click a workspace to see its Workspaces summary page.
+1. Select a project.
+1. Select the **Monitors** icon in the left panel to open the Monitors page
+   and then click the **Monitors** tab at the top.
+1. In the **Monitoring** list, find the monitor you want to edit, and click it.
+1. In the upper right corner of a monitor, click **Edit Monitor**.
+1. Toggle **Add to Project Notifications** and click **Save Settings**.
+
+**Note!** To learn more about notification settings, see
+[notifications](../../notifications_and_alerts/configuring_notifications.md).
+
+### Tests
+
+#### Performance tests
+
+| Performance monitor                  | Description                                                                                                                |
+|--------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| Accuracy                             | Tests whether the model's accuracy changes relative to the reference dataset.                                              |
+| Average Thresholded Confidence (ATC) | Tests the variance of the ATC between reference and evaluation datasets. ATC estimates the accuracy of unlabeled examples. |
+| Average Confidence                   | Tests the variance of average prediction confidence between the reference and evaluation datasets.                         |
+| Calibration Comparison               | Tests whether the calibration curve of the evaluation datset has changed relative to the reference datset.                 |
+| Precision                            | Tests whether the model's precision changes relative to the reference dataset.                                             |
+| Recall                               | Tests whether the model's recall changes relative to the reference dataset.                                                |
+| F1                                   | Tests whether the model's F1 score changes relative to the reference dataset.                                              |
+| False Positive Rate                  | Tests whether the model's false positive rate changes relative to the reference dataset.                                   |
+| False Negative Rate                  | Tests whether the model's false negative rate changes relative to the reference dataset.                                   |
+| F1                                   | Tests whether the model's F1 score changes relative to the reference dataset.                                              |
+
+#### Drift tests
+
+| Drift monitor                 | Description                                                                                                      |
+|-------------------------------|------------------------------------------------------------------------------------------------------------------|
+| Prediction Drift              | Tests the change in distribution between the prediction sets generated by the reference and evaluation datasets. |
+| Label Drift                   | Tests the change in distribution in the model's output.                                                          |
+| Numeric Feature Drift         | Tests the change in distribution within a given numeric feature.                                                 |
+| Categorical Feature Drift     | Tests the change in distribution within a given categorical feature.                                             |
+| Mutual Information Drift      | Tests the change in mutual information between pairs of features, or between a feature and the label.            |
+| Correlation Information Drift | Tests the change in correlation between pairs of features, or between a feature and the label.                   |
+| Embedding Drift               | Tests the change in embeddings distribution between the reference and evaluation datasets.                       |
+
+#### Other tests
+
+Note: the **Unseen Categorical**, **Rare Categories**, and **Numeric Outliers**
+tests each have two associated monitors
+1. **Performance impact** which measures the model performance change
+   attributed to the data with the abnormality.
+2. **Count**, which measures the number of occurrences of the abnormality
+   in each bin.
+
+
+## Related Topics  
+[Configuring Notifications](../../notifications_and_alerts/configuring_notifications.md)  
+[Creating a New Continuous Test](../creating_new_continuous_test.rst)  
+[Loading Data for Scheduled Continuous Testing](../loading_data_for_scheduled_ct.rst)  

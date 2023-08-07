@@ -53,7 +53,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0-rc.0
+                2.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -71,7 +71,7 @@
 <p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
@@ -113,10 +113,11 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../reference/release_notes.html">Release Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../reference/python-sdk.html">Python SDK reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../reference/model_tests_reference.html">Model Tests Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
         </div>
@@ -151,67 +152,67 @@
 This is helpful for integrations Robust Intelligence doesn’t support natively.</p>
 <section id="configuring-authentication-for-custom-integrations">
 <h2>Configuring Authentication for Custom Integrations<a class="headerlink" href="#configuring-authentication-for-custom-integrations" title="Permalink to this heading"></a></h2>
-<ol class="arabic">
+<ol class="arabic simple">
 <li><p>Follow steps 1 through 5 of <a class="reference internal" href="../configuring_integrations.html"><span class="std std-doc">Adding an integration through the Robust Intelligence web UI</span></a></p></li>
 <li><p>From the <em>Integration Type</em> drop-down, select <em>Custom</em>.</p></li>
 <li><p>Type a name for the integration in <em>Name</em>.</p></li>
-<li><p>(Adding a Custom integration) Type the configuration information for the custom integration as key/value pairs and select a sensitivity for each pair.</p>
-<blockquote>
-<div><p>Sensitivity levels are Not sensitive, Workspace level, and Members level.</p>
-</div></blockquote>
+<li><p>(Adding a Custom integration) Type the configuration information
+for the custom integration as key/value pairs and select a
+sensitivity for each pair. Sensitivity levels include:</p>
+<ul class="simple">
+<li><p>Not sensitive</p></li>
+<li><p>Workspace level</p></li>
+<li><p>Members level</p></li>
+</ul>
 </li>
 </ol>
 </section>
 <section id="using-custom-integrations">
 <h2>Using Custom Integrations<a class="headerlink" href="#using-custom-integrations" title="Permalink to this heading"></a></h2>
-<p>Robust Intelligence can load data from arbitrary sources defined in a Python file for use in a Stress Test or Continuous Test.
-Custom integrations may be used by the (custom loader)[../../testing_and_monitoring/monitoring_models/configuring_scheduled_ct.md#custom-loaders] feature to provide authentication credentials as environment variables.</p>
-<section id="example-stress-test-with-a-custom-integration">
-<h3>Example stress test with a custom integration<a class="headerlink" href="#example-stress-test-with-a-custom-integration" title="Permalink to this heading"></a></h3>
-<p>The following code specifies a custom data dictionary and the Python SDK call that starts the stress test.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">custom_config</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Weather Predictor Test&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;split&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;ref_data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;custom&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;load_path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://rime-datasets/custom-loader-weather/custom_weather_loader.py&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;load_func_name&quot;</span><span class="p">:</span> <span class="s2">&quot;get_weather_data&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;loader_kwargs_json&quot;</span><span class="p">:</span> <span class="s1">&#39;{&quot;start_time&quot;: 0, &quot;end_time&quot;: 1758608114}&#39;</span><span class="p">,</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;eval_data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;custom&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;load_path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://rime-datasets/custom-loader-weather/custom_weather_loader.py&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;load_func_name&quot;</span><span class="p">:</span> <span class="s2">&quot;get_weather_data&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;loader_kwargs_json&quot;</span><span class="p">:</span> <span class="s1">&#39;{&quot;start_time&quot;: 0, &quot;end_time&quot;: 1758608114}&#39;</span><span class="p">,</span>
-        <span class="p">},</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="n">job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
-    <span class="n">test_run_config</span><span class="o">=</span><span class="n">custom_config</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>The <code class="docutils literal notranslate"><span class="pre">custom_weather_loader.py</span></code> code specifies the actual data loading logic to use. This example parses data from an Amazon S3 bucket, but a custom data loader can be written to handle data from any source.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&quot;&quot;&quot;Data loader file for weather file.&quot;&quot;&quot;
+<p>Robust Intelligence can load data from arbitrary sources defined in a
+Python file for use in a stress test or continuous test. Custom
+integrations may be used by the <a class="reference internal" href="../../../../testing_and_monitoring/monitoring_models/configuring_scheduled_ct.html#custom-loader"><span class="std std-ref">custom
+loader</span></a>
+feature to provide authentication secrets as key/value pairs
+to the <code class="docutils literal notranslate"><span class="pre">integration_dict</span></code> parameter of the custom data loader
+function. See the example for your test type:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#stress-test-example-with-a-custom-data-integration">Stress test example with a custom data integration</a></p></li>
+<li><p><a class="reference internal" href="#continuous-test-example-with-a-custom-data-integration">Continuous test example with a custom data integration</a></p></li>
+</ul>
+<section id="stress-test-example-with-a-custom-data-integration">
+<h3>Stress test example with a custom data integration<a class="headerlink" href="#stress-test-example-with-a-custom-data-integration" title="Permalink to this heading"></a></h3>
+<p>In this example, we’ll create a custom data loader,
+<code class="docutils literal notranslate"><span class="pre">custom_news_loader.py</span></code>, that loads our reference and evaluation
+data sets. We’ll then use the Robust Intelligence SDK to create and
+register a data set that uses the custom data loader, and finally
+we’ll run a stress test with it.</p>
+<section id="custom-data-loader-example">
+<h4>Custom data loader example<a class="headerlink" href="#custom-data-loader-example" title="Permalink to this heading"></a></h4>
+<p>The example custom data loader, <code class="docutils literal notranslate"><span class="pre">custom_news_loader.py</span></code>, specifies
+the data loading logic. This example parses data from an Amazon S3
+bucket, but a custom data loader can be written to handle data from
+any source.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&quot;&quot;&quot;Data loader file for news file.&quot;&quot;&quot;
 import boto3
 from datetime import datetime
 import pandas as pd
 ​
 BUCKET_NAME = &quot;rime-datasets&quot;
-ACCESS_KEY = &quot;*access key*&quot;
-SECRET_ACCESS_KEY = &quot;*secret key*&quot;
 ​
 ​
-def get_weather_data(start_time: int, end_time: int) -&gt; pd.DataFrame:
+def get_news_data(start_time: int, end_time: int, integration_dict: dict) -&gt; pd.DataFrame:
     start_time = datetime.fromtimestamp(start_time)
     end_time = datetime.fromtimestamp(end_time)
 ​
     master_df = pd.DataFrame()
-    s3 = boto3.resource(&#39;s3&#39;, aws_access_key_id=ACCESS_KEY, aws_secret_access_key=SECRET_ACCESS_KEY)
+    s3 = boto3.resource(
+        &#39;s3&#39;,
+        aws_access_key_id=integration_dict[&#39;ACCESS_KEY&#39;],
+        aws_secret_access_key=integration_dict[&#39;SECRET_ACCESS_KEY&#39;],
+    )
     my_bucket = s3.Bucket(BUCKET_NAME)
-    for object_summary in my_bucket.objects.filter(Prefix=&quot;custom-loader-weather/&quot;):
+    for object_summary in my_bucket.objects.filter(Prefix=&quot;custom-loader-news/&quot;):
         if &quot;.csv&quot; in object_summary.key:
             date_str = object_summary.key.split(&quot;/&quot;)[1].replace(&quot;.csv&quot;, &quot;&quot;)
             date_str = date_str.replace(&quot;day_&quot;, &quot;&quot;)
@@ -224,20 +225,168 @@ def get_weather_data(start_time: int, end_time: int) -&gt; pd.DataFrame:
 </pre></div>
 </div>
 </section>
-<section id="example-continuous-test-with-a-custom-integration">
-<h3>Example continuous test with a custom integration<a class="headerlink" href="#example-continuous-test-with-a-custom-integration" title="Permalink to this heading"></a></h3>
-<p>Continuous tests rely on an established reference data source and do not need to specify one in the data dictionary. The contents of <code class="docutils literal notranslate"><span class="pre">custom_weather_loader.py</span></code> do not change, but the custom data dictionary is different.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">incremental_config</span><span class="o">.=</span> <span class="p">{</span>
-<span class="s2">&quot;eval_data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;custom&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;load_path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://rime-datasets/custom-loader-weather/custom_weather_loader.py&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;load_func_name&quot;</span><span class="p">:</span> <span class="s2">&quot;get_weather_data&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;loader_kwargs_json&quot;</span><span class="p">:</span> <span class="s1">&#39;{&quot;start_time&quot;: 0, &quot;end_time&quot;: 1758608114}&#39;</span><span class="p">,</span>
-<span class="p">}</span>
+<section id="get-datasets-for-a-stress-test">
+<h4>Get datasets for a stress test<a class="headerlink" href="#get-datasets-for-a-stress-test" title="Permalink to this heading"></a></h4>
+<p>Below, we introduce an example function, <code class="docutils literal notranslate"><span class="pre">get_data_info_config()</span></code> that
+calls the SDK function, <code class="docutils literal notranslate"><span class="pre">upload_file</span></code>, which in turn uses your custom
+data loader, <code class="docutils literal notranslate"><span class="pre">get_news_data</span></code>, to load the data into the Robust
+Intelligence cluster for testing.</p>
+<p>For the <code class="docutils literal notranslate"><span class="pre">connection_info</span></code> object, you must specify:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">path</span></code>: the path to your loader file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">load_func_name</span></code>: the name of the data loading function that your
+custom data loader provides</p></li>
+</ul>
+<p>You may optionally also specify:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">loader_kwargs_json</span></code>: Any parameters to be passed to the data loading function</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data_endpoint_integration_id</span></code>: UUID of the integration with secrets required
+by the data loading function</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">DATA_LOADER_FILE</span></code> argument here provides a path to your
+custom data loader script like,
+<code class="docutils literal notranslate"><span class="pre">&quot;s3://rime-datasets/custom-loader-news/custom_news_loader.py&quot;</span></code>,
+and the <code class="docutils literal notranslate"><span class="pre">MODEL_FILE</span></code> argument here provides a path to your model.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uploaded_data_loader_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="n">DATA_LOADER_FILE</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_data_info_config</span><span class="p">(</span><span class="n">start</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="n">loader_kwargs</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">{{</span><span class="s1">&quot;start_time&quot;: </span><span class="si">{</span><span class="n">start</span><span class="si">}</span><span class="s1">, &quot;end_time&quot;: </span><span class="si">{</span><span class="n">end</span><span class="si">}</span><span class="se">}}</span><span class="s1">&#39;</span>
+    <span class="n">data_info</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;data_loading&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">uploaded_data_loader_path</span><span class="p">,</span>
+                <span class="s2">&quot;load_func_name&quot;</span><span class="p">:</span> <span class="s2">&quot;get_news_data&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;loader_kwargs_json&quot;</span><span class="p">:</span> <span class="n">loader_kwargs</span><span class="p">,</span>
+                <span class="s2">&quot;data_endpoint_integration_id&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;inegration_uuid&gt;&quot;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span><span class="n">TIMESTAMP_COL</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">data_info</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>Note!</strong> You will also use the <code class="docutils literal notranslate"><span class="pre">client.upload_file</span></code> SDK function
+to upload your model file.</p>
+</div></blockquote>
+</section>
+<section id="register-the-stress-test-artifacts">
+<h4>Register the stress test artifacts<a class="headerlink" href="#register-the-stress-test-artifacts" title="Permalink to this heading"></a></h4>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">get_data_info_config</span></code> function to return <code class="docutils literal notranslate"><span class="pre">data_info</span></code> objects
+for the reference and evaluation data sets. We assume you will pass an
+integer start time value like <code class="docutils literal notranslate"><span class="pre">0</span></code> and an integer end time value like
+<code class="docutils literal notranslate"><span class="pre">1758608114</span></code>. This example assumes you have uploaded your model at the
+<code class="docutils literal notranslate"><span class="pre">uploaded_model_path</span></code> referenced below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define data/model info:</span>
+<span class="n">model_info</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model_path&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">uploaded_model_path</span><span class="p">}}</span>
+<span class="n">ref_info</span> <span class="o">=</span> <span class="n">get_data_info_config</span><span class="p">(</span><span class="n">REF_START</span><span class="p">,</span> <span class="n">REF_END</span><span class="p">)</span>
+<span class="n">eval_info</span> <span class="o">=</span> <span class="n">get_data_info_config</span><span class="p">(</span><span class="n">EVAL_START</span><span class="p">,</span> <span class="n">EVAL_END</span><span class="p">)</span>
+
+<span class="c1"># Register model &amp; data:</span>
+<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()),</span> <span class="n">model_config</span><span class="o">=</span><span class="n">model_info</span><span class="p">)</span>
+<span class="n">ref_data_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()),</span> <span class="n">ref_info</span><span class="p">)</span>
+<span class="n">eval_data_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()),</span> <span class="n">eval_info</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="configure-the-stress-test">
+<h4>Configure the stress test<a class="headerlink" href="#configure-the-stress-test" title="Permalink to this heading"></a></h4>
+<p>Now that your data has been loaded and registered, use the registered
+data and model IDs to configure a stress test.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stress_test_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;news classification stress test&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="n">ref_data_id</span><span class="p">,</span>
+        <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="n">eval_data_id</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </section>
+<section id="run-the-stress-test">
+<h4>Run the stress test<a class="headerlink" href="#run-the-stress-test" title="Permalink to this heading"></a></h4>
+<p>Call the SDK function, <code class="docutils literal notranslate"><span class="pre">start_stress_test</span></code> to run the test:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="n">test_run_config</span><span class="o">=</span><span class="n">stress_test_config</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="continuous-test-example-with-a-custom-data-integration">
+<h3>Continuous test example with a custom data integration<a class="headerlink" href="#continuous-test-example-with-a-custom-data-integration" title="Permalink to this heading"></a></h3>
+<p>Continuous tests rely on an established reference data source and do not need to specify one in the data dictionary. The contents of <code class="docutils literal notranslate"><span class="pre">custom_news_loader.py</span></code> do not change, but the custom data dictionary is different.</p>
+<section id="get-datasets-for-a-continuous-test">
+<h4>Get datasets for a continuous test<a class="headerlink" href="#get-datasets-for-a-continuous-test" title="Permalink to this heading"></a></h4>
+<p>Create a function (this example creates one called <code class="docutils literal notranslate"><span class="pre">get_data_info_config()</span></code>)
+that calls the SDK function, <code class="docutils literal notranslate"><span class="pre">upload_file</span></code>, which in turn uses your
+custom data loader (<code class="docutils literal notranslate"><span class="pre">get_news_data</span></code> in this example) to load the data
+into the Robust Intelligence cluster for testing.</p>
+<p>For the <code class="docutils literal notranslate"><span class="pre">connection_info</span></code> object, you must specify:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">path</span></code>: the path to your loader file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">load_func_name</span></code>: the name of the data loading function that your
+custom data loader provides</p></li>
+</ul>
+<p>You may optionally also specify:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">loader_kwargs_json</span></code>: Any parameters to be passed to the data loading function</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data_endpoint_integration_id</span></code>: UUID of the integration with secrets required
+by the data loading function</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">DATA_LOADER_FILE</span></code> argument here provides a path to your
+custom data loader script like,
+<code class="docutils literal notranslate"><span class="pre">&quot;s3://rime-datasets/custom-loader-news/custom_news_loader.py&quot;</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uploaded_data_loader_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="n">DATA_LOADER_FILE</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_data_info_config</span><span class="p">(</span><span class="n">start</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="n">loader_kwargs</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">{{</span><span class="s1">&quot;start_time&quot;: </span><span class="si">{</span><span class="n">start</span><span class="si">}</span><span class="s1">, &quot;end_time&quot;: </span><span class="si">{</span><span class="n">end</span><span class="si">}</span><span class="se">}}</span><span class="s1">&#39;</span>
+    <span class="n">data_info</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;data_loading&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">uploaded_data_loader_path</span><span class="p">,</span>
+                <span class="s2">&quot;load_func_name&quot;</span><span class="p">:</span> <span class="s2">&quot;get_news_data&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;loader_kwargs_json&quot;</span><span class="p">:</span> <span class="n">loader_kwargs</span><span class="p">,</span>
+                <span class="s2">&quot;data_endpoint_integration_id&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;inegration_uuid&gt;&quot;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span><span class="n">TIMESTAMP_COL</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">data_info</span>
+</pre></div>
+</div>
+</section>
+<section id="register-the-dataset-for-the-continuous-test">
+<h4>Register the dataset for the continuous test<a class="headerlink" href="#register-the-dataset-for-the-continuous-test" title="Permalink to this heading"></a></h4>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">get_data_info_config</span></code> function to return a <code class="docutils literal notranslate"><span class="pre">data_info</span></code> object
+for the evaluation data set. Pass integer start and end time values.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define data info:</span>
+<span class="n">eval_info</span> <span class="o">=</span> <span class="n">get_data_info_config</span><span class="p">(</span><span class="n">EVAL_START</span><span class="p">,</span> <span class="n">EVAL_END</span><span class="p">)</span>
+
+<span class="c1"># Register data:</span>
+<span class="n">eval_data_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()),</span> <span class="n">eval_info</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="configure-the-continous-test">
+<h4>Configure the continous test<a class="headerlink" href="#configure-the-continous-test" title="Permalink to this heading"></a></h4>
+<p>Now that your data has been loaded and registered, use the registered
+data ID to configure a continuous test.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">incremental_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;news classification continuous test&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="n">eval_data_id</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="related-topics">
+<h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
+<p><a class="reference internal" href="../configuring_integrations.html"><span class="std std-doc">Configuring Integrations</span></a></p>
 </section>
 </section>
 
