@@ -1,5 +1,9 @@
 # Data Access Permissions
-The **data plane** agent uses a K8s service account called `rime-agent-model-tester` for read access to the data and models you wish to use.
+The data plane agent uses **two** K8s service accounts for read access to the data and models you wish to use:
+```
+rime-agent-rime-cross-plane-server
+rime-agent-model-tester
+```
 
 ## AWS EKS + S3
 Our recommended authentication approach for this pattern is [IAM roles for service accounts (IRSA)](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html).
@@ -30,10 +34,34 @@ Our recommended authentication approach for this pattern is [IAM roles for servi
       ]
     }
     ```
-4. Create an IAM role that the `rime-agent-model-tester` K8s service account can assume, and associate it with the policy created in the previous step.
+4. Create an IAM role that the two K8s service accounts (see top of page) can assume, and associate it with the policy created in the previous step.
     - **Save this ARN. You will need to specify this during the agent setup step.**
-5. Create a trust relationship to allow the K8s service account to assume the IAM role.
+5. Create a trust relationship to allow the two K8s service accounts to assume the IAM role.
     - [Configuring a K8s service account to assume an IAM role](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html)
+    - Your trust relationship should have a similar definition as this template below (note the two K8s service accounts in the subject field):
+        ```
+        {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Effect": "Allow",
+                    "Principal": {
+                        "Federated": "arn:aws:iam::111122223333:oidc-provider/oidc.eks.region-code.amazonaws.com/id/EXAMPLED539D4633E53DE1B71EXAMPLE"
+                    },
+                    "Action": "sts:AssumeRoleWithWebIdentity",
+                    "Condition": {
+                        "StringEquals": {
+                            "oidc.eks.region-code.amazonaws.com/id/EXAMPLED539D4633E53DE1B71EXAMPLE:sub": [
+                                "system:serviceaccount:$AGENT_NAMESPACE:rime-agent-rime-cross-plane-server",
+                                "system:serviceaccount:$AGENT_NAMESPACE:rime-agent-model-tester"
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+        ```
+        - (see [Configuring role and service account](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html))
 
 ## GCP GKE + GCS
 Our recommended authentication approach for this pattern is [Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity).
@@ -45,7 +73,7 @@ Our recommended authentication approach for this pattern is [Workload Identity](
 3. Create an IAM service account and grant it role(s) that have `storage.buckets.get` and `storage.objects.get` permissions.
     - [IAM roles for Cloud Storage](https://cloud.google.com/storage/docs/access-control/iam-roles)
     - **Save the service account email. You will need to specify this during the agent setup step.**
-4. Add IAM policy binding between the IAM service account and the K8s service account `rime-agent-model-tester` with role `roles/iam.workloadIdentityUser`.
+4. Add IAM policy binding between the IAM service account and each of the two K8s service accounts (see top of page) with role `roles/iam.workloadIdentityUser`.
     - [Use Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#authenticating_to)
 
 ## Azure AKS + Blob Storage
@@ -62,7 +90,7 @@ Our recommended authentication approach for this pattern is [Azure AD Workload I
     - A suitable Azure-provided role is `Storage Blob Data Reader`.
         - [Assign an Azure role for access to blob data](https://learn.microsoft.com/en-us/azure/storage/blobs/assign-azure-role-data-access?tabs=portal)
     - [Assign Azure roles to a managed identity](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal-managed-identity)
-5. Create a federated identity credential to associate the `rime-agent-model-tester` service account with your managed identity.
+5. Using your managed identity, create a federated identity credential for each of the two K8s service accounts (see top of page).
     - [Establish federated identity credential](https://learn.microsoft.com/en-us/azure/aks/workload-identity-deploy-cluster#establish-federated-identity-credential)
 
 ## Other Cloud Providers
