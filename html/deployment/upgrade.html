@@ -16,8 +16,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
@@ -53,7 +55,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.0
+                2.2.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -92,9 +94,11 @@
 <li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Upgrade</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#upgrading-from-v2-1-to-v2-2">Upgrading from v2.1 to v2.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#upgrading-from-v2-0-to-v2-1">Upgrading from v2.0 to v2.1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#verify-upgrade">Verify Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrading-from-v2-0-to-v2-1">Upgrading from v2.0 to v2.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="requirements/data_access_permissions.html">Data Access Permissions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#verifying-an-upgrade">Verifying an Upgrade</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
@@ -134,48 +138,74 @@
              
   <section id="upgrade">
 <h1>Upgrade<a class="headerlink" href="#upgrade" title="Permalink to this heading"></a></h1>
+<p>If applicable, follow the version-specific steps below for your upgrade.</p>
+<p>Otherwise, the general upgrade process is described below.</p>
 <ol class="arabic">
-<li><p>Point your local <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> to your data plane K8s cluster and namespace.</p></li>
-<li><p>Save the current Helm values to a file:</p>
+<li><p>Point your local <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> to your K8s cluster and namespace.</p></li>
+<li><p>If available, retrieve the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file for your agent.</p>
+<ol class="loweralpha">
+<li><p>Alternatively, you can save the current Helm values to a file like so:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">get</span> <span class="n">values</span> <span class="n">rime</span><span class="o">-</span><span class="n">agent</span> <span class="o">|</span> <span class="n">awk</span> <span class="s1">&#39;!/USER-SUPPLIED VALUES/&#39;</span> <span class="o">&gt;</span> <span class="n">values</span><span class="o">.</span><span class="n">yaml</span>
 </pre></div>
 </div>
 </li>
-<li><p>Edit the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file by changing the image version in the fields <code class="docutils literal notranslate"><span class="pre">rimeAgent.images.agentImage.name</span></code> and <code class="docutils literal notranslate"><span class="pre">rimeAgent.images.agentImage.name</span></code> to the new version. To find the version value, navigate to <strong>Organization Settings</strong> page, and click on the <strong>Manage Agent Setup</strong> tab. The Control Plane version will be displayed at the top of the pane. The version value to be used in the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file will be the Control Plane version without the prefix <code class="docutils literal notranslate"><span class="pre">v</span></code>.</p></li>
-<li><p>Follow the version specific upgrades.</p></li>
 </ol>
-<section id="upgrading-from-v2-1-to-v2-2">
-<h2>Upgrading from v2.1 to v2.2<a class="headerlink" href="#upgrading-from-v2-1-to-v2-2" title="Permalink to this heading"></a></h2>
-<ol class="arabic">
-<li><p>Update helm chart:</p>
+</li>
+<li><p>Edit the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file by changing the image tag in the fields <code class="docutils literal notranslate"><span class="pre">rimeAgent.images.agentImage.name</span></code> and <code class="docutils literal notranslate"><span class="pre">rimeAgent.images.modelTestJobImage.name</span></code> to match the new RIME version.</p>
+<ol class="loweralpha">
+<li><p>The version number can be found by navigating to the <strong>Organization Settings</strong> page and clicking on the <strong>Manage Agent Setup</strong> tab.</p>
+<p>Use this version number (without the <code class="docutils literal notranslate"><span class="pre">v</span></code> prefix) for the image updates.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># values.yaml</span>
+<span class="c1"># (from &quot;Manage Agent Setup&quot; page in UI) &quot;Control Plane: v2.2.1&quot;</span>
+<span class="n">rimeAgent</span><span class="p">:</span>
+   <span class="n">images</span><span class="p">:</span>
+      <span class="n">agentImage</span><span class="p">:</span>
+         <span class="c1"># name: &quot;robustintelligencehq/rime-agent:2.1.8&quot; # OLD</span>
+         <span class="n">name</span><span class="p">:</span> <span class="s2">&quot;robustintelligencehq/rime-agent:2.2.1&quot;</span> <span class="c1"># NEW</span>
+      <span class="n">modelTestJobImage</span><span class="p">:</span>
+         <span class="c1"># name: &quot;robustintelligencehq/rime-testing-engine-dev:2.1.8&quot; # OLD</span>
+         <span class="n">name</span><span class="p">:</span> <span class="s2">&quot;robustintelligencehq/rime-testing-engine-dev:2.2.1&quot;</span> <span class="c1"># NEW</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+<li><p>Install the updated Helm release.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>helm repo update
 helm upgrade rime-agent robustintelligence/rime-agent --version $RI_VERSION --values ./values.yaml
 </pre></div>
 </div>
 </li>
 </ol>
-</section>
 <section id="upgrading-from-v2-0-to-v2-1">
 <h2>Upgrading from v2.0 to v2.1<a class="headerlink" href="#upgrading-from-v2-0-to-v2-1" title="Permalink to this heading"></a></h2>
 <ol class="arabic">
-<li><p>Navigate to <strong>Orgainzation Settings</strong> page, and click on the <strong>Manage Agent Setup</strong> tab. Deactivate and delete the agent.</p></li>
+<li><p>Navigate to <strong>Organization Settings</strong> page and click on the <strong>Manage Agent Setup</strong> tab. Deactivate and then delete the agent.</p></li>
 <li><p>Uninstall the agent in your environment:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">uninstall</span> <span class="n">rime</span><span class="o">-</span><span class="n">agent</span>
 </pre></div>
 </div>
 </li>
-<li><p>Create the new agent using the create agent button on the <strong>Manage Agent Setup</strong> page. Select the agent type and follow the instructions. If permission related inputs are needed, you can find the same inputs you used in v2.0 in the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file under the <code class="docutils literal notranslate"><span class="pre">rimeAgent.operator.modelTestJob</span></code> section.</p></li>
+<li><p>Expand the agent’s data access strategy to include a second K8s service account, <code class="docutils literal notranslate"><span class="pre">rime-agent-rime-cross-plane-server</span></code> (specific steps outlined below).</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="requirements/data_access_permissions.html">Data Access Permissions</a></li>
+</ul>
+</div>
+</li>
+<li><p>Create the new agent using the Create Agent button on the <strong>Manage Agent Setup</strong> page. Select the original agent type and repeat the setup steps.
+If permission related inputs are needed, you can find the same inputs you used in v2.0 in the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file under the <code class="docutils literal notranslate"><span class="pre">rimeAgent.operator.modelTestJob</span></code> section.</p></li>
 </ol>
 </section>
-<section id="verify-upgrade">
-<h2>Verify Upgrade<a class="headerlink" href="#verify-upgrade" title="Permalink to this heading"></a></h2>
+<section id="verifying-an-upgrade">
+<h2>Verifying an Upgrade<a class="headerlink" href="#verifying-an-upgrade" title="Permalink to this heading"></a></h2>
 <ol class="arabic">
-<li><p>Verify that the <code class="docutils literal notranslate"><span class="pre">rime-agent</span></code> helm chart is of the new version:</p>
+<li><p>Verify that the <code class="docutils literal notranslate"><span class="pre">rime-agent</span></code> Helm chart version matches the new RIME version:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="nb">list</span>
 </pre></div>
 </div>
 </li>
-<li><p>Verify docker image versions:</p>
+<li><p>Verify that the Docker image versions match the new RIME version:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">describe</span> <span class="n">deployment</span> <span class="n">rime</span><span class="o">-</span><span class="n">agent</span><span class="o">-</span><span class="n">launcher</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">Image</span>
 </pre></div>
 </div>
@@ -185,6 +215,7 @@ helm upgrade rime-agent robustintelligence/rime-agent --version $RI_VERSION --va
 </pre></div>
 </div>
 </li>
+<li><p>Navigate to <strong>Organization Settings</strong> page and click on the <strong>Manage Agent Setup</strong> tab to confirm that the agent is posting an “Active” status.</p></li>
 </ol>
 </section>
 </section>

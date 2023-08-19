@@ -1,19 +1,39 @@
 Upgrade
 ===============================
 
-1. Point your local ``kubectl`` to your data plane K8s cluster and namespace.
-2. Save the current Helm values to a file:
+If applicable, follow the version-specific steps below for your upgrade.
 
-   .. code-block::
+Otherwise, the general upgrade process is described below.
 
-      helm get values rime-agent | awk '!/USER-SUPPLIED VALUES/' > values.yaml
+1. Point your local ``kubectl`` to your K8s cluster and namespace.
+2. If available, retrieve the ``values.yaml`` file for your agent.
 
-3. Edit the ``values.yaml`` file by changing the image version in the fields ``rimeAgent.images.agentImage.name`` and ``rimeAgent.images.agentImage.name`` to the new version. To find the version value, navigate to **Organization Settings** page, and click on the **Manage Agent Setup** tab. The Control Plane version will be displayed at the top of the pane. The version value to be used in the ``values.yaml`` file will be the Control Plane version without the prefix ``v``.
-4. Follow the version specific upgrades.
+   a. Alternatively, you can save the current Helm values to a file like so:
 
-Upgrading from v2.1 to v2.2
----------------------------------------
-1. Update helm chart:
+      .. code-block::
+
+         helm get values rime-agent | awk '!/USER-SUPPLIED VALUES/' > values.yaml
+
+3. Edit the ``values.yaml`` file by changing the image tag in the fields ``rimeAgent.images.agentImage.name`` and ``rimeAgent.images.modelTestJobImage.name`` to match the new RIME version.
+
+   a. The version number can be found by navigating to the **Organization Settings** page and clicking on the **Manage Agent Setup** tab.
+
+      Use this version number (without the ``v`` prefix) for the image updates.
+
+      .. code-block::
+
+         # values.yaml
+         # (from "Manage Agent Setup" page in UI) "Control Plane: v2.2.1"
+         rimeAgent:
+            images:
+               agentImage:
+                  # name: "robustintelligencehq/rime-agent:2.1.8" # OLD
+                  name: "robustintelligencehq/rime-agent:2.2.1" # NEW
+               modelTestJobImage:
+                  # name: "robustintelligencehq/rime-testing-engine-dev:2.1.8" # OLD
+                  name: "robustintelligencehq/rime-testing-engine-dev:2.2.1" # NEW
+
+4. Install the updated Helm release.
 
    .. code-block::
 
@@ -22,24 +42,32 @@ Upgrading from v2.1 to v2.2
 
 Upgrading from v2.0 to v2.1
 ---------------------------------------
-1. Navigate to **Orgainzation Settings** page, and click on the **Manage Agent Setup** tab. Deactivate and delete the agent.
+1. Navigate to **Organization Settings** page and click on the **Manage Agent Setup** tab. Deactivate and then delete the agent.
 2. Uninstall the agent in your environment:
 
    .. code-block::
 
       helm uninstall rime-agent
 
-3. Create the new agent using the create agent button on the **Manage Agent Setup** page. Select the agent type and follow the instructions. If permission related inputs are needed, you can find the same inputs you used in v2.0 in the ``values.yaml`` file under the ``rimeAgent.operator.modelTestJob`` section.
+3. Expand the agent's data access strategy to include a second K8s service account, ``rime-agent-rime-cross-plane-server`` (specific steps outlined below).
 
-Verify Upgrade
+   .. toctree::
+      :maxdepth: 1
+
+      requirements/data_access_permissions.md
+
+4. Create the new agent using the Create Agent button on the **Manage Agent Setup** page. Select the original agent type and repeat the setup steps.
+   If permission related inputs are needed, you can find the same inputs you used in v2.0 in the ``values.yaml`` file under the ``rimeAgent.operator.modelTestJob`` section.
+
+Verifying an Upgrade
 ---------------------------------------
-1. Verify that the ``rime-agent`` helm chart is of the new version:
+1. Verify that the ``rime-agent`` Helm chart version matches the new RIME version:
 
    .. code-block::
 
       helm list
 
-2. Verify docker image versions:
+2. Verify that the Docker image versions match the new RIME version:
 
    .. code-block::
 
@@ -50,3 +78,5 @@ Verify Upgrade
    .. code-block::
 
       kubectl get crd | grep rbst
+
+4. Navigate to **Organization Settings** page and click on the **Manage Agent Setup** tab to confirm that the agent is posting an "Active" status.
