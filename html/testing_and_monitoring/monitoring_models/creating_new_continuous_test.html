@@ -56,7 +56,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.2
+                2.3.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -78,7 +78,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Creating a New Continuous Test</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../notebooks/demo_notebooks/RIME_Firewall_Configuring.html">Updating your Continuous Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../notebooks/demo_notebooks/RIME_Continuous_Test_Configuring.html">Updating your Continuous Test</a></li>
 <li class="toctree-l2"><a class="reference internal" href="loading_data_for_scheduled_ct.html">Loading Data for Scheduled Continuous Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scheduling_ct_runs.html">Scheduling Continuous Testing Runs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="configuring_scheduled_ct.html">Configuring your Scheduled Continuous Test</a></li>
@@ -108,10 +108,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
@@ -143,8 +143,7 @@
              
   <section id="creating-a-new-continuous-test">
 <span id="continuous-test"></span><h1>Creating a New Continuous Test<a class="headerlink" href="#creating-a-new-continuous-test" title="Permalink to this heading"></a></h1>
-<p>Robust Intelligence allows you to create Continuous Testing to monitor your model for vulnerabilities over time. You can create a Continuous Test using the Python SDK.
-Continuous Tests run on a Firewall.</p>
+<p>Robust Intelligence allows you to create Continuous Testing to monitor your model for vulnerabilities over time. You can create a Continuous Test using the Python SDK.</p>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">SDK</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><ol class="arabic">
 <li><p>Create a project using the following <a class="reference internal" href="../../reference/python-sdk.html#rime-sdk"><span class="std std-ref">SDK command</span></a>.</p>
@@ -180,8 +179,8 @@ to query the model during testing.</p>
 </pre></div>
 </div>
 </div></blockquote>
-<p>The SDK returns the model ID.
-If you do not provide the information to query the model, you must register predictions of the model and dataset.</p>
+<p>The SDK returns the model ID.</p>
+<p>If you do not provide the information to query the model, you must register predictions of the model and dataset.</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span><span class="o">.</span><span class="n">register_predictions</span><span class="p">(</span>
     <span class="n">dataset_id</span><span class="o">=</span><span class="n">reference_id</span>
@@ -199,9 +198,17 @@ If you do not provide the information to query the model, you must register pred
 </div>
 </div></blockquote>
 </li>
-<li><p>Create a new Firewall object in the project. You may choose to create a Firewall with <a class="reference internal" href="scheduling_ct_runs.html#scheduling-continuous-test"><span class="std std-ref">Scheduled CT</span></a> parameters or leave those parameters blank. If Scheduled CT is set, the Firewall will run Continuous Tests automatically for you by pulling the data from the data sources you specify. Otherwise, you will need to manually run Continuous Tests over an evaluation dataset that you provide. This guide will provide an example of the latter case.</p>
+<li><p>Create a new Continuous Test instance in your project. You may
+choose to create a Continuous Test with <a class="reference internal" href="scheduling_ct_runs.html#scheduling-continuous-test"><span class="std std-ref">Scheduled CT</span></a> parameters or leave those
+parameters blank. If <em>Scheduled CT</em> is set, Robust
+Intelligence will run the Continuous Test automatically for
+you (at an interval defined by the <cite>bin_size</cite> you set) by
+utilizing the data integrations you specify.
+Otherwise, you will need to manually run the Continuous Test
+over an evaluation dataset that you provide. The steps below
+show how to start a manual run.</p>
 <blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span><span class="o">.</span><span class="n">create_firewall</span><span class="p">(</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span><span class="o">.</span><span class="n">create_ct</span><span class="p">(</span>
     <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_data_id</span><span class="o">=</span><span class="n">reference_id</span><span class="p">,</span> <span class="n">bin_size</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
@@ -243,17 +250,29 @@ If you do not provide the information to query the model, you must register pred
 </div>
 </div></blockquote>
 </li>
-<li><p>Issue the following command to start the Continuous Test, specifying the configuration created in the previous step and the unique ID of the firewall that contains the Continuous Test. Use the argument <code class="docutils literal notranslate"><span class="pre">override_existing_bins</span></code> to specify whether this Continuous Test should override the results of previous time bins for which other Continuous Tests have run.</p>
+<li><p>Issue the following command to start the Continuous Test,
+specifying the configuration created in the previous step and
+the unique ID of your Continuous Test. Use the argument
+<code class="docutils literal notranslate"><span class="pre">override_existing_bins</span></code> to specify whether this Continuous
+Test should override the results of previous time bins for
+which other Continuous Tests have run.</p>
+<p>Here, <cite>ct_ctl</cite> is your Continuous Test instance, which you
+can get using the <cite>Project.get_ct()</cite> method.</p>
 <blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">continuous_test</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">continuous_test</span> <span class="o">=</span> <span class="n">ct_ctl</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span>
    <span class="n">eval_data_id</span><span class="o">=</span><span class="n">evaluation_id</span><span class="p">,</span>  <span class="n">override_existing_bins</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
-<li><p>Once new data has been gathered, repeat steps 5-7 to start a new Continuous Test with the new evaluation dataset and prediction set.</p></li>
 </ol>
+<p>Anytime new data has been gathered and you want to re-run
+your test, repeat steps 5-7 to start a new Continuous Test
+with your latest evaluation dataset and prediction set.</p>
+<p>If you want to automate your Continuous Test so that it runs at
+a regular interval, set its schedule as shown in
+<a class="reference internal" href="scheduling_ct_runs.html#scheduling-continuous-test"><span class="std std-ref">Scheduling Continuous Testing Runs</span></a>.</p>
 </div></div>
 </section>
 

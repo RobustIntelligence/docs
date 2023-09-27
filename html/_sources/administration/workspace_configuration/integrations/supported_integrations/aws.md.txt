@@ -5,39 +5,190 @@ AWS Data Stores [using the UI.](../configuring_integrations.md)
 
 
 
-## Configuring AWS Data Stores Integration
+## Configuring AWS Data Store Integration
 
-In order to configure the AWS Data Store Integration, there are 2 authentication methods:
+To integrate Robust Intelligence with an AWS Data Store, you must configure one of the following authentication methods:
 
-### Access Key Based Authentication
+- [Access Key Based Authentication](#access-key-based-authentication); or
+- [IAM Role-Based Authentication](#iam-role-based-authentication)
 
-In order to configure AWS Data Stores via access key based authentication,
-you need to enter the following information:
+See the relevant steps for your approach below.
 
-1. Access Key ID
-2. Secret Access Key
+### Access Key-Based Authentication
 
-You can find more information by the following this [AWS Guide](https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html)
+In order to configure an AWS Data Store that Robust Intelligence will
+connect to using access key-based authentication, follow the steps
+below. This procedure will provide the **Access Key ID** and **Secret
+Access Key** that you need when you create the Robust Intelligence-ASW
+integration.
 
-### IAM Roles for Service Accounts Based Authentication
+You can learn more about access key based authentication in the AWS
+document,
+[AWS Account and Access Keys](https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html)
 
-Integrations support authenticating using AWS Role ARN in the same way
-when deploying the [Agent.](../../../../deployment/requirements/data_access_permissions.md)
+**Procedure:**
 
-To enable the integration using Role ARN, you only need to associate the
-service accounts `rime-agent-model-tester` with the agents where you intend
-to use the integration. You can find more information by following this
-[AWS Guide.](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html)
+1. Create or find the AWS bucket that your Robust Intelligence
+   instance will use. This will serve as the agent's default data source.
+   See the AWS document, [Creating a bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html).
 
-**Note:** You do not need to update the service account `rime-agent-model-tester`
-with the new Role ARN as this will be updated during runtime when the integration is used.
+1. Create a policy to *get and list objects* for the designated S3
+   bucket. This will be similar to the policy shown here:
+
+    ```json
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Effect": "Allow",
+              "Action": [
+                  "s3:ListBucket"
+              ],
+              "Resource": "arn:aws:s3:::<YOUR_BUCKET>"
+          },
+          {
+              "Effect": "Allow",
+              "Action": [
+                  "s3:GetObject"
+              ],
+              "Resource": "arn:aws:s3:::<YOUR_BUCKET>/*"
+          }
+      ]
+    }
+    ```
+
+1. Add the policy to the relevant user group. See the AWS document,
+   [Attaching a policy to an IAM user group](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups_manage_attach-policy.html)
+
+    **Note:** If you do not want to create a new user, proceed to Step 5.
+
+1. If needed, add and/or create users in this user group. See the AWS document on
+   [Adding and removing users](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups_manage_add-remove-users.html)
+
+1. Get the access key as explained in the AWS document,
+   [Get your access key ID and secret access key](https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html).
+
+   Once you have the access key:
+
+   - If you did *not* create a new user, then
+     copy the **Access Key ID** and **Secret Access Key**.
+     You'll need these when you configure the integration
+     in the next step.
+
+   - If you *did* create a new user, then you must create
+     the access key for the new user. See the section, "To create an
+     access key" in the AWS document,
+     [Managing access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html?icmpid=docs_iam_console#Using_CreateAccessKey).
+
+1. Add your AWS integration through the
+   [Robust Intelligence UI: Workspace: Integrations: Add](../configuring_integrations.md#add-an-integration-through-the-robust-intelligence-web-ui).
+
+
+### IAM Role-Based Authentication
+
+In order to configure an AWS Data Store that Robust Intelligence will
+connect to using IAM role-based authentication, follow the steps below.
+This procedure will provide the **AWS Role ARN** that you will need
+when you create the Robust Intelligence-AWS integration.
+Learn more about IAM role-based access in the AWS document,
+[Configuring a Kubernetes service account to assume an IAM role](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html).
+
+**Note:** Integrations support authenticating using AWS Role ARN in
+the same way when deploying the
+[Robust Intelligence Agent](../../../../deployment/requirements/data_access_permissions.md).
+
+**Procedure:**
+
+1. Create or find the AWS bucket that your Robust Intelligence
+   instance will use. For information, see the AWS document,
+   [Creating a bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html).
+
+1. If not already configured for your cluster, create an IAM OpenID
+   Connect (OIDC) provider that will enable your cluster to use IAM
+   roles for service accounts. See the AWS document,
+   [Creating an IAM OIDC provider for your cluster](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html)
+
+1. For the designated S3 bucket, create an access policy that allows
+   *listing* and *reading* objects:
+
+    ```json
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Effect": "Allow",
+              "Action": [
+                  "s3:ListBucket"
+              ],
+              "Resource": "arn:aws:s3:::<YOUR_BUCKET>"
+          },
+          {
+              "Effect": "Allow",
+              "Action": [
+                  "s3:GetObject"
+              ],
+              "Resource": "arn:aws:s3:::<YOUR_BUCKET>/*"
+          }
+      ]
+    }
+    ```
+
+1. Create an IAM role that the two K8s service accounts (see top of
+   page) can assume, and associate it with the policy created in the
+   previous step.
+
+   **Save this ARN. You will need to specify this during the Robust
+   Intelligence integration setup step.**
+
+1. Create a trust relationship to allow the two K8s service accounts
+   to assume the IAM role. See the AWS document,
+   [Configuring a K8s service account to assume an IAM role](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html)
+
+   Your trust relationship should have a similar definition as the
+   template shown below. Note the two K8s service accounts in the subject
+   field.
+
+   **Note:** You do *not* need to update the service account
+   `rime-agent-model-tester` and `rime-agent-rime-cross-plane-server`
+   with the new Role ARN as this will be populated at runtime when
+   the integration is used.
+
+    ```json
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+               "Principal": {
+                    "Federated": "arn:aws:iam::111122223333:oidc-provider/oidc.eks.region-code.amazonaws.com/id/EXAMPLED539D4633E53DE1B71EXAMPLE"
+                },
+                "Action": "sts:AssumeRoleWithWebIdentity",
+                "Condition": {
+                    "StringEquals": {
+                        "oidc.eks.region-code.amazonaws.com/id/EXAMPLED539D4633E53DE1B71EXAMPLE:sub": [
+                            "system:serviceaccount:$AGENT_NAMESPACE:rime-agent-rime-cross-plane-server",
+                            "system:serviceaccount:$AGENT_NAMESPACE:rime-agent-model-tester"
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+    ```
+
+    See also the AWS document,
+    [Configuring role and service account](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html).
+
+1. Add your AWS integration through the
+   [Robust Intelligence UI: Workspace: Integrations: Add](../configuring_integrations.md#add-an-integration-through-the-robust-intelligence-web-ui).
+
 
 ## Using the AWS Integration
 
 After configuring the integration, use it to register datasets and models. When registering datasets, the `path` field can point to files of type `csv`, Parquet, `jsonl`, `jsonl.gz`, and `json.gz`. In this case, `data_type` does not need to be specified and defaults to `"DATA_TYPE_UNSPECIFIED"`.
 
-```
-integration_id = "abe23******" #Choose the AWS Integraiton ID
+```python
+integration_id = "abe23******" #Choose the AWS Integration ID
 
 project.register_dataset(
     name= f"ref_data_{dt}",
@@ -63,10 +214,13 @@ model_id = project.register_model(
 )
 ```
 
-The AWS integration can also be used to register a Delta lake table on S3. The path mush point to the S3 folder where the Delta lake table exists and the `"data_type": "DATA_TYPE_DELTA_TABLE"` must be specified.
+The AWS integration can also be used to register a Delta lake table on
+S3. The path mush point to the S3 folder where the Delta lake table
+exists and the `"data_type": "DATA_TYPE_DELTA_TABLE"` must be
+specified.
 
-```
-integration_id = "abe23******" #Choose the AWS Integraiton ID
+```python
+integration_id = "abe23******" #Choose the AWS Integration ID
 
 project.register_dataset(
     name= f"ref_data_{dt}",

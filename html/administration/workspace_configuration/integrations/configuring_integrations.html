@@ -55,7 +55,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.2
+                2.3.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -90,9 +90,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../agents.html">Agents</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../integrations.html">Integrations</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Configuring Integrations</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#adding-an-integration-through-the-robust-intelligence-web-ui">Adding an integration through the Robust Intelligence web UI</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#entering-integration-credentials-through-the-robust-intelligence-web-ui">Entering integration credentials through the Robust Intelligence web UI</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#adding-cloud-object-storage-during-deployment">Adding Cloud Object Storage during deployment.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#add-an-integration-through-the-robust-intelligence-web-ui">Add an integration through the Robust Intelligence web UI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-the-uuid-of-a-saved-integration">Get the UUID of a saved integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#provide-integration-credentials-through-the-robust-intelligence-web-ui">Provide integration credentials through the Robust Intelligence web UI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#add-cloud-object-storage-during-deployment">Add Cloud Object Storage during deployment</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#related-topics">Related Topics</a></li>
 </ul>
 </li>
@@ -113,10 +114,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/model_tests_reference.html">Model Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../reference/troubleshooting.html">Troubleshooting Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/release_notes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../reference/api_changelog.html">API Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
@@ -148,70 +149,86 @@
              
   <section id="configuring-integrations">
 <span id="id1"></span><h1>Configuring Integrations<a class="headerlink" href="#configuring-integrations" title="Permalink to this heading"></a></h1>
-<p>Administrators can configure integrations for a Robust Intelligence instance. Integrations can provide
-data or compute resources to Robust Intelligence.</p>
-<p>All configured integrations can be managed from the <em>Integrations</em> tab in Workspace settings. Only workspace
-administrators and organization administrators are allowed to configure and update integrations. Once an
-integration is configured, all workspace members will be able to see and use the integrations. There are also some preconfigured integrations, namely the Huggingface and Agent Integrations (for agents added since v2.1), which are read-only and cannot be updated by users. The Agent Integrations display the suffix, <em>(Agent)</em>, and the list of integrations contains the information about the cloud agents added to the workspace.</p>
+<p>Administrators can add and manage integrations in a workspace. Robust
+Intelligence uses saved integrations to load data and compute
+resources.</p>
+<p>All configured integrations can be managed from the <em>Integrations</em>
+panel in Workspace settings. Only workspace administrators and
+organization administrators can add and update integrations. Once an
+integration is configured, all workspace members will be able to see
+and use the integration.</p>
+<p>The <em>Integrations</em> panel also displays preconfigured integrations,
+namely the <em>Huggingface</em> and <em>Agent</em> Integrations, which are read-only
+and cannot be updated by users. The Agent Integrations display the
+suffix, <code class="docutils literal notranslate"><span class="pre">(Agent)</span></code>, and the list of integrations contains information
+about the cloud agents added to the workspace.</p>
 <img src="../../../_static/images/integrations.png">
-<section id="adding-an-integration-through-the-robust-intelligence-web-ui">
-<h2>Adding an integration through the Robust Intelligence web UI<a class="headerlink" href="#adding-an-integration-through-the-robust-intelligence-web-ui" title="Permalink to this heading"></a></h2>
-<p>An administrator can add or modify a integration that the Robust Intelligence instance can use.</p>
-<ol class="arabic">
-<li><p>Sign in to a Robust Intelligence instance.</p>
-<blockquote>
-<div><p>The Workspaces page appears.</p>
-</div></blockquote>
-</li>
-<li><p>Click the three-dot menu at the right side of a workspace and select <em>Manage Workspace</em>.</p>
-<blockquote>
-<div><p>Alternately, select <em>Workspace Settings</em> from a workspace page.
-The Workspace Settings page appears.</p>
-</div></blockquote>
-</li>
-<li><p>Click <em>Integrations</em> in the left navigation bar.</p>
-<blockquote>
-<div><p>The Integrations configuration pane appears.</p>
-</div></blockquote>
-</li>
-<li><p>Click <em>Add Integration</em>.</p>
-<blockquote>
-<div><p>The Add Integration dialog box appears.</p>
-</div></blockquote>
-</li>
-<li><p>In <em>Name</em>, type a name for the integration.</p></li>
-<li><p>From the <em>Integration Type</em> drop-down, choose a type.</p>
-<blockquote>
-<div><p>Supported types are AWS S3, Azure Blobstore, Databricks Deltalake, HuggingFace, and Custom.</p>
-</div></blockquote>
+<section id="add-an-integration-through-the-robust-intelligence-web-ui">
+<h2>Add an integration through the Robust Intelligence web UI<a class="headerlink" href="#add-an-integration-through-the-robust-intelligence-web-ui" title="Permalink to this heading"></a></h2>
+<p>An administrator can add or modify a data integration that the Robust
+Intelligence instance can use for loading datasets and other resources.</p>
+<ol class="arabic simple">
+<li><p>Sign in to a Robust Intelligence instance or click <em>Workspaces</em> in
+the right navigation panel.</p></li>
+<li><p>In the Workspaces page, click the name of your workspace</p></li>
+<li><p>Click the gear icon at the lower left of the window and choose
+<em>Workspace Settings</em>.</p></li>
+<li><p>In the Workspace Settings page, click <em>Integrations</em> in the navigation panel.</p></li>
+<li><p>In the Integrations configuration panel, click <em>Add Integration</em>.</p></li>
+<li><p>In the Add Integration dialog box, specify the following:</p>
+<ul class="simple">
+<li><p>A <em>Name</em>, type a name for this integration</p></li>
+<li><p>An <em>Integration Type</em> such as:</p>
+<ul>
+<li><p>AWS S3</p></li>
+<li><p>Azure Blobstore</p></li>
+<li><p>Databricks Deltalake</p></li>
+<li><p>HuggingFace</p></li>
+<li><p>Custom</p></li>
+</ul>
 </li>
 <li><p>Fill in the necessary fields depending on the integration.</p></li>
-<li><p>(Optional) Click <em>Add Variable</em> to add specific secrets as key/value pairs.</p>
-<blockquote>
-<div><p>A set of Key and Value fields appears with a Sensitivity drop-down selector between them.</p>
-</div></blockquote>
+</ul>
 </li>
-<li><p>(Adding a variable) In <em>Key</em> and <em>Value</em>, type a key and the value for that key.</p></li>
-<li><p>(Adding a variable) From the <em>Sensitivity</em> drop-down, select a sensitivity level for the key/value pair.</p>
-<blockquote>
-<div><p>Sensitivity levels are Not sensitive, Workspace level, and Members level.</p>
-</div></blockquote>
-<blockquote>
-<div><p>Sensitive information, such as access tokens, are stored in a secret manager
-service built using <a class="reference external" href="https://developer.hashicorp.com/vault/docs/what-is-vault">Hashicorp Vault</a>.</p>
-</div></blockquote>
-<blockquote>
-<div><p>If the sensitivity is Member level, individual members need to individually configure their sensitive credentials for this
-integration.
-If the sensitivity is Workspace level, administrate configure the sensitive credentials for this integrations</p>
-</div></blockquote>
+<li><p>(Optional) Click <em>Add Variable</em> to add secrets as key/value pairs.</p>
+<ul class="simple">
+<li><p>In <em>Key</em> and <em>Value</em>, type a key name and the value for that key.</p></li>
+<li><p>In the <em>Sensitivity</em> drop-down, select a sensitivity level for
+the key/value pair. This is one of: <code class="docutils literal notranslate"><span class="pre">Not</span> <span class="pre">sensitive</span></code>, <code class="docutils literal notranslate"><span class="pre">Workspace</span></code>
+level, or <code class="docutils literal notranslate"><span class="pre">Members</span></code> level. Information you mark as sensitive (for
+example, access tokens) will be stored in a secrets manager
+service built using
+<a class="reference external" href="https://developer.hashicorp.com/vault/docs/what-is-vault">Hashicorp Vault</a>.
+If the sensitivity is <code class="docutils literal notranslate"><span class="pre">Members</span></code> level, individual members must
+individually configure their sensitive credentials for this
+integration. If the sensitivity is <code class="docutils literal notranslate"><span class="pre">Workspace</span></code> level, the
+administrator configures the sensitive credentials for this
+integration.</p></li>
+</ul>
 </li>
 <li><p>Click <em>Save Integration</em>.</p></li>
 </ol>
 <p>The new integration is now available to the RI Platform.</p>
+<p><strong>Tip!</strong> Once you’ve saved a data integration, you can copy its
+integration UUID from the <strong>ID</strong> column of the <strong>Workspace Settings:
+Integrations</strong> panel.</p>
 </section>
-<section id="entering-integration-credentials-through-the-robust-intelligence-web-ui">
-<h2>Entering integration credentials through the Robust Intelligence web UI<a class="headerlink" href="#entering-integration-credentials-through-the-robust-intelligence-web-ui" title="Permalink to this heading"></a></h2>
+<section id="get-the-uuid-of-a-saved-integration">
+<h2>Get the UUID of a saved integration<a class="headerlink" href="#get-the-uuid-of-a-saved-integration" title="Permalink to this heading"></a></h2>
+<p>Follow these steps to find the ID (UUID) of a saved integration:</p>
+<ol class="arabic simple">
+<li><p>Sign in to a Robust Intelligence instance and click <em>Workspaces</em> in
+the right navigation panel.</p></li>
+<li><p>In the Workspaces page, click the name of your workspace.</p></li>
+<li><p>Click the gear icon at the lower left of the window and choose
+<em>Workspace Settings</em>.</p></li>
+<li><p>In the Workspace Settings page, click <em>Integrations</em> in the navigation panel.</p></li>
+<li><p>In the Integrations configuration panel, scroll to find you data integration.</p></li>
+<li><p>Copy its integration UUID from the <strong>ID</strong> column.</p></li>
+</ol>
+</section>
+<section id="provide-integration-credentials-through-the-robust-intelligence-web-ui">
+<h2>Provide integration credentials through the Robust Intelligence web UI<a class="headerlink" href="#provide-integration-credentials-through-the-robust-intelligence-web-ui" title="Permalink to this heading"></a></h2>
 <p>When an integration requires Member Level credentials, each user needs to enter their own credentials.</p>
 <ol class="arabic">
 <li><p>Sign in to a Robust Intelligence instance.</p>
@@ -237,8 +254,8 @@ The Workspace Settings page appears.</p>
 </ol>
 <p>The new integration is now available to the RI Platform.</p>
 </section>
-<section id="adding-cloud-object-storage-during-deployment">
-<h2>Adding Cloud Object Storage during deployment.<a class="headerlink" href="#adding-cloud-object-storage-during-deployment" title="Permalink to this heading"></a></h2>
+<section id="add-cloud-object-storage-during-deployment">
+<h2>Add Cloud Object Storage during deployment<a class="headerlink" href="#add-cloud-object-storage-during-deployment" title="Permalink to this heading"></a></h2>
 <p>Cloud Object Storage (e.g., AWS S3, Azure Blob Storage, or Google Cloud Storage) can also be configured during deployment time. A default Object Storage needs to be configured during deployment. These do not appear in the Integrations UI.
 <a class="reference internal" href="../../../deployment/requirements/data_access_permissions.html"><span class="std std-doc">More information on this can be found here.</span></a></p>
 </section>

@@ -58,7 +58,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.2
+                2.3.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -116,10 +116,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
@@ -175,8 +175,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
 </pre></div>
 </div>
 </div>
@@ -189,9 +188,6 @@
 <span class="kn">from</span> <span class="nn">ri_public_examples.download_files</span> <span class="kn">import</span> <span class="n">download_files</span>
 
 <span class="n">download_files</span><span class="p">(</span><span class="s2">&quot;images/classification/awa2&quot;</span><span class="p">,</span> <span class="s2">&quot;awa2&quot;</span><span class="p">)</span>
-<span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;probabilities&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;awa2/data/train_inputs_trial.json&quot;</span><span class="p">))],</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;awa2/data/train_preds_trial.json&quot;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">))</span>
-<span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;probabilities&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;awa2/data/test_inputs_trial.json&quot;</span><span class="p">))],</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;awa2/data/test_preds_trial.json&quot;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">))</span>
-<span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;probabilities&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;awa2/data/test_inputs_monitoring_trial.json&quot;</span><span class="p">))],</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;awa2/data/monitoring_preds_trial.json&quot;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -220,19 +216,20 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">description</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;Run Stress Testing and Continuous Testing on an&quot;</span>
-    <span class="s2">&quot; image classification model and dataset. Demonstration uses &quot;</span>
-    <span class="s2">&quot; the Animals with Attributes 2 (AwA2) dataset.&quot;</span>
+    <span class="s2">&quot;Run Stress Testing and Continuous Testing on an &quot;</span>
+    <span class="s2">&quot;image classification model and dataset. Demonstration uses &quot;</span>
+    <span class="s2">&quot;the Animals with Attributes 2 (AwA2) dataset.&quot;</span>
 <span class="p">)</span>
 <span class="n">project</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span>
     <span class="s1">&#39;Image Classification Demo&#39;</span><span class="p">,</span>
     <span class="n">description</span><span class="p">,</span>
     <span class="s2">&quot;MODEL_TASK_MULTICLASS_CLASSIFICATION&quot;</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="n">project</span>
 </pre></div>
 </div>
 </div>
-<p><strong>Go back to the UI to see the Project</strong></p>
+<p><strong>Go back to the UI or click on the link above to see the Project</strong></p>
 </section>
 <section id="Uploading-the-Datasets-+-Predictions">
 <h2><strong>Uploading the Datasets + Predictions</strong><a class="headerlink" href="#Uploading-the-Datasets-+-Predictions" title="Permalink to this heading"></a></h2>
@@ -244,75 +241,6 @@
 <li><p>Monkey</p></li>
 </ol>
 <p>We now want to kick off RIME Stress Tests that will help us evaluated the model in further depth beyond basic performance metrics like accuracy, precision, recall. In order to do this, we will upload this pre-trained model, the reference dataset the model was trained on, and the evaluation dataset the model was evaluated on to an S3 bucket that can be accessed by RIME.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> awa2/models/model.py
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-<span class="kn">from</span> <span class="nn">torchvision.io</span> <span class="kn">import</span> <span class="n">read_image</span><span class="p">,</span> <span class="n">ImageReadMode</span>
-<span class="kn">import</span> <span class="nn">torchvision.models</span> <span class="k">as</span> <span class="nn">models</span>
-<span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="nn">transforms</span>
-
-
-<span class="n">IMG_SIZE</span><span class="o">=</span><span class="mi">224</span>
-<span class="n">NUM_CLASSES</span><span class="o">=</span><span class="mi">40</span>
-<span class="n">NUM_FEATURES</span><span class="o">=</span><span class="mi">512</span>
-<span class="n">MODEL_FOLDER_PATH</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span>
-
-
-<span class="k">class</span> <span class="nc">Net</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backbone</span><span class="p">,</span> <span class="n">features_size</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Net</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="c1"># Resnet Backbone (includes avg pooling layer, takes off last FC layer)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="nb">list</span><span class="p">(</span><span class="n">backbone</span><span class="o">.</span><span class="n">children</span><span class="p">())[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">features_size</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns network outputs and the features &quot;&quot;&quot;</span>
-        <span class="c1"># put images through ResNet backbone</span>
-        <span class="n">img_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
-        <span class="n">img_features</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">img_features</span><span class="p">,</span> <span class="n">start_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">(</span><span class="n">img_features</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">outputs</span>
-
-
-<span class="n">backbone</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet18</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">Net</span><span class="p">(</span><span class="n">backbone</span><span class="p">,</span> <span class="n">NUM_FEATURES</span><span class="p">,</span> <span class="n">NUM_CLASSES</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span>
-    <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
-        <span class="n">MODEL_FOLDER_PATH</span> <span class="o">/</span> <span class="s2">&quot;model.pt&quot;</span><span class="p">,</span>
-        <span class="n">map_location</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
-    <span class="p">)</span>
-<span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-<span class="n">train_mean</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">]</span>
-<span class="n">train_std</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">]</span>
-<span class="n">img_normalize</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">train_mean</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">train_std</span><span class="p">)</span>
-<span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
-    <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">((</span><span class="n">IMG_SIZE</span><span class="p">,</span> <span class="n">IMG_SIZE</span><span class="p">)),</span>
-    <span class="n">transforms</span><span class="o">.</span><span class="n">ConvertImageDtype</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">),</span>
-    <span class="n">img_normalize</span><span class="p">,</span>
-<span class="p">])</span>
-
-
-<span class="k">def</span> <span class="nf">predict_dict</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Predicts on datapoint.&quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
-        <span class="n">image</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;image_path&quot;</span><span class="p">])</span>
-        <span class="n">image</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
-        <span class="n">image</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
-        <span class="n">probs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -456,7 +384,12 @@
         <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="n">eval_id</span><span class="p">,</span>
     <span class="p">},</span>
     <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span><span class="p">,</span>
-    <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;TEST_CATEGORY_TYPE_TRANSFORMATIONS&quot;</span><span class="p">,</span> <span class="s2">&quot;TEST_CATEGORY_TYPE_MODEL_PERFORMANCE&quot;</span><span class="p">,</span> <span class="s2">&quot;TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE&quot;</span><span class="p">]</span>
+    <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_TRANSFORMATIONS&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_ADVERSARIAL&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_DRIFT&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
 <span class="p">}</span>
 <span class="n">stress_job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="n">stress_test_config</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -466,7 +399,7 @@
 </section>
 <section id="Stress-Test-Results">
 <h2><strong>Stress Test Results</strong><a class="headerlink" href="#Stress-Test-Results" title="Permalink to this heading"></a></h2>
-<p>Stress tests are grouped into categories that measure various aspects of model robustness (subset performance, distribution drift, abnormal input, transformations). Suggestions to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information.</p>
+<p>Stress tests are grouped into categories that measure various aspects of model robustness (subset performance, distribution drift, adversarial, transformations). Suggestions to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information.</p>
 <p>You can view the detailed results in the UI by running the below cell and redirecting to the generated link. This page shows granular results for a given AI Stress Test run.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -480,18 +413,18 @@
 <section id="Analyzing-the-Results">
 <h3>Analyzing the Results<a class="headerlink" href="#Analyzing-the-Results" title="Permalink to this heading"></a></h3>
 <p>Below you can see a snapshot of the results. Some of these tests such as the Subset Performance Tests analyze how your model performs on different groups properties related to your data, while others such as Transformations Tests analyze how your model reacts to augmented and perturbed images.</p>
-<img alt="stress.png" src="https://drive.google.com/uc?id=1kSiRzeA4kydrvM4CAG6IXlt68OL9L_bx" />
+<img alt="stress.png" src="https://drive.google.com/uc?id=1UUd44H194ZXSQXvIZWz_OSgHSuhUxRP8" />
 <section id="Subset-Performance-Tests">
 <h4>Subset Performance Tests<a class="headerlink" href="#Subset-Performance-Tests" title="Permalink to this heading"></a></h4>
 <p>Here are the results of the Subset Performance tests. These tests can be thought as more detailed performance tests that identify subsets of underperformance in your images metadata. These tests help ensure that the model works equally well across different styles of images.</p>
-<img alt="subset.png" src="https://drive.google.com/uc?id=1bJ7qk6u3RwmKjgMeVE46cVe_pzvRKK6Z" />
+<img alt="subset.png" src="https://drive.google.com/uc?id=1vyZ8H0eOlQluNE44aBY4TbQ1osxrR5xO" />
 <p>Below we are exploring the “Subset F1 score” test cases for the image metadata feature <code class="docutils literal notranslate"><span class="pre">ImageBrightness</span></code>. We can see that even though the model has an overall F1 score of 0.52, it performs poorly on images at the tails of the brightness distribution - images that are either very dim or very bright.</p>
-<img alt="f1.png" src="https://drive.google.com/uc?id=1OZgWQxiabucizgmhAJpGCPy6zgnuvjro" />
+<img alt="f1.png" src="https://drive.google.com/uc?id=1T1dqEg7Nu5XEsS_w9isIBYimSY6mACMx" />
 </section>
 <section id="Transformation-Tests">
 <h4>Transformation Tests<a class="headerlink" href="#Transformation-Tests" title="Permalink to this heading"></a></h4>
 <p>The results of the transformation tests are below. These tests can be thought as ways to test your models response to augmented image data, which can often occur in reality. They help to make sure that your model is invariant to such changes in your data.</p>
-<img alt="transform.png" src="https://drive.google.com/uc?id=1hWryV02Bvnx0i1B4oIkZbDrfNimTZvp9" />
+<img alt="transform.png" src="https://drive.google.com/uc?id=16aDLm0j9dXA99Q7N4jvvFB60Lo87IhzV" />
 </section>
 </section>
 <section id="Programatically-Querying-the-Results">
@@ -522,24 +455,24 @@
 </div>
 </section>
 </section>
-<section id="Deploy-to-Production-and-Create-the-AI-Firewall">
-<h2><strong>Deploy to Production and Create the AI Firewall</strong><a class="headerlink" href="#Deploy-to-Production-and-Create-the-AI-Firewall" title="Permalink to this heading"></a></h2>
-<p>Once you have identified the best stress test run, you can deploy the associated model and set up a RIME Firewall to run Continuous Testing in order to automatically detect “bad” incoming data and statistically significant distributional drift.</p>
+<section id="Deploy-to-Production-and-set-up-Continuous-Testing">
+<h2><strong>Deploy to Production and set up Continuous Testing</strong><a class="headerlink" href="#Deploy-to-Production-and-set-up-Continuous-Testing" title="Permalink to this heading"></a></h2>
+<p>Once you have identified the best stress test run, you can deploy the associated model and set up Continuous Testing in order to automatically detect “bad” incoming data and statistically significant distributional drift.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
 
-<span class="n">firewall</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_firewall</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">firewall</span>
+<span class="n">ct_instance</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_ct</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">ct_instance</span>
 </pre></div>
 </div>
 </div>
 </section>
-<section id="Uploading-a-Batch-of-Production-Data-with-Model-Predictions-to-Firewall">
-<h2><strong>Uploading a Batch of Production Data with Model Predictions to Firewall</strong><a class="headerlink" href="#Uploading-a-Batch-of-Production-Data-with-Model-Predictions-to-Firewall" title="Permalink to this heading"></a></h2>
-<p>The image classification model has been in production for the past week. Production data and model predictions have been collected and stored for the past two weeks. Now, we will use Firewall to track how the model performed across the last two week.</p>
+<section id="Uploading-a-Batch-of-Production-Data-with-Model-Predictions-to-Continuous-Testing">
+<h2><strong>Uploading a Batch of Production Data with Model Predictions to Continuous Testing</strong><a class="headerlink" href="#Uploading-a-Batch-of-Production-Data-with-Model-Predictions-to-Continuous-Testing" title="Permalink to this heading"></a></h2>
+<p>The image classification model has been in production for the past week. Production data and model predictions have been collected and stored for the past two weeks. Now, we will use Continuous Testing to track how the model performed across the last two week.</p>
 <p><strong>Upload an Incremental Batch of Data</strong></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -562,22 +495,22 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">monitoring_id</span><span class="p">,</span> <span class="n">override_existing_bins</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">ct_instance</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">monitoring_id</span><span class="p">,</span> <span class="n">override_existing_bins</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <p><strong>Wait for a couple minutes and your results will appear in the UI</strong></p>
 </section>
-<section id="Firewall-CT-Results">
-<h2><strong>Firewall CT Results</strong><a class="headerlink" href="#Firewall-CT-Results" title="Permalink to this heading"></a></h2>
-<p>The AI Firewall’s Continuous Tests operate at the batch level and provide a mechanism to monitor the health of ML deployments in production. They allow the user to understand when errors begin to occur and surface the underlying drivers of such errors.</p>
+<section id="CT-Results">
+<h2><strong>CT Results</strong><a class="headerlink" href="#CT-Results" title="Permalink to this heading"></a></h2>
+<p>The Continuous Tests operate at the batch level and provide a mechanism to monitor the health of ML deployments in production. They allow the user to understand when errors begin to occur and surface the underlying drivers of such errors.</p>
 <p>You can explore the results in the UI by running the below cell and redirecting to the generated link</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">firewall</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_instance</span>
 </pre></div>
 </div>
 </div>

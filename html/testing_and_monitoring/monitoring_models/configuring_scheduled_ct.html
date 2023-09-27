@@ -55,7 +55,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.2
+                2.3.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -77,7 +77,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="creating_new_continuous_test.html">Creating a New Continuous Test</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../notebooks/demo_notebooks/RIME_Firewall_Configuring.html">Updating your Continuous Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../notebooks/demo_notebooks/RIME_Continuous_Test_Configuring.html">Updating your Continuous Test</a></li>
 <li class="toctree-l2"><a class="reference internal" href="loading_data_for_scheduled_ct.html">Loading Data for Scheduled Continuous Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scheduling_ct_runs.html">Scheduling Continuous Testing Runs</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Configuring your Scheduled Continuous Test</a><ul>
@@ -119,10 +119,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
@@ -184,7 +184,7 @@
 <p>Data Collector requires you to specify <strong><code class="docutils literal notranslate"><span class="pre">connection_info.data_collector.data_stream_id</span></code></strong> in <strong><code class="docutils literal notranslate"><span class="pre">data_info</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">pred_info</span></code></strong>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Arguments for activating a CT</span>
 <span class="c1"># Schedule with the Data Collector</span>
-<span class="n">firewall</span><span class="o">.</span><span class="n">activate_ct_scheduling</span><span class="p">(</span>
+<span class="n">ct_instance</span><span class="o">.</span><span class="n">activate_ct_scheduling</span><span class="p">(</span>
     <span class="n">data_info</span><span class="o">=</span><span class="p">{</span>
         <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;data_collector&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -220,7 +220,7 @@
 the section on <a class="reference internal" href="../../administration/workspace_configuration/integrations/configuring_integrations.html"><span class="std std-doc">integrations</span></a> to configure
 Delta Lake.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
-<span class="n">firewall</span><span class="o">.</span><span class="n">activate_ct_scheduling</span><span class="p">(</span>
+<span class="n">ct_instance</span><span class="o">.</span><span class="n">activate_ct_scheduling</span><span class="p">(</span>
     <span class="n">data_info</span><span class="o">=</span><span class="p">{</span>
         <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;databricks&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -266,7 +266,7 @@ parameter <code class="docutils literal notranslate"><span class="pre">integrati
 
 <span class="c1"># Arguments for activating a CT</span>
 <span class="c1"># Schedule with Custom Loader</span>
-<span class="n">firewall</span><span class="o">.</span><span class="n">activate_ct_scheduling</span><span class="p">(</span>
+<span class="n">ct_instance</span><span class="o">.</span><span class="n">activate_ct_scheduling</span><span class="p">(</span>
     <span class="n">data_info</span><span class="o">=</span><span class="p">{</span>
         <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;custom_location&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -389,7 +389,7 @@ see our <a class="reference internal" href="../preparing_your_models_and_dataset
 
 <span class="c1"># General Arguments for Activating a Schedule</span>
 <span class="c1"># if using a default reference set</span>
-<span class="n">firewall</span><span class="o">.</span><span class="n">activate_ct_scheduling</span><span class="p">(</span>
+<span class="n">ct_instance</span><span class="o">.</span><span class="n">activate_ct_scheduling</span><span class="p">(</span>
     <span class="n">data_info</span><span class="o">=</span><span class="n">data_info_dict</span><span class="p">,</span>
     <span class="n">data_integration_id</span><span class="o">=</span><span class="s2">&quot;&lt;YOUR_DATA_INTEGRATION_ID&gt;&quot;</span><span class="p">,</span>
     <span class="n">pred_integration_id</span><span class="o">=</span><span class="s2">&quot;&lt;YOUR_PREDICTION_INTEGRATION_ID&gt;&quot;</span><span class="p">,</span>
@@ -408,7 +408,7 @@ see our <a class="reference internal" href="../preparing_your_models_and_dataset
 <span class="n">rolling_window_size</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="c1"># General Arguments for Activating a Schedule</span>
 <span class="c1"># if specifying a reference set with a rolling window</span>
-<span class="n">firewall</span><span class="o">.</span><span class="n">activate_ct_scheduling</span><span class="p">(</span>
+<span class="n">ct_instance</span><span class="o">.</span><span class="n">activate_ct_scheduling</span><span class="p">(</span>
     <span class="n">data_info</span><span class="o">=</span><span class="n">data_info_dict</span><span class="p">,</span>
     <span class="n">data_integration_id</span><span class="o">=</span><span class="s2">&quot;&lt;YOUR_DATA_INTEGRATION_ID&gt;&quot;</span><span class="p">,</span>
     <span class="n">pred_integration_id</span><span class="o">=</span><span class="s2">&quot;&lt;YOUR_PREDICTION_INTEGRATION_ID&gt;&quot;</span><span class="p">,</span>

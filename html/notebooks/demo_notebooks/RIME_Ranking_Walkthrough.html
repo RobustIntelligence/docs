@@ -58,7 +58,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.2
+                2.3.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -118,10 +118,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
@@ -282,7 +282,8 @@
     <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;rank_label&quot;</span><span class="p">,</span>
     <span class="s2">&quot;ranking_info&quot;</span><span class="p">:</span> <span class="p">{</span>
       <span class="s2">&quot;query_col&quot;</span><span class="p">:</span> <span class="s2">&quot;query_id&quot;</span>
-    <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Director&quot;</span><span class="p">,</span> <span class="s2">&quot;Cast1&quot;</span><span class="p">],</span>
 <span class="p">}</span>
 <span class="n">ref_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;ref_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ref_s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="n">data_params</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
@@ -315,7 +316,8 @@
         <span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="n">ref_dataset_id</span><span class="p">,</span>
         <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="n">eval_dataset_id</span><span class="p">,</span>
     <span class="p">},</span>
-    <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span>
+    <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span><span class="p">,</span>
+    <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;TEST_CATEGORY_TYPE_ADVERSARIAL&quot;</span><span class="p">,</span> <span class="s2">&quot;TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE&quot;</span><span class="p">,</span> <span class="s2">&quot;TEST_CATEGORY_TYPE_TRANSFORMATIONS&quot;</span><span class="p">,</span> <span class="s2">&quot;TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS&quot;</span><span class="p">]</span>
 <span class="p">}</span>
 <span class="n">stress_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
     <span class="n">stress_test_config</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
@@ -342,30 +344,30 @@
 <section id="Analyzing-the-Results">
 <h3><strong>Analyzing the Results</strong><a class="headerlink" href="#Analyzing-the-Results" title="Permalink to this heading"></a></h3>
 <p>Below you can see a snapshot of the results.</p>
-<img alt="img_2" src="https://drive.google.com/uc?id=1oaJjWVN18Yu6KqiJ9XGFq4RVcLSE_bLk" />
+<img alt="img_2" src="https://drive.google.com/uc?id=1gR-bosz3YH4wX2W2M4scjCdIz0RRjoig" />
 <p>Here are the results of the Subset Performance tests. These tests can be thought as more detailed performance tests that identify subsets of underperformance. These tests help ensure that the model works equally well across different groups.</p>
 <img alt="img_3" src="https://drive.google.com/uc?id=1ATu9N3jjKm26nKUwehjrCG1yepzIOz9c" />
 <p>Below we are exploring the “Subset Mean Reciprocal Rank (MRR)” test cases for the feature “Votes”. We can see that even though the model has an overall MRR of 0.91, it performs poorly on certain subsets with low values of the “Votes” feature.</p>
 <img alt="img_4" src="https://drive.google.com/uc?id=1Px7l7mc6W5MIdm1RJDY9Gfgg40amdVUi" />
 </section>
 </section>
-<section id="Deploy-to-Production-and-Create-the-AI-Firewall">
-<h2><strong>Deploy to Production and Create the AI Firewall</strong><a class="headerlink" href="#Deploy-to-Production-and-Create-the-AI-Firewall" title="Permalink to this heading"></a></h2>
-<p>Once you have identified the best stress test run, you can deploy the associated model and set up a RIME Firewall to run Continuous Testing in order to automatically detect “bad” incoming data and statistically significant distributional drift.</p>
+<section id="Deploy-to-Production-and-set-up-Continuous-Testing">
+<h2><strong>Deploy to Production and set up Continuous Testing</strong><a class="headerlink" href="#Deploy-to-Production-and-set-up-Continuous-Testing" title="Permalink to this heading"></a></h2>
+<p>Once you have identified the best stress test run, you can deploy the associated model and set up Continuous Testing in order to automatically detect “bad” incoming data and statistically significant distributional drift.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
 
-<span class="n">firewall</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_firewall</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">ct_instance</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_ct</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </section>
-<section id="Uploading-a-Batch-of-Production-Data-&amp;-Model-Predictions-to-Firewall">
-<h2><strong>Uploading a Batch of Production Data &amp; Model Predictions to Firewall</strong><a class="headerlink" href="#Uploading-a-Batch-of-Production-Data-&-Model-Predictions-to-Firewall" title="Permalink to this heading"></a></h2>
-<p>The model has been in production for some time, and new production data and model predictions have been collected and stored. Now, we will use the Firewall to track how the model performed.</p>
+<section id="Uploading-a-Batch-of-Production-Data-&amp;-Model-Predictions-to-Continuous-Testing">
+<h2><strong>Uploading a Batch of Production Data &amp; Model Predictions to Continuous Testing</strong><a class="headerlink" href="#Uploading-a-Batch-of-Production-Data-&-Model-Predictions-to-Continuous-Testing" title="Permalink to this heading"></a></h2>
+<p>The model has been in production for some time, and new production data and model predictions have been collected and stored. Now, we will use Continuous Testing to track how the model performed.</p>
 <p><strong>Upload the Latest Batch of Production Data</strong></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -379,7 +381,7 @@
 <span class="n">prod_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;prod_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
     <span class="n">prod_s3_path</span><span class="p">,</span>
-    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">data_params</span><span class="p">},</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span> <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Director&quot;</span><span class="p">,</span> <span class="s2">&quot;Cast1&quot;</span><span class="p">],</span> <span class="o">**</span><span class="n">data_params</span><span class="p">},</span>
     <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">prod_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
@@ -396,43 +398,55 @@
 </pre></div>
 </div>
 </div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">project</span><span class="o">.</span><span class="n">update_continuous_test_categories</span><span class="p">([</span><span class="s2">&quot;TEST_CATEGORY_TYPE_MODEL_PERFORMANCE&quot;</span><span class="p">,</span>
+                                           <span class="s2">&quot;TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE_DEGRADATION&quot;</span><span class="p">,</span>
+                                           <span class="s2">&quot;TEST_CATEGORY_TYPE_ABNORMAL_INPUTS&quot;</span><span class="p">,</span>
+                                           <span class="s2">&quot;TEST_CATEGORY_TYPE_DRIFT&quot;</span><span class="p">,</span>
+                                           <span class="s2">&quot;TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
 <p><strong>Run Continuous Testing over Batch of Data</strong></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">ct_instance</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">firewall</span>
+<span class="n">ct_instance</span>
 </pre></div>
 </div>
 </div>
 <p><strong>Wait for a couple minutes and your results will appear in the UI.</strong></p>
 </section>
-<section id="Querying-Results-from-the-Firewall">
-<h2><strong>Querying Results from the Firewall</strong><a class="headerlink" href="#Querying-Results-from-the-Firewall" title="Permalink to this heading"></a></h2>
-<p>After a firewall has been created and data has been uploaded for processing, the user can query the results throughout the entire uploaded history.</p>
+<section id="Querying-Results-from-Continuous-Testing">
+<h2><strong>Querying Results from Continuous Testing</strong><a class="headerlink" href="#Querying-Results-from-Continuous-Testing" title="Permalink to this heading"></a></h2>
+<p>After Continuous Testing has been set up and data has been uploaded for processing, the user can query the results throughout the entire uploaded history.</p>
 <p><strong>Obtain All Detection Events</strong></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">events</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">firewall</span><span class="o">.</span><span class="n">list_monitors</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">list_detected_events</span><span class="p">()]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">events</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">ct_instance</span><span class="o">.</span><span class="n">list_monitors</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">list_detected_events</span><span class="p">()]</span>
 <span class="n">events_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">events</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;project_id&quot;</span><span class="p">,</span> <span class="s2">&quot;firewall_id&quot;</span><span class="p">,</span> <span class="s2">&quot;event_object_id&quot;</span><span class="p">,</span> <span class="s2">&quot;description_html&quot;</span><span class="p">,</span> <span class="s2">&quot;last_update_time&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">events_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </section>
-<section id="Firewall-CT-Results">
-<h2><strong>Firewall CT Results</strong><a class="headerlink" href="#Firewall-CT-Results" title="Permalink to this heading"></a></h2>
-<p>The AI Firewall’s Continuous Tests operate at the batch level and provide a mechanism to monitor the health of ML deployments in production. They allow the user to understand when errors begin to occur and surface the underlying drivers of such errors.</p>
+<section id="CT-Results">
+<h2><strong>CT Results</strong><a class="headerlink" href="#CT-Results" title="Permalink to this heading"></a></h2>
+<p>The Continuous Tests operate at the batch level and provide a mechanism to monitor the health of ML deployments in production. They allow the user to understand when errors begin to occur and surface the underlying drivers of such errors.</p>
 <p>You can explore the results in the UI by running the below cell and redirecting to the generated link.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">firewall</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_instance</span>
 </pre></div>
 </div>
 </div>

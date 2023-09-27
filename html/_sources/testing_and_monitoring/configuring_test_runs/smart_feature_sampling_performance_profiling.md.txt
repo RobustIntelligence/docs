@@ -73,5 +73,38 @@ Once these limits are hit the data will be sampled.
 | 500  | 2,200,000  |
 | 750  | 650,000  |
 
+## Memory Recommendations
+Please refer to the below benchmarks to help you determine how much memory to request for your test runs. The numbers in the table represent the maximum dataset size (rows * features) that our tests can accommodate before going out of memory.
+
+The benchmarks assume that dataset sampling is enabled. If you are not using dataset sampling, you will need to request more memory. In addition, the below numbers are meant to be used as a rough guide. Actual memory usage will vary depending on the dataset and model.
+
+### Stress Tests
+
+| Memory | Tabular Regression | Tabular Ranking | Tabular Binary Classification | NLP Multiclass Classification | NLP Inference | Image Multiclass Classification<sup>1</sup> |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| 2GB | 18,000,000 | 100,000,000 | 75,000,000 | - | - | - |
+| 4GB | 36,000,000 | 200,000,000 | 150,000,000 | 40,000,000 | 20,000,000 | - |
+| 8GB | 70,000,000 | 400,000,000 | 300,000,000 |  80,000,000 | 40,000,000 | - |
+| 16GB | 140,000,000 | 800,000,000 | 600,000,000 | 150,000,000| 80,000,000 | 4,000,000 |
+| 32GB | 280,000,000 | 1,500,000,000 | 1,000,000,000 | 300,000,000 | 150,000,000 | 8,000,000 |
+| 64GB | 550,000,000 | 3,000,000,000 | 2,000,000,000 | 600,000,000 | 300,000,000 | 16,000,000 |
+| 128GB | 1,100,000,000 | 6,000,000,000 | 4,000,000,000 | 1,200,000,000 | 600,000,000 | 32,000,000 |
+
+<sup>1</sup>Each image is counted as a single feature. This benchmark leverages Robust Intelligence's image loader and dataset sampling. As such, only a small portion of the images are loaded into memory and embedded. If images are already embedded in your dataset, you will need to request more memory.
+
+### Continuous Tests
+
+| Memory | Tabular Regression | Tabular Ranking | Tabular Binary Classification | NLP Multiclass Classification | NLP Inference | Image Multiclass Classification<sup>1</sup> |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| 2GB | 1,000,000,000 | 1,000,000,000 | 400,000,000 | 7,500,000 | 200,000,000 | - |
+| 4GB | 2,000,000,000 | 2,000,000,000 | 800,000,000 | 15,000,000 | 400,000,000 | - |
+| 8GB | 4,000,000,000 | 4,000,000,000 | 1,500,000,000 | 30,000,000 | 800,000,000 | 4,000,000 |
+| 16GB | 8,000,000,000 | 8,000,000,000 | 3,000,000,000 | 60,000,000 | 1,500,000,000 | 8,000,000 |
+| 32GB | 16,000,000,000 | 16,000,000,000 | 6,000,000,000 | 120,000,000 | 3,000,000,000 | 16,000,000 |
+| 64GB | 32,000,000,000 | 32,000,000,000 | 12,000,000,000 | 240,000,000 | 6,000,000,000 | 32,000,000|
+| 128GB | 64,000,000,000 | 64,000,000,000 | 24,000,000,000 | 480,000,000 | 12,000,000,000 | 64,000,000 |
+
+<sup>1</sup>Each image is counted as a single feature. This benchmark leverages Robust Intelligence's image loader and dataset sampling. As such, only a small portion of the images are loaded into memory and embedded. If images are already embedded in your dataset, you will need to request more memory.
+
 ## Related Topics  
 [Configuring Data Profiling](configuring_data_profiling.md)  

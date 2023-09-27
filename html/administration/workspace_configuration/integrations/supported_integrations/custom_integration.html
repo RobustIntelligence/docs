@@ -55,7 +55,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.2
+                2.3.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -114,10 +114,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/model_tests_reference.html">Model Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../reference/troubleshooting.html">Troubleshooting Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/release_notes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../reference/api_changelog.html">API Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
@@ -152,25 +152,30 @@
 <span id="id1"></span><h1>Custom Integrations<a class="headerlink" href="#custom-integrations" title="Permalink to this heading"></a></h1>
 <p>Robust Intelligence provides a framework to load data from arbitrary sources.
 This is helpful for integrations Robust Intelligence doesn’t support natively.</p>
-<section id="configuring-authentication-for-custom-integrations">
-<h2>Configuring Authentication for Custom Integrations<a class="headerlink" href="#configuring-authentication-for-custom-integrations" title="Permalink to this heading"></a></h2>
+<section id="configure-authentication-for-a-custom-integration">
+<h2>Configure Authentication for a Custom Integration<a class="headerlink" href="#configure-authentication-for-a-custom-integration" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
-<li><p>Follow steps 1 through 5 of <a class="reference internal" href="../configuring_integrations.html"><span class="std std-doc">Adding an integration through the Robust Intelligence web UI</span></a></p></li>
+<li><p>Follow steps 1 through 5 of the section,
+<a class="reference internal" href="../configuring_integrations.html"><span class="std std-doc">Add an integration through the Robust Intelligence web UI</span></a>.</p></li>
 <li><p>From the <em>Integration Type</em> drop-down, select <em>Custom</em>.</p></li>
 <li><p>Type a name for the integration in <em>Name</em>.</p></li>
-<li><p>(Adding a Custom integration) Type the configuration information
-for the custom integration as key/value pairs and select a
-sensitivity for each pair. Sensitivity levels include:</p>
+<li><p>Type the configuration information for the custom integration as
+key/value pairs and select a sensitivity for each pair. Sensitivity
+levels include:</p>
 <ul class="simple">
-<li><p>Not sensitive</p></li>
-<li><p>Workspace level</p></li>
-<li><p>Members level</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Not</span> <span class="pre">sensitive</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Workspace</span></code> level</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Members</span></code> level</p></li>
 </ul>
 </li>
 </ol>
+<p>See <a class="reference internal" href="../configuring_integrations.html"><span class="std std-doc">Configuring Integrations</span></a> for an
+explanation of sensitivity levels.</p>
+<p>Note the <em>ID</em> (UUID) of your saved integration. You will need it
+when you load datasets for your tests.</p>
 </section>
-<section id="using-custom-integrations">
-<h2>Using Custom Integrations<a class="headerlink" href="#using-custom-integrations" title="Permalink to this heading"></a></h2>
+<section id="use-a-custom-integration">
+<h2>Use a Custom Integration<a class="headerlink" href="#use-a-custom-integration" title="Permalink to this heading"></a></h2>
 <p>Robust Intelligence can load data from arbitrary sources defined in a
 Python file for use in a stress test or continuous test. Custom
 integrations may be used by the <a class="reference internal" href="../../../../testing_and_monitoring/monitoring_models/configuring_scheduled_ct.html#custom-loader"><span class="std std-ref">custom
@@ -242,8 +247,9 @@ custom data loader provides</p></li>
 <p>You may optionally also specify:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">loader_kwargs_json</span></code>: Any parameters to be passed to the data loading function</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">data_endpoint_integration_id</span></code>: UUID of the integration with secrets required
-by the data loading function</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data_endpoint_integration_id</span></code>: UUID of the saved integration with secrets
+required by the data loading function. See
+<a class="reference internal" href="../configuring_integrations.html#get-the-uuid-of-a-saved-integration"><span class="std std-ref">Get the UUID of a saved integration</span></a>.</p></li>
 </ul>
 <p>The <code class="docutils literal notranslate"><span class="pre">DATA_LOADER_FILE</span></code> argument here provides a path to your
 custom data loader script like,
@@ -258,7 +264,7 @@ and the <code class="docutils literal notranslate"><span class="pre">MODEL_FILE<
                 <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">uploaded_data_loader_path</span><span class="p">,</span>
                 <span class="s2">&quot;load_func_name&quot;</span><span class="p">:</span> <span class="s2">&quot;get_news_data&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;loader_kwargs_json&quot;</span><span class="p">:</span> <span class="n">loader_kwargs</span><span class="p">,</span>
-                <span class="s2">&quot;data_endpoint_integration_id&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;inegration_uuid&gt;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;data_endpoint_integration_id&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;integration_uuid&gt;&quot;</span><span class="p">,</span>
             <span class="p">}</span>
         <span class="p">},</span>
         <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -333,8 +339,9 @@ custom data loader provides</p></li>
 <p>You may optionally also specify:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">loader_kwargs_json</span></code>: Any parameters to be passed to the data loading function</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">data_endpoint_integration_id</span></code>: UUID of the integration with secrets required
-by the data loading function</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data_endpoint_integration_id</span></code>: UUID of the saved integration with secrets
+required by the data loading function. See
+<a class="reference internal" href="../configuring_integrations.html#get-the-uuid-of-a-saved-integration"><span class="std std-ref">Get the UUID of a saved integration</span></a>.</p></li>
 </ul>
 <p>The <code class="docutils literal notranslate"><span class="pre">DATA_LOADER_FILE</span></code> argument here provides a path to your
 custom data loader script like,
@@ -348,7 +355,7 @@ custom data loader script like,
                 <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">uploaded_data_loader_path</span><span class="p">,</span>
                 <span class="s2">&quot;load_func_name&quot;</span><span class="p">:</span> <span class="s2">&quot;get_news_data&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;loader_kwargs_json&quot;</span><span class="p">:</span> <span class="n">loader_kwargs</span><span class="p">,</span>
-                <span class="s2">&quot;data_endpoint_integration_id&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;inegration_uuid&gt;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;data_endpoint_integration_id&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;integration_uuid&gt;&quot;</span><span class="p">,</span>
             <span class="p">}</span>
         <span class="p">},</span>
         <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>

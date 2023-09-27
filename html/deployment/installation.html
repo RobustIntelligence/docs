@@ -55,7 +55,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.2
+                2.3.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -103,6 +103,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#python-sdk-and-rest-api">Python SDK and REST API</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#monitoring-setup-optional">Monitoring Setup (optional)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Helm Installation</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="upgrade.html">Upgrade</a></li>
@@ -110,10 +114,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/model_tests_reference.html">Model Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/troubleshooting.html">Troubleshooting Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/release_notes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/api_changelog.html">API Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
@@ -230,6 +234,33 @@ Be sure to use an <a class="reference internal" href="../administration/security
 </div>
 </dd>
 </dl>
+</section>
+</section>
+<section id="monitoring-setup-optional">
+<h2>Monitoring Setup (optional)<a class="headerlink" href="#monitoring-setup-optional" title="Permalink to this heading"></a></h2>
+<p>You may optionally install the <code class="docutils literal notranslate"><span class="pre">rime-extras</span></code> helm chart which provides system/application monitoring via the Datadog Agent and Prometheus Node Exporter.</p>
+<section id="id1">
+<h3>Helm Installation<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<ol class="arabic">
+<li><p>Point your local <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> to your data plane K8s cluster and namespace.</p></li>
+<li><p>Create a <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file enabling the Datadog Agent and Prometheus Node Exporter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rimeExtras</span><span class="p">:</span>
+   <span class="c1"># -- Whether to install the DataDog Agent</span>
+   <span class="n">datadog</span><span class="p">:</span> <span class="n">true</span>
+   <span class="c1"># -- Whether to install the Prometheus Node Exporter</span>
+   <span class="n">prometheusNodeExporter</span><span class="p">:</span> <span class="n">true</span>
+</pre></div>
+</div>
+</li>
+<li><p>Execute the below Helm commands to install the chart in your K8s cluster:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>helm repo add robustintelligence https://robustintelligence.github.io/helm --force-update
+
+helm upgrade -i rime-extras robustintelligence/rime-extras \
+   --values $PATH_TO_VALUES_FILE
+</pre></div>
+</div>
+</li>
+</ol>
 </section>
 </section>
 </section>

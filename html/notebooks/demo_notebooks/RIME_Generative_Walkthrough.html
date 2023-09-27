@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RI Generative Stress Test Walkthrough &mdash; Robust Intelligence  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/images/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Robust Intelligence
+          </a>
+              <div class="version">
+                2.3.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/querying_results.html">Querying Test Run Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/notifications_and_alerts.html">Notifications and Alerts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/model_governance.html">Managing Model Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops.html">Integrating with MLOps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/organization_administration.html">Organization Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/workspace_configuration.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/security_and_compliance.html">Security and Compliance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/upgrade.html">Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Robust Intelligence</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><strong>RI Generative Stress Test Walkthrough</strong></li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="RI-Generative-Stress-Test-Walkthrough">
+<h1><strong>RI Generative Stress Test Walkthrough</strong><a class="headerlink" href="#RI-Generative-Stress-Test-Walkthrough" title="Permalink to this heading"></a></h1>
+<p>In this walkthrough, we will run RIME’s Generative AI Stress Testing on OpenAI’s Chat GPT model to demonstrate how RIME can be used with generative models. The data consists of sample text-generated information that a Chat GPT model would use as input and output which includes a title, context, question, answer, and prompt.</p>
+<section id="Install-Dependencies,-Import-Libraries-and-Download-Data">
+<h2><strong>Install Dependencies, Import Libraries and Download Data</strong><a class="headerlink" href="#Install-Dependencies,-Import-Libraries-and-Download-Data" title="Permalink to this heading"></a></h2>
+<p>Run the cell below to install libraries to receive data, install our SDK, and load analysis libraries.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>rime-sdk<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
+</pre></div>
+</div>
+</div>
+<p>Run the cell below to download and unzip a generated dataset and pre-trained model.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>https://github.com/RobustIntelligence/ri-public-examples/archive/master.zip
+<span class="kn">from</span> <span class="nn">ri_public_examples.download_files</span> <span class="kn">import</span> <span class="n">download_files</span>
+
+<span class="n">download_files</span><span class="p">(</span><span class="s1">&#39;generative/question_answering&#39;</span><span class="p">,</span> <span class="s1">&#39;question_answering&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Establish-the-RIME-Client">
+<h2><strong>Establish the RIME Client</strong><a class="headerlink" href="#Establish-the-RIME-Client" title="Permalink to this heading"></a></h2>
+<p>To get started, provide the API credentials and the base domain/address of the RIME service. You can generate and copy an API token from the API Access Tokens Page under Workspace settings. For the domian/address of the RIME service, contact your admin.</p>
+<img alt="API_token" src="https://drive.google.com/uc?id=1zF1inyDbU2Q08SW9Ans2eVw0LqUnA2uP" />
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE API_KEY</span>
+<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
+<span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">API_TOKEN</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Create-a-New-Project">
+<h2><strong>Create a New Project</strong><a class="headerlink" href="#Create-a-New-Project" title="Permalink to this heading"></a></h2>
+<p>You can create projects in RIME to organize your test runs. Each project represents a workspace for a given machine learning task. It can contain multiple candidate models, but should only contain one promoted production model.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">description</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Run Generative Stress Testing on a&quot;</span>
+    <span class="s2">&quot; generative model and dataset. Demonstration uses&quot;</span>
+    <span class="s2">&quot; a dataset composed of short scenarios that are each&quot;</span>
+    <span class="s2">&quot; identifed by title and characterized by context,&quot;</span>
+    <span class="s2">&quot; a question, an answer, and a prompt.&quot;</span>
+<span class="p">)</span>
+<span class="n">project</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;GAI Security Demo&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+    <span class="n">model_task</span><span class="o">=</span><span class="s2">&quot;MODEL_TASK_QUESTION_ANSWERING&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Go back to the UI to see the new ``Generative Model Stress Test Demo`` project.</strong></p>
+</section>
+<section id="Register-and-Upload-the-Model-+-Dataset">
+<h2><strong>Register and Upload the Model + Dataset</strong><a class="headerlink" href="#Register-and-Upload-the-Model-+-Dataset" title="Permalink to this heading"></a></h2>
+<p>We now want to kick off RIME Stress Tests that will help us evaluate the model in further depth beyond basic performance metrics like accuracy, precision, recall. In order to do this, we will upload this pre-trained model and the evaluation dataset the model was evaluated on to an S3 bucket that can be accessed by RIME. We also need to upload a fact sheet that will later be used to run the stress test. Futhermore, we’ll need to register them with RIME.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">upload_path</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_generative&quot;</span>
+
+<span class="n">model_s3_dir</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;question_answering/models&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+<span class="p">)</span>
+<span class="n">model_s3_path</span> <span class="o">=</span> <span class="n">model_s3_dir</span> <span class="o">+</span> <span class="s2">&quot;/chat_gpt_model.py&quot;</span>
+
+<span class="n">eval_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;question_answering/data/squad_v2_test_with_labels.json&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+<span class="p">)</span>
+
+<span class="n">fact_sheet_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;question_answering/data/fact_sheet.txt&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Once the data and model are uploaded to S3, we can register them to RIME. Once they’re registered, we can refer to these resources using their RIME-generated ID’s. We also need to obtain an integration ID from the workspace, which is then used to register the model and aid in stress test configuration.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+
+<span class="n">integration_id</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_integration</span><span class="p">(</span>
+    <span class="n">workspace_id</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="c1"># PASTE WORKSPACE ID FROM INFO BUTTON ON WORKSPACE OVERVIEW PAGE</span>
+    <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;GAI_walkthrough_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">integration_type</span><span class="o">=</span><span class="s2">&quot;INTEGRATION_TYPE_CUSTOM&quot;</span><span class="p">,</span>
+    <span class="n">integration_schema</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;sensitivity&quot;</span><span class="p">:</span> <span class="s2">&quot;VARIABLE_SENSITIVITY_WORKSPACE_SECRET&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="c1"># FILL IN YOUR OPENAI API KEY HERE</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+
+<span class="c1"># Note: models and datasets need to have unique names.</span>
+<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">model_config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;generative_language_model&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;model_path&quot;</span><span class="p">:</span> <span class="n">model_s3_path</span><span class="p">,</span>
+        <span class="s2">&quot;system_prompt&quot;</span><span class="p">:</span> <span class="s2">&quot;I am ChatGPT, a large language model trained by OpenAI, based on the GPT-3.5 architecture.</span><span class="se">\n</span><span class="s2">Knowledge cutoff: 2021-09</span><span class="se">\n</span><span class="s2">Current date: 2023-03-28&quot;</span>
+    <span class="p">}},</span>
+    <span class="n">model_endpoint_integration_id</span><span class="o">=</span><span class="n">integration_id</span><span class="p">,</span>
+    <span class="n">skip_validation</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="n">data_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;answer&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;prompt_col&quot;</span><span class="p">:</span> <span class="s2">&quot;prompt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;text_features&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;context&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;question&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">eval_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;eval_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">data_config</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;data_file&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">eval_s3_path</span><span class="p">}},</span>
+        <span class="s2">&quot;data_params&quot;</span><span class="p">:</span><span class="n">data_params</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">tests_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;row_wise_factual_inconsistency&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;fact_sheet_path&quot;</span><span class="p">:</span> <span class="n">fact_sheet_path</span><span class="p">},</span>
+<span class="p">}</span>
+<span class="n">test_suite_config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;individual_tests_config&quot;</span><span class="p">:</span> <span class="n">tests_config</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Running-a-Generative-Stress-Test">
+<h2><strong>Running a Generative Stress Test</strong><a class="headerlink" href="#Running-a-Generative-Stress-Test" title="Permalink to this heading"></a></h2>
+<p>A Generative Stress Test allows you to test your data and model before deployment. They are a comprehensive suite of hundreds of tests that automatically identify implicit assumptions and weaknesses of pre-production models. Each stress test is run on a single model and displays corresponding results.</p>
+<p>Below is a sample configuration of how to setup and run a RIME Generative Stress Test. This configuration specifies relevant metadata for our dataset and model to run the stress test.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">generative_stress_test_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span><span class="s2">&quot;GPT-3.5&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;model_task&quot;</span><span class="p">:</span><span class="s2">&quot;Question Answering&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;model_id&quot;</span><span class="p">:</span><span class="n">model_id</span><span class="p">,</span>
+    <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span><span class="n">eval_dataset_id</span><span class="p">,</span>
+    <span class="s2">&quot;integration_id&quot;</span><span class="p">:{</span><span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">integration_id</span><span class="p">},</span>
+    <span class="s2">&quot;run_time_info&quot;</span><span class="p">:{</span><span class="s2">&quot;explicit_errors&quot;</span><span class="p">:</span><span class="kc">False</span><span class="p">},</span>
+    <span class="s2">&quot;test_suite_config&quot;</span><span class="p">:</span><span class="n">test_suite_config</span><span class="p">,</span>
+    <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_ADVERSARIAL&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_DATA_POISONING_DETECTION&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_TRANSFORMATIONS&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_EVASION_ATTACK_DETECTION&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_MODEL_ALIGNMENT&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_FACTUAL_AWARENESS&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS&quot;</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">stress_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">_start_generative_stress_test</span><span class="p">(</span>
+    <span class="n">test_run_config</span><span class="o">=</span><span class="n">generative_stress_test_config</span><span class="p">,</span>
+    <span class="n">project_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span>
+<span class="p">)</span>
+<span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Generative-Stress-Test-Results">
+<h2><strong>Generative Stress Test Results</strong><a class="headerlink" href="#Generative-Stress-Test-Results" title="Permalink to this heading"></a></h2>
+<p>Generative Stress Test Results are grouped into categories that measure various aspects of generative model robustness (adverserial, transformations, model alignment, subset performance). These categories are what determine production readiness. Suggestions to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information.</p>
+<p>You can view the detailed results in the UI by running the below cell and redirecting to the generated link. This page shows granular results for a given AI Generative Stress Test run.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_run</span> <span class="o">=</span> <span class="n">stress_job</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
+<span class="n">test_run</span>
+</pre></div>
+</div>
+</div>
+<section id="Analyzing-the-Results">
+<h3><strong>Analyzing the Results</strong><a class="headerlink" href="#Analyzing-the-Results" title="Permalink to this heading"></a></h3>
+<p>Below you can see a snapshot of the results.</p>
+<img alt="stress_test.png" src="https://drive.google.com/uc?id=1Tyn3QHU7UM9EMgE3S7WngGSEW-2Mv4BR" />
+<p>Notice that each test result category articulates status of the model with respect to the category. Under each category description is a list of any ‘Data Requirements’ for that category to run successfully.</p>
+<p>Here are the results of the “Transformations” tests. These tests augment your evaluation dataset with synthetic abnormal values to proactively test your pipeline’s error-handling behavior and measure the performance degradation caused by different types of abnormal values.</p>
+<img alt="transformations_category" src="https://drive.google.com/uc?id=17Ggnf2fw4p3SteTtfitd6l3ZuHxO6eMH" />
+<p>Below we are exploring the “Generative Synonym Swap” test cases. This test measures the robustness of your model to synonym swap transformations. It does this by randomly swapping synonyms in the input string and measuring the difference in model outputs between the original input and the transformed input. For the first test case, we can see the SBERT Score, which measures similarity between the original and transformed outputs, is 0.64. This means that our model has changed its output
+significantly and is likely not robust to synonym swaps.</p>
+<img alt="datapoint_details.png" src="https://drive.google.com/uc?id=19KHVhZaYhm2uv8edqJdTJg0WNef0vMof" />
+</section>
+<section id="Programmatically-Querying-the-Results">
+<h3><strong>Programmatically Querying the Results</strong><a class="headerlink" href="#Programmatically-Querying-the-Results" title="Permalink to this heading"></a></h3>
+<p>RIME not only provides you with an intuitive UI to visualize and explore these results, but also allows you to programmatically query these results. This allows customers to integrate with their MLOps pipeline, log results to experiment management tools like MLFlow, bring automated decision making to their ML practices, or store these results for future references.</p>
+<p>Run the below cell to programmatically query the results. The results are outputed as a pandas dataframe.</p>
+<p><strong>Access results at the test run overview level</strong></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_run_result</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_result_df</span><span class="p">()</span>
+<span class="n">test_run_result</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;QA_Test_Run_Results.csv&quot;</span><span class="p">)</span>
+<span class="n">test_run_result</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Access detailed test results at each individual test cases level.</strong></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_case_result</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_cases_df</span><span class="p">()</span>
+<span class="n">test_case_result</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;QA_Test_Run_Results.csv&quot;</span><span class="p">)</span>
+<span class="n">test_case_result</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Appendix">
+<h2><strong>Appendix</strong><a class="headerlink" href="#Appendix" title="Permalink to this heading"></a></h2>
+<section id="Uploading-a-Model-to-RIME">
+<h3><strong>Uploading a Model to RIME</strong><a class="headerlink" href="#Uploading-a-Model-to-RIME" title="Permalink to this heading"></a></h3>
+<p>To be able to run certain tests, RIME needs query access to your model. To give RIME access, you’ll need to write a Python file that implements the <code class="docutils literal notranslate"><span class="pre">generate(system_prompt:</span> <span class="pre">str,</span> <span class="pre">prompt:</span> <span class="pre">str)</span> <span class="pre">-&gt;</span> <span class="pre">str</span></code> function, and upload that file (and any objects that it loads) to the platform. Here we provide an example model file, show you how to upload this file and the relevant model artifacts, and show you how to configure stress tests to use this model.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> question_answering/models/FLAN_T5_base.py
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="p">,</span> <span class="n">AutoTokenizer</span>
+
+<span class="c1"># Load FLAN-T5-base model</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;google/flan-t5-base&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;google/flan-t5-base&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="n">system_prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Given a system prompt and prompt, return the response as a string.&quot;&quot;&quot;</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">system_prompt</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">prompt</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">input_ids</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">input_ids</span><span class="p">,</span> <span class="n">max_new_tokens</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">decoded</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">decoded</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+
+<span class="n">appendix_model_dir</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;question_answering/models&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+<span class="p">)</span>
+<span class="n">appendix_model_path</span> <span class="o">=</span> <span class="n">appendix_model_dir</span> <span class="o">+</span> <span class="s2">&quot;/FLAN_T5_base.py&quot;</span>
+<span class="c1"># Note: models need to have unique names</span>
+<span class="n">appendix_model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;appendix_model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">model_config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;generative_language_model&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;model_path&quot;</span><span class="p">:</span> <span class="n">appendix_model_path</span><span class="p">,</span>
+        <span class="s2">&quot;system_prompt&quot;</span><span class="p">:</span> <span class="s2">&quot;I am a Hugging Face language model.&quot;</span>
+    <span class="p">}},</span>
+    <span class="n">skip_validation</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="n">appendix_fact_sheet_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;question_answering/data/fact_sheet.txt&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+<span class="p">)</span>
+<span class="n">appendix_tests_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;row_wise_factual_inconsistency&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;fact_sheet_path&quot;</span><span class="p">:</span> <span class="n">appendix_fact_sheet_path</span><span class="p">},</span>
+<span class="p">}</span>
+<span class="n">appendix_test_suite_config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;individual_tests_config&quot;</span><span class="p">:</span> <span class="n">appendix_tests_config</span><span class="p">}</span>
+
+<span class="n">stress_test_with_model_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span><span class="s2">&quot;Uploaded Model Example&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;model_task&quot;</span><span class="p">:</span><span class="s2">&quot;Question Answering&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;model_id&quot;</span><span class="p">:</span><span class="n">appendix_model_id</span><span class="p">,</span>
+    <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span><span class="n">eval_dataset_id</span><span class="p">,</span>
+    <span class="s2">&quot;run_time_info&quot;</span><span class="p">:{</span><span class="s2">&quot;explicit_errors&quot;</span><span class="p">:</span><span class="kc">False</span><span class="p">},</span>
+    <span class="s2">&quot;test_suite_config&quot;</span><span class="p">:</span><span class="n">appendix_test_suite_config</span><span class="p">,</span>
+    <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_ADVERSARIAL&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_DATA_POISONING_DETECTION&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_TRANSFORMATIONS&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_EVASION_ATTACK_DETECTION&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_MODEL_ALIGNMENT&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_FACTUAL_AWARENESS&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS&quot;</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+<span class="n">stress_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">_start_generative_stress_test</span><span class="p">(</span>
+    <span class="n">test_run_config</span><span class="o">=</span><span class="n">stress_test_with_model_config</span><span class="p">,</span>
+    <span class="n">project_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span>
+<span class="p">)</span>
+<span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -6,19 +6,26 @@ Robust Intelligence provides a framework to load data from arbitrary sources.
 This is helpful for integrations Robust Intelligence doesn't support natively.
 
 
-## Configuring Authentication for Custom Integrations
+## Configure Authentication for a Custom Integration
 
-1. Follow steps 1 through 5 of [Adding an integration through the Robust Intelligence web UI](../configuring_integrations.md)
-2. From the *Integration Type* drop-down, select *Custom*.
-3. Type a name for the integration in *Name*.
-4. (Adding a Custom integration) Type the configuration information
-   for the custom integration as key/value pairs and select a
-   sensitivity for each pair. Sensitivity levels include:
-   - Not sensitive
-   - Workspace level
-   - Members level
+1. Follow steps 1 through 5 of the section,
+   [Add an integration through the Robust Intelligence web UI](../configuring_integrations.md).
+1. From the *Integration Type* drop-down, select *Custom*.
+1. Type a name for the integration in *Name*.
+1. Type the configuration information for the custom integration as
+   key/value pairs and select a sensitivity for each pair. Sensitivity
+   levels include:
+   - `Not sensitive`
+   - `Workspace` level
+   - `Members` level
 
-## Using Custom Integrations
+See [Configuring Integrations](../configuring_integrations.md) for an
+explanation of sensitivity levels.
+
+Note the *ID* (UUID) of your saved integration. You will need it
+when you load datasets for your tests.
+
+## Use a Custom Integration
 
 Robust Intelligence can load data from arbitrary sources defined in a
 Python file for use in a stress test or continuous test. Custom
@@ -93,8 +100,9 @@ For the `connection_info` object, you must specify:
 
 You may optionally also specify:
 - `loader_kwargs_json`: Any parameters to be passed to the data loading function
-- `data_endpoint_integration_id`: UUID of the integration with secrets required
-  by the data loading function
+- `data_endpoint_integration_id`: UUID of the saved integration with secrets
+  required by the data loading function. See
+  [Get the UUID of a saved integration](../configuring_integrations.md#get-the-uuid-of-a-saved-integration).
 
 The `DATA_LOADER_FILE` argument here provides a path to your
 custom data loader script like,
@@ -112,7 +120,7 @@ def get_data_info_config(start: int, end: int):
                 "path": uploaded_data_loader_path,
                 "load_func_name": "get_news_data",
                 "loader_kwargs_json": loader_kwargs,
-                "data_endpoint_integration_id": "<inegration_uuid>",
+                "data_endpoint_integration_id": "<integration_uuid>",
             }
         },
         "data_params": {
@@ -188,8 +196,9 @@ For the `connection_info` object, you must specify:
 
 You may optionally also specify:
 - `loader_kwargs_json`: Any parameters to be passed to the data loading function
-- `data_endpoint_integration_id`: UUID of the integration with secrets required
-  by the data loading function
+- `data_endpoint_integration_id`: UUID of the saved integration with secrets
+  required by the data loading function. See
+  [Get the UUID of a saved integration](../configuring_integrations.md#get-the-uuid-of-a-saved-integration).
 
 The `DATA_LOADER_FILE` argument here provides a path to your
 custom data loader script like,
@@ -205,7 +214,7 @@ def get_data_info_config(start: int, end: int):
                 "path": uploaded_data_loader_path,
                 "load_func_name": "get_news_data",
                 "loader_kwargs_json": loader_kwargs,
-                "data_endpoint_integration_id": "<inegration_uuid>",
+                "data_endpoint_integration_id": "<integration_uuid>",
             }
         },
         "data_params": {

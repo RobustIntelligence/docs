@@ -1,20 +1,90 @@
 # Release Notes
 
-For notes on upgrades and deprecations to the Robust Intelligence REST API, refer to the [API changelog](../reference/api_changelog.md).
+For notes on upgrades and deprecations to the Robust Intelligence REST
+API, refer to the [API changelog](../reference/api_changelog.md).
 
 Unless noted otherwise, you must [upgrade](../deployment/upgrade.rst)
 all Robust Intelligence components to take advantage of the changes
 listed here.
 
+## 2.3
+
+### Firewall API deprecated and replaced with new `ContinuousTest` class and methods
+
+In v2.3 of the SDK, the new `ContinuousTest` class replaces the
+`Firewall` class. The v1/firewall API and the associated Python SDK
+methods were deprecated as of v2.2 and will not be supported starting
+in v2.4. Please convert your code to use the new `ContinuousTest`
+class and methods.
+
+The deprecated `Firewall` API and SDK classes and methods have been
+renamed to incorporate the name `ct` to better indicate that they're
+used for running and managing continuous tests. The new and renamed
+classes and methods include:
+
+- `ContinuousTest`
+- `Client.create_ct()`
+- `Client.has_ct()`
+- `Client.get_ct()`
+- `Client.delete_ct()`
+- `Client.get_ct_for_project()`
+- `Project.update_ct_categories()`
+
+### File scanning
+
+This release adds the ability to scan model artifacts for
+vulnerabilities. Once a model has been registered with Robust
+Intelligence, you can run a file scan on the model artifacts. The scan
+identifies any potentially dangerous imports in the model which
+pose risks during de-serialization. This is a critical step in
+securing your model supply chain. See
+[File Scanning](../testing_and_monitoring/preparing_your_models_and_datasets/file_scanning.md)
+for details
+
+
+### Ingress-Nginx Changes
+
+This release bumps the Ingress-Nginx version to v1.8.1. You will need
+to remirror the image and update your deployment if using a private
+docker registry. This image can be found at
+`docker.io/robustintelligencehq/ingress-nginx-controller:v1.8.1`.
+
+### AWS Load Balancer Controller Upgraded to 2.5.4
+
+The AWS Loadbalancer Controller has been upgraded to version 2.5.4.
+This includes updates to its Custom Resource Definitions (CRDs).
+
+You will need to remirror the image and update your deployment if
+using a private docker registry. This image can be found at
+`docker.io/robustintelligencehq/aws-alb-ingress-controller:v2.5.4`
+
+Upgrade actions:
+- If you're performing a fresh installation you do not need to do
+  anything.
+
+- If you're using RI Platform Helm charts you also do not need to
+  take any different actions.
+
+- If you're not using Helm though and upgrading to RI Platform
+  version 2.3 from an earlier version follow these directions:
+
+  Update CRDs to the ones that are bundled with AWS Loadbalancer
+  version 2.5.4:
+  ```
+  $ kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller//crds?ref=v0.0.142"
+  ```
+
 
 ## 2.2
+
 
 ### Cleaner separation of continuous test results from monitored event results
 
 Version 2.2 simplifies the way Robust Intelligence shows Continuous
 Test results. Continuous Tests are tests that run on a regular
 schedule to track model risk and compliance. These now appear in the
-[Continuous Testing](../testing_and_monitoring/monitoring_models/ct_feedback_and_observability.md)
+[Continuous
+Testing](../testing_and_monitoring/monitoring_models/ct_feedback_and_observability.md)
 sections of the UI and API. In contrast, we now handle scheduled model
 performance tests and scheduled custom tests as Monitors. These
 results now appear in the
@@ -26,7 +96,7 @@ risk severity measures that appear in Continuous Test results.
 
 ### Firewall API deprecated
 
-The v1/firewall API and the associated python SDK methods have been deprecated. The endpoints and SDK methods will not be supported from Robust Intelligence v2.4 onwards.
+The v1/firewall API and the associated Python SDK methods have been deprecated. The endpoints and SDK methods will not be supported from Robust Intelligence v2.4 onwards.
 
 ## 2.1
 
@@ -170,4 +240,5 @@ stress_test_config = {
 [API Changelog](../reference/api_changelog.md)  
 [Continuous Testing Feedback and Observability](../testing_and_monitoring/monitoring_models/ct_feedback_and_observability.md)  
 [Model Monitors](../testing_and_monitoring/monitoring_models/monitors/monitors.md)  
+[Securing Model Supply Chain Risk with File Scanning](../testing_and_monitoring/preparing_your_models_and_datasets/file_scanning.md)  
 [Upgrade](../deployment/upgrade.rst)  

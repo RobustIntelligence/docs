@@ -59,6 +59,29 @@ Upgrading from v2.0 to v2.1
 4. Create the new agent using the Create Agent button on the **Manage Agent Setup** page. Select the original agent type and repeat the setup steps.
    If permission related inputs are needed, you can find the same inputs you used in v2.0 in the ``values.yaml`` file under the ``rimeAgent.operator.modelTestJob`` section.
 
+Upgrading from v2.2 to v2.3
+---------------------------------------
+1. Point your local ``kubectl`` to your K8s cluster and namespace.
+2. Delete ``rimejobs.rbst.io`` CRD.
+
+  .. code-block::
+
+    kubectl delete crd rimejobs.rbst.io
+
+3. Uninstall the agent in your environment:
+
+   .. code-block::
+
+      helm uninstall rime-agent
+
+4. Follow step 2 and 3 of the general upgrade process.
+5. Install the updated Helm release.
+
+   .. code-block::
+
+      helm repo update
+      helm install rime-agent robustintelligence/rime-agent --version $RI_VERSION --values ./values.yaml
+
 Verifying an Upgrade
 ---------------------------------------
 1. Verify that the ``rime-agent`` Helm chart version matches the new RIME version:

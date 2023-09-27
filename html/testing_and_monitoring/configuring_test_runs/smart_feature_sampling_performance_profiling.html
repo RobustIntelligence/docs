@@ -55,7 +55,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.2
+                2.3.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -85,6 +85,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#smart-feature-sampling">Smart Feature Sampling</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#profile-caching">Profile Caching</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#smart-dataset-sampling">Smart Dataset Sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#memory-recommendations">Memory Recommendations</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#related-topics">Related Topics</a></li>
 </ul>
 </li>
@@ -117,10 +118,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
@@ -325,6 +326,175 @@ Once these limits are hit the data will be sampled.</p>
 </tr>
 </tbody>
 </table>
+</section>
+</section>
+<section id="memory-recommendations">
+<h2>Memory Recommendations<a class="headerlink" href="#memory-recommendations" title="Permalink to this heading"></a></h2>
+<p>Please refer to the below benchmarks to help you determine how much memory to request for your test runs. The numbers in the table represent the maximum dataset size (rows * features) that our tests can accommodate before going out of memory.</p>
+<p>The benchmarks assume that dataset sampling is enabled. If you are not using dataset sampling, you will need to request more memory. In addition, the below numbers are meant to be used as a rough guide. Actual memory usage will vary depending on the dataset and model.</p>
+<section id="stress-tests">
+<h3>Stress Tests<a class="headerlink" href="#stress-tests" title="Permalink to this heading"></a></h3>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Memory</th>
+<th>Tabular Regression</th>
+<th>Tabular Ranking</th>
+<th>Tabular Binary Classification</th>
+<th>NLP Multiclass Classification</th>
+<th>NLP Inference</th>
+<th>Image Multiclass Classification<sup>1</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2GB</td>
+<td>18,000,000</td>
+<td>100,000,000</td>
+<td>75,000,000</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>4GB</td>
+<td>36,000,000</td>
+<td>200,000,000</td>
+<td>150,000,000</td>
+<td>40,000,000</td>
+<td>20,000,000</td>
+<td>-</td>
+</tr>
+<tr>
+<td>8GB</td>
+<td>70,000,000</td>
+<td>400,000,000</td>
+<td>300,000,000</td>
+<td>80,000,000</td>
+<td>40,000,000</td>
+<td>-</td>
+</tr>
+<tr>
+<td>16GB</td>
+<td>140,000,000</td>
+<td>800,000,000</td>
+<td>600,000,000</td>
+<td>150,000,000</td>
+<td>80,000,000</td>
+<td>4,000,000</td>
+</tr>
+<tr>
+<td>32GB</td>
+<td>280,000,000</td>
+<td>1,500,000,000</td>
+<td>1,000,000,000</td>
+<td>300,000,000</td>
+<td>150,000,000</td>
+<td>8,000,000</td>
+</tr>
+<tr>
+<td>64GB</td>
+<td>550,000,000</td>
+<td>3,000,000,000</td>
+<td>2,000,000,000</td>
+<td>600,000,000</td>
+<td>300,000,000</td>
+<td>16,000,000</td>
+</tr>
+<tr>
+<td>128GB</td>
+<td>1,100,000,000</td>
+<td>6,000,000,000</td>
+<td>4,000,000,000</td>
+<td>1,200,000,000</td>
+<td>600,000,000</td>
+<td>32,000,000</td>
+</tr>
+</tbody>
+</table>
+<p><sup>1</sup>Each image is counted as a single feature. This benchmark leverages Robust Intelligence’s image loader and dataset sampling. As such, only a small portion of the images are loaded into memory and embedded. If images are already embedded in your dataset, you will need to request more memory.</p>
+</section>
+<section id="continuous-tests">
+<h3>Continuous Tests<a class="headerlink" href="#continuous-tests" title="Permalink to this heading"></a></h3>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Memory</th>
+<th>Tabular Regression</th>
+<th>Tabular Ranking</th>
+<th>Tabular Binary Classification</th>
+<th>NLP Multiclass Classification</th>
+<th>NLP Inference</th>
+<th>Image Multiclass Classification<sup>1</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2GB</td>
+<td>1,000,000,000</td>
+<td>1,000,000,000</td>
+<td>400,000,000</td>
+<td>7,500,000</td>
+<td>200,000,000</td>
+<td>-</td>
+</tr>
+<tr>
+<td>4GB</td>
+<td>2,000,000,000</td>
+<td>2,000,000,000</td>
+<td>800,000,000</td>
+<td>15,000,000</td>
+<td>400,000,000</td>
+<td>-</td>
+</tr>
+<tr>
+<td>8GB</td>
+<td>4,000,000,000</td>
+<td>4,000,000,000</td>
+<td>1,500,000,000</td>
+<td>30,000,000</td>
+<td>800,000,000</td>
+<td>4,000,000</td>
+</tr>
+<tr>
+<td>16GB</td>
+<td>8,000,000,000</td>
+<td>8,000,000,000</td>
+<td>3,000,000,000</td>
+<td>60,000,000</td>
+<td>1,500,000,000</td>
+<td>8,000,000</td>
+</tr>
+<tr>
+<td>32GB</td>
+<td>16,000,000,000</td>
+<td>16,000,000,000</td>
+<td>6,000,000,000</td>
+<td>120,000,000</td>
+<td>3,000,000,000</td>
+<td>16,000,000</td>
+</tr>
+<tr>
+<td>64GB</td>
+<td>32,000,000,000</td>
+<td>32,000,000,000</td>
+<td>12,000,000,000</td>
+<td>240,000,000</td>
+<td>6,000,000,000</td>
+<td>32,000,000</td>
+</tr>
+<tr>
+<td>128GB</td>
+<td>64,000,000,000</td>
+<td>64,000,000,000</td>
+<td>24,000,000,000</td>
+<td>480,000,000</td>
+<td>12,000,000,000</td>
+<td>64,000,000</td>
+</tr>
+</tbody>
+</table>
+<p><sup>1</sup>Each image is counted as a single feature. This benchmark leverages Robust Intelligence’s image loader and dataset sampling. As such, only a small portion of the images are loaded into memory and embedded. If images are already embedded in your dataset, you will need to request more memory.</p>
 </section>
 </section>
 <section id="related-topics">

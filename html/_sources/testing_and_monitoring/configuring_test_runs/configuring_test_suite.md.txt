@@ -25,7 +25,7 @@ To use a configuration JSON object, load the configuration JSON into Python as a
 ```json
 {
   "custom_tests": null,
-  "global_test_sensitivity": "TEST_SENSITIVITY_DEFAULT",
+  "global_test_sensitivity": 2,
   "global_exclude_columns": null,
   "individual_tests_config": {
     "avg_confidence": {
@@ -1143,6 +1143,11 @@ To use a configuration JSON object, load the configuration JSON into Python as a
       "severity_thresholds": null,
       "run": true
     },
+    "row_wise_off_topic": {
+      "severity_thresholds": null,
+      "run": true,
+      "allowed_topics": []
+    },
     "row_wise_factual_inconsistency": {
       "severity_thresholds": null,
       "run": true,
@@ -1350,28 +1355,82 @@ To use a configuration JSON object, load the configuration JSON into Python as a
         "aug_word_ratio": 0.05
       }
     },
+    "generative_swap_fem_for_masc_names": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20
+    },
+    "generative_swap_masc_for_fem_names": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20
+    },
+    "generative_swap_fem_for_masc_pronouns": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20
+    },
+    "generative_swap_masc_for_fem_pronouns": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20
+    },
+    "generative_swap_fem_for_plural_pronouns": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20
+    },
+    "generative_swap_masc_for_plural_pronouns": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 20
+    },
     "zero_shot_prompt_injection": {
       "severity_thresholds": null,
       "run": true,
-      "sample_size": 10,
+      "sample_size": 50,
+      "target_token": "jailbreak succeeded"
+    },
+    "delimiter_based_prompt_injection": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 50,
+      "target_token": "jailbreak succeeded"
+    },
+    "few_shot_prompt_injection": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 50,
       "target_token": "jailbreak succeeded"
     },
     "zero_shot_prompt_extraction": {
       "severity_thresholds": null,
       "run": true,
-      "sample_size": 10,
+      "sample_size": 50,
       "target_token": "ABRACADABRA"
     },
     "zero_shot_prompt_injection_japanese": {
       "severity_thresholds": null,
       "run": true,
-      "sample_size": 10,
+      "sample_size": 50,
+      "target_token": "XXX\uff08\u4f8b\uff1a\u30e2\u30c7\u30eb\u306e\u5236\u5fa1\u306a\u3069\u306e\u30d1\u30e9\u30e1\u30fc\u30bf\u30fc\uff09"
+    },
+    "delimiter_based_prompt_injection_japanese": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 50,
+      "target_token": "XXX\uff08\u4f8b\uff1a\u30e2\u30c7\u30eb\u306e\u5236\u5fa1\u306a\u3069\u306e\u30d1\u30e9\u30e1\u30fc\u30bf\u30fc\uff09"
+    },
+    "few_shot_prompt_injection_japanese": {
+      "severity_thresholds": null,
+      "run": true,
+      "sample_size": 50,
       "target_token": "XXX\uff08\u4f8b\uff1a\u30e2\u30c7\u30eb\u306e\u5236\u5fa1\u306a\u3069\u306e\u30d1\u30e9\u30e1\u30fc\u30bf\u30fc\uff09"
     },
     "zero_shot_prompt_extraction_japanese": {
       "severity_thresholds": null,
       "run": true,
-      "sample_size": 10,
+      "sample_size": 50,
       "target_token": "\u3044\u308d\u306f\u306b\u307b\u3078\u3068"
     },
     "zero_shot_misaligned_outputs": {
@@ -1389,6 +1448,10 @@ To use a configuration JSON object, load the configuration JSON into Python as a
     "jailbreak_misaligned_outputs": {
       "severity_thresholds": null,
       "run": true
+    },
+    "stereotypical_sentence_fill": {
+      "severity_thresholds": null,
+      "run": false
     }
   }
 }
