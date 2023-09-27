@@ -4,7 +4,6 @@ Creating a New Continuous Test
 ==============================
 
 Robust Intelligence allows you to create Continuous Testing to monitor your model for vulnerabilities over time. You can create a Continuous Test using the Python SDK.
-Continuous Tests run on a Firewall.
 
 .. tabs::
 
@@ -17,7 +16,6 @@ Continuous Tests run on a Firewall.
                 project = rime_client.create_project(
                     name="foo", description="bar", model_task="MODEL_TASK_BINARY_CLASSIFICATION"
                 )
-
 
       2.  Register a reference dataset. Depending on where you are looking to pull data from you may need to :ref:`create a data integration <configuring-integrations>`: for all data sources except data collector, you will need to create a data integration.
 
@@ -32,9 +30,7 @@ Continuous Tests run on a Firewall.
                     integration_id=INTEGRATION_ID,
                 )
 
-
           The SDK returns the ID of the reference dataset.
-
 
       3.  Register a model. You may optionally provide additional model information to allow Robust Intelligence
           to query the model during testing.
@@ -46,6 +42,7 @@ Continuous Tests run on a Firewall.
                 )
 
           The SDK returns the model ID.
+
           If you do not provide the information to query the model, you must register predictions of the model and dataset.
 
             .. code-block:: python
@@ -63,15 +60,24 @@ Continuous Tests run on a Firewall.
                     },
                 )
 
-      4.  Create a new Firewall object in the project. You may choose to create a Firewall with :ref:`Scheduled CT <scheduling-continuous-test>` parameters or leave those parameters blank. If Scheduled CT is set, the Firewall will run Continuous Tests automatically for you by pulling the data from the data sources you specify. Otherwise, you will need to manually run Continuous Tests over an evaluation dataset that you provide. This guide will provide an example of the latter case.
+      4. Create a new Continuous Test instance in your project. You may
+         choose to create a Continuous Test with :ref:`Scheduled CT
+         <scheduling-continuous-test>` parameters or leave those
+         parameters blank. If *Scheduled CT* is set, Robust
+         Intelligence will run the Continuous Test automatically for
+         you (at an interval defined by the `bin_size` you set) by
+         utilizing the data integrations you specify.
+         Otherwise, you will need to manually run the Continuous Test
+         over an evaluation dataset that you provide. The steps below
+         show how to start a manual run.
 
             .. code-block:: python
 
-                project.create_firewall(
+                project.create_ct(
                     model_id=model_id, ref_data_id=reference_id, bin_size=timedelta(hours=3)
                 )
 
-      5.  Register an evaluation dataset. This dataset must have the ``timestamp_col`` field in the ``data_params`` dictionary.
+      5. Register an evaluation dataset. This dataset must have the ``timestamp_col`` field in the ``data_params`` dictionary.
 
             .. code-block:: python
 
@@ -86,9 +92,9 @@ Continuous Tests run on a Firewall.
                     },
                 )
 
-          The SDK returns the ID of the evaluation dataset.
+         The SDK returns the ID of the evaluation dataset.
 
-      6.  Register a prediction set if the information to query the model is not provided.
+      6. Register a prediction set if the information to query the model is not provided.
 
             .. code-block:: python
 
@@ -106,17 +112,32 @@ Continuous Tests run on a Firewall.
                 )
 
 
-      7.  Issue the following command to start the Continuous Test, specifying the configuration created in the previous step and the unique ID of the firewall that contains the Continuous Test. Use the argument ``override_existing_bins`` to specify whether this Continuous Test should override the results of previous time bins for which other Continuous Tests have run.
+      7. Issue the following command to start the Continuous Test,
+         specifying the configuration created in the previous step and
+         the unique ID of your Continuous Test. Use the argument
+         ``override_existing_bins`` to specify whether this Continuous
+         Test should override the results of previous time bins for
+         which other Continuous Tests have run.
+
+         Here, `ct_ctl` is your Continuous Test instance, which you
+         can get using the `Project.get_ct()` method.
 
             .. code-block:: python
 
-                continuous_test = firewall.start_continuous_test(
+                continuous_test = ct_ctl.start_continuous_test(
                    eval_data_id=evaluation_id,  override_existing_bins=False,
                 )
 
 
 
-      8.  Once new data has been gathered, repeat steps 5-7 to start a new Continuous Test with the new evaluation dataset and prediction set.
+      Anytime new data has been gathered and you want to re-run
+      your test, repeat steps 5-7 to start a new Continuous Test
+      with your latest evaluation dataset and prediction set.
+
+      If you want to automate your Continuous Test so that it runs at
+      a regular interval, set its schedule as shown in
+      :ref:`scheduling-continuous-test`.
+
 ..
    .. tab:: Web UI
 

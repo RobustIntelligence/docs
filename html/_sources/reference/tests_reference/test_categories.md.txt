@@ -1,27 +1,27 @@
-# Summary Tests
+# Test Categories
 ## Drift
-Test for differences in the distribution of the reference dataset versus the evaluation dataset. If predictions and labels are provided, measure the performance degradation caused by shifting data as well as drift in predictions and labels themselves.<br><b>Data Requirements:</b> Labels and predictions are not required but they improve results.
+Test for differences in the distribution of the reference dataset as compared with the evaluation dataset. If predictions and labels are provided, measure the performance degradation caused by shifting data as well as the drift in predictions and labels themselves.
 ## Abnormal Inputs
-Check the evaluation dataset for abnormal values commonly encountered in production. If model predictions are provided, test if the observed abnormal values cause a degradation in your model’s performance.<br><b>Data Requirements:</b> Labels and predictions are not required but they improve results.
+Check the evaluation dataset to verify that it includes sufficient numbers of abnormal values to represent the types of abnormal inputs commonly encountered in production. If model predictions are provided, test whether the evaluation set's abnormal values cause a degradation in your model’s performance.
 ## Subset Performance
-Test that your model performs equally well across different subsets of the evaluation dataset.<br><b>Data Requirements:</b> Predictions are required. Labels are required for most tests.
+Test that your model performs equally well across different subsets of the evaluation dataset.
 ## Bias and Fairness
-Test that your model does not discriminate based on protected features.<br><b>Data Requirements:</b> For some tests predictions, labels, and/or model are required.
+Test that your model does not discriminate or perpetuate stereotypes based on protected features such as gender, race, or disability status. AI models often inherit social biases and other biases from the datasets they're trained on. These tests detect such biases.
 ## Transformations
-Augment your evaluation dataset with synthetic abnormal values to proactively test your pipeline’s error-handling behavior and measure the performance degradation caused by different types of abnormal values.<br><b>Data Requirements:</b> Model is required. Labels are not required but they improve results.
+Augment your evaluation dataset with synthetic abnormal values to proactively test your pipeline’s error-handling behavior and measure the performance degradation caused by different types of abnormal values.
 ## Model Performance
-Test that your model performs well on the evaluation dataset and is not degrading in performance.<br><b>Data Requirements:</b> Predictions are required. Labels are required for exact performance metrics, otherwise approximate performance metrics will be used.
+Test that your model performs well on the evaluation dataset and is not degrading in performance.
 ## Data Cleanliness
-Test for data reliability by checking that your data is consistent and complete.<br><b>Data Requirements:</b> This category only requires input data.
+Test for data reliability by checking that your data is consistent and complete.
 ## Adversarial
-Test the robustness of your model by measuring the worst-case change in model predictions that can be caused by small perturbations to data points.<br><b>Data Requirements:</b> Model is required.
+Test the robustness of your model by measuring the worst-case change in model predictions that can be caused by small perturbations to data points.
 ## Subset Performance Degradation
-Test that your model's performance on different subsets of the data has not degraded.<br><b>Data Requirements:</b> Predictions are required. Labels are required for most tests.
+Test that your model's performance on different subsets of the data has not degraded.
 ## Data Poisoning Detection
-Test for the presence of potentially corrupted samples in your data.<br>Note that the default behavior of this test category in Continuous Testing depends on the quality of data used for the initial stress test. If corrupted samples were detected in the stress test, then the continuous test will be more permissive.<br><b>Data Requirements:</b> This category requires input data with labels and timestamps.
+Test for the presence of potentially corrupted samples in your data. Tests in this group scan the evaluation/CT data to find corrupted rows by comparing them against the reference dataset.
 ## Evasion Attack Detection
-Test for the presence of adversarial evasion attacks against your model.<br><b>Data Requirements:</b> This category only requires input data with timestamps.
+Test whether input data contains signs of adversarial evasion attacks that could be used to cause your model to generate incorrect predictions or classifications.
 ## Model Alignment
-Test that your model is aligned: helpful, honest, and harmless.<br><b>Data Requirements:</b> Most tests in this category require a generative text model to be provided, though providing only predictions is sufficient for any row-wise test.
+Test that your model's responses align with human values, ethical norms, and societal standards, including being helpful, honest, and harmless. Tests in this group apply only to generative question-answering models.
 ## Factual Awareness
-Test that your model is producing factually correct outputs.<br><b>Data Requirements:</b> Most tests in this category require a generative text model to be provided, though providing only predictions is sufficient for any row-wise test.
+Test that your model produces factually correct outputs.

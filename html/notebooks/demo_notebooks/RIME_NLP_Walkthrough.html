@@ -58,7 +58,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.2
+                2.3.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -117,10 +117,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
@@ -213,7 +213,7 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">description</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;Run Stress Testing, Continuous Testing and AI Firewall on a&quot;</span>
+    <span class="s2">&quot;Run Stress Testing and Continuous Testing on a&quot;</span>
     <span class="s2">&quot; text classification model and dataset. Demonstration uses &quot;</span>
     <span class="s2">&quot; a dataset composed of ArXiv paper titles where the task is&quot;</span>
     <span class="s2">&quot; to predict the paper topic.&quot;</span>
@@ -299,33 +299,7 @@
 <section id="Running-a-Stress-Test">
 <h2><strong>Running a Stress Test</strong><a class="headerlink" href="#Running-a-Stress-Test" title="Permalink to this heading"></a></h2>
 <p>AI Stress Tests allow you to test your data and model before deployment. They are a comprehensive suite of hundreds of tests that automatically identify implicit assumptions and weaknesses of pre-production models. Each stress test is run on a single model and its associated reference and evaluation datasets.</p>
-<p>First, we will create a customer image with pip requirements to run our model with. This will take some time to install and run.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">requirements</span> <span class="o">=</span> <span class="p">[</span>
-     <span class="n">client</span><span class="o">.</span><span class="n">pip_requirement</span><span class="p">(</span><span class="s2">&quot;datasets&quot;</span><span class="p">),</span>
-     <span class="n">client</span><span class="o">.</span><span class="n">pip_requirement</span><span class="p">(</span><span class="s2">&quot;sentencepiece&quot;</span><span class="p">),</span>
-<span class="p">]</span>
-
-<span class="n">image_name</span> <span class="o">=</span> <span class="s2">&quot;arxiv_image&quot;</span>
-
-<span class="c1"># Start a new image building job if it doesn&#39;t exist</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">client</span><span class="o">.</span><span class="n">has_managed_image</span><span class="p">(</span><span class="n">image_name</span><span class="p">,</span> <span class="n">check_status</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="c1"># e.g., if the image build job failed</span>
-    <span class="k">if</span> <span class="n">client</span><span class="o">.</span><span class="n">has_managed_image</span><span class="p">(</span><span class="n">image_name</span><span class="p">):</span>
-        <span class="n">client</span><span class="o">.</span><span class="n">delete_managed_image</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
-
-    <span class="n">builder_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_managed_image</span><span class="p">(</span><span class="n">image_name</span><span class="p">,</span> <span class="n">requirements</span><span class="p">)</span>
-
-    <span class="c1"># Wait until the job has finished and print out status information.</span>
-    <span class="c1"># Once this prints out the `READY` status, your image is available for use in stress tests.</span>
-    <span class="n">builder_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<p>Now that we’ve built our custom image, we can run our tests. Below is a sample configuration of how to setup and run a RIME Stress Test for NLP.</p>
+<p>Below is a sample configuration of how to setup and run a RIME Stress Test for NLP.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -339,10 +313,13 @@
     <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span><span class="p">,</span>
     <span class="s2">&quot;run_time_info&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;random_seed&quot;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
-        <span class="s2">&quot;custom_image&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;managed_image_name&quot;</span><span class="p">:</span> <span class="n">image_name</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_ADVERSARIAL&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_TRANSFORMATIONS&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS&quot;</span><span class="p">,</span> <span class="c1"># this category is off by default</span>
+    <span class="p">]</span>
 <span class="p">}</span>
 <span class="n">stress_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
     <span class="n">test_run_config</span><span class="o">=</span><span class="n">stress_test_config</span><span class="p">,</span>
@@ -424,23 +401,23 @@
 </div>
 </section>
 </section>
-<section id="Deploy-to-Production-and-Create-the-AI-Firewall">
-<h2><strong>Deploy to Production and Create the AI Firewall</strong><a class="headerlink" href="#Deploy-to-Production-and-Create-the-AI-Firewall" title="Permalink to this heading"></a></h2>
-<p>Once you have identified the best stress test run, you can deploy the associated model and set up a RIME Firewall to run Continuous Testing in order to automatically detect “bad” incoming data and statistically significant distributional drift.</p>
+<section id="Deploy-to-Production-and-set-up-Continuous-Testing">
+<h2><strong>Deploy to Production and set up Continuous Testing</strong><a class="headerlink" href="#Deploy-to-Production-and-set-up-Continuous-Testing" title="Permalink to this heading"></a></h2>
+<p>Once you have identified the best stress test run, you can deploy the associated model and set up Continuous Testing in order to automatically detect “bad” incoming data and statistically significant distributional drift.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
 
-<span class="n">firewall</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_firewall</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">ct_instance</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_ct</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </section>
-<section id="Uploading-a-Batch-of-Production-Data-&amp;-Model-Predictions-to-Firewall">
-<h2><strong>Uploading a Batch of Production Data &amp; Model Predictions to Firewall</strong><a class="headerlink" href="#Uploading-a-Batch-of-Production-Data-&-Model-Predictions-to-Firewall" title="Permalink to this heading"></a></h2>
-<p>The text classification model has been in production for the past week. Production data and model predictions have been collected and stored for the past week. Now, we will use Firewall to track how the model performed across the last week.</p>
+<section id="Uploading-a-Batch-of-Production-Data-&amp;-Model-Predictions-to-Continuous-Testing">
+<h2><strong>Uploading a Batch of Production Data &amp; Model Predictions to Continuous Testing</strong><a class="headerlink" href="#Uploading-a-Batch-of-Production-Data-&-Model-Predictions-to-Continuous-Testing" title="Permalink to this heading"></a></h2>
+<p>The text classification model has been in production for the past week. Production data and model predictions have been collected and stored for the past week. Now, we will use Continuous Testing to track how the model performed across the last week.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -472,12 +449,12 @@
 </pre></div>
 </div>
 </div>
-<p><strong>Get the Firewall</strong></p>
+<p><strong>Get Continuous Testing</strong></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">firewall</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_firewall_for_project</span><span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_instance</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_ct_for_project</span><span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -486,43 +463,43 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">ct_instance</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">firewall</span>
+<span class="n">ct_instance</span>
 </pre></div>
 </div>
 </div>
 <p><strong>Wait for a couple minutes and your results will appear in the UI</strong></p>
 </section>
-<section id="Querying-Results-from-the-Firewall">
-<h2><strong>Querying Results from the Firewall</strong><a class="headerlink" href="#Querying-Results-from-the-Firewall" title="Permalink to this heading"></a></h2>
-<p>After a firewall has been created and data has been uploaded for processing, the user can query the results throughout the entire uploaded history.</p>
+<section id="Querying-Results-from-Continuous-Testing">
+<h2><strong>Querying Results from Continuous Testing</strong><a class="headerlink" href="#Querying-Results-from-Continuous-Testing" title="Permalink to this heading"></a></h2>
+<p>After continuous testing has been set up and data has been uploaded for processing, the user can query the results throughout the entire uploaded history.</p>
 <p><strong>Obtain All Detection Events</strong></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">events</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">firewall</span><span class="o">.</span><span class="n">list_monitors</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">list_detected_events</span><span class="p">()]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">events</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">ct_instance</span><span class="o">.</span><span class="n">list_monitors</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">list_detected_events</span><span class="p">()]</span>
 <span class="n">events_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">events</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;project_id&quot;</span><span class="p">,</span> <span class="s2">&quot;firewall_id&quot;</span><span class="p">,</span> <span class="s2">&quot;event_object_id&quot;</span><span class="p">,</span> <span class="s2">&quot;description_html&quot;</span><span class="p">,</span> <span class="s2">&quot;last_update_time&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">events_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </section>
-<section id="Firewall-CT-Overview">
-<h2><strong>Firewall CT Overview</strong><a class="headerlink" href="#Firewall-CT-Overview" title="Permalink to this heading"></a></h2>
+<section id="CT-Overview">
+<h2><strong>CT Overview</strong><a class="headerlink" href="#CT-Overview" title="Permalink to this heading"></a></h2>
 <p>The Overview page is the mission control for your model’s production deployment health. In it, you can see the status of continuous test runs and their metrics change over time.</p>
 <img alt="img_5" src="https://drive.google.com/uc?id=1bd17xeRw81iziUZJqxeFyVP9T-O1LljZ" />
 </section>
-<section id="Firewall-CT-Results">
-<h2><strong>Firewall CT Results</strong><a class="headerlink" href="#Firewall-CT-Results" title="Permalink to this heading"></a></h2>
-<p>The AI Firewall’s Continuous Tests operate at the batch level and provide a mechanism to monitor the health of ML deployments in production. They allow the user to understand when errors begin to occur and surface the underlying drivers of such errors.</p>
+<section id="CT-Results">
+<h2><strong>CT Results</strong><a class="headerlink" href="#CT-Results" title="Permalink to this heading"></a></h2>
+<p>The Continuous Tests operate at the batch level and provide a mechanism to monitor the health of ML deployments in production. They allow the user to understand when errors begin to occur and surface the underlying drivers of such errors.</p>
 <p>You can explore the results in the UI by running the below cell and redirecting to the generated link.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">firewall</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_instance</span>
 </pre></div>
 </div>
 </div>

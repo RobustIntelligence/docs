@@ -55,7 +55,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.2
+                2.3.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -106,10 +106,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
@@ -152,13 +152,6 @@ Test run results can only be fetched for completed test runs. To get the progres
 </div>
 <p>To retrieve information about the test run results, first retrieve the desired test run object:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">test_run</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">(</span><span class="s2">&quot;your_desired_test_run_id_here&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>If the user is running Continuous Testing and wants to retrieve a test run corresponding to a specific time bin, this appoach can be deployed:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">test_runs</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">get_test_runs</span><span class="p">()</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<span class="n">desired_start</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">test_run</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">test_run</span> <span class="k">for</span> <span class="n">test_run</span> <span class="ow">in</span> <span class="n">test_runs</span> <span class="k">if</span> <span class="n">test_run</span><span class="o">.</span><span class="n">start_time</span> <span class="o">==</span> <span class="n">desired_start</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Now the user can analyze the results of the test run at varying levels of granularity! We can begin by retrieving a high-level summary of the test run as a Pandas DataFrame:</p>

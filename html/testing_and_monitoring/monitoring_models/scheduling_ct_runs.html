@@ -56,7 +56,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.2
+                2.3.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -78,11 +78,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="creating_new_continuous_test.html">Creating a New Continuous Test</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../notebooks/demo_notebooks/RIME_Firewall_Configuring.html">Updating your Continuous Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../notebooks/demo_notebooks/RIME_Continuous_Test_Configuring.html">Updating your Continuous Test</a></li>
 <li class="toctree-l2"><a class="reference internal" href="loading_data_for_scheduled_ct.html">Loading Data for Scheduled Continuous Testing</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Scheduling Continuous Testing Runs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#activating-a-schedule-for-a-continuous-test">Activating a schedule for a Continuous Test</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#deactivating-a-schedule-for-a-continuous-test">Deactivating a schedule for a Continuous Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#finding-the-schedule-for-a-continuous-test">Finding the schedule for a Continuous Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deactivating-the-schedule-for-a-continuous-test">Deactivating the schedule for a Continuous Test</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#updating-the-reference-dataset-for-a-scheduled-continuous-test">Updating the reference dataset for a Scheduled Continuous Test</a></li>
 </ul>
 </li>
@@ -113,10 +114,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
@@ -147,8 +148,9 @@
              
   <section id="scheduling-continuous-testing-runs">
 <span id="scheduling-continuous-test"></span><h1>Scheduling Continuous Testing Runs<a class="headerlink" href="#scheduling-continuous-testing-runs" title="Permalink to this heading"></a></h1>
-<p>You can create and update the schedule for a Continuous Test from the SDK. For
-more configuration information, see the Configuring your Scheduled Continuous Tests page.</p>
+<p>You can create and update the schedule for a Continuous Test (CT) from
+the SDK. For more configuration information, see the section,
+<a class="reference internal" href="configuring_scheduled_ct.html"><span class="doc">Configuring your Scheduled Continuous Test</span></a>.</p>
 <section id="activating-a-schedule-for-a-continuous-test">
 <h2>Activating a schedule for a Continuous Test<a class="headerlink" href="#activating-a-schedule-for-a-continuous-test" title="Permalink to this heading"></a></h2>
 <div class="sphinx-tabs docutils container">
@@ -156,14 +158,14 @@ more configuration information, see the Configuring your Scheduled Continuous Te
 <li><p><a class="reference internal" href="creating_new_continuous_test.html#continuous-test"><span class="std std-ref">Create a new Continuous Test</span></a></p></li>
 <li><p>Get the Continuous Test from the project.</p>
 <blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">firewall</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">get_firewall_for_project</span><span class="p">(</span><span class="s2">&quot;foo-project&quot;</span><span class="p">)</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ct_ctl</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">get_ct_for_project</span><span class="p">(</span><span class="s2">&quot;foo-project&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p>Activate a schedule for the Continuous Test.</p>
 <blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">firewall</span><span class="o">.</span><span class="n">activate_ct_scheduling</span><span class="p">(</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ct_ctl</span><span class="o">.</span><span class="n">activate_ct_scheduling</span><span class="p">(</span>
     <span class="n">data_integration_id</span><span class="p">:</span> <span class="s2">&quot;&lt;YOUR_DATA_INTEGRATION_ID&gt;&quot;</span><span class="p">,</span>
     <span class="n">data_info</span><span class="p">:</span> <span class="s2">&quot;&lt;Data Info for your dataset&gt;&quot;</span><span class="p">,</span>
     <span class="n">pred_integration_id</span><span class="p">:</span> <span class="s2">&quot;&lt;YOUR_PREDICTIONS_INTEGRATION_ID&gt;&quot;</span><span class="p">,</span>
@@ -176,12 +178,54 @@ more configuration information, see the Configuring your Scheduled Continuous Te
 </li>
 </ol>
 <blockquote>
-<div><p>The parameters are dependent on which data integration you are using. For more information, reference the template for your <a class="reference internal" href="configuring_scheduled_ct.html#configuring-scheduled-ct"><span class="std std-ref">data integration</span></a>.</p>
+<div><p>Your scheduled continuous test runs at the frequency you set,
+which can be as frequent as once per hour. The frequency is
+determined by the <cite>bin_size</cite> set on the Continuous Test
+instance.</p>
+<p>Every hour at 20 minutes past the hour, Robust Intelligence
+checks whether a time duration of <cite>bin_size</cite> has elapsed since
+the last run. If it has, scheduled CT will kick off a job that
+will run on data from the last-completed bin start time to the
+current time, snapped to the closest previous bin. If there
+are no completed bins in this CT instance, then the job will
+run on data from the time that this scheduled CT was
+activated.</p>
+<p>Examples:</p>
+<ul class="simple">
+<li><p>Assume the <cite>bin_size</cite> is set to 1 hour and the last
+completed bin was the 9 AM bin. If the current time is 1:20
+PM, then scheduled CT will start a job that runs on the data
+in the 9:00 AM through 1:00 PM bins.</p></li>
+<li><p>Assume the <cite>bin_size</cite> is set to 1 hour, but there is no last
+completed bin. Let’s assume this scheduled CT instance was
+activated yesterday at 5:00 PM. If the current time is 1:20
+PM, then scheduled CT will start a job that runs on the data
+in all bins from yesterday’s 5:00 PM bin through today’s
+1:00 PM bin.</p></li>
+</ul>
+<p>The <cite>rolling_window_size</cite> is optional:</p>
+<ul class="simple">
+<li><p>If your scheduled CT instance does not have a rolling
+window, then it will test against a static reference set,
+meaning the data in the bins in the current CT job window
+will be compared with the static reference set.</p></li>
+<li><p>If a rolling window is set, data in the current job window
+range will be compared to the data in the window just before
+it. For example, if you initiate a CT test run from 1:00
+PM - 2:00 PM, and you set the <cite>rolling_window</cite> to 3 hours,
+then the test will compare the data in the 1:00 PM - 2:00 PM
+bins to the data from 10:00 AM - 1:00 PM.</p></li>
+</ul>
+<p>The rest of the parameter values you pass to
+<cite>activate_ct_scheduling()</cite> depend on which type of data
+integration you’re using. For more information, see the
+template for your <a class="reference internal" href="configuring_scheduled_ct.html#configuring-scheduled-ct"><span class="std std-ref">data integration</span></a>.</p>
 </div></blockquote>
 <ol class="arabic" start="4">
-<li><p>These parameters can also be updated after scheduled ct has been updated.</p>
+<li><p>You can also update your scheduled CT’s settings after you’ve
+scheduled it:</p>
 <blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">firewall</span><span class="o">.</span><span class="n">update_scheduled_ct_info</span><span class="p">(</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ct_ctl</span><span class="o">.</span><span class="n">update_scheduled_ct_info</span><span class="p">(</span>
     <span class="n">data_integration_id</span><span class="p">:</span> <span class="s2">&quot;&lt;YOUR_DATA_INTEGRATION_ID&gt;&quot;</span><span class="p">,</span>
     <span class="n">data_info</span><span class="p">:</span> <span class="s2">&quot;&lt;Data Info for your dataset&gt;&quot;</span><span class="p">,</span>
     <span class="n">pred_integration_id</span><span class="p">:</span> <span class="s2">&quot;&lt;YOUR_PREDICTIONS_INTEGRATION_ID&gt;&quot;</span><span class="p">,</span>
@@ -193,14 +237,25 @@ more configuration information, see the Configuring your Scheduled Continuous Te
 </div></blockquote>
 </li>
 </ol>
-<p>You can set also a schedule at the same time you <a class="reference internal" href="creating_new_continuous_test.html#continuous-test"><span class="std std-ref">create a Continuous Test</span></a>. To create a
-schedule, specify a data source as well as any credentials required for access to the data source while creating a firewall.</p>
+<p>You can also set a schedule when you
+<a class="reference internal" href="creating_new_continuous_test.html#continuous-test"><span class="std std-ref">create a Continuous Test</span></a>.
+To create a scheduled continuous test, use the
+<cite>Project.create_ct()</cite> method and specify a data source, the
+credentials required for data access, and a bin size.</p>
 </div></div>
 </section>
-<section id="deactivating-a-schedule-for-a-continuous-test">
-<h2>Deactivating a schedule for a Continuous Test<a class="headerlink" href="#deactivating-a-schedule-for-a-continuous-test" title="Permalink to this heading"></a></h2>
+<section id="finding-the-schedule-for-a-continuous-test">
+<h2>Finding the schedule for a Continuous Test<a class="headerlink" href="#finding-the-schedule-for-a-continuous-test" title="Permalink to this heading"></a></h2>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">SDK</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">firewall</span><span class="o">.</span><span class="n">deactivate_ct_scheduling</span><span class="p">()</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">SDK</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ct_ctl</span><span class="o">.</span><span class="n">get_scheduled_ct_info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></div>
+</section>
+<section id="deactivating-the-schedule-for-a-continuous-test">
+<h2>Deactivating the schedule for a Continuous Test<a class="headerlink" href="#deactivating-the-schedule-for-a-continuous-test" title="Permalink to this heading"></a></h2>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-2-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-2-2-0" name="2-0" role="tab" tabindex="0">SDK</button></div><div aria-labelledby="tab-2-2-0" class="sphinx-tabs-panel" id="panel-2-2-0" name="2-0" role="tabpanel" tabindex="0"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ct_ctl</span><span class="o">.</span><span class="n">deactivate_ct_scheduling</span><span class="p">()</span>
 </pre></div>
 </div>
 </div></div>
@@ -210,10 +265,12 @@ schedule, specify a data source as well as any credentials required for access t
 <p>In addition to specifying access and process parameters, you can also modify the
 reference data that tests are routinely run against. To change the reference
 set, please register a new dataset and update the
-firewall reference.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">firewall</span><span class="o">.</span><span class="n">update_firewall</span><span class="p">(</span><span class="n">ref_data_id</span><span class="o">=</span><span class="n">new_ref_data_id</span><span class="p">)</span>
+continuous test reference.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-3-3-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-3-3-0" name="3-0" role="tab" tabindex="0">SDK</button></div><div aria-labelledby="tab-3-3-0" class="sphinx-tabs-panel" id="panel-3-3-0" name="3-0" role="tabpanel" tabindex="0"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ct_ctl</span><span class="o">.</span><span class="n">update_ct</span><span class="p">(</span><span class="n">ref_data_id</span><span class="o">=</span><span class="n">new_ref_data_id</span><span class="p">)</span>
 </pre></div>
 </div>
+</div></div>
 </section>
 </section>
 

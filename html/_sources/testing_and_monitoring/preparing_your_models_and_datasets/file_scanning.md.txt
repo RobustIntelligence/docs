@@ -1,0 +1,53 @@
+# Securing Model Supply Chain Risk with File Scanning
+
+What is model supply chain risk?
+
+Pickle is a widely used serialization format in Machine Learning, emerging as the most common way to share model and model weights. However, when you load and de-serialize a pickle file, it is susceptible to dangerous arbitrary code execution attacks specified by the original author of the file. To learn more about pickle serialization based attacks: check out our [blog post](https://www.robustintelligence.com/blog-posts/pickle-serialization-in-data-science-a-ticking-time-bomb) on the topic.
+
+Once a model has been registered with Robust Intelligence, you can run a file scan on the model artifacts, which will identify potentially dangerous imports within the model which pose risks during de-serialization. This is a critical step in securing your model supply chain. All pickle derived model formats, including PyTorch, TensorFlow, Keras, and Scikit-Learn, are supported for file scanning.
+
+
+> **Note:** File Scanning is only enabled on registered HuggingFace models in v2.3. File Scanning on other model types will be available in v2.4.
+
+## Running a file scan on a registered HuggingFace model
+
+This tutorial assumes you have already [created a project](../creating_projects/creating_a_project.rst) and [registered a model](./registering_model_datasets.md) and retrieved the model and project IDs.
+
+```python
+from rime_sdk import Client
+
+client = Client(domain=<CLUSTER_URL>, api_key=<API_KEY>)
+job = client.start_file_scan(model_id=<MODEL_ID>, project_id=<PROJECT_ID>)
+job.get_status(verbose=True, wait_until_finish=True)
+```
+## Getting the results of a file scan
+
+Once the file scan job has completed, you can view the results of the file scan in the SDK:
+
+```python
+client.get_file_scan_result(file_scan_id=job.job_id)
+```
+Severity is scored from 1-3, with 3 corresponding to an Alert level of risk, and 1 being a pass. If vulnerabilities were found during the file scan, they will be present under the *file_security_reports* field under *unsafe_dependencies*. The *file_security_reports* field will be empty if no vulnerabilities were found in any of the model files.
+
+You can also view the latest file scan result for a specific model on its model registry page.
+
+1.  Sign in to a Robust Intelligence instance.
+    >   The Workspaces page appears.
+2.  Click a workspace.
+    >   The Workspaces summary page appears.
+3.  Select the project in which the model is registered.
+    >   The project overview page appears.
+4.  Click the *Model Registry* tab on the left navigation bar under *Artifacts*.
+    >   The model registry page appears.
+5.  Click the model for which you have run a file scan.
+    >   The model info page for the model appears.
+6.  The severity of the latest file scan result is displayed under the *File Scan* tab in the lower right.
+    >   There are three possible severity levels: Alert, Warning, Pass.
+
+## Understanding your file scan results
+
+The result or severity of a file scan result is determined by the most dangerous import amongst all dependencies found across all files that comprise the model. Certain imports, such as any methods from the `os` or `sys` module, are considered more dangerous than others, such as `numpy` or `pandas` which are more commonly found in model artifacts. Some examples of dangerous imports include dependencies that enable arbitrary code execution, such as the builtin exec function, or libraries that create HTTP connections, such as httplib. Robust Intelligence maintains a list of dangerous dependencies, updating whenever a new CVE is identified to ensure that your model is secured against the latest vulnerabilities.
+
+## Related Topics  
+[Creating a Project](../creating_projects/creating_a_project.rst)  
+[Registering Models,  Datasets, and Predictions](./registering_model_datasets.md)  

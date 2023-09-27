@@ -2,49 +2,80 @@
 
 # Configuring Integrations
 
-Administrators can configure integrations for a Robust Intelligence instance. Integrations can provide
-data or compute resources to Robust Intelligence.
+Administrators can add and manage integrations in a workspace. Robust
+Intelligence uses saved integrations to load data and compute
+resources.
 
-All configured integrations can be managed from the *Integrations* tab in Workspace settings. Only workspace
-administrators and organization administrators are allowed to configure and update integrations. Once an
-integration is configured, all workspace members will be able to see and use the integrations. There are also some preconfigured integrations, namely the Huggingface and Agent Integrations (for agents added since v2.1), which are read-only and cannot be updated by users. The Agent Integrations display the suffix, *(Agent)*, and the list of integrations contains the information about the cloud agents added to the workspace.
+All configured integrations can be managed from the *Integrations*
+panel in Workspace settings. Only workspace administrators and
+organization administrators can add and update integrations. Once an
+integration is configured, all workspace members will be able to see
+and use the integration.
+
+The *Integrations* panel also displays preconfigured integrations,
+namely the *Huggingface* and *Agent* Integrations, which are read-only
+and cannot be updated by users. The Agent Integrations display the
+suffix, `(Agent)`, and the list of integrations contains information
+about the cloud agents added to the workspace.
 
 <img src="../../../_static/images/integrations.png">
 
-## Adding an integration through the Robust Intelligence web UI
+## Add an integration through the Robust Intelligence web UI
 
-An administrator can add or modify a integration that the Robust Intelligence instance can use.
+An administrator can add or modify a data integration that the Robust
+Intelligence instance can use for loading datasets and other resources.
 
-1. Sign in to a Robust Intelligence instance.
-    >   The Workspaces page appears.
-2. Click the three-dot menu at the right side of a workspace and select *Manage Workspace*.
-    >   Alternately, select *Workspace Settings* from a workspace page.
-    >   The Workspace Settings page appears.
-3. Click *Integrations* in the left navigation bar.
-    >   The Integrations configuration pane appears.
-4. Click *Add Integration*.
-    >   The Add Integration dialog box appears.
-5. In *Name*, type a name for the integration.
-6. From the *Integration Type* drop-down, choose a type.
-    >   Supported types are AWS S3, Azure Blobstore, Databricks Deltalake, HuggingFace, and Custom.
-7. Fill in the necessary fields depending on the integration.
-8. (Optional) Click *Add Variable* to add specific secrets as key/value pairs.
-   >   A set of Key and Value fields appears with a Sensitivity drop-down selector between them.
-9. (Adding a variable) In *Key* and *Value*, type a key and the value for that key.
-10. (Adding a variable) From the *Sensitivity* drop-down, select a sensitivity level for the key/value pair.
-    >   Sensitivity levels are Not sensitive, Workspace level, and Members level.
-
-    >Sensitive information, such as access tokens, are stored in a secret manager
-service built using [Hashicorp Vault](https://developer.hashicorp.com/vault/docs/what-is-vault).
-
-    > If the sensitivity is Member level, individual members need to individually configure their sensitive credentials for this
-integration.
-    > If the sensitivity is Workspace level, administrate configure the sensitive credentials for this integrations
-12. Click *Save Integration*.
+1. Sign in to a Robust Intelligence instance or click *Workspaces* in
+   the right navigation panel.
+1. In the Workspaces page, click the name of your workspace
+1. Click the gear icon at the lower left of the window and choose
+   *Workspace Settings*.
+1. In the Workspace Settings page, click *Integrations* in the navigation panel.
+1. In the Integrations configuration panel, click *Add Integration*.
+1. In the Add Integration dialog box, specify the following:
+   - A *Name*, type a name for this integration
+   - An *Integration Type* such as:
+     - AWS S3
+     - Azure Blobstore
+     - Databricks Deltalake
+     - HuggingFace
+     - Custom
+   - Fill in the necessary fields depending on the integration.
+1. (Optional) Click *Add Variable* to add secrets as key/value pairs.
+   - In *Key* and *Value*, type a key name and the value for that key.
+   - In the *Sensitivity* drop-down, select a sensitivity level for
+     the key/value pair. This is one of: `Not sensitive`, `Workspace`
+     level, or `Members` level. Information you mark as sensitive (for
+     example, access tokens) will be stored in a secrets manager
+     service built using
+     [Hashicorp Vault](https://developer.hashicorp.com/vault/docs/what-is-vault).
+     If the sensitivity is `Members` level, individual members must
+     individually configure their sensitive credentials for this
+     integration. If the sensitivity is `Workspace` level, the
+     administrator configures the sensitive credentials for this
+     integration.
+1. Click *Save Integration*.
 
 The new integration is now available to the RI Platform.
 
-## Entering integration credentials through the Robust Intelligence web UI
+**Tip!** Once you've saved a data integration, you can copy its
+integration UUID from the **ID** column of the **Workspace Settings:
+Integrations** panel.
+
+## Get the UUID of a saved integration
+
+Follow these steps to find the ID (UUID) of a saved integration:
+
+1. Sign in to a Robust Intelligence instance and click *Workspaces* in
+   the right navigation panel.
+1. In the Workspaces page, click the name of your workspace.
+1. Click the gear icon at the lower left of the window and choose
+   *Workspace Settings*.
+1. In the Workspace Settings page, click *Integrations* in the navigation panel.
+1. In the Integrations configuration panel, scroll to find you data integration.
+1. Copy its integration UUID from the **ID** column.
+
+## Provide integration credentials through the Robust Intelligence web UI
 
 When an integration requires Member Level credentials, each user needs to enter their own credentials.
 
@@ -62,7 +93,7 @@ When an integration requires Member Level credentials, each user needs to enter 
 
 The new integration is now available to the RI Platform.
 
-## Adding Cloud Object Storage during deployment.
+## Add Cloud Object Storage during deployment
 
 Cloud Object Storage (e.g., AWS S3, Azure Blob Storage, or Google Cloud Storage) can also be configured during deployment time. A default Object Storage needs to be configured during deployment. These do not appear in the Integrations UI.
 [More information on this can be found here.](../../../deployment/requirements/data_access_permissions.md)

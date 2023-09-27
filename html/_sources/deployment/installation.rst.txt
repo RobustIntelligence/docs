@@ -111,3 +111,31 @@ REST API
    .. code-block::
 
       {"agents":[{"agentId":{"uuid:": ... }%
+
+Monitoring Setup (optional)
+-------------------------------
+You may optionally install the ``rime-extras`` helm chart which provides system/application monitoring via the Datadog Agent and Prometheus Node Exporter.
+
+Helm Installation
+```````````````````````````````
+
+1. Point your local ``kubectl`` to your data plane K8s cluster and namespace.
+
+2. Create a ``values.yaml`` file enabling the Datadog Agent and Prometheus Node Exporter:
+
+   .. code-block::
+
+      rimeExtras:
+         # -- Whether to install the DataDog Agent
+         datadog: true
+         # -- Whether to install the Prometheus Node Exporter
+         prometheusNodeExporter: true
+
+3. Execute the below Helm commands to install the chart in your K8s cluster:
+
+   .. code-block::
+
+      helm repo add robustintelligence https://robustintelligence.github.io/helm --force-update
+
+      helm upgrade -i rime-extras robustintelligence/rime-extras \
+         --values $PATH_TO_VALUES_FILE

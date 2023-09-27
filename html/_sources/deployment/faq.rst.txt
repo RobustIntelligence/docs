@@ -48,3 +48,36 @@ FAQ
 .. _Azure: https://azure.microsoft.com/en-us/
 
 .. _AKS: https://azure.microsoft.com/en-us/products/kubernetes-service/
+
+5 - What logs and information are needed for assistance when an isssue is encountered?
+  If you encounter any issues and require assistance, please provide the logs and details of your agent deployment. To do so, execute the script below in the environment where your agent is deployed. You must have access to the environment and both ``helm`` and ``kubectl`` tools installed.
+
+  .. code-block::
+
+    #!/bin/bash
+
+    current_datetime=$(date +"%Y%m%d_%H%M%S")
+    dir_name="rime_agent_logs-${current_datetime}"
+    mkdir "$dir_name"
+    pushd "$dir_name"
+    exec 2>errors.txt
+
+    kubectl version > k8s_version.txt
+    helm version > helm_version.txt
+
+    helm get values rime-agent | awk '!/USER-SUPPLIED VALUES/' > agent_values.yaml
+
+    kubectl get pods -o custom-columns=NAME:.metadata.name,READY:".status.containerStatuses[0].ready",STATUS:.status.phase,RESTARTS:".status.containerStatuses[0].restartCount",CREATED:.metadata.creationTimestamp,IMAGE:".spec.containers[0].image" > pods.txt
+    for pod in $(kubectl get pods -o custom-columns=NAME:.metadata.name --no-headers); do
+	    kubectl logs $pod > ${pod}_logs.txt
+    done
+
+    kubectl get crd | grep rbst > rbst_crds.txt
+    kubectl get rimejobs > rimejobs.txt
+    kubectl get crossplanerpcjobs > crossplanejobs.txt
+
+    popd
+    zip -r "$dir_name.zip" "$dir_name"
+    rm -rf "$dir_name"
+
+  The script will generate a file named ``agent_logs-{timestamp}.zip``. This file is a compressed directory containing logs and relevant data for troubleshooting. Please submit this file to our support team for further assistance.

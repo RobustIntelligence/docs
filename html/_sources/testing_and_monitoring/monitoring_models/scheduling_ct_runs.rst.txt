@@ -3,11 +3,13 @@
 Scheduling Continuous Testing Runs
 ==================================
 
-You can create and update the schedule for a Continuous Test from the SDK. For
-more configuration information, see the Configuring your Scheduled Continuous Tests page.
+You can create and update the schedule for a Continuous Test (CT) from
+the SDK. For more configuration information, see the section,
+:doc:`configuring_scheduled_ct`.
+
 
 Activating a schedule for a Continuous Test
---------------------------------------------
+-------------------------------------------
 
 .. tabs::
 
@@ -19,13 +21,13 @@ Activating a schedule for a Continuous Test
 
             .. code-block:: python
 
-              firewall = rime_client.get_firewall_for_project("foo-project")
+              ct_ctl = rime_client.get_ct_for_project("foo-project")
 
       3. Activate a schedule for the Continuous Test.
 
             .. code-block:: python
 
-                firewall.activate_ct_scheduling(
+                ct_ctl.activate_ct_scheduling(
                     data_integration_id: "<YOUR_DATA_INTEGRATION_ID>",
                     data_info: "<Data Info for your dataset>",
                     pred_integration_id: "<YOUR_PREDICTIONS_INTEGRATION_ID>",
@@ -33,13 +35,59 @@ Activating a schedule for a Continuous Test
                     rolling_window_size: "<Rolling window for your dataset>",
                 )
 
-        The parameters are dependent on which data integration you are using. For more information, reference the template for your :ref:`data integration<configuring-scheduled-ct>`.
+        Your scheduled continuous test runs at the frequency you set,
+        which can be as frequent as once per hour. The frequency is
+        determined by the `bin_size` set on the Continuous Test
+        instance.
 
-      4. These parameters can also be updated after scheduled ct has been updated.
+        Every hour at 20 minutes past the hour, Robust Intelligence
+        checks whether a time duration of `bin_size` has elapsed since
+        the last run. If it has, scheduled CT will kick off a job that
+        will run on data from the last-completed bin start time to the
+        current time, snapped to the closest previous bin. If there
+        are no completed bins in this CT instance, then the job will
+        run on data from the time that this scheduled CT was
+        activated.
+
+        Examples:
+
+        - Assume the `bin_size` is set to 1 hour and the last
+          completed bin was the 9 AM bin. If the current time is 1:20
+          PM, then scheduled CT will start a job that runs on the data
+          in the 9:00 AM through 1:00 PM bins.
+
+        - Assume the `bin_size` is set to 1 hour, but there is no last
+          completed bin. Let's assume this scheduled CT instance was
+          activated yesterday at 5:00 PM. If the current time is 1:20
+          PM, then scheduled CT will start a job that runs on the data
+          in all bins from yesterday's 5:00 PM bin through today's
+          1:00 PM bin.
+
+        The `rolling_window_size` is optional:
+
+        - If your scheduled CT instance does not have a rolling
+          window, then it will test against a static reference set,
+          meaning the data in the bins in the current CT job window
+          will be compared with the static reference set.
+
+        - If a rolling window is set, data in the current job window
+          range will be compared to the data in the window just before
+          it. For example, if you initiate a CT test run from 1:00
+          PM - 2:00 PM, and you set the `rolling_window` to 3 hours,
+          then the test will compare the data in the 1:00 PM - 2:00 PM
+          bins to the data from 10:00 AM - 1:00 PM.
+
+        The rest of the parameter values you pass to
+        `activate_ct_scheduling()` depend on which type of data
+        integration you're using. For more information, see the
+        template for your :ref:`data integration<configuring-scheduled-ct>`.
+
+      4. You can also update your scheduled CT's settings after you've
+         scheduled it:
 
             .. code-block:: python
 
-                firewall.update_scheduled_ct_info(
+                ct_ctl.update_scheduled_ct_info(
                     data_integration_id: "<YOUR_DATA_INTEGRATION_ID>",
                     data_info: "<Data Info for your dataset>",
                     pred_integration_id: "<YOUR_PREDICTIONS_INTEGRATION_ID>",
@@ -47,11 +95,14 @@ Activating a schedule for a Continuous Test
                     rolling_window_size: "<Rolling window for your dataset>",
                 )
 
-      You can set also a schedule at the same time you :ref:`create a Continuous Test<continuous-test>`. To create a
-      schedule, specify a data source as well as any credentials required for access to the data source while creating a firewall.
+      You can also set a schedule when you
+      :ref:`create a Continuous Test<continuous-test>`.
+      To create a scheduled continuous test, use the
+      `Project.create_ct()` method and specify a data source, the
+      credentials required for data access, and a bin size.
 
-Deactivating a schedule for a Continuous Test
-----------------------------------------------
+Finding the schedule for a Continuous Test
+------------------------------------------
 
 .. tabs::
 
@@ -59,18 +110,38 @@ Deactivating a schedule for a Continuous Test
 
       .. code-block:: python
 
-            firewall.deactivate_ct_scheduling()
+            ct_ctl.get_scheduled_ct_info()
+
+   ..
+
+Deactivating the schedule for a Continuous Test
+-----------------------------------------------
+
+.. tabs::
+
+   .. tab:: SDK
+
+      .. code-block:: python
+
+            ct_ctl.deactivate_ct_scheduling()
 
    ..
 
 Updating the reference dataset for a Scheduled Continuous Test
----------------------------------------------------------------
+--------------------------------------------------------------
 
 In addition to specifying access and process parameters, you can also modify the
 reference data that tests are routinely run against. To change the reference
 set, please register a new dataset and update the
-firewall reference.
+continuous test reference.
 
-.. code-block:: python
 
-     firewall.update_firewall(ref_data_id=new_ref_data_id)
+.. tabs::
+
+   .. tab:: SDK
+
+      .. code-block:: python
+
+            ct_ctl.update_ct(ref_data_id=new_ref_data_id)
+
+   ..

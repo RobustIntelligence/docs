@@ -55,7 +55,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.2
+                2.3.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -98,6 +98,7 @@
 <li class="toctree-l3"><a class="reference internal" href="requirements/data_access_permissions.html">Data Access Permissions</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrading-from-v2-2-to-v2-3">Upgrading from v2.2 to v2.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#verifying-an-upgrade">Verifying an Upgrade</a></li>
 </ul>
 </li>
@@ -105,10 +106,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/model_tests_reference.html">Model Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/troubleshooting.html">Troubleshooting Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/release_notes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/api_changelog.html">API Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
@@ -195,6 +196,32 @@ helm upgrade rime-agent robustintelligence/rime-agent --version $RI_VERSION --va
 </li>
 <li><p>Create the new agent using the Create Agent button on the <strong>Manage Agent Setup</strong> page. Select the original agent type and repeat the setup steps.
 If permission related inputs are needed, you can find the same inputs you used in v2.0 in the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file under the <code class="docutils literal notranslate"><span class="pre">rimeAgent.operator.modelTestJob</span></code> section.</p></li>
+</ol>
+</section>
+<section id="upgrading-from-v2-2-to-v2-3">
+<h2>Upgrading from v2.2 to v2.3<a class="headerlink" href="#upgrading-from-v2-2-to-v2-3" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Point your local <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> to your K8s cluster and namespace.</p></li>
+<li><p>Delete <code class="docutils literal notranslate"><span class="pre">rimejobs.rbst.io</span></code> CRD.</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">delete</span> <span class="n">crd</span> <span class="n">rimejobs</span><span class="o">.</span><span class="n">rbst</span><span class="o">.</span><span class="n">io</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic" start="3">
+<li><p>Uninstall the agent in your environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">uninstall</span> <span class="n">rime</span><span class="o">-</span><span class="n">agent</span>
+</pre></div>
+</div>
+</li>
+<li><p>Follow step 2 and 3 of the general upgrade process.</p></li>
+<li><p>Install the updated Helm release.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>helm repo update
+helm install rime-agent robustintelligence/rime-agent --version $RI_VERSION --values ./values.yaml
+</pre></div>
+</div>
+</li>
 </ol>
 </section>
 <section id="verifying-an-upgrade">

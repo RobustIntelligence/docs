@@ -154,7 +154,7 @@
    "outputs": [],
    "source": [
     "description = (\n",
-    "    \"Run Stress Testing, Continuous Testing and AI Firewall on a\"\n",
+    "    \"Run Stress Testing and Continuous Testing on a\"\n",
     "    \" text classification model and dataset. Demonstration uses \"\n",
     "    \" a dataset composed of ArXiv paper titles where the task is\"\n",
     "    \" to predict the paper topic.\"\n",
@@ -297,52 +297,12 @@
   },
   {
    "cell_type": "markdown",
-   "id": "UU2aHh-2Sg9B",
-   "metadata": {
-    "id": "UU2aHh-2Sg9B"
-   },
-   "source": [
-    "First, we will create a customer image with pip requirements to run our model with. This will take some time to install and run."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "iQQ9Je9oSf2m",
-   "metadata": {
-    "id": "iQQ9Je9oSf2m",
-    "tags": []
-   },
-   "outputs": [],
-   "source": [
-    "requirements = [\n",
-    "     client.pip_requirement(\"datasets\"),\n",
-    "     client.pip_requirement(\"sentencepiece\"),\n",
-    "]\n",
-    "\n",
-    "image_name = \"arxiv_image\"\n",
-    "\n",
-    "# Start a new image building job if it doesn't exist\n",
-    "if not client.has_managed_image(image_name, check_status=True):\n",
-    "    # e.g., if the image build job failed\n",
-    "    if client.has_managed_image(image_name):\n",
-    "        client.delete_managed_image(image_name)\n",
-    "    \n",
-    "    builder_job = client.create_managed_image(image_name, requirements)\n",
-    "\n",
-    "    # Wait until the job has finished and print out status information.\n",
-    "    # Once this prints out the `READY` status, your image is available for use in stress tests.\n",
-    "    builder_job.get_status(verbose=True, wait_until_finish=True)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
    "id": "8n-_-QpbbUOD",
    "metadata": {
     "id": "8n-_-QpbbUOD"
    },
    "source": [
-    "Now that we've built our custom image, we can run our tests. Below is a sample configuration of how to setup and run a RIME Stress Test for NLP."
+    "Below is a sample configuration of how to setup and run a RIME Stress Test for NLP."
    ]
   },
   {
@@ -363,10 +323,13 @@
     "    \"model_id\": model_id,\n",
     "    \"run_time_info\": {\n",
     "        \"random_seed\": 42,\n",
-    "        \"custom_image\": {\n",
-    "            \"managed_image_name\": image_name\n",
-    "        }\n",
-    "    }\n",
+    "    },\n",
+    "    \"categories\": [\n",
+    "        \"TEST_CATEGORY_TYPE_ADVERSARIAL\",\n",
+    "        \"TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE\",\n",
+    "        \"TEST_CATEGORY_TYPE_TRANSFORMATIONS\",\n",
+    "        \"TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS\", # this category is off by default\n",
+    "    ]\n",
     "}\n",
     "stress_job = client.start_stress_test(\n",
     "    test_run_config=stress_test_config,\n",
@@ -627,7 +590,7 @@
     "id": "1a787ecc"
    },
    "source": [
-    "## **Deploy to Production and Create the AI Firewall**"
+    "## **Deploy to Production and set up Continuous Testing**"
    ]
   },
   {
@@ -637,7 +600,7 @@
     "id": "776d9dee"
    },
    "source": [
-    "Once you have identified the best stress test run, you can deploy the associated model and set up a RIME Firewall to run Continuous Testing in order to automatically detect “bad” incoming data and statistically significant distributional drift. "
+    "Once you have identified the best stress test run, you can deploy the associated model and set up Continuous Testing in order to automatically detect “bad” incoming data and statistically significant distributional drift. "
    ]
   },
   {
@@ -651,7 +614,7 @@
    "source": [
     "from datetime import timedelta\n",
     "\n",
-    "firewall = project.create_firewall(model_id, ref_dataset_id, timedelta(days=1))"
+    "ct_instance = project.create_ct(model_id, ref_dataset_id, timedelta(days=1))"
    ]
   },
   {
@@ -661,7 +624,7 @@
     "id": "3486dfe2"
    },
    "source": [
-    "## **Uploading a Batch of Production Data & Model Predictions to Firewall**"
+    "## **Uploading a Batch of Production Data & Model Predictions to Continuous Testing**"
    ]
   },
   {
@@ -671,7 +634,7 @@
     "id": "e45cf559"
    },
    "source": [
-    "The text classification model has been in production for the past week. Production data and model predictions have been collected and stored for the past week. Now, we will use Firewall to track how the model performed across the last week."
+    "The text classification model has been in production for the past week. Production data and model predictions have been collected and stored for the past week. Now, we will use Continuous Testing to track how the model performed across the last week."
    ]
   },
   {
@@ -714,7 +677,7 @@
     "id": "5e88c523"
    },
    "source": [
-    "**Get the Firewall**"
+    "**Get Continuous Testing**"
    ]
   },
   {
@@ -726,7 +689,7 @@
    },
    "outputs": [],
    "source": [
-    "firewall = client.get_firewall_for_project(project.project_id)"
+    "ct_instance = client.get_ct_for_project(project.project_id)"
    ]
   },
   {
@@ -748,9 +711,9 @@
    },
    "outputs": [],
    "source": [
-    "ct_job = firewall.start_continuous_test(prod_dataset_id, agent_id=AGENT_ID)\n",
+    "ct_job = ct_instance.start_continuous_test(prod_dataset_id, agent_id=AGENT_ID)\n",
     "ct_job.get_status(verbose=True, wait_until_finish=True)\n",
-    "firewall"
+    "ct_instance"
    ]
   },
   {
@@ -770,7 +733,7 @@
     "tags": []
    },
    "source": [
-    "## **Querying Results from the Firewall**"
+    "## **Querying Results from Continuous Testing**"
    ]
   },
   {
@@ -778,7 +741,7 @@
    "id": "75235c63-eb39-4bc8-9de4-1b439cd9f560",
    "metadata": {},
    "source": [
-    "After a firewall has been created and data has been uploaded for processing, the user can query the results throughout the entire uploaded history."
+    "After continuous testing has been set up and data has been uploaded for processing, the user can query the results throughout the entire uploaded history."
    ]
   },
   {
@@ -796,7 +759,7 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "events = [d.to_dict() for m in firewall.list_monitors() for d in m.list_detected_events()]\n",
+    "events = [d.to_dict() for m in ct_instance.list_monitors() for d in m.list_detected_events()]\n",
     "events_df = pd.DataFrame(events).drop([\"id\", \"project_id\", \"firewall_id\", \"event_object_id\", \"description_html\", \"last_update_time\"], axis=1)\n",
     "events_df.head()"
    ]
@@ -809,7 +772,7 @@
    },
    "source": [
     "\n",
-    "## **Firewall CT Overview**\n",
+    "## **CT Overview**\n",
     "\n",
     "The Overview page is the mission control for your model’s production deployment health. In it, you can see the status of continuous test runs and their metrics change over time.\n"
    ]
@@ -831,9 +794,9 @@
     "id": "MzMea8BUFOT1"
    },
    "source": [
-    "## **Firewall CT Results**\n",
+    "## **CT Results**\n",
     "\n",
-    "The AI Firewall’s Continuous Tests operate at the batch level and provide a mechanism to monitor the health of ML deployments in production. They allow the user to understand when errors begin to occur and surface the underlying drivers of such errors. \n",
+    "The Continuous Tests operate at the batch level and provide a mechanism to monitor the health of ML deployments in production. They allow the user to understand when errors begin to occur and surface the underlying drivers of such errors. \n",
     "\n",
     "You can explore the results in the UI by running the below cell and redirecting to the generated link.\n"
    ]
@@ -847,7 +810,7 @@
    },
    "outputs": [],
    "source": [
-    "firewall"
+    "ct_instance"
    ]
   },
   {
@@ -897,7 +860,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.10.3"
+   "version": "3.9.17"
   },
   "vscode": {
    "interpreter": {

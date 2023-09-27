@@ -212,7 +212,8 @@
     "    \"label_col\": \"rank_label\",\n",
     "    \"ranking_info\": {\n",
     "      \"query_col\": \"query_id\"\n",
-    "    }\n",
+    "    },\n",
+    "    \"protected_features\": [\"Director\", \"Cast1\"],\n",
     "}\n",
     "ref_dataset_id = project.register_dataset_from_file(\n",
     "    f\"ref_dataset_{dt}\", ref_s3_path, data_params=data_params, agent_id=AGENT_ID\n",
@@ -256,7 +257,8 @@
     "        \"ref_dataset_id\": ref_dataset_id, \n",
     "        \"eval_dataset_id\": eval_dataset_id,\n",
     "    }, \n",
-    "    \"model_id\": model_id\n",
+    "    \"model_id\": model_id,\n",
+    "    \"categories\": [\"TEST_CATEGORY_TYPE_ADVERSARIAL\", \"TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE\", \"TEST_CATEGORY_TYPE_TRANSFORMATIONS\", \"TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS\"]\n",
     "}\n",
     "stress_job = client.start_stress_test(\n",
     "    stress_test_config, project.project_id, agent_id=AGENT_ID\n",
@@ -317,7 +319,7 @@
     "id": "h2jQYUDmknsU"
    },
    "source": [
-    "![img_2](https://drive.google.com/uc?id=1oaJjWVN18Yu6KqiJ9XGFq4RVcLSE_bLk)"
+    "![img_2](https://drive.google.com/uc?id=1gR-bosz3YH4wX2W2M4scjCdIz0RRjoig)"
    ]
   },
   {
@@ -362,9 +364,9 @@
     "id": "AzP97mzuab3m"
    },
    "source": [
-    "## **Deploy to Production and Create the AI Firewall**\n",
+    "## **Deploy to Production and set up Continuous Testing**\n",
     "\n",
-    "Once you have identified the best stress test run, you can deploy the associated model and set up a RIME Firewall to run Continuous Testing in order to automatically detect “bad” incoming data and statistically significant distributional drift."
+    "Once you have identified the best stress test run, you can deploy the associated model and set up Continuous Testing in order to automatically detect “bad” incoming data and statistically significant distributional drift."
    ]
   },
   {
@@ -377,7 +379,7 @@
    "source": [
     "from datetime import timedelta\n",
     "\n",
-    "firewall = project.create_firewall(model_id, ref_dataset_id, timedelta(days=1))"
+    "ct_instance = project.create_ct(model_id, ref_dataset_id, timedelta(days=1))"
    ]
   },
   {
@@ -386,9 +388,9 @@
     "id": "a0Lw2YBXBkb4"
    },
    "source": [
-    "## **Uploading a Batch of Production Data & Model Predictions to Firewall**\n",
+    "## **Uploading a Batch of Production Data & Model Predictions to Continuous Testing**\n",
     "\n",
-    "The model has been in production for some time, and new production data and model predictions have been collected and stored. Now, we will use the Firewall to track how the model performed. "
+    "The model has been in production for some time, and new production data and model predictions have been collected and stored. Now, we will use Continuous Testing to track how the model performed. "
    ]
   },
   {
@@ -416,7 +418,7 @@
     "prod_dataset_id = project.register_dataset_from_file(\n",
     "    f\"prod_dataset_{dt}\", \n",
     "    prod_s3_path, \n",
-    "    data_params={\"timestamp_col\": \"timestamp\", **data_params},\n",
+    "    data_params={\"timestamp_col\": \"timestamp\", \"protected_features\": [\"Director\", \"Cast1\"], **data_params},\n",
     "    agent_id=AGENT_ID\n",
     ")\n",
     "prod_preds_s3_path = client.upload_file(\n",
@@ -430,6 +432,19 @@
     "    pred_params=pred_params,\n",
     "    agent_id=AGENT_ID\n",
     ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "project.update_continuous_test_categories([\"TEST_CATEGORY_TYPE_MODEL_PERFORMANCE\",\n",
+    "                                           \"TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE_DEGRADATION\",\n",
+    "                                           \"TEST_CATEGORY_TYPE_ABNORMAL_INPUTS\",\n",
+    "                                           \"TEST_CATEGORY_TYPE_DRIFT\",\n",
+    "                                           \"TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS\"])"
    ]
   },
   {
@@ -449,9 +464,9 @@
    },
    "outputs": [],
    "source": [
-    "ct_job = firewall.start_continuous_test(prod_dataset_id, agent_id=AGENT_ID)\n",
+    "ct_job = ct_instance.start_continuous_test(prod_dataset_id, agent_id=AGENT_ID)\n",
     "ct_job.get_status(verbose=True, wait_until_finish=True)\n",
-    "firewall"
+    "ct_instance"
    ]
   },
   {
@@ -469,14 +484,14 @@
     "tags": []
    },
    "source": [
-    "## **Querying Results from the Firewall**"
+    "## **Querying Results from Continuous Testing**"
    ]
   },
   {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "After a firewall has been created and data has been uploaded for processing, the user can query the results throughout the entire uploaded history."
+    "After Continuous Testing has been set up and data has been uploaded for processing, the user can query the results throughout the entire uploaded history."
    ]
   },
   {
@@ -492,7 +507,7 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "events = [d.to_dict() for m in firewall.list_monitors() for d in m.list_detected_events()]\n",
+    "events = [d.to_dict() for m in ct_instance.list_monitors() for d in m.list_detected_events()]\n",
     "events_df = pd.DataFrame(events).drop([\"id\", \"project_id\", \"firewall_id\", \"event_object_id\", \"description_html\", \"last_update_time\"], axis=1)\n",
     "events_df.head()"
    ]
@@ -503,9 +518,9 @@
     "id": "MzMea8BUFOT1"
    },
    "source": [
-    "## **Firewall CT Results**\n",
+    "## **CT Results**\n",
     "\n",
-    "The AI Firewall’s Continuous Tests operate at the batch level and provide a mechanism to monitor the health of ML deployments in production. They allow the user to understand when errors begin to occur and surface the underlying drivers of such errors. \n",
+    "The Continuous Tests operate at the batch level and provide a mechanism to monitor the health of ML deployments in production. They allow the user to understand when errors begin to occur and surface the underlying drivers of such errors. \n",
     "\n",
     "You can explore the results in the UI by running the below cell and redirecting to the generated link.\n"
    ]
@@ -518,7 +533,7 @@
    },
    "outputs": [],
    "source": [
-    "firewall"
+    "ct_instance"
    ]
   },
   {
@@ -586,7 +601,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.10.3"
+   "version": "3.9.17"
   }
  },
  "nbformat": 4,

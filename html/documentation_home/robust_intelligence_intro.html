@@ -55,7 +55,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.2
+                2.3.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -68,7 +68,14 @@
               <p class="caption" role="heading"><span class="caption-text">Documentation Home</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">What is Robust Intelligence?</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#what-is-ai-risk">What is AI Risk?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-ai-risk">What is AI Risk?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#why-we-test">Why We Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#why-we-run-stress-tests">Why We Run Stress Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#why-we-run-continuous-tests">Why We Run Continuous Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#risk-testing-built-into-your-ai-pipeline">Risk Testing Built into Your AI Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#measuring-ai-risk">Measuring AI Risk</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#key-machine-learning-tasks-covered">Key Machine Learning Tasks Covered</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#tabular">Tabular</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#natural-language-processing-nlp">Natural Language Processing (NLP)</a></li>
@@ -82,6 +89,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#robust-intelligence-inputs">Robust Intelligence Inputs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ai-compliance-management-model-cards">AI Compliance Management - Model Cards</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#workspace-overview">Workspace Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#related-topics">Related Topics</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="get_started.html">Get Started</a></li>
@@ -114,10 +122,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/model_tests_reference.html">Model Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/troubleshooting.html">Troubleshooting Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/release_notes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/api_changelog.html">API Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
@@ -148,14 +156,70 @@
   <section id="what-is-robust-intelligence">
 <h1>What is Robust Intelligence?<a class="headerlink" href="#what-is-robust-intelligence" title="Permalink to this heading"></a></h1>
 <p>Welcome to Robust Intelligence, the solution for maintaining AI integrity. The platform helps you identify and eliminate the risks inherent to production AI by integrating into your AI pipeline.</p>
-<p>AI risk refers to the potential negative consequences of using AI models in production, including operational, ethical, and security risks. <strong>Operational risks</strong> can arise from subpar model performance, while <strong>ethical risks</strong> stem from model behavior that violates regulatory or governance standards. <strong>Security risks</strong> occur when models are vulnerable to adversarial actors who try to exploit or compromise the model’s performance.</p>
-<p>Robust Intelligence allows users to test and monitor their models for these three risk categories by integrating into two points in the model development and deployment pipeline.</p>
-<p>To address these risks, Robust Intelligence offers two key features. During model development, <strong>AI Stress Testing</strong> measures the robustness of your model by running dozens of pre-configured tests. Each test checks the model’s vulnerability to a specific form of potential failure in production. During production deployment, <strong>AI Continuous Testing</strong> monitors your model and alerts you to issues such as data drift and detected adversarial attacks.</p>
 <section id="what-is-ai-risk">
 <h2>What is AI Risk?<a class="headerlink" href="#what-is-ai-risk" title="Permalink to this heading"></a></h2>
+<p>AI risk refers to the potential negative consequences of using AI models in production, including operational, ethical, and security risks.</p>
+<ul class="simple">
+<li><p><strong>Security risks</strong> occur when models are vulnerable to adversarial
+actors who try to exploit or compromise a machine learning model’s
+performance. Proprietary and third-party models may be susceptible
+to data leakage and adversarial attacks, including system breaches,
+model evasion, and theft. All models must be regularly screened
+before and during use to protect against a wide array of evolving
+vulnerabilities and threats.</p></li>
+<li><p><strong>Ethical risks</strong> stem from model behavior that violates norms,
+laws, regulations, or other governance standards. AI models can have
+or develop a variety of ethical issues, including bias, fairness,
+and use of offensive language. This can lead to inequality,
+reputational damage, and lawsuits.</p></li>
+<li><p><strong>Operational risks</strong> can arise from subpar model performance.
+Changes in data can lead to model failures including performance
+drift, corruption, and broken data pipelines. These failures can
+affect an organization’s operations in terms of lost revenue, lost
+trust, damage to the organization’s reputation, and resource
+constraints.</p></li>
+</ul>
+</section>
+<section id="why-we-test">
+<h2>Why We Test<a class="headerlink" href="#why-we-test" title="Permalink to this heading"></a></h2>
+<section id="why-we-run-stress-tests">
+<h3>Why We Run Stress Tests<a class="headerlink" href="#why-we-run-stress-tests" title="Permalink to this heading"></a></h3>
+<p><a class="reference internal" href="../testing_and_monitoring/validating_models.html"><span class="std std-doc">Stress Testing</span></a>
+measures the robustness of your AI model before you deploy it. Test
+results identify security, ethical, and operational risks and
+weaknesses in your model and provide you with insights on how to
+improve it before deployment.</p>
+</section>
+<section id="why-we-run-continuous-tests">
+<h3>Why We Run Continuous Tests<a class="headerlink" href="#why-we-run-continuous-tests" title="Permalink to this heading"></a></h3>
+<p><a class="reference internal" href="../testing_and_monitoring/monitoring_models.html"><span class="std std-doc">Continuous Testing</span></a>
+monitors AI models that are deployed in production in order to detect
+when vulnerabilities or failures emerge, such as data drift or
+inability to withstand adversarial attacks.</p>
+</section>
+</section>
+<section id="risk-testing-built-into-your-ai-pipeline">
+<h2>Risk Testing Built into Your AI Pipeline<a class="headerlink" href="#risk-testing-built-into-your-ai-pipeline" title="Permalink to this heading"></a></h2>
+<p>Robust Intelligence allows you to test and monitor your models for
+security, ethical, and operational risk by integrating into the
+following phases of your model development and deployment pipeline:</p>
+<ul class="simple">
+<li><p>During model development,
+<a class="reference internal" href="../testing_and_monitoring/validating_models.html"><span class="std std-doc">AI Stress Testing</span></a>
+measures the robustness of your model by running dozens of
+pre-configured tests. Each test checks the model’s vulnerability to
+a specific form of potential failure in production.</p></li>
+<li><p>Once models are deployed into production,
+<a class="reference internal" href="../testing_and_monitoring/monitoring_models.html"><span class="std std-doc">AI Continuous Testing</span></a>
+monitors your model and alerts you to issues such as data drift and
+detected adversarial attacks.</p></li>
+</ul>
+</section>
+<section id="measuring-ai-risk">
+<h2>Measuring AI Risk<a class="headerlink" href="#measuring-ai-risk" title="Permalink to this heading"></a></h2>
 <p>In modern engineering organizations, data scientists and machine learning engineers typically invest a significant amount of effort into the development stage of the model life cycle, which includes tasks such as data ingestion and cleaning, feature extraction, and model training. During this stage, models are evaluated mainly based on their performance on clean test data.</p>
-<p>While these metrics may be useful in controlled development environments, deploying models in production introduces a new set of challenges and risks that are often overlooked. Once a model is deployed, data scientists lose control over how the model is used and how data is passed into it. Moreover, they have no oversight over the data pipelines that incorporate the model. Even when the model is used correctly, the real world can change, leading to issues like distributional shifts in production data, which can silently degrade model performance.</p>
-<p>These risks can manifest in several ways, such as operational, ethical, and security risks. Operational risks arise from subpar model performance, which may occur due to factors such as data drift or other distributional shifts in the production environment. Ethical risks occur when model behavior violates regulatory or governance standards, which may lead to legal or reputational harm for the organization. Finally, security risks arise when models are vulnerable to adversarial actors who can exploit or compromise the model’s performance.</p>
+<p>While these metrics may be useful in controlled development environments, deploying models in production introduces a new set of challenges and risks that are often overlooked. Once a model is deployed, data scientists lose control over how the model is used and how data is passed into it. Moreover, they have no oversight over the data pipelines that incorporate the model. Even when the model is used correctly, the real world can change, leading to issues like distributional shifts in production data, which can silently degrade model performance.
+These risks can manifest in several ways, such as operational, ethical, and security risks. Operational risks arise from subpar model performance, which may occur due to factors such as data drift or other distributional shifts in the production environment. Ethical risks occur when model behavior violates regulatory or governance standards, which may lead to legal or reputational harm for the organization. Finally, security risks arise when models are vulnerable to adversarial actors who can exploit or compromise the model’s performance.</p>
 <p>To mitigate these risks, it’s crucial to have tools like Robust Intelligence that allow you to test and monitor models continuously throughout their lifecycle, from development to deployment. This ensures that you catch any issues as they arise and can take corrective action before they cause significant problems.</p>
 <img src="../_static/images/adopting_ai_risk.png">
 <section id="key-machine-learning-tasks-covered">
@@ -190,33 +254,62 @@
 </section>
 <section id="stress-testing">
 <h2>Stress Testing<a class="headerlink" href="#stress-testing" title="Permalink to this heading"></a></h2>
-<p>Stress Testing is a comprehensive set of tests that measure the robustness of your AI model before deployment. These tests are designed to identify potential weaknesses and failure modes of your prospective AI deployment, and each test represents a specific axis of potential model vulnerability.</p>
+<p><a class="reference internal" href="../testing_and_monitoring/validating_models.html"><span class="std std-doc">Stress Testing</span></a> is a
+comprehensive set of tests that measure the robustness of your AI
+model before deployment. These tests are designed to identify
+potential weaknesses and failure modes of your prospective AI
+deployment, and each test represents a specific axis of potential
+model vulnerability.</p>
 <p>The Stress Testing framework comes with a wide range of pre-configured tests, from simple operational risk tests that measure whether model performance is sufficiently high, to complex security tests that identify signatures that are evidence of adversarial attacks. By running hundreds of these tests across both your model and associated datasets, Robust Intelligence can identify potential vulnerabilities in your model, and provide you with insights on how to improve its robustness.</p>
 <p>During the development stage of your model’s lifecycle, the Stress Testing framework can help you ensure that your model is performing optimally, across all risk categories. By analyzing individual tests, you can identify areas where your model needs improvement, and refine it accordingly. By identifying these issues early on in the development process, you can address them proactively and ensure that your model is compliant with applicable regulatory or governance standards.</p>
 <p>The Stress Testing framework is a powerful tool for measuring the robustness of your AI model before deployment. Its pre-configured tests cover a wide range of potential vulnerabilities, allowing you to identify areas where your model needs improvement, and address them proactively.</p>
-<!--- ### AI Firewall
-
-
-AI Firewall protects your model from bad predictions before model inference. Firewall operates at the data point level. It can flag or block aberrant data points in realtime, and the AI Firewall is automatically configured from the results of stress testing. The end result is that the user gets a custom AI Firewall that protects against the unique forms of model failure to which a given model is susceptible. Firewall can be deployed with a single line of code directly in the inference pipeline of your ML model, wherein it logs, analyzes, and/or acts upon (flag, block, impute) aberrant data points in realtime.
--->
 </section>
 <section id="continuous-testing">
 <h2>Continuous Testing<a class="headerlink" href="#continuous-testing" title="Permalink to this heading"></a></h2>
-<p>Continuous Testing is a monitoring tool for AI models during production deployment that uses the Stress Testing framework applied continually over time. The framework includes dozens of pre-configured tests that check the model’s vulnerability to potential failure in production, such as data drift or detected adversarial attacks.</p>
+<p><a class="reference internal" href="../testing_and_monitoring/monitoring_models.html"><span class="std std-doc">Continuous Testing</span></a>
+is a monitoring tool for AI models during production deployment that
+uses the Stress Testing framework applied continually over time. The
+framework includes dozens of pre-configured tests that check the
+model’s vulnerability to potential failure in production, such as data
+drift or detected adversarial attacks.</p>
 <p>Continuous Testing can be configured to run on a fixed schedule. On completion we surface vulnerabilities that were discovered in the test run via events and alerts.</p>
 <p>To set up Continuous Testing, you can passively log and analyze predictions by uploading prediction logs after model inference. This process can be automated to run at regular intervals.</p>
 </section>
 <section id="robust-intelligence-inputs">
 <h2>Robust Intelligence Inputs<a class="headerlink" href="#robust-intelligence-inputs" title="Permalink to this heading"></a></h2>
-<p>In order to run stress tests and continuous testing, the platform can take in various inputs.</p>
+<p>To run stress tests (ST) and continuous tests (CT), the platform takes as input:</p>
 <ul class="simple">
-<li><p><strong>Data</strong>: The Robust Intelligence requires that you pass in a sample of data for both ST and CT.</p>
+<li><p><strong>Data</strong>: Robust Intelligence requires
+<a class="reference internal" href="../testing_and_monitoring/preparing_your_models_and_datasets/preprocessing_your_datasets.html"><span class="std std-doc">sample data</span></a>
+for both ST and CT:</p>
 <ul>
-<li><p><strong>ST</strong>: It is required that the user pass in a reference dataset and an evaluation dataset. The reference set is some clean training data, and the evaluation set is some held out dataset that the model will encounter in production. These datasets need to be registered to the RI Data Registry before usage, and can optionally have ground truth labels and associated model predictions (which should be registered to the Prediction Registry). Having this additional information allows the testing suite to run more tests than is possible otherwise.</p></li>
-<li><p><strong>CT</strong>: The data requirements for CT are an extension of ST, although there is the additional requirement of passing in production evaluation data periodically (either manually or via scheduling that you can configure as a part of the CT instance).</p></li>
+<li><p><strong>ST</strong>: A reference dataset and an evaluation dataset are
+required. The reference set contains clean training data, and the
+evaluation set contains a held-out dataset that the model will
+encounter in production. These datasets need to be registered to
+the RI Data Registry before usage, and can optionally have
+ground truth labels and associated model predictions (which
+should be registered to the Prediction Registry). Having this
+additional information allows the testing suite to run more
+tests than is possible otherwise.</p></li>
+<li><p><strong>CT</strong>: The data requirements for CT are an extension of what is
+needed for ST. For CT, there is the additional requirement of
+passing in production evaluation data periodically (either
+manually or via scheduling that you can configure as a part of
+the CT instance).</p></li>
 </ul>
 </li>
-<li><p><strong>Model</strong>: Providing access to the model allows for testing the model behavior under different circumstances. The tests perturb model inputs, provide them to the model, and examine the model behavior to uncover its vulnerabilities. The model is treated as a black box, and providing access to the model entails registering a model.py file to the RI Model Registry. The model.py file requires a prediction function that takes in an input from Robust Intelligence and provides the model prediction given this input. By treating the model as a black box, Robust Intelligence can easily integrate with whatever model framework you use.</p></li>
+<li><p><strong>Model</strong>: Providing access to the
+<a class="reference internal" href="../testing_and_monitoring/preparing_your_models_and_datasets/defining_model_interface.html"><span class="std std-doc">model</span></a>
+allows for testing the model behavior under different circumstances.
+The tests perturb model inputs, provide them to the model, and
+examine the model behavior to uncover its vulnerabilities. The model
+is treated as a black box, and providing access to the model entails
+registering a <code class="docutils literal notranslate"><span class="pre">model.py</span></code> file to the RI Model Registry. The <code class="docutils literal notranslate"><span class="pre">model.py</span></code>
+file requires a prediction function that takes in an input from
+Robust Intelligence and provides the model prediction given this
+input. By treating the model as a black box, Robust Intelligence can
+easily integrate with whatever model framework you use.</p></li>
 </ul>
 </section>
 <section id="ai-compliance-management-model-cards">
@@ -225,7 +318,19 @@ AI Firewall protects your model from bad predictions before model inference. Fir
 </section>
 <section id="workspace-overview">
 <h2>Workspace Overview<a class="headerlink" href="#workspace-overview" title="Permalink to this heading"></a></h2>
-<p>A single pane of glass provides visibility into all models in production, providing model health status and the ability to track models to any custom metric, which is especially useful for AI leadership in organizations.</p>
+<p>A Robust Intelligence <a class="reference internal" href="../administration/workspace_configuration/workspaces.html"><span class="std std-doc">workspace</span></a>
+is a single pane of glass that provides visibility into all models in
+production, providing model health status and the ability to track
+models to any custom metric, which is especially useful for AI
+leadership in organizations.</p>
+</section>
+<section id="related-topics">
+<h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
+<p><a class="reference internal" href="../testing_and_monitoring/preparing_your_models_and_datasets/defining_model_interface.html"><span class="std std-doc">Defining a Model Interface</span></a><br />
+<a class="reference internal" href="../testing_and_monitoring/monitoring_models.html"><span class="std std-doc">Monitor Models with Continuous Tests</span></a><br />
+<a class="reference internal" href="../testing_and_monitoring/preparing_your_models_and_datasets/preprocessing_your_datasets.html"><span class="std std-doc">Preprocessing Your Datasets</span></a><br />
+<a class="reference internal" href="../testing_and_monitoring/validating_models.html"><span class="std std-doc">Validate Models with Stress Tests</span></a><br />
+<a class="reference internal" href="../administration/workspace_configuration/workspaces.html"><span class="std std-doc">Workspaces</span></a></p>
 </section>
 </section>
 

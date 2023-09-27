@@ -55,7 +55,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.2.2
+                2.3.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -103,10 +103,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/model_tests_reference.html">Model Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/troubleshooting.html">Troubleshooting Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../reference/model_tests_reference.html">Model Tests Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/release_notes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/api_changelog.html">API Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
@@ -164,6 +164,38 @@ Robust Intelligence will reach out beforehand to coordinate each upgrade.</p>
 </div>
 </dd>
 <dt>4 - Which cloud providers does Robust Intelligence support?</dt><dd><p>Though we design our product to be cloud-agnostic, our official testing currently covers <a class="reference external" href="https://aws.amazon.com/">AWS</a> (<a class="reference external" href="https://aws.amazon.com/eks/">EKS</a>), <a class="reference external" href="https://cloud.google.com/products/">GCP</a> (<a class="reference external" href="https://cloud.google.com/kubernetes-engine/">GKE</a>), and <a class="reference external" href="https://azure.microsoft.com/en-us/">Azure</a> (<a class="reference external" href="https://azure.microsoft.com/en-us/products/kubernetes-service/">AKS</a>).</p>
+</dd>
+</dl>
+<dl>
+<dt>5 - What logs and information are needed for assistance when an isssue is encountered?</dt><dd><p>If you encounter any issues and require assistance, please provide the logs and details of your agent deployment. To do so, execute the script below in the environment where your agent is deployed. You must have access to the environment and both <code class="docutils literal notranslate"><span class="pre">helm</span></code> and <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> tools installed.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+
+current_datetime=$(date +&quot;%Y%m%d_%H%M%S&quot;)
+dir_name=&quot;rime_agent_logs-${current_datetime}&quot;
+mkdir &quot;$dir_name&quot;
+pushd &quot;$dir_name&quot;
+exec 2&gt;errors.txt
+
+kubectl version &gt; k8s_version.txt
+helm version &gt; helm_version.txt
+
+helm get values rime-agent | awk &#39;!/USER-SUPPLIED VALUES/&#39; &gt; agent_values.yaml
+
+kubectl get pods -o custom-columns=NAME:.metadata.name,READY:&quot;.status.containerStatuses[0].ready&quot;,STATUS:.status.phase,RESTARTS:&quot;.status.containerStatuses[0].restartCount&quot;,CREATED:.metadata.creationTimestamp,IMAGE:&quot;.spec.containers[0].image&quot; &gt; pods.txt
+for pod in $(kubectl get pods -o custom-columns=NAME:.metadata.name --no-headers); do
+        kubectl logs $pod &gt; ${pod}_logs.txt
+done
+
+kubectl get crd | grep rbst &gt; rbst_crds.txt
+kubectl get rimejobs &gt; rimejobs.txt
+kubectl get crossplanerpcjobs &gt; crossplanejobs.txt
+
+popd
+zip -r &quot;$dir_name.zip&quot; &quot;$dir_name&quot;
+rm -rf &quot;$dir_name&quot;
+</pre></div>
+</div>
+<p>The script will generate a file named <code class="docutils literal notranslate"><span class="pre">agent_logs-{timestamp}.zip</span></code>. This file is a compressed directory containing logs and relevant data for troubleshooting. Please submit this file to our support team for further assistance.</p>
 </dd>
 </dl>
 </section>
