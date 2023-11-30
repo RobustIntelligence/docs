@@ -1,0 +1,42 @@
+# Feature Sampling
+
+## Smart Feature Sampling
+
+For large datasets, Robust Intelligence can be optimized by running on
+a subset of features. This works by specifying the number of features
+that will be evaluated during the test.
+
+Robust Intelligence automatically calculates feature importances in
+both the with-model case and without-model case (as long as labels or
+predictions are provided), and runs its suite of tests across the most
+important features.
+
+### Configuration
+
+To turn on smart feature sampling, specify the
+[num_feats_to_profile](configuring_data_profiling.md#data-profiling-arguments)
+setting in the `data_profiling` configuration. For details,
+see [Data Profiling Configuration](configuring_data_profiling.md).
+
+### How Smart Feature Sampling works
+
+- You specify your desired threshold *k* of features.
+- Robust Intelligence loads only the top *k* features, by feature
+  importance. An upper threshold of 750 features is enforced.
+- After computing the top *k* features, Robust Intelligence adds
+  protected feature pairs, custom intersections, projected columns,
+  and embedding columns if they aren’t present in the top *k* features
+  that were already slated for loading.
+
+
+### FAQ on Smart Feature Sampling
+
+#### Can I also specify the number of rows to load?
+
+Yes. Smart Feature Sampling can work in conjunction with Smart Dataset
+Sampling. See [Smart Dataset Sampling](row_sampling.md#smart-dataset-sampling).
+
+
+
+## Related Topics  
+[Configuring Data Profiling](configuring_data_profiling.md)  

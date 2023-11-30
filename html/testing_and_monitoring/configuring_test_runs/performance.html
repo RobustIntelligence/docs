@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Performance &mdash; Robust Intelligence  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Configuring Test Categories" href="configuring_test_categories.html" />
+    <link rel="prev" title="Row Sampling" href="row_sampling.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/images/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Robust Intelligence
+          </a>
+              <div class="version">
+                2.5.0-rc.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../creating_projects.html">Creating Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../configuring_test_runs.html#configuring-at-the-project-level">Configuring at the Project Level</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../configuring_test_runs.html#data-and-model-profiling">Data and Model Profiling</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="configuring_data_profiling.html">Configuring Data Profiling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuring_model_profiling.html">Configuring Model Profiling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feature_sampling.html">Feature Sampling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="row_sampling.html">Row Sampling</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Performance</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#profile-caching">Profile Caching</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#for-large-datasets-use-smart-sampling">For large datasets, use Smart Sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#memory-recommendations">Memory Recommendations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#related-topics">Related Topics</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../configuring_test_runs.html#categories">Categories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuring_test_runs.html#test-suite">Test Suite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuring_test_runs.html#runtime">Runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuring_test_runs.html#custom-metrics">Custom Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../querying_results.html">Querying Test Run Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notifications_and_alerts.html">Notifications and Alerts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_governance.html">Managing Model Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integrating_mlops.html">Integrating with MLOps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/organization_administration.html">Organization Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/workspace_configuration.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/security_and_compliance.html">Security and Compliance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/upgrade.html">Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Robust Intelligence</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
+      <li class="breadcrumb-item active">Performance</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="performance">
+<h1>Performance<a class="headerlink" href="#performance" title="Permalink to this heading"></a></h1>
+<section id="profile-caching">
+<h2>Profile Caching<a class="headerlink" href="#profile-caching" title="Permalink to this heading"></a></h2>
+<p>Before it can run tests, Robust Intelligence needs to understand
+properties of the datasets and models. To do this, we use
+<a class="reference internal" href="configuring_data_profiling.html"><span class="std std-doc">data profiles</span></a> and
+<a class="reference internal" href="configuring_model_profiling.html"><span class="std std-doc">model profiles</span></a>.</p>
+<p>Since it is common to run Robust Intelligence multiple times over the
+same datasets and models, these profiles are cached and then re-used
+to make subsequent runs faster. For example, the same datasets might
+be used to evaluate multiple models. In this case, the dataset
+profiles will not be recomputed for the second run or any run after
+that.</p>
+<p>Caching is specific to each unique combination of a dataset and a model ID.
+For best performance:</p>
+<ul class="simple">
+<li><p>If there have not been significant changes to the data or model,
+it’s best to re-use datasets and models. If you do not re-register
+them, the existing cache will be used so that all runs after the
+first run will complete more quickly.</p></li>
+<li><p>When you need to accommodate a significant change, you can force a
+refresh of the cache by re-registering your dataset.</p></li>
+</ul>
+</section>
+<section id="for-large-datasets-use-smart-sampling">
+<h2>For large datasets, use Smart Sampling<a class="headerlink" href="#for-large-datasets-use-smart-sampling" title="Permalink to this heading"></a></h2>
+<p>If your datasets are large, Robust Intelligence offers control over
+how many features and how many rows are loaded in a test run:</p>
+<ul class="simple">
+<li><p>To load only the <em>k</em> most important features in your dataset,
+enable <a class="reference internal" href="feature_sampling.html"><span class="std std-doc">Smart Feature Sampling</span></a>.</p></li>
+<li><p>You can rely on <a class="reference internal" href="row_sampling.html"><span class="std std-doc">Smart Dataset Sampling</span></a> to load
+the maximum number of rows that will fit in available memory,
+or you can set your own maximum number of rows.</p></li>
+</ul>
+</section>
+<section id="memory-recommendations">
+<h2>Memory Recommendations<a class="headerlink" href="#memory-recommendations" title="Permalink to this heading"></a></h2>
+<p>Please refer to the below benchmarks to help you determine how much
+memory to request for your test runs. The numbers in the table
+represent the maximum dataset size (rows * features) that our tests
+can accommodate before going out of memory.</p>
+<p>The benchmarks assume that <a class="reference internal" href="row_sampling.html"><span class="std std-doc">Smart Dataset Sampling</span></a>
+is enabled in your
+<a class="reference internal" href="configuring_data_profiling.html#data-profiling-arguments"><span class="std std-ref">data profiling configuration</span></a>.
+If you are not using Smart Dataset Sampling, you will need to request
+more memory.</p>
+<p>The memory recommendations shown below are intended as a rough guide.
+Actual memory usage will vary depending on the dataset and model.</p>
+<section id="stress-tests">
+<h3>Stress Tests<a class="headerlink" href="#stress-tests" title="Permalink to this heading"></a></h3>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Memory</th>
+<th>Tabular Regression</th>
+<th>Tabular Ranking</th>
+<th>Tabular Binary Classification</th>
+<th>NLP Multiclass Classification</th>
+<th>NLP Inference</th>
+<th>Image Multiclass Classification<sup>1</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2GB</td>
+<td>18,000,000</td>
+<td>100,000,000</td>
+<td>75,000,000</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>4GB</td>
+<td>36,000,000</td>
+<td>200,000,000</td>
+<td>150,000,000</td>
+<td>40,000,000</td>
+<td>20,000,000</td>
+<td>-</td>
+</tr>
+<tr>
+<td>8GB</td>
+<td>70,000,000</td>
+<td>400,000,000</td>
+<td>300,000,000</td>
+<td>80,000,000</td>
+<td>40,000,000</td>
+<td>-</td>
+</tr>
+<tr>
+<td>16GB</td>
+<td>140,000,000</td>
+<td>800,000,000</td>
+<td>600,000,000</td>
+<td>150,000,000</td>
+<td>80,000,000</td>
+<td>4,000,000</td>
+</tr>
+<tr>
+<td>32GB</td>
+<td>280,000,000</td>
+<td>1,500,000,000</td>
+<td>1,000,000,000</td>
+<td>300,000,000</td>
+<td>150,000,000</td>
+<td>8,000,000</td>
+</tr>
+<tr>
+<td>64GB</td>
+<td>550,000,000</td>
+<td>3,000,000,000</td>
+<td>2,000,000,000</td>
+<td>600,000,000</td>
+<td>300,000,000</td>
+<td>16,000,000</td>
+</tr>
+<tr>
+<td>128GB</td>
+<td>1,100,000,000</td>
+<td>6,000,000,000</td>
+<td>4,000,000,000</td>
+<td>1,200,000,000</td>
+<td>600,000,000</td>
+<td>32,000,000</td>
+</tr>
+</tbody>
+</table>
+<p><sup>1</sup>Each image is counted as a single feature. This benchmark leverages Robust Intelligence’s image loader and dataset sampling. As such, only a small portion of the images are loaded into memory and embedded. If images are already embedded in your dataset, you will need to request more memory.</p>
+</section>
+<section id="continuous-tests">
+<h3>Continuous Tests<a class="headerlink" href="#continuous-tests" title="Permalink to this heading"></a></h3>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Memory</th>
+<th>Tabular Regression</th>
+<th>Tabular Ranking</th>
+<th>Tabular Binary Classification</th>
+<th>NLP Multiclass Classification</th>
+<th>NLP Inference</th>
+<th>Image Multiclass Classification<sup>1</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2GB</td>
+<td>1,000,000,000</td>
+<td>1,000,000,000</td>
+<td>400,000,000</td>
+<td>7,500,000</td>
+<td>200,000,000</td>
+<td>-</td>
+</tr>
+<tr>
+<td>4GB</td>
+<td>2,000,000,000</td>
+<td>2,000,000,000</td>
+<td>800,000,000</td>
+<td>15,000,000</td>
+<td>400,000,000</td>
+<td>-</td>
+</tr>
+<tr>
+<td>8GB</td>
+<td>4,000,000,000</td>
+<td>4,000,000,000</td>
+<td>1,500,000,000</td>
+<td>30,000,000</td>
+<td>800,000,000</td>
+<td>4,000,000</td>
+</tr>
+<tr>
+<td>16GB</td>
+<td>8,000,000,000</td>
+<td>8,000,000,000</td>
+<td>3,000,000,000</td>
+<td>60,000,000</td>
+<td>1,500,000,000</td>
+<td>8,000,000</td>
+</tr>
+<tr>
+<td>32GB</td>
+<td>16,000,000,000</td>
+<td>16,000,000,000</td>
+<td>6,000,000,000</td>
+<td>120,000,000</td>
+<td>3,000,000,000</td>
+<td>16,000,000</td>
+</tr>
+<tr>
+<td>64GB</td>
+<td>32,000,000,000</td>
+<td>32,000,000,000</td>
+<td>12,000,000,000</td>
+<td>240,000,000</td>
+<td>6,000,000,000</td>
+<td>32,000,000</td>
+</tr>
+<tr>
+<td>128GB</td>
+<td>64,000,000,000</td>
+<td>64,000,000,000</td>
+<td>24,000,000,000</td>
+<td>480,000,000</td>
+<td>12,000,000,000</td>
+<td>64,000,000</td>
+</tr>
+</tbody>
+</table>
+<p><sup>1</sup>Each image is counted as a single feature. This benchmark leverages Robust Intelligence’s image loader and dataset sampling. As such, only a small portion of the images are loaded into memory and embedded. If images are already embedded in your dataset, you will need to request more memory.</p>
+</section>
+</section>
+<section id="related-topics">
+<h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
+<p><a class="reference internal" href="configuring_data_profiling.html"><span class="std std-doc">Configuring Data Profiling</span></a><br />
+<a class="reference internal" href="configuring_model_profiling.html"><span class="std std-doc">Configuring Model Profiling</span></a><br />
+<a class="reference internal" href="feature_sampling.html"><span class="std std-doc">Feature Sampling</span></a><br />
+<a class="reference internal" href="row_sampling.html"><span class="std std-doc">Row Sampling</span></a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="row_sampling.html" class="btn btn-neutral float-left" title="Row Sampling" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="configuring_test_categories.html" class="btn btn-neutral float-right" title="Configuring Test Categories" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
