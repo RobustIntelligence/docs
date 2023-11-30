@@ -1,0 +1,86 @@
+# Performance
+
+## Profile Caching
+
+Before it can run tests, Robust Intelligence needs to understand
+properties of the datasets and models. To do this, we use
+[data profiles](configuring_data_profiling.md) and
+[model profiles](configuring_model_profiling.md).
+
+Since it is common to run Robust Intelligence multiple times over the
+same datasets and models, these profiles are cached and then re-used
+to make subsequent runs faster. For example, the same datasets might
+be used to evaluate multiple models. In this case, the dataset
+profiles will not be recomputed for the second run or any run after
+that.
+
+Caching is specific to each unique combination of a dataset and a model ID.
+For best performance:
+
+- If there have not been significant changes to the data or model,
+  it's best to re-use datasets and models. If you do not re-register
+  them, the existing cache will be used so that all runs after the
+  first run will complete more quickly.
+
+- When you need to accommodate a significant change, you can force a
+  refresh of the cache by re-registering your dataset.
+
+## For large datasets, use Smart Sampling
+
+If your datasets are large, Robust Intelligence offers control over
+how many features and how many rows are loaded in a test run:
+- To load only the *k* most important features in your dataset,
+  enable [Smart Feature Sampling](feature_sampling.md).
+- You can rely on [Smart Dataset Sampling](row_sampling.md) to load
+  the maximum number of rows that will fit in available memory,
+  or you can set your own maximum number of rows.
+
+## Memory Recommendations
+
+Please refer to the below benchmarks to help you determine how much
+memory to request for your test runs. The numbers in the table
+represent the maximum dataset size (rows * features) that our tests
+can accommodate before going out of memory.
+
+The benchmarks assume that [Smart Dataset Sampling](row_sampling.md)
+is enabled in your
+[data profiling configuration](configuring_data_profiling.md#data-profiling-arguments).
+If you are not using Smart Dataset Sampling, you will need to request
+more memory.
+
+The memory recommendations shown below are intended as a rough guide.
+Actual memory usage will vary depending on the dataset and model.
+
+### Stress Tests
+
+| Memory | Tabular Regression | Tabular Ranking | Tabular Binary Classification | NLP Multiclass Classification | NLP Inference | Image Multiclass Classification<sup>1</sup> |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| 2GB | 18,000,000 | 100,000,000 | 75,000,000 | - | - | - |
+| 4GB | 36,000,000 | 200,000,000 | 150,000,000 | 40,000,000 | 20,000,000 | - |
+| 8GB | 70,000,000 | 400,000,000 | 300,000,000 |  80,000,000 | 40,000,000 | - |
+| 16GB | 140,000,000 | 800,000,000 | 600,000,000 | 150,000,000| 80,000,000 | 4,000,000 |
+| 32GB | 280,000,000 | 1,500,000,000 | 1,000,000,000 | 300,000,000 | 150,000,000 | 8,000,000 |
+| 64GB | 550,000,000 | 3,000,000,000 | 2,000,000,000 | 600,000,000 | 300,000,000 | 16,000,000 |
+| 128GB | 1,100,000,000 | 6,000,000,000 | 4,000,000,000 | 1,200,000,000 | 600,000,000 | 32,000,000 |
+
+<sup>1</sup>Each image is counted as a single feature. This benchmark leverages Robust Intelligence's image loader and dataset sampling. As such, only a small portion of the images are loaded into memory and embedded. If images are already embedded in your dataset, you will need to request more memory.
+
+### Continuous Tests
+
+| Memory | Tabular Regression | Tabular Ranking | Tabular Binary Classification | NLP Multiclass Classification | NLP Inference | Image Multiclass Classification<sup>1</sup> |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| 2GB | 1,000,000,000 | 1,000,000,000 | 400,000,000 | 7,500,000 | 200,000,000 | - |
+| 4GB | 2,000,000,000 | 2,000,000,000 | 800,000,000 | 15,000,000 | 400,000,000 | - |
+| 8GB | 4,000,000,000 | 4,000,000,000 | 1,500,000,000 | 30,000,000 | 800,000,000 | 4,000,000 |
+| 16GB | 8,000,000,000 | 8,000,000,000 | 3,000,000,000 | 60,000,000 | 1,500,000,000 | 8,000,000 |
+| 32GB | 16,000,000,000 | 16,000,000,000 | 6,000,000,000 | 120,000,000 | 3,000,000,000 | 16,000,000 |
+| 64GB | 32,000,000,000 | 32,000,000,000 | 12,000,000,000 | 240,000,000 | 6,000,000,000 | 32,000,000|
+| 128GB | 64,000,000,000 | 64,000,000,000 | 24,000,000,000 | 480,000,000 | 12,000,000,000 | 64,000,000 |
+
+<sup>1</sup>Each image is counted as a single feature. This benchmark leverages Robust Intelligence's image loader and dataset sampling. As such, only a small portion of the images are loaded into memory and embedded. If images are already embedded in your dataset, you will need to request more memory.
+
+## Related Topics  
+[Configuring Data Profiling](configuring_data_profiling.md)  
+[Configuring Model Profiling](configuring_model_profiling.md)  
+[Feature Sampling](feature_sampling.md)  
+[Row Sampling](row_sampling.md)  

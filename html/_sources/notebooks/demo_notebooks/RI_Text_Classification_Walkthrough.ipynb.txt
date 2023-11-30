@@ -1,0 +1,863 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "22441406",
+   "metadata": {
+    "id": "22441406"
+   },
+   "source": [
+    "# **RI Text Multiclass Classification Walkthrough**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "139eb33d",
+   "metadata": {
+    "id": "139eb33d"
+   },
+   "source": [
+    "\n",
+    "> ▶️ **Try this in Colab!** Run the [RI Text Multiclass Classification Walkthrough in Google Colab](https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_NLP_Walkthrough.ipynb). \n",
+    "\n",
+    "You are a data scientist working to maintain a large research library. The data science team has been tasked with implementing a research paper topic classification model and monitoring how that model performs over time. The performance of this model directly impacts the profits of the company. To ensure the data science team develops the best model and the performance of this model doesn't degrade over time, the VP of Data Science purchases the RIME platform.\n",
+    "\n",
+    "In this Notebook Walkthrough, we will walkthrough 2 of RIME's core products - **AI Stress Testing** and **AI Continuous Testing**.\n",
+    "\n",
+    "1. **AI Stress Testing** is used in the model development stage. Using AI Stress Testing you can test the developed model. RIME goes beyond simply optimizing for basic model performance like accuracy and automatically discovers the model's weaknesses.\n",
+    "2. **AI Continuous Testing** is used after the model is deployed in production. Using AI Continuous Testing, you can automate the monitoring, discovery and remediation of issues that occur post-deployment."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "55f7dbb3",
+   "metadata": {
+    "id": "55f7dbb3"
+   },
+   "source": [
+    "## **Install Dependencies, Import Libraries and Download Data**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "77c29f18",
+   "metadata": {
+    "id": "77c29f18"
+   },
+   "source": [
+    "Run the cell below to install libraries to receive data, install our SDK, and load analysis libraries."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "2dfa4cb5",
+   "metadata": {
+    "id": "2dfa4cb5"
+   },
+   "outputs": [],
+   "source": [
+    "!pip install rime-sdk &> /dev/null\n",
+    "\n",
+    "import pandas as pd\n",
+    "from pathlib import Path\n",
+    "from rime_sdk import Client"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "hLpEVK64Mmti",
+   "metadata": {
+    "id": "hLpEVK64Mmti"
+   },
+   "outputs": [],
+   "source": [
+    "!pip install https://github.com/RobustIntelligence/ri-public-examples/archive/master.zip\n",
+    "    \n",
+    "from ri_public_examples.download_files import download_files\n",
+    "\n",
+    "download_files('nlp/classification/arxiv-2.0', 'arxiv')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0ca803a7",
+   "metadata": {
+    "id": "0ca803a7"
+   },
+   "source": [
+    "## **Establish the RIME Client**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "38e5f5a7",
+   "metadata": {
+    "id": "38e5f5a7"
+   },
+   "source": [
+    "To get started, provide the API credentials and the base domain/address of the RIME Cluster. You can generate and copy an API token from the API Access Tokens Page under Workspace settings. For the domain/address of the RIME Cluster, contact your admin."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "40334928",
+   "metadata": {},
+   "source": [
+    "![api.jpeg](https://www.dropbox.com/s/bpz7vb8j6a7zgwu/img_1_api.jpeg?dl=0)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e29a5ce6",
+   "metadata": {
+    "id": "e29a5ce6"
+   },
+   "outputs": [],
+   "source": [
+    "API_TOKEN = '' # PASTE API_KEY \n",
+    "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)\n",
+    "AGENT_ID = '' # PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT\n",
+    "client = Client(CLUSTER_URL, API_TOKEN)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "bce4684d",
+   "metadata": {
+    "id": "bce4684d",
+    "tags": []
+   },
+   "source": [
+    "## **Create a New Project**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5d26ed83",
+   "metadata": {
+    "id": "5d26ed83"
+   },
+   "source": [
+    "You can create projects in RIME to organize your test runs. Each project represents a workspace for a given machine learning task. It can contain multiple candidate models, but should only contain one promoted production model."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "3b65dd7f",
+   "metadata": {
+    "id": "3b65dd7f"
+   },
+   "outputs": [],
+   "source": [
+    "description = (\n",
+    "    \"Run Stress Testing and Continuous Testing on a\"\n",
+    "    \" text classification model and dataset. Demonstration uses \"\n",
+    "    \" a dataset composed of ArXiv paper titles where the task is\"\n",
+    "    \" to predict the paper topic.\"\n",
+    ")\n",
+    "project = client.create_project(\n",
+    "    name='Text Classification Demo', \n",
+    "    description=description,\n",
+    "    model_task='MODEL_TASK_MULTICLASS_CLASSIFICATION'\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "6cd5eb92",
+   "metadata": {
+    "id": "6cd5eb92"
+   },
+   "source": [
+    "**Go back to the UI to see the Arxiv Project**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "86e144e4",
+   "metadata": {
+    "id": "86e144e4"
+   },
+   "source": [
+    "## **Uploading the Model + Datasets + Predictions**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "badd1201",
+   "metadata": {
+    "id": "badd1201"
+   },
+   "source": [
+    "For this demo, we are going to use the prediction logs of a text classification model for arxiv, a popular research database.\n",
+    "\n",
+    "The model classifies the research paper into a number of different categories such as - \n",
+    "\n",
+    "1. Black Hole\n",
+    "2. Neutron Star\n",
+    "3. Dark Matter\n",
+    "\n",
+    "We now want to kick off RIME Stress Tests that will help us evaluate the model in further depth beyond basic performance metrics like accuracy, precision, recall. In order to do this, we will upload this pre-trained model, the reference dataset the model was trained on, and the evaluation dataset the model was evaluated on to an S3 bucket that can be accessed by RIME. Futhermore, we'll need to register them with RIME."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "926b29f2",
+   "metadata": {
+    "id": "926b29f2"
+   },
+   "outputs": [],
+   "source": [
+    "upload_path = \"ri_public_examples_arxiv\"\n",
+    "ref_s3_path = client.upload_file(\n",
+    "    Path('arxiv/data/train.json.gz'), upload_path=upload_path\n",
+    ")\n",
+    "eval_s3_path = client.upload_file(\n",
+    "    Path('arxiv/data/val_0_with_label.json.gz'), upload_path=upload_path\n",
+    ")\n",
+    "ref_preds_s3_path = client.upload_file(\n",
+    "    Path(\"arxiv/data/preds.train.jsonl.gz\"), upload_path=upload_path\n",
+    ")\n",
+    "eval_preds_s3_path = client.upload_file(\n",
+    "    Path(\"arxiv/data/preds.val_0.jsonl.gz\"), upload_path=upload_path\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "220524de-f955-476c-ac12-e9f6b914b187",
+   "metadata": {},
+   "source": [
+    "Once the data and model are uploaded to S3, we can register them to RIME. Once they're registered, we can refer to these resources using their RIME-generated ID's."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ac15ee52-b195-474d-883c-8bd28c9aea26",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from datetime import datetime\n",
+    "\n",
+    "dt = str(datetime.now())\n",
+    "\n",
+    "# Note: models and datasets need to have unique names.\n",
+    "model_id = project.register_model(\n",
+    "    f'model_{dt}',\n",
+    "    model_config={\"hugging_face\": {\"model_uri\": \"Wi/arxiv-distilbert-base-cased\"}},\n",
+    "    agent_id=AGENT_ID\n",
+    ")\n",
+    "data_params = {\n",
+    "    \"label_col\": \"label\",\n",
+    "    \"text_features\": [\n",
+    "        \"text\"\n",
+    "    ],\n",
+    "    \"timestamp_col\": \"timestamp\"\n",
+    "}\n",
+    "ref_dataset_id = project.register_dataset_from_file(\n",
+    "    f\"ref_dataset_{dt}\", ref_s3_path, data_params=data_params, agent_id=AGENT_ID\n",
+    ")\n",
+    "eval_dataset_id = project.register_dataset_from_file(\n",
+    "    f\"eval_dataset_{dt}\", eval_s3_path, data_params=data_params, agent_id=AGENT_ID\n",
+    ")\n",
+    "project.register_predictions_from_file(\n",
+    "    ref_dataset_id, model_id, ref_preds_s3_path, agent_id=AGENT_ID\n",
+    ")\n",
+    "project.register_predictions_from_file(\n",
+    "    eval_dataset_id, model_id, eval_preds_s3_path, agent_id=AGENT_ID\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a7ff3270",
+   "metadata": {
+    "id": "a7ff3270"
+   },
+   "source": [
+    "## **Running a Stress Test**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3cd67e3f",
+   "metadata": {
+    "id": "3cd67e3f"
+   },
+   "source": [
+    "AI Stress Tests allow you to test your data and model before deployment. \n",
+    "They are a comprehensive suite of hundreds of tests that automatically identify implicit assumptions and weaknesses of pre-production models. Each stress test is run on a single model and its associated reference and evaluation datasets."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8n-_-QpbbUOD",
+   "metadata": {
+    "id": "8n-_-QpbbUOD"
+   },
+   "source": [
+    "Below is a sample configuration of how to setup and run a RIME Stress Test for NLP."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "35d40591",
+   "metadata": {
+    "id": "35d40591"
+   },
+   "outputs": [],
+   "source": [
+    "stress_test_config = {\n",
+    "    \"run_name\": \"ArXiv Topic Classification\",\n",
+    "    \"data_info\": {\n",
+    "        \"ref_dataset_id\": ref_dataset_id,\n",
+    "        \"eval_dataset_id\": eval_dataset_id,\n",
+    "    },\n",
+    "    \"model_id\": model_id,\n",
+    "    \"run_time_info\": {\n",
+    "        \"random_seed\": 42,\n",
+    "    },\n",
+    "    \"categories\": [\n",
+    "        \"TEST_CATEGORY_TYPE_ADVERSARIAL\",\n",
+    "        \"TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE\",\n",
+    "        \"TEST_CATEGORY_TYPE_TRANSFORMATIONS\",\n",
+    "        \"TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS\", # this category is off by default\n",
+    "        \"TEST_CATEGORY_TYPE_DATA_CLEANLINESS\",\n",
+    "        \"TEST_CATEGORY_TYPE_ABNORMAL_INPUTS\"\n",
+    "    ]\n",
+    "}\n",
+    "stress_job = client.start_stress_test(\n",
+    "    test_run_config=stress_test_config,\n",
+    "    project_id=project.project_id,\n",
+    "    agent_id=AGENT_ID\n",
+    ")\n",
+    "stress_job.get_status(verbose=True, wait_until_finish=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ac71b930",
+   "metadata": {
+    "id": "ac71b930"
+   },
+   "source": [
+    "## **Stress Test Results**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0e02c6cb",
+   "metadata": {
+    "id": "0e02c6cb"
+   },
+   "source": [
+    "Stress tests are grouped into categories that measure various aspects of model robustness (subset performance, distribution drift, abnormal input). Suggestions to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information.\n",
+    "\n",
+    "You can view the detailed results in the UI by running the below cell and redirecting to the generated link. This page shows granular results for a given AI Stress Test run."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "53454038",
+   "metadata": {
+    "id": "53454038"
+   },
+   "outputs": [],
+   "source": [
+    "test_run = stress_job.get_test_run()\n",
+    "test_run"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "1516b6d3",
+   "metadata": {
+    "id": "1516b6d3"
+   },
+   "source": [
+    "### Analyzing the Results"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "AZHS7eaFDlYV",
+   "metadata": {
+    "id": "AZHS7eaFDlYV"
+   },
+   "source": [
+    "#### Subset Performance Tests"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d84b3aa0",
+   "metadata": {
+    "id": "d84b3aa0"
+   },
+   "source": [
+    "Here are the results of the Subset Performance tests. These tests can be thought as more detailed performance tests that identify subsets of underperformance. These tests help ensure that the model works equally well across different groups."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "12941dd1",
+   "metadata": {},
+   "source": [
+    "![subset.png](https://drive.google.com/uc?id=1m-YaOEv7JJmxGRnaGUUZ-wT7Sy6D4k2F)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3d984daa",
+   "metadata": {
+    "id": "3d984daa"
+   },
+   "source": [
+    "Below we are exploring the \"Subset Macro Precision\" test cases for the text metadata feature \"AverageTokenLength\". We can see that even though the model has a Macro Precision of 0.53, it performs poorly on certain subsets, especially those with lower average token lengths."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "caad7230",
+   "metadata": {},
+   "source": [
+    "![precision.png](https://drive.google.com/uc?id=1tSBMtZy-6qEnsh2xV6u98Zr3YBqdmmCV)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "L-TXi6pnDsV8",
+   "metadata": {
+    "id": "L-TXi6pnDsV8"
+   },
+   "source": [
+    "#### Transformation Tests"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7tIKl3xrDyfe",
+   "metadata": {
+    "id": "7tIKl3xrDyfe"
+   },
+   "source": [
+    "Here are the results of the Transformation tests. These tests can be thought as ways to test your models response to augmented text data. They help to make sure that your model is invariant to such changes in your data."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "08cd198e",
+   "metadata": {},
+   "source": [
+    "![transform.png](https://drive.google.com/uc?id=1DIwzsn7lxm6DzkeYavLQVV1dmvDLdBUi)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ydb-roGBEa77",
+   "metadata": {
+    "id": "ydb-roGBEa77"
+   },
+   "source": [
+    "Below we are exploring a transformation test that changes the original text to upper-case text. We see that this transformation causes the original class's predicted score to change by 0.70. As a result, the model predicts an entirely new class for the text and misclassifies it."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f1697117",
+   "metadata": {},
+   "source": [
+    "![replacement.png](https://drive.google.com/uc?id=1EwNbC9RPy2lhvUDiI2uswN5kKmkGn3Eo)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "00a24782",
+   "metadata": {
+    "id": "00a24782"
+   },
+   "source": [
+    "### Programmatically Querying the Results"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4bdb3ec3",
+   "metadata": {
+    "id": "4bdb3ec3"
+   },
+   "source": [
+    "RIME not only provides you with an intuitive UI to visualize and explore these results, but also allows you to programmatically query these results. This allows customers to integrate with their MLOps pipeline, log results to experiment management tools like MLFlow, bring automated decision making to their ML practices, or store these results for future references.\n",
+    "\n",
+    "Run the below cell to programmatically query the results. The results are outputted as a pandas dataframe."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "9c3b82d0",
+   "metadata": {
+    "id": "9c3b82d0"
+   },
+   "source": [
+    "**Access results at the a test run overview level**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "3ada9b87",
+   "metadata": {
+    "id": "3ada9b87"
+   },
+   "outputs": [],
+   "source": [
+    "test_run_result = test_run.get_result_df()\n",
+    "test_run_result.to_csv(\"Arxiv_Test_Run_Results.csv\")\n",
+    "test_run_result"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "2368f059",
+   "metadata": {
+    "id": "2368f059"
+   },
+   "source": [
+    "**Access detailed test results at each individual test cases level**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "6c0791c5",
+   "metadata": {
+    "id": "6c0791c5"
+   },
+   "outputs": [],
+   "source": [
+    "test_case_result = test_run.get_test_cases_df()\n",
+    "test_case_result.to_csv(\"Arxiv_Test_Case_Results.csv\")\n",
+    "test_case_result"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "651b1a21",
+   "metadata": {},
+   "source": [
+    "**Access detailed test results for a given test batch**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "152b13ad",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "subset_macro_f1 = test_run.get_test_batch(\"subset_performance:subset_macro_f1\")\n",
+    "subset_macro_f1.get_test_cases_df()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "1a787ecc",
+   "metadata": {
+    "id": "1a787ecc"
+   },
+   "source": [
+    "## **Deploy to Production and set up Continuous Testing**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "776d9dee",
+   "metadata": {
+    "id": "776d9dee"
+   },
+   "source": [
+    "Once you have identified the best stress test run, you can deploy the associated model and set up Continuous Testing in order to automatically detect “bad” incoming data and statistically significant distributional drift. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "12780c88",
+   "metadata": {
+    "id": "12780c88"
+   },
+   "outputs": [],
+   "source": [
+    "from datetime import timedelta\n",
+    "\n",
+    "project.update_ct_categories([\"TEST_CATEGORY_TYPE_ABNORMAL_INPUTS\",\n",
+    "                              \"TEST_CATEGORY_TYPE_DRIFT\",\n",
+    "                              \"TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS\",\n",
+    "                              \"TEST_CATEGORY_TYPE_EVASION_ATTACK_DETECTION\"\n",
+    "                            ])\n",
+    "\n",
+    "ct_instance = project.create_ct(model_id, ref_dataset_id, timedelta(days=1))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3486dfe2",
+   "metadata": {
+    "id": "3486dfe2"
+   },
+   "source": [
+    "## **Uploading a Batch of Production Data & Model Predictions to Continuous Testing**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e45cf559",
+   "metadata": {
+    "id": "e45cf559"
+   },
+   "source": [
+    "The text classification model has been in production for the past week. Production data and model predictions have been collected and stored for the past week. Now, we will use Continuous Testing to track how the model performed across the last week."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c9731dc4-6019-4ac3-ad51-944d812d158d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dt = str(datetime.now())\n",
+    "data_params = {\n",
+    "    \"text_features\": [\n",
+    "        \"text\"\n",
+    "    ],\n",
+    "    \"timestamp_col\": \"timestamp\"\n",
+    "}\n",
+    "prod_s3_path = client.upload_file(\n",
+    "    Path('arxiv/data/val_1.json.gz'), \n",
+    "    upload_path=upload_path\n",
+    ")\n",
+    "prod_dataset_id = project.register_dataset_from_file(\n",
+    "    f\"prod_dataset_{dt}\", \n",
+    "    prod_s3_path, \n",
+    "    data_params=data_params,\n",
+    "    agent_id=AGENT_ID\n",
+    ")\n",
+    "prod_preds_s3_path = client.upload_file(\n",
+    "    Path('arxiv/data/preds.val_1.jsonl.gz'), \n",
+    "    upload_path=upload_path,\n",
+    ")\n",
+    "project.register_predictions_from_file(\n",
+    "    prod_dataset_id, model_id, prod_preds_s3_path, agent_id=AGENT_ID\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5e88c523",
+   "metadata": {
+    "id": "5e88c523"
+   },
+   "source": [
+    "**Get Continuous Testing**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "3dc01dd3",
+   "metadata": {
+    "id": "3dc01dd3"
+   },
+   "outputs": [],
+   "source": [
+    "ct_instance = client.get_ct_for_project(project.project_id)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "2905e5fe",
+   "metadata": {
+    "id": "2905e5fe"
+   },
+   "source": [
+    "**Run Continuous Testing over Batch of Data**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f7ee267b",
+   "metadata": {
+    "id": "f7ee267b"
+   },
+   "outputs": [],
+   "source": [
+    "ct_job = ct_instance.start_continuous_test(prod_dataset_id, agent_id=AGENT_ID)\n",
+    "ct_job.get_status(verbose=True, wait_until_finish=True)\n",
+    "ct_instance"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b3069139",
+   "metadata": {
+    "id": "b3069139"
+   },
+   "source": [
+    "**Wait for a couple minutes and your results will appear in the UI**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "06ed0741-4bcd-4dd4-b001-58c68e4cdd0a",
+   "metadata": {
+    "tags": []
+   },
+   "source": [
+    "## **Querying Results from Continuous Testing**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "75235c63-eb39-4bc8-9de4-1b439cd9f560",
+   "metadata": {},
+   "source": [
+    "After continuous testing has been set up and data has been uploaded for processing, the user can query the results throughout the entire uploaded history."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "6b7721d7-4df3-455d-bd46-a045fc4b68ad",
+   "metadata": {},
+   "source": [
+    "**Obtain All Detection Events**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b3c16f43-c234-4b33-a2b4-cdedf82c7914",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "events = [d.to_dict() for m in ct_instance.list_monitors() for d in m.list_detected_events()]\n",
+    "events_df = pd.DataFrame(events).drop([\"id\", \"project_id\", \"firewall_id\", \"event_object_id\", \"description_html\", \"last_update_time\"], axis=1)\n",
+    "events_df.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "55a637f2-bfa3-47bc-a150-a378436ed52a",
+   "metadata": {
+    "id": "vmpxUnaLMn-u"
+   },
+   "source": [
+    "\n",
+    "## **CT Overview**\n",
+    "\n",
+    "The Overview page is the mission control for your model’s production deployment health. In it, you can see the status of continuous test runs and their metrics change over time.\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d1e52c50-50f9-4e2d-884d-1beeeca1f978",
+   "metadata": {
+    "id": "AFuGGg8uNtC2"
+   },
+   "source": [
+    "![img_5](https://drive.google.com/uc?id=1bd17xeRw81iziUZJqxeFyVP9T-O1LljZ)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a496a836-48b1-4414-92a4-50dc5fa60d21",
+   "metadata": {
+    "id": "MzMea8BUFOT1"
+   },
+   "source": [
+    "## **CT Results**\n",
+    "\n",
+    "The Continuous Tests operate at the batch level and provide a mechanism to monitor the health of ML deployments in production. They allow the user to understand when errors begin to occur and surface the underlying drivers of such errors. \n",
+    "\n",
+    "You can explore the results in the UI by running the below cell and redirecting to the generated link.\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c205fbda-e09e-4e2e-80e5-dac19ad41ec8",
+   "metadata": {
+    "id": "Qndn2zUMLhJo"
+   },
+   "outputs": [],
+   "source": [
+    "ct_instance"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "02564b07-2987-4dc0-b72d-e0334e7cae32",
+   "metadata": {
+    "id": "719bad4b"
+   },
+   "source": [
+    "### **Analyzing CT Results**\n",
+    "\n",
+    "**Failing Rows Rate Increases For a Time Period** - In the below image, we can see that the failing rows rate has increased in the middle of the week, from when the model was first deployed."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "13117af9-11a7-4b5e-9d01-11e2eaf91504",
+   "metadata": {
+    "id": "jwelJ7gcLqgV"
+   },
+   "source": [
+    "![img_6](https://drive.google.com/uc?id=1ebqpuNvMwp9eMCJ7PX9FWf_dpj3FAtFn)"
+   ]
+  }
+ ],
+ "metadata": {
+  "colab": {
+   "collapsed_sections": [
+    "070f5702",
+    "d3ab0c6b"
+   ],
+   "name": "RIME_NLP_Walkthrough.ipynb",
+   "provenance": []
+  },
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.7"
+  },
+  "vscode": {
+   "interpreter": {
+    "hash": "adacf6347835c0276f230fbe40e5e6a5cd451b7abae6a82fbc9025be2b203b7d"
+   }
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

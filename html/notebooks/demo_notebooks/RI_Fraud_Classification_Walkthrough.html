@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RI Fraud Classification Walkthrough &mdash; Robust Intelligence  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="RI Lending Classification Walkthrough" href="RI_Lending_Classification_Walkthrough.html" />
+    <link rel="prev" title="Tutorial Notebooks" href="../../documentation_home/notebooks.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/images/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Robust Intelligence
+          </a>
+              <div class="version">
+                2.5.0-rc.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation Home</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../documentation_home/installation.html">Installation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../documentation_home/notebooks.html">Tutorial Notebooks</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../documentation_home/notebooks.html#tabular-notebooks">Tabular Notebooks</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#"><strong>RI Fraud Classification Walkthrough</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="RI_Lending_Classification_Walkthrough.html"><strong>RI Lending Classification Walkthrough</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="RI_Regression_Walkthrough.html"><strong>RI NYC Taxi and Limousine Data Walkthrough</strong> 🚖</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RI_Ranking_Walkthrough.html"><strong>RI Movie Ratings Ranking Data Walkthrough</strong> 🎥</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation_home/notebooks.html#nlp-notebooks">NLP Notebooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation_home/notebooks.html#cv-notebooks">CV Notebooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation_home/notebooks.html#rest-api-notebooks">REST API Notebooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation_home/notebooks.html#set-up-your-own-test-run">Set Up Your Own Test Run</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/querying_results.html">Querying Test Run Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/notifications_and_alerts.html">Notifications and Alerts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/model_governance.html">Managing Model Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops.html">Integrating with MLOps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/organization_administration.html">Organization Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/workspace_configuration.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/security_and_compliance.html">Security and Compliance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/upgrade.html">Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Robust Intelligence</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../documentation_home/get_started.html">Get Started</a></li>
+          <li class="breadcrumb-item"><a href="../../documentation_home/notebooks.html">Tutorial Notebooks</a></li>
+      <li class="breadcrumb-item active"><strong>RI Fraud Classification Walkthrough</strong></li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="RI-Fraud-Classification-Walkthrough">
+<h1><strong>RI Fraud Classification Walkthrough</strong><a class="headerlink" href="#RI-Fraud-Classification-Walkthrough" title="Permalink to this heading"></a></h1>
+<blockquote>
+<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RIME_Fraud_OnboardingWalkthrough.ipynb">RI Fraud Classification Walkthrough in Google Colab</a>.</p>
+</div></blockquote>
+<p>You are a data scientist at a Payment Processing Company. The data science team has been tasked with implementing a Fraud Detection model and monitoring how that model performs over time. The performance of this fraud detection model directly impacts the costs of the company. In order to ensure the data science team develops the best model and the performance of this model doesn’t degrade over time, the VP of Data Science purchases the RIME platform.</p>
+<p>In this Notebook Walkthrough, we will walkthrough 2 of RIME’s core products - <strong>AI Stress Testing</strong> and <strong>AI Continuous Testing</strong>.</p>
+<ol class="arabic simple">
+<li><p><strong>AI Stress Testing</strong> is used in the model development stage. Using AI Stress Testing you can test the developed model. RIME goes beyond simply optimizing for basic model performance like accuracy and automatically discovers the model’s weaknesses.</p></li>
+<li><p><strong>AI Continuous Testing</strong> is used after the model is deployed in production. Using AI Continuous Testing, you can automate the monitoring, discovery and remediation of issues that occur post-deployment.</p></li>
+</ol>
+<section id="Install-Dependencies,-Import-Libraries-and-Download-Data">
+<h2><strong>Install Dependencies, Import Libraries and Download Data</strong><a class="headerlink" href="#Install-Dependencies,-Import-Libraries-and-Download-Data" title="Permalink to this heading"></a></h2>
+<p>Run the cell below to install libraries to receive data, install our SDK, and load analysis libraries.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>rime-sdk<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>https://github.com/RobustIntelligence/ri-public-examples/archive/master.zip
+
+<span class="kn">from</span> <span class="nn">ri_public_examples.download_files</span> <span class="kn">import</span> <span class="n">download_files</span>
+
+<span class="n">download_files</span><span class="p">(</span><span class="s1">&#39;tabular-2.0/fraud&#39;</span><span class="p">,</span> <span class="s1">&#39;fraud&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Establish-the-RIME-Client">
+<h2><strong>Establish the RIME Client</strong><a class="headerlink" href="#Establish-the-RIME-Client" title="Permalink to this heading"></a></h2>
+<p>To get started, provide the API credentials and the base domain/address of the RIME service. You can generate and copy an API token from the API Access Tokens Page under Workspace settings. For the domian/address of the RIME service, contact your admin.</p>
+<img alt="img_1" src="https://drive.google.com/uc?id=1vMDhZii8yq22iuqSM8-Vqt3sZ2F3tPyz" />
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE API_KEY</span>
+<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
+<span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">API_TOKEN</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Create-a-New-Project">
+<h2><strong>Create a New Project</strong><a class="headerlink" href="#Create-a-New-Project" title="Permalink to this heading"></a></h2>
+<p>You can create projects in RIME to organize your test runs. Each project represents a workspace for a given machine learning task. It can contain multiple candidate models, but should only contain one promoted production model.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">description</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Run Stress Testing and Continuous Testing on a tabular&quot;</span>
+    <span class="s2">&quot; binary classification model and dataset. Demonstration uses a&quot;</span>
+    <span class="s2">&quot; dataset that simulates credit card fraud detection.&quot;</span>
+<span class="p">)</span>
+<span class="n">project</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Tabular Binary Classification Demo&#39;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+    <span class="n">model_task</span><span class="o">=</span><span class="s1">&#39;MODEL_TASK_BINARY_CLASSIFICATION&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Go back to the UI to see the new Fraud Demo Project.</strong></p>
+</section>
+<section id="Uploading-the-Model-+-Datasets">
+<h2><strong>Uploading the Model + Datasets</strong><a class="headerlink" href="#Uploading-the-Model-+-Datasets" title="Permalink to this heading"></a></h2>
+<p>Let’s first take a look at what the dataset looks like:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/data/fraud_ref.csv&#39;</span><span class="p">))</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>For this demo, we are going to use a pretrained CatBoostClassifier Model.</p>
+<p>The model predicts whether a particular transaction is fraud or not fraud.</p>
+<p>The model makes use of the following features -</p>
+<ol class="arabic simple">
+<li><p>category</p></li>
+<li><p>card_type</p></li>
+<li><p>card_company</p></li>
+<li><p>transaction_amount</p></li>
+<li><p>browser_version</p></li>
+<li><p>city</p></li>
+<li><p>country</p></li>
+</ol>
+<p>We now want to kick off RIME Stress Tests that will help us evaluate the model in further depth beyond basic performance metrics like accuracy, precision, recall. In order to do this, we will upload this pre-trained model, the reference dataset the model was trained on, and the evaluation dataset the model was evaluated on to an S3 bucket that can be accessed by RIME.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">upload_path</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_fraud&quot;</span>
+
+<span class="n">model_s3_dir</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/models&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+<span class="p">)</span>
+<span class="n">model_s3_path</span> <span class="o">=</span> <span class="n">model_s3_dir</span> <span class="o">+</span> <span class="s2">&quot;/fraud_model.py&quot;</span>
+
+<span class="n">ref_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/data/fraud_ref.csv&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+<span class="p">)</span>
+<span class="n">eval_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/data/fraud_eval.csv&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+<span class="p">)</span>
+
+<span class="n">ref_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;fraud/data/fraud_ref_preds.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+<span class="p">)</span>
+<span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;fraud/data/fraud_eval_preds.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Once the data and model are uploaded to S3, we can register them to RIME. Once they’re registered, we can refer to these resources using their RIME-generated ID’s.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+
+<span class="c1"># Note: models and datasets need to have unique names.</span>
+<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">model_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
+
+<span class="n">ref_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;ref_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ref_s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">},</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+<span class="n">eval_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;eval_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">eval_s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">},</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+
+<span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
+    <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">ref_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+<span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
+    <span class="n">eval_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">eval_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Running-a-Stress-Test">
+<h2><strong>Running a Stress Test</strong><a class="headerlink" href="#Running-a-Stress-Test" title="Permalink to this heading"></a></h2>
+<p>AI Stress Tests allow you to test your data and model before deployment. They are a comprehensive suite of hundreds of tests that automatically identify implicit assumptions and weaknesses of pre-production models. Each stress test is run on a single model and its associated reference and evaluation datasets.</p>
+<p>Below is a sample configuration of how to setup and run a RIME Stress Test.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stress_test_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Onboarding Stress Test Run&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="n">ref_dataset_id</span><span class="p">,</span>
+        <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="n">eval_dataset_id</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span><span class="p">,</span>
+    <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;TEST_CATEGORY_TYPE_ADVERSARIAL&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;TEST_CATEGORY_TYPE_TRANSFORMATIONS&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;TEST_CATEGORY_TYPE_ABNORMAL_INPUTS&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;TEST_CATEGORY_TYPE_DATA_CLEANLINESS&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">stress_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
+    <span class="n">stress_test_config</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+<span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Wait for a couple minutes and your results will appear in the UI.</strong></p>
+</section>
+<section id="Stress-Test-Results">
+<h2><strong>Stress Test Results</strong><a class="headerlink" href="#Stress-Test-Results" title="Permalink to this heading"></a></h2>
+<p>Stress tests are grouped into categories that measure various aspects of model robustness (model behavior, distribution drift, abnormal input, transformations, adversarial attacks, data cleanliness). Suggestions to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information.</p>
+<p>You can view the detailed results in the UI by running the below cell and redirecting to the generated link. This page shows granular results for a given AI Stress Test run.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_run</span> <span class="o">=</span> <span class="n">stress_job</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
+<span class="n">test_run</span>
+</pre></div>
+</div>
+</div>
+<section id="Analyzing-the-Results">
+<h3><strong>Analyzing the Results</strong><a class="headerlink" href="#Analyzing-the-Results" title="Permalink to this heading"></a></h3>
+<p>Below you can see a snapshot of the results.</p>
+<img alt="img_2" src="https://drive.google.com/uc?id=126qw9YXDHzli_lj7XwyIi89U0FBVjMki" />
+<p>Here are the results of the Subset Performance tests. These tests can be thought as more detailed performance tests that identify subsets of underperformance. These tests help ensure that the model works equally well across different groups.</p>
+<img alt="img_3" src="https://drive.google.com/uc?id=1ityHRKipkvMi8aU3nMS3Xb9ewrSUDhnx" />
+<p>Below we are exploring the “Subset Recall” test cases for the feature “City”. We can see that even though the model has a Recall of 0.81, it performs poorly on certain cities like Sao Paolo and Rio De Janeiro.</p>
+<img alt="img_4" src="https://drive.google.com/uc?id=1epNLMxOVLVoiByCBJ-sCHM4QgopYEDYW" />
+</section>
+<section id="Programmatically-Querying-the-Results">
+<h3><strong>Programmatically Querying the Results</strong><a class="headerlink" href="#Programmatically-Querying-the-Results" title="Permalink to this heading"></a></h3>
+<p>RIME not only provides you with an intuitive UI to visualize and explore these results, but also allows you to programmatically query these results. This allows customers to integrate with their MLOps pipeline, log results to experiment management tools like MLFlow, bring automated decision making to their ML practicies, or store these results for future references.</p>
+<p>Run the below cell to programmatically query the results. The results are outputed as a pandas dataframe.</p>
+<p><strong>Access results at the a test run overview level</strong></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_run_result</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_result_df</span><span class="p">()</span>
+<span class="n">test_run_result</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Access detailed test results at each individual test cases level.</strong></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_case_result</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_cases_df</span><span class="p">()</span>
+<span class="n">test_case_result</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Deploy-to-Production-and-set-up-Continuous-Testing">
+<h2><strong>Deploy to Production and set up Continuous Testing</strong><a class="headerlink" href="#Deploy-to-Production-and-set-up-Continuous-Testing" title="Permalink to this heading"></a></h2>
+<p>Once you have identified the best stress test run, you can deploy the associated model and set up Continuous Testing in order to automatically detect “bad” incoming data and statistically significant distributional drift.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
+
+<span class="n">project</span><span class="o">.</span><span class="n">update_ct_categories</span><span class="p">([</span><span class="s2">&quot;TEST_CATEGORY_TYPE_ABNORMAL_INPUTS&quot;</span><span class="p">,</span>
+                              <span class="s2">&quot;TEST_CATEGORY_TYPE_DRIFT&quot;</span><span class="p">,</span>
+                              <span class="s2">&quot;TEST_CATEGORY_TYPE_EVASION_ATTACK_DETECTION&quot;</span>
+                            <span class="p">])</span>
+
+<span class="n">ct_instance</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_ct</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Uploading-a-Batch-of-Production-Data-&amp;-Model-Predictions-to-Continuous-Testing">
+<h2><strong>Uploading a Batch of Production Data &amp; Model Predictions to Continuous Testing</strong><a class="headerlink" href="#Uploading-a-Batch-of-Production-Data-&-Model-Predictions-to-Continuous-Testing" title="Permalink to this heading"></a></h2>
+<p>The fraud detection model has been in production for 30 days. Production data and model predictions have been collected and stored for the past 30 days. Now, we will use Continuous Testing to track how the model performed across the last 30 days.</p>
+<p><strong>Upload the Latest Batch of Production Data</strong></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+<span class="n">prod_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/data/fraud_incremental.csv&#39;</span><span class="p">),</span>
+    <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+<span class="p">)</span>
+<span class="n">prod_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;prod_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">prod_s3_path</span><span class="p">,</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">},</span>
+    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+<span class="n">prod_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/data/fraud_incremental_preds.csv&#39;</span><span class="p">),</span>
+    <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+<span class="p">)</span>
+<span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
+    <span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">prod_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Run Continuous Testing over Batch of Data</strong></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">ct_instance</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
+<span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ct_instance</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Wait for a couple minutes and your results will appear in the UI.</strong></p>
+</section>
+<section id="Querying-Results-from-Continuous-Testing">
+<h2><strong>Querying Results from Continuous Testing</strong><a class="headerlink" href="#Querying-Results-from-Continuous-Testing" title="Permalink to this heading"></a></h2>
+<p>After continuous testing has been created and data has been uploaded for processing, the user can query the results throughout the entire uploaded history.</p>
+<p><strong>Obtain All Detection Events</strong></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">events</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">ct_instance</span><span class="o">.</span><span class="n">list_monitors</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">list_detected_events</span><span class="p">()]</span>
+<span class="n">events_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">events</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;project_id&quot;</span><span class="p">,</span> <span class="s2">&quot;firewall_id&quot;</span><span class="p">,</span> <span class="s2">&quot;event_object_id&quot;</span><span class="p">,</span> <span class="s2">&quot;description_html&quot;</span><span class="p">,</span> <span class="s2">&quot;last_update_time&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">events_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="CT-Overview">
+<h2><strong>CT Overview</strong><a class="headerlink" href="#CT-Overview" title="Permalink to this heading"></a></h2>
+<p>The Overview page is the mission control for your model’s production deployment health. In it, you can see the status of continuous test runs and their metrics change over time.</p>
+<img alt="img_5" src="https://drive.google.com/uc?id=18Q62IvDft4IEAba9Tm7unCoIle8y4NOv" />
+</section>
+<section id="CT-Results">
+<h2><strong>CT Results</strong><a class="headerlink" href="#CT-Results" title="Permalink to this heading"></a></h2>
+<p>The Continuous Tests operate at the batch level and provide a mechanism to monitor the health of ML deployments in production. They allow the user to understand when errors begin to occur and surface the underlying drivers of such errors.</p>
+<p>You can explore the results in the UI by running the below cell and redirecting to the generated link.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_instance</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Appendix">
+<h2><strong>Appendix</strong><a class="headerlink" href="#Appendix" title="Permalink to this heading"></a></h2>
+</section>
+<section id="Uploading-a-Model-to-RIME">
+<h2><strong>Uploading a Model to RIME</strong><a class="headerlink" href="#Uploading-a-Model-to-RIME" title="Permalink to this heading"></a></h2>
+<p>To be able to run certain tests, RIME needs query access to your model. To give RIME access, you’ll need to write a Python file that implements the <code class="docutils literal notranslate"><span class="pre">predict_df(df:</span> <span class="pre">pd.DataFrame)</span> <span class="pre">-&gt;</span> <span class="pre">np.ndarray</span></code> function, and upload that file (and any objects that it loads) to the platform. Here we provide an example model file, show you how to upload this file and the relevant model artifacts, and show you how to configure stress tests to use this model.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> fraud/models/fraud_model.py
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">catboost</span> <span class="kn">import</span> <span class="n">CatBoostClassifier</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<span class="n">mod</span> <span class="o">=</span> <span class="n">CatBoostClassifier</span><span class="p">()</span>
+<span class="c1"># Load our CatBoost model. Note that this requires us to</span>
+<span class="c1"># upload fraud_model.catb along with this Python file,</span>
+<span class="c1"># in the same directory.</span>
+<span class="n">mod</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;fraud_model.catb&quot;</span><span class="p">)</span>
+<span class="n">cat_cols</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;card_type&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;card_company&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;city&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;browser_version&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;country&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">predict_df</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Given data as a pandas DataFrame, return probabilities as a NumPy array.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cat_cols</span><span class="p">:</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+    <span class="c1"># For binary classification we expect a one-dimensional</span>
+    <span class="c1"># array for the probabilities, where the score for each datapoint</span>
+    <span class="c1"># is the probability that the label is 1.</span>
+    <span class="k">return</span> <span class="n">mod</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">))[:,</span><span class="mi">1</span><span class="p">]</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Note that &#39;fraud/models&#39; directory already contains the &#39;fraud_model.catb&#39; file.</span>
+<span class="n">appendix_model_dir</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/models&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+<span class="p">)</span>
+<span class="n">appendix_model_path</span> <span class="o">=</span> <span class="n">appendix_model_dir</span> <span class="o">+</span> <span class="s2">&quot;/fraud_model.py&quot;</span>
+<span class="n">appendix_model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;appendix_model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">appendix_model_path</span>
+<span class="p">)</span>
+<span class="n">stress_test_with_model_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Uploaded Model Example&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="n">ref_dataset_id</span><span class="p">,</span>
+        <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="n">eval_dataset_id</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">appendix_model_id</span>
+<span class="p">}</span>
+<span class="n">stress_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
+    <span class="n">stress_test_with_model_config</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+<span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Running-a-Custom-Test">
+<h2><strong>Running a Custom Test</strong><a class="headerlink" href="#Running-a-Custom-Test" title="Permalink to this heading"></a></h2>
+<p>With RIME you can write your own custom tests, to encode any domain-specific validation you want to perform. These tests will run and be uploaded to the platform just like any of the built-in tests. To run a custom test you need to implement a specific interface in Python, upload the file to the platform, and point to it in your configuration. Below we provide a simple example of a custom test that checks if the difference in the length of the reference and evaluation datasets does not exceed
+some threshold.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> fraud/custom_test.py
+<span class="sd">&quot;&quot;&quot;Custom test batch runner.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">rime.core.schema.config</span> <span class="kn">import</span> <span class="n">CustomConfig</span>
+<span class="kn">from</span> <span class="nn">rime.core.schema.status</span> <span class="kn">import</span> <span class="n">Status</span>
+<span class="kn">from</span> <span class="nn">rime.core.stress_tests.schema.table_info</span> <span class="kn">import</span> <span class="n">TableColumn</span>
+<span class="kn">from</span> <span class="nn">rime.core.stress_tests.schema.test_result</span> <span class="kn">import</span> <span class="n">TestBatchResult</span><span class="p">,</span> <span class="n">TestOutput</span>
+<span class="kn">from</span> <span class="nn">rime.core.test</span> <span class="kn">import</span> <span class="n">BaseTest</span><span class="p">,</span> <span class="n">TestExtraInfo</span>
+<span class="kn">from</span> <span class="nn">rime.core.stress_tests.batch_runner</span> <span class="kn">import</span> <span class="n">DataTestBatchRunner</span>
+<span class="kn">from</span> <span class="nn">rime.core.stress_tests.schema.test_result</span> <span class="kn">import</span> <span class="n">TestBatchResult</span><span class="p">,</span> <span class="n">TestOutput</span>
+<span class="kn">from</span> <span class="nn">rime.core.profiler.run_containers</span> <span class="kn">import</span> <span class="n">RunContainer</span>
+<span class="kn">from</span> <span class="nn">rime.protos.ri.lib.common_pb2</span> <span class="kn">import</span> <span class="n">Severity</span>
+
+<span class="c1"># Signature should not be changed.</span>
+<span class="k">class</span> <span class="nc">CustomTest</span><span class="p">(</span><span class="n">BaseTest</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize with a delta between n_rows ref and eval.&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">delta</span>
+
+    <span class="c1"># Signature should not be changed.</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">run_container</span><span class="p">:</span> <span class="n">RunContainer</span><span class="p">,</span>
+        <span class="n">silent_errors</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">TestOutput</span><span class="p">,</span> <span class="n">TestExtraInfo</span><span class="p">]:</span>
+        <span class="n">ref_data_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">run_container</span><span class="o">.</span><span class="n">ref_data</span><span class="o">.</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">eval_data_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">run_container</span><span class="o">.</span><span class="n">eval_data</span><span class="o">.</span><span class="n">df</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ref_data_size</span> <span class="o">&gt;</span> <span class="n">eval_data_size</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">Status</span><span class="o">.</span><span class="n">WARNING</span>
+            <span class="n">severity</span> <span class="o">=</span> <span class="n">Severity</span><span class="o">.</span><span class="n">SEVERITY_ALERT</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">Status</span><span class="o">.</span><span class="n">PASS</span>
+            <span class="n">severity</span> <span class="o">=</span> <span class="n">Severity</span><span class="o">.</span><span class="n">SEVERITY_PASS</span>
+        <span class="n">test_output</span> <span class="o">=</span> <span class="n">TestOutput</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;Severity&quot;</span><span class="p">:</span> <span class="n">severity</span><span class="p">},</span> <span class="n">severity</span><span class="p">,</span> <span class="p">[],</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">test_output</span><span class="p">,</span> <span class="n">TestExtraInfo</span><span class="p">(</span><span class="n">severity</span><span class="p">)</span>
+
+
+<span class="c1"># Signature should not be changed.</span>
+<span class="k">class</span> <span class="nc">CustomBatchRunner</span><span class="p">(</span><span class="n">DataTestBatchRunner</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;TestBatchRunner for the CustomTest.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Signature should not be changed.</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_from_config</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">run_container</span><span class="p">:</span> <span class="n">RunContainer</span><span class="p">,</span>  <span class="n">config</span><span class="p">:</span> <span class="n">CustomConfig</span><span class="p">,</span> <span class="n">category</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;DataTestBatchRunner&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">delta</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">delta</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;delta&quot;</span><span class="p">]</span>
+        <span class="n">tests</span> <span class="o">=</span> <span class="p">[</span><span class="n">CustomTest</span><span class="p">(</span><span class="n">delta</span><span class="o">=</span><span class="n">delta</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">tests</span><span class="p">,</span> <span class="n">category</span><span class="p">)</span>
+
+    <span class="c1"># Signature should not be changed.</span>
+    <span class="k">def</span> <span class="nf">_outputs_to_batch_res</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">run_container</span><span class="p">:</span> <span class="n">RunContainer</span><span class="p">,</span>
+        <span class="n">outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TestOutput</span><span class="p">],</span>
+        <span class="n">extra_infos</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span>
+        <span class="n">duration</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TestBatchResult</span><span class="p">:</span>
+        <span class="n">long_description_tabs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Description&quot;</span><span class="p">,</span> <span class="s2">&quot;contents&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">long_description</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Why it Matters&quot;</span><span class="p">,</span> <span class="s2">&quot;contents&quot;</span><span class="p">:</span> <span class="s2">&quot;Explain why this test matters.&quot;</span><span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Configuration&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;contents&quot;</span><span class="p">:</span> <span class="s2">&quot;Explain how this test is configured.&quot;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Example&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;contents&quot;</span><span class="p">:</span> <span class="s2">&quot;Include an example of how this test works.&quot;</span>
+            <span class="p">},</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="n">TestBatchResult</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">long_description_tabs</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">,</span>
+            <span class="n">outputs</span><span class="p">,</span>
+            <span class="p">[],</span>
+            <span class="n">duration</span><span class="p">,</span>
+            <span class="n">extra_infos</span><span class="p">,</span>
+            <span class="p">[</span><span class="n">TableColumn</span><span class="p">(</span><span class="s2">&quot;Severity&quot;</span><span class="p">)],</span>
+            <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">severity</span><span class="p">,</span>
+        <span class="p">)</span>
+
+
+    <span class="c1"># Signature should not be changed.</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;This is custom test&quot;</span>
+
+    <span class="c1"># Signature should not be changed.</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">long_description</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;This is a long description of a custom test.&quot;</span>
+
+    <span class="c1"># Signature should not be changed.</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Example Custom Test&quot;</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">custom_test_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="s2">&quot;fraud/custom_test.py&quot;</span><span class="p">,</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stress_test_with_model_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Custom Test Example&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="n">ref_dataset_id</span><span class="p">,</span>
+        <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="n">eval_dataset_id</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;test_suite_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;custom_tests&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;custom_test_category&quot;</span><span class="p">:</span> <span class="s2">&quot;Data Cleanliness&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;test_path&quot;</span><span class="p">:</span> <span class="n">custom_test_path</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span>
+<span class="p">}</span>
+<span class="n">stress_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
+    <span class="n">stress_test_with_model_config</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+<span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stress_job</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../../documentation_home/notebooks.html" class="btn btn-neutral float-left" title="Tutorial Notebooks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="RI_Lending_Classification_Walkthrough.html" class="btn btn-neutral float-right" title="RI Lending Classification Walkthrough" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

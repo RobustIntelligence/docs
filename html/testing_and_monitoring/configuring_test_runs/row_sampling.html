@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Row Sampling &mdash; Robust Intelligence  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Performance" href="performance.html" />
+    <link rel="prev" title="Feature Sampling" href="feature_sampling.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/images/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Robust Intelligence
+          </a>
+              <div class="version">
+                2.5.0-rc.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../creating_projects.html">Creating Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../configuring_test_runs.html#configuring-at-the-project-level">Configuring at the Project Level</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../configuring_test_runs.html#data-and-model-profiling">Data and Model Profiling</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="configuring_data_profiling.html">Configuring Data Profiling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuring_model_profiling.html">Configuring Model Profiling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feature_sampling.html">Feature Sampling</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Row Sampling</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#specifying-how-many-rows-will-be-loaded-in-a-test-run">Specifying how many rows will be loaded in a test run</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#smart-dataset-sampling">Smart Dataset Sampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#data-loading-limits">Data Loading Limits</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#related-topics">Related Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="performance.html">Performance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../configuring_test_runs.html#categories">Categories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuring_test_runs.html#test-suite">Test Suite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuring_test_runs.html#runtime">Runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuring_test_runs.html#custom-metrics">Custom Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../querying_results.html">Querying Test Run Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notifications_and_alerts.html">Notifications and Alerts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_governance.html">Managing Model Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integrating_mlops.html">Integrating with MLOps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/organization_administration.html">Organization Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/workspace_configuration.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/security_and_compliance.html">Security and Compliance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/upgrade.html">Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Robust Intelligence</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
+      <li class="breadcrumb-item active">Row Sampling</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="row-sampling">
+<h1>Row Sampling<a class="headerlink" href="#row-sampling" title="Permalink to this heading"></a></h1>
+<p>When running a test, Robust Intelligence can load the number of rows
+you specify, or it can automatically load the largest sample of rows
+that will fit in memory.</p>
+<section id="specifying-how-many-rows-will-be-loaded-in-a-test-run">
+<h2>Specifying how many rows will be loaded in a test run<a class="headerlink" href="#specifying-how-many-rows-will-be-loaded-in-a-test-run" title="Permalink to this heading"></a></h2>
+<p>There are three options for configuring the number of rows to be
+loaded in your test runs:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#use-smart-dataset-sampling"><span class="std std-ref">Use Smart Dataset Sampling</span></a></p></li>
+<li><p><a class="reference internal" href="#load-a-specific-number-of-rows"><span class="std std-ref">Load a specific number of rows</span></a></p></li>
+<li><p><a class="reference internal" href="#load-all-rows"><span class="std std-ref">Load all rows</span></a></p></li>
+</ul>
+<section id="use-smart-dataset-sampling">
+<h3>Use Smart Dataset Sampling<a class="headerlink" href="#use-smart-dataset-sampling" title="Permalink to this heading"></a></h3>
+<p>If a dataset cannot be contained in memory because it exceeds
+<a class="reference internal" href="#data-loading-limits"><span class="std std-ref">data loading limits</span></a>, Robust Intelligence can be
+configured to load the largest sample of rows that will fit in memory.
+To set this up, edit your
+<a class="reference internal" href="../preparing_your_models_and_datasets/data_source.html#dataset-sizing"><span class="std std-ref">data_params configuration</span></a>
+as follows:</p>
+<ul class="simple">
+<li><p>set <code class="docutils literal notranslate"><span class="pre">sample</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code></p></li>
+<li><p>leave <code class="docutils literal notranslate"><span class="pre">nrows</span></code> undefined</p></li>
+</ul>
+<p>See <a class="reference internal" href="#smart-dataset-sampling"><span class="std std-ref">Smart Dataset Sampling</span></a>.</p>
+</section>
+<section id="load-a-specific-number-of-rows">
+<h3>Load a specific number of rows<a class="headerlink" href="#load-a-specific-number-of-rows" title="Permalink to this heading"></a></h3>
+<p>If you wish to specify the number of rows to load, edit your
+<a class="reference internal" href="../preparing_your_models_and_datasets/data_source.html#dataset-sizing"><span class="std std-ref">data_params configuration</span></a>
+as follows:</p>
+<ul class="simple">
+<li><p>set <code class="docutils literal notranslate"><span class="pre">sample</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code></p></li>
+<li><p>set <code class="docutils literal notranslate"><span class="pre">nrows</span></code> to the number of rows you wish to load</p></li>
+</ul>
+<p>Robust Intelligence uses <a class="reference external" href="https://en.wikipedia.org/wiki/Reservoir_sampling">reservoir sampling</a>
+to choose which rows to sample.</p>
+</section>
+<section id="load-all-rows">
+<h3>Load all rows<a class="headerlink" href="#load-all-rows" title="Permalink to this heading"></a></h3>
+<p>To load all rows of your dataset, edit your
+<a class="reference internal" href="../preparing_your_models_and_datasets/data_source.html#dataset-sizing"><span class="std std-ref">data_params configuration</span></a>
+as follows:</p>
+<ul class="simple">
+<li><p>set <code class="docutils literal notranslate"><span class="pre">sample</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p>leave <code class="docutils literal notranslate"><span class="pre">nrows</span></code> undefined</p></li>
+</ul>
+</section>
+</section>
+<section id="smart-dataset-sampling">
+<h2>Smart Dataset Sampling<a class="headerlink" href="#smart-dataset-sampling" title="Permalink to this heading"></a></h2>
+<p>Smart Dataset Sampling reads a subset of your dataset in order to
+assess how much memory it requires. We extrapolate the maximal dataset
+that can be loaded into memory based on this assessed size and the
+total memory available.</p>
+<section id="how-smart-dataset-sampling-works">
+<h3>How Smart Dataset Sampling Works<a class="headerlink" href="#how-smart-dataset-sampling-works" title="Permalink to this heading"></a></h3>
+<p>If your configuration doesn’t specify the
+<a class="reference internal" href="../preparing_your_models_and_datasets/data_source.html#dataset-sizing"><span class="std std-ref">number of rows to be sampled (nrows)</span></a>,
+then Robust Intelligence chooses a default sample size using the steps
+outlined in the example below.</p>
+<p>For this example, we assume a dataset of 1 million rows.</p>
+<ol class="arabic">
+<li><p>We load a batch of 65,000 rows from the dataset into memory in order to
+assess the size of the batch in memory.</p></li>
+<li><p>We calculate the number of rows that will fit in available memory:</p>
+<ul>
+<li><p><em>Job Memory Requested</em> is the memory you request in your configuration.
+If you don’t specify a value, this defaults to 8 GiB.</p></li>
+<li><p><em>Used Memory</em> is the memory currently being used by the node (depending
+on current jobs running)</p></li>
+<li><p><em>Buffer memory</em> is always 1.5 GiB</p></li>
+<li><p><em>Batch memory</em> is the amount of memory that was needed for the
+65,000-row sample loaded in step 1</p></li>
+<li><p>the <em>Number of Batches</em> is calculated as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Number</span> <span class="n">of</span> <span class="n">Batches</span> <span class="o">=</span> <span class="p">(</span><span class="n">Job</span> <span class="n">Memory</span> <span class="n">Requested</span> <span class="o">-</span> <span class="n">Used</span> <span class="n">Memory</span> <span class="o">-</span> <span class="n">Buffer</span> <span class="n">Memory</span><span class="p">)</span> <span class="o">/</span> <span class="n">Batch</span> <span class="n">Memory</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>Using the above values, we calculate the number of rows to sample:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Number</span> <span class="n">of</span> <span class="n">Rows</span> <span class="o">=</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">Batches</span> <span class="o">*</span> <span class="mi">65000</span>
+</pre></div>
+</div>
+</li>
+<li><p>Once we’ve calculated how many rows we’ll sample, we use
+<a class="reference external" href="https://en.wikipedia.org/wiki/Reservoir_sampling">reservoir sampling</a>
+to choose which rows to sample.</p></li>
+</ol>
+</section>
+<section id="faq-on-smart-dataset-sampling">
+<h3>FAQ on Smart Dataset Sampling<a class="headerlink" href="#faq-on-smart-dataset-sampling" title="Permalink to this heading"></a></h3>
+<section id="what-if-i-specify-a-number-of-features-to-use">
+<h4>What if I specify a number of features to use?<a class="headerlink" href="#what-if-i-specify-a-number-of-features-to-use" title="Permalink to this heading"></a></h4>
+<p>Smart Dataset Sampling can work in conjunction with Smart Feature
+Sampling. If you have set up <a class="reference internal" href="feature_sampling.html"><span class="std std-doc">Smart Feature Sampling</span></a>
+with a threshold <em>k</em> of features, then we load only the top <em>k</em> most
+important features when loading sample rows to calculate the batch
+memory.</p>
+</section>
+</section>
+</section>
+<section id="data-loading-limits">
+<h2>Data Loading Limits<a class="headerlink" href="#data-loading-limits" title="Permalink to this heading"></a></h2>
+<p>The following tables show Robust Intelligence’s limits with respect to
+data in CSV format. Once these limits are reached, data will be sampled
+using <a class="reference internal" href="#smart-dataset-sampling"><span class="std std-ref">Smart Dataset Sampling</span></a>.</p>
+<p>See the <a class="reference internal" href="performance.html#memory-recommendations"><span class="std std-ref">memory recommendations</span></a>
+in the Performance section for sizing guidelines.</p>
+<section id="gb-memory-ceiling">
+<h3>8GB Memory Ceiling<a class="headerlink" href="#gb-memory-ceiling" title="Permalink to this heading"></a></h3>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Feature Count</th>
+<th>Row Limit Before Sampling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>25</td>
+<td>13,000,000</td>
+</tr>
+<tr>
+<td>50</td>
+<td>6,400,000</td>
+</tr>
+<tr>
+<td>75</td>
+<td>4,200,000</td>
+</tr>
+<tr>
+<td>100</td>
+<td>3,000,000</td>
+</tr>
+<tr>
+<td>200</td>
+<td>1,600,000</td>
+</tr>
+<tr>
+<td>300</td>
+<td>1,000,000</td>
+</tr>
+<tr>
+<td>400</td>
+<td>750,000</td>
+</tr>
+<tr>
+<td>500</td>
+<td>600,000</td>
+</tr>
+<tr>
+<td>750</td>
+<td>175,000</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id1">
+<h3>16GB Memory Ceiling<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Feature Count</th>
+<th>Row Limit Before Sampling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>25</td>
+<td>26,000,000</td>
+</tr>
+<tr>
+<td>50</td>
+<td>12,800,000</td>
+</tr>
+<tr>
+<td>75</td>
+<td>8,400,000</td>
+</tr>
+<tr>
+<td>100</td>
+<td>6,000,000</td>
+</tr>
+<tr>
+<td>200</td>
+<td>3,200,000</td>
+</tr>
+<tr>
+<td>300</td>
+<td>2,000,000</td>
+</tr>
+<tr>
+<td>400</td>
+<td>1,500,000</td>
+</tr>
+<tr>
+<td>500</td>
+<td>1,200,000</td>
+</tr>
+<tr>
+<td>750</td>
+<td>350,000</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id2">
+<h3>32GB Memory Ceiling<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Feature Count</th>
+<th>Row Limit Before Sampling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>25</td>
+<td>50,000,000</td>
+</tr>
+<tr>
+<td>50</td>
+<td>24,500,000</td>
+</tr>
+<tr>
+<td>75</td>
+<td>16,200,000</td>
+</tr>
+<tr>
+<td>100</td>
+<td>11,500,000</td>
+</tr>
+<tr>
+<td>200</td>
+<td>6,100,000</td>
+</tr>
+<tr>
+<td>300</td>
+<td>3,800,000</td>
+</tr>
+<tr>
+<td>400</td>
+<td>2,800,000</td>
+</tr>
+<tr>
+<td>500</td>
+<td>2,200,000</td>
+</tr>
+<tr>
+<td>750</td>
+<td>650,000</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="related-topics">
+<h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
+<p><a class="reference internal" href="feature_sampling.html"><span class="std std-doc">Feature Sampling</span></a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="feature_sampling.html" class="btn btn-neutral float-left" title="Feature Sampling" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="performance.html" class="btn btn-neutral float-right" title="Performance" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
