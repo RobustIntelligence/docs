@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Creating a New Continuous Test &mdash; Robust Intelligence  documentation</title>
+  <title>Creating a new Continuous Test &mdash; Robust Intelligence  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
@@ -31,7 +31,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Creating Projects" href="../creating_projects.html" />
+    <link rel="next" title="Updating your Continuous Test" href="../../notebooks/feature_notebooks/RI_Continuous_Test_Configuring.html" />
     <link rel="prev" title="Creating a New Stress Test" href="../validating_models/stress_tests_from_sdk.html" />
 <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
@@ -56,7 +56,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.3.0
+                2.5.0-rc.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -77,11 +77,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Creating a New Continuous Test</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../notebooks/demo_notebooks/RIME_Continuous_Test_Configuring.html">Updating your Continuous Test</a></li>
-<li class="toctree-l2"><a class="reference internal" href="loading_data_for_scheduled_ct.html">Loading Data for Scheduled Continuous Testing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="scheduling_ct_runs.html">Scheduling Continuous Testing Runs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuring_scheduled_ct.html">Configuring your Scheduled Continuous Test</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Creating a new Continuous Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../notebooks/feature_notebooks/RI_Scheduled_CT.html">Scheduled Continuous Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ct_feedback_and_observability.html">Continuous Testing Feedback and Observability</a></li>
 <li class="toctree-l2"><a class="reference internal" href="monitors/monitors.html">Model Monitors</a></li>
 </ul>
@@ -132,7 +129,7 @@
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../documentation_home/get_started.html">Get Started</a></li>
           <li class="breadcrumb-item"><a href="../../documentation_home/notebooks.html">Tutorial Notebooks</a></li>
-      <li class="breadcrumb-item active">Creating a New Continuous Test</li>
+      <li class="breadcrumb-item active">Creating a new Continuous Test</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -142,8 +139,10 @@
            <div itemprop="articleBody">
              
   <section id="creating-a-new-continuous-test">
-<span id="continuous-test"></span><h1>Creating a New Continuous Test<a class="headerlink" href="#creating-a-new-continuous-test" title="Permalink to this heading"></a></h1>
-<p>Robust Intelligence allows you to create Continuous Testing to monitor your model for vulnerabilities over time. You can create a Continuous Test using the Python SDK.</p>
+<span id="continuous-test"></span><h1>Creating a new Continuous Test<a class="headerlink" href="#creating-a-new-continuous-test" title="Permalink to this heading"></a></h1>
+<p>Robust Intelligence allows you to create Continuous Testing to monitor your
+model for vulnerabilities over time. You can create a Continuous Test using the
+Python SDK.</p>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">SDK</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><ol class="arabic">
 <li><p>Create a project using the following <a class="reference internal" href="../../reference/python-sdk.html#rime-sdk"><span class="std std-ref">SDK command</span></a>.</p>
@@ -155,23 +154,35 @@
 </div>
 </div></blockquote>
 </li>
-<li><p>Register a reference dataset. Depending on where you are looking to pull data from you may need to <a class="reference internal" href="../../administration/workspace_configuration/integrations/configuring_integrations.html#configuring-integrations"><span class="std std-ref">create a data integration</span></a>: for all data sources except data collector, you will need to create a data integration.</p>
+<li><p>Register a reference dataset. Depending on where you are looking to
+pull data from you may need to <a class="reference internal" href="../../administration/workspace_configuration/integrations/configuring_integrations.html#configuring-integrations"><span class="std std-ref">create a data integration</span></a>.</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">reference_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="n">DATASET_NAME</span><span class="p">,</span>
-    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;data_file&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">FILE_PATH</span><span class="p">}},</span>
-        <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="n">LABEL_COL</span><span class="p">},</span>
+    <span class="n">data_config</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;data_file&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://path/to/data/file&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="n">LABEL_COL</span><span class="p">,</span>
+            <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="n">TIMESTAMP_COL</span><span class="p">,</span>
+        <span class="p">},</span>
     <span class="p">},</span>
     <span class="n">integration_id</span><span class="o">=</span><span class="n">INTEGRATION_ID</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
-<p>The SDK returns the ID of the reference dataset.</p>
+<p>The SDK returns the ID of the reference dataset. There are
+<a class="reference internal" href="../preparing_your_models_and_datasets.html#preparing-your-models-and-datasets"><span class="std std-ref">additional options</span></a>
+available to further customize how Continuous Testing ingests your
+data.</p>
 </li>
-<li><p>Register a model. You may optionally provide additional model information to allow Robust Intelligence
-to query the model during testing.</p>
+<li><p>Register a model. You may optionally provide additional model
+information to allow Robust Intelligence to query the model during
+testing.</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;baz&quot;</span>
@@ -179,8 +190,10 @@ to query the model during testing.</p>
 </pre></div>
 </div>
 </div></blockquote>
-<p>The SDK returns the model ID.</p>
-<p>If you do not provide the information to query the model, you must register predictions of the model and dataset.</p>
+<p>The SDK returns the model ID. There are <a class="reference internal" href="../preparing_your_models_and_datasets.html#preparing-your-models-and-datasets"><span class="std std-ref">additional options</span></a> available to further customize
+how Continuous Testing ingests your data.</p>
+<p>If you do not provide the information to query the model, you must
+register predictions of the model and dataset.</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span><span class="o">.</span><span class="n">register_predictions</span><span class="p">(</span>
     <span class="n">dataset_id</span><span class="o">=</span><span class="n">reference_id</span>
@@ -188,18 +201,19 @@ to query the model during testing.</p>
     <span class="n">pred_config</span><span class="o">=</span><span class="p">{</span>
         <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;data_file&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">PREDICTION_FILE_PATH</span><span class="p">,</span>
+                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://path/to/predictions/file&quot;</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">},</span>
-        <span class="s2">&quot;pred_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="n">PREDICTION_COL</span><span class="p">}</span>
+        <span class="s2">&quot;pred_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="n">PREDICTION_COL</span><span class="p">},</span>
     <span class="p">},</span>
+    <span class="n">integration_id</span><span class="o">=</span><span class="n">INTEGRATION_ID</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p>Create a new Continuous Test instance in your project. You may
-choose to create a Continuous Test with <a class="reference internal" href="scheduling_ct_runs.html#scheduling-continuous-test"><span class="std std-ref">Scheduled CT</span></a> parameters or leave those
+choose to create a Continuous Test with <span class="xref std std-ref">Scheduled CT</span> parameters or leave those
 parameters blank. If <em>Scheduled CT</em> is set, Robust
 Intelligence will run the Continuous Test automatically for
 you (at an interval defined by the <cite>bin_size</cite> you set) by
@@ -215,24 +229,34 @@ show how to start a manual run.</p>
 </div>
 </div></blockquote>
 </li>
-<li><p>Register an evaluation dataset. This dataset must have the <code class="docutils literal notranslate"><span class="pre">timestamp_col</span></code> field in the <code class="docutils literal notranslate"><span class="pre">data_params</span></code> dictionary.</p>
+<li><p>Register an evaluation dataset. This dataset must have the
+<code class="docutils literal notranslate"><span class="pre">timestamp_col</span></code> field in the <code class="docutils literal notranslate"><span class="pre">data_params</span></code> dictionary.</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">evaluation_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span>
     <span class="n">data_config</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;data_file&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">EVALUATION_DATA_FILE_PATH</span><span class="p">}},</span>
+        <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;data_file&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://path/to/data/file&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
         <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="n">LABEL_COL</span><span class="p">,</span>
             <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="n">TIMESTAMP_COL</span><span class="p">,</span>
         <span class="p">},</span>
     <span class="p">},</span>
+    <span class="n">integration_id</span><span class="o">=</span><span class="n">INTEGRATION_ID</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
-<p>The SDK returns the ID of the evaluation dataset.</p>
+<p>The SDK returns the ID of the evaluation dataset. There are
+<a class="reference internal" href="../preparing_your_models_and_datasets.html#preparing-your-models-and-datasets"><span class="std std-ref">additional options</span></a>
+available to further customize how Continuous Testing ingests your
+data.</p>
 </li>
-<li><p>Register a prediction set if the information to query the model is not provided.</p>
+<li><p>Register a prediction set if the information to query the model is
+not provided.</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span><span class="o">.</span><span class="n">register_predictions</span><span class="p">(</span>
     <span class="n">dataset_id</span><span class="o">=</span><span class="n">evaluation_id</span>
@@ -240,39 +264,40 @@ show how to start a manual run.</p>
     <span class="n">pred_config</span><span class="o">=</span><span class="p">{</span>
         <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;data_file&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">PREDICTION_FILE_PATH</span><span class="p">,</span>
+                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;s3://path/to/predictions/file&quot;</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">},</span>
-        <span class="s2">&quot;pred_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="n">PREDICTION_COL</span><span class="p">}</span>
+        <span class="s2">&quot;pred_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;pred_col&quot;</span><span class="p">:</span> <span class="n">PREDICTION_COL</span><span class="p">},</span>
     <span class="p">},</span>
+    <span class="n">integration_id</span><span class="o">=</span><span class="n">INTEGRATION_ID</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
-<li><p>Issue the following command to start the Continuous Test,
-specifying the configuration created in the previous step and
-the unique ID of your Continuous Test. Use the argument
-<code class="docutils literal notranslate"><span class="pre">override_existing_bins</span></code> to specify whether this Continuous
-Test should override the results of previous time bins for
-which other Continuous Tests have run.</p>
-<p>Here, <cite>ct_ctl</cite> is your Continuous Test instance, which you
-can get using the <cite>Project.get_ct()</cite> method.</p>
+<li><p>Issue the following command to start the Continuous Test, specifying
+the configuration created in the previous step and the unique ID of
+your Continuous Test. Use the argument <code class="docutils literal notranslate"><span class="pre">override_existing_bins</span></code> to
+specify whether this Continuous Test should override the results of
+previous time bins for which other Continuous Tests have run.</p>
+<p>Here, <cite>ct</cite> is your Continuous Test instance, which you can get using
+the <cite>Project.get_ct()</cite> method.</p>
 <blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">continuous_test</span> <span class="o">=</span> <span class="n">ct_ctl</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span>
    <span class="n">eval_data_id</span><span class="o">=</span><span class="n">evaluation_id</span><span class="p">,</span>  <span class="n">override_existing_bins</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
+<p>Anytime new data has been gathered and you want to re-run your test,
+repeat steps 5-7 to start a new Continuous Test with your latest
+evaluation dataset and prediction set.</p>
+<p>If you want to automate your Continuous Test so that it runs at a
+regular interval, set its schedule as shown in
+<span class="xref std std-ref">scheduling-continuous-test</span>.</p>
 </li>
 </ol>
-<p>Anytime new data has been gathered and you want to re-run
-your test, repeat steps 5-7 to start a new Continuous Test
-with your latest evaluation dataset and prediction set.</p>
-<p>If you want to automate your Continuous Test so that it runs at
-a regular interval, set its schedule as shown in
-<a class="reference internal" href="scheduling_ct_runs.html#scheduling-continuous-test"><span class="std std-ref">Scheduling Continuous Testing Runs</span></a>.</p>
 </div></div>
 </section>
 
@@ -281,7 +306,7 @@ a regular interval, set its schedule as shown in
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../validating_models/stress_tests_from_sdk.html" class="btn btn-neutral float-left" title="Creating a New Stress Test" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../creating_projects.html" class="btn btn-neutral float-right" title="Creating Projects" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../../notebooks/feature_notebooks/RI_Continuous_Test_Configuring.html" class="btn btn-neutral float-right" title="Updating your Continuous Test" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

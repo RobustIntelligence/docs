@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RI NLP Walkthrough using REST API &mdash; Robust Intelligence  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="../../_static/main.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Preparing Your Models and Datasets" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html" />
+    <link rel="prev" title="RI Image Classification Walkthrough" href="../demo_notebooks/RI_Images_Walkthrough.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+<div class="ge_header no-print">
+    <a id="header-logo" href="../../index.html">
+        <img src="../../_static/images/header-logo.png" alt="logo" />
+    </a>
+</div>
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Robust Intelligence
+          </a>
+              <div class="version">
+                2.5.0-rc.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation Home</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../documentation_home/installation.html">Installation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../documentation_home/notebooks.html">Tutorial Notebooks</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../documentation_home/notebooks.html#tabular-notebooks">Tabular Notebooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation_home/notebooks.html#nlp-notebooks">NLP Notebooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation_home/notebooks.html#cv-notebooks">CV Notebooks</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../documentation_home/notebooks.html#rest-api-notebooks">REST API Notebooks</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#"><strong>RI NLP Walkthrough using REST API</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation_home/notebooks.html#set-up-your-own-test-run">Set Up Your Own Test Run</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/querying_results.html">Querying Test Run Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/notifications_and_alerts.html">Notifications and Alerts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/model_governance.html">Managing Model Governance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/integrating_mlops.html">Integrating with MLOps</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/organization_administration.html">Organization Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/workspace_configuration.html">Workspace Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/security_and_compliance.html">Security and Compliance</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/upgrade.html">Upgrade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deployment/faq.html">FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/model_tests_reference.html">Model Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/python-sdk.html">Python SDK Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Robust Intelligence</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../documentation_home/get_started.html">Get Started</a></li>
+          <li class="breadcrumb-item"><a href="../../documentation_home/notebooks.html">Tutorial Notebooks</a></li>
+      <li class="breadcrumb-item active"><strong>RI NLP Walkthrough using REST API</strong></li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="RI-NLP-Walkthrough-using-REST-API">
+<h1><strong>RI NLP Walkthrough using REST API</strong><a class="headerlink" href="#RI-NLP-Walkthrough-using-REST-API" title="Permalink to this heading"></a></h1>
+<blockquote>
+<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RI_NLP_REST_WALKTHROUGH.ipynb">RI NLP REST Walkthrough in Google Colab</a>.</p>
+</div></blockquote>
+<p>In this Notebook Walkthrough, we will walkthrough one of RIME’s core products using our REST API - AI Stress Testing.</p>
+<p>AI Stress Testing is used in the model development stage. Using AI Stress Testing you can test the developed model. RIME goes beyond simply optimizing for basic model performance like accuracy and automatically discovers the model’s weaknesses.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+</pre></div>
+</div>
+</div>
+<section id="Establish-the-RIME-Client.">
+<h2><strong>Establish the RIME Client.</strong><a class="headerlink" href="#Establish-the-RIME-Client." title="Permalink to this heading"></a></h2>
+<p>To get started, provide the API credentials and the base domain/address of the RIME service. You can generate and copy an API token from the API Access Tokens Page under Workspace settings. For the domain/address of the RIME service, contact your admin.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># Paste API_KEY</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;rime-api-key&quot;</span><span class="p">:</span> <span class="n">API_TOKEN</span><span class="p">}</span>
+
+<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># PASTE DOMAIN OF RIME SERVICE (eg: rime.example.rbst.io)</span>
+<span class="n">API_URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://</span><span class="si">{</span><span class="n">CLUSTER_URL</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Create-a-New-Project.">
+<h2><strong>Create a New Project.</strong><a class="headerlink" href="#Create-a-New-Project." title="Permalink to this heading"></a></h2>
+<p>You can create Projects in RIME to organize your Test Runs. Each Project represents a workspace for a given machine learning task. It can contain multiple candidate models, but should only contain one promoted production model.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Project for the Natural Language Inference model task.</span>
+<span class="n">req</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;NLP Example&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Example stress test on NLP data.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;model_task&quot;</span><span class="p">:</span> <span class="s2">&quot;MODEL_TASK_NATURAL_LANGUAGE_INFERENCE&quot;</span>
+<span class="p">}</span>
+<span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/v1/projects&quot;</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+    <span class="n">api_endpoint</span><span class="p">,</span>
+    <span class="n">json</span><span class="o">=</span><span class="n">req</span><span class="p">,</span>
+    <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">assert</span> <span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+<span class="c1"># Get the Project ID from the response. This will be needed to start a Stress Test.</span>
+<span class="n">project_id</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;project&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Optional:-Create-Job-Tracker.">
+<h2><strong>Optional: Create Job Tracker.</strong><a class="headerlink" href="#Optional:-Create-Job-Tracker." title="Permalink to this heading"></a></h2>
+<p>Once a Stress Test request or Managed Image request has been sent, we have to wait until the Job completes before checking for results. The following helper functions track the status of a job by blocking until the Job has status “Succeeded”.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Helper function for displaying Job Status.</span>
+<span class="k">def</span> <span class="nf">_add_padding</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">max_str_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="s2">&quot;JOB_STATUS_REQUESTED&quot;</span><span class="p">)</span>
+    <span class="n">padding_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_str_len</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">string</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="n">padding_len</span>
+
+<span class="c1"># Helper function for periodically querying for Job status.</span>
+<span class="k">def</span> <span class="nf">track_job</span><span class="p">(</span><span class="n">job_id</span><span class="p">):</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/v1/jobs/</span><span class="si">{</span><span class="n">job_id</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="n">job_status</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;job&quot;</span><span class="p">][</span><span class="s2">&quot;status&quot;</span><span class="p">]</span>
+
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">job_status</span> <span class="o">!=</span> <span class="s2">&quot;JOB_STATUS_SUCCEEDED&quot;</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+        <span class="n">res_json</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="n">job_status</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;job&quot;</span><span class="p">][</span><span class="s2">&quot;status&quot;</span><span class="p">]</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Poll count: </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">.</span><span class="se">\t</span><span class="s2">Job status: </span><span class="si">{</span><span class="n">_add_padding</span><span class="p">(</span><span class="n">job_status</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">job_status</span> <span class="o">==</span> <span class="s2">&quot;JOB_STATUS_FAILED&quot;</span><span class="p">:</span>
+            <span class="n">logs_url</span> <span class="o">=</span> <span class="n">res_json</span><span class="p">[</span><span class="s2">&quot;job&quot;</span><span class="p">][</span><span class="s2">&quot;archivedJobLogs&quot;</span><span class="p">][</span><span class="s2">&quot;url&quot;</span><span class="p">][</span><span class="s2">&quot;url&quot;</span><span class="p">]</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test run failed. Job logs available at </span><span class="si">{</span><span class="n">logs_url</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">res_json</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Create-Managed-Image.">
+<h2><strong>Create Managed Image.</strong><a class="headerlink" href="#Create-Managed-Image." title="Permalink to this heading"></a></h2>
+<p>In order to run a Stress Test against a huggingface model, we have to create a Managed Image with the model’s pip requirements pre-installed. The following snippet checks if a huggingface Managed Image exists, and if not, creates one.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">managed_image_name</span> <span class="o">=</span> <span class="s2">&quot;huggingface_image&quot;</span>
+
+<span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/images/</span><span class="si">{</span><span class="n">managed_image_name</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="n">managed_image_exists</span> <span class="o">=</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">managed_image_exists</span><span class="p">:</span>
+    <span class="n">req</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">managed_image_name</span><span class="p">,</span>
+        <span class="s2">&quot;pip_requirements&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;transformers&quot;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;datasets&quot;</span><span class="p">},</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+    <span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/images&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="n">job_id</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;job&quot;</span><span class="p">][</span><span class="s2">&quot;jobId&quot;</span><span class="p">]</span>
+
+    <span class="n">track_job</span><span class="p">(</span><span class="n">job_id</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># These are the URIs of the model that we want to Stress Test, and an associated dataset.</span>
+<span class="n">DATASET_URI</span> <span class="o">=</span> <span class="s2">&quot;rungalileo/snli&quot;</span>
+<span class="n">MODEL_URI</span> <span class="o">=</span> <span class="s2">&quot;cross-encoder/nli-MiniLM2-L6-H768&quot;</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Register-Dataset">
+<h2><strong>Register Dataset</strong><a class="headerlink" href="#Register-Dataset" title="Permalink to this heading"></a></h2>
+<p>Now that we have the huggingface model URIs, we can register them and the dataset to RIME. Once they’re registed, we can refer to these resources using their RIME-generated ID’s.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+
+<span class="c1"># Register the huggingface dataset.</span>
+<span class="k">def</span> <span class="nf">register_dataset</span><span class="p">(</span><span class="n">dataset_uri</span><span class="p">,</span> <span class="n">split_name</span><span class="p">):</span>
+    <span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/v1/registry/</span><span class="si">{</span><span class="n">project_id</span><span class="p">[</span><span class="s1">&#39;uuid&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">/dataset&quot;</span>
+    <span class="n">req</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1"># Note: models and datasets need to have unique names.</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dataset_uri</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">split_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;hugging_face&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;dataset_uri&quot;</span><span class="p">:</span> <span class="n">dataset_uri</span><span class="p">,</span>
+                    <span class="s2">&quot;split_name&quot;</span><span class="p">:</span> <span class="n">split_name</span><span class="p">,</span>
+                    <span class="c1"># TODO: remove line below</span>
+                    <span class="s2">&quot;loading_params_json&quot;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({}),</span>
+                <span class="p">},</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;data_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;text_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;premise&quot;</span><span class="p">,</span> <span class="s2">&quot;hypothesis&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;class_names&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Contradiction&quot;</span><span class="p">,</span> <span class="s2">&quot;Neutral&quot;</span><span class="p">,</span> <span class="s2">&quot;Entailment&quot;</span><span class="p">],</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">AGENT_ID</span><span class="p">:</span>
+        <span class="n">req</span><span class="p">[</span><span class="s2">&quot;agent_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">AGENT_ID</span><span class="p">}</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">req</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;datasetId&quot;</span><span class="p">]</span>
+
+
+<span class="n">ref_data_id</span> <span class="o">=</span> <span class="n">register_dataset</span><span class="p">(</span><span class="n">DATASET_URI</span><span class="p">,</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<span class="n">eval_data_id</span> <span class="o">=</span> <span class="n">register_dataset</span><span class="p">(</span><span class="n">DATASET_URI</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Register-Model">
+<h2><strong>Register Model</strong><a class="headerlink" href="#Register-Model" title="Permalink to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/v1/registry/</span><span class="si">{</span><span class="n">project_id</span><span class="p">[</span><span class="s1">&#39;uuid&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">/model&quot;</span>
+<span class="n">req</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Note: models and datasets need to have unique names.</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">MODEL_URI</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;model_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;hugging_face&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;model_uri&quot;</span><span class="p">:</span> <span class="n">MODEL_URI</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+<span class="k">if</span> <span class="n">AGENT_ID</span><span class="p">:</span>
+    <span class="n">req</span><span class="p">[</span><span class="s2">&quot;agent_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">AGENT_ID</span><span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">req</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="n">model_id</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;modelId&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Create-Test-Run-Config">
+<h2><strong>Create Test Run Config</strong><a class="headerlink" href="#Create-Test-Run-Config" title="Permalink to this heading"></a></h2>
+<p>Below is a sample configuration of how to setup and run a RIME Stress Test. The configuration includes important information, such as the IDs of the model, reference dataset, evaluation dataset and the name of a Managed Image to use (optional).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;NLP Stress Test&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span><span class="p">,</span>
+    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="n">ref_data_id</span><span class="p">,</span>
+        <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="n">eval_data_id</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;run_time_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;custom_image&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;managed_image_name&quot;</span><span class="p">:</span> <span class="n">managed_image_name</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;test_suite_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;global_exclude_columns&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+<br/></pre></div>
+</div>
+</div>
+</section>
+<section id="Run-Stress-Test">
+<h2><strong>Run Stress Test</strong><a class="headerlink" href="#Run-Stress-Test" title="Permalink to this heading"></a></h2>
+<p>With a completed Test Run Configuration, we can now start a Stress Test and track its progress until the tests complete.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">req</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;test_run_config&quot;</span><span class="p">:</span> <span class="n">config</span><span class="p">}</span>
+<span class="k">if</span> <span class="n">AGENT_ID</span><span class="p">:</span>
+    <span class="n">req</span><span class="p">[</span><span class="s2">&quot;agent_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">AGENT_ID</span><span class="p">}</span>
+<span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/v1/stress-tests/</span><span class="si">{</span><span class="n">project_id</span><span class="p">[</span><span class="s1">&#39;uuid&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">req</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="n">job_id</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;job&quot;</span><span class="p">][</span><span class="s2">&quot;jobId&quot;</span><span class="p">]</span>
+
+<span class="c1"># Track Stress Test Job Progress.</span>
+<span class="n">res_json</span> <span class="o">=</span> <span class="n">track_job</span><span class="p">(</span><span class="n">job_id</span><span class="p">)</span>
+
+<span class="c1"># Once a Stress Test Job has completed, get the Test Run ID to access results.</span>
+<span class="n">test_run_id</span> <span class="o">=</span> <span class="n">res_json</span><span class="p">[</span><span class="s2">&quot;job&quot;</span><span class="p">][</span><span class="s2">&quot;jobData&quot;</span><span class="p">][</span><span class="s2">&quot;stress&quot;</span><span class="p">][</span><span class="s2">&quot;testRunId&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Get-Test-Run-Results.">
+<h2><strong>Get Test Run Results.</strong><a class="headerlink" href="#Get-Test-Run-Results." title="Permalink to this heading"></a></h2>
+<p>Once a Test Run completes, we can access the results of the Stress Test using the Test Run ID.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Print information about a completed Test Run.</span>
+<span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/v1/test-runs/</span><span class="si">{</span><span class="n">test_run_id</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;testRun&quot;</span><span class="p">])</span>
+
+<span class="c1"># List individual Test Cases from the Test Run.</span>
+<span class="n">api_endpoint</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">API_URL</span><span class="si">}</span><span class="s2">/v1/test-cases&quot;</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;listTestCasesQuery.testRunId&quot;</span><span class="p">:</span> <span class="n">test_run_id</span><span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;testCases&quot;</span><span class="p">])</span>
+<br/></pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../demo_notebooks/RI_Images_Walkthrough.html" class="btn btn-neutral float-left" title="RI Image Classification Walkthrough" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../testing_and_monitoring/preparing_your_models_and_datasets.html" class="btn btn-neutral float-right" title="Preparing Your Models and Datasets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

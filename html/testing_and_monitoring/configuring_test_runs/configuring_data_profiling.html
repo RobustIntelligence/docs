@@ -55,7 +55,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.3.0
+                2.5.0-rc.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -80,13 +80,15 @@
 <li class="toctree-l2"><a class="reference internal" href="../configuring_test_runs.html#configuring-at-the-project-level">Configuring at the Project Level</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../configuring_test_runs.html#data-and-model-profiling">Data and Model Profiling</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Configuring Data Profiling</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#template">Template</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#arguments">Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#data-profiling-template">Data profiling template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#data-profiling-arguments">Data profiling arguments</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#related-topics">Related Topics</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="configuring_model_profiling.html">Configuring Model Profiling</a></li>
-<li class="toctree-l3"><a class="reference internal" href="smart_feature_sampling_performance_profiling.html">Smart Feature Sampling and Other Performance Optimizations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feature_sampling.html">Feature Sampling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="row_sampling.html">Row Sampling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="performance.html">Performance</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../configuring_test_runs.html#categories">Categories</a></li>
@@ -150,12 +152,22 @@
              
   <section id="configuring-data-profiling">
 <h1>Configuring Data Profiling<a class="headerlink" href="#configuring-data-profiling" title="Permalink to this heading"></a></h1>
-<p>Robust Intelligence performs profiling of data in order to inform how its tests run. This involves inferring feature types,
-computing feature relationships, and restricting feature counts. Robust Intelligence uses safe default values and flags exceptions for each parameter,
-so all these parameters are optional.</p>
-<section id="template">
-<h2>Template<a class="headerlink" href="#template" title="Permalink to this heading"></a></h2>
-<p>Specify this configuration in the <a class="reference internal" href="../validating_models/configuring_stress_tests.html"><span class="std std-doc">AI Stress Testing Configuration</span></a> JSON file, under the <code class="docutils literal notranslate"><span class="pre">&quot;data_profiling&quot;</span></code> parameter of the <code class="docutils literal notranslate"><span class="pre">&quot;profiling_config&quot;</span></code> dictionary.</p>
+<p>Robust Intelligence performs profiling of datasets in order to inform
+how its tests run. This involves inferring feature types, computing
+feature relationships, and restricting feature counts. Robust
+Intelligence uses safe default data profiling values and flags
+exceptions for each parameter, so setting the parameters below is
+optional.</p>
+<p>Your dataset’s profile is cached during the first test run, and the
+cache is used on subsequent runs for faster performance. See the
+<a class="reference internal" href="performance.html"><span class="std std-doc">performance</span></a> section for information about cached
+profiles.</p>
+<section id="data-profiling-template">
+<h2>Data profiling template<a class="headerlink" href="#data-profiling-template" title="Permalink to this heading"></a></h2>
+<p>Specify your dataset profile parameters in the
+<a class="reference internal" href="../validating_models/configuring_stress_tests.html"><span class="std std-doc">AI Stress Testing Configuration</span></a>
+JSON file, in the <code class="docutils literal notranslate"><span class="pre">data_profiling</span></code> configuration in the
+<code class="docutils literal notranslate"><span class="pre">profiling_config</span></code> dictionary.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="c1">#...,</span>
     <span class="s2">&quot;data_profiling&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -181,8 +193,10 @@ so all these parameters are optional.</p>
 </pre></div>
 </div>
 </section>
-<section id="arguments">
-<h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this heading"></a></h2>
+<section id="data-profiling-arguments">
+<h2>Data profiling arguments<a class="headerlink" href="#data-profiling-arguments" title="Permalink to this heading"></a></h2>
+<p>The properties of the <code class="docutils literal notranslate"><span class="pre">data_profiling</span></code> configuration in the
+<code class="docutils literal notranslate"><span class="pre">profiling_config</span></code> are as follows:</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">num_quantiles</span></code>: int, <em>default</em> = 1001</p>
 <p>The number of quantiles to store for numerical columns.</p>
@@ -212,7 +226,8 @@ so all these parameters are optional.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">feature_relationship_info</span></code>:</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">num_feats_to_profile</span></code>: int or <code class="docutils literal notranslate"><span class="pre">null</span></code>, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
-<p>Number of features to profile for smart feature sampling.</p>
+<p>Number of features to profile for <a class="reference internal" href="feature_sampling.html"><span class="std std-doc">Smart Feature Sampling</span></a>. If this value is unset and the dataset has fewer than 100 features, we will skip data profiling.</p>
+<p>Feature profiling is a memory intensive process. If you are running into memory/OOM issues on smaller datasets ( less than 100 features), consider disabling feature profiling by not setting this value.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">compute_feature_relationships</span></code>: bool, <em>default</em> = True</p>
 <p>Whether to compute feature relationships.</p>
@@ -232,7 +247,9 @@ so all these parameters are optional.</p>
 </section>
 <section id="related-topics">
 <h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
-<p><a class="reference internal" href="../validating_models/configuring_stress_tests.html"><span class="std std-doc">Configuring Stress Tests</span></a></p>
+<p><a class="reference internal" href="../validating_models/configuring_stress_tests.html"><span class="std std-doc">Configuring Stress Tests</span></a><br />
+<a class="reference internal" href="feature_sampling.html"><span class="std std-doc">Feature Sampling</span></a><br />
+<a class="reference internal" href="performance.html"><span class="std std-doc">Performance</span></a></p>
 </section>
 </section>
 

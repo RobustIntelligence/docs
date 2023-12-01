@@ -1,8 +1,12 @@
 # Data Configuration
 
-In order to register a reference and evaluation dataset, the user needs
-to configure `SingleDataInfo`. `SingleDataInfo` takes
-two elements, a `connection_info` object and a `data_params` object.
+To register your reference and evaluation datasets, you must configure
+a `SingleDataInfo` object, which contains two elements:
+
+- a [connection_info](#connection-info) object that specifies the
+  location of the dataset; and
+- a [data_params](#data-parameters) object that characterizes your
+  dataset's structure and how its contents will be used.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
@@ -18,11 +22,23 @@ two elements, a `connection_info` object and a `data_params` object.
 }
 ```
 
-## A) Connection Info
+Set up your [connection_info](#connection-info) and [data_params](#data-parameters) as shown below.
 
-This object how to connect to a data source. Specify exactly one of the parameters:
 
-### 1) Loads a data file from a Cloud Data store (eg: AWS S3, Azure Blob Storage)
+## Connection Info
+
+The `connection_info` object specifies how you will connect to your data
+source. Specify this as shown below for your data source type:
+
+- [Cloud storage](#load-a-data-file-from-a-cloud-data-store)
+- [Custom data loader](#load-a-data-file-from-a-custom-data-loader)
+- [Databricks Delta Lake](#load-a-databricks-delta-lake-table)
+- [Hugging Face dataset](#load-a-hugging-face-dataset)
+- [Data collector](#load-a-data-stream-from-a-data-collector-deprecated) (This approach is deprecated.)
+
+### Load a data file from a cloud data store
+
+Use this approach for loading from a cloud storage service such as AWS S3 or Azure Blob Storage.
 
 a) Parameter = data_file
 
@@ -43,7 +59,11 @@ b) Type = DataFileInfo
 | path | string | The path to the file.                                                                                                                 |
 | data_type | string | Default value is `"DATA_TYPE_UNSPECIFIED"`. Should be set to `"DATA_TYPE_DELTA_TABLE"` when the `path` points to a Delta Table on S3. |
 
-### 2) Loads a data file from a custom data loader.
+See the [AWS data loading](../../administration/workspace_configuration/integrations/supported_integrations/aws.md)
+and [Azure data loading](../../administration/workspace_configuration/integrations/supported_integrations/azure.md)
+examples.
+
+### Load a data file from a custom data loader
 
 a) Parameter = data_loading
 
@@ -69,7 +89,60 @@ b) Type = DataLoadingInfo
 | loader_kwargs | string          | A JSON String of keyword arguments to be passed into the load function.                                                 |
 | data_endpoint_integration_id | Optional string | The UUID for an integration that has scerets as key/value pairs, that will be provided to the custom loader at runtime. |
 
-### 3) Loads a data stream from a data collector (deprecated).
+See the [custom data loader example](../../administration/workspace_configuration/integrations/supported_integrations/custom_integration.md).
+
+
+### Load a Databricks Delta Lake table
+
+a) parameter = databricks
+
+b) Type = DatabricksInfo
+
+```json
+{
+  "connection_info": {
+    "databricks": {
+      "table_name": "Table"
+    }
+  }
+}
+```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| table_name | String | The name of the Delta Lake table. |
+
+See the [Databricks Delta Lake example](../../administration/workspace_configuration/integrations/supported_integrations/databricks_deltalake.md).
+
+
+### Load a Hugging Face dataset
+
+a) Parameter = hugging_face
+
+b) Type = HuggingFaceDataInfo
+
+```json
+{
+  "connection_info": {
+    "hugging_face": {
+      "dataset_uri": "",
+      "split_name": "",
+      "loading_params_json": ""
+    }
+  }
+}
+```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| dataset_uri | String | The unique identifier of the dataset. |
+| split_name | String | The name of a predefined subset of data. |
+| loading_params_json | String | A JSON serialized string that contains loading parameters. |
+
+See the [Hugging Face example](../../administration/workspace_configuration/integrations/supported_integrations/huggingface.md).
+
+
+### Load a data stream from a data collector (deprecated)
 
 a) Parameter = data_collector
 
@@ -96,55 +169,8 @@ b) Type = DataCollectorInfo
 | start_time | int64 | The start time in seconds from the UNIX epoch. |
 | end_time | int64 | The end time in seconds from the UNIX epoch. |
 
-### 4) Loads a Databricks Delta Lake table.
 
-a) parameter = databricks
-
-b) Type = DatabricksInfo
-
-```json
-{
-  "connection_info": {
-    "databricks": {
-      "table_name": "Table"
-    }
-  }
-}
-```
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| table_name | String | The name of the Delta Lake table. |
-
-See the [Databricks Delta Lake example](../../administration/workspace_configuration/integrations/supported_integrations/databricks_deltalake.md).
-
-
-### 5) Loading a Hugging Face dataset
-
-a) Parameter = hugging_face
-
-b) Type = HuggingFaceDataInfo
-
-```json
-{
-  "connection_info": {
-    "hugging_face": {
-      "dataset_uri": "",
-      "split_name": "",
-      "loading_params_json": ""
-    }
-  }
-}
-```
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| dataset_uri | String | The unique identifier of the dataset. |
-| split_name | String | The name of a predefined subset of data. |
-| loading_params_json | String | A JSON serialized string that contains loading parameters. |
-
-
-## B) Data Parameters
+## Data Parameters
 
 To configure a data source, specify a mapping in the main Robust Intelligence JSON configuration file
 in the `data_params` argument. The `data_params` configuration can take on different forms, offering a tradeoff between
@@ -206,9 +232,9 @@ simplicity and flexibility.
 
 | Parameter | Type | Description                                                                                                                                                                 |
 |-----------|------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| nrows | Optional int64 | Number of rows of data to load and test. Loads all rows when null and `sample` is not specified. Infers the maximum number of rows possible when null and `sample` is true. |
+| nrows | Optional int64 | Number of rows of data to load and test. Loads all rows when null and `sample` is not specified. Infers the maximum number of rows possible when null and `sample` is true. See [Row Sampling](../configuring_test_runs/row_sampling.html). |
 | nrows_per_time_bin | Optional int64 | Number of rows of data per time bin to load and test in CT. Loads all rows when null.                                                                                       |
-| sample | Optional Boolean | Specifies whether to sample rows in the data. Default is True.                                                                                                              |
+| sample | Optional Boolean | Specifies whether to sample rows in order to maximize test data given the available memory. Default is True. See [Smart Dataset Sampling](../configuring_test_runs/row_sampling.html#smart-dataset-sampling). |
 
 #### Feature types and relations
 
@@ -241,4 +267,8 @@ The `FeatureIntersection` message is defined as follows:
 | image_load_path | String | Path to a python file that contains a `load_image` function defining custom logic for loading an image from the file path provided in the dataset. |
 
 ## Related Topics  
+[AWS Data Stores](../../administration/workspace_configuration/integrations/supported_integrations/aws.md)  
+[Azure Data Stores](../../administration/workspace_configuration/integrations/supported_integrations/azure.md)  
+[Custom Integrations](../../administration/workspace_configuration/integrations/supported_integrations/custom_integration.md)  
 [Databricks Delta Lake](../../administration/workspace_configuration/integrations/supported_integrations/databricks_deltalake.md)  
+[HuggingFace](../../administration/workspace_configuration/integrations/supported_integrations/huggingface.md)  

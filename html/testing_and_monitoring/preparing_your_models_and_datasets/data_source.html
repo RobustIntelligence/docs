@@ -55,7 +55,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.3.0
+                2.5.0-rc.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -79,15 +79,15 @@
 <li class="toctree-l2"><a class="reference internal" href="upload_data.html">Uploading to Cloud Storage (Optional)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="registering_model_datasets.html">Registering Models,  Datasets, and Predictions</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Data Configuration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#a-connection-info">A) Connection Info</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#loads-a-data-file-from-a-cloud-data-store-eg-aws-s3-azure-blob-storage">1) Loads a data file from a Cloud Data store (eg: AWS S3, Azure Blob Storage)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#loads-a-data-file-from-a-custom-data-loader">2) Loads a data file from a custom data loader.</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#loads-a-data-stream-from-a-data-collector-deprecated">3) Loads a data stream from a data collector (deprecated).</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#loads-a-databricks-delta-lake-table">4) Loads a Databricks Delta Lake table.</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#loading-a-hugging-face-dataset">5) Loading a Hugging Face dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#connection-info">Connection Info</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#load-a-data-file-from-a-cloud-data-store">Load a data file from a cloud data store</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#load-a-data-file-from-a-custom-data-loader">Load a data file from a custom data loader</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#load-a-databricks-delta-lake-table">Load a Databricks Delta Lake table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#load-a-hugging-face-dataset">Load a Hugging Face dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#load-a-data-stream-from-a-data-collector-deprecated">Load a data stream from a data collector (deprecated)</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#b-data-parameters">B) Data Parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-parameters">Data Parameters</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#default-data-params-template">Default Data Params Template</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#parameters-for-the-data-params-object">Parameters for the <code class="docutils literal notranslate"><span class="pre">data_params</span></code> object</a></li>
 </ul>
@@ -159,9 +159,14 @@
              
   <section id="data-configuration">
 <h1>Data Configuration<a class="headerlink" href="#data-configuration" title="Permalink to this heading"></a></h1>
-<p>In order to register a reference and evaluation dataset, the user needs
-to configure <code class="docutils literal notranslate"><span class="pre">SingleDataInfo</span></code>. <code class="docutils literal notranslate"><span class="pre">SingleDataInfo</span></code> takes
-two elements, a <code class="docutils literal notranslate"><span class="pre">connection_info</span></code> object and a <code class="docutils literal notranslate"><span class="pre">data_params</span></code> object.</p>
+<p>To register your reference and evaluation datasets, you must configure
+a <code class="docutils literal notranslate"><span class="pre">SingleDataInfo</span></code> object, which contains two elements:</p>
+<ul class="simple">
+<li><p>a <a class="reference internal" href="#connection-info"><span class="std std-ref">connection_info</span></a> object that specifies the
+location of the dataset; and</p></li>
+<li><p>a <a class="reference internal" href="#data-parameters"><span class="std std-ref">data_params</span></a> object that characterizes your
+dataset’s structure and how its contents will be used.</p></li>
+</ul>
 <table border="1" class="docutils">
 <thead>
 <tr>
@@ -191,11 +196,21 @@ two elements, a <code class="docutils literal notranslate"><span class="pre">con
 <span class="p">}</span>
 </pre></div>
 </div>
-<section id="a-connection-info">
-<h2>A) Connection Info<a class="headerlink" href="#a-connection-info" title="Permalink to this heading"></a></h2>
-<p>This object how to connect to a data source. Specify exactly one of the parameters:</p>
-<section id="loads-a-data-file-from-a-cloud-data-store-eg-aws-s3-azure-blob-storage">
-<h3>1) Loads a data file from a Cloud Data store (eg: AWS S3, Azure Blob Storage)<a class="headerlink" href="#loads-a-data-file-from-a-cloud-data-store-eg-aws-s3-azure-blob-storage" title="Permalink to this heading"></a></h3>
+<p>Set up your <a class="reference internal" href="#connection-info"><span class="std std-ref">connection_info</span></a> and <a class="reference internal" href="#data-parameters"><span class="std std-ref">data_params</span></a> as shown below.</p>
+<section id="connection-info">
+<h2>Connection Info<a class="headerlink" href="#connection-info" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">connection_info</span></code> object specifies how you will connect to your data
+source. Specify this as shown below for your data source type:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#load-a-data-file-from-a-cloud-data-store"><span class="std std-ref">Cloud storage</span></a></p></li>
+<li><p><a class="reference internal" href="#load-a-data-file-from-a-custom-data-loader"><span class="std std-ref">Custom data loader</span></a></p></li>
+<li><p><a class="reference internal" href="#load-a-databricks-delta-lake-table"><span class="std std-ref">Databricks Delta Lake</span></a></p></li>
+<li><p><a class="reference internal" href="#load-a-hugging-face-dataset"><span class="std std-ref">Hugging Face dataset</span></a></p></li>
+<li><p><a class="reference internal" href="#load-a-data-stream-from-a-data-collector-deprecated"><span class="std std-ref">Data collector</span></a> (This approach is deprecated.)</p></li>
+</ul>
+<section id="load-a-data-file-from-a-cloud-data-store">
+<h3>Load a data file from a cloud data store<a class="headerlink" href="#load-a-data-file-from-a-cloud-data-store" title="Permalink to this heading"></a></h3>
+<p>Use this approach for loading from a cloud storage service such as AWS S3 or Azure Blob Storage.</p>
 <p>a) Parameter = data_file</p>
 <p>b) Type = DataFileInfo</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -228,9 +243,12 @@ two elements, a <code class="docutils literal notranslate"><span class="pre">con
 </tr>
 </tbody>
 </table>
+<p>See the <a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/aws.html"><span class="std std-doc">AWS data loading</span></a>
+and <a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/azure.html"><span class="std std-doc">Azure data loading</span></a>
+examples.</p>
 </section>
-<section id="loads-a-data-file-from-a-custom-data-loader">
-<h3>2) Loads a data file from a custom data loader.<a class="headerlink" href="#loads-a-data-file-from-a-custom-data-loader" title="Permalink to this heading"></a></h3>
+<section id="load-a-data-file-from-a-custom-data-loader">
+<h3>Load a data file from a custom data loader<a class="headerlink" href="#load-a-data-file-from-a-custom-data-loader" title="Permalink to this heading"></a></h3>
 <p>a) Parameter = data_loading</p>
 <p>b) Type = DataLoadingInfo</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -276,9 +294,84 @@ two elements, a <code class="docutils literal notranslate"><span class="pre">con
 </tr>
 </tbody>
 </table>
+<p>See the <a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/custom_integration.html"><span class="std std-doc">custom data loader example</span></a>.</p>
 </section>
-<section id="loads-a-data-stream-from-a-data-collector-deprecated">
-<h3>3) Loads a data stream from a data collector (deprecated).<a class="headerlink" href="#loads-a-data-stream-from-a-data-collector-deprecated" title="Permalink to this heading"></a></h3>
+<section id="load-a-databricks-delta-lake-table">
+<h3>Load a Databricks Delta Lake table<a class="headerlink" href="#load-a-databricks-delta-lake-table" title="Permalink to this heading"></a></h3>
+<p>a) parameter = databricks</p>
+<p>b) Type = DatabricksInfo</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;connection_info&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;databricks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;table_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Table&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>table_name</td>
+<td>String</td>
+<td>The name of the Delta Lake table.</td>
+</tr>
+</tbody>
+</table>
+<p>See the <a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/databricks_deltalake.html"><span class="std std-doc">Databricks Delta Lake example</span></a>.</p>
+</section>
+<section id="load-a-hugging-face-dataset">
+<h3>Load a Hugging Face dataset<a class="headerlink" href="#load-a-hugging-face-dataset" title="Permalink to this heading"></a></h3>
+<p>a) Parameter = hugging_face</p>
+<p>b) Type = HuggingFaceDataInfo</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;connection_info&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;hugging_face&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;dataset_uri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;split_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;loading_params_json&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dataset_uri</td>
+<td>String</td>
+<td>The unique identifier of the dataset.</td>
+</tr>
+<tr>
+<td>split_name</td>
+<td>String</td>
+<td>The name of a predefined subset of data.</td>
+</tr>
+<tr>
+<td>loading_params_json</td>
+<td>String</td>
+<td>A JSON serialized string that contains loading parameters.</td>
+</tr>
+</tbody>
+</table>
+<p>See the <a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/huggingface.html"><span class="std std-doc">Hugging Face example</span></a>.</p>
+</section>
+<section id="load-a-data-stream-from-a-data-collector-deprecated">
+<h3>Load a data stream from a data collector (deprecated)<a class="headerlink" href="#load-a-data-stream-from-a-data-collector-deprecated" title="Permalink to this heading"></a></h3>
 <p>a) Parameter = data_collector</p>
 <p>b) Type = DataCollectorInfo</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -320,82 +413,9 @@ two elements, a <code class="docutils literal notranslate"><span class="pre">con
 </tbody>
 </table>
 </section>
-<section id="loads-a-databricks-delta-lake-table">
-<h3>4) Loads a Databricks Delta Lake table.<a class="headerlink" href="#loads-a-databricks-delta-lake-table" title="Permalink to this heading"></a></h3>
-<p>a) parameter = databricks</p>
-<p>b) Type = DatabricksInfo</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;connection_info&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;databricks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;table_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Table&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<table border="1" class="docutils">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>table_name</td>
-<td>String</td>
-<td>The name of the Delta Lake table.</td>
-</tr>
-</tbody>
-</table>
-<p>See the <a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/databricks_deltalake.html"><span class="std std-doc">Databricks Delta Lake example</span></a>.</p>
 </section>
-<section id="loading-a-hugging-face-dataset">
-<h3>5) Loading a Hugging Face dataset<a class="headerlink" href="#loading-a-hugging-face-dataset" title="Permalink to this heading"></a></h3>
-<p>a) Parameter = hugging_face</p>
-<p>b) Type = HuggingFaceDataInfo</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;connection_info&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;hugging_face&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;dataset_uri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;split_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;loading_params_json&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<table border="1" class="docutils">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>dataset_uri</td>
-<td>String</td>
-<td>The unique identifier of the dataset.</td>
-</tr>
-<tr>
-<td>split_name</td>
-<td>String</td>
-<td>The name of a predefined subset of data.</td>
-</tr>
-<tr>
-<td>loading_params_json</td>
-<td>String</td>
-<td>A JSON serialized string that contains loading parameters.</td>
-</tr>
-</tbody>
-</table>
-</section>
-</section>
-<section id="b-data-parameters">
-<h2>B) Data Parameters<a class="headerlink" href="#b-data-parameters" title="Permalink to this heading"></a></h2>
+<section id="data-parameters">
+<h2>Data Parameters<a class="headerlink" href="#data-parameters" title="Permalink to this heading"></a></h2>
 <p>To configure a data source, specify a mapping in the main Robust Intelligence JSON configuration file
 in the <code class="docutils literal notranslate"><span class="pre">data_params</span></code> argument. The <code class="docutils literal notranslate"><span class="pre">data_params</span></code> configuration can take on different forms, offering a tradeoff between
 simplicity and flexibility.</p>
@@ -504,7 +524,7 @@ simplicity and flexibility.</p>
 <tr>
 <td>nrows</td>
 <td>Optional int64</td>
-<td>Number of rows of data to load and test. Loads all rows when null and <code>sample</code> is not specified. Infers the maximum number of rows possible when null and <code>sample</code> is true.</td>
+<td>Number of rows of data to load and test. Loads all rows when null and <code>sample</code> is not specified. Infers the maximum number of rows possible when null and <code>sample</code> is true. See <a href="../configuring_test_runs/row_sampling.html">Row Sampling</a>.</td>
 </tr>
 <tr>
 <td>nrows_per_time_bin</td>
@@ -514,7 +534,7 @@ simplicity and flexibility.</p>
 <tr>
 <td>sample</td>
 <td>Optional Boolean</td>
-<td>Specifies whether to sample rows in the data. Default is True.</td>
+<td>Specifies whether to sample rows in order to maximize test data given the available memory. Default is True. See <a href="../configuring_test_runs/row_sampling.html#smart-dataset-sampling">Smart Dataset Sampling</a>.</td>
 </tr>
 </tbody>
 </table>
@@ -627,7 +647,11 @@ simplicity and flexibility.</p>
 </section>
 <section id="related-topics">
 <h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
-<p><a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/databricks_deltalake.html"><span class="std std-doc">Databricks Delta Lake</span></a></p>
+<p><a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/aws.html"><span class="std std-doc">AWS Data Stores</span></a><br />
+<a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/azure.html"><span class="std std-doc">Azure Data Stores</span></a><br />
+<a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/custom_integration.html"><span class="std std-doc">Custom Integrations</span></a><br />
+<a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/databricks_deltalake.html"><span class="std std-doc">Databricks Delta Lake</span></a><br />
+<a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/huggingface.html"><span class="std std-doc">HuggingFace</span></a></p>
 </section>
 </section>
 

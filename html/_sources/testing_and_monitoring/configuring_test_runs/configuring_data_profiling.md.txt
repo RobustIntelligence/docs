@@ -1,11 +1,24 @@
 # Configuring Data Profiling
 
-Robust Intelligence performs profiling of data in order to inform how its tests run. This involves inferring feature types,
-computing feature relationships, and restricting feature counts. Robust Intelligence uses safe default values and flags exceptions for each parameter,
-so all these parameters are optional.
+Robust Intelligence performs profiling of datasets in order to inform
+how its tests run. This involves inferring feature types, computing
+feature relationships, and restricting feature counts. Robust
+Intelligence uses safe default data profiling values and flags
+exceptions for each parameter, so setting the parameters below is
+optional.
 
-### Template
-Specify this configuration in the [AI Stress Testing Configuration](../validating_models/configuring_stress_tests.md) JSON file, under the `"data_profiling"` parameter of the `"profiling_config"` dictionary.
+Your dataset's profile is cached during the first test run, and the
+cache is used on subsequent runs for faster performance. See the
+[performance](performance.md) section for information about cached
+profiles.
+
+## Data profiling template
+
+Specify your dataset profile parameters in the
+[AI Stress Testing Configuration](../validating_models/configuring_stress_tests.md)
+JSON file, in the `data_profiling` configuration in the
+`profiling_config` dictionary.
+
 ```python
 {
     #...,
@@ -31,7 +44,10 @@ Specify this configuration in the [AI Stress Testing Configuration](../validatin
 }
 ```
 
-### Arguments
+## Data profiling arguments
+
+The properties of the `data_profiling` configuration in the
+`profiling_config` are as follows:
 
 - `num_quantiles`: int, *default* = 1001
 
@@ -67,7 +83,10 @@ Specify this configuration in the [AI Stress Testing Configuration](../validatin
 - `feature_relationship_info`:
     - `num_feats_to_profile`: int or `null`, *default* = `null`
 
-        Number of features to profile for smart feature sampling.
+        Number of features to profile for [Smart Feature Sampling](feature_sampling.md). If this value is unset and the dataset has fewer than 100 features, we will skip data profiling.
+
+        Feature profiling is a memory intensive process. If you are running into memory/OOM issues on smaller datasets ( less than 100 features), consider disabling feature profiling by not setting this value.
+
     - `compute_feature_relationships`: bool, *default* = True
 
         Whether to compute feature relationships.
@@ -82,5 +101,8 @@ Specify this configuration in the [AI Stress Testing Configuration](../validatin
 
     Optional list of label class names (in label order). For classification tasks only.
 
+
 ## Related Topics  
 [Configuring Stress Tests](../validating_models/configuring_stress_tests.md)  
+[Feature Sampling](feature_sampling.md)  
+[Performance](performance.md)  

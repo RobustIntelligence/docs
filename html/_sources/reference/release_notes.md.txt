@@ -7,6 +7,38 @@ Unless noted otherwise, you must [upgrade](../deployment/upgrade.rst)
 all Robust Intelligence components to take advantage of the changes
 listed here.
 
+## 2.4
+
+### AWS Terraform Provider Upgraded to >= 4.47.0, < 5.0.0 for rime_eks_cluster Module
+
+This change only affects customers upgrading self-hosted instances of Robust Intelligence.
+When using Terraform to upgrade to a 2.4 or higher version of the `rime_eks_cluster` Terraform module, you must now use a version of the AWS Terraform provider that is >= 4.47.0 and < 5.0.0.
+
+### AWS Load Balancer Controller Upgraded to 2.6.1
+
+The AWS Loadbalancer Controller has been upgraded to version 2.6.1.
+This includes updates to its Custom Resource Definitions (CRDs).
+
+You will need to remirror the image and update your deployment if
+using a private docker registry. This image can be found at
+`docker.io/robustintelligencehq/aws-alb-ingress-controller:v2.6.1`
+
+Upgrade actions:
+- If you're performing a fresh installation you do not need to do
+  anything.
+
+- If you're using RI Platform Helm charts you also do not need to
+  take any different actions.
+
+- If you're not using Helm though and upgrading to RI Platform
+  version 2.4 from an earlier version follow these directions:
+
+  Update CRDs to the ones that are bundled with AWS Loadbalancer
+  version 2.6.1:
+  ```
+  $ kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller//crds?ref=v0.0.150"
+  ```
+
 ## 2.3
 
 ### Firewall API deprecated and replaced with new `ContinuousTest` class and methods

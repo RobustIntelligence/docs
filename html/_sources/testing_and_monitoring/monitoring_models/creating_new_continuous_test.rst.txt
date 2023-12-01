@@ -1,9 +1,11 @@
 .. _continuous-test:
 
-Creating a New Continuous Test
+Creating a new Continuous Test
 ==============================
 
-Robust Intelligence allows you to create Continuous Testing to monitor your model for vulnerabilities over time. You can create a Continuous Test using the Python SDK.
+Robust Intelligence allows you to create Continuous Testing to monitor your
+model for vulnerabilities over time. You can create a Continuous Test using the
+Python SDK.
 
 .. tabs::
 
@@ -17,23 +19,36 @@ Robust Intelligence allows you to create Continuous Testing to monitor your mode
                     name="foo", description="bar", model_task="MODEL_TASK_BINARY_CLASSIFICATION"
                 )
 
-      2.  Register a reference dataset. Depending on where you are looking to pull data from you may need to :ref:`create a data integration <configuring-integrations>`: for all data sources except data collector, you will need to create a data integration.
+      2.  Register a reference dataset. Depending on where you are looking to
+          pull data from you may need to :ref:`create a data integration
+          <configuring-integrations>`.
 
             .. code-block:: python
 
                 reference_id = project.register_dataset(
                     name=DATASET_NAME,
-                    data_params={
-                        "connection_info": {"data_file": {"path": FILE_PATH}},
-                        "data_params": {"label_col": LABEL_COL},
+                    data_config={
+                        "connection_info": {
+                            "data_file": {
+                                "path": "s3://path/to/data/file",
+                            },
+                        },
+                        "data_params": {
+                            "label_col": LABEL_COL,
+                            "timestamp_col": TIMESTAMP_COL,
+                        },
                     },
                     integration_id=INTEGRATION_ID,
                 )
 
-          The SDK returns the ID of the reference dataset.
+          The SDK returns the ID of the reference dataset. There are
+          :ref:`additional options <preparing_your_models_and_datasets>`
+          available to further customize how Continuous Testing ingests your
+          data.
 
-      3.  Register a model. You may optionally provide additional model information to allow Robust Intelligence
-          to query the model during testing.
+      3.  Register a model. You may optionally provide additional model
+          information to allow Robust Intelligence to query the model during
+          testing.
 
             .. code-block:: python
 
@@ -41,9 +56,12 @@ Robust Intelligence allows you to create Continuous Testing to monitor your mode
                     name="baz"
                 )
 
-          The SDK returns the model ID.
+          The SDK returns the model ID. There are :ref:`additional options
+          <preparing_your_models_and_datasets>` available to further customize
+          how Continuous Testing ingests your data.
 
-          If you do not provide the information to query the model, you must register predictions of the model and dataset.
+          If you do not provide the information to query the model, you must
+          register predictions of the model and dataset.
 
             .. code-block:: python
 
@@ -53,23 +71,24 @@ Robust Intelligence allows you to create Continuous Testing to monitor your mode
                     pred_config={
                         "connection_info": {
                             "data_file": {
-                                "path": PREDICTION_FILE_PATH,
+                                "path": "s3://path/to/predictions/file",
                             },
                         },
-                        "pred_params": {"pred_col": PREDICTION_COL}
+                        "pred_params": {"pred_col": PREDICTION_COL},
                     },
+                    integration_id=INTEGRATION_ID,
                 )
 
-      4. Create a new Continuous Test instance in your project. You may
-         choose to create a Continuous Test with :ref:`Scheduled CT
-         <scheduling-continuous-test>` parameters or leave those
-         parameters blank. If *Scheduled CT* is set, Robust
-         Intelligence will run the Continuous Test automatically for
-         you (at an interval defined by the `bin_size` you set) by
-         utilizing the data integrations you specify.
-         Otherwise, you will need to manually run the Continuous Test
-         over an evaluation dataset that you provide. The steps below
-         show how to start a manual run.
+      4.  Create a new Continuous Test instance in your project. You may
+          choose to create a Continuous Test with :ref:`Scheduled CT
+          <scheduling-continuous-test>` parameters or leave those
+          parameters blank. If *Scheduled CT* is set, Robust
+          Intelligence will run the Continuous Test automatically for
+          you (at an interval defined by the `bin_size` you set) by
+          utilizing the data integrations you specify.
+          Otherwise, you will need to manually run the Continuous Test
+          over an evaluation dataset that you provide. The steps below
+          show how to start a manual run.
 
             .. code-block:: python
 
@@ -77,24 +96,34 @@ Robust Intelligence allows you to create Continuous Testing to monitor your mode
                     model_id=model_id, ref_data_id=reference_id, bin_size=timedelta(hours=3)
                 )
 
-      5. Register an evaluation dataset. This dataset must have the ``timestamp_col`` field in the ``data_params`` dictionary.
+      5.  Register an evaluation dataset. This dataset must have the
+          ``timestamp_col`` field in the ``data_params`` dictionary.
 
             .. code-block:: python
 
                 evaluation_id = project.register_dataset(
                     name="bar",
                     data_config={
-                        "connection_info": {"data_file": {"path": EVALUATION_DATA_FILE_PATH}},
+                        "connection_info": {
+                            "data_file": {
+                                "path": "s3://path/to/data/file",
+                            },
+                        },
                         "data_params": {
                             "label_col": LABEL_COL,
                             "timestamp_col": TIMESTAMP_COL,
                         },
                     },
+                    integration_id=INTEGRATION_ID,
                 )
 
-         The SDK returns the ID of the evaluation dataset.
+          The SDK returns the ID of the evaluation dataset. There are
+          :ref:`additional options <preparing_your_models_and_datasets>`
+          available to further customize how Continuous Testing ingests your
+          data.
 
-      6. Register a prediction set if the information to query the model is not provided.
+      6.  Register a prediction set if the information to query the model is
+          not provided.
 
             .. code-block:: python
 
@@ -104,39 +133,39 @@ Robust Intelligence allows you to create Continuous Testing to monitor your mode
                     pred_config={
                         "connection_info": {
                             "data_file": {
-                                "path": PREDICTION_FILE_PATH,
+                                "path": "s3://path/to/predictions/file",
                             },
                         },
-                        "pred_params": {"pred_col": PREDICTION_COL}
+                        "pred_params": {"pred_col": PREDICTION_COL},
                     },
+                    integration_id=INTEGRATION_ID,
                 )
 
 
-      7. Issue the following command to start the Continuous Test,
-         specifying the configuration created in the previous step and
-         the unique ID of your Continuous Test. Use the argument
-         ``override_existing_bins`` to specify whether this Continuous
-         Test should override the results of previous time bins for
-         which other Continuous Tests have run.
+      7.  Issue the following command to start the Continuous Test, specifying
+          the configuration created in the previous step and the unique ID of
+          your Continuous Test. Use the argument ``override_existing_bins`` to
+          specify whether this Continuous Test should override the results of
+          previous time bins for which other Continuous Tests have run.
 
-         Here, `ct_ctl` is your Continuous Test instance, which you
-         can get using the `Project.get_ct()` method.
+          Here, `ct` is your Continuous Test instance, which you can get using
+          the `Project.get_ct()` method.
 
             .. code-block:: python
 
-                continuous_test = ct_ctl.start_continuous_test(
+                ct_job = ct.start_continuous_test(
                    eval_data_id=evaluation_id,  override_existing_bins=False,
                 )
+                ct_job.get_status(verbose=True, wait_until_finish=True)
 
 
+          Anytime new data has been gathered and you want to re-run your test,
+          repeat steps 5-7 to start a new Continuous Test with your latest
+          evaluation dataset and prediction set.
 
-      Anytime new data has been gathered and you want to re-run
-      your test, repeat steps 5-7 to start a new Continuous Test
-      with your latest evaluation dataset and prediction set.
-
-      If you want to automate your Continuous Test so that it runs at
-      a regular interval, set its schedule as shown in
-      :ref:`scheduling-continuous-test`.
+          If you want to automate your Continuous Test so that it runs at a
+          regular interval, set its schedule as shown in
+          :ref:`scheduling-continuous-test`.
 
 ..
    .. tab:: Web UI
