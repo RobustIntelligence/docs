@@ -58,7 +58,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.5.0-rc.2
+                2.4.3-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -123,6 +123,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/versions.html">Versioning and compatibility</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
@@ -572,6 +573,7 @@ some threshold.</p>
 <span class="sd">&quot;&quot;&quot;Custom test batch runner.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
 <span class="kn">from</span> <span class="nn">rime.core.schema.config</span> <span class="kn">import</span> <span class="n">CustomConfig</span>
+<span class="kn">from</span> <span class="nn">rime.core.schema.severity</span> <span class="kn">import</span> <span class="n">ImportanceLevel</span>
 <span class="kn">from</span> <span class="nn">rime.core.schema.status</span> <span class="kn">import</span> <span class="n">Status</span>
 <span class="kn">from</span> <span class="nn">rime.core.stress_tests.schema.table_info</span> <span class="kn">import</span> <span class="n">TableColumn</span>
 <span class="kn">from</span> <span class="nn">rime.core.stress_tests.schema.test_result</span> <span class="kn">import</span> <span class="n">TestBatchResult</span><span class="p">,</span> <span class="n">TestOutput</span>
@@ -579,7 +581,6 @@ some threshold.</p>
 <span class="kn">from</span> <span class="nn">rime.core.stress_tests.batch_runner</span> <span class="kn">import</span> <span class="n">DataTestBatchRunner</span>
 <span class="kn">from</span> <span class="nn">rime.core.stress_tests.schema.test_result</span> <span class="kn">import</span> <span class="n">TestBatchResult</span><span class="p">,</span> <span class="n">TestOutput</span>
 <span class="kn">from</span> <span class="nn">rime.core.profiler.run_containers</span> <span class="kn">import</span> <span class="n">RunContainer</span>
-<span class="kn">from</span> <span class="nn">rime.protos.ri.lib.common_pb2</span> <span class="kn">import</span> <span class="n">Severity</span>
 
 <span class="c1"># Signature should not be changed.</span>
 <span class="k">class</span> <span class="nc">CustomTest</span><span class="p">(</span><span class="n">BaseTest</span><span class="p">):</span>
@@ -598,10 +599,10 @@ some threshold.</p>
         <span class="n">eval_data_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">run_container</span><span class="o">.</span><span class="n">eval_data</span><span class="o">.</span><span class="n">df</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ref_data_size</span> <span class="o">&gt;</span> <span class="n">eval_data_size</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">:</span>
             <span class="n">status</span> <span class="o">=</span> <span class="n">Status</span><span class="o">.</span><span class="n">WARNING</span>
-            <span class="n">severity</span> <span class="o">=</span> <span class="n">Severity</span><span class="o">.</span><span class="n">SEVERITY_ALERT</span>
+            <span class="n">severity</span> <span class="o">=</span> <span class="n">ImportanceLevel</span><span class="o">.</span><span class="n">HIGH</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">status</span> <span class="o">=</span> <span class="n">Status</span><span class="o">.</span><span class="n">PASS</span>
-            <span class="n">severity</span> <span class="o">=</span> <span class="n">Severity</span><span class="o">.</span><span class="n">SEVERITY_PASS</span>
+            <span class="n">severity</span> <span class="o">=</span> <span class="n">ImportanceLevel</span><span class="o">.</span><span class="n">NONE</span>
         <span class="n">test_output</span> <span class="o">=</span> <span class="n">TestOutput</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;Severity&quot;</span><span class="p">:</span> <span class="n">severity</span><span class="p">},</span> <span class="n">severity</span><span class="p">,</span> <span class="p">[],</span>
         <span class="p">)</span>

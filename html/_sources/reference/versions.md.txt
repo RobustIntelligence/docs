@@ -1,0 +1,51 @@
+# Versioning and compatibility
+
+## Main product and SDK versioning
+
+The Robust Intelligence main product (control plane, data plane, and
+user interface ) and SDK follow a semantic versioning scheme with
+three numbers indicating their major, minor, and patch version. The
+SDK version you use must match your Robust Intelligence product
+version number as shown in the Robust Intelligence UI.
+
+When Robust Intelligence plans to end support for a product version,
+we will notify you at least 13 months before support ends. When a new
+version becomes available, its preceding version will be supported for
+13 months to give you time to transition to the upgraded SDK. After
+the transition period, the older version will be marked as deprecated
+and removed.
+
+## REST API versioning
+
+See [API versioning](api_changelog.md#about-api-versions).
+
+## Test results versioning
+
+The results of validation tests you run in Robust Intelligence are
+retrievable in their origin release and the two subsequent releases.
+For example, a test that you generate on v2.1 will be retrievable on
+v2.1, v2.2, and v2.3.
+
+## Product updates and your data
+
+### Robust Intelligence Cloud
+
+For customers using the Robust Intelligence cloud-deployed service,
+product updates are non-destructive with respect to your data. See the
+[Upgrade Guide](../deployment/upgrade.rst) for instructions.
+
+### Robust Intelligence On-Prem
+
+For Robust Intelligence installations that you deploy on servers that
+you manage, product updates are non-destructive with respect to your
+data. Robust Intelligence software uses Kubernetes Persistent Volumes
+for data storage. User records, Projects, Test Runs, and all other
+data are saved in Persistent Volumes in the product’s Kubernetes
+cluster. Robust Intelligence updates are carried out by the
+`helm upgrade` command, which does not modify persisted storage
+resources like Persistent Volumes, so your data remains in place
+during and after the upgrade. Unless an administrator manually
+intervenes, these volumes are never deleted.
+
+## Related Topics  
+[Upgrade](../deployment/upgrade.rst)  
