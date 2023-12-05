@@ -58,7 +58,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.5.0-rc.2
+                2.4.3-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -121,6 +121,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/versions.html">Versioning and compatibility</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
@@ -258,6 +259,31 @@ Dataset</a>, check out the linked documentation.</p>
 
 <span class="n">ref_dataset_id</span> <span class="o">=</span> <span class="n">_register_dataset</span><span class="p">(</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
 <span class="n">eval_dataset_id</span> <span class="o">=</span> <span class="n">_register_dataset</span><span class="p">(</span><span class="s2">&quot;validation&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Start-File-Scan-on-the-Registered-Model">
+<h2><strong>Start File Scan on the Registered Model</strong><a class="headerlink" href="#Start-File-Scan-on-the-Registered-Model" title="Permalink to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file_scan_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_file_scan</span><span class="p">(</span>
+    <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+<span class="n">file_scan_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Get-File-Scan-Result-for-Registered-Model">
+<h2><strong>Get File Scan Result for Registered Model</strong><a class="headerlink" href="#Get-File-Scan-Result-for-Registered-Model" title="Permalink to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file_scan_result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_file_scan_result</span><span class="p">(</span><span class="n">file_scan_id</span><span class="o">=</span><span class="n">file_scan_job</span><span class="o">.</span><span class="n">job_id</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

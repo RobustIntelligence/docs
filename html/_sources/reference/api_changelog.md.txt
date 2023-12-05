@@ -1,11 +1,48 @@
 # API Changelog
 
-## API Versioning
-Robust Intelligence aims to provide a stable API that is backwards compatible. To minimize the impact of any necessary breaking changes, we categorize our endpoints as either beta or versioned. The beta endpoints may be subject to breaking changes, while the versioned endpoints are guaranteed to be backwards compatible until deprecation. The version of an endpoint can be identified via the URI (v1/projects vs v1-beta/integrations).
+## About API versions
 
-A v1-beta endpoint may be subject to breaking changes. These are typically new features, which may be subject to further optimization.
+```{admonition} Note
+This page applies only to REST API versioning.
+For SDK and product versioning, see
+[Versioning and compatibility](versions.md).
+```
 
-A major version endpoint (v1, v2, etc.) will not be subject to breaking changes. Once an endpoint has a version upgrade, i.e. from v1 to v2, both versions will be supported for 6 months to allow time for transitioning to the upgraded endpoint. After these 6 months, the older version will be marked deprecated and removed.
+Robust Intelligence provides a stable API designed to remain usable
+without changes to your client code across multiple versions of the
+main Robust Intelligence product. API endpoints are versioned
+independently of the main Robust Intelligence product, with a given
+API version typically supporting many releases of the main product.
+
+To minimize the impact of breaking changes, we categorize our endpoint
+versions as general availability ("GA") and beta:
+
+- A GA endpoint version is fully tested and supported, and it's
+  guaranteed to be backward compatible until it's deprecated. GA
+  endpoints display their version number in the URI. For example, the
+  v1 versioned integrations endpoint URI contains "v1", as in,
+  `v1/integrations`
+
+- Beta endpoint versions are subject to breaking changes.
+  Backward compatibility is not guaranteed. A beta endpoint
+  will display `-beta` in its URI. For example, a v1-beta
+  integrations endpoint URI would contain `v1-beta/integrations`
+
+### Support period for GA REST API endpoints
+
+GA-version API endpoints (for example, v1) are not subject to breaking
+changes while the version remains supported. When Robust Intelligence
+plans to end support for a REST API version, we will notify you at
+least 13 months before support for your API version ends. When a new
+API version becomes available, its preceding version will be supported
+for 13 months to give you time to transition to the upgraded API.
+After the transition period, the older version will be marked as
+deprecated and removed. Notifications and transition periods do not
+apply to APIs marked as "beta".
+
+## 2.4
+
+No changes.
 
 ## 2.3
 
@@ -99,3 +136,6 @@ DELETE /v1/firewall/{firewallId.uuid} api sunset date '' can't be parsed for dep
 GET /v1/firewall/{firewallId.uuid} api sunset date '' can't be parsed for deprecated API: sunset header not found
 POST /v1/firewall api sunset date '' can't be parsed for deprecated API: sunset header not found
 -->
+
+## Related Topics  
+[Versioning and compatibility](versions.md)  
