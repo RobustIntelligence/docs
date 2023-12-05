@@ -7,11 +7,11 @@ Pickle is a widely used serialization format in Machine Learning, emerging as th
 Once a model has been registered with Robust Intelligence, you can run a file scan on the model artifacts, which will identify potentially dangerous imports within the model which pose risks during de-serialization. This is a critical step in securing your model supply chain. All pickle derived model formats, including PyTorch, TensorFlow, Keras, and Scikit-Learn, are supported for file scanning.
 
 
-> **Note:** File Scanning is only enabled on registered HuggingFace models in v2.3. File Scanning on other model types will be available in v2.4.
+> **Note:** File Scanning is currently only enabled on registered HuggingFace models.
 
 ## Running a file scan on a registered HuggingFace model
 
-This tutorial assumes you have already [created a project](../creating_projects/creating_a_project.rst) and [registered a model](./registering_model_datasets.md) and retrieved the model and project IDs.
+This tutorial assumes you have already [created a project](../creating_projects/creating_a_project.rst) and [registered a model](./registering_model_datasets.md) and retrieved the model and project IDs. For large generative models, consider specifying the `ram_request_megabytes` field to a higher value such as 30000 in the `start_file_scan` method to ensure that the file scan job has enough memory to run.
 
 ```python
 from rime_sdk import Client
@@ -20,6 +20,9 @@ client = Client(domain=<CLUSTER_URL>, api_key=<API_KEY>)
 job = client.start_file_scan(model_id=<MODEL_ID>, project_id=<PROJECT_ID>)
 job.get_status(verbose=True, wait_until_finish=True)
 ```
+
+To run a file scan on a private Huggingface model, you have to first create a [custom integration](../../administration/workspace_configuration/integrations/supported_integrations/custom_integration.md) with a key set to HUGGINGFACE_API_TOKEN and the value set to your Huggingface API token. You can find your Huggingface API token on your [Huggingface profile page](https://huggingface.co/settings/tokens). Then during model registration, specify the integration ID as an argument to the `register_model` method. From there, start a file scan on the model as you would for a public model.
+
 ## Getting the results of a file scan
 
 Once the file scan job has completed, you can view the results of the file scan in the SDK:
@@ -50,4 +53,5 @@ The result or severity of a file scan result is determined by the most dangerous
 
 ## Related Topics  
 [Creating a Project](../creating_projects/creating_a_project.rst)  
+[Custom Integrations](../../administration/workspace_configuration/integrations/supported_integrations/custom_integration.md)  
 [Registering Models,  Datasets, and Predictions](./registering_model_datasets.md)  

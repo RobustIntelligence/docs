@@ -1,0 +1,151 @@
+# Row Sampling
+
+When running a test, Robust Intelligence can load the number of rows
+you specify, or it can automatically load the largest sample of rows
+that will fit in memory.
+
+## Specifying how many rows will be loaded in a test run
+
+There are three options for configuring the number of rows to be
+loaded in your test runs:
+
+- [Use Smart Dataset Sampling](#use-smart-dataset-sampling)
+- [Load a specific number of rows](#load-a-specific-number-of-rows)
+- [Load all rows](#load-all-rows)
+
+### Use Smart Dataset Sampling
+
+If a dataset cannot be contained in memory because it exceeds
+[data loading limits](#data-loading-limits), Robust Intelligence can be
+configured to load the largest sample of rows that will fit in memory.
+To set this up, edit your
+[data_params configuration](../preparing_your_models_and_datasets/data_source.md#dataset-sizing)
+as follows:
+- set `sample` to `true`
+- leave `nrows` undefined
+
+See [Smart Dataset Sampling](#smart-dataset-sampling).
+
+### Load a specific number of rows
+
+If you wish to specify the number of rows to load, edit your
+[data_params configuration](../preparing_your_models_and_datasets/data_source.md#dataset-sizing)
+as follows:
+- set `sample` to `true`
+- set `nrows` to the number of rows you wish to load
+
+Robust Intelligence uses [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling)
+to choose which rows to sample.
+
+### Load all rows
+
+To load all rows of your dataset, edit your
+[data_params configuration](../preparing_your_models_and_datasets/data_source.md#dataset-sizing)
+as follows:
+- set `sample` to `false`
+- leave `nrows` undefined
+
+
+## Smart Dataset Sampling
+
+Smart Dataset Sampling reads a subset of your dataset in order to
+assess how much memory it requires. We extrapolate the maximal dataset
+that can be loaded into memory based on this assessed size and the
+total memory available.
+
+
+### How Smart Dataset Sampling Works
+
+If your configuration doesn’t specify the
+[number of rows to be sampled (nrows)](../preparing_your_models_and_datasets/data_source.md#dataset-sizing),
+then Robust Intelligence chooses a default sample size using the steps
+outlined in the example below.
+
+For this example, we assume a dataset of 1 million rows.
+
+1. We load a batch of 65,000 rows from the dataset into memory in order to
+   assess the size of the batch in memory.
+1. We calculate the number of rows that will fit in available memory:
+   - *Job Memory Requested* is the memory you request in your configuration.
+     If you don't specify a value, this defaults to 8 GiB.
+   - *Used Memory* is the memory currently being used by the node (depending
+     on current jobs running)
+   - *Buffer memory* is always 1.5 GiB
+   - *Batch memory* is the amount of memory that was needed for the
+     65,000-row sample loaded in step 1
+   - the *Number of Batches* is calculated as:
+     ```
+     Number of Batches = (Job Memory Requested - Used Memory - Buffer Memory) / Batch Memory
+     ```
+1. Using the above values, we calculate the number of rows to sample:
+   ```
+   Number of Rows = Number of Batches * 65000
+   ```
+1. Once we've calculated how many rows we'll sample, we use
+   [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling)
+   to choose which rows to sample.
+
+### FAQ on Smart Dataset Sampling
+
+#### What if I specify a number of features to use?
+
+Smart Dataset Sampling can work in conjunction with Smart Feature
+Sampling. If you have set up [Smart Feature Sampling](feature_sampling.md)
+with a threshold *k* of features, then we load only the top *k* most
+important features when loading sample rows to calculate the batch
+memory.
+
+
+## Data Loading Limits
+
+The following tables show Robust Intelligence's limits with respect to
+data in CSV format. Once these limits are reached, data will be sampled
+using [Smart Dataset Sampling](#smart-dataset-sampling).
+
+See the [memory recommendations](performance.md#memory-recommendations)
+in the Performance section for sizing guidelines.
+
+### 8GB Memory Ceiling
+
+| Feature Count  | Row Limit Before Sampling |
+| ------------- | ------------- |
+| 25  | 13,000,000  |
+| 50  | 6,400,000  |
+| 75  | 4,200,000  |
+| 100  | 3,000,000  |
+| 200  | 1,600,000  |
+| 300  | 1,000,000  |
+| 400  | 750,000  |
+| 500  | 600,000  |
+| 750  | 175,000  |
+
+### 16GB Memory Ceiling
+
+| Feature Count  | Row Limit Before Sampling |
+| ------------- | ------------- |
+| 25  | 26,000,000  |
+| 50  | 12,800,000  |
+| 75  | 8,400,000  |
+| 100  | 6,000,000  |
+| 200  | 3,200,000  |
+| 300  | 2,000,000  |
+| 400  | 1,500,000  |
+| 500  | 1,200,000  |
+| 750  | 350,000  |
+
+### 32GB Memory Ceiling
+
+| Feature Count  | Row Limit Before Sampling |
+| ------------- | ------------- |
+| 25  | 50,000,000  |
+| 50  | 24,500,000  |
+| 75  | 16,200,000  |
+| 100  | 11,500,000  |
+| 200  | 6,100,000  |
+| 300  | 3,800,000  |
+| 400  | 2,800,000  |
+| 500  | 2,200,000  |
+| 750  | 650,000  |
+
+## Related Topics  
+[Feature Sampling](feature_sampling.md)  

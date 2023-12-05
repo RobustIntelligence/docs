@@ -63,7 +63,7 @@ documentation for full details on the SDK calls used in this procedure.
 
 ### Register your model with a model config or with a path to a model artifact.
 
-#### Example of registering a Hugging Face model:
+#### Example of registering a Hugging Face model
 
 ```python
 # Get your model config
@@ -84,7 +84,7 @@ model_id = project.register_model(
 
 For more on model configuration, check out the [model configuration documentation](../../testing_and_monitoring/preparing_your_models_and_datasets/model_source.md).
 
-#### Registering a model with a path to a model artifact:
+#### Registering a model with a path to a model artifact
 
 ```python
 model_id = project.register_model_from_path(name=<NAME>, remote_path=<MODEL_PATH>)
@@ -152,11 +152,12 @@ dataset_id = project.register_dataset(
 )
 ```
 
-For more on dataset configuration, check out the [dataset configuration documentation](../../testing_and_monitoring/preparing_your_models_and_datasets/data_source.md).
+For more on dataset configuration, check out the [dataset configuration documentation](data_source.md).
 
 **Note**: Registering a dataset will run validation on it to ensure it works with Robust Intelligence's systems.  This
 may take a few seconds.  If you wish to skip validation, set the `skip_validation` parameter to `True`
-(not recommended).
+(not recommended).  Validation is currently not supported for json files and
+[custom data loaders](../../testing_and_monitoring/preparing_your_models_and_datasets/data_source.md#load-a-data-file-from-a-custom-data-loader
 
 Check out the SDK documentation for more on [registering a dataset](../../reference/python-sdk.rst).
 
@@ -178,7 +179,7 @@ model_id = project.register_model(
 
 See above for more information on registering a dataset or model.
 
-### Register your predictions with a predictions configuration.
+### Register your predictions with a predictions configuration
 
 ```python
 prediction_config={
@@ -201,7 +202,8 @@ predictions_id = project.register_predictions(
 
 **Note**: Registering predictions will run validation on it to ensure it works with Robust Intelligence's systems.  This
 may take a few seconds.  If you wish to skip validation, set the `skip_validation` parameter to `True`
-(not recommended).
+(not recommended). Validation is currently not supported for json files and
+[custom data loaders](../../testing_and_monitoring/preparing_your_models_and_datasets/data_source.md#load-a-data-file-from-a-custom-data-loader).
 
 Check out the SDK documentation for more on [registering predictions](../../reference/python-sdk.rst).
 
@@ -221,9 +223,10 @@ All registered datasets and predictions along with their metadata can be seen on
 <img src="../../_static/images/datasets_modal.png">
 
 ## Related Topics  
-[Creating a New Continuous Test](../monitoring_models/creating_new_continuous_test.rst)  
 [Creating a New Stress Test](../validating_models/stress_tests_from_sdk.md)  
+[Creating a new Continuous Test](../monitoring_models/creating_new_continuous_test.rst)  
 [Data Configuration](../../testing_and_monitoring/preparing_your_models_and_datasets/data_source.md)  
+[Data Configuration](data_source.md)  
 [Installation](../../documentation_home/installation.md)  
 [Model Configuration](../../testing_and_monitoring/preparing_your_models_and_datasets/model_source.md)  
 [Model Registry](../model_governance/model_registry.md)  

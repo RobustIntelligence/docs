@@ -55,7 +55,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.3.0
+                2.4.3-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -90,7 +90,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#registering-predictions-using-the-sdk">Registering Predictions Using the SDK</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#grab-your-dataset-and-model-ids-or-register-new-ones">Grab your dataset and model IDs or register new ones</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#register-your-predictions-with-a-predictions-configuration">Register your predictions with a predictions configuration.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#register-your-predictions-with-a-predictions-configuration">Register your predictions with a predictions configuration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#view-registered-datasets-and-predictions-in-web-ui">View registered datasets and predictions in Web UI</a></li>
 </ul>
 </li>
@@ -131,6 +131,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/versions.html">Versioning and compatibility</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
@@ -215,7 +216,7 @@ documentation for full details on the SDK calls used in this procedure.</p>
 <section id="register-your-model-with-a-model-config-or-with-a-path-to-a-model-artifact">
 <h3>Register your model with a model config or with a path to a model artifact.<a class="headerlink" href="#register-your-model-with-a-model-config-or-with-a-path-to-a-model-artifact" title="Permalink to this heading"></a></h3>
 <section id="example-of-registering-a-hugging-face-model">
-<h4>Example of registering a Hugging Face model:<a class="headerlink" href="#example-of-registering-a-hugging-face-model" title="Permalink to this heading"></a></h4>
+<h4>Example of registering a Hugging Face model<a class="headerlink" href="#example-of-registering-a-hugging-face-model" title="Permalink to this heading"></a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get your model config</span>
 <span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&lt;NAME&gt;&quot;</span><span class="p">,</span>
@@ -235,7 +236,7 @@ documentation for full details on the SDK calls used in this procedure.</p>
 <p>For more on model configuration, check out the <a class="reference internal" href="model_source.html"><span class="std std-doc">model configuration documentation</span></a>.</p>
 </section>
 <section id="registering-a-model-with-a-path-to-a-model-artifact">
-<h4>Registering a model with a path to a model artifact:<a class="headerlink" href="#registering-a-model-with-a-path-to-a-model-artifact" title="Permalink to this heading"></a></h4>
+<h4>Registering a model with a path to a model artifact<a class="headerlink" href="#registering-a-model-with-a-path-to-a-model-artifact" title="Permalink to this heading"></a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span><span class="n">name</span><span class="o">=&lt;</span><span class="n">NAME</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">remote_path</span><span class="o">=&lt;</span><span class="n">MODEL_PATH</span><span class="o">&gt;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -302,7 +303,8 @@ the right navigation panel.</p></li>
 <p>For more on dataset configuration, check out the <a class="reference internal" href="data_source.html"><span class="std std-doc">dataset configuration documentation</span></a>.</p>
 <p><strong>Note</strong>: Registering a dataset will run validation on it to ensure it works with Robust Intelligence’s systems.  This
 may take a few seconds.  If you wish to skip validation, set the <code class="docutils literal notranslate"><span class="pre">skip_validation</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">True</span></code>
-(not recommended).</p>
+(not recommended).  Validation is currently not supported for json files and
+[custom data loaders](../../testing_and_monitoring/preparing_your_models_and_datasets/data_source.md#load-a-data-file-from-a-custom-data-loader</p>
 <p>Check out the SDK documentation for more on <a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">registering a dataset</span></a>.</p>
 </section>
 </section>
@@ -324,7 +326,7 @@ may take a few seconds.  If you wish to skip validation, set the <code class="do
 <p>See above for more information on registering a dataset or model.</p>
 </section>
 <section id="register-your-predictions-with-a-predictions-configuration">
-<h3>Register your predictions with a predictions configuration.<a class="headerlink" href="#register-your-predictions-with-a-predictions-configuration" title="Permalink to this heading"></a></h3>
+<h3>Register your predictions with a predictions configuration<a class="headerlink" href="#register-your-predictions-with-a-predictions-configuration" title="Permalink to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prediction_config</span><span class="o">=</span><span class="p">{</span>
     <span class="s2">&quot;connection_info&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;data_file&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -345,7 +347,8 @@ may take a few seconds.  If you wish to skip validation, set the <code class="do
 </div>
 <p><strong>Note</strong>: Registering predictions will run validation on it to ensure it works with Robust Intelligence’s systems.  This
 may take a few seconds.  If you wish to skip validation, set the <code class="docutils literal notranslate"><span class="pre">skip_validation</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">True</span></code>
-(not recommended).</p>
+(not recommended). Validation is currently not supported for json files and
+<a class="reference internal" href="data_source.html#load-a-data-file-from-a-custom-data-loader"><span class="std std-ref">custom data loaders</span></a>.</p>
 <p>Check out the SDK documentation for more on <a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">registering predictions</span></a>.</p>
 </section>
 <section id="view-registered-datasets-and-predictions-in-web-ui">
@@ -367,8 +370,9 @@ the right navigation panel.</p></li>
 </section>
 <section id="related-topics">
 <h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
-<p><a class="reference internal" href="../monitoring_models/creating_new_continuous_test.html"><span class="std std-doc">Creating a New Continuous Test</span></a><br />
-<a class="reference internal" href="../validating_models/stress_tests_from_sdk.html"><span class="std std-doc">Creating a New Stress Test</span></a><br />
+<p><a class="reference internal" href="../validating_models/stress_tests_from_sdk.html"><span class="std std-doc">Creating a New Stress Test</span></a><br />
+<a class="reference internal" href="../monitoring_models/creating_new_continuous_test.html"><span class="std std-doc">Creating a new Continuous Test</span></a><br />
+<a class="reference internal" href="data_source.html"><span class="std std-doc">Data Configuration</span></a><br />
 <a class="reference internal" href="data_source.html"><span class="std std-doc">Data Configuration</span></a><br />
 <a class="reference internal" href="../../documentation_home/installation.html"><span class="std std-doc">Installation</span></a><br />
 <a class="reference internal" href="model_source.html"><span class="std std-doc">Model Configuration</span></a><br />

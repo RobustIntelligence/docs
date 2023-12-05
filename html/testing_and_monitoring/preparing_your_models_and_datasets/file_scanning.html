@@ -55,7 +55,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.3.0
+                2.4.3-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -118,6 +118,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../reference/troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/release_notes.html">Release Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/api_changelog.html">API Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/versions.html">Versioning and compatibility</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
@@ -153,11 +154,11 @@
 <p>Pickle is a widely used serialization format in Machine Learning, emerging as the most common way to share model and model weights. However, when you load and de-serialize a pickle file, it is susceptible to dangerous arbitrary code execution attacks specified by the original author of the file. To learn more about pickle serialization based attacks: check out our <a class="reference external" href="https://www.robustintelligence.com/blog-posts/pickle-serialization-in-data-science-a-ticking-time-bomb">blog post</a> on the topic.</p>
 <p>Once a model has been registered with Robust Intelligence, you can run a file scan on the model artifacts, which will identify potentially dangerous imports within the model which pose risks during de-serialization. This is a critical step in securing your model supply chain. All pickle derived model formats, including PyTorch, TensorFlow, Keras, and Scikit-Learn, are supported for file scanning.</p>
 <blockquote>
-<div><p><strong>Note:</strong> File Scanning is only enabled on registered HuggingFace models in v2.3. File Scanning on other model types will be available in v2.4.</p>
+<div><p><strong>Note:</strong> File Scanning is currently only enabled on registered HuggingFace models.</p>
 </div></blockquote>
 <section id="running-a-file-scan-on-a-registered-huggingface-model">
 <h2>Running a file scan on a registered HuggingFace model<a class="headerlink" href="#running-a-file-scan-on-a-registered-huggingface-model" title="Permalink to this heading"></a></h2>
-<p>This tutorial assumes you have already <a class="reference internal" href="../creating_projects/creating_a_project.html"><span class="std std-doc">created a project</span></a> and <a class="reference internal" href="registering_model_datasets.html"><span class="std std-doc">registered a model</span></a> and retrieved the model and project IDs.</p>
+<p>This tutorial assumes you have already <a class="reference internal" href="../creating_projects/creating_a_project.html"><span class="std std-doc">created a project</span></a> and <a class="reference internal" href="registering_model_datasets.html"><span class="std std-doc">registered a model</span></a> and retrieved the model and project IDs. For large generative models, consider specifying the <code class="docutils literal notranslate"><span class="pre">ram_request_megabytes</span></code> field to a higher value such as 30000 in the <code class="docutils literal notranslate"><span class="pre">start_file_scan</span></code> method to ensure that the file scan job has enough memory to run.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">domain</span><span class="o">=&lt;</span><span class="n">CLUSTER_URL</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=&lt;</span><span class="n">API_KEY</span><span class="o">&gt;</span><span class="p">)</span>
@@ -165,6 +166,7 @@
 <span class="n">job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>To run a file scan on a private Huggingface model, you have to first create a <a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/custom_integration.html"><span class="std std-doc">custom integration</span></a> with a key set to HUGGINGFACE_API_TOKEN and the value set to your Huggingface API token. You can find your Huggingface API token on your <a class="reference external" href="https://huggingface.co/settings/tokens">Huggingface profile page</a>. Then during model registration, specify the integration ID as an argument to the <code class="docutils literal notranslate"><span class="pre">register_model</span></code> method. From there, start a file scan on the model as you would for a public model.</p>
 </section>
 <section id="getting-the-results-of-a-file-scan">
 <h2>Getting the results of a file scan<a class="headerlink" href="#getting-the-results-of-a-file-scan" title="Permalink to this heading"></a></h2>
@@ -214,6 +216,7 @@
 <section id="related-topics">
 <h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
 <p><a class="reference internal" href="../creating_projects/creating_a_project.html"><span class="std std-doc">Creating a Project</span></a><br />
+<a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/custom_integration.html"><span class="std std-doc">Custom Integrations</span></a><br />
 <a class="reference internal" href="registering_model_datasets.html"><span class="std std-doc">Registering Models,  Datasets, and Predictions</span></a></p>
 </section>
 </section>

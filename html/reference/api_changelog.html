@@ -55,7 +55,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.3.0
+                2.4.3-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -103,13 +103,19 @@
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#api-versioning">API Versioning</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">2.3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">2.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">2.1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ga">2.0 GA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#about-api-versions">About API versions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#support-period-for-ga-rest-api-endpoints">Support period for GA REST API endpoints</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ga">2.0 GA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#related-topics">Related Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="versions.html">Versioning and compatibility</a></li>
 <li class="toctree-l1"><a class="reference internal" href="legal.html">Robust Intelligence Terms and Conditions</a></li>
 </ul>
 
@@ -139,23 +145,60 @@
              
   <section id="api-changelog">
 <h1>API Changelog<a class="headerlink" href="#api-changelog" title="Permalink to this heading"></a></h1>
-<section id="api-versioning">
-<h2>API Versioning<a class="headerlink" href="#api-versioning" title="Permalink to this heading"></a></h2>
-<p>Robust Intelligence aims to provide a stable API that is backwards compatible. To minimize the impact of any necessary breaking changes, we categorize our endpoints as either beta or versioned. The beta endpoints may be subject to breaking changes, while the versioned endpoints are guaranteed to be backwards compatible until deprecation. The version of an endpoint can be identified via the URI (v1/projects vs v1-beta/integrations).</p>
-<p>A v1-beta endpoint may be subject to breaking changes. These are typically new features, which may be subject to further optimization.</p>
-<p>A major version endpoint (v1, v2, etc.) will not be subject to breaking changes. Once an endpoint has a version upgrade, i.e. from v1 to v2, both versions will be supported for 6 months to allow time for transitioning to the upgraded endpoint. After these 6 months, the older version will be marked deprecated and removed.</p>
+<section id="about-api-versions">
+<h2>About API versions<a class="headerlink" href="#about-api-versions" title="Permalink to this heading"></a></h2>
+<div class="admonition-note admonition">
+<p class="admonition-title">Note</p>
+<p>This page applies only to REST API versioning.
+For SDK and product versioning, see
+<a class="reference internal" href="versions.html"><span class="std std-doc">Versioning and compatibility</span></a>.</p>
+</div>
+<p>Robust Intelligence provides a stable API designed to remain usable
+without changes to your client code across multiple versions of the
+main Robust Intelligence product. API endpoints are versioned
+independently of the main Robust Intelligence product, with a given
+API version typically supporting many releases of the main product.</p>
+<p>To minimize the impact of breaking changes, we categorize our endpoint
+versions as general availability (“GA”) and beta:</p>
+<ul class="simple">
+<li><p>A GA endpoint version is fully tested and supported, and it’s
+guaranteed to be backward compatible until it’s deprecated. GA
+endpoints display their version number in the URI. For example, the
+v1 versioned integrations endpoint URI contains “v1”, as in,
+<code class="docutils literal notranslate"><span class="pre">v1/integrations</span></code></p></li>
+<li><p>Beta endpoint versions are subject to breaking changes.
+Backward compatibility is not guaranteed. A beta endpoint
+will display <code class="docutils literal notranslate"><span class="pre">-beta</span></code> in its URI. For example, a v1-beta
+integrations endpoint URI would contain <code class="docutils literal notranslate"><span class="pre">v1-beta/integrations</span></code></p></li>
+</ul>
+<section id="support-period-for-ga-rest-api-endpoints">
+<h3>Support period for GA REST API endpoints<a class="headerlink" href="#support-period-for-ga-rest-api-endpoints" title="Permalink to this heading"></a></h3>
+<p>GA-version API endpoints (for example, v1) are not subject to breaking
+changes while the version remains supported. When Robust Intelligence
+plans to end support for a REST API version, we will notify you at
+least 13 months before support for your API version ends. When a new
+API version becomes available, its preceding version will be supported
+for 13 months to give you time to transition to the upgraded API.
+After the transition period, the older version will be marked as
+deprecated and removed. Notifications and transition periods do not
+apply to APIs marked as “beta”.</p>
+</section>
 </section>
 <section id="id1">
-<h2>2.3<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
-<p>GET /v1-beta/file-scans api removed without deprecation. Use GET /v1-beta/file-scan-results instead.</p>
+<h2>2.4<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<p>No changes.</p>
 </section>
 <section id="id2">
-<h2>2.2<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<h2>2.3<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<p>GET /v1-beta/file-scans api removed without deprecation. Use GET /v1-beta/file-scan-results instead.</p>
+</section>
+<section id="id3">
+<h2>2.2<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
 <p>PUT /v1/agents/deactivate/{agentId.uuid} api path removed without deprecation. Use DELETE /v1/agents/{agentId.uuid} directly instead.</p>
 <p>/v1/firewall api paths are deprecated. They will not be supported from Robust Intelligence v2.4 onwards.</p>
 </section>
-<section id="id3">
-<h2>2.1<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<section id="id4">
+<h2>2.1<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">delta_lake</span></code> connection_info has been renamed to <code class="docutils literal notranslate"><span class="pre">databricks</span></code>. This loads a Databricks Delta Lake Table.
 Before:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -221,6 +264,10 @@ DELETE /v1/firewall/{firewallId.uuid} api sunset date '' can't be parsed for dep
 GET /v1/firewall/{firewallId.uuid} api sunset date '' can't be parsed for deprecated API: sunset header not found
 POST /v1/firewall api sunset date '' can't be parsed for deprecated API: sunset header not found
 -->
+</section>
+<section id="related-topics">
+<h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
+<p><a class="reference internal" href="versions.html"><span class="std std-doc">Versioning and compatibility</span></a></p>
 </section>
 </section>
 
