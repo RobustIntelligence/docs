@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AWS Data Stores &mdash; Robust Intelligence  documentation</title>
-      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css" />
+
+  
     <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../../../_static/js/html5shiv.min.js"></script>
@@ -55,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.4.3-rc.0
+                2.4.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -159,8 +161,12 @@ AWS Data Stores <a class="reference internal" href="../configuring_integrations.
 <ul class="simple">
 <li><p><a class="reference internal" href="#access-key-based-authentication"><span class="std std-ref">Access Key Based Authentication</span></a>; or</p></li>
 <li><p><a class="reference internal" href="#iam-role-based-authentication"><span class="std std-ref">IAM Role-Based Authentication</span></a></p></li>
+<li><p><a class="reference internal" href="#iam-cross-account-access"><span class="std std-ref">IAM Cross-Account Access</span></a></p></li>
 </ul>
 <p>See the relevant steps for your approach below.</p>
+<p>After you’ve configured your AWS data store integration, see
+<a class="reference internal" href="#using-the-aws-integration"><span class="std std-ref">Using the AWS Integration</span></a> for help
+registering your datasets and models.</p>
 <section id="access-key-based-authentication">
 <h3>Access Key-Based Authentication<a class="headerlink" href="#access-key-based-authentication" title="Permalink to this heading"></a></h3>
 <p>In order to configure an AWS Data Store that Robust Intelligence will
@@ -289,7 +295,7 @@ the integration is used.</p>
 <span class="w">    </span><span class="nt">&quot;Statement&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">{</span>
 <span class="w">            </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
-<span class="w">           </span><span class="nt">&quot;Principal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Principal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                </span><span class="nt">&quot;Federated&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:iam::111122223333:oidc-provider/oidc.eks.region-code.amazonaws.com/id/EXAMPLED539D4633E53DE1B71EXAMPLE&quot;</span>
 <span class="w">            </span><span class="p">},</span>
 <span class="w">            </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sts:AssumeRoleWithWebIdentity&quot;</span><span class="p">,</span>
@@ -312,6 +318,143 @@ the integration is used.</p>
 <li><p>Add your AWS integration through the
 <a class="reference internal" href="../configuring_integrations.html#add-an-integration-through-the-robust-intelligence-web-ui"><span class="std std-ref">Robust Intelligence UI: Workspace: Integrations: Add</span></a>.</p></li>
 </ol>
+</section>
+<section id="iam-cross-account-access">
+<h3>IAM Cross-Account Access<a class="headerlink" href="#iam-cross-account-access" title="Permalink to this heading"></a></h3>
+<p>If your data resides in an S3 bucket owned by a user other than the
+main AWS service account you use for your Robust Intelligence-to-S3 data
+integration, then you can use IAM cross-account access to load that
+data. The steps below explain how to set this up.</p>
+<div class="admonition-note admonition">
+<p class="admonition-title">Note</p>
+<p>The steps below are based on the
+<a class="reference external" href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-walkthroughs-managing-access-example2.html#access-policies-walkthrough-cross-account-permissions-acctA-tasks">cross-account permissions walkthrough</a> in the AWS documentation.</p>
+</div>
+<section id="overview">
+<h4>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h4>
+<p>In these instructions, we’ll use the following example account
+names:</p>
+<ul class="simple">
+<li><p><em>Account A</em> is the AWS account that owns the S3 bucket whose data you wish
+to load.</p></li>
+<li><p><em>Account B</em> is the AWS account of the user who wants to load data
+for test runs in Robust Intelligence. A user in this account will be
+set up as the Robust Intelligence integration service account as
+explained in <a class="reference internal" href="#iam-role-based-authentication"><span class="std std-ref">IAM Role-Based Authentication</span></a>.</p></li>
+</ul>
+</section>
+<section id="procedure">
+<h4>Procedure<a class="headerlink" href="#procedure" title="Permalink to this heading"></a></h4>
+<ol class="arabic">
+<li><p>Create a role in Account B and give it the permissions to be
+received from Account A:</p>
+<ul>
+<li><p>Sign in as an administrator of Account B (the account that wants
+access to the data).</p></li>
+<li><p>Create a role that will be granted the bucket access permissions
+received from Account A. Here we give our example role the name,
+<code class="docutils literal notranslate"><span class="pre">cross-account-rw-accountA-rime-blob-bucket-role</span></code>.</p></li>
+<li><p>Create an inline policy for this role, granting permission to
+perform the actions <code class="docutils literal notranslate"><span class="pre">s3:ListBucket</span></code>, <code class="docutils literal notranslate"><span class="pre">s3:GetBucketLocation</span></code>,
+<code class="docutils literal notranslate"><span class="pre">s3:GetObject</span></code>, <code class="docutils literal notranslate"><span class="pre">s3:PutObject</span></code>, and <code class="docutils literal notranslate"><span class="pre">s3:DeleteObject</span></code> on the
+bucket. Here, we use the example bucket ARN,
+<code class="docutils literal notranslate"><span class="pre">arn:aws:s3:::accountA-rime-blob-bucket</span></code>.
+Replace this with your bucket’s ARN.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;Statement&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">&quot;s3:ListBucket&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;s3:GetBucketLocation&quot;</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:s3:::accountA-rime-blob-bucket&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">&quot;s3:GetObject&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;s3:PutObject&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;s3:DeleteObject&quot;</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:s3:::accountA-rime-blob-bucket/*&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>You can view the role and its access policy in the AWS Console:
+<br />
+<img src="../../../../_static/images/iam-cross-acct-role.png" style="max-height:400px"></p></li>
+</ul>
+</li>
+<li><p>Create a bucket policy that grants Account B access to Account A’s bucket:</p>
+<ul>
+<li><p>Using the IAM user sign-in URL for Account A, first sign in to the
+AWS Management Console as an admin user.</p></li>
+<li><p>Attach a bucket policy (see example below) to the bucket to grant
+Account B permission to perform the actions <code class="docutils literal notranslate"><span class="pre">s3:ListBucket</span></code>,
+<code class="docutils literal notranslate"><span class="pre">s3:GetBucketLocation</span></code>, <code class="docutils literal notranslate"><span class="pre">s3:GetObject</span></code>, <code class="docutils literal notranslate"><span class="pre">s3:PutObject</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">s3:DeleteObject</span></code>. Specifically, grant the permissions to the
+role you defined earlier in Account B (which uses the example
+account ID, <code class="docutils literal notranslate"><span class="pre">111122223333</span></code>). Replace the example bucket ARN,
+<code class="docutils literal notranslate"><span class="pre">arn:aws:s3:::accountA-rime-blob-bucket</span></code>, with your bucket’s ARN.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;Statement&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Principal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;AWS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:iam::111122223333:role/cross-account-rw-accountA-rime-blob-bucket-role&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">&quot;s3:ListBucket&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;s3:GetBucketLocation&quot;</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:s3:::accountA-rime-blob-bucket&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Principal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;AWS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:iam::111122223333:role/cross-account-rw-accountA-rime-blob-bucket-role&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">&quot;s3:GetObject&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;s3:PutObject&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;s3:DeleteObject&quot;</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:s3:::accountA-rime-blob-bucket/*&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul>
+<li><p>Use the AWS CLI to verify that the policy is working and allows
+an admin user in Account B (user <code class="docutils literal notranslate"><span class="pre">AccountBadmin</span></code> in this
+example) to list the bucket’s contents. In Account B, switch
+to the IAM role you created for the bucket access (see the AWS
+instructions, <a class="reference external" href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-cli.html">Switching to an IAM role</a>).
+Then test that you can access Account A’s bucket. Here,
+we show the example bucket, <code class="docutils literal notranslate"><span class="pre">accountA-rime-blob-bucket</span></code>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>aws<span class="w"> </span>s3<span class="w"> </span>ls<span class="w"> </span>s3://accountA-rime-blob-bucket
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Create an AWS S3 Integration in Robust Intelligence using the role
+you just created. For instructions, see
+<a class="reference internal" href="#iam-role-based-authentication"><span class="std std-ref">IAM Role-Based Authentication</span></a>, above.</p>
+<p>Once you’ve created the integration, you can use it as explained in
+<a class="reference internal" href="#using-the-aws-integration"><span class="std std-ref">Using the AWS Integration</span></a>.</p>
+</li>
+</ol>
+</section>
 </section>
 </section>
 <section id="using-the-aws-integration">
