@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Configuring Stress Tests &mdash; Robust Intelligence  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+
+  
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
@@ -55,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.4.3-rc.0
+                2.5.2-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -77,8 +79,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="stress_tests_from_sdk.html">Creating a New Stress Test</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Configuring Stress Tests</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#template">Template</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test-run-config-object"><code class="docutils literal notranslate"><span class="pre">test_run_config</span></code> object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#attributes-of-the-test-run-config-object">Attributes of the <code class="docutils literal notranslate"><span class="pre">test_run_config</span></code> object</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#related-topics">Related Topics</a></li>
 </ul>
 </li>
@@ -142,10 +144,11 @@
              
   <section id="configuring-stress-tests">
 <h1>Configuring Stress Tests<a class="headerlink" href="#configuring-stress-tests" title="Permalink to this heading"></a></h1>
-<p>Configuration of Stress Testing is done through a JSON configuration
-file that you pass as an argument to the Python SDK when running ST.</p>
-<section id="template">
-<h2>Template<a class="headerlink" href="#template" title="Permalink to this heading"></a></h2>
+<p>Configuration of stress testing is done through a <em>test_run_config</em>
+that you pass as an argument to the Python SDK when you
+<a class="reference internal" href="stress_tests_from_sdk.html"><span class="std std-doc">start the stress test</span></a>.</p>
+<section id="test-run-config-object">
+<h2><code class="docutils literal notranslate"><span class="pre">test_run_config</span></code> object<a class="headerlink" href="#test-run-config-object" title="Permalink to this heading"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Run Name&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">REQUIRED</span><span class="p">)</span>
   <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -164,8 +167,10 @@ file that you pass as an argument to the Python SDK when running ST.</p>
 </pre></div>
 </div>
 </section>
-<section id="arguments">
-<h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this heading"></a></h2>
+<section id="attributes-of-the-test-run-config-object">
+<h2>Attributes of the <code class="docutils literal notranslate"><span class="pre">test_run_config</span></code> object<a class="headerlink" href="#attributes-of-the-test-run-config-object" title="Permalink to this heading"></a></h2>
+<p>The <em>test_run_config</em> for a stress test contains the following
+attributes:</p>
 <ul>
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">run_name</span></code></strong>: string, <em><strong>required</strong></em></p>
 <p>The name under which your run will appear in the UI.</p>
@@ -218,6 +223,7 @@ Stress Test run uses default parameters.</p>
 <a class="reference internal" href="../configuring_test_runs/configuring_runtime.html"><span class="std std-doc">Configuring Runtime Information</span></a><br />
 <a class="reference internal" href="../configuring_test_runs/configuring_test_categories.html"><span class="std std-doc">Configuring Test Categories</span></a><br />
 <a class="reference internal" href="../configuring_test_runs/configuring_test_suite.html"><span class="std std-doc">Configuring the Test Suite</span></a><br />
+<a class="reference internal" href="stress_tests_from_sdk.html"><span class="std std-doc">Creating a New Stress Test</span></a><br />
 <a class="reference internal" href="../preparing_your_models_and_datasets/registering_model_datasets.html"><span class="std std-doc">Registering Models,  Datasets, and Predictions</span></a></p>
 </section>
 </section>

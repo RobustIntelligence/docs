@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RI Text Multiclass Classification Walkthrough &mdash; Robust Intelligence  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+
+  
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
@@ -58,7 +60,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.4.3-rc.0
+                2.5.2-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -153,7 +155,7 @@
   <section id="RI-Text-Multiclass-Classification-Walkthrough">
 <h1><strong>RI Text Multiclass Classification Walkthrough</strong><a class="headerlink" href="#RI-Text-Multiclass-Classification-Walkthrough" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RI_Text_Classification_Walkthrough.ipynb">RI Text Multiclass Classification Walkthrough in Google Colab</a>.</p>
+<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/2.5-stable/notebooks/demo_notebooks/RI_Text_Classification_Walkthrough.ipynb">RI Text Multiclass Classification Walkthrough in Google Colab</a>.</p>
 </div></blockquote>
 <p>You are a data scientist working to maintain a large research library. The data science team has been tasked with implementing a research paper topic classification model and monitoring how that model performs over time. The performance of this model directly impacts the profits of the company. To ensure the data science team develops the best model and the performance of this model doesn’t degrade over time, the VP of Data Science purchases the RIME platform.</p>
 <p>In this Notebook Walkthrough, we will walkthrough 2 of RIME’s core products - <strong>AI Stress Testing</strong> and <strong>AI Continuous Testing</strong>.</p>
@@ -173,7 +175,7 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -185,14 +187,14 @@
 <span class="kn">from</span> <span class="nn">ri_public_examples.download_files</span> <span class="kn">import</span> <span class="n">download_files</span>
 
 <span class="n">download_files</span><span class="p">(</span><span class="s1">&#39;nlp/classification/arxiv-2.0&#39;</span><span class="p">,</span> <span class="s1">&#39;arxiv&#39;</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
 <section id="Establish-the-RIME-Client">
 <h2><strong>Establish the RIME Client</strong><a class="headerlink" href="#Establish-the-RIME-Client" title="Permalink to this heading"></a></h2>
 <p>To get started, provide the API credentials and the base domain/address of the RIME Cluster. You can generate and copy an API token from the API Access Tokens Page under Workspace settings. For the domain/address of the RIME Cluster, contact your admin.</p>
-<img alt="api.jpeg" src="https://www.dropbox.com/s/bpz7vb8j6a7zgwu/img_1_api.jpeg?dl=0" />
+<p><img alt="Image of getting an API token" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/api_access_tokens.png" /><img alt="Image of creating an API token" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/create_token.png" /></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -201,7 +203,7 @@
 <span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
 <span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">API_TOKEN</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -223,7 +225,7 @@
     <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
     <span class="n">model_task</span><span class="o">=</span><span class="s1">&#39;MODEL_TASK_MULTICLASS_CLASSIFICATION&#39;</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Go back to the UI to see the Arxiv Project</strong></p>
@@ -255,7 +257,7 @@
 <span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
     <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;arxiv/data/preds.val_0.jsonl.gz&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p>Once the data and model are uploaded to S3, we can register them to RIME. Once they’re registered, we can refer to these resources using their RIME-generated ID’s.</p>
@@ -292,7 +294,7 @@
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
     <span class="n">eval_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">eval_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -312,7 +314,7 @@
     <span class="p">},</span>
     <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span><span class="p">,</span>
     <span class="s2">&quot;run_time_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;random_seed&quot;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+        <span class="s2">&quot;random_seed&quot;</span><span class="p">:</span> <span class="s2">&quot;42&quot;</span><span class="p">,</span>
     <span class="p">},</span>
     <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
         <span class="s2">&quot;TEST_CATEGORY_TYPE_ADVERSARIAL&quot;</span><span class="p">,</span>
@@ -329,7 +331,7 @@
     <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -343,7 +345,7 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_run</span> <span class="o">=</span> <span class="n">stress_job</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
 <span class="n">test_run</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <section id="Analyzing-the-Results">
@@ -351,16 +353,16 @@
 <section id="Subset-Performance-Tests">
 <h4>Subset Performance Tests<a class="headerlink" href="#Subset-Performance-Tests" title="Permalink to this heading"></a></h4>
 <p>Here are the results of the Subset Performance tests. These tests can be thought as more detailed performance tests that identify subsets of underperformance. These tests help ensure that the model works equally well across different groups.</p>
-<img alt="subset.png" src="https://drive.google.com/uc?id=1m-YaOEv7JJmxGRnaGUUZ-wT7Sy6D4k2F" />
-<p>Below we are exploring the “Subset Macro Precision” test cases for the text metadata feature “AverageTokenLength”. We can see that even though the model has a Macro Precision of 0.53, it performs poorly on certain subsets, especially those with lower average token lengths.</p>
-<img alt="precision.png" src="https://drive.google.com/uc?id=1tSBMtZy-6qEnsh2xV6u98Zr3YBqdmmCV" />
+<img alt="Image of ST subset results on a test of a text classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_text_classification_walkthrough/text_st_subset.png" />
+<p>Below we are exploring the “Subset Macro Precision” test cases for the text metadata feature “text.DetectedLanguage”. We can see that even though the model has a Macro Precision of 0.53, it performs poorly on certain subsets.</p>
+<img alt="Image of ST subset macro precision results on a test of a text classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_text_classification_walkthrough/text_st_macro_precis.png" />
 </section>
 <section id="Transformation-Tests">
 <h4>Transformation Tests<a class="headerlink" href="#Transformation-Tests" title="Permalink to this heading"></a></h4>
 <p>Here are the results of the Transformation tests. These tests can be thought as ways to test your models response to augmented text data. They help to make sure that your model is invariant to such changes in your data.</p>
-<img alt="transform.png" src="https://drive.google.com/uc?id=1DIwzsn7lxm6DzkeYavLQVV1dmvDLdBUi" />
-<p>Below we are exploring a transformation test that changes the original text to upper-case text. We see that this transformation causes the original class’s predicted score to change by 0.70. As a result, the model predicts an entirely new class for the text and misclassifies it.</p>
-<img alt="replacement.png" src="https://drive.google.com/uc?id=1EwNbC9RPy2lhvUDiI2uswN5kKmkGn3Eo" />
+<img alt="Image of ST value-transformation results on a test of a text classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_text_classification_walkthrough/text_transformations.png" />
+<p>Below we are exploring a transformation test that changes the original text to upper-case text. We see that this transformation causes the original class’s predicted score to change by 0.52. As a result, the model predicts an entirely new class for the text and misclassifies it.</p>
+<img alt="Image of ST transformation test warnings for a text classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_text_classification_walkthrough/text_transform_warn.png" />
 </section>
 </section>
 <section id="Programmatically-Querying-the-Results">
@@ -375,7 +377,7 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_run_result</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_result_df</span><span class="p">()</span>
 <span class="n">test_run_result</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;Arxiv_Test_Run_Results.csv&quot;</span><span class="p">)</span>
 <span class="n">test_run_result</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Access detailed test results at each individual test cases level</strong></p>
@@ -386,7 +388,7 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_case_result</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_cases_df</span><span class="p">()</span>
 <span class="n">test_case_result</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;Arxiv_Test_Case_Results.csv&quot;</span><span class="p">)</span>
 <span class="n">test_case_result</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Access detailed test results for a given test batch</strong></p>
@@ -396,7 +398,7 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subset_macro_f1</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_batch</span><span class="p">(</span><span class="s2">&quot;subset_performance:subset_macro_f1&quot;</span><span class="p">)</span>
 <span class="n">subset_macro_f1</span><span class="o">.</span><span class="n">get_test_cases_df</span><span class="p">()</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -417,7 +419,7 @@
                             <span class="p">])</span>
 
 <span class="n">ct_instance</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_ct</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -452,7 +454,7 @@
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
     <span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">prod_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Get Continuous Testing</strong></p>
@@ -461,7 +463,7 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_instance</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_ct_for_project</span><span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Run Continuous Testing over Batch of Data</strong></p>
@@ -472,7 +474,7 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">ct_instance</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">ct_instance</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Wait for a couple minutes and your results will appear in the UI</strong></p>
@@ -488,14 +490,14 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">events</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">ct_instance</span><span class="o">.</span><span class="n">list_monitors</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">list_detected_events</span><span class="p">()]</span>
 <span class="n">events_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">events</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;project_id&quot;</span><span class="p">,</span> <span class="s2">&quot;firewall_id&quot;</span><span class="p">,</span> <span class="s2">&quot;event_object_id&quot;</span><span class="p">,</span> <span class="s2">&quot;description_html&quot;</span><span class="p">,</span> <span class="s2">&quot;last_update_time&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">events_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
 <section id="CT-Overview">
 <h2><strong>CT Overview</strong><a class="headerlink" href="#CT-Overview" title="Permalink to this heading"></a></h2>
 <p>The Overview page is the mission control for your model’s production deployment health. In it, you can see the status of continuous test runs and their metrics change over time.</p>
-<img alt="img_5" src="https://drive.google.com/uc?id=1bd17xeRw81iziUZJqxeFyVP9T-O1LljZ" />
+<img alt="Image of a graphed test result history for a text classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_text_classification_walkthrough/text_ct_perf.png" />
 </section>
 <section id="CT-Results">
 <h2><strong>CT Results</strong><a class="headerlink" href="#CT-Results" title="Permalink to this heading"></a></h2>
@@ -506,13 +508,13 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_instance</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <section id="Analyzing-CT-Results">
 <h3><strong>Analyzing CT Results</strong><a class="headerlink" href="#Analyzing-CT-Results" title="Permalink to this heading"></a></h3>
 <p><strong>Failing Rows Rate Increases For a Time Period</strong> - In the below image, we can see that the failing rows rate has increased in the middle of the week, from when the model was first deployed.</p>
-<img alt="img_6" src="https://drive.google.com/uc?id=1ebqpuNvMwp9eMCJ7PX9FWf_dpj3FAtFn" />
+<img alt="Image of a graph showing an increase in the failing rows rate for a text classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_text_classification_walkthrough/text_failing_rows.png" />
 </section>
 </section>
 </section>

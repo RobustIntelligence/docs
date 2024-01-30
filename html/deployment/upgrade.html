@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Upgrade &mdash; Robust Intelligence  documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -55,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.4.3-rc.0
+                2.5.2-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -94,11 +96,13 @@
 <li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Upgrade</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#general-upgrade-steps">General upgrade steps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#upgrading-from-v2-0-to-v2-1">Upgrading from v2.0 to v2.1</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="requirements/data_access_permissions.html">Data Access Permissions</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#upgrading-from-v2-2-to-v2-3">Upgrading from v2.2 to v2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrading-from-v2-3-to-v2-4">Upgrading from v2.3 to v2.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#verifying-an-upgrade">Verifying an Upgrade</a></li>
 </ul>
 </li>
@@ -140,11 +144,14 @@
              
   <section id="upgrade">
 <h1>Upgrade<a class="headerlink" href="#upgrade" title="Permalink to this heading"></a></h1>
-<p>If applicable, follow the version-specific steps below for your upgrade.</p>
-<p>Otherwise, the general upgrade process is described below.</p>
+<p>Follow the version-specific steps shown below for your upgrade path.
+For paths not listed below, follow the general upgrade steps.</p>
+<section id="general-upgrade-steps">
+<h2>General upgrade steps<a class="headerlink" href="#general-upgrade-steps" title="Permalink to this heading"></a></h2>
 <ol class="arabic">
 <li><p>Point your local <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> to your K8s cluster and namespace.</p></li>
-<li><p>If available, retrieve the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file for your agent.</p>
+<li><p>If available, retrieve the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file for your Robust
+Intelligence Model Testing Agent.</p>
 <ol class="loweralpha">
 <li><p>Alternatively, you can save the current Helm values to a file like so:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">get</span> <span class="n">values</span> <span class="n">rime</span><span class="o">-</span><span class="n">agent</span> <span class="o">|</span> <span class="n">awk</span> <span class="s1">&#39;!/USER-SUPPLIED VALUES/&#39;</span> <span class="o">&gt;</span> <span class="n">values</span><span class="o">.</span><span class="n">yaml</span>
@@ -153,7 +160,10 @@
 </li>
 </ol>
 </li>
-<li><p>Edit the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file by changing the image tag in the fields <code class="docutils literal notranslate"><span class="pre">rimeAgent.images.agentImage.name</span></code> and <code class="docutils literal notranslate"><span class="pre">rimeAgent.images.modelTestJobImage.name</span></code> to match the new RIME version.</p>
+<li><p>Edit the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file by changing the image tag in the
+fields <code class="docutils literal notranslate"><span class="pre">rimeAgent.images.agentImage.name</span></code> and
+<code class="docutils literal notranslate"><span class="pre">rimeAgent.images.modelTestJobImage.name</span></code> to match the new Robust
+Intelligence version.</p>
 <ol class="loweralpha">
 <li><p>The version number can be found by navigating to the <strong>Organization Settings</strong> page and clicking on the <strong>Manage Agent Setup</strong> tab.</p>
 <p>Use this version number (without the <code class="docutils literal notranslate"><span class="pre">v</span></code> prefix) for the image updates.</p>
@@ -179,6 +189,7 @@ helm upgrade rime-agent robustintelligence/rime-agent --version $RI_VERSION --va
 </div>
 </li>
 </ol>
+</section>
 <section id="upgrading-from-v2-0-to-v2-1">
 <h2>Upgrading from v2.0 to v2.1<a class="headerlink" href="#upgrading-from-v2-0-to-v2-1" title="Permalink to this heading"></a></h2>
 <ol class="arabic">
@@ -203,7 +214,7 @@ If permission related inputs are needed, you can find the same inputs you used i
 <h2>Upgrading from v2.2 to v2.3<a class="headerlink" href="#upgrading-from-v2-2-to-v2-3" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p>Point your local <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> to your K8s cluster and namespace.</p></li>
-<li><p>Delete <code class="docutils literal notranslate"><span class="pre">rimejobs.rbst.io</span></code> CRD.</p></li>
+<li><p>Delete the <code class="docutils literal notranslate"><span class="pre">rimejobs.rbst.io</span></code> CRD.</p></li>
 </ol>
 <blockquote>
 <div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">delete</span> <span class="n">crd</span> <span class="n">rimejobs</span><span class="o">.</span><span class="n">rbst</span><span class="o">.</span><span class="n">io</span>
@@ -216,7 +227,33 @@ If permission related inputs are needed, you can find the same inputs you used i
 </pre></div>
 </div>
 </li>
-<li><p>Follow step 2 and 3 of the general upgrade process.</p></li>
+<li><p>Follow steps 2 and 3 of the general upgrade process.</p></li>
+<li><p>Install the updated Helm release.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>helm repo update
+helm install rime-agent robustintelligence/rime-agent --version $RI_VERSION --values ./values.yaml
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="upgrading-from-v2-3-to-v2-4">
+<h2>Upgrading from v2.3 to v2.4<a class="headerlink" href="#upgrading-from-v2-3-to-v2-4" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Point your local <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> to your K8s cluster and namespace.</p></li>
+<li><p>Delete the <code class="docutils literal notranslate"><span class="pre">rimejobs.rbst.io</span></code> CRD.</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">delete</span> <span class="n">crd</span> <span class="n">rimejobs</span><span class="o">.</span><span class="n">rbst</span><span class="o">.</span><span class="n">io</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic" start="3">
+<li><p>Uninstall the agent in your environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">uninstall</span> <span class="n">rime</span><span class="o">-</span><span class="n">agent</span>
+</pre></div>
+</div>
+</li>
+<li><p>Follow steps 2 and 3 of the general upgrade process.</p></li>
 <li><p>Install the updated Helm release.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>helm repo update
 helm install rime-agent robustintelligence/rime-agent --version $RI_VERSION --values ./values.yaml
@@ -228,12 +265,12 @@ helm install rime-agent robustintelligence/rime-agent --version $RI_VERSION --va
 <section id="verifying-an-upgrade">
 <h2>Verifying an Upgrade<a class="headerlink" href="#verifying-an-upgrade" title="Permalink to this heading"></a></h2>
 <ol class="arabic">
-<li><p>Verify that the <code class="docutils literal notranslate"><span class="pre">rime-agent</span></code> Helm chart version matches the new RIME version:</p>
+<li><p>Verify that the <code class="docutils literal notranslate"><span class="pre">rime-agent</span></code> Helm chart version matches the new Robust Intelligence version:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="nb">list</span>
 </pre></div>
 </div>
 </li>
-<li><p>Verify that the Docker image versions match the new RIME version:</p>
+<li><p>Verify that the Docker image versions match the new Robust Intelligence version:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">describe</span> <span class="n">deployment</span> <span class="n">rime</span><span class="o">-</span><span class="n">agent</span><span class="o">-</span><span class="n">launcher</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">Image</span>
 </pre></div>
 </div>

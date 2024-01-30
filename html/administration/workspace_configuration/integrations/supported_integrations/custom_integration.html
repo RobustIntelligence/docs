@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Custom Integrations &mdash; Robust Intelligence  documentation</title>
-      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css" />
+
+  
     <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../../../_static/js/html5shiv.min.js"></script>
@@ -55,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.4.3-rc.0
+                2.5.2-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -202,7 +204,7 @@ we’ll run a stress test with it.</p>
 the data loading logic. This example parses data from an Amazon S3
 bucket, but a custom data loader can be written to handle data from
 any source.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&quot;&quot;&quot;Data loader file for news file.&quot;&quot;&quot;
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>&quot;&quot;&quot;Data loader file for news file.&quot;&quot;&quot;
 import boto3
 from datetime import datetime
 import pandas as pd
@@ -210,7 +212,11 @@ import pandas as pd
 BUCKET_NAME = &quot;rime-datasets&quot;
 ​
 ​
-def get_news_data(start_time: int, end_time: int, integration_dict: dict) -&gt; pd.DataFrame:
+def get_news_data(
+    start_time: datetime, # REQUIRED
+    end_time: datetime, # REQUIRED
+    integration_dict: dict,
+) -&gt; pd.DataFrame:
     start_time = datetime.fromtimestamp(start_time)
     end_time = datetime.fromtimestamp(end_time)
 ​

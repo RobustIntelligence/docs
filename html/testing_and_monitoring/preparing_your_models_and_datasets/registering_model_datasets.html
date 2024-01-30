@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registering Models, Datasets, and Predictions &mdash; Robust Intelligence  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+
+  
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
@@ -55,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.4.3-rc.0
+                2.5.2-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -248,7 +250,13 @@ may take a few seconds.  If you wish to skip validation, set the <code class="do
 <section id="passing-secrets-to-the-model">
 <h3>Passing secrets to the model<a class="headerlink" href="#passing-secrets-to-the-model" title="Permalink to this heading"></a></h3>
 <p>If access credentials are required by your model at runtime, you can pass them in as model endpoint integration. A model endpoint integration specifies secrets as key-value pairs, that are made available to the model during runtime, when it is making a prediction.</p>
-<p>To do so, you would need to first create an integration in RIME UI and specify the secrets there. Then, the integration’s uuid must be passed as the <code class="docutils literal notranslate"><span class="pre">model_endpoint_integration_id</span></code> parameter when registering the model. The model’s <a class="reference internal" href="defining_model_interface.html#step-6-passing-secrets-to-the-model"><span class="std std-ref">predict interface</span></a> would then need to specify an <code class="docutils literal notranslate"><span class="pre">integration_dict</span></code> parameter, which would receive the secrets as key-value pairs.</p>
+<p>To do so, you would need to first create an integration in the Robust
+Intelligence UI and specify the secrets there. Then, the integration’s
+uuid must be passed as the <code class="docutils literal notranslate"><span class="pre">model_endpoint_integration_id</span></code> parameter
+when registering the model. The model’s
+<a class="reference internal" href="defining_model_interface.html#step-6-passing-secrets-to-the-model"><span class="std std-ref">predict interface</span></a>
+would then need to specify an <code class="docutils literal notranslate"><span class="pre">integration_dict</span></code> parameter, which
+would receive the secrets as key-value pairs.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&lt;NAME&gt;&quot;</span><span class="p">,</span>
     <span class="n">model_config</span><span class="o">=</span><span class="p">{</span>

@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Python SDK Reference &mdash; Robust Intelligence  documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -55,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.4.3-rc.0
+                2.5.2-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -179,6 +181,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.update_model_profiling_config"><code class="docutils literal notranslate"><span class="pre">Project.update_model_profiling_config()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.update_data_profiling_config"><code class="docutils literal notranslate"><span class="pre">Project.update_data_profiling_config()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.update_test_suite_config"><code class="docutils literal notranslate"><span class="pre">Project.update_test_suite_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Project.update_run_time_info"><code class="docutils literal notranslate"><span class="pre">Project.update_run_time_info()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#rime_sdk.Job"><code class="docutils literal notranslate"><span class="pre">Job</span></code></a><ul>
@@ -299,7 +302,8 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#rime_sdk.GenerativeFirewall"><code class="docutils literal notranslate"><span class="pre">GenerativeFirewall</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.GenerativeFirewall.validate"><code class="docutils literal notranslate"><span class="pre">GenerativeFirewall.validate()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.GenerativeFirewall.upload_file"><code class="docutils literal notranslate"><span class="pre">GenerativeFirewall.upload_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.GenerativeFirewall.get_config"><code class="docutils literal notranslate"><span class="pre">GenerativeFirewall.get_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.GenerativeFirewall.get_effective_config"><code class="docutils literal notranslate"><span class="pre">GenerativeFirewall.get_effective_config()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.GenerativeFirewall.update_config"><code class="docutils literal notranslate"><span class="pre">GenerativeFirewall.update_config()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.GenerativeFirewall.login"><code class="docutils literal notranslate"><span class="pre">GenerativeFirewall.login()</span></code></a></li>
 </ul>
@@ -384,7 +388,7 @@ Enable/disable SSL hostname verification.</p></li>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Client.create_project">
-<span class="sig-name descname"><span class="pre">create_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_case</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ethical_consideration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profiling_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">general_access_role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ACTOR_ROLE_NONE'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.Project" title="rime_sdk.project.Project"><span class="pre">Project</span></a></span></span><a class="headerlink" href="#rime_sdk.Client.create_project" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_case</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ethical_consideration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profiling_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">general_access_role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ACTOR_ROLE_NONE'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_time_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.Project" title="rime_sdk.project.Project"><span class="pre">Project</span></a></span></span><a class="headerlink" href="#rime_sdk.Client.create_project" title="Permalink to this definition"></a></dt>
 <dd><p>Create a new RIME Project.</p>
 <p>Projects enable you to organize Stress Test runs.
 A natural way to organize Stress Test runs is to create a Project for each
@@ -413,6 +417,8 @@ runs.</p></li>
 <li><p><strong>general_access_role</strong> – Optional[str],
 Project roles assigned to the workspace members.
 Allowed Values: ACTOR_ROLE_USER, ACTOR_ROLE_VIEWER, ACTOR_ROLE_NONE.</p></li>
+<li><p><strong>run_time_info</strong> – Optional[dict]
+Default runtime information for all test runs in the project.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -763,7 +769,6 @@ unique identifier <cite>model_uuid</cite> is registered.</p>
     <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="s2">&quot;bar&quot;</span><span class="p">},</span>
     <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_uuid</span><span class="p">,</span>
     <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;My Stress Test Run&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;model_task&quot;</span><span class="p">:</span> <span class="s2">&quot;Binary Classification&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -2519,6 +2524,26 @@ Data profiling configuration with which to update the project.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>test_suite_config</strong> – dict
 Test suite configuration with which to update the project.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – This error is generated when the request to the Project service fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.Project.update_run_time_info">
+<span class="sig-name descname"><span class="pre">update_run_time_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">run_time_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#rime_sdk.Project.update_run_time_info" title="Permalink to this definition"></a></dt>
+<dd><p>Update the runtime information object that specifies how this Project runs.</p>
+<p>If no runtime information is provided when the test is created or started,
+then this runtime information is used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>run_time_info</strong> – dict
+Runtime information object with which to update the Project.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
@@ -4438,20 +4463,21 @@ The amount of time in seconds to wait for responses from the firewall.</p></li>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">firewall</span> <span class="o">=</span> <span class="n">GenerativeFirewall</span><span class="p">(</span><span class="s2">&quot;my_vpc.rime.com&quot;</span><span class="p">,</span> <span class="s2">&quot;api-key&quot;</span><span class="p">)</span>   <span class="c1"># using api-key</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">firewall</span> <span class="o">=</span> <span class="n">GenerativeFirewall</span><span class="p">(</span>
+    <span class="s2">&quot;my_vpc.rime.com&quot;</span><span class="p">,</span> <span class="s2">&quot;api-key&quot;</span><span class="p">)</span>   <span class="c1"># using api-key</span>
 <span class="n">firewall</span> <span class="o">=</span> <span class="n">GenerativeFirewall</span><span class="p">(</span><span class="s2">&quot;my_vpc.rime.com&quot;</span><span class="p">,</span> <span class="n">auth</span><span class="o">-</span><span class="n">token</span><span class="o">=</span><span class="s2">&quot;auth-token&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.GenerativeFirewall.validate">
-<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contexts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#rime_sdk.GenerativeFirewall.validate" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_input_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contexts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#rime_sdk.GenerativeFirewall.validate" title="Permalink to this definition"></a></dt>
 <dd><p>Validate model input and/or output text.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>input</strong> – Optional[str]
+<li><p><strong>user_input_text</strong> – Optional[str]
 The user input text to validate.</p></li>
-<li><p><strong>output</strong> – Optional[str]
+<li><p><strong>output_text</strong> – Optional[str]
 The model output text to validate.</p></li>
 <li><p><strong>contexts</strong> – Optional[List[str]]
 The context documents used as a model input. In a RAG application the
@@ -4460,11 +4486,11 @@ augment the LLM’s response.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of validation results, each of which is a dictionary of rule
-results for the input or output text.</p>
+<dd class="field-even"><p>“input_results” will contain all
+results for input rules, and “output_results” will contain all results for output rules.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List[dict]</p>
+<dd class="field-odd"><p>A dictionary of results keyed by validation type</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>ValueError</strong> – If neither input nor output text is provided or when there was an error
@@ -4473,59 +4499,65 @@ results for the input or output text.</p>
 </dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span>
-    <span class="nb">input</span><span class="o">=</span><span class="s2">&quot;Hello!&quot;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;Hi, how can I help you?&quot;</span>
+    <span class="n">user_input_text</span><span class="o">=</span><span class="s2">&quot;Hello!&quot;</span><span class="p">,</span> <span class="n">output_text</span><span class="o">=</span><span class="s2">&quot;Hi, how can I help you?&quot;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="rime_sdk.GenerativeFirewall.upload_file">
-<span class="sig-name descname"><span class="pre">upload_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.GenerativeFirewall.upload_file" title="Permalink to this definition"></a></dt>
-<dd><p>Upload a file to make it accessible to the RI firewall.</p>
-<p>The uploaded file is stored in the firewall in a blob store
-using its file name.</p>
+<dt class="sig sig-object py" id="rime_sdk.GenerativeFirewall.get_config">
+<span class="sig-name descname"><span class="pre">get_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#rime_sdk.GenerativeFirewall.get_config" title="Permalink to this definition"></a></dt>
+<dd><p>Get the configuration of the Firewall.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>file_path</strong> – Union[Path, str]
-Path to the file to be uploaded to firewall’s blob store.</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The firewall configuration.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A reference to the uploaded file’s location in the blob store. This
-reference can be used to refer to that object when writing firewall
-configs. Please store this reference for future access to the file.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>FileNotFoundError</strong> – When the path <code class="docutils literal notranslate"><span class="pre">file_path</span></code> does not exist.</p></li>
-<li><p><strong>IOError</strong> – When <code class="docutils literal notranslate"><span class="pre">file_path</span></code> is not a file.</p></li>
-<li><p><strong>ValueError</strong> – When there was an error in obtaining a blobstore location from the
-    firewall backend or in uploading <code class="docutils literal notranslate"><span class="pre">file_path</span></code> to firewall’s blob
-    store. When the file upload fails, the incomplete file is
-    NOT automatically deleted.</p></li>
-</ul>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">uploaded_file_path</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.GenerativeFirewall.get_effective_config">
+<span class="sig-name descname"><span class="pre">get_effective_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#rime_sdk.GenerativeFirewall.get_effective_config" title="Permalink to this definition"></a></dt>
+<dd><p>Get the effective configuration of the Firewall.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The firewall effective configuration.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">firewall</span><span class="o">.</span><span class="n">get_effective_config</span><span class="p">()</span>
 </pre></div>
 </div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.GenerativeFirewall.update_config">
-<span class="sig-name descname"><span class="pre">update_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">firewall_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#rime_sdk.GenerativeFirewall.update_config" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">firewall_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#rime_sdk.GenerativeFirewall.update_config" title="Permalink to this definition"></a></dt>
 <dd><p>Update the firewall configuration.</p>
 <p>The update is performed via a PATCH request by merging the provided
 <cite>firewall_config</cite> with the existing config, meaning that any fields not
 explicitly provided in <cite>firewall_config</cite> will not be overwritten.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>firewall_config</strong> – dict
-A dictionary containing the firewall configuration components to update.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>firewall_config</strong> – dict
+A dictionary containing the firewall configuration components to update.</p></li>
+<li><p><strong>overwrite</strong> – bool
+A flag determining whether the config should be overwritten with exactly
+the new config provided, as opposed to patching the existing config.
+Default is False.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The updated firewall configuration.</p>

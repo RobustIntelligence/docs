@@ -11,8 +11,13 @@ To integrate Robust Intelligence with an AWS Data Store, you must configure one 
 
 - [Access Key Based Authentication](#access-key-based-authentication); or
 - [IAM Role-Based Authentication](#iam-role-based-authentication)
+- [IAM Cross-Account Access](#iam-cross-account-access)
 
 See the relevant steps for your approach below.
+
+After you've configured your AWS data store integration, see
+[Using the AWS Integration](#using-the-aws-integration) for help
+registering your datasets and models.
 
 ### Access Key-Based Authentication
 
@@ -159,7 +164,7 @@ the same way when deploying the
         "Statement": [
             {
                 "Effect": "Allow",
-               "Principal": {
+                "Principal": {
                     "Federated": "arn:aws:iam::111122223333:oidc-provider/oidc.eks.region-code.amazonaws.com/id/EXAMPLED539D4633E53DE1B71EXAMPLE"
                 },
                 "Action": "sts:AssumeRoleWithWebIdentity",
@@ -182,6 +187,137 @@ the same way when deploying the
 1. Add your AWS integration through the
    [Robust Intelligence UI: Workspace: Integrations: Add](../configuring_integrations.md#add-an-integration-through-the-robust-intelligence-web-ui).
 
+
+### IAM Cross-Account Access
+
+If your data resides in an S3 bucket owned by a user other than the
+main AWS service account you use for your Robust Intelligence-to-S3 data
+integration, then you can use IAM cross-account access to load that
+data. The steps below explain how to set this up.
+
+```{admonition} Note
+The steps below are based on the
+[cross-account permissions walkthrough](https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-walkthroughs-managing-access-example2.html#access-policies-walkthrough-cross-account-permissions-acctA-tasks) in the AWS documentation.
+```
+
+#### Overview
+
+In these instructions, we'll use the following example account
+names:
+
+- *Account A* is the AWS account that owns the S3 bucket whose data you wish
+  to load.
+
+- *Account B* is the AWS account of the user who wants to load data
+  for test runs in Robust Intelligence. A user in this account will be
+  set up as the Robust Intelligence integration service account as
+  explained in [IAM Role-Based Authentication](#iam-role-based-authentication).
+
+#### Procedure
+
+1. Create a role in Account B and give it the permissions to be
+   received from Account A:
+   - Sign in as an administrator of Account B (the account that wants
+     access to the data).
+   - Create a role that will be granted the bucket access permissions
+     received from Account A. Here we give our example role the name,
+     `cross-account-rw-accountA-rime-blob-bucket-role`.
+   - Create an inline policy for this role, granting permission to
+     perform the actions `s3:ListBucket`, `s3:GetBucketLocation`,
+     `s3:GetObject`, `s3:PutObject`, and `s3:DeleteObject` on the
+     bucket. Here, we use the example bucket ARN,
+     `arn:aws:s3:::accountA-rime-blob-bucket`.
+     Replace this with your bucket's ARN.
+
+     ```json
+     {
+         "Version": "2012-10-17",
+         "Statement": [
+             {
+                 "Effect": "Allow",
+                 "Action": [
+                     "s3:ListBucket",
+                     "s3:GetBucketLocation"
+                 ],
+                 "Resource": "arn:aws:s3:::accountA-rime-blob-bucket"
+             },
+             {
+                 "Effect": "Allow",
+                 "Action": [
+                     "s3:GetObject",
+                     "s3:PutObject",
+                     "s3:DeleteObject"
+                 ],
+                 "Resource": "arn:aws:s3:::accountA-rime-blob-bucket/*"
+             }
+         ]
+     }
+     ```
+
+   - You can view the role and its access policy in the AWS Console:
+     <br />
+     <img src="../../../../_static/images/iam-cross-acct-role.png" style="max-height:400px">
+
+2. Create a bucket policy that grants Account B access to Account A's bucket:
+   - Using the IAM user sign-in URL for Account A, first sign in to the
+     AWS Management Console as an admin user.
+   - Attach a bucket policy (see example below) to the bucket to grant
+     Account B permission to perform the actions `s3:ListBucket`,
+     `s3:GetBucketLocation`, `s3:GetObject`, `s3:PutObject`, and
+     `s3:DeleteObject`. Specifically, grant the permissions to the
+     role you defined earlier in Account B (which uses the example
+     account ID, `111122223333`). Replace the example bucket ARN,
+     `arn:aws:s3:::accountA-rime-blob-bucket`, with your bucket's ARN.
+
+     ```json
+     {
+         "Version": "2012-10-17",
+         "Statement": [
+             {
+                 "Principal": {
+                     "AWS": "arn:aws:iam::111122223333:role/cross-account-rw-accountA-rime-blob-bucket-role"
+                 },
+                 "Effect": "Allow",
+                 "Action": [
+                     "s3:ListBucket",
+                     "s3:GetBucketLocation"
+                 ],
+                 "Resource": "arn:aws:s3:::accountA-rime-blob-bucket"
+             },
+             {
+                 "Principal": {
+                     "AWS": "arn:aws:iam::111122223333:role/cross-account-rw-accountA-rime-blob-bucket-role"
+                 },
+                 "Effect": "Allow",
+                 "Action": [
+                     "s3:GetObject",
+                     "s3:PutObject",
+                     "s3:DeleteObject"
+                 ],
+                 "Resource": "arn:aws:s3:::accountA-rime-blob-bucket/*"
+             }
+         ]
+     }
+     ```
+
+     - Use the AWS CLI to verify that the policy is working and allows
+       an admin user in Account B (user `AccountBadmin` in this
+       example) to list the bucket's contents. In Account B, switch
+       to the IAM role you created for the bucket access (see the AWS
+       instructions, [Switching to an IAM role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-cli.html)).
+       Then test that you can access Account A's bucket. Here,
+       we show the example bucket, `accountA-rime-blob-bucket`:
+
+       ```shell
+       aws s3 ls s3://accountA-rime-blob-bucket
+       ```
+
+3. Create an AWS S3 Integration in Robust Intelligence using the role
+   you just created. For instructions, see
+   [IAM Role-Based Authentication](#iam-role-based-authentication), above.
+
+   Once you've created the integration, you can use it as explained in
+   [Using the AWS Integration](#using-the-aws-integration).
 
 ## Using the AWS Integration
 

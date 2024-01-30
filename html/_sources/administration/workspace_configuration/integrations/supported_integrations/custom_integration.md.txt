@@ -56,7 +56,7 @@ the data loading logic. This example parses data from an Amazon S3
 bucket, but a custom data loader can be written to handle data from
 any source.
 
-```
+```python
 """Data loader file for news file."""
 import boto3
 from datetime import datetime
@@ -65,7 +65,11 @@ import pandas as pd
 BUCKET_NAME = "rime-datasets"
 ​
 ​
-def get_news_data(start_time: int, end_time: int, integration_dict: dict) -> pd.DataFrame:
+def get_news_data(
+    start_time: datetime, # REQUIRED
+    end_time: datetime, # REQUIRED
+    integration_dict: dict,
+) -> pd.DataFrame:
     start_time = datetime.fromtimestamp(start_time)
     end_time = datetime.fromtimestamp(end_time)
 ​

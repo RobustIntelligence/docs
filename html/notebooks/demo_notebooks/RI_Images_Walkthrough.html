@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RI Image Classification Walkthrough &mdash; Robust Intelligence  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+
+  
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
@@ -58,7 +60,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.4.3-rc.0
+                2.5.2-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -152,7 +154,7 @@
   <section id="RI-Image-Classification-Walkthrough">
 <h1><strong>RI Image Classification Walkthrough</strong><a class="headerlink" href="#RI-Image-Classification-Walkthrough" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RI_Images_Walkthrough.ipynb">RI Image Classification Walkthrough in Google Colab</a>.</p>
+<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/2.5-stable/notebooks/demo_notebooks/RI_Images_Walkthrough.ipynb">RI Image Classification Walkthrough in Google Colab</a>.</p>
 </div></blockquote>
 <p>You are a data scientist working for a wildlife research foundation. The data science team has been tasked with implementing an animal classifier and monitoring how that model performs over time. The performance of this model directly impacts the profits of the foundation. In order to ensure the data science team develops the best model and the performance of this model doesn’t degrade over time, the VP of Data Science purchases the RIME platform.</p>
 <p>In this Notebook Walkthrough, we will walkthrough 2 of RIME’s core products - <strong>AI Stress Testing</strong> and <strong>AI Continuous Testing</strong>.</p>
@@ -168,7 +170,7 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>rime-sdk<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -176,7 +178,7 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -188,14 +190,14 @@
 <span class="kn">from</span> <span class="nn">ri_public_examples.download_files</span> <span class="kn">import</span> <span class="n">download_files</span>
 
 <span class="n">download_files</span><span class="p">(</span><span class="s2">&quot;images/classification/awa2&quot;</span><span class="p">,</span> <span class="s2">&quot;awa2&quot;</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
 <section id="Establish-the-RIME-Client">
 <h2><strong>Establish the RIME Client</strong><a class="headerlink" href="#Establish-the-RIME-Client" title="Permalink to this heading"></a></h2>
 <p>To get started, provide the API credentials and the base domain/address of the RIME Cluster. You can generate and copy an API token from the API Access Tokens Page under Workspace settings. For the domain/address of the RIME Cluster, contact your admin.</p>
-<img alt="img_1" src="https://drive.google.com/uc?id=1vMDhZii8yq22iuqSM8-Vqt3sZ2F3tPyz" />
+<p><img alt="Image of getting an API token" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/api_access_tokens.png" /><img alt="Image of creating an API token" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/create_token.png" /></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -204,7 +206,7 @@
 <span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
 <span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
 <span class="n">rime_client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">API_TOKEN</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -226,7 +228,7 @@
     <span class="s2">&quot;MODEL_TASK_MULTICLASS_CLASSIFICATION&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">project</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Go back to the UI or click on the link above to see the Project</strong></p>
@@ -247,8 +249,8 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">upload_path</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_awa2&quot;</span>
 <span class="n">rime_models_directory</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span><span class="s2">&quot;awa2/models&quot;</span><span class="p">,</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span><span class="p">)</span>
-<span class="n">rime_model_path</span> <span class="o">=</span> <span class="n">rime_models_directory</span> <span class="o">+</span> <span class="s2">&quot;/model.py&quot;</span>
-</pre></div>
+<span class="n">rime_model_path</span> <span class="o">=</span> <span class="n">rime_models_directory</span> <span class="o">+</span> <span class="s2">&quot;/awa2_cpu.py&quot;</span>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -262,7 +264,7 @@
 <span class="c1"># All registered resources need to have unique names, so we append the current</span>
 <span class="c1"># timestamp in case this notebook is rerun.</span>
 <span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">rime_model_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -277,7 +279,7 @@
 <span class="n">_</span><span class="p">,</span> <span class="n">test_inputs_path</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_local_image_dataset_file</span><span class="p">(</span>
     <span class="n">test_inputs_file</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;image_path&quot;</span><span class="p">],</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -331,7 +333,7 @@
     <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span>
     <span class="s2">&quot;class_names&quot;</span><span class="p">:</span> <span class="n">class_names</span><span class="p">,</span>
 <span class="p">}</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -350,7 +352,7 @@
     <span class="n">data_info</span><span class="p">,</span>
     <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -365,7 +367,7 @@
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
     <span class="n">eval_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">eval_preds_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -393,13 +395,13 @@
 <span class="p">}</span>
 <span class="n">stress_job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="n">stress_test_config</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
 <section id="Stress-Test-Results">
 <h2><strong>Stress Test Results</strong><a class="headerlink" href="#Stress-Test-Results" title="Permalink to this heading"></a></h2>
-<p>Stress tests are grouped into categories that measure various aspects of model robustness (subset performance, distribution drift, adversarial, transformations). Suggestions to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information.</p>
+<p>Stress tests are grouped first by risk categories and then into categories that measure various aspects of model robustness (subset performance, distribution drift, adversarial, transformations). Key findings to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information.</p>
 <p>You can view the detailed results in the UI by running the below cell and redirecting to the generated link. This page shows granular results for a given AI Stress Test run.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -407,24 +409,24 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_run</span> <span class="o">=</span> <span class="n">stress_job</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
 <span class="n">test_run</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <section id="Analyzing-the-Results">
 <h3>Analyzing the Results<a class="headerlink" href="#Analyzing-the-Results" title="Permalink to this heading"></a></h3>
 <p>Below you can see a snapshot of the results. Some of these tests such as the Subset Performance Tests analyze how your model performs on different groups properties related to your data, while others such as Transformations Tests analyze how your model reacts to augmented and perturbed images.</p>
-<img alt="stress.png" src="https://drive.google.com/uc?id=1UUd44H194ZXSQXvIZWz_OSgHSuhUxRP8" />
+<img alt="Image of stress tests results for an image classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_images_walkthrough/image_st.png" />
 <section id="Subset-Performance-Tests">
 <h4>Subset Performance Tests<a class="headerlink" href="#Subset-Performance-Tests" title="Permalink to this heading"></a></h4>
 <p>Here are the results of the Subset Performance tests. These tests can be thought as more detailed performance tests that identify subsets of underperformance in your images metadata. These tests help ensure that the model works equally well across different styles of images.</p>
-<img alt="subset.png" src="https://drive.google.com/uc?id=1vyZ8H0eOlQluNE44aBY4TbQ1osxrR5xO" />
+<img alt="Image of subset performance results for an image classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_images_walkthrough/image_subset.png" />
 <p>Below we are exploring the “Subset F1 score” test cases for the image metadata feature <code class="docutils literal notranslate"><span class="pre">ImageBrightness</span></code>. We can see that even though the model has an overall F1 score of 0.52, it performs poorly on images at the tails of the brightness distribution - images that are either very dim or very bright.</p>
-<img alt="f1.png" src="https://drive.google.com/uc?id=1T1dqEg7Nu5XEsS_w9isIBYimSY6mACMx" />
+<img alt="Image of subset results for an image brightness feature of an image classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_images_walkthrough/image_brightness.png" />
 </section>
 <section id="Transformation-Tests">
 <h4>Transformation Tests<a class="headerlink" href="#Transformation-Tests" title="Permalink to this heading"></a></h4>
 <p>The results of the transformation tests are below. These tests can be thought as ways to test your models response to augmented image data, which can often occur in reality. They help to make sure that your model is invariant to such changes in your data.</p>
-<img alt="transform.png" src="https://drive.google.com/uc?id=16aDLm0j9dXA99Q7N4jvvFB60Lo87IhzV" />
+<img alt="Image of subset results for an image brightness feature of an image classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_images_walkthrough/image_perturb.png" />
 </section>
 </section>
 <section id="Programatically-Querying-the-Results">
@@ -439,7 +441,7 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_run_result</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_result_df</span><span class="p">()</span>
 <span class="n">test_run_result</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;AWA2_Test_Run_Results.csv&quot;</span><span class="p">)</span>
 <span class="n">test_run_result</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Access detailed test results at each individual test cases level</strong></p>
@@ -450,7 +452,7 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_case_result</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_cases_df</span><span class="p">()</span>
 <span class="n">test_case_result</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;AWA2_Test_Case_Results.csv&quot;</span><span class="p">)</span>
 <span class="n">test_case_result</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -466,7 +468,7 @@
 
 <span class="n">ct_instance</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_ct</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 <span class="n">ct_instance</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -487,7 +489,7 @@
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
     <span class="n">monitoring_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">monitoring_preds_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Run Continuous Testing over Batch of Data</strong></p>
@@ -497,7 +499,7 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">ct_instance</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">monitoring_id</span><span class="p">,</span> <span class="n">override_existing_bins</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Wait for a couple minutes and your results will appear in the UI</strong></p>
@@ -511,7 +513,7 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_instance</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>

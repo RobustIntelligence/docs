@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Release Notes &mdash; Robust Intelligence  documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -55,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.4.3-rc.0
+                2.5.2-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -102,24 +104,29 @@
 <li class="toctree-l1"><a class="reference internal" href="python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">2.4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">2.5</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#better-setting-and-defaulting-of-memory-and-cpu-preferences-for-scheduled-continuous-tests">Better setting and defaulting of memory and CPU preferences for scheduled continuous tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2.4</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#incorrect-memory-and-cpu-settings-for-continuous-test-runs">Incorrect memory and CPU settings for continuous test runs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#aws-terraform-provider-upgraded-to-4-47-0-5-0-0-for-rime-eks-cluster-module">AWS Terraform Provider Upgraded to &gt;= 4.47.0, &lt; 5.0.0 for rime_eks_cluster Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#aws-load-balancer-controller-upgraded-to-2-6-1">AWS Load Balancer Controller Upgraded to 2.6.1</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">2.3</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id3">2.3</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#firewall-api-deprecated-and-replaced-with-new-continuoustest-class-and-methods">Firewall API deprecated and replaced with new <code class="docutils literal notranslate"><span class="pre">ContinuousTest</span></code> class and methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#file-scanning">File scanning</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ingress-nginx-changes">Ingress-Nginx Changes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#aws-load-balancer-controller-upgraded-to-2-5-4">AWS Load Balancer Controller Upgraded to 2.5.4</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">2.2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id4">2.2</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#cleaner-separation-of-continuous-test-results-from-monitored-event-results">Cleaner separation of continuous test results from monitored event results</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#firewall-api-deprecated">Firewall API deprecated</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">2.1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id5">2.1</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#category-field-deprecated">Category field deprecated</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#python-3-7-no-longer-supported">Python 3.7 no longer supported</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#delta-lake-connection-info-renamed">delta_lake connection_info renamed</a></li>
@@ -168,7 +175,37 @@ API, refer to the <a class="reference internal" href="api_changelog.html"><span 
 all Robust Intelligence components to take advantage of the changes
 listed here.</p>
 <section id="id1">
-<h2>2.4<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<h2>2.5<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<section id="better-setting-and-defaulting-of-memory-and-cpu-preferences-for-scheduled-continuous-tests">
+<h3>Better setting and defaulting of memory and CPU preferences for scheduled continuous tests<a class="headerlink" href="#better-setting-and-defaulting-of-memory-and-cpu-preferences-for-scheduled-continuous-tests" title="Permalink to this heading"></a></h3>
+<p>In earlier versions of Robust Intelligence, scheduled continuous tests
+did not give you a way to specify the desired allocation of memory and
+CPU for the job. For a stress test run, it’s possible to specify the
+desired memory and CPU when you start the test run, but it’s not
+possible to set these values at runtime for a scheduled continuous
+test. For this reason, better control over and defaulting of memory
+and CPU settings was needed.</p>
+<p>This has been fixed by setting scheduling continuous test runs to use
+the the project’s memory and CPU settings (in earlier versions, we
+used system defaults).</p>
+<p>You can now specify the desired default CPU and memory preferences for
+a scheduled continuous test in its project. You provide these in the
+<a class="reference internal" href="../testing_and_monitoring/configuring_test_runs/configuring_runtime.html"><span class="std std-doc">runtime information setting</span></a>
+in the project. See <a class="reference internal" href="python-sdk.html#rime_sdk.Project.update_run_time_info"><span class="std std-ref">Project.update_run_time_info</span></a>
+in the SDK.</p>
+</section>
+</section>
+<section id="id2">
+<h2>2.4<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<section id="incorrect-memory-and-cpu-settings-for-continuous-test-runs">
+<h3>Incorrect memory and CPU settings for continuous test runs<a class="headerlink" href="#incorrect-memory-and-cpu-settings-for-continuous-test-runs" title="Permalink to this heading"></a></h3>
+<p>In version 2.4.4 and earlier of Robust Intelligence, continuous test
+runs fail to default to the project’s memory and CPU settings.
+Instead, they use system defaults that might provide insufficient
+resources for the test run. This issue has been corrected in version
+2.4.5 and later. This issue affects only scheduled continuous test
+runs and not stress test runs.</p>
+</section>
 <section id="aws-terraform-provider-upgraded-to-4-47-0-5-0-0-for-rime-eks-cluster-module">
 <h3>AWS Terraform Provider Upgraded to &gt;= 4.47.0, &lt; 5.0.0 for rime_eks_cluster Module<a class="headerlink" href="#aws-terraform-provider-upgraded-to-4-47-0-5-0-0-for-rime-eks-cluster-module" title="Permalink to this heading"></a></h3>
 <p>This change only affects customers upgrading self-hosted instances of Robust Intelligence.
@@ -198,8 +235,8 @@ version 2.6.1:</p>
 </ul>
 </section>
 </section>
-<section id="id2">
-<h2>2.3<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<section id="id3">
+<h2>2.3<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
 <section id="firewall-api-deprecated-and-replaced-with-new-continuoustest-class-and-methods">
 <h3>Firewall API deprecated and replaced with new <code class="docutils literal notranslate"><span class="pre">ContinuousTest</span></code> class and methods<a class="headerlink" href="#firewall-api-deprecated-and-replaced-with-new-continuoustest-class-and-methods" title="Permalink to this heading"></a></h3>
 <p>In v2.3 of the SDK, the new <code class="docutils literal notranslate"><span class="pre">ContinuousTest</span></code> class replaces the
@@ -263,8 +300,8 @@ version 2.5.4:</p>
 </ul>
 </section>
 </section>
-<section id="id3">
-<h2>2.2<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<section id="id4">
+<h2>2.2<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
 <section id="cleaner-separation-of-continuous-test-results-from-monitored-event-results">
 <h3>Cleaner separation of continuous test results from monitored event results<a class="headerlink" href="#cleaner-separation-of-continuous-test-results-from-monitored-event-results" title="Permalink to this heading"></a></h3>
 <p>Version 2.2 simplifies the way Robust Intelligence shows Continuous
@@ -285,8 +322,8 @@ risk severity measures that appear in Continuous Test results.</p>
 <p>The v1/firewall API and the associated Python SDK methods have been deprecated. The endpoints and SDK methods will not be supported from Robust Intelligence v2.4 onwards.</p>
 </section>
 </section>
-<section id="id4">
-<h2>2.1<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<section id="id5">
+<h2>2.1<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
 <section id="category-field-deprecated">
 <h3>Category field deprecated<a class="headerlink" href="#category-field-deprecated" title="Permalink to this heading"></a></h3>
 <p>The string <code class="docutils literal notranslate"><span class="pre">category</span></code> field is deprecated in favor of the <code class="docutils literal notranslate"><span class="pre">test_category</span></code> enum field. The string <code class="docutils literal notranslate"><span class="pre">category</span></code> field will be removed in v2.3.
@@ -356,24 +393,24 @@ supported. Projects based on Python 3.7 should be migrated to Python
 <p>Before:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Update the project&#39;s Stress Testing, Continuous Testing categories</span>
 <span class="n">project</span><span class="o">.</span><span class="n">update_test_suite_config</span><span class="p">({</span>
-	<span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
-	  <span class="p">{</span>
-	      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Model Performance&quot;</span><span class="p">,</span>
-	      <span class="s2">&quot;run_st&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-	      <span class="s2">&quot;run_ct&quot;</span><span class="p">:</span> <span class="kc">True</span>
-	  <span class="p">},</span>
-	  <span class="p">{</span>
-	      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Subset Performance&quot;</span><span class="p">,</span>
-	      <span class="s2">&quot;run_st&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-	      <span class="s2">&quot;run_ct&quot;</span><span class="p">:</span> <span class="kc">False</span>
-	  <span class="p">},</span>
-	  <span class="p">{</span>
-	      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Drift&quot;</span><span class="p">,</span>
-	      <span class="s2">&quot;run_st&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-	      <span class="s2">&quot;run_ct&quot;</span><span class="p">:</span> <span class="kc">True</span>
-	  <span class="p">}</span>
-	<span class="p">],</span>
-	<span class="c1"># ...</span>
+    <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+          <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Model Performance&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;run_st&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+          <span class="s2">&quot;run_ct&quot;</span><span class="p">:</span> <span class="kc">True</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+          <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Subset Performance&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;run_st&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+          <span class="s2">&quot;run_ct&quot;</span><span class="p">:</span> <span class="kc">False</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+          <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Drift&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;run_st&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+          <span class="s2">&quot;run_ct&quot;</span><span class="p">:</span> <span class="kc">True</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="c1"># ...</span>
 <span class="p">})</span>
 
 <span class="c1"># When running Stress Testing, user can override the project&#39;s Stress Testing categories:</span>
@@ -416,6 +453,7 @@ supported. Projects based on Python 3.7 should be migrated to Python
 <section id="related-topics">
 <h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
 <p><a class="reference internal" href="api_changelog.html"><span class="std std-doc">API Changelog</span></a><br />
+<a class="reference internal" href="../testing_and_monitoring/configuring_test_runs/configuring_runtime.html"><span class="std std-doc">Configuring Runtime Information</span></a><br />
 <a class="reference internal" href="../testing_and_monitoring/monitoring_models/ct_feedback_and_observability.html"><span class="std std-doc">Continuous Testing Feedback and Observability</span></a><br />
 <a class="reference internal" href="../testing_and_monitoring/monitoring_models/monitors/monitors.html"><span class="std std-doc">Model Monitors</span></a><br />
 <a class="reference internal" href="../testing_and_monitoring/preparing_your_models_and_datasets/file_scanning.html"><span class="std std-doc">Securing Model Supply Chain Risk with File Scanning</span></a><br />

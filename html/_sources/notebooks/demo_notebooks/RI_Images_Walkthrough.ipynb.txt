@@ -17,7 +17,7 @@
     "id": "2a62b333"
    },
    "source": [
-    "> ▶️ **Try this in Colab!** Run the [RI Image Classification Walkthrough in Google Colab](https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RI_Images_Walkthrough.ipynb).\n",
+    "> ▶️ **Try this in Colab!** Run the [RI Image Classification Walkthrough in Google Colab](https://colab.research.google.com/github/RobustIntelligence/docs/blob/2.5-stable/notebooks/demo_notebooks/RI_Images_Walkthrough.ipynb).\n",
     "\n",
     "You are a data scientist working for a wildlife research foundation. The data science team has been tasked with implementing an animal classifier and monitoring how that model performs over time. The performance of this  model directly impacts the profits of the foundation. In order to ensure the data science team develops the best model and the performance of this model doesn't degrade over time, the VP of Data Science purchases the RIME platform.\n",
     "\n",
@@ -56,7 +56,7 @@
    },
    "outputs": [],
    "source": [
-    "!pip install rime-sdk &> /dev/null"
+    "!pip install rime-sdk &> /dev/null\n"
    ]
   },
   {
@@ -66,7 +66,7 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "from rime_sdk import Client"
+    "from rime_sdk import Client\n"
    ]
   },
   {
@@ -82,7 +82,7 @@
     "    \n",
     "from ri_public_examples.download_files import download_files\n",
     "\n",
-    "download_files(\"images/classification/awa2\", \"awa2\")"
+    "download_files(\"images/classification/awa2\", \"awa2\")\n"
    ]
   },
   {
@@ -110,7 +110,8 @@
    "id": "6a594b58",
    "metadata": {},
    "source": [
-    "![img_1](https://drive.google.com/uc?id=1vMDhZii8yq22iuqSM8-Vqt3sZ2F3tPyz)"
+    "![Image of getting an API token](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/api_access_tokens.png)",
+    "![Image of creating an API token](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/create_token.png)"
    ]
   },
   {
@@ -125,7 +126,7 @@
     "API_TOKEN = '' # PASTE API_KEY \n",
     "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)\n",
     "AGENT_ID = '' # PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT\n",
-    "rime_client = Client(CLUSTER_URL, API_TOKEN)"
+    "rime_client = Client(CLUSTER_URL, API_TOKEN)\n"
    ]
   },
   {
@@ -167,7 +168,7 @@
     "    description,\n",
     "    \"MODEL_TASK_MULTICLASS_CLASSIFICATION\",\n",
     ")\n",
-    "project"
+    "project\n"
    ]
   },
   {
@@ -219,7 +220,7 @@
    "source": [
     "upload_path = \"ri_public_examples_awa2\"\n",
     "rime_models_directory = rime_client.upload_directory(\"awa2/models\", upload_path=upload_path)\n",
-    "rime_model_path = rime_models_directory + \"/model.py\""
+    "rime_model_path = rime_models_directory + \"/awa2_cpu.py\"\n"
    ]
   },
   {
@@ -235,7 +236,7 @@
     "\n",
     "# All registered resources need to have unique names, so we append the current\n",
     "# timestamp in case this notebook is rerun.\n",
-    "model_id = project.register_model_from_path(f\"model_{dt}\", rime_model_path, agent_id=AGENT_ID)"
+    "model_id = project.register_model_from_path(f\"model_{dt}\", rime_model_path, agent_id=AGENT_ID)\n"
    ]
   },
   {
@@ -254,7 +255,7 @@
     ")\n",
     "_, test_inputs_path = rime_client.upload_local_image_dataset_file(\n",
     "    test_inputs_file, [\"image_path\"], upload_path=upload_path\n",
-    ")"
+    ")\n"
    ]
   },
   {
@@ -310,7 +311,7 @@
     "    \"image_features\": [\"image_path\"], \n",
     "    \"label_col\": \"label\", \n",
     "    \"class_names\": class_names,\n",
-    "}"
+    "}\n"
    ]
   },
   {
@@ -331,7 +332,7 @@
     "    test_inputs_path, \n",
     "    data_info,\n",
     "    agent_id=AGENT_ID\n",
-    ")"
+    ")\n"
    ]
   },
   {
@@ -348,7 +349,7 @@
     "    )\n",
     "project.register_predictions_from_file(\n",
     "    eval_id, model_id, eval_preds_path, agent_id=AGENT_ID\n",
-    ")"
+    ")\n"
    ]
   },
   {
@@ -406,7 +407,7 @@
     "    ]\n",
     "}\n",
     "stress_job = rime_client.start_stress_test(stress_test_config, project.project_id, agent_id=AGENT_ID)\n",
-    "stress_job.get_status(verbose=True, wait_until_finish=True)"
+    "stress_job.get_status(verbose=True, wait_until_finish=True)\n"
    ]
   },
   {
@@ -426,7 +427,7 @@
     "id": "cc28ba9e"
    },
    "source": [
-    "Stress tests are grouped into categories that measure various aspects of model robustness (subset performance, distribution drift, adversarial, transformations). Suggestions to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information.\n",
+    "Stress tests are grouped first by risk categories and then into categories that measure various aspects of model robustness (subset performance, distribution drift, adversarial, transformations). Key findings to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information.\n",
     "\n",
     "You can view the detailed results in the UI by running the below cell and redirecting to the generated link. This page shows granular results for a given AI Stress Test run."
    ]
@@ -441,7 +442,7 @@
    "outputs": [],
    "source": [
     "test_run = stress_job.get_test_run()\n",
-    "test_run"
+    "test_run\n"
    ]
   },
   {
@@ -469,7 +470,7 @@
    "id": "f37a686d",
    "metadata": {},
    "source": [
-    "![stress.png](https://drive.google.com/uc?id=1UUd44H194ZXSQXvIZWz_OSgHSuhUxRP8)"
+    "![Image of stress tests results for an image classification model](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_images_walkthrough/image_st.png)"
    ]
   },
   {
@@ -497,7 +498,7 @@
    "id": "6c46fd87",
    "metadata": {},
    "source": [
-    "![subset.png](https://drive.google.com/uc?id=1vyZ8H0eOlQluNE44aBY4TbQ1osxrR5xO)"
+    "![Image of subset performance results for an image classification model](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_images_walkthrough/image_subset.png)"
    ]
   },
   {
@@ -515,7 +516,7 @@
    "id": "a458abb9",
    "metadata": {},
    "source": [
-    "![f1.png](https://drive.google.com/uc?id=1T1dqEg7Nu5XEsS_w9isIBYimSY6mACMx)"
+    "![Image of subset results for an image brightness feature of an image classification model](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_images_walkthrough/image_brightness.png)"
    ]
   },
   {
@@ -543,7 +544,7 @@
    "id": "b38e0e18",
    "metadata": {},
    "source": [
-    "![transform.png](https://drive.google.com/uc?id=16aDLm0j9dXA99Q7N4jvvFB60Lo87IhzV)"
+    "![Image of subset results for an image brightness feature of an image classification model](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_images_walkthrough/image_perturb.png)"
    ]
   },
   {
@@ -589,7 +590,7 @@
    "source": [
     "test_run_result = test_run.get_result_df()\n",
     "test_run_result.to_csv(\"AWA2_Test_Run_Results.csv\")\n",
-    "test_run_result"
+    "test_run_result\n"
    ]
   },
   {
@@ -613,7 +614,7 @@
    "source": [
     "test_case_result = test_run.get_test_cases_df()\n",
     "test_case_result.to_csv(\"AWA2_Test_Case_Results.csv\")\n",
-    "test_case_result"
+    "test_case_result\n"
    ]
   },
   {
@@ -646,7 +647,7 @@
     "from datetime import timedelta\n",
     "\n",
     "ct_instance = project.create_ct(model_id, ref_id, timedelta(days=1))\n",
-    "ct_instance"
+    "ct_instance\n"
    ]
   },
   {
@@ -696,7 +697,7 @@
     "monitoring_preds_path = rime_client.upload_file(\"awa2/data/monitoring_preds_trial.json\")\n",
     "project.register_predictions_from_file(\n",
     "    monitoring_id, model_id, monitoring_preds_path, agent_id=AGENT_ID\n",
-    ")"
+    ")\n"
    ]
   },
   {
@@ -719,7 +720,7 @@
    "outputs": [],
    "source": [
     "ct_job = ct_instance.start_continuous_test(monitoring_id, override_existing_bins=True, agent_id=AGENT_ID)\n",
-    "ct_job.get_status(verbose=True, wait_until_finish=True)"
+    "ct_job.get_status(verbose=True, wait_until_finish=True)\n"
    ]
   },
   {
@@ -763,7 +764,7 @@
    },
    "outputs": [],
    "source": [
-    "ct_instance"
+    "ct_instance\n"
    ]
   }
  ],

@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>API Changelog &mdash; Robust Intelligence  documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -55,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.4.3-rc.0
+                2.5.2-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -107,10 +109,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#support-period-for-ga-rest-api-endpoints">Support period for GA REST API endpoints</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">2.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">2.3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">2.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">2.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ga">2.0 GA</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#related-topics">Related Topics</a></li>
 </ul>
@@ -185,20 +188,30 @@ apply to APIs marked as “beta”.</p>
 </section>
 </section>
 <section id="id1">
-<h2>2.4<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
-<p>No changes.</p>
+<h2>2.5<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<p>Project objects returned by the API now include a <code class="docutils literal notranslate"><span class="pre">riskScores</span></code>
+property that shows the risk scores of the last test run in the
+project.</p>
+<p>Project objects now contain a
+<a class="reference internal" href="../testing_and_monitoring/configuring_test_runs/configuring_runtime.html"><span class="std std-doc">runTimeInfo</span></a>
+object that lets you specify the desired default CPU and memory
+preferences for scheduled continuous tests in the Project.</p>
 </section>
 <section id="id2">
-<h2>2.3<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
-<p>GET /v1-beta/file-scans api removed without deprecation. Use GET /v1-beta/file-scan-results instead.</p>
+<h2>2.4<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<p>No changes.</p>
 </section>
 <section id="id3">
-<h2>2.2<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<h2>2.3<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<p>GET /v1-beta/file-scans api removed without deprecation. Use GET /v1-beta/file-scan-results instead.</p>
+</section>
+<section id="id4">
+<h2>2.2<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
 <p>PUT /v1/agents/deactivate/{agentId.uuid} api path removed without deprecation. Use DELETE /v1/agents/{agentId.uuid} directly instead.</p>
 <p>/v1/firewall api paths are deprecated. They will not be supported from Robust Intelligence v2.4 onwards.</p>
 </section>
-<section id="id4">
-<h2>2.1<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<section id="id5">
+<h2>2.1<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">delta_lake</span></code> connection_info has been renamed to <code class="docutils literal notranslate"><span class="pre">databricks</span></code>. This loads a Databricks Delta Lake Table.
 Before:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -267,7 +280,8 @@ POST /v1/firewall api sunset date '' can't be parsed for deprecated API: sunset 
 </section>
 <section id="related-topics">
 <h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
-<p><a class="reference internal" href="versions.html"><span class="std std-doc">Versioning and compatibility</span></a></p>
+<p><a class="reference internal" href="../testing_and_monitoring/configuring_test_runs/configuring_runtime.html"><span class="std std-doc">Configuring Runtime Information</span></a><br />
+<a class="reference internal" href="versions.html"><span class="std std-doc">Versioning and compatibility</span></a></p>
 </section>
 </section>
 

@@ -1,14 +1,24 @@
 # Configuring Runtime Information
 
-You can configure specific details on how Robust Intelligence runs a particular job.
+A `run_time_info` object tells Robust Intelligence what system resources
+to use when running your test job.
 
-By default, Robust Intelligence attempts to infer optimal values for all of these options. Manually set
-these parameters only when Robust Intelligence is not selecting appropriate values.
+By default, Robust Intelligence attempts to infer optimal values for
+the `run_time_info` settings. You should only opt for manually setting
+these parameters if you find that Robust Intelligence is not selecting
+appropriate values.
 
-### Template
+If you choose to set your `run_time_info` manually, you can set it in
+one of the following ways:
 
-Specify this configuration in the [Stress Testing configuration](../validating_models/configuring_stress_tests.md)
-JSON file, under the `"run_time_info"` parameter.
+- Save it in your [project](../../reference/python-sdk.rst#rime_sdk.Project.update_run_time_info); or
+- Pass it in the
+  [stress testing configuration](../validating_models/configuring_stress_tests.md)
+  when you [run a test](../validating_models/stress_tests_from_sdk.md).
+
+### `run_time_info` object
+
+Below, we show an example `run_time_info` object:
 
 ```python
 # values shown below are not defaults, but rather examples of how to specify configuration.
@@ -35,7 +45,7 @@ JSON file, under the `"run_time_info"` parameter.
 }
 ```
 
-### Arguments
+### Attributes of the `run_time_info` object
 
 - `agent_id`: string, *default* = the ID of the default agent for the workspace.
 
@@ -51,17 +61,18 @@ JSON file, under the `"run_time_info"` parameter.
 
   The compute resources, such as RAM and CPU, that the job requires. If you leave this parameter unspecified, Robust Intelligence will attempt to infer the optimal values for your job.
 
-  If you would like to learn more about how much RAM and CPU your job requires, see the [Performance](performance.md) page of the documentation.
+  To learn more about memory and CPU settings, see [Performance](performance.md).
 
 - `explicit_errors`: boolean, *default* = `False`
 
   Specifies whether runtime errors that occur within Robust Intelligence tests will be explicitly raised, interrupting the entire test run. By default, this parameter is set to false, meaning that errors within a single test will not stop the test run.
 
-- `random_seed`: int64, *default* = None
+- `random_seed`: string, *default* = None
 
-  Random seed for the job to ensure deterministic results. If not specified, the random seed will not be set.
+  Random seed (int64 encoded as a string) for the job to ensure deterministic results. If not specified, the random seed will not be set.
 
 ## Related Topics  
 [Configuring Stress Tests](../validating_models/configuring_stress_tests.md)  
+[Creating a New Stress Test](../validating_models/stress_tests_from_sdk.md)  
 [Performance](performance.md)  
 [Running Tests on Managed Docker Images](run_tests_on_managed_images.md)  

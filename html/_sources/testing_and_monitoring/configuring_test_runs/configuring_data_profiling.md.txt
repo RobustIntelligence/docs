@@ -16,7 +16,7 @@ profiles.
 
 Specify your dataset profile parameters in the
 [AI Stress Testing Configuration](../validating_models/configuring_stress_tests.md)
-JSON file, in the `data_profiling` configuration in the
+JSON object, which is part of the `data_profiling` configuration in the
 `profiling_config` dictionary.
 
 ```python
@@ -35,7 +35,7 @@ JSON file, in the `data_profiling` configuration in the
             "unseen_values_allowed_criteria": 0.25,
         },
         "feature_relationship_info": {
-            "num_feats_to_profile": 100,
+            "num_feats_to_profile": 30,
             "compute_feature_relationships": True,
             "compute_numeric_feature_relationships": False,
             "ignore_nan_for_feature_relationships": True,
@@ -81,11 +81,9 @@ The properties of the `data_profiling` configuration in the
     - `unseen_values_allowed_criteria`:
 
 - `feature_relationship_info`:
-    - `num_feats_to_profile`: int or `null`, *default* = `null`
+    - `num_feats_to_profile`: int or `null`, *default* = `30`
 
-        Number of features to profile for [Smart Feature Sampling](feature_sampling.md). If this value is unset and the dataset has fewer than 100 features, we will skip data profiling.
-
-        Feature profiling is a memory intensive process. If you are running into memory/OOM issues on smaller datasets ( less than 100 features), consider disabling feature profiling by not setting this value.
+        Number of features to profile for [Smart Feature Sampling](feature_sampling.md).
 
     - `compute_feature_relationships`: bool, *default* = True
 
