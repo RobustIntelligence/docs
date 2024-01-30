@@ -9,7 +9,7 @@
    "source": [
     "# **RI Movie Ratings Ranking Data Walkthrough** 🎥\n",
     "\n",
-    "> ▶️ **Try this in Colab!** Run the [RI Movie Ratings Ranking Data Walkthrough in Google Colab](https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RI_Ranking_Walkthrough.ipynb). \n",
+    "> ▶️ **Try this in Colab!** Run the [RI Movie Ratings Ranking Data Walkthrough in Google Colab](https://colab.research.google.com/github/RobustIntelligence/docs/blob/2.5-stable/notebooks/demo_notebooks/RI_Ranking_Walkthrough.ipynb). \n",
     "\n",
     "In this walkthrough, you are a data scientist tasked with training a recommendation system to predict whether or not a given user will upvote a movie. From experience, the team has found that the upstream data pipelines can be brittle, and want to use RIME to:\n",
     "\n",
@@ -40,7 +40,7 @@
     "\n",
     "import pandas as pd\n",
     "from pathlib import Path\n",
-    "from rime_sdk import Client"
+    "from rime_sdk import Client\n"
    ]
   },
   {
@@ -53,7 +53,7 @@
     "    \n",
     "from ri_public_examples.download_files import download_files\n",
     "\n",
-    "download_files('tabular-2.0/ranking', 'ranking')"
+    "download_files('tabular-2.0/ranking', 'ranking')\n"
    ]
   },
   {
@@ -73,7 +73,8 @@
     "id": "90zo7hdkmKyW"
    },
    "source": [
-    "![img_1](https://drive.google.com/uc?id=1vMDhZii8yq22iuqSM8-Vqt3sZ2F3tPyz)"
+    "![Image of getting an API token](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/api_access_tokens.png)",
+    "![Image of creating an API token](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/create_token.png)"
    ]
   },
   {
@@ -87,7 +88,7 @@
     "API_TOKEN = '' # PASTE API_KEY \n",
     "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)\n",
     "AGENT_ID = '' # PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT\n",
-    "client = Client(CLUSTER_URL, API_TOKEN)"
+    "client = Client(CLUSTER_URL, API_TOKEN)\n"
    ]
   },
   {
@@ -118,7 +119,7 @@
     "    name='Tabular Ranking Demo',\n",
     "    description=description,\n",
     "    model_task='MODEL_TASK_RANKING'\n",
-    ")"
+    ")\n"
    ]
   },
   {
@@ -155,7 +156,7 @@
    "outputs": [],
    "source": [
     "df = pd.read_csv(Path('ranking/data/ref.csv'))\n",
-    "df.head()"
+    "df.head()\n"
    ]
   },
   {
@@ -185,7 +186,7 @@
     ")\n",
     "eval_preds_s3_path = client.upload_file(\n",
     "    Path(\"ranking/data/eval_preds.csv\"), upload_path=upload_path\n",
-    ")"
+    ")\n"
    ]
   },
   {
@@ -227,7 +228,7 @@
     ")\n",
     "project.register_predictions_from_file(\n",
     "    eval_dataset_id, model_id, eval_preds_s3_path, pred_params=pred_params, agent_id=AGENT_ID\n",
-    ")"
+    ")\n"
    ]
   },
   {
@@ -263,7 +264,7 @@
     "stress_job = client.start_stress_test(\n",
     "    stress_test_config, project.project_id, agent_id=AGENT_ID\n",
     ")\n",
-    "stress_job.get_status(verbose=True, wait_until_finish=True)"
+    "stress_job.get_status(verbose=True, wait_until_finish=True)\n"
    ]
   },
   {
@@ -274,8 +275,7 @@
    "source": [
     "## **Stress Test Results**\n",
     "\n",
-    "Stress tests are grouped into categories that measure various aspects of model robustness (model behavior, distribution drift, abnormal input, transformations, adversarial attacks, data cleanliness). Suggestions to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information. \n",
-    "\n",
+    "Stress tests are grouped first by risk categories and then into categories that measure various aspects of model robustness (model behavior, distribution drift, abnormal input, transformations, adversarial attacks, data cleanliness). Key findings to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information. \n",
     "\n",
     "You can view the detailed results in the UI by running the below cell and redirecting to the generated link. This page shows granular results for a given AI Stress Test run. "
    ]
@@ -289,7 +289,7 @@
    "outputs": [],
    "source": [
     "test_run = stress_job.get_test_run()\n",
-    "test_run"
+    "test_run\n"
    ]
   },
   {
@@ -319,7 +319,7 @@
     "id": "h2jQYUDmknsU"
    },
    "source": [
-    "![img_2](https://drive.google.com/uc?id=1gR-bosz3YH4wX2W2M4scjCdIz0RRjoig)"
+    "![Image of ST results for movie ranking model](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_ranking_walkthrough/movie_ranking.png)"
    ]
   },
   {
@@ -337,7 +337,7 @@
     "id": "Nc1TzYeqkn1k"
    },
    "source": [
-    "![img_3](https://drive.google.com/uc?id=1ATu9N3jjKm26nKUwehjrCG1yepzIOz9c)"
+    "![Image of ST operational risk results for movie ranking model](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_ranking_walkthrough/movie_operational_risk.png)"
    ]
   },
   {
@@ -355,7 +355,7 @@
     "id": "g91I82zRkoH5"
    },
    "source": [
-    "![img_4](https://drive.google.com/uc?id=1Px7l7mc6W5MIdm1RJDY9Gfgg40amdVUi)"
+    "![Image of ST MRR results for movie ranking model](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_ranking_walkthrough/movie_mrr.png)"
    ]
   },
   {
@@ -379,7 +379,7 @@
    "source": [
     "from datetime import timedelta\n",
     "\n",
-    "ct_instance = project.create_ct(model_id, ref_dataset_id, timedelta(days=1))"
+    "ct_instance = project.create_ct(model_id, ref_dataset_id, timedelta(days=1))\n"
    ]
   },
   {
@@ -431,7 +431,7 @@
     "    prod_preds_s3_path, \n",
     "    pred_params=pred_params,\n",
     "    agent_id=AGENT_ID\n",
-    ")"
+    ")\n"
    ]
   },
   {
@@ -444,7 +444,7 @@
     "                                           \"TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE_DEGRADATION\",\n",
     "                                           \"TEST_CATEGORY_TYPE_ABNORMAL_INPUTS\",\n",
     "                                           \"TEST_CATEGORY_TYPE_DRIFT\",\n",
-    "                                           \"TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS\"])"
+    "                                           \"TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS\"])\n"
    ]
   },
   {
@@ -466,7 +466,7 @@
    "source": [
     "ct_job = ct_instance.start_continuous_test(prod_dataset_id, agent_id=AGENT_ID)\n",
     "ct_job.get_status(verbose=True, wait_until_finish=True)\n",
-    "ct_instance"
+    "ct_instance\n"
    ]
   },
   {
@@ -509,7 +509,7 @@
    "source": [
     "events = [d.to_dict() for m in ct_instance.list_monitors() for d in m.list_detected_events()]\n",
     "events_df = pd.DataFrame(events).drop([\"id\", \"project_id\", \"firewall_id\", \"event_object_id\", \"description_html\", \"last_update_time\"], axis=1)\n",
-    "events_df.head()"
+    "events_df.head()\n"
    ]
   },
   {
@@ -533,7 +533,7 @@
    },
    "outputs": [],
    "source": [
-    "ct_instance"
+    "ct_instance\n"
    ]
   },
   {
@@ -554,7 +554,7 @@
     "id": "AFuGGg8uNtC2"
    },
    "source": [
-    "![img_5](https://drive.google.com/uc?id=15Q5bmKWTmoG9tE0TovW0AM9t2j7kARQS)"
+    "![Image of model historical performance graph for movie ranking model](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_ranking_walkthrough/production_perf_graph.png)"
    ]
   },
   {

@@ -11,7 +11,7 @@
    "source": [
     "# **RI Fraud Classification Walkthrough**\n",
     "\n",
-    "> ▶️ **Try this in Colab!** Run the [RI Fraud Classification Walkthrough in Google Colab](https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RI_Fraud_Classification_Walkthrough.ipynb). \n",
+    "> ▶️ **Try this in Colab!** Run the [RI Fraud Classification Walkthrough in Google Colab](https://colab.research.google.com/github/RobustIntelligence/docs/blob/2.5-stable/notebooks/demo_notebooks/RI_Fraud_Classification_Walkthrough.ipynb). \n",
     "\n",
     "You are a data scientist at a Payment Processing Company. The data science team has been tasked with implementing a Fraud Detection model and monitoring how that model performs over time. The performance of this fraud detection model directly impacts the costs of the company. In order to ensure the data science team develops the best model and the performance of this model doesn't degrade over time, the VP of Data Science purchases the RIME platform. \n",
     "    \n",
@@ -51,7 +51,7 @@
     "\n",
     "import pandas as pd\n",
     "from pathlib import Path\n",
-    "from rime_sdk import Client"
+    "from rime_sdk import Client\n"
    ]
   },
   {
@@ -69,7 +69,7 @@
     "    \n",
     "from ri_public_examples.download_files import download_files\n",
     "\n",
-    "download_files('tabular-2.0/fraud', 'fraud')"
+    "download_files('tabular-2.0/fraud', 'fraud')\n"
    ]
   },
   {
@@ -95,7 +95,8 @@
     }
    },
    "source": [
-    "![img_1](https://drive.google.com/uc?id=1vMDhZii8yq22iuqSM8-Vqt3sZ2F3tPyz)"
+    "![Image of getting an API token](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/api_access_tokens.png)",
+    "![Image of creating an API token](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/create_token.png)"
    ]
   },
   {
@@ -111,7 +112,7 @@
    "source": [
     "API_TOKEN = '' # PASTE API_KEY \n",
     "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)\n",
-    "AGENT_ID = '' # PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT"
+    "AGENT_ID = '' # PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT\n"
    ]
   },
   {
@@ -124,7 +125,7 @@
    },
    "outputs": [],
    "source": [
-    "client = Client(CLUSTER_URL, API_TOKEN)"
+    "client = Client(CLUSTER_URL, API_TOKEN)\n"
    ]
   },
   {
@@ -161,7 +162,7 @@
     "    name='Tabular Binary Classification Demo', \n",
     "    description=description, \n",
     "    model_task='MODEL_TASK_BINARY_CLASSIFICATION'\n",
-    ")"
+    ")\n"
    ]
   },
   {
@@ -202,7 +203,7 @@
    "outputs": [],
    "source": [
     "df = pd.read_csv(Path('fraud/data/fraud_ref.csv'))\n",
-    "df.head()"
+    "df.head()\n"
    ]
   },
   {
@@ -262,7 +263,7 @@
     ")\n",
     "eval_preds_s3_path = client.upload_file(\n",
     "    Path(\"fraud/data/fraud_eval_preds.csv\"), upload_path=upload_path\n",
-    ")"
+    ")\n"
    ]
   },
   {
@@ -305,7 +306,7 @@
     ")\n",
     "project.register_predictions_from_file(\n",
     "    eval_dataset_id, model_id, eval_preds_s3_path, agent_id=AGENT_ID\n",
-    ")"
+    ")\n"
    ]
   },
   {
@@ -352,7 +353,7 @@
     "stress_job = client.start_stress_test(\n",
     "    stress_test_config, project.project_id, agent_id=AGENT_ID\n",
     ")\n",
-    "stress_job.get_status(verbose=True, wait_until_finish=True)"
+    "stress_job.get_status(verbose=True, wait_until_finish=True)\n"
    ]
   },
   {
@@ -378,7 +379,7 @@
    "source": [
     "## **Stress Test Results**\n",
     "\n",
-    "Stress tests are grouped into categories that measure various aspects of model robustness (model behavior, distribution drift, abnormal input, transformations, adversarial attacks, data cleanliness). Suggestions to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information. \n",
+    "Stress tests are grouped first by risk categories and then into categories that measure various aspects of model robustness (model behavior, distribution drift, abnormal input, transformations, adversarial attacks, data cleanliness). Key findings to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information. \n",
     "\n",
     "\n",
     "You can view the detailed results in the UI by running the below cell and redirecting to the generated link. This page shows granular results for a given AI Stress Test run. "
@@ -396,7 +397,7 @@
    "outputs": [],
    "source": [
     "test_run = stress_job.get_test_run()\n",
-    "test_run"
+    "test_run\n"
    ]
   },
   {
@@ -423,7 +424,7 @@
     }
    },
    "source": [
-    "![img_2](https://drive.google.com/uc?id=126qw9YXDHzli_lj7XwyIi89U0FBVjMki)"
+    "![Image of a stress test results for a fraud detection model](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_fraud_classification_walkthrough/fraud_st_results.png)"
    ]
   },
   {
@@ -435,7 +436,7 @@
     }
    },
    "source": [
-    "Here are the results of the Subset Performance tests. These tests can be thought as more detailed performance tests that identify subsets of underperformance. These tests help ensure that the model works equally well across different groups."
+    "Here are the results of one of the Operational Risk tests, Transformations. Transformation tests augment evaluation dataset with abnormal values and measure the performance degradation from them."
    ]
   },
   {
@@ -447,7 +448,7 @@
     }
    },
    "source": [
-    "![img_3](https://drive.google.com/uc?id=1ityHRKipkvMi8aU3nMS3Xb9ewrSUDhnx)"
+    "![Image of transformation test results for a fraud detection model](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_fraud_classification_walkthrough/fraud_transformation.png)"
    ]
   },
   {
@@ -459,7 +460,7 @@
     }
    },
    "source": [
-    "Below we are exploring the \"Subset Recall\" test cases for the feature \"City\". We can see that even though the model has a Recall of 0.81, it performs poorly on certain cities like Sao Paolo and Rio De Janeiro. "
+    "Below we are exploring the \"Capitalization Change\" test cases for the feature \"category\". This test measures the impact on the model when we substitute different types of capitalization into clean datapoints."
    ]
   },
   {
@@ -471,7 +472,7 @@
     }
    },
    "source": [
-    "![img_4](https://drive.google.com/uc?id=1epNLMxOVLVoiByCBJ-sCHM4QgopYEDYW)"
+    "![Image of capitalization-change test result for a fraud detection model](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_fraud_classification_walkthrough/fraud_capitalization.png)"
    ]
   },
   {
@@ -524,7 +525,7 @@
    "outputs": [],
    "source": [
     "test_run_result = test_run.get_result_df()\n",
-    "test_run_result"
+    "test_run_result\n"
    ]
   },
   {
@@ -551,7 +552,7 @@
    "outputs": [],
    "source": [
     "test_case_result = test_run.get_test_cases_df()\n",
-    "test_case_result.head()"
+    "test_case_result.head()\n"
    ]
   },
   {
@@ -586,7 +587,7 @@
     "                              \"TEST_CATEGORY_TYPE_EVASION_ATTACK_DETECTION\"\n",
     "                            ])\n",
     "\n",
-    "ct_instance = project.create_ct(model_id, ref_dataset_id, timedelta(days=1))"
+    "ct_instance = project.create_ct(model_id, ref_dataset_id, timedelta(days=1))\n"
    ]
   },
   {
@@ -643,7 +644,7 @@
     ")\n",
     "project.register_predictions_from_file(\n",
     "    prod_dataset_id, model_id, prod_preds_s3_path, agent_id=AGENT_ID\n",
-    ")"
+    ")\n"
    ]
   },
   {
@@ -671,7 +672,7 @@
    "source": [
     "ct_job = ct_instance.start_continuous_test(prod_dataset_id, agent_id=AGENT_ID)\n",
     "ct_job.get_status(verbose=True, wait_until_finish=True)\n",
-    "ct_instance"
+    "ct_instance\n"
    ]
   },
   {
@@ -731,7 +732,7 @@
    "source": [
     "events = [d.to_dict() for m in ct_instance.list_monitors() for d in m.list_detected_events()]\n",
     "events_df = pd.DataFrame(events).drop([\"id\", \"project_id\", \"firewall_id\", \"event_object_id\", \"description_html\", \"last_update_time\"], axis=1)\n",
-    "events_df.head()"
+    "events_df.head()\n"
    ]
   },
   {
@@ -758,7 +759,7 @@
     }
    },
    "source": [
-    "![img_5](https://drive.google.com/uc?id=18Q62IvDft4IEAba9Tm7unCoIle8y4NOv)"
+    "![Image of a graph of the historic performance results for a fraud detection model](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_fraud_classification_walkthrough/fraud_historical.png)"
    ]
   },
   {
@@ -788,7 +789,7 @@
    },
    "outputs": [],
    "source": [
-    "ct_instance"
+    "ct_instance\n"
    ]
   },
   {
@@ -885,7 +886,7 @@
     "stress_job = client.start_stress_test(\n",
     "    stress_test_with_model_config, project.project_id, agent_id=AGENT_ID\n",
     ")\n",
-    "stress_job.get_status(verbose=True, wait_until_finish=True)"
+    "stress_job.get_status(verbose=True, wait_until_finish=True)\n"
    ]
   },
   {
@@ -914,14 +915,16 @@
     "\"\"\"Custom test batch runner.\"\"\"\n",
     "from typing import List, Tuple\n",
     "from rime.core.schema.config import CustomConfig\n",
-    "from rime.core.schema.severity import ImportanceLevel\n",
-    "from rime.core.schema.status import Status\n",
+    "from rime.protos.ri.api.resultsynthesizer.result_message_pb2 import (\n",
+    "    TestCaseStatus as Status,\n",
+    ")\n",
     "from rime.core.stress_tests.schema.table_info import TableColumn\n",
     "from rime.core.stress_tests.schema.test_result import TestBatchResult, TestOutput\n",
     "from rime.core.test import BaseTest, TestExtraInfo\n",
     "from rime.core.stress_tests.batch_runner import DataTestBatchRunner\n",
     "from rime.core.stress_tests.schema.test_result import TestBatchResult, TestOutput\n",
     "from rime.core.profiler.run_containers import RunContainer\n",
+    "from rime.protos.ri.lib.common_pb2 import Severity\n",
     "\n",
     "# Signature should not be changed.\n",
     "class CustomTest(BaseTest):\n",
@@ -939,11 +942,11 @@
     "        ref_data_size = len(run_container.ref_data.df)\n",
     "        eval_data_size = len(run_container.eval_data.df)\n",
     "        if ref_data_size > eval_data_size + self.delta:\n",
-    "            status = Status.WARNING\n",
-    "            severity = ImportanceLevel.HIGH\n",
+    "            status = Status.TEST_CASE_STATUS_WARNING\n",
+    "            severity = Severity.SEVERITY_ALERT\n",
     "        else:\n",
-    "            status = Status.PASS\n",
-    "            severity = ImportanceLevel.NONE\n",
+    "            status = Status.TEST_CASE_STATUS_PASS_UNSPECIFIED\n",
+    "            severity = Severity.SEVERITY_PASS\n",
     "        test_output = TestOutput(\n",
     "            self.id, status, {\"Severity\": severity}, severity, [],\n",
     "        )\n",
@@ -1026,7 +1029,7 @@
    },
    "outputs": [],
    "source": [
-    "custom_test_path = client.upload_file(\"fraud/custom_test.py\", upload_path=upload_path)"
+    "custom_test_path = client.upload_file(\"fraud/custom_test.py\", upload_path=upload_path)\n"
    ]
   },
   {
@@ -1058,7 +1061,7 @@
     "stress_job = client.start_stress_test(\n",
     "    stress_test_with_model_config, project.project_id, agent_id=AGENT_ID\n",
     ")\n",
-    "stress_job.get_status(verbose=True, wait_until_finish=True)"
+    "stress_job.get_status(verbose=True, wait_until_finish=True)\n"
    ]
   },
   {
@@ -1071,7 +1074,7 @@
    },
    "outputs": [],
    "source": [
-    "stress_job.get_test_run()"
+    "stress_job.get_test_run()\n"
    ]
   }
  ],
@@ -1096,7 +1099,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.9.7"
+   "version": "3.9.13"
   }
  },
  "nbformat": 4,

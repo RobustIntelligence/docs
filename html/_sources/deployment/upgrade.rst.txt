@@ -1,12 +1,14 @@
 Upgrade
 ===============================
 
-If applicable, follow the version-specific steps below for your upgrade.
+Follow the version-specific steps shown below for your upgrade path.
+For paths not listed below, follow the general upgrade steps.
 
-Otherwise, the general upgrade process is described below.
-
+General upgrade steps
+---------------------------------------
 1. Point your local ``kubectl`` to your K8s cluster and namespace.
-2. If available, retrieve the ``values.yaml`` file for your agent.
+2. If available, retrieve the ``values.yaml`` file for your Robust
+   Intelligence Model Testing Agent.
 
    a. Alternatively, you can save the current Helm values to a file like so:
 
@@ -14,7 +16,10 @@ Otherwise, the general upgrade process is described below.
 
          helm get values rime-agent | awk '!/USER-SUPPLIED VALUES/' > values.yaml
 
-3. Edit the ``values.yaml`` file by changing the image tag in the fields ``rimeAgent.images.agentImage.name`` and ``rimeAgent.images.modelTestJobImage.name`` to match the new RIME version.
+3. Edit the ``values.yaml`` file by changing the image tag in the
+   fields ``rimeAgent.images.agentImage.name`` and
+   ``rimeAgent.images.modelTestJobImage.name`` to match the new Robust
+   Intelligence version.
 
    a. The version number can be found by navigating to the **Organization Settings** page and clicking on the **Manage Agent Setup** tab.
 
@@ -62,7 +67,7 @@ Upgrading from v2.0 to v2.1
 Upgrading from v2.2 to v2.3
 ---------------------------------------
 1. Point your local ``kubectl`` to your K8s cluster and namespace.
-2. Delete ``rimejobs.rbst.io`` CRD.
+2. Delete the ``rimejobs.rbst.io`` CRD.
 
   .. code-block::
 
@@ -74,7 +79,30 @@ Upgrading from v2.2 to v2.3
 
       helm uninstall rime-agent
 
-4. Follow step 2 and 3 of the general upgrade process.
+4. Follow steps 2 and 3 of the general upgrade process.
+5. Install the updated Helm release.
+
+   .. code-block::
+
+      helm repo update
+      helm install rime-agent robustintelligence/rime-agent --version $RI_VERSION --values ./values.yaml
+
+Upgrading from v2.3 to v2.4
+---------------------------------------
+1. Point your local ``kubectl`` to your K8s cluster and namespace.
+2. Delete the ``rimejobs.rbst.io`` CRD.
+
+  .. code-block::
+
+    kubectl delete crd rimejobs.rbst.io
+
+3. Uninstall the agent in your environment:
+
+   .. code-block::
+
+      helm uninstall rime-agent
+
+4. Follow steps 2 and 3 of the general upgrade process.
 5. Install the updated Helm release.
 
    .. code-block::
@@ -84,13 +112,13 @@ Upgrading from v2.2 to v2.3
 
 Verifying an Upgrade
 ---------------------------------------
-1. Verify that the ``rime-agent`` Helm chart version matches the new RIME version:
+1. Verify that the ``rime-agent`` Helm chart version matches the new Robust Intelligence version:
 
    .. code-block::
 
       helm list
 
-2. Verify that the Docker image versions match the new RIME version:
+2. Verify that the Docker image versions match the new Robust Intelligence version:
 
    .. code-block::
 

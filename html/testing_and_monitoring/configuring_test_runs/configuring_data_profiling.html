@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Configuring Data Profiling &mdash; Robust Intelligence  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+
+  
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
@@ -55,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.4.3-rc.0
+                2.5.2-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -167,7 +169,7 @@ profiles.</p>
 <h2>Data profiling template<a class="headerlink" href="#data-profiling-template" title="Permalink to this heading"></a></h2>
 <p>Specify your dataset profile parameters in the
 <a class="reference internal" href="../validating_models/configuring_stress_tests.html"><span class="std std-doc">AI Stress Testing Configuration</span></a>
-JSON file, in the <code class="docutils literal notranslate"><span class="pre">data_profiling</span></code> configuration in the
+JSON object, which is part of the <code class="docutils literal notranslate"><span class="pre">data_profiling</span></code> configuration in the
 <code class="docutils literal notranslate"><span class="pre">profiling_config</span></code> dictionary.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="c1">#...,</span>
@@ -184,7 +186,7 @@ JSON file, in the <code class="docutils literal notranslate"><span class="pre">d
             <span class="s2">&quot;unseen_values_allowed_criteria&quot;</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span>
         <span class="p">},</span>
         <span class="s2">&quot;feature_relationship_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;num_feats_to_profile&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+            <span class="s2">&quot;num_feats_to_profile&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
             <span class="s2">&quot;compute_feature_relationships&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
             <span class="s2">&quot;compute_numeric_feature_relationships&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
             <span class="s2">&quot;ignore_nan_for_feature_relationships&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
@@ -226,9 +228,8 @@ JSON file, in the <code class="docutils literal notranslate"><span class="pre">d
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">feature_relationship_info</span></code>:</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">num_feats_to_profile</span></code>: int or <code class="docutils literal notranslate"><span class="pre">null</span></code>, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
-<p>Number of features to profile for <a class="reference internal" href="feature_sampling.html"><span class="std std-doc">Smart Feature Sampling</span></a>. If this value is unset and the dataset has fewer than 100 features, we will skip data profiling.</p>
-<p>Feature profiling is a memory intensive process. If you are running into memory/OOM issues on smaller datasets ( less than 100 features), consider disabling feature profiling by not setting this value.</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_feats_to_profile</span></code>: int or <code class="docutils literal notranslate"><span class="pre">null</span></code>, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">30</span></code></p>
+<p>Number of features to profile for <a class="reference internal" href="feature_sampling.html"><span class="std std-doc">Smart Feature Sampling</span></a>.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">compute_feature_relationships</span></code>: bool, <em>default</em> = True</p>
 <p>Whether to compute feature relationships.</p>

@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RI Movie Ratings Ranking Data Walkthrough 🎥 &mdash; Robust Intelligence  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+
+  
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
@@ -58,7 +60,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.4.3-rc.0
+                2.5.2-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -155,7 +157,7 @@
   <section id="RI-Movie-Ratings-Ranking-Data-Walkthrough-🎥">
 <h1><strong>RI Movie Ratings Ranking Data Walkthrough</strong> 🎥<a class="headerlink" href="#RI-Movie-Ratings-Ranking-Data-Walkthrough-🎥" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RI_Ranking_Walkthrough.ipynb">RI Movie Ratings Ranking Data Walkthrough in Google Colab</a>.</p>
+<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/2.5-stable/notebooks/demo_notebooks/RI_Ranking_Walkthrough.ipynb">RI Movie Ratings Ranking Data Walkthrough in Google Colab</a>.</p>
 </div></blockquote>
 <p>In this walkthrough, you are a data scientist tasked with training a recommendation system to predict whether or not a given user will upvote a movie. From experience, the team has found that the upstream data pipelines can be brittle, and want to use RIME to:</p>
 <ol class="arabic simple">
@@ -174,7 +176,7 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -186,14 +188,14 @@
 <span class="kn">from</span> <span class="nn">ri_public_examples.download_files</span> <span class="kn">import</span> <span class="n">download_files</span>
 
 <span class="n">download_files</span><span class="p">(</span><span class="s1">&#39;tabular-2.0/ranking&#39;</span><span class="p">,</span> <span class="s1">&#39;ranking&#39;</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
 <section id="Establish-the-RIME-Client">
 <h2><strong>Establish the RIME Client</strong><a class="headerlink" href="#Establish-the-RIME-Client" title="Permalink to this heading"></a></h2>
 <p>To get started, provide the API credentials and the base domain/address of the RIME service. You can generate and copy an API token from the API Access Tokens Page under Workspace settings. For the domian/address of the RIME service, contact your admin.</p>
-<img alt="img_1" src="https://drive.google.com/uc?id=1vMDhZii8yq22iuqSM8-Vqt3sZ2F3tPyz" />
+<p><img alt="Image of getting an API token" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/api_access_tokens.png" /><img alt="Image of creating an API token" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/create_token.png" /></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -202,7 +204,7 @@
 <span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
 <span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">API_TOKEN</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -223,7 +225,7 @@
     <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
     <span class="n">model_task</span><span class="o">=</span><span class="s1">&#39;MODEL_TASK_RANKING&#39;</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Go back to the UI to see the new Ranking Demo Project.</strong></p>
@@ -237,7 +239,7 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;ranking/data/ref.csv&#39;</span><span class="p">))</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -264,7 +266,7 @@
 <span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
     <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;ranking/data/eval_preds.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p>Once the data and model are uploaded to S3, we can register them to RIME. Once they’re registered, we can refer to these resources using their RIME-generated ID’s.</p>
@@ -299,7 +301,7 @@
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
     <span class="n">eval_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">eval_preds_s3_path</span><span class="p">,</span> <span class="n">pred_params</span><span class="o">=</span><span class="n">pred_params</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -324,13 +326,13 @@
     <span class="n">stress_test_config</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
 <section id="Stress-Test-Results">
 <h2><strong>Stress Test Results</strong><a class="headerlink" href="#Stress-Test-Results" title="Permalink to this heading"></a></h2>
-<p>Stress tests are grouped into categories that measure various aspects of model robustness (model behavior, distribution drift, abnormal input, transformations, adversarial attacks, data cleanliness). Suggestions to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information.</p>
+<p>Stress tests are grouped first by risk categories and then into categories that measure various aspects of model robustness (model behavior, distribution drift, abnormal input, transformations, adversarial attacks, data cleanliness). Key findings to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information.</p>
 <p>You can view the detailed results in the UI by running the below cell and redirecting to the generated link. This page shows granular results for a given AI Stress Test run.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -338,18 +340,18 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_run</span> <span class="o">=</span> <span class="n">stress_job</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
 <span class="n">test_run</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p>Stress testing should be used during model development to inform us about various issues with the data and model that we might want to address before the model is deployed. The information is presented in an incident management view.</p>
 <section id="Analyzing-the-Results">
 <h3><strong>Analyzing the Results</strong><a class="headerlink" href="#Analyzing-the-Results" title="Permalink to this heading"></a></h3>
 <p>Below you can see a snapshot of the results.</p>
-<img alt="img_2" src="https://drive.google.com/uc?id=1gR-bosz3YH4wX2W2M4scjCdIz0RRjoig" />
+<img alt="Image of ST results for movie ranking model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_ranking_walkthrough/movie_ranking.png" />
 <p>Here are the results of the Subset Performance tests. These tests can be thought as more detailed performance tests that identify subsets of underperformance. These tests help ensure that the model works equally well across different groups.</p>
-<img alt="img_3" src="https://drive.google.com/uc?id=1ATu9N3jjKm26nKUwehjrCG1yepzIOz9c" />
+<img alt="Image of ST operational risk results for movie ranking model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_ranking_walkthrough/movie_operational_risk.png" />
 <p>Below we are exploring the “Subset Mean Reciprocal Rank (MRR)” test cases for the feature “Votes”. We can see that even though the model has an overall MRR of 0.91, it performs poorly on certain subsets with low values of the “Votes” feature.</p>
-<img alt="img_4" src="https://drive.google.com/uc?id=1Px7l7mc6W5MIdm1RJDY9Gfgg40amdVUi" />
+<img alt="Image of ST MRR results for movie ranking model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_ranking_walkthrough/movie_mrr.png" />
 </section>
 </section>
 <section id="Deploy-to-Production-and-set-up-Continuous-Testing">
@@ -362,7 +364,7 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
 
 <span class="n">ct_instance</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_ct</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -396,7 +398,7 @@
     <span class="n">pred_params</span><span class="o">=</span><span class="n">pred_params</span><span class="p">,</span>
     <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -408,7 +410,7 @@
                                            <span class="s2">&quot;TEST_CATEGORY_TYPE_ABNORMAL_INPUTS&quot;</span><span class="p">,</span>
                                            <span class="s2">&quot;TEST_CATEGORY_TYPE_DRIFT&quot;</span><span class="p">,</span>
                                            <span class="s2">&quot;TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS&quot;</span><span class="p">])</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Run Continuous Testing over Batch of Data</strong></p>
@@ -419,7 +421,7 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">ct_instance</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">ct_instance</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Wait for a couple minutes and your results will appear in the UI.</strong></p>
@@ -435,7 +437,7 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">events</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">ct_instance</span><span class="o">.</span><span class="n">list_monitors</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">list_detected_events</span><span class="p">()]</span>
 <span class="n">events_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">events</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;project_id&quot;</span><span class="p">,</span> <span class="s2">&quot;firewall_id&quot;</span><span class="p">,</span> <span class="s2">&quot;event_object_id&quot;</span><span class="p">,</span> <span class="s2">&quot;description_html&quot;</span><span class="p">,</span> <span class="s2">&quot;last_update_time&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">events_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -448,13 +450,13 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_instance</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <section id="Analyzing-CT-Results">
 <h3><strong>Analyzing CT Results</strong><a class="headerlink" href="#Analyzing-CT-Results" title="Permalink to this heading"></a></h3>
 <p><strong>Failing Rows Rate stays steady (and low) over time</strong> - In the below image, we can see that the Failing Rows Rate remains fairly low (&lt;15%) over time, and does not trend upward significantly.</p>
-<img alt="img_5" src="https://drive.google.com/uc?id=15Q5bmKWTmoG9tE0TovW0AM9t2j7kARQS" />
+<img alt="Image of model historical performance graph for movie ranking model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_ranking_walkthrough/production_perf_graph.png" />
 </section>
 </section>
 <section id="Summary:">

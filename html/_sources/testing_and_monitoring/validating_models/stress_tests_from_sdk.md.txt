@@ -1,9 +1,13 @@
 # Creating a New Stress Test
 
-This procedure presumes a model.py file is already registered to the RI Platform and that all commands are issued in a Python environment.
+This procedure presumes a `model.py` file is already registered to the
+Robust Intelligence platform and that all commands are issued in a
+Python environment.
 
-1.  (When a suitable [project](../creating_projects/creating_a_project.rst) does not already exist) Create a project
-    using the following [SDK command](../../reference/python-sdk.rst).
+1.  If a suitable [project](../creating_projects/creating_a_project.rst)
+    does not already exist, create a project using the
+    [create_project](../../reference/python-sdk.rst#rime_sdk.Client.create_project)
+    command in the SDK.
 
     >   ```python
     >   project = rime_client.create_project(
@@ -37,7 +41,7 @@ This procedure presumes a model.py file is already registered to the RI Platform
 
     >   The SDK returns the ID of the reference dataset.
 
-    >   Note that it is best to register a dataset once and then re-use the reference_id afterwards. The SDK commands `project.has_dataset` and `project.get_dataset` can be used to retrieve the dataset ID associated with a particular name.
+    >   Note that it is best to register a dataset once and then re-use its dataset ID (called `reference_id` in this example) afterwards. The SDK commands `project.has_dataset` and `project.get_dataset` can be used to retrieve the dataset ID associated with a particular name.
 
 3.  Register an evaluation dataset.
 
@@ -85,10 +89,10 @@ This procedure presumes a model.py file is already registered to the RI Platform
 
     >   The SDK returns the model ID.
 
-5.  Create a [test run configuration](configuring_stress_tests.md) that uses the
-    registered reference and evaluation datasets and the model, specifying a name and
-    model task in addition to the IDs of the datasets and model registered earlier in
-    this procedure.
+5.  Create a [test_run_config](./configuring_stress_tests.md) that uses
+    the registered reference and evaluation datasets and the model,
+    specifying a name and model task in addition to the IDs of the
+    datasets and model registered earlier in this procedure.
 
     >   ```python
     >   config = {
@@ -100,9 +104,10 @@ This procedure presumes a model.py file is already registered to the RI Platform
 
     >   You can also [specify predictions](../preparing_your_models_and_datasets/data_source.md) in the test run configuration.
 
-6.  Issue the following command to start the Stress Test, specifying the configuration
-    created in the previous step and the unique ID of the project that contains the
-    Stress Test.
+6.  Issue the following command to start the stress test, specifying
+    the [test_run_config](./configuring_stress_tests.md) you created
+    in the previous step and the unique ID of the project that
+    contains the stress test.
 
     >   ```python
     >   job = client.start_stress_test(
@@ -113,6 +118,7 @@ This procedure presumes a model.py file is already registered to the RI Platform
 Once the stress test has completed, you can [query test run results](../querying_results.rst) to programmatically access the results of the stress test.
 
 ## Related Topics  
+[Configuring Stress Tests](./configuring_stress_tests.md)  
 [Configuring Stress Tests](configuring_stress_tests.md)  
 [Creating a Project](../creating_projects/creating_a_project.rst)  
 [Data Configuration](../preparing_your_models_and_datasets/data_source.md)  

@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RI Fraud Classification Walkthrough &mdash; Robust Intelligence  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+
+  
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
@@ -58,7 +60,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.4.3-rc.0
+                2.5.2-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -155,7 +157,7 @@
   <section id="RI-Fraud-Classification-Walkthrough">
 <h1><strong>RI Fraud Classification Walkthrough</strong><a class="headerlink" href="#RI-Fraud-Classification-Walkthrough" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RI_Fraud_Classification_Walkthrough.ipynb">RI Fraud Classification Walkthrough in Google Colab</a>.</p>
+<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/2.5-stable/notebooks/demo_notebooks/RI_Fraud_Classification_Walkthrough.ipynb">RI Fraud Classification Walkthrough in Google Colab</a>.</p>
 </div></blockquote>
 <p>You are a data scientist at a Payment Processing Company. The data science team has been tasked with implementing a Fraud Detection model and monitoring how that model performs over time. The performance of this fraud detection model directly impacts the costs of the company. In order to ensure the data science team develops the best model and the performance of this model doesn’t degrade over time, the VP of Data Science purchases the RIME platform.</p>
 <p>In this Notebook Walkthrough, we will walkthrough 2 of RIME’s core products - <strong>AI Stress Testing</strong> and <strong>AI Continuous Testing</strong>.</p>
@@ -175,7 +177,7 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -187,14 +189,14 @@
 <span class="kn">from</span> <span class="nn">ri_public_examples.download_files</span> <span class="kn">import</span> <span class="n">download_files</span>
 
 <span class="n">download_files</span><span class="p">(</span><span class="s1">&#39;tabular-2.0/fraud&#39;</span><span class="p">,</span> <span class="s1">&#39;fraud&#39;</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
 <section id="Establish-the-RIME-Client">
 <h2><strong>Establish the RIME Client</strong><a class="headerlink" href="#Establish-the-RIME-Client" title="Permalink to this heading"></a></h2>
 <p>To get started, provide the API credentials and the base domain/address of the RIME service. You can generate and copy an API token from the API Access Tokens Page under Workspace settings. For the domian/address of the RIME service, contact your admin.</p>
-<img alt="img_1" src="https://drive.google.com/uc?id=1vMDhZii8yq22iuqSM8-Vqt3sZ2F3tPyz" />
+<p><img alt="Image of getting an API token" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/api_access_tokens.png" /><img alt="Image of creating an API token" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/create_token.png" /></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -202,7 +204,7 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE API_KEY</span>
 <span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
 <span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -210,7 +212,7 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">API_TOKEN</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -231,7 +233,7 @@
     <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
     <span class="n">model_task</span><span class="o">=</span><span class="s1">&#39;MODEL_TASK_BINARY_CLASSIFICATION&#39;</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Go back to the UI to see the new Fraud Demo Project.</strong></p>
@@ -245,7 +247,7 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/data/fraud_ref.csv&#39;</span><span class="p">))</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p>For this demo, we are going to use a pretrained CatBoostClassifier Model.</p>
@@ -285,7 +287,7 @@
 <span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
     <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;fraud/data/fraud_eval_preds.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p>Once the data and model are uploaded to S3, we can register them to RIME. Once they’re registered, we can refer to these resources using their RIME-generated ID’s.</p>
@@ -313,7 +315,7 @@
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
     <span class="n">eval_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">eval_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -343,14 +345,14 @@
     <span class="n">stress_test_config</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Wait for a couple minutes and your results will appear in the UI.</strong></p>
 </section>
 <section id="Stress-Test-Results">
 <h2><strong>Stress Test Results</strong><a class="headerlink" href="#Stress-Test-Results" title="Permalink to this heading"></a></h2>
-<p>Stress tests are grouped into categories that measure various aspects of model robustness (model behavior, distribution drift, abnormal input, transformations, adversarial attacks, data cleanliness). Suggestions to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information.</p>
+<p>Stress tests are grouped first by risk categories and then into categories that measure various aspects of model robustness (model behavior, distribution drift, abnormal input, transformations, adversarial attacks, data cleanliness). Key findings to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information.</p>
 <p>You can view the detailed results in the UI by running the below cell and redirecting to the generated link. This page shows granular results for a given AI Stress Test run.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -358,17 +360,17 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_run</span> <span class="o">=</span> <span class="n">stress_job</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
 <span class="n">test_run</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <section id="Analyzing-the-Results">
 <h3><strong>Analyzing the Results</strong><a class="headerlink" href="#Analyzing-the-Results" title="Permalink to this heading"></a></h3>
 <p>Below you can see a snapshot of the results.</p>
-<img alt="img_2" src="https://drive.google.com/uc?id=126qw9YXDHzli_lj7XwyIi89U0FBVjMki" />
-<p>Here are the results of the Subset Performance tests. These tests can be thought as more detailed performance tests that identify subsets of underperformance. These tests help ensure that the model works equally well across different groups.</p>
-<img alt="img_3" src="https://drive.google.com/uc?id=1ityHRKipkvMi8aU3nMS3Xb9ewrSUDhnx" />
-<p>Below we are exploring the “Subset Recall” test cases for the feature “City”. We can see that even though the model has a Recall of 0.81, it performs poorly on certain cities like Sao Paolo and Rio De Janeiro.</p>
-<img alt="img_4" src="https://drive.google.com/uc?id=1epNLMxOVLVoiByCBJ-sCHM4QgopYEDYW" />
+<img alt="Image of a stress test results for a fraud detection model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_fraud_classification_walkthrough/fraud_st_results.png" />
+<p>Here are the results of one of the Operational Risk tests, Transformations. Transformation tests augment evaluation dataset with abnormal values and measure the performance degradation from them.</p>
+<img alt="Image of transformation test results for a fraud detection model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_fraud_classification_walkthrough/fraud_transformation.png" />
+<p>Below we are exploring the “Capitalization Change” test cases for the feature “category”. This test measures the impact on the model when we substitute different types of capitalization into clean datapoints.</p>
+<img alt="Image of capitalization-change test result for a fraud detection model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_fraud_classification_walkthrough/fraud_capitalization.png" />
 </section>
 <section id="Programmatically-Querying-the-Results">
 <h3><strong>Programmatically Querying the Results</strong><a class="headerlink" href="#Programmatically-Querying-the-Results" title="Permalink to this heading"></a></h3>
@@ -381,7 +383,7 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_run_result</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_result_df</span><span class="p">()</span>
 <span class="n">test_run_result</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Access detailed test results at each individual test cases level.</strong></p>
@@ -391,7 +393,7 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_case_result</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_cases_df</span><span class="p">()</span>
 <span class="n">test_case_result</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -411,7 +413,7 @@
                             <span class="p">])</span>
 
 <span class="n">ct_instance</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_ct</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -441,7 +443,7 @@
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
     <span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">prod_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Run Continuous Testing over Batch of Data</strong></p>
@@ -452,7 +454,7 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">ct_instance</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">ct_instance</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Wait for a couple minutes and your results will appear in the UI.</strong></p>
@@ -468,14 +470,14 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">events</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">ct_instance</span><span class="o">.</span><span class="n">list_monitors</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">list_detected_events</span><span class="p">()]</span>
 <span class="n">events_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">events</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;project_id&quot;</span><span class="p">,</span> <span class="s2">&quot;firewall_id&quot;</span><span class="p">,</span> <span class="s2">&quot;event_object_id&quot;</span><span class="p">,</span> <span class="s2">&quot;description_html&quot;</span><span class="p">,</span> <span class="s2">&quot;last_update_time&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">events_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
 <section id="CT-Overview">
 <h2><strong>CT Overview</strong><a class="headerlink" href="#CT-Overview" title="Permalink to this heading"></a></h2>
 <p>The Overview page is the mission control for your model’s production deployment health. In it, you can see the status of continuous test runs and their metrics change over time.</p>
-<img alt="img_5" src="https://drive.google.com/uc?id=18Q62IvDft4IEAba9Tm7unCoIle8y4NOv" />
+<img alt="Image of a graph of the historic performance results for a fraud detection model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_fraud_classification_walkthrough/fraud_historical.png" />
 </section>
 <section id="CT-Results">
 <h2><strong>CT Results</strong><a class="headerlink" href="#CT-Results" title="Permalink to this heading"></a></h2>
@@ -486,7 +488,7 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_instance</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -557,7 +559,7 @@
     <span class="n">stress_test_with_model_config</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -573,14 +575,16 @@ some threshold.</p>
 <span class="sd">&quot;&quot;&quot;Custom test batch runner.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
 <span class="kn">from</span> <span class="nn">rime.core.schema.config</span> <span class="kn">import</span> <span class="n">CustomConfig</span>
-<span class="kn">from</span> <span class="nn">rime.core.schema.severity</span> <span class="kn">import</span> <span class="n">ImportanceLevel</span>
-<span class="kn">from</span> <span class="nn">rime.core.schema.status</span> <span class="kn">import</span> <span class="n">Status</span>
+<span class="kn">from</span> <span class="nn">rime.protos.ri.api.resultsynthesizer.result_message_pb2</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">TestCaseStatus</span> <span class="k">as</span> <span class="n">Status</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">rime.core.stress_tests.schema.table_info</span> <span class="kn">import</span> <span class="n">TableColumn</span>
 <span class="kn">from</span> <span class="nn">rime.core.stress_tests.schema.test_result</span> <span class="kn">import</span> <span class="n">TestBatchResult</span><span class="p">,</span> <span class="n">TestOutput</span>
 <span class="kn">from</span> <span class="nn">rime.core.test</span> <span class="kn">import</span> <span class="n">BaseTest</span><span class="p">,</span> <span class="n">TestExtraInfo</span>
 <span class="kn">from</span> <span class="nn">rime.core.stress_tests.batch_runner</span> <span class="kn">import</span> <span class="n">DataTestBatchRunner</span>
 <span class="kn">from</span> <span class="nn">rime.core.stress_tests.schema.test_result</span> <span class="kn">import</span> <span class="n">TestBatchResult</span><span class="p">,</span> <span class="n">TestOutput</span>
 <span class="kn">from</span> <span class="nn">rime.core.profiler.run_containers</span> <span class="kn">import</span> <span class="n">RunContainer</span>
+<span class="kn">from</span> <span class="nn">rime.protos.ri.lib.common_pb2</span> <span class="kn">import</span> <span class="n">Severity</span>
 
 <span class="c1"># Signature should not be changed.</span>
 <span class="k">class</span> <span class="nc">CustomTest</span><span class="p">(</span><span class="n">BaseTest</span><span class="p">):</span>
@@ -598,11 +602,11 @@ some threshold.</p>
         <span class="n">ref_data_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">run_container</span><span class="o">.</span><span class="n">ref_data</span><span class="o">.</span><span class="n">df</span><span class="p">)</span>
         <span class="n">eval_data_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">run_container</span><span class="o">.</span><span class="n">eval_data</span><span class="o">.</span><span class="n">df</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ref_data_size</span> <span class="o">&gt;</span> <span class="n">eval_data_size</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">:</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="n">Status</span><span class="o">.</span><span class="n">WARNING</span>
-            <span class="n">severity</span> <span class="o">=</span> <span class="n">ImportanceLevel</span><span class="o">.</span><span class="n">HIGH</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">Status</span><span class="o">.</span><span class="n">TEST_CASE_STATUS_WARNING</span>
+            <span class="n">severity</span> <span class="o">=</span> <span class="n">Severity</span><span class="o">.</span><span class="n">SEVERITY_ALERT</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="n">Status</span><span class="o">.</span><span class="n">PASS</span>
-            <span class="n">severity</span> <span class="o">=</span> <span class="n">ImportanceLevel</span><span class="o">.</span><span class="n">NONE</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">Status</span><span class="o">.</span><span class="n">TEST_CASE_STATUS_PASS_UNSPECIFIED</span>
+            <span class="n">severity</span> <span class="o">=</span> <span class="n">Severity</span><span class="o">.</span><span class="n">SEVERITY_PASS</span>
         <span class="n">test_output</span> <span class="o">=</span> <span class="n">TestOutput</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;Severity&quot;</span><span class="p">:</span> <span class="n">severity</span><span class="p">},</span> <span class="n">severity</span><span class="p">,</span> <span class="p">[],</span>
         <span class="p">)</span>
@@ -681,7 +685,7 @@ some threshold.</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">custom_test_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="s2">&quot;fraud/custom_test.py&quot;</span><span class="p">,</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -708,7 +712,7 @@ some threshold.</p>
     <span class="n">stress_test_with_model_config</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -716,7 +720,7 @@ some threshold.</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stress_job</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>

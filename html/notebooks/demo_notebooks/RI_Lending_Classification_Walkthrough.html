@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RI Lending Classification Walkthrough &mdash; Robust Intelligence  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+
+  
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
@@ -58,7 +60,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.4.3-rc.0
+                2.5.2-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -155,7 +157,7 @@
   <section id="RI-Lending-Classification-Walkthrough">
 <h1><strong>RI Lending Classification Walkthrough</strong><a class="headerlink" href="#RI-Lending-Classification-Walkthrough" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RI_Lending_Classification_Walkthrough.ipynb">RI Lending Classification Walkthrough in Google Colab</a>.</p>
+<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/2.5-stable/notebooks/demo_notebooks/RI_Lending_Classification_Walkthrough.ipynb">RI Lending Classification Walkthrough in Google Colab</a>.</p>
 </div></blockquote>
 <p>You are a data scientist at a Bank. The data science team has been tasked with implementing a binary classification model to predict whether an individual will default on a loan. The goal of this project is two-fold: we want to monitor how that model performs over time as well as ensure that the model is compliant with financial regulations. In order to accomplish the latter, we will be testing whether the model is biased against certain protected features. One could imagine such models being
 used downstream for various purposes, such as loan approval or funding allocation. A biased model could yield disadvantageous outcomes for protected groups. For instance, we may find that an individual with a specific race or race/gender combination causes the model to consistently predict a higher probability of them defaulting, causing a higher rate of loan rejection.</p>
@@ -168,7 +170,7 @@ used downstream for various purposes, such as loan approval or funding allocatio
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>rime-sdk<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -178,7 +180,7 @@ used downstream for various purposes, such as loan approval or funding allocatio
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -188,14 +190,14 @@ used downstream for various purposes, such as loan approval or funding allocatio
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>https://github.com/RobustIntelligence/ri-public-examples/archive/master.zip
 <span class="kn">from</span> <span class="nn">ri_public_examples.download_files</span> <span class="kn">import</span> <span class="n">download_files</span>
 <span class="n">download_files</span><span class="p">(</span><span class="s1">&#39;tabular-2.0/lending&#39;</span><span class="p">,</span> <span class="s1">&#39;lending&#39;</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
 <section id="Establish-the-RIME-Client">
 <h2><strong>Establish the RIME Client</strong><a class="headerlink" href="#Establish-the-RIME-Client" title="Permalink to this heading"></a></h2>
 <p>To get started, provide the API credentials and the base domain/address of the RIME service. You can generate and copy an API token from the API Access Tokens Page under Workspace settings. For the domian/address of the RIME service, contact your admin.</p>
-<img alt="img_1" src="https://drive.google.com/uc?id=1vMDhZii8yq22iuqSM8-Vqt3sZ2F3tPyz" />
+<p><img alt="Image of getting an API token" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/api_access_tokens.png" /><img alt="Image of creating an API token" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/create_token.png" /></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -203,7 +205,7 @@ used downstream for various purposes, such as loan approval or funding allocatio
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE API_KEY</span>
 <span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
 <span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -211,7 +213,7 @@ used downstream for various purposes, such as loan approval or funding allocatio
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">API_TOKEN</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -233,7 +235,7 @@ used downstream for various purposes, such as loan approval or funding allocatio
     <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
     <span class="n">model_task</span><span class="o">=</span><span class="s2">&quot;MODEL_TASK_BINARY_CLASSIFICATION&quot;</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -241,7 +243,7 @@ used downstream for various purposes, such as loan approval or funding allocatio
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Go back to the UI to see the new ``Lending Classification Continuous Testing Demo`` project.</strong></p>
@@ -254,7 +256,7 @@ used downstream for various purposes, such as loan approval or funding allocatio
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;lending/data/ref.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p>For this demo, we are going to use a pretrained CatBoostClassifier Model.</p>
@@ -284,7 +286,7 @@ used downstream for various purposes, such as loan approval or funding allocatio
 <span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
     <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;lending/data/eval_preds.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p>Once the data and model are uploaded to S3, we can register them to RIME. In this bias and fairness setting, we require some additional information when registering datasets. Within the <code class="docutils literal notranslate"><span class="pre">data_params</span></code> parameter in the registering function, we include the protected features present in the data such that we can run our bias and fairness tests on those features. Once the datasets and models are registered, we can refer to these resources using their RIME-generated ID’s.</p>
@@ -353,17 +355,17 @@ as such is necessary:</p>
 <span class="p">}</span>
 <span class="n">stress_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="n">test_run_config</span><span class="o">=</span><span class="n">stress_test_config</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Wait for a couple minutes and your results will appear in the UI.</strong></p>
 </section>
 <section id="Stress-Test-Results">
 <h2><strong>Stress Test Results</strong><a class="headerlink" href="#Stress-Test-Results" title="Permalink to this heading"></a></h2>
-<p>Stress tests are grouped into categories that measure various aspects of model robustness (model behavior, distribution drift, abnormal input, transformations, adversarial attacks, bias and fairness). Suggestions to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information.</p>
-<img alt="img_3" src="https://drive.google.com/uc?id=1dYI1YLTZqOMcuk_KSRfJOavdS_26CKC3" />
+<p>Stress tests are tests are grouped first by risk categories and then into categories that measure various aspects of model robustness (model behavior, distribution drift, abnormal input, transformations, adversarial attacks, bias and fairness). Key insights to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information.</p>
+<img alt="Image of the stress test overview for a lending default prediciton model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_lending_classification_walkthrough/loan_st.png" />
 <p>Similar to running RIME Stress Tests in the default setting, we surface an overall distribution of test severities, model metrics, as well as key insights to the right. This test suite comprises a selection of Bias and Fairness tests over any protected features, Attack tests over all features, and Abnormal Inputs tests over all features. These tests align with financial regulatory standards. Lets take a closer look at the Demographic Parity test:</p>
-<img alt="img_4" src="https://drive.google.com/uc?id=1sBlvaUHu_Gwut_hmFN0tR_WJmcbpfTLZ" />
+<img alt="Image of the demographic parity results for a lending default prediciton model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_lending_classification_walkthrough/loan_demographic_parity.png" />
 <p>This test is commonly known as the demographic parity or statistical parity test in fairness literature. This test checks whether the model performs equally well across a given subset of rows as it does across the whole dataset. The key detail displays the performance difference between the lowest performing subset and the overall population. The test first splits the dataset into various subsets depending on the quantiles of a given feature column. If the feature is categorical, the data is
 split based on the feature values. We then test whether the Positive Prediction Rate of model predictions within a specific subset is significantly different than the model prediction Positive Prediction Rate over the entire ‘population’.</p>
 <p>We can see that the model fails the demographic parity test for two of the three protected features that we configured.</p>
@@ -373,7 +375,7 @@ split based on the feature values. We then test whether the Positive Prediction 
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_run</span> <span class="o">=</span> <span class="n">stress_job</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
 <span class="n">test_run</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -382,7 +384,7 @@ split based on the feature values. We then test whether the Positive Prediction 
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_case_result</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_result_df</span><span class="p">()</span>
 <span class="n">test_case_result</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <section id="Programmatically-Querying-the-Results">
@@ -397,7 +399,7 @@ split based on the feature values. We then test whether the Positive Prediction 
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_run_result</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_result_df</span><span class="p">()</span>
 <span class="n">test_run_result</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;Lending_Test_Run_Results.csv&quot;</span><span class="p">)</span>
 <span class="n">test_run_result</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Access detailed test results at each individual test cases level.</strong></p>
@@ -408,7 +410,7 @@ split based on the feature values. We then test whether the Positive Prediction 
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_case_result</span> <span class="o">=</span> <span class="n">test_run</span><span class="o">.</span><span class="n">get_test_cases_df</span><span class="p">()</span>
 <span class="n">test_case_result</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;Lending_Test_Case_Results.csv&quot;</span><span class="p">)</span>
 <span class="n">test_case_result</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -425,7 +427,7 @@ split based on the feature values. We then test whether the Positive Prediction 
 
 <span class="c1"># Set up Continuous Testing using previously registered model and dataset IDs.</span>
 <span class="n">ct</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_ct</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -455,7 +457,7 @@ split based on the feature values. We then test whether the Positive Prediction 
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
     <span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">prod_preds_s3_path</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p>To run the Bias and Fairness category in Continuous Testing, you will want to specify the Bias and Fairness Category as a continuous test category. This category does not run by default so specifying along with other categories as such is necessary:</p>
@@ -469,7 +471,7 @@ split based on the feature values. We then test whether the Positive Prediction 
                                            <span class="s2">&quot;TEST_CATEGORY_TYPE_DRIFT&quot;</span><span class="p">,</span>
                                            <span class="s2">&quot;TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS&quot;</span>
                                           <span class="p">])</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Run Continuous Testing over Batch of Data</strong></p>
@@ -480,7 +482,7 @@ split based on the feature values. We then test whether the Positive Prediction 
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">ct</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Wait for a couple minutes and your results will appear in the UI.</strong></p>
@@ -488,7 +490,7 @@ split based on the feature values. We then test whether the Positive Prediction 
 <section id="Continuous-Testing-Overview">
 <h2><strong>Continuous Testing Overview</strong><a class="headerlink" href="#Continuous-Testing-Overview" title="Permalink to this heading"></a></h2>
 <p>The page is the mission control for your model’s production deployment health. In it, you can see the status of continuous test runs, and see their metrics changes over time.</p>
-<img alt="img_5" src="https://drive.google.com/uc?id=1uT3q4pakoQSPhRf9HfxS5tyL16c3dDpx" />
+<img alt="Image of a graph of the performance history of a lending default prediciton model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_lending_classification_walkthrough/loan_historical.png" />
 </section>
 <section id="Continuous-Test-Results">
 <h2><strong>Continuous Test Results</strong><a class="headerlink" href="#Continuous-Test-Results" title="Permalink to this heading"></a></h2>
@@ -499,7 +501,7 @@ split based on the feature values. We then test whether the Positive Prediction 
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>

@@ -18,7 +18,7 @@
    },
    "source": [
     "\n",
-    "> ▶️ **Try this in Colab!** Run the [RI Text Multiclass Classification Walkthrough in Google Colab](https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RI_Text_Classification_Walkthrough.ipynb). \n",
+    "> ▶️ **Try this in Colab!** Run the [RI Text Multiclass Classification Walkthrough in Google Colab](https://colab.research.google.com/github/RobustIntelligence/docs/blob/2.5-stable/notebooks/demo_notebooks/RI_Text_Classification_Walkthrough.ipynb). \n",
     "\n",
     "You are a data scientist working to maintain a large research library. The data science team has been tasked with implementing a research paper topic classification model and monitoring how that model performs over time. The performance of this model directly impacts the profits of the company. To ensure the data science team develops the best model and the performance of this model doesn't degrade over time, the VP of Data Science purchases the RIME platform.\n",
     "\n",
@@ -61,7 +61,7 @@
     "\n",
     "import pandas as pd\n",
     "from pathlib import Path\n",
-    "from rime_sdk import Client"
+    "from rime_sdk import Client\n"
    ]
   },
   {
@@ -77,7 +77,7 @@
     "    \n",
     "from ri_public_examples.download_files import download_files\n",
     "\n",
-    "download_files('nlp/classification/arxiv-2.0', 'arxiv')"
+    "download_files('nlp/classification/arxiv-2.0', 'arxiv')\n"
    ]
   },
   {
@@ -105,7 +105,8 @@
    "id": "40334928",
    "metadata": {},
    "source": [
-    "![api.jpeg](https://www.dropbox.com/s/bpz7vb8j6a7zgwu/img_1_api.jpeg?dl=0)"
+    "![Image of getting an API token](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/api_access_tokens.png)",
+    "![Image of creating an API token](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/create_token.png)"
    ]
   },
   {
@@ -120,7 +121,7 @@
     "API_TOKEN = '' # PASTE API_KEY \n",
     "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)\n",
     "AGENT_ID = '' # PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT\n",
-    "client = Client(CLUSTER_URL, API_TOKEN)"
+    "client = Client(CLUSTER_URL, API_TOKEN)\n"
    ]
   },
   {
@@ -163,7 +164,7 @@
     "    name='Text Classification Demo', \n",
     "    description=description,\n",
     "    model_task='MODEL_TASK_MULTICLASS_CLASSIFICATION'\n",
-    ")"
+    ")\n"
    ]
   },
   {
@@ -225,7 +226,7 @@
     ")\n",
     "eval_preds_s3_path = client.upload_file(\n",
     "    Path(\"arxiv/data/preds.val_0.jsonl.gz\"), upload_path=upload_path\n",
-    ")"
+    ")\n"
    ]
   },
   {
@@ -271,7 +272,7 @@
     ")\n",
     "project.register_predictions_from_file(\n",
     "    eval_dataset_id, model_id, eval_preds_s3_path, agent_id=AGENT_ID\n",
-    ")"
+    ")\n"
    ]
   },
   {
@@ -322,7 +323,7 @@
     "    },\n",
     "    \"model_id\": model_id,\n",
     "    \"run_time_info\": {\n",
-    "        \"random_seed\": 42,\n",
+    "        \"random_seed\": \"42\",\n",
     "    },\n",
     "    \"categories\": [\n",
     "        \"TEST_CATEGORY_TYPE_ADVERSARIAL\",\n",
@@ -338,7 +339,7 @@
     "    project_id=project.project_id,\n",
     "    agent_id=AGENT_ID\n",
     ")\n",
-    "stress_job.get_status(verbose=True, wait_until_finish=True)"
+    "stress_job.get_status(verbose=True, wait_until_finish=True)\n"
    ]
   },
   {
@@ -373,7 +374,7 @@
    "outputs": [],
    "source": [
     "test_run = stress_job.get_test_run()\n",
-    "test_run"
+    "test_run\n"
    ]
   },
   {
@@ -411,8 +412,8 @@
    "id": "12941dd1",
    "metadata": {},
    "source": [
-    "![subset.png](https://drive.google.com/uc?id=1m-YaOEv7JJmxGRnaGUUZ-wT7Sy6D4k2F)"
-   ]
+    "![Image of ST subset results on a test of a text classification model](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_text_classification_walkthrough/text_st_subset.png)"
+    ]
   },
   {
    "cell_type": "markdown",
@@ -421,7 +422,7 @@
     "id": "3d984daa"
    },
    "source": [
-    "Below we are exploring the \"Subset Macro Precision\" test cases for the text metadata feature \"AverageTokenLength\". We can see that even though the model has a Macro Precision of 0.53, it performs poorly on certain subsets, especially those with lower average token lengths."
+    "Below we are exploring the \"Subset Macro Precision\" test cases for the text metadata feature \"text.DetectedLanguage\". We can see that even though the model has a Macro Precision of 0.53, it performs poorly on certain subsets."
    ]
   },
   {
@@ -429,8 +430,8 @@
    "id": "caad7230",
    "metadata": {},
    "source": [
-    "![precision.png](https://drive.google.com/uc?id=1tSBMtZy-6qEnsh2xV6u98Zr3YBqdmmCV)"
-   ]
+    "![Image of ST subset macro precision results on a test of a text classification model](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_text_classification_walkthrough/text_st_macro_precis.png)"
+    ]
   },
   {
    "cell_type": "markdown",
@@ -457,7 +458,7 @@
    "id": "08cd198e",
    "metadata": {},
    "source": [
-    "![transform.png](https://drive.google.com/uc?id=1DIwzsn7lxm6DzkeYavLQVV1dmvDLdBUi)"
+    "![Image of ST value-transformation results on a test of a text classification model](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_text_classification_walkthrough/text_transformations.png)"
    ]
   },
   {
@@ -467,7 +468,7 @@
     "id": "ydb-roGBEa77"
    },
    "source": [
-    "Below we are exploring a transformation test that changes the original text to upper-case text. We see that this transformation causes the original class's predicted score to change by 0.70. As a result, the model predicts an entirely new class for the text and misclassifies it."
+    "Below we are exploring a transformation test that changes the original text to upper-case text. We see that this transformation causes the original class's predicted score to change by 0.52. As a result, the model predicts an entirely new class for the text and misclassifies it."
    ]
   },
   {
@@ -475,7 +476,7 @@
    "id": "f1697117",
    "metadata": {},
    "source": [
-    "![replacement.png](https://drive.google.com/uc?id=1EwNbC9RPy2lhvUDiI2uswN5kKmkGn3Eo)"
+    "![Image of ST transformation test warnings for a text classification model](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_text_classification_walkthrough/text_transform_warn.png)"
    ]
   },
   {
@@ -521,7 +522,7 @@
    "source": [
     "test_run_result = test_run.get_result_df()\n",
     "test_run_result.to_csv(\"Arxiv_Test_Run_Results.csv\")\n",
-    "test_run_result"
+    "test_run_result\n"
    ]
   },
   {
@@ -545,7 +546,7 @@
    "source": [
     "test_case_result = test_run.get_test_cases_df()\n",
     "test_case_result.to_csv(\"Arxiv_Test_Case_Results.csv\")\n",
-    "test_case_result"
+    "test_case_result\n"
    ]
   },
   {
@@ -564,7 +565,7 @@
    "outputs": [],
    "source": [
     "subset_macro_f1 = test_run.get_test_batch(\"subset_performance:subset_macro_f1\")\n",
-    "subset_macro_f1.get_test_cases_df()"
+    "subset_macro_f1.get_test_cases_df()\n"
    ]
   },
   {
@@ -604,7 +605,7 @@
     "                              \"TEST_CATEGORY_TYPE_EVASION_ATTACK_DETECTION\"\n",
     "                            ])\n",
     "\n",
-    "ct_instance = project.create_ct(model_id, ref_dataset_id, timedelta(days=1))"
+    "ct_instance = project.create_ct(model_id, ref_dataset_id, timedelta(days=1))\n"
    ]
   },
   {
@@ -657,7 +658,7 @@
     ")\n",
     "project.register_predictions_from_file(\n",
     "    prod_dataset_id, model_id, prod_preds_s3_path, agent_id=AGENT_ID\n",
-    ")"
+    ")\n"
    ]
   },
   {
@@ -679,7 +680,7 @@
    },
    "outputs": [],
    "source": [
-    "ct_instance = client.get_ct_for_project(project.project_id)"
+    "ct_instance = client.get_ct_for_project(project.project_id)\n"
    ]
   },
   {
@@ -703,7 +704,7 @@
    "source": [
     "ct_job = ct_instance.start_continuous_test(prod_dataset_id, agent_id=AGENT_ID)\n",
     "ct_job.get_status(verbose=True, wait_until_finish=True)\n",
-    "ct_instance"
+    "ct_instance\n"
    ]
   },
   {
@@ -751,7 +752,7 @@
    "source": [
     "events = [d.to_dict() for m in ct_instance.list_monitors() for d in m.list_detected_events()]\n",
     "events_df = pd.DataFrame(events).drop([\"id\", \"project_id\", \"firewall_id\", \"event_object_id\", \"description_html\", \"last_update_time\"], axis=1)\n",
-    "events_df.head()"
+    "events_df.head()\n"
    ]
   },
   {
@@ -774,7 +775,7 @@
     "id": "AFuGGg8uNtC2"
    },
    "source": [
-    "![img_5](https://drive.google.com/uc?id=1bd17xeRw81iziUZJqxeFyVP9T-O1LljZ)"
+    "![Image of a graphed test result history for a text classification model](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_text_classification_walkthrough/text_ct_perf.png)"
    ]
   },
   {
@@ -800,7 +801,7 @@
    },
    "outputs": [],
    "source": [
-    "ct_instance"
+    "ct_instance\n"
    ]
   },
   {
@@ -822,7 +823,7 @@
     "id": "jwelJ7gcLqgV"
    },
    "source": [
-    "![img_6](https://drive.google.com/uc?id=1ebqpuNvMwp9eMCJ7PX9FWf_dpj3FAtFn)"
+    "![Image of a graph showing an increase in the failing rows rate for a text classification model](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_text_classification_walkthrough/text_failing_rows.png)"
    ]
   }
  ],

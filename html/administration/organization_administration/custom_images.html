@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Run Robust Intelligence on Custom Docker Images &mdash; Robust Intelligence  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+
+  
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
@@ -55,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.4.3-rc.0
+                2.5.2-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -91,7 +93,8 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#building-the-image">Building the Image</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#running-rime-with-a-custom-image">Running RIME with a custom image:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-robust-intelligence-with-a-custom-image">Running Robust Intelligence with a custom image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#related-topics">Related Topics</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="managed_images.html">Using Managed Images for Testing</a></li>
@@ -152,7 +155,7 @@
 <section id="building-a-custom-docker-image">
 <h2>Building a Custom Docker Image<a class="headerlink" href="#building-a-custom-docker-image" title="Permalink to this heading"></a></h2>
 <p>First, you need to construct a new Docker image built from the Robust Intelligence-provided base image for model testing.
-If the custom image already exists, skip to <a class="reference internal" href="#running-rime-with-a-custom-image"><span class="std std-ref">how to run Robust Intelligence stress tests with a custom image</span></a>.</p>
+If the custom image already exists, skip to <a class="reference internal" href="#running-robust-intelligence-with-a-custom-image"><span class="std std-ref">how to run Robust Intelligence stress tests with a custom image</span></a>.</p>
 <section id="requirements">
 <h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h3>
 <p>To build the custom image, you will need to have:</p>
@@ -192,10 +195,12 @@ If the custom image already exists, skip to <a class="reference internal" href="
 <li><p>You can then use this image to stress test your models using the process describe below.</p></li>
 </ol>
 </section>
-<section id="running-rime-with-a-custom-image">
-<h2>Running RIME with a custom image:<a class="headerlink" href="#running-rime-with-a-custom-image" title="Permalink to this heading"></a></h2>
-<p>The following assumes you have instantiated the SDK, and that you are familiar with running Robust Intelligence with the RIME SDK.</p>
-<p>The following is an example of how to specify a custom image when starting a test run with the RIME SDK:</p>
+<section id="running-robust-intelligence-with-a-custom-image">
+<h2>Running Robust Intelligence with a custom image<a class="headerlink" href="#running-robust-intelligence-with-a-custom-image" title="Permalink to this heading"></a></h2>
+<p>Below, we show an example of how to specify a custom image when
+starting a test run with the Robust Intelligence SDK. For this
+example, we assume you’ve already instantiated the
+<a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">Robust Intelligence SDK</span></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set custom image to use for test run</span>
 <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
    <span class="s2">&quot;run_time_info&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -211,6 +216,10 @@ If the custom image already exists, skip to <a class="reference internal" href="
 <span class="n">job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="n">test_run_config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">project_id</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</section>
+<section id="related-topics">
+<h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
+<p><a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">Python SDK Reference</span></a></p>
 </section>
 </section>
 

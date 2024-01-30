@@ -7,7 +7,38 @@ Unless noted otherwise, you must [upgrade](../deployment/upgrade.rst)
 all Robust Intelligence components to take advantage of the changes
 listed here.
 
+## 2.5
+
+### Better setting and defaulting of memory and CPU preferences for scheduled continuous tests
+
+In earlier versions of Robust Intelligence, scheduled continuous tests
+did not give you a way to specify the desired allocation of memory and
+CPU for the job. For a stress test run, it's possible to specify the
+desired memory and CPU when you start the test run, but it's not
+possible to set these values at runtime for a scheduled continuous
+test. For this reason, better control over and defaulting of memory
+and CPU settings was needed.
+
+This has been fixed by setting scheduling continuous test runs to use
+the the project's memory and CPU settings (in earlier versions, we
+used system defaults).
+
+You can now specify the desired default CPU and memory preferences for
+a scheduled continuous test in its project. You provide these in the
+[runtime information setting](../testing_and_monitoring/configuring_test_runs/configuring_runtime.md)
+in the project. See [Project.update_run_time_info](./python-sdk.rst#rime_sdk.Project.update_run_time_info)
+in the SDK.
+
 ## 2.4
+
+### Incorrect memory and CPU settings for continuous test runs
+
+In version 2.4.4 and earlier of Robust Intelligence, continuous test
+runs fail to default to the project's memory and CPU settings.
+Instead, they use system defaults that might provide insufficient
+resources for the test run. This issue has been corrected in version
+2.4.5 and later. This issue affects only scheduled continuous test
+runs and not stress test runs.
 
 ### AWS Terraform Provider Upgraded to >= 4.47.0, < 5.0.0 for rime_eks_cluster Module
 
@@ -212,24 +243,24 @@ Before:
 ```python
 # Update the project's Stress Testing, Continuous Testing categories
 project.update_test_suite_config({
-	"categories": [
-	  {
-	      "name": "Model Performance",
-	      "run_st": True,
-	      "run_ct": True
-	  },
-	  {
-	      "name": "Subset Performance",
-	      "run_st": True,
-	      "run_ct": False
-	  },
-	  {
-	      "name": "Drift",
-	      "run_st": False,
-	      "run_ct": True
-	  }
-	],
-	# ...
+    "categories": [
+      {
+          "name": "Model Performance",
+          "run_st": True,
+          "run_ct": True
+      },
+      {
+          "name": "Subset Performance",
+          "run_st": True,
+          "run_ct": False
+      },
+      {
+          "name": "Drift",
+          "run_st": False,
+          "run_ct": True
+      }
+    ],
+    # ...
 })
 
 # When running Stress Testing, user can override the project's Stress Testing categories:
@@ -270,6 +301,7 @@ stress_test_config = {
 
 ## Related Topics  
 [API Changelog](../reference/api_changelog.md)  
+[Configuring Runtime Information](../testing_and_monitoring/configuring_test_runs/configuring_runtime.md)  
 [Continuous Testing Feedback and Observability](../testing_and_monitoring/monitoring_models/ct_feedback_and_observability.md)  
 [Model Monitors](../testing_and_monitoring/monitoring_models/monitors/monitors.md)  
 [Securing Model Supply Chain Risk with File Scanning](../testing_and_monitoring/preparing_your_models_and_datasets/file_scanning.md)  

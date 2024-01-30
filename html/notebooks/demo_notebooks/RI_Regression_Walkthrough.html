@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RI NYC Taxi and Limousine Data Walkthrough 🚖 &mdash; Robust Intelligence  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
-      <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/sb-1.4.0/datatables.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+
+  
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
@@ -58,7 +60,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.4.3-rc.0
+                2.5.2-rc.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -155,7 +157,7 @@
   <section id="RI-NYC-Taxi-and-Limousine-Data-Walkthrough-🚖">
 <h1><strong>RI NYC Taxi and Limousine Data Walkthrough</strong> 🚖<a class="headerlink" href="#RI-NYC-Taxi-and-Limousine-Data-Walkthrough-🚖" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RI_Regression_Walkthrough.ipynb">RI NYC Taxi and Limousine Data Walkthrough in Google Colab</a>.</p>
+<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/2.5-stable/notebooks/demo_notebooks/RI_Regression_Walkthrough.ipynb">RI NYC Taxi and Limousine Data Walkthrough in Google Colab</a>.</p>
 </div></blockquote>
 <p>In this walkthrough, we’ll run AI Stress Testing and AI Continuous Testing on public NYC Taxi and Limousine Commission data (<a class="reference external" href="https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page">https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page</a>) to demonstrate how RIME can be used with regression models. This data consists of information such as the pickup and dropoff locations, pickup and dropoff times, fare amounts and the number of passengers for every taxi trip that happens in New York City. We’ll be predicting the duration of each trip given a
 bunch of other information about the trip.</p>
@@ -168,7 +170,7 @@ bunch of other information about the trip.</p>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE API_KEY</span>
 <span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
 <span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <section id="Libraries-📕">
@@ -179,7 +181,7 @@ bunch of other information about the trip.</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>rime-sdk<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -189,7 +191,7 @@ bunch of other information about the trip.</p>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -203,7 +205,7 @@ bunch of other information about the trip.</p>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/RobustIntelligence/ri-public-examples.git
 <span class="kn">from</span> <span class="nn">ri_public_examples.download_files</span> <span class="kn">import</span> <span class="n">download_files</span>
 <span class="n">download_files</span><span class="p">(</span><span class="s1">&#39;tabular-2.0/nyc_tlc&#39;</span><span class="p">,</span> <span class="s1">&#39;nyc_tlc&#39;</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p>Next, let’s take a quick look at the reference data (in this case, this was the data used to train the model).</p>
@@ -212,7 +214,7 @@ bunch of other information about the trip.</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;nyc_tlc/data/ref.csv&quot;</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p>The key columns to look at above are the <code class="docutils literal notranslate"><span class="pre">TripDuration</span></code>, the duration of the trip in seconds, and <code class="docutils literal notranslate"><span class="pre">Prediction</span></code>, our model’s estimate of the duration of the trip. The other columns are features used by the model to help predict the trip duration. We’ll now proceed to run RIME Stress Testing on our data and model! We’ll start by creating a project and uploading our datasets and model.</p>
@@ -221,7 +223,7 @@ bunch of other information about the trip.</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">API_TOKEN</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -239,7 +241,7 @@ bunch of other information about the trip.</p>
     <span class="n">description</span><span class="p">,</span>
     <span class="s2">&quot;MODEL_TASK_REGRESSION&quot;</span><span class="p">,</span>
 <span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -266,7 +268,7 @@ bunch of other information about the trip.</p>
 
 <span class="n">ref_id</span> <span class="o">=</span> <span class="n">upload_and_register_data</span><span class="p">(</span><span class="s2">&quot;ref&quot;</span><span class="p">)</span>
 <span class="n">eval_id</span> <span class="o">=</span> <span class="n">upload_and_register_data</span><span class="p">(</span><span class="s2">&quot;eval&quot;</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 </section>
@@ -292,7 +294,7 @@ bunch of other information about the trip.</p>
     <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">stress_test_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p>You can view the detailed results in the UI by running the below cell and redirecting to the generated link. This page shows granular results for a given AI Stress Test run.</p>
@@ -302,11 +304,11 @@ bunch of other information about the trip.</p>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_run</span> <span class="o">=</span> <span class="n">stress_test_job</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
 <span class="n">test_run</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p>Stress testing should be used during model development to inform us about various issues with the data and model that we might want to address before the model is deployed.</p>
-<img alt="img_1" src="https://drive.google.com/uc?id=1tzZWlSIb-r5vwaWxqjrk0IqZT-53hRhI" />
+<img alt="Image of stress test results for taxi regression data" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_regression_walkthrough/taxi_st_results.png" />
 </section>
 <section id="AI-Continuous-Testing">
 <h2>AI Continuous Testing<a class="headerlink" href="#AI-Continuous-Testing" title="Permalink to this heading"></a></h2>
@@ -318,7 +320,7 @@ bunch of other information about the trip.</p>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
 
 <span class="n">ct_instance</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_ct</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">weeks</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p>Next, we’ll upload some incoming production data. The data we’re uploading here is from 2019 through to 2021, which will look substantially different from what the model saw in its training data from 2018 (the data will be automatically split into pieces based on the timestamps specified and the bin size set for this AI Continuous Testing instance). We’ll use AI Continuous Testing to identify the differences and understand how they’re impacting our model.</p>
@@ -327,7 +329,7 @@ bunch of other information about the trip.</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prod_dataset_id</span> <span class="o">=</span> <span class="n">upload_and_register_data</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">timestamp_col</span><span class="o">=</span><span class="s2">&quot;PickupDatetime&quot;</span><span class="p">)</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -339,7 +341,7 @@ bunch of other information about the trip.</p>
                                            <span class="s2">&quot;TEST_CATEGORY_TYPE_ABNORMAL_INPUTS&quot;</span><span class="p">,</span>
                                            <span class="s2">&quot;TEST_CATEGORY_TYPE_DRIFT&quot;</span><span class="p">,</span>
                                            <span class="s2">&quot;TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS&quot;</span><span class="p">])</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -349,13 +351,13 @@ bunch of other information about the trip.</p>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">ct_instance</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">ct_instance</span>
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <p>Time to see how our model is doing! Navigate to the “Continuous Tests” tab on the left nav. Here, you’ll see some of the key metrics that are being tracked over time.</p>
-<img alt="img_2" src="https://drive.google.com/uc?id=1P5m239sHLXF0EZ9MIDD2mhe_m9PsErWB" />
+<img alt="Image of historical performance results for taxi regression data" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_regression_walkthrough/taxi_historical.png" />
 <p>We can inspect the input data for failing input values. The overall failing rows rate shows the percent of failing inputs (for all types of failing tests including outliers, missing values, unseen categories) over time. We can see that there’s a spike in the failing rows rate in early 2021 after which it remains high.</p>
-<img alt="abnormality_rate" src="https://drive.google.com/uc?id=1z2EZD7R15HF91f2Bjjsomzkdgb_8eNBX" />
+<img alt="Image of the failing rows rate history for taxi regression data" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_regression_walkthrough/taxi_failing_rows.png" />
 </section>
 </section>
 
