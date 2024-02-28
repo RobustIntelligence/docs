@@ -57,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.5.2-rc.0
+                2.6.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -72,12 +72,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<p class="caption" role="heading"><span class="caption-text">Testing</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../creating_projects.html">Creating Projects</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Preprocessing Your Datasets</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#supported-file-formats">Supported File Formats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#supported-file-formats">Supported File Formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-requirements-by-task">Data requirements by task</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#binary-classification">Binary Classification</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#multi-class-classification">Multi-Class Classification</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#natural-language-inference">Natural Language Inference</a></li>
@@ -92,14 +93,14 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="defining_model_interface.html">Defining a Model Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="upload_data.html">Uploading to Cloud Storage (Optional)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="registering_model_datasets.html">Registering Models,  Datasets, and Predictions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registering_model_datasets.html">Registering Models, Datasets, and Predictions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_source.html">Data Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="model_source.html">Model Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_scanning.html">Securing Model Supply Chain Risk with File Scanning</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../monitoring_models.html">Scheduled Stress Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../querying_results.html">Querying Test Run Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notifications_and_alerts.html">Notifications and Alerts</a></li>
@@ -169,11 +170,13 @@
 <li><p>JSONL</p></li>
 <li><p>CSV</p></li>
 </ul>
-<p>The column headers of CSV, Parquet, and Delta Lake input files are used as feature names and must be strings. For JSON and JSONL files, the keys of each record is used as the feature name.</p>
+<p>The column headers of CSV, Parquet, and Delta Lake input files are used as feature names and must be strings. For JSON and JSONL files, the keys in each record are used as feature names.</p>
 <p>Text features and image features must have string values. The value of the image feature string is the path to an image file. Specify text features and image features in the <a class="reference internal" href="data_source.html"><span class="std std-doc">data info configuration</span></a>.</p>
 <p>Providing labels and predictions increases the effectiveness of Robust Intelligence, but most tasks do not require either.</p>
 <p>Specify predictions in a separate file, and register them using the <a class="reference internal" href="registering_model_datasets.html"><span class="std std-doc">registry</span></a> functionality. Include labels with the datasets.</p>
-<p><strong>Requirements By Task</strong></p>
+</section>
+<section id="data-requirements-by-task">
+<h2>Data requirements by task<a class="headerlink" href="#data-requirements-by-task" title="Permalink to this heading"></a></h2>
 <section id="binary-classification">
 <h3>Binary Classification<a class="headerlink" href="#binary-classification" title="Permalink to this heading"></a></h3>
 <ul class="simple">
@@ -223,14 +226,14 @@
 <h3>Object Detection<a class="headerlink" href="#object-detection" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Labels must be lists of dictionaries, with each dictionary corresponding to an object. Each object dictionary must contain the four keys <code class="docutils literal notranslate"><span class="pre">x_min</span></code>, <code class="docutils literal notranslate"><span class="pre">x_max</span></code>, <code class="docutils literal notranslate"><span class="pre">y_min</span></code>, and <code class="docutils literal notranslate"><span class="pre">y_max</span></code> with float values defining the coordinates of the bounding box, along with a <code class="docutils literal notranslate"><span class="pre">class_id</span></code> key with the integer value of the class label.</p></li>
-<li><p>Predictions must be list of dictionaries, with each dictionary corresponding to an object. Each object dictionary must contain the four keys <code class="docutils literal notranslate"><span class="pre">x_min</span></code>, <code class="docutils literal notranslate"><span class="pre">x_max</span></code>, <code class="docutils literal notranslate"><span class="pre">y_min</span></code>, and <code class="docutils literal notranslate"><span class="pre">y_max</span></code> with float values defining the coordinates of the bounding box, along with a <code class="docutils literal notranslate"><span class="pre">probabilities</span></code> key with a list floats defining the predicted probability for each class.</p></li>
+<li><p>Predictions must be lists of dictionaries, with each dictionary corresponding to an object. Each object dictionary must contain the four keys <code class="docutils literal notranslate"><span class="pre">x_min</span></code>, <code class="docutils literal notranslate"><span class="pre">x_max</span></code>, <code class="docutils literal notranslate"><span class="pre">y_min</span></code>, and <code class="docutils literal notranslate"><span class="pre">y_max</span></code> with float values defining the coordinates of the bounding box, along with a <code class="docutils literal notranslate"><span class="pre">probabilities</span></code> key with a list of floats defining the predicted probability for each class.</p></li>
 </ul>
 </section>
 </section>
 <section id="related-topics">
 <h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
 <p><a class="reference internal" href="data_source.html"><span class="std std-doc">Data Configuration</span></a><br />
-<a class="reference internal" href="registering_model_datasets.html"><span class="std std-doc">Registering Models,  Datasets, and Predictions</span></a></p>
+<a class="reference internal" href="registering_model_datasets.html"><span class="std std-doc">Registering Models, Datasets, and Predictions</span></a></p>
 </section>
 </section>
 
@@ -245,7 +248,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+    <p>&#169; Copyright 2024, Robust Intelligence.</p>
   </div>
 
    

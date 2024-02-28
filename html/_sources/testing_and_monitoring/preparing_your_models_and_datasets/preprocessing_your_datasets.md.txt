@@ -10,7 +10,7 @@ Robust Intelligence currently supports the following formats:
 * JSONL
 * CSV
 
-The column headers of CSV, Parquet, and Delta Lake input files are used as feature names and must be strings. For JSON and JSONL files, the keys of each record is used as the feature name.
+The column headers of CSV, Parquet, and Delta Lake input files are used as feature names and must be strings. For JSON and JSONL files, the keys in each record are used as feature names.
 
 Text features and image features must have string values. The value of the image feature string is the path to an image file. Specify text features and image features in the [data info configuration](data_source.md).
 
@@ -18,7 +18,7 @@ Providing labels and predictions increases the effectiveness of Robust Intellige
 
 Specify predictions in a separate file, and register them using the [registry](registering_model_datasets.md) functionality. Include labels with the datasets.
 
-**Requirements By Task**
+## Data requirements by task
 
 ### Binary Classification
 - Labels must be the integer values 0 or 1
@@ -49,8 +49,8 @@ Specify predictions in a separate file, and register them using the [registry](r
 
 ### Object Detection
 - Labels must be lists of dictionaries, with each dictionary corresponding to an object. Each object dictionary must contain the four keys `x_min`, `x_max`, `y_min`, and `y_max` with float values defining the coordinates of the bounding box, along with a `class_id` key with the integer value of the class label.
-- Predictions must be list of dictionaries, with each dictionary corresponding to an object. Each object dictionary must contain the four keys `x_min`, `x_max`, `y_min`, and `y_max` with float values defining the coordinates of the bounding box, along with a `probabilities` key with a list floats defining the predicted probability for each class.
+- Predictions must be lists of dictionaries, with each dictionary corresponding to an object. Each object dictionary must contain the four keys `x_min`, `x_max`, `y_min`, and `y_max` with float values defining the coordinates of the bounding box, along with a `probabilities` key with a list of floats defining the predicted probability for each class.
 
 ## Related Topics  
 [Data Configuration](data_source.md)  
-[Registering Models,  Datasets, and Predictions](registering_model_datasets.md)  
+[Registering Models, Datasets, and Predictions](registering_model_datasets.md)  

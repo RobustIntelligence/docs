@@ -57,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.5.2-rc.0
+                2.6.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -72,14 +72,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<p class="caption" role="heading"><span class="caption-text">Testing</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../creating_projects.html">Creating Projects</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="preprocessing_your_datasets.html">Preprocessing Your Datasets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="defining_model_interface.html">Defining a Model Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="upload_data.html">Uploading to Cloud Storage (Optional)</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Registering Models,  Datasets, and Predictions</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Registering Models, Datasets, and Predictions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-started-by-retrieving-your-project">Get started by retrieving your project</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#registering-a-model-using-the-sdk">Registering a Model Using the SDK</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#register-your-model-with-a-model-config-or-with-a-path-to-a-model-artifact">Register your model with a model config or with a path to a model artifact.</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#passing-secrets-to-the-model">Passing secrets to the model</a></li>
@@ -105,7 +106,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../monitoring_models.html">Scheduled Stress Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../querying_results.html">Querying Test Run Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notifications_and_alerts.html">Notifications and Alerts</a></li>
@@ -154,7 +155,7 @@
           <li class="breadcrumb-item"><a href="../../documentation_home/get_started.html">Get Started</a></li>
           <li class="breadcrumb-item"><a href="../../documentation_home/notebooks.html">Tutorial Notebooks</a></li>
           <li class="breadcrumb-item"><a href="../preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
-      <li class="breadcrumb-item active">Registering Models,  Datasets, and Predictions</li>
+      <li class="breadcrumb-item active">Registering Models, Datasets, and Predictions</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -164,18 +165,17 @@
            <div itemprop="articleBody">
              
   <section id="registering-models-datasets-and-predictions">
-<h1>Registering Models,  Datasets, and Predictions<a class="headerlink" href="#registering-models-datasets-and-predictions" title="Permalink to this heading"></a></h1>
+<h1>Registering Models, Datasets, and Predictions<a class="headerlink" href="#registering-models-datasets-and-predictions" title="Permalink to this heading"></a></h1>
 <p>Contextual information (e.g., the name of a label column in a dataset) is necessary to compute many of the statistical
 measures powering the Robust Intelligence testing suite.</p>
 <p>Registries provide you with a way to store this context alongside your models, datasets, and prediction files. Once a
 data object is registered, Robust Intelligence will reference the artifact by its unique ID, which can be reused for
-repeated references to the data object (e.g., a training set used in both
-<a class="reference internal" href="../validating_models.html"><span class="std std-doc">Stress Testing</span></a> and
-<a class="reference internal" href="../monitoring_models.html"><span class="std std-doc">Continuous Testing</span></a>).</p>
+repeated references to the data object (e.g., a training set used in
+<a class="reference internal" href="../validating_models.html"><span class="std std-doc">Stress Testing</span></a>.</p>
 <p>Registration can be performed with a single Python SDK call, as illustrated below.</p>
 <p>Once a model, dataset, or prediction set has been registered with a Robust Intelligence instance, that data object is
-available for selection in the appropriate drop-down selectors during project configuration for either a
-<a class="reference internal" href="../validating_models/stress_tests_from_sdk.html"><span class="std std-doc">Stress test</span></a> or a <a class="reference internal" href="../monitoring_models/creating_new_continuous_test.html"><span class="std std-doc">Continuous test</span></a>.</p>
+available for selection in the appropriate drop-down selectors during project configuration for a
+<a class="reference internal" href="../validating_models/stress_tests_from_sdk.html"><span class="std std-doc">stress test</span></a>.</p>
 <blockquote>
 <div><p><strong>Note:</strong> Once you have registered your data and initiated stress testing, the data is cached according to the
 pre-established configuration settings. It’s crucial to understand that the Robust Intelligence systems
@@ -193,7 +193,9 @@ reconfigure your stress testing settings accordingly.
 This includes files, Hugging Face integrations, Databricks integrations, and any other sources referenced in
 your settings.</p>
 </div></blockquote>
-<p>To get started, make sure you’ve <a class="reference internal" href="../../documentation_home/installation.html"><span class="std std-doc">installed the Python SDK</span></a>
+<section id="get-started-by-retrieving-your-project">
+<h2>Get started by retrieving your project<a class="headerlink" href="#get-started-by-retrieving-your-project" title="Permalink to this heading"></a></h2>
+<p>Before you begin to register a model, make sure you’ve <a class="reference internal" href="../../documentation_home/installation.html"><span class="std std-doc">installed the Python SDK</span></a>
 and initialized your client:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">domain</span><span class="o">=&lt;</span><span class="n">CLUSTER_URL</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=&lt;</span><span class="n">API_KEY</span><span class="o">&gt;</span><span class="p">)</span>
@@ -208,13 +210,17 @@ and initialized your client:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;&lt;PROJECT_NAME&gt;&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;&lt;DESCRIPTION&gt;&quot;</span><span class="p">,</span> <span class="n">model_task</span><span class="o">=</span><span class="s2">&quot;MODEL_TASK_BINARY_CLASSIFICATION&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>See the <a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">Python SDK documentation</span></a> for details on how
-to do this.</p>
+<div class="admonition-note admonition">
+<p class="admonition-title">Note</p>
+<p>See the <a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">Python SDK documentation</span></a> for more details.</p>
+</div>
+<p>Once you have your project, proceed to <em>Registering a Model</em>, below.</p>
+</section>
 <section id="registering-a-model-using-the-sdk">
 <h2>Registering a Model Using the SDK<a class="headerlink" href="#registering-a-model-using-the-sdk" title="Permalink to this heading"></a></h2>
 <p>Assuming the Robust Intelligence SDK is installed and available for use and that the relevant data objects have been
-uploaded to the Robust Intelligence instance, you can register a model using the following procedure. See the Python SDK
-documentation for full details on the SDK calls used in this procedure.</p>
+uploaded to the Robust Intelligence instance, you can register a model using the following procedure. See the
+<a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">Python SDK documentation</span></a> for full details on the SDK calls used in this procedure.</p>
 <section id="register-your-model-with-a-model-config-or-with-a-path-to-a-model-artifact">
 <h3>Register your model with a model config or with a path to a model artifact.<a class="headerlink" href="#register-your-model-with-a-model-config-or-with-a-path-to-a-model-artifact" title="Permalink to this heading"></a></h3>
 <section id="example-of-registering-a-hugging-face-model">
@@ -242,9 +248,13 @@ documentation for full details on the SDK calls used in this procedure.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span><span class="n">name</span><span class="o">=&lt;</span><span class="n">NAME</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">remote_path</span><span class="o">=&lt;</span><span class="n">MODEL_PATH</span><span class="o">&gt;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><strong>Note</strong>: Registering your model will run validation on it to ensure it works with Robust Intelligence’s systems.  This
+<div class="admonition-note admonition">
+<p class="admonition-title">Note</p>
+<p>Registering your model will run validation on it to ensure it works with Robust Intelligence’s systems.  This
 may take a few seconds.  If you wish to skip validation, set the <code class="docutils literal notranslate"><span class="pre">skip_validation</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">True</span></code>
 (not recommended).</p>
+<p>See more about validation statuses <a class="reference internal" href="registry_validation.html"><span class="std std-doc">here</span></a></p>
+</div>
 </section>
 </section>
 <section id="passing-secrets-to-the-model">
@@ -309,10 +319,16 @@ the right navigation panel.</p></li>
 </pre></div>
 </div>
 <p>For more on dataset configuration, check out the <a class="reference internal" href="data_source.html"><span class="std std-doc">dataset configuration documentation</span></a>.</p>
-<p><strong>Note</strong>: Registering a dataset will run validation on it to ensure it works with Robust Intelligence’s systems.  This
-may take a few seconds.  If you wish to skip validation, set the <code class="docutils literal notranslate"><span class="pre">skip_validation</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">True</span></code>
-(not recommended).  Validation is currently not supported for json files and
-[custom data loaders](../../testing_and_monitoring/preparing_your_models_and_datasets/data_source.md#load-a-data-file-from-a-custom-data-loader</p>
+<div class="admonition-note admonition">
+<p class="admonition-title">Note</p>
+<p>Registering a dataset will run validation on it to ensure it
+works with Robust Intelligence’s systems. This may take a few seconds.
+If you wish to skip validation, set the <code class="docutils literal notranslate"><span class="pre">skip_validation</span></code> parameter to
+<code class="docutils literal notranslate"><span class="pre">True</span></code> (not recommended). Validation is currently not supported for
+JSON files and
+<a class="reference internal" href="data_source.html#load-a-data-file-from-a-custom-data-loader"><span class="std std-ref">custom data loaders</span></a>.</p>
+<p>See more about validation statuses <a class="reference internal" href="registry_validation.html"><span class="std std-doc">here</span></a>.</p>
+</div>
 <p>Check out the SDK documentation for more on <a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">registering a dataset</span></a>.</p>
 </section>
 </section>
@@ -353,10 +369,16 @@ may take a few seconds.  If you wish to skip validation, set the <code class="do
 <span class="p">)</span>
 </pre></div>
 </div>
-<p><strong>Note</strong>: Registering predictions will run validation on it to ensure it works with Robust Intelligence’s systems.  This
-may take a few seconds.  If you wish to skip validation, set the <code class="docutils literal notranslate"><span class="pre">skip_validation</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">True</span></code>
-(not recommended). Validation is currently not supported for json files and
+<div class="admonition-note admonition">
+<p class="admonition-title">Note</p>
+<p>Registering predictions will run validation on it to ensure it works
+with Robust Intelligence’s systems. This may take a few seconds.
+If you wish to skip validation, set the <code class="docutils literal notranslate"><span class="pre">skip_validation</span></code> parameter to
+<code class="docutils literal notranslate"><span class="pre">True</span></code> (not recommended). Validation is currently not supported for
+JSON files and
 <a class="reference internal" href="data_source.html#load-a-data-file-from-a-custom-data-loader"><span class="std std-ref">custom data loaders</span></a>.</p>
+<p>See more about validation statuses <a class="reference internal" href="registry_validation.html"><span class="std std-doc">here</span></a>.</p>
+</div>
 <p>Check out the SDK documentation for more on <a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">registering predictions</span></a>.</p>
 </section>
 <section id="view-registered-datasets-and-predictions-in-web-ui">
@@ -379,14 +401,13 @@ the right navigation panel.</p></li>
 <section id="related-topics">
 <h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
 <p><a class="reference internal" href="../validating_models/stress_tests_from_sdk.html"><span class="std std-doc">Creating a New Stress Test</span></a><br />
-<a class="reference internal" href="../monitoring_models/creating_new_continuous_test.html"><span class="std std-doc">Creating a new Continuous Test</span></a><br />
-<a class="reference internal" href="data_source.html"><span class="std std-doc">Data Configuration</span></a><br />
 <a class="reference internal" href="data_source.html"><span class="std std-doc">Data Configuration</span></a><br />
 <a class="reference internal" href="../../documentation_home/installation.html"><span class="std std-doc">Installation</span></a><br />
 <a class="reference internal" href="model_source.html"><span class="std std-doc">Model Configuration</span></a><br />
 <a class="reference internal" href="../model_governance/model_registry.html"><span class="std std-doc">Model Registry</span></a><br />
-<a class="reference internal" href="../monitoring_models.html"><span class="std std-doc">Monitor Models with Continuous Tests</span></a><br />
 <a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">Python SDK Reference</span></a><br />
+<a class="reference internal" href="registry_validation.html"><span class="std std-doc">Registry Validation Statuses</span></a><br />
+<a class="reference internal" href="../monitoring_models.html"><span class="std std-doc">Scheduled Stress Testing</span></a><br />
 <a class="reference internal" href="../validating_models.html"><span class="std std-doc">Validate Models with Stress Tests</span></a></p>
 </section>
 </section>
@@ -402,7 +423,7 @@ the right navigation panel.</p></li>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+    <p>&#169; Copyright 2024, Robust Intelligence.</p>
   </div>
 
    

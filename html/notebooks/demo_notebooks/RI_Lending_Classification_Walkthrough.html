@@ -60,7 +60,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.5.2-rc.0
+                2.6.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -92,12 +92,12 @@
 </ul>
 </li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<p class="caption" role="heading"><span class="caption-text">Testing</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Scheduled Stress Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/querying_results.html">Querying Test Run Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/notifications_and_alerts.html">Notifications and Alerts</a></li>
@@ -157,7 +157,7 @@
   <section id="RI-Lending-Classification-Walkthrough">
 <h1><strong>RI Lending Classification Walkthrough</strong><a class="headerlink" href="#RI-Lending-Classification-Walkthrough" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/2.5-stable/notebooks/demo_notebooks/RI_Lending_Classification_Walkthrough.ipynb">RI Lending Classification Walkthrough in Google Colab</a>.</p>
+<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/2.6-stable/notebooks/demo_notebooks/RI_Lending_Classification_Walkthrough.ipynb">RI Lending Classification Walkthrough in Google Colab</a>.</p>
 </div></blockquote>
 <p>You are a data scientist at a Bank. The data science team has been tasked with implementing a binary classification model to predict whether an individual will default on a loan. The goal of this project is two-fold: we want to monitor how that model performs over time as well as ensure that the model is compliant with financial regulations. In order to accomplish the latter, we will be testing whether the model is biased against certain protected features. One could imagine such models being
 used downstream for various purposes, such as loan approval or funding allocation. A biased model could yield disadvantageous outcomes for protected groups. For instance, we may find that an individual with a specific race or race/gender combination causes the model to consistently predict a higher probability of them defaulting, causing a higher rate of loan rejection.</p>
@@ -197,7 +197,7 @@ used downstream for various purposes, such as loan approval or funding allocatio
 <section id="Establish-the-RIME-Client">
 <h2><strong>Establish the RIME Client</strong><a class="headerlink" href="#Establish-the-RIME-Client" title="Permalink to this heading"></a></h2>
 <p>To get started, provide the API credentials and the base domain/address of the RIME service. You can generate and copy an API token from the API Access Tokens Page under Workspace settings. For the domian/address of the RIME service, contact your admin.</p>
-<p><img alt="Image of getting an API token" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/api_access_tokens.png" /><img alt="Image of creating an API token" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/create_token.png" /></p>
+<p><img alt="Image of getting an API token" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.6-stable/_static/images/demo_notebooks/common/api_access_tokens.png" /><img alt="Image of creating an API token" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.6-stable/_static/images/demo_notebooks/common/create_token.png" /></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -363,9 +363,9 @@ as such is necessary:</p>
 <section id="Stress-Test-Results">
 <h2><strong>Stress Test Results</strong><a class="headerlink" href="#Stress-Test-Results" title="Permalink to this heading"></a></h2>
 <p>Stress tests are tests are grouped first by risk categories and then into categories that measure various aspects of model robustness (model behavior, distribution drift, abnormal input, transformations, adversarial attacks, bias and fairness). Key insights to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information.</p>
-<img alt="Image of the stress test overview for a lending default prediciton model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_lending_classification_walkthrough/loan_st.png" />
+<img alt="Image of the stress test overview for a lending default prediciton model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.6-stable/_static/images/demo_notebooks/ri_lending_classification_walkthrough/loan_st.png" />
 <p>Similar to running RIME Stress Tests in the default setting, we surface an overall distribution of test severities, model metrics, as well as key insights to the right. This test suite comprises a selection of Bias and Fairness tests over any protected features, Attack tests over all features, and Abnormal Inputs tests over all features. These tests align with financial regulatory standards. Lets take a closer look at the Demographic Parity test:</p>
-<img alt="Image of the demographic parity results for a lending default prediciton model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_lending_classification_walkthrough/loan_demographic_parity.png" />
+<img alt="Image of the demographic parity results for a lending default prediciton model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.6-stable/_static/images/demo_notebooks/ri_lending_classification_walkthrough/loan_demographic_parity.png" />
 <p>This test is commonly known as the demographic parity or statistical parity test in fairness literature. This test checks whether the model performs equally well across a given subset of rows as it does across the whole dataset. The key detail displays the performance difference between the lowest performing subset and the overall population. The test first splits the dataset into various subsets depending on the quantiles of a given feature column. If the feature is categorical, the data is
 split based on the feature values. We then test whether the Positive Prediction Rate of model predictions within a specific subset is significantly different than the model prediction Positive Prediction Rate over the entire ‘population’.</p>
 <p>We can see that the model fails the demographic parity test for two of the three protected features that we configured.</p>
@@ -465,7 +465,7 @@ split based on the feature values. We then test whether the Positive Prediction 
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">project</span><span class="o">.</span><span class="n">update_continuous_test_categories</span><span class="p">([</span><span class="s2">&quot;TEST_CATEGORY_TYPE_MODEL_PERFORMANCE&quot;</span><span class="p">,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">project</span><span class="o">.</span><span class="n">update_ct_categories</span><span class="p">([</span><span class="s2">&quot;TEST_CATEGORY_TYPE_MODEL_PERFORMANCE&quot;</span><span class="p">,</span>
                                            <span class="s2">&quot;TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE_DEGRADATION&quot;</span><span class="p">,</span>
                                            <span class="s2">&quot;TEST_CATEGORY_TYPE_ABNORMAL_INPUTS&quot;</span><span class="p">,</span>
                                            <span class="s2">&quot;TEST_CATEGORY_TYPE_DRIFT&quot;</span><span class="p">,</span>
@@ -490,7 +490,7 @@ split based on the feature values. We then test whether the Positive Prediction 
 <section id="Continuous-Testing-Overview">
 <h2><strong>Continuous Testing Overview</strong><a class="headerlink" href="#Continuous-Testing-Overview" title="Permalink to this heading"></a></h2>
 <p>The page is the mission control for your model’s production deployment health. In it, you can see the status of continuous test runs, and see their metrics changes over time.</p>
-<img alt="Image of a graph of the performance history of a lending default prediciton model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_lending_classification_walkthrough/loan_historical.png" />
+<img alt="Image of a graph of the performance history of a lending default prediciton model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.6-stable/_static/images/demo_notebooks/ri_lending_classification_walkthrough/loan_historical.png" />
 </section>
 <section id="Continuous-Test-Results">
 <h2><strong>Continuous Test Results</strong><a class="headerlink" href="#Continuous-Test-Results" title="Permalink to this heading"></a></h2>
@@ -518,7 +518,7 @@ split based on the feature values. We then test whether the Positive Prediction 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+    <p>&#169; Copyright 2024, Robust Intelligence.</p>
   </div>
 
    

@@ -37,18 +37,18 @@ results identify security, ethical, and operational risks and
 weaknesses in your model and provide you with insights on how to
 improve it before deployment.
 
-### Why We Run Continuous Tests
+### Scheduled Stress Testing to Detect Emerging Risks
 
-[Continuous Testing](../testing_and_monitoring/monitoring_models.rst)
-monitors AI models that are deployed in production in order to detect
-when vulnerabilities or failures emerge, such as data drift or
-inability to withstand adversarial attacks.
+[Scheduled Stress Testing](../testing_and_monitoring/monitoring_models.rst)
+continually validates AI models that are deployed in production in
+order to detect when vulnerabilities or failures emerge, such as data
+drift or inability to withstand adversarial attacks.
 
 ## Risk Testing Built into Your AI Pipeline
 
-Robust Intelligence allows you to test and monitor your models for
-security, ethical, and operational risk by integrating into the
-following phases of your model development and deployment pipeline:
+Robust Intelligence allows you to test your models for security,
+ethical, and operational risk by integrating into the following phases
+of your model development and deployment pipeline:
 
 - During model development,
   [AI Stress Testing](../testing_and_monitoring/validating_models.rst)
@@ -57,8 +57,8 @@ following phases of your model development and deployment pipeline:
   a specific form of potential failure in production.
 
 - Once models are deployed into production,
-  [AI Continuous Testing](../testing_and_monitoring/monitoring_models.rst)
-  monitors your model and alerts you to issues such as data drift and
+  set up Scheduled Stress Testing to automatically
+  alert you to issues such as data drift and
   detected adversarial attacks.
 
 ## Measuring AI Risk
@@ -68,13 +68,17 @@ In modern engineering organizations, data scientists and machine learning engine
 While these metrics may be useful in controlled development environments, deploying models in production introduces a new set of challenges and risks that are often overlooked. Once a model is deployed, data scientists lose control over how the model is used and how data is passed into it. Moreover, they have no oversight over the data pipelines that incorporate the model. Even when the model is used correctly, the real world can change, leading to issues like distributional shifts in production data, which can silently degrade model performance.
 These risks can manifest in several ways, such as operational, ethical, and security risks. Operational risks arise from subpar model performance, which may occur due to factors such as data drift or other distributional shifts in the production environment. Ethical risks occur when model behavior violates regulatory or governance standards, which may lead to legal or reputational harm for the organization. Finally, security risks arise when models are vulnerable to adversarial actors who can exploit or compromise the model's performance.
 
-To mitigate these risks, it's crucial to have tools like Robust Intelligence that allow you to test and monitor models continuously throughout their lifecycle, from development to deployment. This ensures that you catch any issues as they arise and can take corrective action before they cause significant problems.
+To mitigate these risks, it's important to test models continually throughout their lifecycle, during development and after deployment. This ensures that you catch any issues as they arise and can take corrective action before they cause significant problems.
 
 <img src="../_static/images/adopting_ai_risk.png">
 
 ### Key Machine Learning Tasks Covered
 
 Robust Intelligence provides model testing across the following broad task categories:
+
+#### Generative
+
+- Question Answering
 
 #### Tabular
 
@@ -104,6 +108,11 @@ potential weaknesses and failure modes of your prospective AI
 deployment, and each test represents a specific axis of potential
 model vulnerability.
 
+[Scheduled Stress Testing](../testing_and_monitoring/monitoring_models.rst)
+allows you to automatically validate AI models without human
+intervention during production deployment at regular time-intervals
+such as hourly, daily, or weekly.
+
 The Stress Testing framework comes with a wide range of pre-configured tests, from simple operational risk tests that measure whether model performance is sufficiently high, to complex security tests that identify signatures that are evidence of adversarial attacks. By running hundreds of these tests across both your model and associated datasets, Robust Intelligence can identify potential vulnerabilities in your model, and provide you with insights on how to improve its robustness.
 
 During the development stage of your model's lifecycle, the Stress Testing framework can help you ensure that your model is performing optimally, across all risk categories. By analyzing individual tests, you can identify areas where your model needs improvement, and refine it accordingly. By identifying these issues early on in the development process, you can address them proactively and ensure that your model is compliant with applicable regulatory or governance standards.
@@ -111,43 +120,23 @@ During the development stage of your model's lifecycle, the Stress Testing frame
 The Stress Testing framework is a powerful tool for measuring the robustness of your AI model before deployment. Its pre-configured tests cover a wide range of potential vulnerabilities, allowing you to identify areas where your model needs improvement, and address them proactively.
 
 
-## Continuous Testing
-
-[Continuous Testing](../testing_and_monitoring/monitoring_models.rst)
-is a monitoring tool for AI models during production deployment that
-uses the Stress Testing framework applied continually over time. The
-framework includes dozens of pre-configured tests that check the
-model's vulnerability to potential failure in production, such as data
-drift or detected adversarial attacks.
-
-Continuous Testing can be configured to run on a fixed schedule. On completion we surface vulnerabilities that were discovered in the test run via events and alerts.
-
-To set up Continuous Testing, you can passively log and analyze predictions by uploading prediction logs after model inference. This process can be automated to run at regular intervals.
-
-
 ## Robust Intelligence Inputs
 
-To run stress tests (ST) and continuous tests (CT), the platform takes as input:
+To run stress tests, the platform takes as input:
 
 - **Data**: Robust Intelligence requires
   [sample data](../testing_and_monitoring/preparing_your_models_and_datasets/preprocessing_your_datasets.md)
-  for both ST and CT:
+  in the form of a reference dataset and an evaluation dataset:
+  - the reference set contains clean training data
+  - the evaluation set contains a held-out dataset that the model will encounter in production
 
-    - **ST**: A reference dataset and an evaluation dataset are
-      required. The reference set contains clean training data, and the
-      evaluation set contains a held-out dataset that the model will
-      encounter in production. These datasets need to be registered to
-      the RI Data Registry before usage, and can optionally have
-      ground truth labels and associated model predictions (which
-      should be registered to the Prediction Registry). Having this
-      additional information allows the testing suite to run more
-      tests than is possible otherwise.
-
-    - **CT**: The data requirements for CT are an extension of what is
-      needed for ST. For CT, there is the additional requirement of
-      passing in production evaluation data periodically (either
-      manually or via scheduling that you can configure as a part of
-      the CT instance).
+  These datasets need to be registered with the
+  [RI Data Registry](../testing_and_monitoring/preparing_your_models_and_datasets/registering_model_datasets.md)
+  before you use them, and they can optionally have ground-truth
+  labels and associated model predictions (which should be registered
+  with the [Prediction Registry](../testing_and_monitoring/preparing_your_models_and_datasets/registering_model_datasets.md#registering-predictions-using-the-sdk).
+  Having this additional information allows the testing suite to run
+  more tests than is possible otherwise.
 
 - **Model**: Providing access to the
   [model](../testing_and_monitoring/preparing_your_models_and_datasets/defining_model_interface.md)
@@ -155,16 +144,19 @@ To run stress tests (ST) and continuous tests (CT), the platform takes as input:
   The tests perturb model inputs, provide them to the model, and
   examine the model behavior to uncover its vulnerabilities. The model
   is treated as a black box, and providing access to the model entails
-  registering a `model.py` file to the RI Model Registry. The `model.py`
-  file requires a prediction function that takes in an input from
-  Robust Intelligence and provides the model prediction given this
-  input. By treating the model as a black box, Robust Intelligence can
-  easily integrate with whatever model framework you use.
+  registering a `model.py` file with the [RI Model Registry](../testing_and_monitoring/model_governance/model_registry.md).
+  The `model.py` file requires a prediction function that takes in an
+  input from Robust Intelligence and provides the model prediction
+  given this input. By treating the model as a black box, Robust
+  Intelligence can easily integrate with whatever model framework you
+  use.
 
+## AI Compliance Management with Model Cards
 
-## AI Compliance Management - Model Cards
-
-AI Compliance Management allows the user to download auto-generated model cards for internal and external documentation needs. This incorporates results from both Stress Testing and Continuous Testing. These reports help companies comply with AI regulatory standards and maintain a record of testing.
+Once you've run stress tests, Robust Intelligence lets you download
+auto-generated model cards for internal and external documentation
+needs. These reports help your organization comply with AI regulatory
+standards and maintain a record of test results.
 
 ## Workspace Overview
 
@@ -176,7 +168,9 @@ leadership in organizations.
 
 ## Related Topics  
 [Defining a Model Interface](../testing_and_monitoring/preparing_your_models_and_datasets/defining_model_interface.md)  
-[Monitor Models with Continuous Tests](../testing_and_monitoring/monitoring_models.rst)  
+[Model Registry](../testing_and_monitoring/model_governance/model_registry.md)  
 [Preprocessing Your Datasets](../testing_and_monitoring/preparing_your_models_and_datasets/preprocessing_your_datasets.md)  
+[Registering Models, Datasets, and Predictions](../testing_and_monitoring/preparing_your_models_and_datasets/registering_model_datasets.md)  
+[Scheduled Stress Testing](../testing_and_monitoring/monitoring_models.rst)  
 [Validate Models with Stress Tests](../testing_and_monitoring/validating_models.rst)  
 [Workspaces](../administration/workspace_configuration/workspaces.md)  

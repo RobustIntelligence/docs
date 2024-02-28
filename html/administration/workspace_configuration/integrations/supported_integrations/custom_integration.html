@@ -57,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.5.2-rc.0
+                2.6.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -72,12 +72,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../documentation_home/get_started.html">Get Started</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<p class="caption" role="heading"><span class="caption-text">Testing</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../testing_and_monitoring/monitoring_models.html">Scheduled Stress Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../testing_and_monitoring/querying_results.html">Querying Test Run Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../testing_and_monitoring/notifications_and_alerts.html">Notifications and Alerts</a></li>
@@ -204,39 +204,38 @@ we’ll run a stress test with it.</p>
 the data loading logic. This example parses data from an Amazon S3
 bucket, but a custom data loader can be written to handle data from
 any source.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>&quot;&quot;&quot;Data loader file for news file.&quot;&quot;&quot;
-import boto3
-from datetime import datetime
-import pandas as pd
-​
-BUCKET_NAME = &quot;rime-datasets&quot;
-​
-​
-def get_news_data(
-    start_time: datetime, # REQUIRED
-    end_time: datetime, # REQUIRED
-    integration_dict: dict,
-) -&gt; pd.DataFrame:
-    start_time = datetime.fromtimestamp(start_time)
-    end_time = datetime.fromtimestamp(end_time)
-​
-    master_df = pd.DataFrame()
-    s3 = boto3.resource(
-        &#39;s3&#39;,
-        aws_access_key_id=integration_dict[&#39;ACCESS_KEY&#39;],
-        aws_secret_access_key=integration_dict[&#39;SECRET_ACCESS_KEY&#39;],
-    )
-    my_bucket = s3.Bucket(BUCKET_NAME)
-    for object_summary in my_bucket.objects.filter(Prefix=&quot;custom-loader-news/&quot;):
-        if &quot;.csv&quot; in object_summary.key:
-            date_str = object_summary.key.split(&quot;/&quot;)[1].replace(&quot;.csv&quot;, &quot;&quot;)
-            date_str = date_str.replace(&quot;day_&quot;, &quot;&quot;)
-            file_time = datetime.strptime(date_str, &quot;%Y-%m-%d&quot;)
-            if start_time &lt;= file_time &lt;= end_time:
-                obj = s3.Object(BUCKET_NAME, object_summary.key)
-                curr_df = pd.read_csv(obj.get()[&quot;Body&quot;])
-                master_df = pd.concat([master_df, curr_df], ignore_index=True)
-    return master_df
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Data loader file for news file.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">boto3</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">BUCKET_NAME</span> <span class="o">=</span> <span class="s2">&quot;rime-datasets&quot;</span>
+
+<span class="k">def</span> <span class="nf">get_news_data</span><span class="p">(</span>
+    <span class="n">start_time</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="c1"># REQUIRED</span>
+    <span class="n">end_time</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="c1"># REQUIRED</span>
+    <span class="n">integration_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
+    <span class="n">end_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">end_time</span><span class="p">)</span>
+
+    <span class="n">master_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">resource</span><span class="p">(</span>
+        <span class="s1">&#39;s3&#39;</span><span class="p">,</span>
+        <span class="n">aws_access_key_id</span><span class="o">=</span><span class="n">integration_dict</span><span class="p">[</span><span class="s1">&#39;ACCESS_KEY&#39;</span><span class="p">],</span>
+        <span class="n">aws_secret_access_key</span><span class="o">=</span><span class="n">integration_dict</span><span class="p">[</span><span class="s1">&#39;SECRET_ACCESS_KEY&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">my_bucket</span> <span class="o">=</span> <span class="n">s3</span><span class="o">.</span><span class="n">Bucket</span><span class="p">(</span><span class="n">BUCKET_NAME</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">object_summary</span> <span class="ow">in</span> <span class="n">my_bucket</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Prefix</span><span class="o">=</span><span class="s2">&quot;custom-loader-news/&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;.csv&quot;</span> <span class="ow">in</span> <span class="n">object_summary</span><span class="o">.</span><span class="n">key</span><span class="p">:</span>
+            <span class="n">date_str</span> <span class="o">=</span> <span class="n">object_summary</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">date_str</span> <span class="o">=</span> <span class="n">date_str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;day_&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">file_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_str</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">start_time</span> <span class="o">&lt;=</span> <span class="n">file_time</span> <span class="o">&lt;=</span> <span class="n">end_time</span><span class="p">:</span>
+                <span class="n">obj</span> <span class="o">=</span> <span class="n">s3</span><span class="o">.</span><span class="n">Object</span><span class="p">(</span><span class="n">BUCKET_NAME</span><span class="p">,</span> <span class="n">object_summary</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+                <span class="n">curr_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">()[</span><span class="s2">&quot;Body&quot;</span><span class="p">])</span>
+                <span class="n">master_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">master_df</span><span class="p">,</span> <span class="n">curr_df</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">master_df</span>
 </pre></div>
 </div>
 </section>
@@ -404,7 +403,7 @@ data ID to configure a continuous test.</p>
 <section id="related-topics">
 <h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
 <p><a class="reference internal" href="../configuring_integrations.html"><span class="std std-doc">Configuring Integrations</span></a><br />
-<a class="reference internal" href="../../../../testing_and_monitoring/monitoring_models.html"><span class="std std-doc">Monitor Models with Continuous Tests</span></a></p>
+<a class="reference internal" href="../../../../testing_and_monitoring/monitoring_models.html"><span class="std std-doc">Scheduled Stress Testing</span></a></p>
 </section>
 </section>
 
@@ -419,7 +418,7 @@ data ID to configure a continuous test.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+    <p>&#169; Copyright 2024, Robust Intelligence.</p>
   </div>
 
    
