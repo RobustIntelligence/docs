@@ -7,6 +7,25 @@ Unless noted otherwise, you must [upgrade](../deployment/upgrade.rst)
 all Robust Intelligence components to take advantage of the changes
 listed here.
 
+## 2.6
+
+### Scheduled stress tests
+
+This release introduces the ability to run model stress tests on a daily, weekly
+or other schedule that you set. Scheduled stress tests are the recommended way
+to test models on a recurring basis, rather than scheduled continuous tests,
+which remain supported as of v2.6. See
+[Scheduled Stress Testing](../testing_and_monitoring/monitoring_models.rst).
+
+### New generative test: Harmful SQL Generation
+
+This test applies a harmful SQL generation attack that uses natural
+language prompts that may cause the model to generate harmful SQL
+queries. It will fail if the model generates SQL queries that expose
+table schemas or create, alter, or drop tables. See the
+[Model tests reference](model_tests_reference.rst).
+
+
 ## 2.5
 
 ### Better setting and defaulting of memory and CPU preferences for scheduled continuous tests
@@ -302,7 +321,8 @@ stress_test_config = {
 ## Related Topics  
 [API Changelog](../reference/api_changelog.md)  
 [Configuring Runtime Information](../testing_and_monitoring/configuring_test_runs/configuring_runtime.md)  
-[Continuous Testing Feedback and Observability](../testing_and_monitoring/monitoring_models/ct_feedback_and_observability.md)  
 [Model Monitors](../testing_and_monitoring/monitoring_models/monitors/monitors.md)  
+[Scheduled Stress Testing](../testing_and_monitoring/monitoring_models.rst)  
+[Scheduled Testing Feedback and Observability](../testing_and_monitoring/monitoring_models/ct_feedback_and_observability.md)  
 [Securing Model Supply Chain Risk with File Scanning](../testing_and_monitoring/preparing_your_models_and_datasets/file_scanning.md)  
 [Upgrade](../deployment/upgrade.rst)  

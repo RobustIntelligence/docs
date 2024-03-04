@@ -1,0 +1,427 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "bbc7fabd-6883-42f6-856a-7a6e52dbe806",
+   "metadata": {},
+   "source": [
+    "# **Scheduled Stress Testing**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "550892e7-b64c-4484-a816-405ee72062c7",
+   "metadata": {},
+   "source": [
+    "### **Install Dependencies, Import Libraries and Download Data**\n",
+    "Run the cell below to install libraries to receive data, install our SDK, and load analysis libraries."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "7651d047-6150-4487-a6a8-b26ddcc5a20f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "!pip install rime-sdk==2.6.0rc8 &> /dev/null\n",
+    "\n",
+    "import pandas as pd\n",
+    "from pathlib import Path\n",
+    "from rime_sdk import Client"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "0a268470-9f8d-455b-a5dd-d8c65320159c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "!pip install https://github.com/RobustIntelligence/ri-public-examples/archive/master.zip\n",
+    "    \n",
+    "from ri_public_examples.download_files import download_files\n",
+    "\n",
+    "download_files('tabular-2.0/fraud', 'fraud')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "554d9a36-7ae4-4de9-a926-75dd753a5c2f",
+   "metadata": {},
+   "source": [
+    "### **Establish the RIME Client**\n",
+    "\n",
+    "To get started, provide the API credentials and the base domain/address of the RIME service. You can generate and copy an API token from the API Access Tokens Page under Workspace settings. For the domian/address of the RIME service, contact your admin."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "12c8dddf-347d-46d9-9b7d-8225065aedd6",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "API_TOKEN = '' # PASTE API_KEY \n",
+    "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)\n",
+    "\n",
+    "client = Client(CLUSTER_URL, API_TOKEN)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "6eaaf516-7c45-4dc8-8d70-b8b24484669d",
+   "metadata": {},
+   "source": [
+    "### **Create a new project**\n",
+    "After creating the project, note down the ID. You can use it to retrieve the project the next time you use the RIME client."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "41377977-cdeb-4075-b300-c0b00bce7d97",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "description = (\n",
+    "    \"Create a Stress Test and set up scheduling.\"\n",
+    "    \" Demonstration uses a tabular binary classification dataset\"\n",
+    "    \" and model that simulates credit card fraud detection.\"\n",
+    ")\n",
+    "project = client.create_project(\n",
+    "    \"Scheduled Stress Testing Demo\", \n",
+    "    description,\n",
+    "    \"MODEL_TASK_BINARY_CLASSIFICATION\"\n",
+    ")\n",
+    "print(f\"Project ID: {project.project_id}\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c71f6d49-bbdf-43a3-914e-6e3a71150627",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "project_id = '' # PASTE FROM ABOVE\n",
+    "project = client.get_project(project_id)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "bd580963-6dcb-479c-869f-3952df58821e",
+   "metadata": {},
+   "source": [
+    "### **Upload the model and datasets**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "01645055-a24e-4867-a514-c898c7b7ed7c",
+   "metadata": {},
+   "source": [
+    "First let's see what the data looks like."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "7c8d9a31-198e-4c8e-a3de-be297d0cf8bf",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df = pd.read_csv(Path('fraud/data/fraud_ref.csv'))\n",
+    "df.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ce4cb65e-8850-496a-9632-faec5e97a24c",
+   "metadata": {},
+   "source": [
+    "For this demo, we are going to use a pretrained CatBoostClassifier Model. \n",
+    "\n",
+    "The model predicts whether a particular transaction is fraud or not fraud.\n",
+    "\n",
+    "The model makes use of the following features - \n",
+    "\n",
+    "1.   category\n",
+    "2.   card_type\n",
+    "3.   card_company\n",
+    "4.   transaction_amount\n",
+    "5.   city\n",
+    "6.   browser_version\n",
+    "7.   country\n",
+    "\n",
+    "We now want to kick off RIME Stress Tests that will help us evaluate the model in further depth beyond basic performance metrics like accuracy, precision, recall. In order to do this, we will upload this pre-trained model, the reference dataset the model was trained on, and the evaluation dataset the model was evaluated on to an S3 bucket that can be accessed by RIME."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c43d5bdc-fe6b-4887-9985-d116a2508171",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "upload_path = \"ri_public_examples_fraud\"\n",
+    "\n",
+    "model_s3_dir = client.upload_directory(\n",
+    "    Path('fraud/models'), upload_path=upload_path\n",
+    ")\n",
+    "model_s3_path = model_s3_dir + \"/fraud_model.py\"\n",
+    "\n",
+    "ref_s3_path = client.upload_file(\n",
+    "    Path('fraud/data/fraud_ref.csv'), upload_path=upload_path\n",
+    ")\n",
+    "eval_s3_path = client.upload_file(\n",
+    "    Path('fraud/data/fraud_eval.csv'), upload_path=upload_path\n",
+    ")\n",
+    "\n",
+    "ref_preds_s3_path = client.upload_file(\n",
+    "    Path(\"fraud/data/fraud_ref_preds.csv\"), upload_path=upload_path\n",
+    ")\n",
+    "eval_preds_s3_path = client.upload_file(\n",
+    "    Path(\"fraud/data/fraud_eval_preds.csv\"), upload_path=upload_path\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "fc6463e4-386d-4ccb-87af-3bfbaddb48ff",
+   "metadata": {},
+   "source": [
+    "Once the data and model are uploaded to S3, we can register them to RIME. Once they're registered, we can refer to these resources using their RIME-generated IDs.\n",
+    "\n",
+    "**Tip: Note down the RIME-generated IDs for future use so that you don't have to repeatedly upload datasets and models to RIME every time you want to run Stress Tests.**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "5e52a978-95f2-404e-898e-cc932f9c69c8",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from datetime import datetime\n",
+    "\n",
+    "dt = str(datetime.now())\n",
+    "\n",
+    "# Note: models and datasets need to have unique names.\n",
+    "model_id = project.register_model_from_path(f\"model_{dt}\", model_s3_path)\n",
+    "\n",
+    "ref_dataset_id = project.register_dataset_from_file(\n",
+    "    f\"ref_dataset_{dt}\", ref_s3_path, data_params={\"label_col\": \"label\"}\n",
+    ")\n",
+    "eval_dataset_id = project.register_dataset_from_file(\n",
+    "    f\"eval_dataset_{dt}\", eval_s3_path, data_params={\"label_col\": \"label\"}\n",
+    ")\n",
+    "\n",
+    "project.register_predictions_from_file(\n",
+    "    ref_dataset_id, model_id, ref_preds_s3_path\n",
+    ")\n",
+    "project.register_predictions_from_file(\n",
+    "    eval_dataset_id, model_id, eval_preds_s3_path\n",
+    ")\n",
+    "\n",
+    "print(f\"Model ID: {model_id}\")\n",
+    "print(f\"Reference dataset ID: {ref_dataset_id}\")\n",
+    "print(f\"Evaluation dataset ID: {eval_dataset_id}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "2db9c9cd-6ed3-4d97-a86c-5c9ed40a9291",
+   "metadata": {},
+   "source": [
+    "### **Running a Stress Test**\n",
+    "\n",
+    "AI Stress Tests allow you to test your data and model before deployment. They are a comprehensive suite of hundreds of tests that automatically identify implicit assumptions and weaknesses of pre-production models. Each stress test is run on a single model and its associated reference and evaluation datasets. \n",
+    "\n",
+    "Below is a sample configuration of how to setup and run a RIME Stress Test."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9c87750c-eafa-45a2-93e2-b53cb39f6735",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "model_id = '' # PASTE FROM ABOVE\n",
+    "ref_dataset_id = '' # PASTE FROM ABOVE\n",
+    "eval_dataset_id = '' # PASTE FROM ABOVE\n",
+    "\n",
+    "stress_test_config = {\n",
+    "    \"run_name\": \"Onboarding Stress Test Run\", \n",
+    "    \"data_info\": {\n",
+    "        \"ref_dataset_id\": ref_dataset_id, \n",
+    "        \"eval_dataset_id\": eval_dataset_id,\n",
+    "    }, \n",
+    "    \"model_id\": model_id,\n",
+    "    \"categories\": [\n",
+    "            \"TEST_CATEGORY_TYPE_ADVERSARIAL\",\n",
+    "            \"TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE\",\n",
+    "            \"TEST_CATEGORY_TYPE_TRANSFORMATIONS\",\n",
+    "            \"TEST_CATEGORY_TYPE_ABNORMAL_INPUTS\",\n",
+    "            \"TEST_CATEGORY_TYPE_DATA_CLEANLINESS\"]\n",
+    "}\n",
+    "\n",
+    "stress_test_config"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "01461a4d-d364-4048-ac2c-3c924cc1a0ef",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "stress_job = client.start_stress_test(\n",
+    "    stress_test_config, project.project_id\n",
+    ")\n",
+    "stress_job.get_status(verbose=True, wait_until_finish=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8e74f25a-f6df-4683-9540-c4878bdc36b7",
+   "metadata": {},
+   "source": [
+    "### **Set up a Schedule to run Stress Tests automatically**\n",
+    "\n",
+    "After you have successfully run a manual Stress Test, you can carry over the configuration and use it to set up Stress Tests to run automatically."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "be3e4bad-068d-40b6-bfef-517462fe5cf9",
+   "metadata": {},
+   "source": [
+    "First, let's take another look at `stress_test_config` and see if we need to make any updates. For example, you may want to update the evaluation dataset used to run your automatically scheduled Stress Tests."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "08c575e3-1688-45cc-9566-7e3e012a8ee3",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "stress_test_config\n",
+    "\n",
+    "# e.g.,\n",
+    "# stress_test_config[\"data_info\"][\"eval_dataset_id\"] = new_eval_dataset_id"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "474f45f5-e5af-42a3-85ad-f57722d45c32",
+   "metadata": {},
+   "source": [
+    "We can now create a new Schedule containing the information necessary to automatically run Stress Tests. You will need to provide a configuration dict as well as a string indicating how often you want the Stress Tests to run. Supported strings are: \"@hourly\", \"@daily\", \"@weekly\" and \"@monthly\"."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "5e517b1e-3242-4df6-8fe0-caebf57258ad",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "schedule = project.create_schedule(test_run_config=stress_test_config, frequency_cron_expr=\"@hourly\")\n",
+    "#print(schedule.info)\n",
+    "\n",
+    "print(f\"Schedule ID: {schedule.schedule_id}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b765e414-16f9-4c10-b43c-f0fd906905c9",
+   "metadata": {},
+   "source": [
+    "After creating a Schedule, you need to activate it on your project. Feel free to activate and deactivate your Schedule as required."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c4fae77e-308d-4b3e-acd7-b3198dd4b854",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "schedule_id = '' # PASTE FROM ABOVE\n",
+    "\n",
+    "project.activate_schedule(schedule_id)\n",
+    "#project.deactivate_schedule(schedule_id)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d15b6ce1-e309-4ac1-a2ed-a22030c18d5a",
+   "metadata": {},
+   "source": [
+    "If you forget which schedule is active on your project, you can always retrieve the information later using either of the methods below."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e2a3afb1-974a-4411-aad7-832f0cbb0b1b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "project.info.active_schedule\n",
+    "\n",
+    "project.get_active_schedule().info"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "35abe19b-7d80-4fe4-82be-127a70b90365",
+   "metadata": {},
+   "source": [
+    "You can also update how frequently you want your Schedule to run Stress Tests."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "35b6a83d-b171-477f-a823-2b9acb0c5e9a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "project.update_schedule(schedule_id, \"@daily\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "072dd267-4f20-4373-a731-813fe45c4a74",
+   "metadata": {},
+   "source": [
+    "Congratulations! Stress test scheduling is now set up. You can go to the Stress Testing tab for your project on the Robust Intelligence UI to view and analyze new Stress Tests as they run over time."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "dev",
+   "language": "python",
+   "name": "dev"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.18"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

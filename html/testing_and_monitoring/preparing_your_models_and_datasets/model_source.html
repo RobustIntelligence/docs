@@ -57,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.5.2-rc.0
+                2.6.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -72,21 +72,18 @@
 <li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<p class="caption" role="heading"><span class="caption-text">Testing</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../creating_projects.html">Creating Projects</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="preprocessing_your_datasets.html">Preprocessing Your Datasets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="defining_model_interface.html">Defining a Model Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="upload_data.html">Uploading to Cloud Storage (Optional)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="registering_model_datasets.html">Registering Models,  Datasets, and Predictions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registering_model_datasets.html">Registering Models, Datasets, and Predictions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_source.html">Data Configuration</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Model Configuration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#template">Template</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#model-path">Model Path</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#huggingface">Huggingface</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="#model-path">Model Path</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hugging-face">Hugging Face</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#related-topics">Related Topics</a></li>
 </ul>
 </li>
@@ -94,7 +91,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../validating_models.html">Validate Models with Stress Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../monitoring_models.html">Scheduled Stress Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../querying_results.html">Querying Test Run Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notifications_and_alerts.html">Notifications and Alerts</a></li>
@@ -154,16 +151,14 @@
              
   <section id="model-configuration">
 <h1>Model Configuration<a class="headerlink" href="#model-configuration" title="Permalink to this heading"></a></h1>
-<p>Configuring a model source can be done by specifying a mapping with a python object.  It allows you to point to specific
-models you have created or gives the ability to access hugging face models.<br />
-<a class="reference internal" href="defining_model_interface.html"><span class="std std-doc">Specify a Model</span></a> discusses how to create a Python model file.</p>
+<p>Configuring a model source can be done by specifying a mapping with a Python object.  It allows you to point to specific
+models you have created or gives the ability to access Hugging Face models. The
+<a class="reference internal" href="defining_model_interface.html"><span class="std std-doc">Specify a Model</span></a> section discusses how to create a Python model file.</p>
 <p>For an example of how to use this config in the model registry, please see the “Register a Model” step in
-<a class="reference internal" href="../validating_models/stress_tests_from_sdk.html"><span class="std std-doc">Stress Tests walkthrough</span></a>.</p>
-<section id="template">
-<h2>Template<a class="headerlink" href="#template" title="Permalink to this heading"></a></h2>
+the <a class="reference internal" href="../validating_models/stress_tests_from_sdk.html"><span class="std std-doc">Stress Tests walkthrough</span></a>.</p>
 <section id="model-path">
-<h3>Model Path<a class="headerlink" href="#model-path" title="Permalink to this heading"></a></h3>
-<p>Load model from a file.</p>
+<h2>Model Path<a class="headerlink" href="#model-path" title="Permalink to this heading"></a></h2>
+<p>Load a model from a file.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;model_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;path/to/model.py&quot;</span>
@@ -194,9 +189,9 @@ models you have created or gives the ability to access hugging face models.<br /
 </tbody>
 </table>
 </section>
-<section id="huggingface">
-<h3>Huggingface<a class="headerlink" href="#huggingface" title="Permalink to this heading"></a></h3>
-<p>Load model from HuggingFace.</p>
+<section id="hugging-face">
+<h2>Hugging Face<a class="headerlink" href="#hugging-face" title="Permalink to this heading"></a></h2>
+<p>Load a model from Hugging Face.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;hugging_face&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;model_uri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cross-encoder/nli-MiniLM2-L6-H768&quot;</span><span class="p">,</span>
@@ -218,22 +213,21 @@ models you have created or gives the ability to access hugging face models.<br /
 <tr>
 <td>hugging_face</td>
 <td>JSON object</td>
-<td>Specification for a huggingface model.</td>
+<td>Specification for a Hugging Face model.</td>
 </tr>
 <tr>
 <td>&nbsp;&nbsp;&nbsp;&nbsp; model_uri</td>
 <td>String</td>
-<td>The URI to a HuggingFace model.</td>
+<td>The URI to a Hugging Face model.</td>
 </tr>
 <tr>
 <td>&nbsp;&nbsp;&nbsp;&nbsp; kwargs</td>
 <td>String</td>
-<td>A JSON String of arguments to pass to HuggingFace model.</td>
+<td>A JSON String of arguments to pass to Hugging Face model.</td>
 </tr>
 </tbody>
 </table>
 <p>Note: Specify exactly one of <code class="docutils literal notranslate"><span class="pre">model_path</span></code> or <code class="docutils literal notranslate"><span class="pre">hugging_face</span></code>.</p>
-</section>
 </section>
 <section id="related-topics">
 <h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
@@ -253,7 +247,7 @@ models you have created or gives the ability to access hugging face models.<br /
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+    <p>&#169; Copyright 2024, Robust Intelligence.</p>
   </div>
 
    

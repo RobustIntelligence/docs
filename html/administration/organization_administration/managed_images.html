@@ -57,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.5.2-rc.0
+                2.6.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -72,12 +72,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<p class="caption" role="heading"><span class="caption-text">Testing</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Scheduled Stress Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/querying_results.html">Querying Test Run Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/notifications_and_alerts.html">Notifications and Alerts</a></li>
@@ -89,6 +89,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../organization_administration.html">Organization Administration</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="custom_images.html">Run Robust Intelligence on Custom Docker Images</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Using Managed Images for Testing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#enabling-the-managed-images-feature">Enabling the Managed Images feature</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ecr-permissions-for-the-managed-image-registry">ECR permissions for the Managed Image Registry</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#managed-image-management">Managed Image management</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#creating-a-managed-image">Creating a Managed Image</a></li>
@@ -153,12 +154,31 @@
 <blockquote>
 <div><p><strong>Managed images are not currently supported in a Cloud deployment. Please reach out to Robust Intelligence for support if this functionality is required for your deployment.</strong></p>
 </div></blockquote>
-<p>The Managed Image Registry enables containerization of the dependencies for a given model. Docker images that contain the dependencies for models can be swapped to match the requirements of the model being used.</p>
-<p>Managed Images created in a workspace are not bound to that workspace and are available to all other workspaces on the same Robust Intelligence instance.</p>
-<p>Managed Images can be created by any user account. Managed Images can only be deleted by user accounts with the Organization Administrator <a class="reference internal" href="../security_and_compliance/user_account_roles.html"><span class="std std-doc">role</span></a>.</p>
-<p>Robust Intelligence provides a set of base images that are built to address a given set of use cases. Users can build a managed image from a base image.</p>
-<p>The Managed Image Registry operates on <a class="reference external" href="https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html">AWS ECR</a>.</p>
-<p><em>NOTE</em>: as of version 0.13.0, the Managed Images feature is enabled by default in our Terraform module.</p>
+<p>The Managed Image Registry enables containerization of the
+dependencies for a given model. Docker images that contain the
+dependencies for models can be swapped to match the requirements of
+the model being used. Once you’ve created a Managed Image, you can use
+it in model testing as shown in
+<a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs/run_tests_on_managed_images.html"><span class="std std-doc">Running Tests on Managed Docker Images</span></a></p>
+<p>Notes on using Managed Images:</p>
+<ul class="simple">
+<li><p>Managed Images created in a workspace are not bound to that
+workspace and are available to all other workspaces on the same
+Robust Intelligence instance.</p></li>
+<li><p>Managed Images can be created by any user account. Managed Images
+can only be deleted by user accounts with the Organization
+Administrator
+<a class="reference internal" href="../security_and_compliance/user_account_roles.html"><span class="std std-doc">role</span></a>.</p></li>
+<li><p>Robust Intelligence provides a set of base images that are built to
+address a given set of use cases. Users can build a managed image
+from a base image.</p></li>
+<li><p>The Managed Image Registry operates on
+<a class="reference external" href="https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html">AWS ECR</a>.</p></li>
+<li><p>The Managed Images feature is enabled by default in our Terraform
+module.</p></li>
+</ul>
+<section id="enabling-the-managed-images-feature">
+<h2>Enabling the Managed Images feature<a class="headerlink" href="#enabling-the-managed-images-feature" title="Permalink to this heading"></a></h2>
 <p>Configuration for this feature uses the <code class="docutils literal notranslate"><span class="pre">image_registry_config</span></code> of the <code class="docutils literal notranslate"><span class="pre">rime</span></code> Terraform module:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="s2">&quot;rime&quot;</span> <span class="p">{</span>
   <span class="o">...</span>
@@ -172,6 +192,7 @@
 </pre></div>
 </div>
 <p>The value of the <code class="docutils literal notranslate"><span class="pre">repository_prefix</span></code> variable specifies a string that identifies repositories that are managed by the Managed Image Registry. Repositories without the string specified by <code class="docutils literal notranslate"><span class="pre">repository_prefix</span></code> are not acted upon by the Managed Image Registry.</p>
+</section>
 <section id="ecr-permissions-for-the-managed-image-registry">
 <h2>ECR permissions for the Managed Image Registry<a class="headerlink" href="#ecr-permissions-for-the-managed-image-registry" title="Permalink to this heading"></a></h2>
 <p>Permissions for Managed Images can be applied automatically by a user with the Organziation administrator <a class="reference internal" href="../security_and_compliance/user_account_roles.html"><span class="std std-doc">role</span></a> when applying the Robust Intelligence Terraform module.</p>
@@ -200,7 +221,14 @@
 <p>The <a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">Robust Intelligence SDK</span></a> provides calls for creating, altering, and deleting Managed Images.</p>
 <section id="creating-a-managed-image">
 <h3>Creating a Managed Image<a class="headerlink" href="#creating-a-managed-image" title="Permalink to this heading"></a></h3>
-<p>Create a new Managed Image with the <a href="../../reference/python-sdk.html#rime_sdk.Client.create_managed_image"><code class="docutils literal notranslate"><span class="pre">Client.create_managed_image()</span></code></a> call in the RIME SDK. To use a base image, specify values for the <code class="docutils literal notranslate"><span class="pre">image_type</span></code> and <code class="docutils literal notranslate"><span class="pre">python_version</span></code> parameters.</p>
+<ol class="arabic simple">
+<li><p>Create a new Managed Image with the
+<a href="../../reference/python-sdk.html#rime_sdk.Client.create_managed_image"><code class="docutils literal notranslate"><span class="pre">Client.create_managed_image()</span></code></a>
+call in the RIME SDK. To use a base image, specify values for the
+<code class="docutils literal notranslate"><span class="pre">image_type</span></code> and <code class="docutils literal notranslate"><span class="pre">python_version</span></code> parameters.</p></li>
+<li><p>Use the image in your testing as shown in
+<a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs/run_tests_on_managed_images.html"><span class="std std-doc">Running Tests on Managed Docker Images</span></a>.</p></li>
+</ol>
 </section>
 <section id="deleting-a-managed-image">
 <h3>Deleting a Managed Image<a class="headerlink" href="#deleting-a-managed-image" title="Permalink to this heading"></a></h3>
@@ -234,12 +262,12 @@ Platform instance.</p>
 <li><p>Click <em>Remove image</em>.</p></li>
 </ol>
 <p>The Managed Image is removed from the Robust Intelligence instance.</p>
-<!-- Stubbed out, content moved to mimgoverview.md -->
 </section>
 </section>
 <section id="related-topics">
 <h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
 <p><a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">Python SDK Reference</span></a><br />
+<a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs/run_tests_on_managed_images.html"><span class="std std-doc">Running Tests on Managed Docker Images</span></a><br />
 <a class="reference internal" href="../security_and_compliance/user_account_roles.html"><span class="std std-doc">User Account Roles</span></a></p>
 </section>
 </section>
@@ -255,7 +283,7 @@ Platform instance.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+    <p>&#169; Copyright 2024, Robust Intelligence.</p>
   </div>
 
    

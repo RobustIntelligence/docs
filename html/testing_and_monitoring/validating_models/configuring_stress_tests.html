@@ -32,7 +32,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Monitor Models with Continuous Tests" href="../monitoring_models.html" />
+    <link rel="next" title="Scheduled Stress Testing" href="../monitoring_models.html" />
     <link rel="prev" title="Validate Models with Stress Tests" href="../validating_models.html" />
 <link href="../../_static/style.css" rel="stylesheet" type="text/css">
 
@@ -57,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.5.2-rc.0
+                2.6.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../documentation_home/get_started.html">Get Started</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<p class="caption" role="heading"><span class="caption-text">Testing</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../creating_projects.html">Creating Projects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
@@ -86,7 +86,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../monitoring_models.html">Scheduled Stress Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../configuring_test_runs.html">Configuring your Test Runs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../querying_results.html">Querying Test Run Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notifications_and_alerts.html">Notifications and Alerts</a></li>
@@ -180,8 +180,12 @@ attributes:</p>
 </li>
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">model_id</span></code></strong>: string, <em><strong>required</strong></em></p>
 <p>Configuration for the Model to use. For a reference on how to configure a
-model, see <a class="reference internal" href="../preparing_your_models_and_datasets/registering_model_datasets.html"><span class="std std-doc">Robust Intelligence Registries</span></a>. If you are not providing
-a model, this should be <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
+model, see <a class="reference internal" href="../preparing_your_models_and_datasets/registering_model_datasets.html"><span class="std std-doc">Registering Models</span></a>.</p>
+<ul class="simple">
+<li><p>For test runs that will test only data, you can provide a dummy
+model. To do this, specify the <code class="docutils literal notranslate"><span class="pre">model_config</span></code> as <code class="docutils literal notranslate"><span class="pre">None</span></code> when you
+register the model, and provide the resulting <code class="docutils literal notranslate"><span class="pre">model_id</span></code> here.</p></li>
+</ul>
 </li>
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">model_task</span></code></strong>: string, <em>default</em> = <code class="docutils literal notranslate"><span class="pre">&quot;MODEL_TASK_BINARY_CLASSIFICATION&quot;</span></code></p>
 <p>Specification of the model task. Currently accepted values are <code class="docutils literal notranslate"><span class="pre">&quot;MODEL_TASK_REGRESSION&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;MODEL_TASK_BINARY_CLASSIFICATION&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;MODEL_TASK_MULTICLASS_CLASSIFICATION&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;MODEL_TASK_NAMED_ENTITY_RECOGNITION&quot;</span></code>,<code class="docutils literal notranslate"><span class="pre">&quot;MODEL_TASK_RANKING&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;MODEL_TASK_OBJECT_DETECTION&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;MODEL_TASK_NATURAL_LANGUAGE_INFERENCE&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;MODEL_TASK_FILL_MASK&quot;</span></code>.</p>
@@ -224,7 +228,7 @@ Stress Test run uses default parameters.</p>
 <a class="reference internal" href="../configuring_test_runs/configuring_test_categories.html"><span class="std std-doc">Configuring Test Categories</span></a><br />
 <a class="reference internal" href="../configuring_test_runs/configuring_test_suite.html"><span class="std std-doc">Configuring the Test Suite</span></a><br />
 <a class="reference internal" href="stress_tests_from_sdk.html"><span class="std std-doc">Creating a New Stress Test</span></a><br />
-<a class="reference internal" href="../preparing_your_models_and_datasets/registering_model_datasets.html"><span class="std std-doc">Registering Models,  Datasets, and Predictions</span></a></p>
+<a class="reference internal" href="../preparing_your_models_and_datasets/registering_model_datasets.html"><span class="std std-doc">Registering Models, Datasets, and Predictions</span></a></p>
 </section>
 </section>
 
@@ -233,13 +237,13 @@ Stress Test run uses default parameters.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../validating_models.html" class="btn btn-neutral float-left" title="Validate Models with Stress Tests" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../monitoring_models.html" class="btn btn-neutral float-right" title="Monitor Models with Continuous Tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../monitoring_models.html" class="btn btn-neutral float-right" title="Scheduled Stress Testing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+    <p>&#169; Copyright 2024, Robust Intelligence.</p>
   </div>
 
    

@@ -2,17 +2,34 @@
 
 > **Managed images are not currently supported in a Cloud deployment. Please reach out to Robust Intelligence for support if this functionality is required for your deployment.**
 
-The Managed Image Registry enables containerization of the dependencies for a given model. Docker images that contain the dependencies for models can be swapped to match the requirements of the model being used.
+The Managed Image Registry enables containerization of the
+dependencies for a given model. Docker images that contain the
+dependencies for models can be swapped to match the requirements of
+the model being used. Once you've created a Managed Image, you can use
+it in model testing as shown in
+[Running Tests on Managed Docker Images](../../testing_and_monitoring/configuring_test_runs/run_tests_on_managed_images.md)
 
-Managed Images created in a workspace are not bound to that workspace and are available to all other workspaces on the same Robust Intelligence instance.
+Notes on using Managed Images:
+- Managed Images created in a workspace are not bound to that
+  workspace and are available to all other workspaces on the same
+  Robust Intelligence instance.
 
-Managed Images can be created by any user account. Managed Images can only be deleted by user accounts with the Organization Administrator [role](../security_and_compliance/user_account_roles.md).
+- Managed Images can be created by any user account. Managed Images
+  can only be deleted by user accounts with the Organization
+  Administrator
+  [role](../security_and_compliance/user_account_roles.md).
 
-Robust Intelligence provides a set of base images that are built to address a given set of use cases. Users can build a managed image from a base image.
+- Robust Intelligence provides a set of base images that are built to
+  address a given set of use cases. Users can build a managed image
+  from a base image.
 
-The Managed Image Registry operates on [AWS ECR](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html).
+- The Managed Image Registry operates on
+  [AWS ECR](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html).
 
-*NOTE*: as of version 0.13.0, the Managed Images feature is enabled by default in our Terraform module.
+- The Managed Images feature is enabled by default in our Terraform
+  module.
+
+## Enabling the Managed Images feature
 
 Configuration for this feature uses the `image_registry_config` of the `rime` Terraform module:
 
@@ -65,7 +82,12 @@ The [Robust Intelligence SDK](../../reference/python-sdk.rst) provides calls for
 
 ### Creating a Managed Image
 
-Create a new Managed Image with the <a href="../../reference/python-sdk.html#rime_sdk.Client.create_managed_image">`Client.create_managed_image()`</a> call in the RIME SDK. To use a base image, specify values for the `image_type` and `python_version` parameters.
+1. Create a new Managed Image with the
+   <a href="../../reference/python-sdk.html#rime_sdk.Client.create_managed_image">`Client.create_managed_image()`</a>
+   call in the RIME SDK. To use a base image, specify values for the
+   `image_type` and `python_version` parameters.
+2. Use the image in your testing as shown in
+   [Running Tests on Managed Docker Images](../../testing_and_monitoring/configuring_test_runs/run_tests_on_managed_images.md).
 
 ### Deleting a Managed Image
 
@@ -84,8 +106,8 @@ Create a new Managed Image with the <a href="../../reference/python-sdk.html#rim
 
 The Managed Image is removed from the Robust Intelligence instance.
 
-<!-- Stubbed out, content moved to mimgoverview.md -->
 
 ## Related Topics  
 [Python SDK Reference](../../reference/python-sdk.rst)  
+[Running Tests on Managed Docker Images](../../testing_and_monitoring/configuring_test_runs/run_tests_on_managed_images.md)  
 [User Account Roles](../security_and_compliance/user_account_roles.md)  

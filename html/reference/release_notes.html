@@ -57,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.5.2-rc.0
+                2.6.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -72,12 +72,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../documentation_home/robust_intelligence_intro.html">What is Robust Intelligence?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../documentation_home/get_started.html">Get Started</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<p class="caption" role="heading"><span class="caption-text">Testing</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/monitoring_models.html">Scheduled Stress Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/querying_results.html">Querying Test Run Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testing_and_monitoring/notifications_and_alerts.html">Notifications and Alerts</a></li>
@@ -104,29 +104,34 @@
 <li class="toctree-l1"><a class="reference internal" href="python-sdk.html">Python SDK Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting Home</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">2.5</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">2.6</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#scheduled-stress-tests">Scheduled stress tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#new-generative-test-harmful-sql-generation">New generative test: Harmful SQL Generation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2.5</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#better-setting-and-defaulting-of-memory-and-cpu-preferences-for-scheduled-continuous-tests">Better setting and defaulting of memory and CPU preferences for scheduled continuous tests</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">2.4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id3">2.4</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#incorrect-memory-and-cpu-settings-for-continuous-test-runs">Incorrect memory and CPU settings for continuous test runs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#aws-terraform-provider-upgraded-to-4-47-0-5-0-0-for-rime-eks-cluster-module">AWS Terraform Provider Upgraded to &gt;= 4.47.0, &lt; 5.0.0 for rime_eks_cluster Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#aws-load-balancer-controller-upgraded-to-2-6-1">AWS Load Balancer Controller Upgraded to 2.6.1</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">2.3</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id4">2.3</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#firewall-api-deprecated-and-replaced-with-new-continuoustest-class-and-methods">Firewall API deprecated and replaced with new <code class="docutils literal notranslate"><span class="pre">ContinuousTest</span></code> class and methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#file-scanning">File scanning</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ingress-nginx-changes">Ingress-Nginx Changes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#aws-load-balancer-controller-upgraded-to-2-5-4">AWS Load Balancer Controller Upgraded to 2.5.4</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">2.2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id5">2.2</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#cleaner-separation-of-continuous-test-results-from-monitored-event-results">Cleaner separation of continuous test results from monitored event results</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#firewall-api-deprecated">Firewall API deprecated</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">2.1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id6">2.1</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#category-field-deprecated">Category field deprecated</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#python-3-7-no-longer-supported">Python 3.7 no longer supported</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#delta-lake-connection-info-renamed">delta_lake connection_info renamed</a></li>
@@ -175,7 +180,26 @@ API, refer to the <a class="reference internal" href="api_changelog.html"><span 
 all Robust Intelligence components to take advantage of the changes
 listed here.</p>
 <section id="id1">
-<h2>2.5<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<h2>2.6<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<section id="scheduled-stress-tests">
+<h3>Scheduled stress tests<a class="headerlink" href="#scheduled-stress-tests" title="Permalink to this heading"></a></h3>
+<p>This release introduces the ability to run model stress tests on a daily, weekly
+or other schedule that you set. Scheduled stress tests are the recommended way
+to test models on a recurring basis, rather than scheduled continuous tests,
+which remain supported as of v2.6. See
+<a class="reference internal" href="../testing_and_monitoring/monitoring_models.html"><span class="std std-doc">Scheduled Stress Testing</span></a>.</p>
+</section>
+<section id="new-generative-test-harmful-sql-generation">
+<h3>New generative test: Harmful SQL Generation<a class="headerlink" href="#new-generative-test-harmful-sql-generation" title="Permalink to this heading"></a></h3>
+<p>This test applies a harmful SQL generation attack that uses natural
+language prompts that may cause the model to generate harmful SQL
+queries. It will fail if the model generates SQL queries that expose
+table schemas or create, alter, or drop tables. See the
+<a class="reference internal" href="model_tests_reference.html"><span class="std std-doc">Model tests reference</span></a>.</p>
+</section>
+</section>
+<section id="id2">
+<h2>2.5<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
 <section id="better-setting-and-defaulting-of-memory-and-cpu-preferences-for-scheduled-continuous-tests">
 <h3>Better setting and defaulting of memory and CPU preferences for scheduled continuous tests<a class="headerlink" href="#better-setting-and-defaulting-of-memory-and-cpu-preferences-for-scheduled-continuous-tests" title="Permalink to this heading"></a></h3>
 <p>In earlier versions of Robust Intelligence, scheduled continuous tests
@@ -195,8 +219,8 @@ in the project. See <a class="reference internal" href="python-sdk.html#rime_sdk
 in the SDK.</p>
 </section>
 </section>
-<section id="id2">
-<h2>2.4<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<section id="id3">
+<h2>2.4<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
 <section id="incorrect-memory-and-cpu-settings-for-continuous-test-runs">
 <h3>Incorrect memory and CPU settings for continuous test runs<a class="headerlink" href="#incorrect-memory-and-cpu-settings-for-continuous-test-runs" title="Permalink to this heading"></a></h3>
 <p>In version 2.4.4 and earlier of Robust Intelligence, continuous test
@@ -235,8 +259,8 @@ version 2.6.1:</p>
 </ul>
 </section>
 </section>
-<section id="id3">
-<h2>2.3<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<section id="id4">
+<h2>2.3<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
 <section id="firewall-api-deprecated-and-replaced-with-new-continuoustest-class-and-methods">
 <h3>Firewall API deprecated and replaced with new <code class="docutils literal notranslate"><span class="pre">ContinuousTest</span></code> class and methods<a class="headerlink" href="#firewall-api-deprecated-and-replaced-with-new-continuoustest-class-and-methods" title="Permalink to this heading"></a></h3>
 <p>In v2.3 of the SDK, the new <code class="docutils literal notranslate"><span class="pre">ContinuousTest</span></code> class replaces the
@@ -300,8 +324,8 @@ version 2.5.4:</p>
 </ul>
 </section>
 </section>
-<section id="id4">
-<h2>2.2<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<section id="id5">
+<h2>2.2<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
 <section id="cleaner-separation-of-continuous-test-results-from-monitored-event-results">
 <h3>Cleaner separation of continuous test results from monitored event results<a class="headerlink" href="#cleaner-separation-of-continuous-test-results-from-monitored-event-results" title="Permalink to this heading"></a></h3>
 <p>Version 2.2 simplifies the way Robust Intelligence shows Continuous
@@ -322,8 +346,8 @@ risk severity measures that appear in Continuous Test results.</p>
 <p>The v1/firewall API and the associated Python SDK methods have been deprecated. The endpoints and SDK methods will not be supported from Robust Intelligence v2.4 onwards.</p>
 </section>
 </section>
-<section id="id5">
-<h2>2.1<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<section id="id6">
+<h2>2.1<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h2>
 <section id="category-field-deprecated">
 <h3>Category field deprecated<a class="headerlink" href="#category-field-deprecated" title="Permalink to this heading"></a></h3>
 <p>The string <code class="docutils literal notranslate"><span class="pre">category</span></code> field is deprecated in favor of the <code class="docutils literal notranslate"><span class="pre">test_category</span></code> enum field. The string <code class="docutils literal notranslate"><span class="pre">category</span></code> field will be removed in v2.3.
@@ -454,8 +478,9 @@ supported. Projects based on Python 3.7 should be migrated to Python
 <h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
 <p><a class="reference internal" href="api_changelog.html"><span class="std std-doc">API Changelog</span></a><br />
 <a class="reference internal" href="../testing_and_monitoring/configuring_test_runs/configuring_runtime.html"><span class="std std-doc">Configuring Runtime Information</span></a><br />
-<a class="reference internal" href="../testing_and_monitoring/monitoring_models/ct_feedback_and_observability.html"><span class="std std-doc">Continuous Testing Feedback and Observability</span></a><br />
 <a class="reference internal" href="../testing_and_monitoring/monitoring_models/monitors/monitors.html"><span class="std std-doc">Model Monitors</span></a><br />
+<a class="reference internal" href="../testing_and_monitoring/monitoring_models.html"><span class="std std-doc">Scheduled Stress Testing</span></a><br />
+<a class="reference internal" href="../testing_and_monitoring/monitoring_models/ct_feedback_and_observability.html"><span class="std std-doc">Scheduled Testing Feedback and Observability</span></a><br />
 <a class="reference internal" href="../testing_and_monitoring/preparing_your_models_and_datasets/file_scanning.html"><span class="std std-doc">Securing Model Supply Chain Risk with File Scanning</span></a><br />
 <a class="reference internal" href="../deployment/upgrade.html"><span class="std std-doc">Upgrade</span></a></p>
 </section>
@@ -472,7 +497,7 @@ supported. Projects based on Python 3.7 should be migrated to Python
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+    <p>&#169; Copyright 2024, Robust Intelligence.</p>
   </div>
 
    

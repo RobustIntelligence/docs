@@ -61,10 +61,9 @@ any source.
 import boto3
 from datetime import datetime
 import pandas as pd
-​
+
 BUCKET_NAME = "rime-datasets"
-​
-​
+
 def get_news_data(
     start_time: datetime, # REQUIRED
     end_time: datetime, # REQUIRED
@@ -72,7 +71,7 @@ def get_news_data(
 ) -> pd.DataFrame:
     start_time = datetime.fromtimestamp(start_time)
     end_time = datetime.fromtimestamp(end_time)
-​
+
     master_df = pd.DataFrame()
     s3 = boto3.resource(
         's3',
@@ -259,4 +258,4 @@ incremental_config = {
 
 ## Related Topics  
 [Configuring Integrations](../configuring_integrations.md)  
-[Monitor Models with Continuous Tests](../../../../testing_and_monitoring/monitoring_models.rst)  
+[Scheduled Stress Testing](../../../../testing_and_monitoring/monitoring_models.rst)  

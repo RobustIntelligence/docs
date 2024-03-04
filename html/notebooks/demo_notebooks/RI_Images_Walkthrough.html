@@ -60,7 +60,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.5.2-rc.0
+                2.6.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -89,12 +89,12 @@
 </ul>
 </li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Testing and Monitoring</span></p>
+<p class="caption" role="heading"><span class="caption-text">Testing</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/creating_projects.html">Creating Projects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/preparing_your_models_and_datasets.html">Preparing Your Models and Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/validating_models.html">Validate Models with Stress Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Monitor Models with Continuous Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/monitoring_models.html">Scheduled Stress Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/configuring_test_runs.html">Configuring your Test Runs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/querying_results.html">Querying Test Run Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../testing_and_monitoring/notifications_and_alerts.html">Notifications and Alerts</a></li>
@@ -154,7 +154,7 @@
   <section id="RI-Image-Classification-Walkthrough">
 <h1><strong>RI Image Classification Walkthrough</strong><a class="headerlink" href="#RI-Image-Classification-Walkthrough" title="Permalink to this heading"></a></h1>
 <blockquote>
-<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/2.5-stable/notebooks/demo_notebooks/RI_Images_Walkthrough.ipynb">RI Image Classification Walkthrough in Google Colab</a>.</p>
+<div><p>▶️ <strong>Try this in Colab!</strong> Run the <a class="reference external" href="https://colab.research.google.com/github/RobustIntelligence/docs/blob/2.6-stable/notebooks/demo_notebooks/RI_Images_Walkthrough.ipynb">RI Image Classification Walkthrough in Google Colab</a>.</p>
 </div></blockquote>
 <p>You are a data scientist working for a wildlife research foundation. The data science team has been tasked with implementing an animal classifier and monitoring how that model performs over time. The performance of this model directly impacts the profits of the foundation. In order to ensure the data science team develops the best model and the performance of this model doesn’t degrade over time, the VP of Data Science purchases the RIME platform.</p>
 <p>In this Notebook Walkthrough, we will walkthrough 2 of RIME’s core products - <strong>AI Stress Testing</strong> and <strong>AI Continuous Testing</strong>.</p>
@@ -197,7 +197,7 @@
 <section id="Establish-the-RIME-Client">
 <h2><strong>Establish the RIME Client</strong><a class="headerlink" href="#Establish-the-RIME-Client" title="Permalink to this heading"></a></h2>
 <p>To get started, provide the API credentials and the base domain/address of the RIME Cluster. You can generate and copy an API token from the API Access Tokens Page under Workspace settings. For the domain/address of the RIME Cluster, contact your admin.</p>
-<p><img alt="Image of getting an API token" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/api_access_tokens.png" /><img alt="Image of creating an API token" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/create_token.png" /></p>
+<p><img alt="Image of getting an API token" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.6-stable/_static/images/demo_notebooks/common/api_access_tokens.png" /><img alt="Image of creating an API token" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.6-stable/_static/images/demo_notebooks/common/create_token.png" /></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -415,18 +415,18 @@
 <section id="Analyzing-the-Results">
 <h3>Analyzing the Results<a class="headerlink" href="#Analyzing-the-Results" title="Permalink to this heading"></a></h3>
 <p>Below you can see a snapshot of the results. Some of these tests such as the Subset Performance Tests analyze how your model performs on different groups properties related to your data, while others such as Transformations Tests analyze how your model reacts to augmented and perturbed images.</p>
-<img alt="Image of stress tests results for an image classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_images_walkthrough/image_st.png" />
+<img alt="Image of stress tests results for an image classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.6-stable/_static/images/demo_notebooks/ri_images_walkthrough/image_st.png" />
 <section id="Subset-Performance-Tests">
 <h4>Subset Performance Tests<a class="headerlink" href="#Subset-Performance-Tests" title="Permalink to this heading"></a></h4>
 <p>Here are the results of the Subset Performance tests. These tests can be thought as more detailed performance tests that identify subsets of underperformance in your images metadata. These tests help ensure that the model works equally well across different styles of images.</p>
-<img alt="Image of subset performance results for an image classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_images_walkthrough/image_subset.png" />
+<img alt="Image of subset performance results for an image classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.6-stable/_static/images/demo_notebooks/ri_images_walkthrough/image_subset.png" />
 <p>Below we are exploring the “Subset F1 score” test cases for the image metadata feature <code class="docutils literal notranslate"><span class="pre">ImageBrightness</span></code>. We can see that even though the model has an overall F1 score of 0.52, it performs poorly on images at the tails of the brightness distribution - images that are either very dim or very bright.</p>
-<img alt="Image of subset results for an image brightness feature of an image classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_images_walkthrough/image_brightness.png" />
+<img alt="Image of subset results for an image brightness feature of an image classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.6-stable/_static/images/demo_notebooks/ri_images_walkthrough/image_brightness.png" />
 </section>
 <section id="Transformation-Tests">
 <h4>Transformation Tests<a class="headerlink" href="#Transformation-Tests" title="Permalink to this heading"></a></h4>
 <p>The results of the transformation tests are below. These tests can be thought as ways to test your models response to augmented image data, which can often occur in reality. They help to make sure that your model is invariant to such changes in your data.</p>
-<img alt="Image of subset results for an image brightness feature of an image classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_images_walkthrough/image_perturb.png" />
+<img alt="Image of subset results for an image brightness feature of an image classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.6-stable/_static/images/demo_notebooks/ri_images_walkthrough/image_perturb.png" />
 </section>
 </section>
 <section id="Programatically-Querying-the-Results">
@@ -530,7 +530,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Robust Intelligence.</p>
+    <p>&#169; Copyright 2024, Robust Intelligence.</p>
   </div>
 
    
