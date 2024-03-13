@@ -82,7 +82,12 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../querying_results.html">Querying Test Run Results</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="test_run_progress.html">Viewing Test Run Progress</a></li>
 <li class="toctree-l2"><a class="reference internal" href="test_run_results.html">Fetching Test Run Results</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Fetching Test Run Logs</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Fetching Test Run Logs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#enable-the-log-archival-feature">Enable the log archival feature</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#view-logs">View logs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#related-topics">Related Topics</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../notifications_and_alerts.html">Notifications and Alerts</a></li>
@@ -140,17 +145,28 @@
              
   <section id="fetching-test-run-logs">
 <h1>Fetching Test Run Logs<a class="headerlink" href="#fetching-test-run-logs" title="Permalink to this heading"></a></h1>
-<p>Robust Intelligence can be deployed with a log archival solution that uses blob
-storage. If your instance was deployed with log archival configured, when a
-job fails, the control plane will push the job logs to the blob storage configured.
-The logs are then accessible through a presigned url which can be retrieved using
+<p>You can deploy the Robust Intelligence agent with a log archival solution
+that captures logs for failed jobs and archives them to blob storage.</p>
+<section id="enable-the-log-archival-feature">
+<h2>Enable the log archival feature<a class="headerlink" href="#enable-the-log-archival-feature" title="Permalink to this heading"></a></h2>
+<p>To set this up, follow the “Log Archival Setup” steps in the
+<a class="reference internal" href="../../deployment/installation.html"><span class="std std-doc">Installation instructions</span></a>.</p>
+</section>
+<section id="view-logs">
+<h2>View logs<a class="headerlink" href="#view-logs" title="Permalink to this heading"></a></h2>
+<p>Logs are accessible through a pre-signed URL that you can retrieve using
 the Python SDK. These logs are stored in blob storage for 7 days by default, although the
-presigned url may expire before that depending on the configuration of the blob storage.</p>
-<p>In order to view your logs, you can use the following commands on a completed job:</p>
+pre-signed URL may expire before that, depending on the configuration of the blob storage.</p>
+<p>To view your logs, run the following commands on a completed job:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">job</span><span class="o">.</span><span class="n">get_status</span><span class="p">()</span>
     <span class="n">job</span><span class="o">.</span><span class="n">get_job_debug_logs_link</span><span class="p">()</span>
 </pre></div>
 </div>
+</section>
+<section id="related-topics">
+<h2>Related Topics<a class="headerlink" href="#related-topics" title="Permalink to this heading"></a></h2>
+<p><a class="reference internal" href="../../deployment/installation.html"><span class="std std-doc">Installation</span></a></p>
+</section>
 </section>
 
 

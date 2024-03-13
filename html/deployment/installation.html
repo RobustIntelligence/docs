@@ -109,6 +109,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#id1">Helm Installation</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#log-archival-setup-recommended">Log Archival Setup (recommended)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#log-archival-helm">Helm Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#terraform-installation">Terraform Installation</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="upgrade.html">Upgrade</a></li>
@@ -264,6 +269,155 @@ helm upgrade -i rime-extras robustintelligence/rime-extras \
 </div>
 </li>
 </ol>
+</section>
+</section>
+<section id="log-archival-setup-recommended">
+<h2>Log Archival Setup (recommended)<a class="headerlink" href="#log-archival-setup-recommended" title="Permalink to this heading"></a></h2>
+<p>For convenient debugging, you can configure the agent to capture logs for failed jobs. Once enabled, the log archival feature automatically uploads failed job logs to your AWS S3 bucket, which can then be consumed via the Python SDK or REST APIs (see <a class="reference internal" href="../testing_and_monitoring/querying_results/fetching_test_run_logs.html"><span class="doc">Fetching Test Run Logs</span></a> for more details).</p>
+<p>While log archival has been designed for AWS, it can also be
+configured to work with Azure or GCP storage. For help setting up with
+Azure or GCP, contact the Robust Intelligence solutions team.</p>
+<p>To set up log archival, see the section below that corresponds to your
+deployment approach:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#log-archival-helm"><span class="std std-ref">Helm Installation</span></a></p></li>
+<li><p><a class="reference internal" href="#log-archival-terraform"><span class="std std-ref">Terraform Installation</span></a></p></li>
+</ul>
+<section id="log-archival-helm">
+<span id="id2"></span><h3>Helm Installation<a class="headerlink" href="#log-archival-helm" title="Permalink to this heading"></a></h3>
+<p>If you manage your Robust Intelligence agent installation via Helm, follow the instructions below.</p>
+<ol class="arabic">
+<li><dl class="simple">
+<dt>Collect the following information:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>The IAM Role for the agent.</dt><dd><ul>
+<li><p>This can be found under <code class="docutils literal notranslate"><span class="pre">rimeAgent.operator.modelTestJob.serviceAccount.annotations.eks.amazonaws.com/role-arn</span></code>.</p></li>
+<li><p>Create the role now if it does not exist. See <a class="reference internal" href="requirements/data_access_permissions.html"><span class="doc">Data Access Permissions</span></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>The name of the Service Account used for the operator controller manager (default is <code class="docutils literal notranslate"><span class="pre">rime-agent-operator</span></code>).</dt><dd><ul>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">-n</span> <span class="pre">&lt;namespace&gt;</span> <span class="pre">get</span> <span class="pre">pods</span></code> and find the pod name for the operator. The name should be similar to <code class="docutils literal notranslate"><span class="pre">rime-agent-operator-controller-manager</span></code>.</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">-n</span> <span class="pre">&lt;namespace&gt;</span> <span class="pre">describe</span> <span class="pre">pod</span> <span class="pre">&lt;pod_name&gt;</span> <span class="pre">|</span> <span class="pre">grep</span> <span class="pre">'Service</span> <span class="pre">Account:'</span></code> to locate the Service Account name.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>The ARN of the S3 bucket where you want logs to be uploaded. <strong>Note: The S3 bucket must be in the same region as the EKS cluster.</strong></dt><dd><ul>
+<li><p>We recommend using the default S3 bucket made during the initial installation.</p></li>
+<li><p>Logs will be stored in a <cite>/logs</cite> folder.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Expand the trust relationship of the agent’s IAM Role to include the Service Account of the operator controller manager.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">TRUST</span> <span class="n">RELATIONSHIP</span> <span class="n">OF</span> <span class="n">AGENT</span> <span class="n">IAM</span> <span class="n">ROLE</span>
+<span class="p">{</span>
+    <span class="s2">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Statement&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="o">...</span>
+            <span class="s2">&quot;Condition&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;StringEquals&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;oidc.eks.region-code.amazonaws.com/id/EXAMPLED539D4633E53DE1B71EXAMPLE:sub&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="o">...</span>
+                        <span class="s2">&quot;system:serviceaccount:$AGENT_NAMESPACE:$AGENT_OPERATOR_SERVICE_ACCOUNT&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>Create a new IAM Policy with permissions that allow for management of log files.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">PERMISSION</span> <span class="n">POLICY</span> <span class="n">FOR</span> <span class="n">LOG</span> <span class="n">ARCHIVAL</span>
+<span class="p">{</span>
+    <span class="s2">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Statement&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;LogArchivalAccessBucket&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;s3:ListBucket&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;&lt;BUCKET_ARN&gt;&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;LogArchivalAccess&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;s3:GetObject&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:DeleteObject&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:PutObject&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;&lt;BUCKET_ARN&gt;/logs/*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>Attach this policy to the agent IAM Role.</p></li>
+<li><p>Go to the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> for your rime-agent deployment and set
+the following values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rimeAgent</span><span class="p">:</span>
+  <span class="n">operator</span><span class="p">:</span>
+    <span class="n">serviceAccount</span><span class="p">:</span>
+      <span class="n">annotations</span><span class="p">:</span>
+        <span class="n">eks</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">role</span><span class="o">-</span><span class="n">arn</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">ROLE_ARN</span><span class="o">&gt;</span>
+    <span class="n">logArchival</span><span class="p">:</span>
+      <span class="n">enabled</span><span class="p">:</span> <span class="n">true</span>
+      <span class="n">storageBucketName</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">S3_BUCKET_NAME</span><span class="o">&gt;</span>
+      <span class="n">endpoint</span><span class="p">:</span> <span class="s2">&quot;s3.amazonaws.com&quot;</span>
+      <span class="nb">type</span><span class="p">:</span> <span class="s2">&quot;s3&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">helm</span> <span class="pre">install</span></code> or <code class="docutils literal notranslate"><span class="pre">helm</span> <span class="pre">upgrade</span></code>. You may also need to
+manually restart the operator to refresh its AWS credentials.</p></li>
+</ol>
+<p>Your log archival setup is complete.
+See <a class="reference internal" href="../testing_and_monitoring/querying_results/fetching_test_run_logs.html"><span class="doc">Fetching Test Run Logs</span></a>
+to learn how to retrieve logs.</p>
+<blockquote>
+<div></div></blockquote>
+</section>
+<section id="terraform-installation">
+<span id="log-archival-terraform"></span><h3>Terraform Installation<a class="headerlink" href="#terraform-installation" title="Permalink to this heading"></a></h3>
+<p>If you manage your Robust Intelligence agent installation via Terraform, follow the instructions below.</p>
+<ol class="arabic">
+<li><p>Set the following variables on the <code class="docutils literal notranslate"><span class="pre">rime_agent</span></code> module:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="s2">&quot;rime_agent_release&quot;</span> <span class="p">{</span>
+  <span class="o">...</span>
+  <span class="n">log_archival_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">enable</span> <span class="o">=</span> <span class="n">true</span>
+    <span class="n">bucket_name</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">S3_BUCKET_NAME</span><span class="o">&gt;</span>
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;s3.amazonaws.com&quot;</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;s3&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">apply</span></code> to create the configuration described in
+the Helm section above. This will also install or upgrade the release.</p></li>
+</ol>
+<p>Your log archival setup is complete.
+See <a class="reference internal" href="../testing_and_monitoring/querying_results/fetching_test_run_logs.html"><span class="doc">Fetching Test Run Logs</span></a>
+to learn how to retrieve logs.</p>
 </section>
 </section>
 </section>
