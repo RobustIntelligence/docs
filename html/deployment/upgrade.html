@@ -57,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.6.2
+                2.8.0-rc.6
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -152,35 +152,40 @@ For paths not listed below, follow the general upgrade steps.</p>
 <li><p>Point your local <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> to your K8s cluster and namespace.</p></li>
 <li><p>If available, retrieve the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file for your Robust
 Intelligence Model Testing Agent.</p>
-<ol class="loweralpha">
-<li><p>Alternatively, you can save the current Helm values to a file like so:</p>
+<p>Alternatively, you can save the current Helm values to a file like so:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">get</span> <span class="n">values</span> <span class="n">rime</span><span class="o">-</span><span class="n">agent</span> <span class="o">|</span> <span class="n">awk</span> <span class="s1">&#39;!/USER-SUPPLIED VALUES/&#39;</span> <span class="o">&gt;</span> <span class="n">values</span><span class="o">.</span><span class="n">yaml</span>
 </pre></div>
 </div>
 </li>
-</ol>
-</li>
 <li><p>Edit the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file by changing the image tag in the
 fields <code class="docutils literal notranslate"><span class="pre">rimeAgent.images.agentImage.name</span></code> and
-<code class="docutils literal notranslate"><span class="pre">rimeAgent.images.modelTestJobImage.name</span></code> to match the new Robust
-Intelligence version.</p>
-<ol class="loweralpha">
-<li><p>The version number can be found by navigating to the <strong>Organization Settings</strong> page and clicking on the <strong>Manage Agent Setup</strong> tab.</p>
-<p>Use this version number (without the <code class="docutils literal notranslate"><span class="pre">v</span></code> prefix) for the image updates.</p>
+<code class="docutils literal notranslate"><span class="pre">rimeAgent.images.modelTestJobImage.name</span></code> to match the Robust
+Intelligence version you want to upgrade to (for example, <code class="docutils literal notranslate"><span class="pre">2.7.6</span></code>).</p>
+<p>You can find your current version number in the <strong>Organization
+Settings</strong> page by clicking on the <strong>Manage Agent Setup</strong> tab. Your
+customer success contact can provide the latest patch release
+number for your desired product version.</p>
+<p>Specify version numbers without a <code class="docutils literal notranslate"><span class="pre">v</span></code> prefix. Replace the example
+value used here (<code class="docutils literal notranslate"><span class="pre">2.7.6</span></code>) with your desired version.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># values.yaml</span>
-<span class="c1"># (from &quot;Manage Agent Setup&quot; page in UI) &quot;Control Plane: v2.2.1&quot;</span>
+<span class="c1"># (from &quot;Manage Agent Setup&quot; page in UI) &quot;Control Plane: v2.7.6&quot;</span>
 <span class="n">rimeAgent</span><span class="p">:</span>
    <span class="n">images</span><span class="p">:</span>
       <span class="n">agentImage</span><span class="p">:</span>
-         <span class="c1"># name: &quot;robustintelligencehq/rime-agent:2.1.8&quot; # OLD</span>
-         <span class="n">name</span><span class="p">:</span> <span class="s2">&quot;robustintelligencehq/rime-agent:2.2.1&quot;</span> <span class="c1"># NEW</span>
+         <span class="c1"># name: &quot;robustintelligencehq/rime-agent:2.6.0&quot; # OLD</span>
+         <span class="n">name</span><span class="p">:</span> <span class="s2">&quot;robustintelligencehq/rime-agent:2.7.6&quot;</span> <span class="c1"># NEW</span>
       <span class="n">modelTestJobImage</span><span class="p">:</span>
-         <span class="c1"># name: &quot;robustintelligencehq/rime-testing-engine-dev:2.1.8&quot; # OLD</span>
-         <span class="n">name</span><span class="p">:</span> <span class="s2">&quot;robustintelligencehq/rime-testing-engine-dev:2.2.1&quot;</span> <span class="c1"># NEW</span>
+         <span class="c1"># name: &quot;robustintelligencehq/rime-testing-engine-dev:2.6.0&quot; # OLD</span>
+         <span class="n">name</span><span class="p">:</span> <span class="s2">&quot;robustintelligencehq/rime-testing-engine-dev:2.7.6&quot;</span> <span class="c1"># NEW</span>
 </pre></div>
 </div>
 </li>
-</ol>
+<li><p>Upgrade the CRD resources. Replace the example value used here
+(<code class="docutils literal notranslate"><span class="pre">2.7.6</span></code>) with your desired version.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">raw</span><span class="o">.</span><span class="n">githubusercontent</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">RobustIntelligence</span><span class="o">/</span><span class="n">helm</span><span class="o">/</span><span class="mf">2.7.6</span><span class="o">/</span><span class="n">rime</span><span class="o">-</span><span class="n">agent</span><span class="o">/</span><span class="n">crds</span><span class="o">/</span><span class="n">rime</span><span class="o">-</span><span class="n">agent</span><span class="o">.</span><span class="n">crds</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">raw</span><span class="o">.</span><span class="n">githubusercontent</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">RobustIntelligence</span><span class="o">/</span><span class="n">helm</span><span class="o">/</span><span class="mf">2.7.6</span><span class="o">/</span><span class="n">rime</span><span class="o">-</span><span class="n">agent</span><span class="o">/</span><span class="n">crds</span><span class="o">/</span><span class="n">rime</span><span class="o">-</span><span class="n">agent</span><span class="o">-</span><span class="n">deployment</span><span class="o">.</span><span class="n">crds</span><span class="o">.</span><span class="n">yaml</span>
+</pre></div>
+</div>
 </li>
 <li><p>Install the updated Helm release.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>helm repo update
@@ -227,7 +232,7 @@ If permission related inputs are needed, you can find the same inputs you used i
 </pre></div>
 </div>
 </li>
-<li><p>Follow steps 2 and 3 of the general upgrade process.</p></li>
+<li><p>Follow steps 2 through 4 of the general upgrade process.</p></li>
 <li><p>Install the updated Helm release.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>helm repo update
 helm install rime-agent robustintelligence/rime-agent --version $RI_VERSION --values ./values.yaml
@@ -253,7 +258,7 @@ helm install rime-agent robustintelligence/rime-agent --version $RI_VERSION --va
 </pre></div>
 </div>
 </li>
-<li><p>Follow steps 2 and 3 of the general upgrade process.</p></li>
+<li><p>Follow steps 2 through 4 of the general upgrade process.</p></li>
 <li><p>Install the updated Helm release.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>helm repo update
 helm install rime-agent robustintelligence/rime-agent --version $RI_VERSION --values ./values.yaml
@@ -280,7 +285,7 @@ helm install rime-agent robustintelligence/rime-agent --version $RI_VERSION --va
 </pre></div>
 </div>
 </li>
-<li><p>Navigate to <strong>Organization Settings</strong> page and click on the <strong>Manage Agent Setup</strong> tab to confirm that the agent is posting an “Active” status.</p></li>
+<li><p>Navigate to <strong>Organization Settings</strong> page and click on the <strong>Manage Agent Setup</strong> tab to confirm that the agent shows an “Active” status.</p></li>
 </ol>
 </section>
 </section>

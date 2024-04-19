@@ -1,0 +1,394 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "dd9c562c",
+   "metadata": {},
+   "source": [
+    "# **RI HuggingFace File Scanning Demo**\n",
+    "\n",
+    "> ▶️ **Try this in Colab!** Run the [RI Adversarial File Scanning Walkthrough in Google Colab](https://colab.research.google.com/github/RobustIntelligence/docs/blob/main/notebooks/demo_notebooks/RI_Adversarial_File_Scanning_Walkthrough.ipynb). \n",
+    "\n",
+    "You are the AI Risk Officer at a Consumer Social Company. The NLP team has been tasked with implementing a text classification model to predict the top-level \"sentiment\" of posts on the app. These predictions will later be consumed by multiple models throughout the company, such as recommendation, lead prediction, and the core advertisement models. You want to verify your models are sufficiently robust to adversaries seeking to exploit model vulnerabilities and boost content that your user base does not actually like.\n",
+    "\n",
+    "In this Notebook Walkthrough, we will review our core product of **AI Stress Testing** of NLP models in an *adversarial setting*. RIME AI Stress Testing allows you to test any text classification model on any dataset. In this way, you will be able to quantify your model's vulnerability to attacks and noisy data.\n",
+    "\n",
+    "Your team's NLP models are fine-tuned from state-of-the-art transformer models found on [Hugging Face's Model Hub 🤗](https://huggingface.co/models). In particular, you have chosen to fine-tune a [DistilBERT](https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english) on data similar to the [Stanford Sentiment Treebank](https://huggingface.co/datasets/sst2) dataset for a lightweight yet performant model. \n",
+    "\n",
+    "For more information on how to connect with a [Hugging Face Model](https://readthedocs.com/cas/login?service=https%3A%2F%2Frobust-intelligence-inc-rime.readthedocs-hosted.com%2Fen%2Flatest%2Ffor_data_scientists%2Fhow_to_guides%2Fintegrations%2Fhuggingface.html%3Fnext%3Dhttps%253A%252F%252Frobust-intelligence-inc-rime.readthedocs-hosted.com%252Fen%252Flatest%252Ffor_data_scientists%252Fhow_to_guides%252Fintegrations%252Fhuggingface.html%253Fhighlight%253Dhuggingface#huggingface-classification-model) or \n",
+    "[Hugging Face Dataset](https://readthedocs.com/cas/login?service=https%3A%2F%2Frobust-intelligence-inc-rime.readthedocs-hosted.com%2Fen%2Flatest%2Ffor_data_scientists%2Freference%2Fconfiguration%2Fnlp%2Fdata_source.html%3Fnext%3Dhttps%253A%252F%252Frobust-intelligence-inc-rime.readthedocs-hosted.com%252Fen%252Flatest%252Ffor_data_scientists%252Freference%252Fconfiguration%252Fnlp%252Fdata_source.html%253Fhighlight%253Dhuggingface#huggingface-dataset), check out the linked documentation.\n",
+    "\n",
+    "To begin, please specify your RIME cluster's URL and personal access token."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "dae500a0",
+   "metadata": {},
+   "source": [
+    "## 1. **Install Dependencies, Import Libraries, and Download Data**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c52643c7",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Installing the dependencies\n",
+    "%pip install rime-sdk\n",
+    "%pip install python-dotenv"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "99890569",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "from pathlib import Path\n",
+    "from datetime import datetime\n",
+    "from rime_sdk import Client\n",
+    "import os\n",
+    "from dotenv import load_dotenv, find_dotenv"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "bba360d4",
+   "metadata": {},
+   "source": [
+    "## 2. **Establish the RI Client**\n",
+    "\n",
+    "To get started, provide the API credentials and the base domain/address of the RIME service. You can generate and copy an API token from the API Access Tokens Page under Workspace settings. For the domian/address of the RIME service, contact your admin. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "87ac6bbb",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Load environment variables\n",
+    "load_dotenv(find_dotenv())\n",
+    "API_TOKEN = os.environ.get('API_TOKEN')\n",
+    "CLUSTER_URL = os.environ.get('CLUSTER_URL')\n",
+    "AGENT_ID = os.environ.get('AGENT_ID')\n",
+    "WORKSPACE_ID = os.environ.get('WORKSPACE_ID')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "34f50983",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "client = Client(CLUSTER_URL, API_TOKEN)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "81130477-0c7d-4dd0-88cf-3d39f96d8079",
+   "metadata": {},
+   "source": [
+    "## 3. **Create a New Project**\n",
+    "\n",
+    "Below, create a project to store this and other future adversarial robustness stress test run results."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "72059347",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "description = (\n",
+    "    \"Evaluate the robustness of text classification models\"\n",
+    "    \" against adversarial attacks. Demonstration uses the\"\n",
+    "    \" DAIR-Emotion dataset (https://huggingface.co/datasets/dair-ai/emotion)\"\n",
+    "    \" and a fine-tuned version of the DistilBERT model\"\n",
+    "    \" (https://huggingface.co/esuriddick/distilbert-base-uncased-finetuned-emotion).\"\n",
+    ")\n",
+    "project = client.create_project(\n",
+    "    name=\"HuggingFace File Scanning\", \n",
+    "    description=description,\n",
+    "    model_task=\"MODEL_TASK_MULTICLASS_CLASSIFICATION\"\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "74a10ae5-cf42-4c0e-b8fa-741488a9bb86",
+   "metadata": {},
+   "source": [
+    "## 4. **Uploading the Model and Datasets**\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "32a19e9e",
+   "metadata": {},
+   "source": [
+    "##### 4.1. Registering two HuggingFace models"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "2f1994b6-d07c-4f7b-bfa7-0e06585f3f9f",
+   "metadata": {
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "#Benign model\n",
+    "distilbert_model_id = project.register_model(\n",
+    "    name = f\"distilbert_{datetime.now()}\",\n",
+    "    model_config={\n",
+    "        \"hugging_face\": {\n",
+    "            \"model_uri\": \"esuriddick/distilbert-base-uncased-finetuned-emotion\"\n",
+    "        }\n",
+    "    },\n",
+    "    agent_id=AGENT_ID\n",
+    ")\n",
+    "\n",
+    "# Malicious model\n",
+    "malicious_bert_model_id = project.register_model(\n",
+    "    name = f\"bert_{datetime.now()}\",\n",
+    "    model_config={\n",
+    "        \"hugging_face\": {\n",
+    "            \"model_uri\": \"drhyrum/bert-tiny-torch-picklebomb\"\n",
+    "        }\n",
+    "    },\n",
+    "    agent_id=AGENT_ID\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ee3a1b9f",
+   "metadata": {},
+   "source": [
+    "##### 4.2. Uploading Reference and Evaluation datasets from HuggingFace"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "d48879d3-f154-40ff-8259-f41589ae5579",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "ref_dataset_id = project.register_dataset(\n",
+    "    name = f'train_emotion_dataset_{datetime.now()}',\n",
+    "    data_config = {\n",
+    "        \"connection_info\": {\n",
+    "            \"hugging_face\": {\n",
+    "                \"dataset_uri\": \"dair-ai/emotion\",\n",
+    "                \"split_name\": \"train\",\n",
+    "            },\n",
+    "        },\n",
+    "        \"data_params\": {\n",
+    "            \"label_col\": \"label\",\n",
+    "            \"text_features\": [\"text\"],\n",
+    "            \"class_names\": [\"sadness\", \"joy\",\"love\",\"anger\",\"fear\",\"surprise\"],\n",
+    "            \"sample\": True,\n",
+    "            \"nrows\": 100\n",
+    "        },\n",
+    "    }\n",
+    ")\n",
+    "\n",
+    "eval_dataset_id = project.register_dataset(\n",
+    "    name = f'validation_emotion_dataset_{datetime.now()}',\n",
+    "    data_config = {\n",
+    "        \"connection_info\": {\n",
+    "            \"hugging_face\": {\n",
+    "                \"dataset_uri\": \"dair-ai/emotion\",\n",
+    "                \"split_name\": \"validation\",\n",
+    "            },\n",
+    "        },\n",
+    "        \"data_params\": {\n",
+    "            \"label_col\": \"label\",\n",
+    "            \"text_features\": [\"text\"],\n",
+    "            \"class_names\": [\"sadness\", \"joy\",\"love\",\"anger\",\"fear\",\"surprise\"],\n",
+    "            \"sample\": True,\n",
+    "            \"nrows\": 100\n",
+    "        },\n",
+    "    }\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5b114e9c",
+   "metadata": {},
+   "source": [
+    "## 5. **Running a File Scan on the Registered Models**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "221fc7e0",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Benign model\n",
+    "file_scan_job_distilbert = client.start_file_scan(\n",
+    "    model_id = distilbert_model_id, \n",
+    "    project_id = project.project_id, \n",
+    "    agent_id = AGENT_ID\n",
+    ")\n",
+    "\n",
+    "#Malicious model\n",
+    "file_scan_job_malicious_bert = client.start_file_scan(\n",
+    "    model_id = malicious_bert_model_id, \n",
+    "    project_id = project.project_id, \n",
+    "    agent_id = AGENT_ID\n",
+    ")\n",
+    "\n",
+    "file_scan_job_malicious_bert.get_status(wait_until_finish=True), file_scan_job_distilbert.get_status(wait_until_finish=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d587978b",
+   "metadata": {},
+   "source": [
+    "## 6. **File Scan Results**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "1313474f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "file_scan_result_malicious_bert = client.get_file_scan_result(file_scan_id = file_scan_job_malicious_bert.job_id)\n",
+    "file_scan_result_distilbert = client.get_file_scan_result(file_scan_id = file_scan_job_distilbert.job_id)\n",
+    "\n",
+    "print(f\"BERT (malicious) file scanning result: {file_scan_result_malicious_bert['severity']}\")\n",
+    "print(f\"DistilBERT file scanning result: {file_scan_result_distilbert['severity']}\") "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d3658ba7-783e-4062-a377-adbc906110b5",
+   "metadata": {
+    "tags": []
+   },
+   "source": [
+    "## 7. **Running a Stress Test**\n",
+    "This test is on the benign distilbert model"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "84ec5f73-b803-4a55-8150-ea57b2096669",
+   "metadata": {
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "stress_test_config = {\n",
+    "    \"run_name\": \"DistilBERT Adversarial Robustness\",\n",
+    "    \"data_info\": {\n",
+    "        \"ref_dataset_id\": ref_dataset_id,\n",
+    "        \"eval_dataset_id\": eval_dataset_id,\n",
+    "    },\n",
+    "    \"model_id\": distilbert_model_id,\n",
+    "    \"categories\": [\n",
+    "        \"TEST_CATEGORY_TYPE_ABNORMAL_INPUTS\",\n",
+    "        \"TEST_CATEGORY_TYPE_ADVERSARIAL\",\n",
+    "        \"TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS\",\n",
+    "        \"TEST_CATEGORY_TYPE_DATA_CLEANLINESS\",\n",
+    "        \"TEST_CATEGORY_TYPE_DRIFT\",\n",
+    "        \"TEST_CATEGORY_TYPE_DATA_POISONING_DETECTION\",\n",
+    "        \"TEST_CATEGORY_TYPE_MODEL_PERFORMANCE\",\n",
+    "        \"TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE\",\n",
+    "        \"TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE_DEGRADATION\",\n",
+    "        \"TEST_CATEGORY_TYPE_TRANSFORMATIONS\",\n",
+    "    ],\n",
+    "    \"run_time_info\": {\n",
+    "        \"resource_request\": {\n",
+    "            \"ram_request_megabytes\": \"28000\",\n",
+    "        },\n",
+    "        \"random_seed\" : \"0\"\n",
+    "    }\n",
+    "}\n",
+    "stress_job = client.start_stress_test(\n",
+    "    stress_test_config, project.project_id, agent_id=AGENT_ID\n",
+    ")\n",
+    "stress_job.get_status(verbose=True, wait_until_finish=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0bf6f351-719c-4f35-bddd-60bcb4eee8fd",
+   "metadata": {},
+   "source": [
+    "## 8. **Analyzing and Querying Results**\n",
+    "\n",
+    "Now that the test run is complete, we can check out the results in the RIME web interface."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9f9acd72-b9c6-48c5-a30f-2fdc9cba89b7",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "test_run = stress_job.get_test_run()\n",
+    "results_df = test_run.get_result_df()\n",
+    "results_df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "06556ca3",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Get a link to the stress test\n",
+    "print(\"https://\"+ test_run.get_link())"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.13"
+  },
+  "vscode": {
+   "interpreter": {
+    "hash": "ca72df3b9ba417119a386bc7f6836e81c78349bc450cdbaf3afafb90bdf8ed1f"
+   }
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

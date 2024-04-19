@@ -39,8 +39,7 @@ fi
 
 # Create a virtual environment for the demo dependencies
 python3 -m pip install --upgrade pip
-python3 -m pip install virtualenv
-python3 -m virtualenv -p python3 $AIRFLOW_SCRIPT_DIR/.venv-airflow
+python3 -m venv -p python3 $AIRFLOW_SCRIPT_DIR/.venv-airflow
 # Activate the virtual environment
 source $AIRFLOW_SCRIPT_DIR/.venv-airflow/bin/activate
 

@@ -139,3 +139,145 @@ Helm Installation
 
       helm upgrade -i rime-extras robustintelligence/rime-extras \
          --values $PATH_TO_VALUES_FILE
+
+Log Archival Setup (recommended)
+--------------------------------
+
+For convenient debugging, you can configure the agent to capture logs for failed jobs. Once enabled, the log archival feature automatically uploads failed job logs to your AWS S3 bucket, which can then be consumed via the Python SDK or REST APIs (see :doc:`../testing_and_monitoring/querying_results/fetching_test_run_logs` for more details).
+
+While log archival has been designed for AWS, it can also be
+configured to work with Azure or GCP storage. For help setting up with
+Azure or GCP, contact the Robust Intelligence solutions team.
+
+To set up log archival, see the section below that corresponds to your
+deployment approach:
+
+- :ref:`log-archival-helm`
+- :ref:`log-archival-terraform`
+
+
+.. _log-archival-helm:
+
+Helm Installation
+```````````````````````````````
+
+If you manage your Robust Intelligence agent installation via Helm, follow the instructions below.
+
+1. Collect the following information:
+    - The IAM Role for the agent.
+        - This can be found under ``rimeAgent.operator.modelTestJob.serviceAccount.annotations.eks.amazonaws.com/role-arn``.
+        - Create the role now if it does not exist. See :doc:`requirements/data_access_permissions`.
+    - The name of the Service Account used for the operator controller manager (default is ``rime-agent-operator``).
+        - Run ``kubectl -n <namespace> get pods`` and find the pod name for the operator. The name should be similar to ``rime-agent-operator-controller-manager``.
+        - Run ``kubectl -n <namespace> describe pod <pod_name> | grep 'Service Account:'`` to locate the Service Account name.
+    - The ARN of the S3 bucket where you want logs to be uploaded. **Note: The S3 bucket must be in the same region as the EKS cluster.**
+        - We recommend using the default S3 bucket made during the initial installation.
+        - Logs will be stored in a `/logs` folder.
+
+2. Expand the trust relationship of the agent's IAM Role to include the Service Account of the operator controller manager.
+
+   .. code-block::
+
+      // TRUST RELATIONSHIP OF AGENT IAM ROLE
+      {
+          "Version": "2012-10-17",
+          "Statement": [
+              {
+                  ...
+                  "Condition": {
+                      "StringEquals": {
+                          "oidc.eks.region-code.amazonaws.com/id/EXAMPLED539D4633E53DE1B71EXAMPLE:sub": [
+                              ...
+                              "system:serviceaccount:$AGENT_NAMESPACE:$AGENT_OPERATOR_SERVICE_ACCOUNT"
+                          ]
+                      }
+                  }
+              }
+          ]
+      }
+
+3. Create a new IAM Policy with permissions that allow for management of log files.
+
+   .. code-block::
+
+      // PERMISSION POLICY FOR LOG ARCHIVAL
+      {
+          "Version": "2012-10-17",
+          "Statement": [
+              {
+                  "Sid": "LogArchivalAccessBucket",
+                  "Effect": "Allow",
+                  "Action": [
+                      "s3:ListBucket"
+                  ],
+                  "Resource": [
+                      "<BUCKET_ARN>"
+                  ]
+              },
+              {
+                  "Sid": "LogArchivalAccess",
+                  "Effect": "Allow",
+                  "Action": [
+                      "s3:GetObject",
+                      "s3:DeleteObject",
+                      "s3:PutObject"
+                  ],
+                  "Resource": [
+                      "<BUCKET_ARN>/logs/*"
+                  ]
+              }
+          ]
+      }
+
+4. Attach this policy to the agent IAM Role.
+
+5. Go to the ``values.yaml`` for your rime-agent deployment and set
+   the following values:
+
+   .. code-block::
+
+      rimeAgent:
+        operator:
+          serviceAccount:
+            annotations:
+              eks.amazonaws.com/role-arn: <ROLE_ARN>
+          logArchival:
+            enabled: true
+            storageBucketName: <S3_BUCKET_NAME>
+            endpoint: "s3.amazonaws.com"
+            type: "s3"
+
+6. Run ``helm install`` or ``helm upgrade``. You may also need to
+   manually restart the operator to refresh its AWS credentials.
+
+Your log archival setup is complete.
+See :doc:`../testing_and_monitoring/querying_results/fetching_test_run_logs`
+to learn how to retrieve logs.
+
+   .. _log-archival-terraform:
+
+Terraform Installation
+```````````````````````````````
+
+If you manage your Robust Intelligence agent installation via Terraform, follow the instructions below.
+
+1. Set the following variables on the ``rime_agent`` module:
+
+   .. code-block::
+
+      module "rime_agent_release" {
+        ...
+        log_archival_config = {
+          enable = true
+          bucket_name = <S3_BUCKET_NAME>
+          endpoint = "s3.amazonaws.com"
+          type = "s3"
+        }
+      }
+
+2. Run ``terraform apply`` to create the configuration described in
+   the Helm section above. This will also install or upgrade the release.
+
+Your log archival setup is complete.
+See :doc:`../testing_and_monitoring/querying_results/fetching_test_run_logs`
+to learn how to retrieve logs.

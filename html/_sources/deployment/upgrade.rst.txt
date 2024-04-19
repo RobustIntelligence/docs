@@ -10,40 +10,53 @@ General upgrade steps
 2. If available, retrieve the ``values.yaml`` file for your Robust
    Intelligence Model Testing Agent.
 
-   a. Alternatively, you can save the current Helm values to a file like so:
+   Alternatively, you can save the current Helm values to a file like so:
 
-      .. code-block::
+   .. code-block::
 
-         helm get values rime-agent | awk '!/USER-SUPPLIED VALUES/' > values.yaml
+      helm get values rime-agent | awk '!/USER-SUPPLIED VALUES/' > values.yaml
 
 3. Edit the ``values.yaml`` file by changing the image tag in the
    fields ``rimeAgent.images.agentImage.name`` and
-   ``rimeAgent.images.modelTestJobImage.name`` to match the new Robust
-   Intelligence version.
+   ``rimeAgent.images.modelTestJobImage.name`` to match the Robust
+   Intelligence version you want to upgrade to (for example, ``2.7.6``).
 
-   a. The version number can be found by navigating to the **Organization Settings** page and clicking on the **Manage Agent Setup** tab.
+   You can find your current version number in the **Organization
+   Settings** page by clicking on the **Manage Agent Setup** tab. Your
+   customer success contact can provide the latest patch release
+   number for your desired product version.
 
-      Use this version number (without the ``v`` prefix) for the image updates.
+   Specify version numbers without a ``v`` prefix. Replace the example
+   value used here (``2.7.6``) with your desired version.
 
-      .. code-block::
+   .. code-block::
 
-         # values.yaml
-         # (from "Manage Agent Setup" page in UI) "Control Plane: v2.2.1"
-         rimeAgent:
-            images:
-               agentImage:
-                  # name: "robustintelligencehq/rime-agent:2.1.8" # OLD
-                  name: "robustintelligencehq/rime-agent:2.2.1" # NEW
-               modelTestJobImage:
-                  # name: "robustintelligencehq/rime-testing-engine-dev:2.1.8" # OLD
-                  name: "robustintelligencehq/rime-testing-engine-dev:2.2.1" # NEW
+      # values.yaml
+      # (from "Manage Agent Setup" page in UI) "Control Plane: v2.7.6"
+      rimeAgent:
+         images:
+            agentImage:
+               # name: "robustintelligencehq/rime-agent:2.6.0" # OLD
+               name: "robustintelligencehq/rime-agent:2.7.6" # NEW
+            modelTestJobImage:
+               # name: "robustintelligencehq/rime-testing-engine-dev:2.6.0" # OLD
+               name: "robustintelligencehq/rime-testing-engine-dev:2.7.6" # NEW
 
-4. Install the updated Helm release.
+4. Upgrade the CRD resources. Replace the example value used here
+   (``2.7.6``) with your desired version.
+
+   .. code-block::
+
+      kubectl apply -f https://raw.githubusercontent.com/RobustIntelligence/helm/2.7.6/rime-agent/crds/rime-agent.crds.yaml
+      kubectl apply -f https://raw.githubusercontent.com/RobustIntelligence/helm/2.7.6/rime-agent/crds/rime-agent-deployment.crds.yaml
+
+5. Install the updated Helm release.
 
    .. code-block::
 
       helm repo update
       helm upgrade rime-agent robustintelligence/rime-agent --version $RI_VERSION --values ./values.yaml
+
 
 Upgrading from v2.0 to v2.1
 ---------------------------------------
@@ -79,7 +92,7 @@ Upgrading from v2.2 to v2.3
 
       helm uninstall rime-agent
 
-4. Follow steps 2 and 3 of the general upgrade process.
+4. Follow steps 2 through 4 of the general upgrade process.
 5. Install the updated Helm release.
 
    .. code-block::
@@ -102,7 +115,7 @@ Upgrading from v2.3 to v2.4
 
       helm uninstall rime-agent
 
-4. Follow steps 2 and 3 of the general upgrade process.
+4. Follow steps 2 through 4 of the general upgrade process.
 5. Install the updated Helm release.
 
    .. code-block::
@@ -130,4 +143,4 @@ Verifying an Upgrade
 
       kubectl get crd | grep rbst
 
-4. Navigate to **Organization Settings** page and click on the **Manage Agent Setup** tab to confirm that the agent is posting an "Active" status.
+4. Navigate to **Organization Settings** page and click on the **Manage Agent Setup** tab to confirm that the agent shows an "Active" status.
