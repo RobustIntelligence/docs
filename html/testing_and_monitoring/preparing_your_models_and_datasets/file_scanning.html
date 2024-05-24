@@ -57,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.8.0-rc.6
+                2.8.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -83,8 +83,16 @@
 <li class="toctree-l2"><a class="reference internal" href="data_source.html">Data Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="model_source.html">Model Configuration</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Securing Model Supply Chain Risk with File Scanning</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#running-a-file-scan-on-a-registered-huggingface-model">Running a file scan on a registered HuggingFace model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#getting-the-results-of-a-file-scan">Getting the results of a file scan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#prepare-a-hugging-face-model-for-scanning">Prepare a Hugging Face model for scanning</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#prepare-a-gated-model-for-scanning">Prepare a gated model for scanning</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#run-a-file-scan-on-a-hugging-face-model">Run a file scan on a Hugging Face model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-the-results-of-a-file-scan">Get the results of a file scan</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#retrieve-via-the-sdk">Retrieve via the SDK</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#view-in-the-ui">View in the UI</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#understanding-your-file-scan-results">Understanding your file scan results</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#related-topics">Related Topics</a></li>
 </ul>
@@ -156,11 +164,89 @@
 <p>Pickle is a widely used serialization format in Machine Learning, emerging as the most common way to share model and model weights. However, when you load and de-serialize a pickle file, it is susceptible to dangerous arbitrary code execution attacks specified by the original author of the file. To learn more about pickle serialization based attacks: check out our <a class="reference external" href="https://www.robustintelligence.com/blog-posts/pickle-serialization-in-data-science-a-ticking-time-bomb">blog post</a> on the topic.</p>
 <p>Once a model has been registered with Robust Intelligence, you can run a file scan on the model artifacts, which will identify potentially dangerous imports within the model which pose risks during de-serialization. This is a critical step in securing your model supply chain. All pickle derived model formats, including PyTorch, TensorFlow, Keras, and Scikit-Learn, are supported for file scanning.</p>
 <blockquote>
-<div><p><strong>Note:</strong> File Scanning is currently only enabled on registered HuggingFace models.</p>
+<div><p><strong>Note:</strong> File Scanning is currently only enabled on registered Hugging Face models.</p>
 </div></blockquote>
-<section id="running-a-file-scan-on-a-registered-huggingface-model">
-<h2>Running a file scan on a registered HuggingFace model<a class="headerlink" href="#running-a-file-scan-on-a-registered-huggingface-model" title="Permalink to this heading"></a></h2>
-<p>This tutorial assumes you have already <a class="reference internal" href="../creating_projects/creating_a_project.html"><span class="std std-doc">created a project</span></a> and <a class="reference internal" href="registering_model_datasets.html"><span class="std std-doc">registered a model</span></a> and retrieved the model and project IDs. For large generative models, consider specifying the <code class="docutils literal notranslate"><span class="pre">ram_request_megabytes</span></code> field to a higher value such as 30000 in the <code class="docutils literal notranslate"><span class="pre">start_file_scan</span></code> method to ensure that the file scan job has enough memory to run.</p>
+<section id="prepare-a-hugging-face-model-for-scanning">
+<h2>Prepare a Hugging Face model for scanning<a class="headerlink" href="#prepare-a-hugging-face-model-for-scanning" title="Permalink to this heading"></a></h2>
+<p>To prepare a Hugging Face model for scanning:</p>
+<ol class="arabic">
+<li><p><a class="reference internal" href="../creating_projects/creating_a_project.html"><span class="std std-doc">Create a project</span></a></p></li>
+<li><p><a class="reference internal" href="registering_model_datasets.html"><span class="std std-doc">Register the model</span></a>. If your model is a gated
+model, additional steps are needed. See “Prepare a gated model for scanning,”
+below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;google/gemma-7b&quot;</span><span class="p">,</span>
+    <span class="n">model_config</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;hugging_face&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;model_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;google/gemma-7b&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Retrieve the model and project IDs and proceed to “Run a file scan,” below.</p></li>
+</ol>
+<section id="prepare-a-gated-model-for-scanning">
+<h3>Prepare a gated model for scanning<a class="headerlink" href="#prepare-a-gated-model-for-scanning" title="Permalink to this heading"></a></h3>
+<p>To scan a private or gated Hugging Face model, you must first set up a
+<a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/custom_integration.html"><span class="std std-doc">custom integration</span></a>
+for the model. The integration stores sensitive tokens/secrets that
+your artifacts (models/datasets) might need.</p>
+<p>To prepare a gated Hugging Face model for scanning:</p>
+<ol class="arabic">
+<li><p><a class="reference internal" href="../creating_projects/creating_a_project.html"><span class="std std-doc">Create a project</span></a></p></li>
+<li><p>Create the <a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/custom_integration.html"><span class="std std-doc">custom integration</span></a>
+for the model. When you create the integration:</p>
+<ul class="simple">
+<li><p>Include a key <code class="docutils literal notranslate"><span class="pre">HUGGINGFACE_API_TOKEN</span></code> with its value set to your
+Hugging Face API token. <strong>Note</strong>: You can find your Huggingface API token
+on your <a class="reference external" href="https://huggingface.co/settings/tokens">Huggingface profile page</a>.</p></li>
+<li><p>You must must manually accept the Hugging Face terms and conditions
+with the account that owns your API key.</p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="registering_model_datasets.html"><span class="std std-doc">Register the model</span></a>. When you
+register the model:</p>
+<ul>
+<li><p>Specify the <code class="docutils literal notranslate"><span class="pre">integration_id</span></code> as an argument to the
+<code class="docutils literal notranslate"><span class="pre">register_model</span></code> method of the SDK’s <code class="docutils literal notranslate"><span class="pre">Project</span></code> class.
+See <a class="reference internal" href="../../reference/python-sdk.html##rime_sdk.Project.register_model"><span class="std std-ref">Project.register_model</span></a>.
+Use the <code class="docutils literal notranslate"><span class="pre">integration_id</span></code> parameter and NOT the <code class="docutils literal notranslate"><span class="pre">model_endpoint_integration_id</span></code>.</p></li>
+<li><p>Copy the integration id and paste it into the <code class="docutils literal notranslate"><span class="pre">integration_id</span></code>. See
+the sample value, <code class="docutils literal notranslate"><span class="pre">INTEGRATION_ID</span></code> in the example below. This is
+where you register the model to be scanned:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;google/gemma-7b&quot;</span><span class="p">,</span>
+    <span class="n">model_config</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;hugging_face&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;model_uri&quot;</span><span class="p">:</span> <span class="s2">&quot;google/gemma-7b&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">integration_id</span><span class="o">=</span><span class="n">INTEGRATION_ID</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>Retrieve the model and project IDs and proceed to “Run a file scan,” below.</p></li>
+</ol>
+</section>
+</section>
+<section id="run-a-file-scan-on-a-hugging-face-model">
+<h2>Run a file scan on a Hugging Face model<a class="headerlink" href="#run-a-file-scan-on-a-hugging-face-model" title="Permalink to this heading"></a></h2>
+<p>Before you can scan a model, you must have
+<a class="reference internal" href="../creating_projects/creating_a_project.html"><span class="std std-doc">created a project</span></a>,
+<a class="reference internal" href="registering_model_datasets.html"><span class="std std-doc">registered the model</span></a>, and retrieved
+the model ID and project ID.</p>
+<blockquote>
+<div><p><strong>Note:</strong> For large generative models, consider specifying the
+<code class="docutils literal notranslate"><span class="pre">ram_request_megabytes</span></code> field to a higher value such as 30000 in the
+<code class="docutils literal notranslate"><span class="pre">start_file_scan</span></code> method to ensure that the file scan job has enough
+memory to run.</p>
+</div></blockquote>
+<p>Use the SDK’s <code class="docutils literal notranslate"><span class="pre">Client.start_file_scan</span></code> method to start the scan:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">domain</span><span class="o">=&lt;</span><span class="n">CLUSTER_URL</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=&lt;</span><span class="n">API_KEY</span><span class="o">&gt;</span><span class="p">)</span>
@@ -168,15 +254,19 @@
 <span class="n">job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>To run a file scan on a private Huggingface model, you have to first create a <a class="reference internal" href="../../administration/workspace_configuration/integrations/supported_integrations/custom_integration.html"><span class="std std-doc">custom integration</span></a> with a key set to HUGGINGFACE_API_TOKEN and the value set to your Huggingface API token. You can find your Huggingface API token on your <a class="reference external" href="https://huggingface.co/settings/tokens">Huggingface profile page</a>. Then during model registration, specify the integration ID as an argument to the <code class="docutils literal notranslate"><span class="pre">register_model</span></code> method. From there, start a file scan on the model as you would for a public model.</p>
 </section>
-<section id="getting-the-results-of-a-file-scan">
-<h2>Getting the results of a file scan<a class="headerlink" href="#getting-the-results-of-a-file-scan" title="Permalink to this heading"></a></h2>
-<p>Once the file scan job has completed, you can view the results of the file scan in the SDK:</p>
+<section id="get-the-results-of-a-file-scan">
+<h2>Get the results of a file scan<a class="headerlink" href="#get-the-results-of-a-file-scan" title="Permalink to this heading"></a></h2>
+<section id="retrieve-via-the-sdk">
+<h3>Retrieve via the SDK<a class="headerlink" href="#retrieve-via-the-sdk" title="Permalink to this heading"></a></h3>
+<p>Once the file scan job has completed, you can view the results of the file scan via the SDK:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">get_file_scan_result</span><span class="p">(</span><span class="n">file_scan_id</span><span class="o">=</span><span class="n">job</span><span class="o">.</span><span class="n">job_id</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Severity is scored from 1-3, with 3 corresponding to an Alert level of risk, and 1 being a pass. If vulnerabilities were found during the file scan, they will be present under the <em>file_security_reports</em> field under <em>unsafe_dependencies</em>. The <em>file_security_reports</em> field will be empty if no vulnerabilities were found in any of the model files.</p>
+</section>
+<section id="view-in-the-ui">
+<h3>View in the UI<a class="headerlink" href="#view-in-the-ui" title="Permalink to this heading"></a></h3>
 <p>You can also view the latest file scan result for a specific model on its model registry page.</p>
 <ol class="arabic">
 <li><p>Sign in to a Robust Intelligence instance.</p>
@@ -210,6 +300,7 @@
 </div></blockquote>
 </li>
 </ol>
+</section>
 </section>
 <section id="understanding-your-file-scan-results">
 <h2>Understanding your file scan results<a class="headerlink" href="#understanding-your-file-scan-results" title="Permalink to this heading"></a></h2>

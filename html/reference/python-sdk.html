@@ -57,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.8.0-rc.6
+                2.8.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -131,6 +131,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Client.list_file_scan_results"><code class="docutils literal notranslate"><span class="pre">Client.list_file_scan_results()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Client.delete_file_scan_result"><code class="docutils literal notranslate"><span class="pre">Client.delete_file_scan_result()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Client.create_integration"><code class="docutils literal notranslate"><span class="pre">Client.create_integration()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rime_sdk.Client.get_model_security_report"><code class="docutils literal notranslate"><span class="pre">Client.get_model_security_report()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#rime_sdk.Project"><code class="docutils literal notranslate"><span class="pre">Project</span></code></a><ul>
@@ -1257,6 +1258,28 @@ value: str (optional)</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="rime_sdk.Client.get_model_security_report">
+<span class="sig-name descname"><span class="pre">get_model_security_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.Client.get_model_security_report" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the supply chain risk report for a Hugging Face model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>repo_id</strong> – str
+ID of the Hugging Face model.</p></li>
+<li><p><strong>repo_type</strong> – enum
+Currently only Hugging Face is supported.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary representation of the model scan result.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -1641,15 +1664,11 @@ agent will be used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>The ID of the newly registered dataset.
-job:</p>
-<blockquote>
-<div><p>The job object that represents the validation job.</p>
-</div></blockquote>
-</p>
+<dd class="field-even"><p>The returned Tuple contains the ID of the newly registered
+dataset and the Job object that represents the validation job.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Tuple[str, Optional[<a class="reference internal" href="#rime_sdk.Job" title="rime_sdk.Job">Job</a>]]</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
@@ -1754,15 +1773,11 @@ agent will be used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>The ID of the newly registered dataset.
-job:</p>
-<blockquote>
-<div><p>The job object that represents the validation job.</p>
-</div></blockquote>
-</p>
+<dd class="field-even"><p>The returned Tuple contains the ID of the newly registered
+dataset and the Job object that represents the validation job.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Tuple[str, Optional[<a class="reference internal" href="#rime_sdk.Job" title="rime_sdk.Job">Job</a>]]</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
@@ -1869,15 +1884,11 @@ agent will be used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>The ID of the newly registered dataset.
-job:</p>
-<blockquote>
-<div><p>The job object that represents the validation job.</p>
-</div></blockquote>
-</p>
+<dd class="field-even"><p>The returned Tuple contains the ID of the newly registered
+dataset and the Job object that represents the validation job.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Tuple[str, Optional[<a class="reference internal" href="#rime_sdk.Job" title="rime_sdk.Job">Job</a>]]</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
@@ -1990,15 +2001,11 @@ agent will be used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>The ID of the newly registered model.
-job:</p>
-<blockquote>
-<div><p>The job object that represents the validation job.</p>
-</div></blockquote>
-</p>
+<dd class="field-even"><p>The returned Tuple contains the ID of the newly registered
+dataset and the Job object that represents the validation job.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Tuple[str, Optional[<a class="reference internal" href="#rime_sdk.Job" title="rime_sdk.Job">Job</a>]]</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
@@ -2114,15 +2121,11 @@ agent will be used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>The ID of the newly registered model.
-job:</p>
-<blockquote>
-<div><p>The job object that represents the validation job.</p>
-</div></blockquote>
-</p>
+<dd class="field-even"><p>The returned Tuple contains the ID of the newly registered
+dataset and the Job object that represents the validation job.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Tuple[str, Optional[<a class="reference internal" href="#rime_sdk.Job" title="rime_sdk.Job">Job</a>]]</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
@@ -2249,15 +2252,11 @@ agent will be used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>The ID of the newly registered model.
-job:</p>
-<blockquote>
-<div><p>The job object that represents the validation job.</p>
-</div></blockquote>
-</p>
+<dd class="field-even"><p>The returned Tuple contains the ID of the newly registered
+dataset and the Job object that represents the validation job.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Tuple[str, Optional[<a class="reference internal" href="#rime_sdk.Job" title="rime_sdk.Job">Job</a>]]</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
@@ -4235,15 +4234,11 @@ agent will be used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>The ID of the newly registered dataset.
-job:</p>
-<blockquote>
-<div><p>The job object that represents the validation job.</p>
-</div></blockquote>
-</p>
+<dd class="field-even"><p>The returned Tuple contains the ID of the newly registered
+dataset and the Job object that represents the validation job.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Tuple[str, Optional[<a class="reference internal" href="#rime_sdk.Job" title="rime_sdk.Job">Job</a>]]</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>ValueError</strong> – This error is generated when the request to the Registry
@@ -4365,15 +4360,11 @@ agent will be used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>The ID of the newly registered model.
-job:</p>
-<blockquote>
-<div><p>The job object that represents the validation job.</p>
-</div></blockquote>
-</p>
+<dd class="field-even"><p>The returned Tuple contains the ID of the newly registered
+dataset and the Job object that represents the validation job.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Tuple[str, Optional[<a class="reference internal" href="#rime_sdk.Job" title="rime_sdk.Job">Job</a>]]</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>ValueError</strong> – This error is generated when the request to the Registry
@@ -4853,9 +4844,13 @@ They are independent from each other.</p>
 <li><p><strong>domain</strong> – str
 The base domain/address of the firewall.</p></li>
 <li><p><strong>api_key</strong> – str
-The API key used to authenticate to the firewall.</p></li>
+The API key is used to authenticate to the firewall. If an api_key is
+provided, you do not need to provide an auth_token.</p></li>
 <li><p><strong>auth_token</strong> – str
-The Auth Token used to authenticate to backend services. Optional.</p></li>
+The auth token is generated in the Firewall UI and is used to authenticate
+to the firewall. If the auth_token is provided, you do not need to provide
+an api_key. Auth tokens are only available when the Firewall UI has been
+enabled.</p></li>
 <li><p><strong>channel_timeout</strong> – float
 The amount of time in seconds to wait for responses from the firewall.</p></li>
 </ul>

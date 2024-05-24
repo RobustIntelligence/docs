@@ -57,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.8.0-rc.6
+                2.8.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -97,6 +97,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../upgrade.html">Upgrade</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../upgrade.html#general-upgrade-steps">General upgrade steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../upgrade.html#upgrading-from-v2-3-to-v2-4">Upgrading from v2.3 to v2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../upgrade.html#upgrading-from-v2-2-to-v2-3">Upgrading from v2.2 to v2.3</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../upgrade.html#upgrading-from-v2-0-to-v2-1">Upgrading from v2.0 to v2.1</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Data Access Permissions</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#aws-eks-s3">AWS EKS + S3</a></li>
@@ -107,8 +109,6 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../upgrade.html#upgrading-from-v2-2-to-v2-3">Upgrading from v2.2 to v2.3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../upgrade.html#upgrading-from-v2-3-to-v2-4">Upgrading from v2.3 to v2.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../upgrade.html#verifying-an-upgrade">Verifying an Upgrade</a></li>
 </ul>
 </li>
@@ -161,7 +161,10 @@ feature, you’ll need to add another service account,
 <code class="docutils literal notranslate"><span class="pre">rime-agent-operator</span></code>.</p>
 <section id="aws-eks-s3">
 <h2>AWS EKS + S3<a class="headerlink" href="#aws-eks-s3" title="Permalink to this heading"></a></h2>
-<p>Our recommended authentication approach for this pattern is <a class="reference external" href="https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html">IAM roles for service accounts (IRSA)</a>.</p>
+<p>Our recommended authentication approach for this pattern is <a class="reference external" href="https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html">IAM roles for service accounts (IRSA)</a>.
+Note that if you use a different authentication framework, such as
+KIAM, you may need to edit your Helm charts to add <code class="docutils literal notranslate"><span class="pre">*.annotations.*</span></code>
+values to support that framework.</p>
 <ol class="arabic">
 <li><p>If not already configured for your cluster, be sure to create an IAM OpenID Connect (OIDC) provider for your cluster to use IAM roles for service accounts.</p>
 <ul class="simple">
@@ -301,7 +304,7 @@ feature, you’ll need to add another service account,
 </section>
 <section id="other-cloud-providers">
 <h2>Other Cloud Providers<a class="headerlink" href="#other-cloud-providers" title="Permalink to this heading"></a></h2>
-<p>If you are using a different cloud provider or want to specify the service account directly, you can specify other configurations via the <code class="docutils literal notranslate"><span class="pre">rimeAgent.modelTestJob.serviceAccount</span></code> Helm values.</p>
+<p>If you are using a different cloud provider or want to specify the service account directly, you can specify other configurations via the <code class="docutils literal notranslate"><span class="pre">rimeAgent.operator.modelTestJob.serviceAccount</span></code> Helm values.</p>
 <p>Your Solutions Architect can help you through this process.</p>
 </section>
 </section>

@@ -11,6 +11,9 @@ feature, you'll need to add another service account,
 
 ## AWS EKS + S3
 Our recommended authentication approach for this pattern is [IAM roles for service accounts (IRSA)](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html).
+Note that if you use a different authentication framework, such as
+KIAM, you may need to edit your Helm charts to add `*.annotations.*`
+values to support that framework.
 
 1. If not already configured for your cluster, be sure to create an IAM OpenID Connect (OIDC) provider for your cluster to use IAM roles for service accounts.
     - [Creating an IAM OIDC provider for your cluster](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html)
@@ -98,6 +101,6 @@ Our recommended authentication approach for this pattern is [Azure AD Workload I
     - [Establish federated identity credential](https://learn.microsoft.com/en-us/azure/aks/workload-identity-deploy-cluster#establish-federated-identity-credential)
 
 ## Other Cloud Providers
-If you are using a different cloud provider or want to specify the service account directly, you can specify other configurations via the `rimeAgent.modelTestJob.serviceAccount` Helm values.
+If you are using a different cloud provider or want to specify the service account directly, you can specify other configurations via the `rimeAgent.operator.modelTestJob.serviceAccount` Helm values.
 
 Your Solutions Architect can help you through this process.

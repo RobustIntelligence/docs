@@ -57,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.8.0-rc.6
+                2.8.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -97,12 +97,12 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Upgrade</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#general-upgrade-steps">General upgrade steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrading-from-v2-3-to-v2-4">Upgrading from v2.3 to v2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrading-from-v2-2-to-v2-3">Upgrading from v2.2 to v2.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#upgrading-from-v2-0-to-v2-1">Upgrading from v2.0 to v2.1</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="requirements/data_access_permissions.html">Data Access Permissions</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#upgrading-from-v2-2-to-v2-3">Upgrading from v2.2 to v2.3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#upgrading-from-v2-3-to-v2-4">Upgrading from v2.3 to v2.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#verifying-an-upgrade">Verifying an Upgrade</a></li>
 </ul>
 </li>
@@ -146,6 +146,12 @@
 <h1>Upgrade<a class="headerlink" href="#upgrade" title="Permalink to this heading"></a></h1>
 <p>Follow the version-specific steps shown below for your upgrade path.
 For paths not listed below, follow the general upgrade steps.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The general upgrade steps were revised in v2.7 to include
+direct upgrades of CRDs. When you upgrade to v2.7 or later, be sure
+to include the CRD upgrade step.</p>
+</div>
 <section id="general-upgrade-steps">
 <h2>General upgrade steps<a class="headerlink" href="#general-upgrade-steps" title="Permalink to this heading"></a></h2>
 <ol class="arabic">
@@ -195,24 +201,30 @@ helm upgrade rime-agent robustintelligence/rime-agent --version $RI_VERSION --va
 </li>
 </ol>
 </section>
-<section id="upgrading-from-v2-0-to-v2-1">
-<h2>Upgrading from v2.0 to v2.1<a class="headerlink" href="#upgrading-from-v2-0-to-v2-1" title="Permalink to this heading"></a></h2>
-<ol class="arabic">
-<li><p>Navigate to <strong>Organization Settings</strong> page and click on the <strong>Manage Agent Setup</strong> tab. Deactivate and then delete the agent.</p></li>
+<section id="upgrading-from-v2-3-to-v2-4">
+<h2>Upgrading from v2.3 to v2.4<a class="headerlink" href="#upgrading-from-v2-3-to-v2-4" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Point your local <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> to your K8s cluster and namespace.</p></li>
+<li><p>Delete the <code class="docutils literal notranslate"><span class="pre">rimejobs.rbst.io</span></code> CRD.</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">delete</span> <span class="n">crd</span> <span class="n">rimejobs</span><span class="o">.</span><span class="n">rbst</span><span class="o">.</span><span class="n">io</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic" start="3">
 <li><p>Uninstall the agent in your environment:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">uninstall</span> <span class="n">rime</span><span class="o">-</span><span class="n">agent</span>
 </pre></div>
 </div>
 </li>
-<li><p>Expand the agent’s data access strategy to include a second K8s service account, <code class="docutils literal notranslate"><span class="pre">rime-agent-rime-cross-plane-server</span></code> (specific steps outlined below).</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="requirements/data_access_permissions.html">Data Access Permissions</a></li>
-</ul>
+<li><p>Follow steps 2 through 4 of the general upgrade process.</p></li>
+<li><p>Install the updated Helm release.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>helm repo update
+helm install rime-agent robustintelligence/rime-agent --version $RI_VERSION --values ./values.yaml
+</pre></div>
 </div>
 </li>
-<li><p>Create the new agent using the Create Agent button on the <strong>Manage Agent Setup</strong> page. Select the original agent type and repeat the setup steps.
-If permission related inputs are needed, you can find the same inputs you used in v2.0 in the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file under the <code class="docutils literal notranslate"><span class="pre">rimeAgent.operator.modelTestJob</span></code> section.</p></li>
 </ol>
 </section>
 <section id="upgrading-from-v2-2-to-v2-3">
@@ -241,30 +253,24 @@ helm install rime-agent robustintelligence/rime-agent --version $RI_VERSION --va
 </li>
 </ol>
 </section>
-<section id="upgrading-from-v2-3-to-v2-4">
-<h2>Upgrading from v2.3 to v2.4<a class="headerlink" href="#upgrading-from-v2-3-to-v2-4" title="Permalink to this heading"></a></h2>
-<ol class="arabic simple">
-<li><p>Point your local <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> to your K8s cluster and namespace.</p></li>
-<li><p>Delete the <code class="docutils literal notranslate"><span class="pre">rimejobs.rbst.io</span></code> CRD.</p></li>
-</ol>
-<blockquote>
-<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">delete</span> <span class="n">crd</span> <span class="n">rimejobs</span><span class="o">.</span><span class="n">rbst</span><span class="o">.</span><span class="n">io</span>
-</pre></div>
-</div>
-</div></blockquote>
-<ol class="arabic" start="3">
+<section id="upgrading-from-v2-0-to-v2-1">
+<h2>Upgrading from v2.0 to v2.1<a class="headerlink" href="#upgrading-from-v2-0-to-v2-1" title="Permalink to this heading"></a></h2>
+<ol class="arabic">
+<li><p>Navigate to <strong>Organization Settings</strong> page and click on the <strong>Manage Agent Setup</strong> tab. Deactivate and then delete the agent.</p></li>
 <li><p>Uninstall the agent in your environment:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">helm</span> <span class="n">uninstall</span> <span class="n">rime</span><span class="o">-</span><span class="n">agent</span>
 </pre></div>
 </div>
 </li>
-<li><p>Follow steps 2 through 4 of the general upgrade process.</p></li>
-<li><p>Install the updated Helm release.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>helm repo update
-helm install rime-agent robustintelligence/rime-agent --version $RI_VERSION --values ./values.yaml
-</pre></div>
+<li><p>Expand the agent’s data access strategy to include a second K8s service account, <code class="docutils literal notranslate"><span class="pre">rime-agent-rime-cross-plane-server</span></code> (specific steps outlined below).</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="requirements/data_access_permissions.html">Data Access Permissions</a></li>
+</ul>
 </div>
 </li>
+<li><p>Create the new agent using the Create Agent button on the <strong>Manage Agent Setup</strong> page. Select the original agent type and repeat the setup steps.
+If permission related inputs are needed, you can find the same inputs you used in v2.0 in the <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code> file under the <code class="docutils literal notranslate"><span class="pre">rimeAgent.operator.modelTestJob</span></code> section.</p></li>
 </ol>
 </section>
 <section id="verifying-an-upgrade">

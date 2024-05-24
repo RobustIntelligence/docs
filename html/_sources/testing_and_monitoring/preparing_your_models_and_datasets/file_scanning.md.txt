@@ -7,11 +7,91 @@ Pickle is a widely used serialization format in Machine Learning, emerging as th
 Once a model has been registered with Robust Intelligence, you can run a file scan on the model artifacts, which will identify potentially dangerous imports within the model which pose risks during de-serialization. This is a critical step in securing your model supply chain. All pickle derived model formats, including PyTorch, TensorFlow, Keras, and Scikit-Learn, are supported for file scanning.
 
 
-> **Note:** File Scanning is currently only enabled on registered HuggingFace models.
+> **Note:** File Scanning is currently only enabled on registered Hugging Face models.
 
-## Running a file scan on a registered HuggingFace model
+## Prepare a Hugging Face model for scanning
 
-This tutorial assumes you have already [created a project](../creating_projects/creating_a_project.rst) and [registered a model](./registering_model_datasets.md) and retrieved the model and project IDs. For large generative models, consider specifying the `ram_request_megabytes` field to a higher value such as 30000 in the `start_file_scan` method to ensure that the file scan job has enough memory to run.
+To prepare a Hugging Face model for scanning:
+
+1. [Create a project](../creating_projects/creating_a_project.rst)
+
+2. [Register the model](./registering_model_datasets.md). If your model is a gated
+   model, additional steps are needed. See "Prepare a gated model for scanning,"
+   below.
+
+   ```python
+   model_id = project.register_model(
+       name="google/gemma-7b",
+       model_config={
+           "hugging_face": {
+               "model_uri": "google/gemma-7b",
+           }
+       }
+   )
+   ```
+
+3. Retrieve the model and project IDs and proceed to "Run a file scan," below.
+
+### Prepare a gated model for scanning
+
+To scan a private or gated Hugging Face model, you must first set up a
+[custom integration](../../administration/workspace_configuration/integrations/supported_integrations/custom_integration.md)
+for the model. The integration stores sensitive tokens/secrets that
+your artifacts (models/datasets) might need.
+
+To prepare a gated Hugging Face model for scanning:
+
+1. [Create a project](../creating_projects/creating_a_project.rst)
+
+2. Create the [custom integration](../../administration/workspace_configuration/integrations/supported_integrations/custom_integration.md)
+   for the model. When you create the integration:
+
+   - Include a key `HUGGINGFACE_API_TOKEN` with its value set to your
+     Hugging Face API token. **Note**: You can find your Huggingface API token
+     on your [Huggingface profile page](https://huggingface.co/settings/tokens).
+
+   - You must must manually accept the Hugging Face terms and conditions
+     with the account that owns your API key.
+
+3. [Register the model](./registering_model_datasets.md). When you
+   register the model:
+
+   - Specify the `integration_id` as an argument to the
+     `register_model` method of the SDK's `Project` class.
+     See [Project.register_model](../../reference/python-sdk.rst##rime_sdk.Project.register_model).
+     Use the `integration_id` parameter and NOT the `model_endpoint_integration_id`.
+
+   - Copy the integration id and paste it into the `integration_id`. See
+     the sample value, `INTEGRATION_ID` in the example below. This is
+     where you register the model to be scanned:
+
+     ```python
+     model_id = project.register_model(
+         name="google/gemma-7b",
+         model_config={
+             "hugging_face": {
+                 "model_uri": "google/gemma-7b",
+             }
+         },
+         integration_id=INTEGRATION_ID
+     )
+     ```
+
+4. Retrieve the model and project IDs and proceed to "Run a file scan," below.
+
+## Run a file scan on a Hugging Face model
+
+Before you can scan a model, you must have
+[created a project](../creating_projects/creating_a_project.rst),
+[registered the model](./registering_model_datasets.md), and retrieved
+the model ID and project ID.
+
+> **Note:** For large generative models, consider specifying the
+`ram_request_megabytes` field to a higher value such as 30000 in the
+`start_file_scan` method to ensure that the file scan job has enough
+memory to run.
+
+Use the SDK's `Client.start_file_scan` method to start the scan:
 
 ```python
 from rime_sdk import Client
@@ -21,16 +101,19 @@ job = client.start_file_scan(model_id=<MODEL_ID>, project_id=<PROJECT_ID>)
 job.get_status(verbose=True, wait_until_finish=True)
 ```
 
-To run a file scan on a private Huggingface model, you have to first create a [custom integration](../../administration/workspace_configuration/integrations/supported_integrations/custom_integration.md) with a key set to HUGGINGFACE_API_TOKEN and the value set to your Huggingface API token. You can find your Huggingface API token on your [Huggingface profile page](https://huggingface.co/settings/tokens). Then during model registration, specify the integration ID as an argument to the `register_model` method. From there, start a file scan on the model as you would for a public model.
 
-## Getting the results of a file scan
+## Get the results of a file scan
 
-Once the file scan job has completed, you can view the results of the file scan in the SDK:
+### Retrieve via the SDK
+
+Once the file scan job has completed, you can view the results of the file scan via the SDK:
 
 ```python
 client.get_file_scan_result(file_scan_id=job.job_id)
 ```
 Severity is scored from 1-3, with 3 corresponding to an Alert level of risk, and 1 being a pass. If vulnerabilities were found during the file scan, they will be present under the *file_security_reports* field under *unsafe_dependencies*. The *file_security_reports* field will be empty if no vulnerabilities were found in any of the model files.
+
+### View in the UI
 
 You can also view the latest file scan result for a specific model on its model registry page.
 
