@@ -73,8 +73,7 @@
     "id": "90zo7hdkmKyW"
    },
    "source": [
-    "![Image of getting an API token](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/api_access_tokens.png)",
-    "![Image of creating an API token](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/create_token.png)"
+    "![Image of getting an API token](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/api_access_tokens.png)![Image of creating an API token](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/create_token.png)"
    ]
   },
   {
@@ -86,7 +85,7 @@
    "outputs": [],
    "source": [
     "API_TOKEN = '' # PASTE API_KEY \n",
-    "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)\n",
+    "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE (e.g., https://rime.example.rbst.io)\n",
     "AGENT_ID = '' # PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT\n",
     "client = Client(CLUSTER_URL, API_TOKEN)\n"
    ]
@@ -135,7 +134,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "## **Uploading the Model + Datasets**"
+    "## **Preparing the Model + Datasets**"
    ]
   },
   {
@@ -160,6 +159,44 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### **Uploading Artifacts to Blob Storage**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "For SaaS environments using the default S3 storage location, the Python SDK supports direct file uploads using `upload_*()`.\n",
+    "\n",
+    "For other environments and storage technologies, artifacts must be managed through alternate means."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "IS_SAAS = False # TOGGLE True/False (Note: SaaS environments use URLs ending in \"rbst.io\" and have an \"Internal Agent\")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "if not IS_SAAS:\n",
+    "    BLOB_STORE_URI = \"\" # PROVIDE BLOB STORE URI (e.g., \"s3://acmecorp-rime\")\n",
+    "    assert BLOB_STORE_URI != \"\"\n",
+    "\n",
+    "UPLOAD_PATH = \"ri_public_examples_ranking\"\n"
+   ]
+  },
+  {
    "cell_type": "code",
    "execution_count": null,
    "metadata": {
@@ -167,26 +204,33 @@
    },
    "outputs": [],
    "source": [
-    "upload_path = \"ri_public_examples_ranking\"\n",
-    "\n",
-    "model_s3_dir = client.upload_directory(\n",
-    "    Path('ranking/models'), upload_path=upload_path\n",
-    ")\n",
-    "model_s3_path = model_s3_dir + \"/model_extras/model.py\"\n",
-    "\n",
-    "ref_s3_path = client.upload_file(\n",
-    "    Path('ranking/data/ref.csv'), upload_path=upload_path\n",
-    ")\n",
-    "eval_s3_path = client.upload_file(\n",
-    "    Path('ranking/data/eval.csv'), upload_path=upload_path\n",
-    ")\n",
-    "\n",
-    "ref_preds_s3_path = client.upload_file(\n",
-    "    Path(\"ranking/data/ref_preds.csv\"), upload_path=upload_path\n",
-    ")\n",
-    "eval_preds_s3_path = client.upload_file(\n",
-    "    Path(\"ranking/data/eval_preds.csv\"), upload_path=upload_path\n",
-    ")\n"
+    "if IS_SAAS:\n",
+    "    model_s3_dir = client.upload_directory(\n",
+    "        Path('ranking/models'), upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "    model_s3_path = model_s3_dir + \"/model_extras/model.py\"\n",
+    "    \n",
+    "    ref_s3_path = client.upload_file(\n",
+    "        Path('ranking/data/ref.csv'), upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "    eval_s3_path = client.upload_file(\n",
+    "        Path('ranking/data/eval.csv'), upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "    \n",
+    "    ref_preds_s3_path = client.upload_file(\n",
+    "        Path(\"ranking/data/ref_preds.csv\"), upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "    eval_preds_s3_path = client.upload_file(\n",
+    "        Path(\"ranking/data/eval_preds.csv\"), upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "else:\n",
+    "    model_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/model_extras/model.py\"\n",
+    "    \n",
+    "    ref_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/ref.csv\"\n",
+    "    eval_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/eval.csv\"\n",
+    "    \n",
+    "    ref_preds_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/ref_preds.csv\"\n",
+    "    eval_preds_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/eval_preds.csv\""
    ]
   },
   {
@@ -411,19 +455,25 @@
    "outputs": [],
    "source": [
     "dt = str(datetime.now())\n",
-    "prod_s3_path = client.upload_file(\n",
-    "    Path('ranking/data/test.csv'), \n",
-    "    upload_path=upload_path,\n",
-    ")\n",
+    "\n",
+    "if IS_SAAS:\n",
+    "    prod_s3_path = client.upload_file(\n",
+    "        Path('ranking/data/test.csv'), \n",
+    "        upload_path=UPLOAD_PATH,\n",
+    "    )\n",
+    "    prod_preds_s3_path = client.upload_file(\n",
+    "        Path('ranking/data/test_preds.csv'), \n",
+    "        upload_path=UPLOAD_PATH,\n",
+    "    )\n",
+    "else:\n",
+    "    prod_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/test.csv\"\n",
+    "    prod_preds_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/test_preds.csv\"\n",
+    "\n",
     "prod_dataset_id = project.register_dataset_from_file(\n",
     "    f\"prod_dataset_{dt}\", \n",
     "    prod_s3_path, \n",
     "    data_params={\"timestamp_col\": \"timestamp\", \"protected_features\": [\"Director\", \"Cast1\"], **data_params},\n",
     "    agent_id=AGENT_ID\n",
-    ")\n",
-    "prod_preds_s3_path = client.upload_file(\n",
-    "    Path('ranking/data/test_preds.csv'), \n",
-    "    upload_path=upload_path,\n",
     ")\n",
     "project.register_predictions_from_file(\n",
     "    prod_dataset_id, \n",
@@ -601,7 +651,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.9.17"
+   "version": "3.9.7"
   }
  },
  "nbformat": 4,

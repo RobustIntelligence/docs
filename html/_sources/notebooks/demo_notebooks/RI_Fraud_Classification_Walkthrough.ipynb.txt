@@ -95,8 +95,7 @@
     }
    },
    "source": [
-    "![Image of getting an API token](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/api_access_tokens.png)",
-    "![Image of creating an API token](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/create_token.png)"
+    "![Image of getting an API token](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/api_access_tokens.png)![Image of creating an API token](https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/common/create_token.png)"
    ]
   },
   {
@@ -111,7 +110,7 @@
    "outputs": [],
    "source": [
     "API_TOKEN = '' # PASTE API_KEY \n",
-    "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)\n",
+    "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE (e.g., https://rime.example.rbst.io)\n",
     "AGENT_ID = '' # PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT\n"
    ]
   },
@@ -186,7 +185,7 @@
     }
    },
    "source": [
-    "## **Uploading the Model + Datasets**\n",
+    "## **Preparing the Model + Datasets**\n",
     "\n",
     "Let's first take a look at what the dataset looks like:"
    ]
@@ -234,6 +233,53 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### **Uploading Artifacts to Blob Storage**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "For SaaS environments using the default S3 storage location, the Python SDK supports direct file uploads using `upload_*()`.\n",
+    "\n",
+    "For other environments and storage technologies, artifacts must be managed through alternate means."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "IS_SAAS = False # TOGGLE True/False (Note: SaaS environments use URLs ending in \"rbst.io\" and have an \"Internal Agent\")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "if not IS_SAAS:\n",
+    "    BLOB_STORE_URI = \"\" # PROVIDE BLOB STORE URI (e.g., \"s3://acmecorp-rime\")\n",
+    "    assert BLOB_STORE_URI != \"\"\n",
+    "\n",
+    "UPLOAD_PATH = \"ri_public_examples_fraud\"\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**If your environment is not SaaS (or if you are using a storage mechanism other than AWS S3), be sure to upload the example artifacts before proceeding!**\n",
+    "\n",
+    "If your environment is SaaS, the cell below will automatically upload the example artifacts for you."
+   ]
+  },
+  {
    "cell_type": "code",
    "execution_count": null,
    "metadata": {
@@ -244,26 +290,33 @@
    },
    "outputs": [],
    "source": [
-    "upload_path = \"ri_public_examples_fraud\"\n",
+    "if IS_SAAS:\n",
+    "    model_s3_dir = client.upload_directory(\n",
+    "        Path('fraud/models'), upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "    model_s3_path = model_s3_dir + \"/fraud_model.py\"\n",
     "\n",
-    "model_s3_dir = client.upload_directory(\n",
-    "    Path('fraud/models'), upload_path=upload_path\n",
-    ")\n",
-    "model_s3_path = model_s3_dir + \"/fraud_model.py\"\n",
-    "\n",
-    "ref_s3_path = client.upload_file(\n",
-    "    Path('fraud/data/fraud_ref.csv'), upload_path=upload_path\n",
-    ")\n",
-    "eval_s3_path = client.upload_file(\n",
-    "    Path('fraud/data/fraud_eval.csv'), upload_path=upload_path\n",
-    ")\n",
-    "\n",
-    "ref_preds_s3_path = client.upload_file(\n",
-    "    Path(\"fraud/data/fraud_ref_preds.csv\"), upload_path=upload_path\n",
-    ")\n",
-    "eval_preds_s3_path = client.upload_file(\n",
-    "    Path(\"fraud/data/fraud_eval_preds.csv\"), upload_path=upload_path\n",
-    ")\n"
+    "    ref_s3_path = client.upload_file(\n",
+    "        Path('fraud/data/fraud_ref.csv'), upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "    eval_s3_path = client.upload_file(\n",
+    "        Path('fraud/data/fraud_eval.csv'), upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "    \n",
+    "    ref_preds_s3_path = client.upload_file(\n",
+    "        Path(\"fraud/data/fraud_ref_preds.csv\"), upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "    eval_preds_s3_path = client.upload_file(\n",
+    "        Path(\"fraud/data/fraud_eval_preds.csv\"), upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "else:\n",
+    "    model_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/models/fraud_model.py\"\n",
+    "    \n",
+    "    ref_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/fraud_ref.csv\"\n",
+    "    eval_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/fraud_eval.csv\"\n",
+    "    \n",
+    "    ref_preds_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/fraud_ref_preds.csv\"\n",
+    "    eval_preds_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/fraud_eval_preds.csv\"\n"
    ]
   },
   {
@@ -274,7 +327,7 @@
     }
    },
    "source": [
-    "Once the data and model are uploaded to S3, we can register them to RIME. Once they're registered, we can refer to these resources using their RIME-generated ID's."
+    "Once the data and model are uploaded, we can register them to RIME. Once they're registered, we can refer to these resources using their RIME-generated ID's."
    ]
   },
   {
@@ -344,11 +397,12 @@
     "    }, \n",
     "    \"model_id\": model_id,\n",
     "    \"categories\": [\n",
-    "            \"TEST_CATEGORY_TYPE_ADVERSARIAL\",\n",
-    "            \"TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE\",\n",
-    "            \"TEST_CATEGORY_TYPE_TRANSFORMATIONS\",\n",
-    "            \"TEST_CATEGORY_TYPE_ABNORMAL_INPUTS\",\n",
-    "            \"TEST_CATEGORY_TYPE_DATA_CLEANLINESS\"]\n",
+    "        \"TEST_CATEGORY_TYPE_ADVERSARIAL\",\n",
+    "        \"TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE\",\n",
+    "        \"TEST_CATEGORY_TYPE_TRANSFORMATIONS\",\n",
+    "        \"TEST_CATEGORY_TYPE_ABNORMAL_INPUTS\",\n",
+    "        \"TEST_CATEGORY_TYPE_DATA_CLEANLINESS\"\n",
+    "    ]\n",
     "}\n",
     "stress_job = client.start_stress_test(\n",
     "    stress_test_config, project.project_id, agent_id=AGENT_ID\n",
@@ -582,10 +636,13 @@
    "source": [
     "from datetime import timedelta\n",
     "\n",
-    "project.update_ct_categories([\"TEST_CATEGORY_TYPE_ABNORMAL_INPUTS\",\n",
-    "                              \"TEST_CATEGORY_TYPE_DRIFT\",\n",
-    "                              \"TEST_CATEGORY_TYPE_EVASION_ATTACK_DETECTION\"\n",
-    "                            ])\n",
+    "project.update_ct_categories(\n",
+    "    [\n",
+    "        \"TEST_CATEGORY_TYPE_ABNORMAL_INPUTS\",\n",
+    "        \"TEST_CATEGORY_TYPE_DRIFT\",\n",
+    "        \"TEST_CATEGORY_TYPE_EVASION_ATTACK_DETECTION\"\n",
+    "    ]\n",
+    ")\n",
     "\n",
     "ct_instance = project.create_ct(model_id, ref_dataset_id, timedelta(days=1))\n"
    ]
@@ -628,19 +685,25 @@
    "outputs": [],
    "source": [
     "dt = str(datetime.now())\n",
-    "prod_s3_path = client.upload_file(\n",
-    "    Path('fraud/data/fraud_incremental.csv'), \n",
-    "    upload_path=upload_path\n",
-    ")\n",
+    "\n",
+    "if IS_SAAS:\n",
+    "    prod_s3_path = client.upload_file(\n",
+    "        Path('fraud/data/fraud_incremental.csv'), \n",
+    "        upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "    prod_preds_s3_path = client.upload_file(\n",
+    "        Path('fraud/data/fraud_incremental_preds.csv'), \n",
+    "        upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "else:\n",
+    "    prod_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/fraud_incremental.csv\"\n",
+    "    prod_preds_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/fraud_incremental_preds.csv\"\n",
+    "\n",
     "prod_dataset_id = project.register_dataset_from_file(\n",
     "    f\"prod_dataset_{dt}\", \n",
     "    prod_s3_path, \n",
     "    data_params={\"label_col\": \"label\", \"timestamp_col\": \"timestamp\"},\n",
     "    agent_id=AGENT_ID\n",
-    ")\n",
-    "prod_preds_s3_path = client.upload_file(\n",
-    "    Path('fraud/data/fraud_incremental_preds.csv'), \n",
-    "    upload_path=upload_path\n",
     ")\n",
     "project.register_predictions_from_file(\n",
     "    prod_dataset_id, model_id, prod_preds_s3_path, agent_id=AGENT_ID\n",
@@ -795,6 +858,7 @@
   {
    "cell_type": "markdown",
    "metadata": {
+    "jp-MarkdownHeadingCollapsed": true,
     "pycharm": {
      "name": "#%% md\n"
     }
@@ -860,6 +924,33 @@
   {
    "cell_type": "code",
    "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Note that 'fraud/models' directory already contains the 'fraud_model.catb' file.\n",
+    "if IS_SAAS:\n",
+    "    appendix_model_dir = client.upload_directory(\n",
+    "        Path('fraud/models'), upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "    appendix_model_path = appendix_model_dir + \"/fraud_model.py\"\n",
+    "else:\n",
+    "    appendix_model_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/models/fraud_model.py\"\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "appendix_model_id = project.register_model_from_path(\n",
+    "    f\"appendix_model_{dt}\", appendix_model_path\n",
+    ")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
    "metadata": {
     "pycharm": {
      "name": "#%%\n"
@@ -867,14 +958,6 @@
    },
    "outputs": [],
    "source": [
-    "# Note that 'fraud/models' directory already contains the 'fraud_model.catb' file.\n",
-    "appendix_model_dir = client.upload_directory(\n",
-    "    Path('fraud/models'), upload_path=upload_path\n",
-    ")\n",
-    "appendix_model_path = appendix_model_dir + \"/fraud_model.py\"\n",
-    "appendix_model_id = project.register_model_from_path(\n",
-    "    f\"appendix_model_{dt}\", appendix_model_path\n",
-    ")\n",
     "stress_test_with_model_config = {\n",
     "    \"run_name\": \"Uploaded Model Example\",\n",
     "    \"data_info\": {\n",
@@ -887,194 +970,6 @@
     "    stress_test_with_model_config, project.project_id, agent_id=AGENT_ID\n",
     ")\n",
     "stress_job.get_status(verbose=True, wait_until_finish=True)\n"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "pycharm": {
-     "name": "#%% md\n"
-    }
-   },
-   "source": [
-    "## **Running a Custom Test**\n",
-    "With RIME you can write your own custom tests, to encode any domain-specific validation you want to perform. These tests will run and be uploaded to the platform just like any of the built-in tests. To run a custom test you need to implement a specific interface in Python, upload the file to the platform, and point to it in your configuration. Below we provide a simple example of a custom test that checks if the difference in the length of the reference and evaluation datasets does not exceed some threshold."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {
-    "pycharm": {
-     "name": "#%%\n"
-    }
-   },
-   "outputs": [],
-   "source": [
-    "%%writefile fraud/custom_test.py\n",
-    "\"\"\"Custom test batch runner.\"\"\"\n",
-    "from typing import List, Tuple\n",
-    "from rime.core.schema.config import CustomConfig\n",
-    "from rime.protos.ri.api.resultsynthesizer.result_message_pb2 import (\n",
-    "    TestCaseStatus as Status,\n",
-    ")\n",
-    "from rime.core.stress_tests.schema.table_info import TableColumn\n",
-    "from rime.core.stress_tests.schema.test_result import TestBatchResult, TestOutput\n",
-    "from rime.core.test import BaseTest, TestExtraInfo\n",
-    "from rime.core.stress_tests.batch_runner import DataTestBatchRunner\n",
-    "from rime.core.stress_tests.schema.test_result import TestBatchResult, TestOutput\n",
-    "from rime.core.profiler.run_containers import RunContainer\n",
-    "from rime.protos.ri.lib.common_pb2 import Severity\n",
-    "\n",
-    "# Signature should not be changed.\n",
-    "class CustomTest(BaseTest):\n",
-    "    def __init__(self, delta: int = 0):\n",
-    "        \"\"\"Initialize with a delta between n_rows ref and eval.\"\"\"\n",
-    "        super().__init__()\n",
-    "        self.delta = delta\n",
-    "\n",
-    "    # Signature should not be changed.\n",
-    "    def run(\n",
-    "        self, \n",
-    "        run_container: RunContainer,\n",
-    "        silent_errors: bool = False\n",
-    "    ) -> Tuple[TestOutput, TestExtraInfo]:\n",
-    "        ref_data_size = len(run_container.ref_data.df)\n",
-    "        eval_data_size = len(run_container.eval_data.df)\n",
-    "        if ref_data_size > eval_data_size + self.delta:\n",
-    "            status = Status.TEST_CASE_STATUS_WARNING\n",
-    "            severity = Severity.SEVERITY_ALERT\n",
-    "        else:\n",
-    "            status = Status.TEST_CASE_STATUS_PASS_UNSPECIFIED\n",
-    "            severity = Severity.SEVERITY_PASS\n",
-    "        test_output = TestOutput(\n",
-    "            self.id, status, {\"Severity\": severity}, severity, [],\n",
-    "        )\n",
-    "        return test_output, TestExtraInfo(severity)\n",
-    "\n",
-    "\n",
-    "# Signature should not be changed.\n",
-    "class CustomBatchRunner(DataTestBatchRunner):\n",
-    "    \"\"\"TestBatchRunner for the CustomTest.\"\"\"\n",
-    "\n",
-    "    # Signature should not be changed.\n",
-    "    @classmethod\n",
-    "    def _from_config(\n",
-    "        cls, run_container: RunContainer,  config: CustomConfig, category: str\n",
-    "    ) -> \"DataTestBatchRunner\":\n",
-    "        if config.params is None:\n",
-    "            delta = 0\n",
-    "        else:\n",
-    "            delta = config.params[\"delta\"]\n",
-    "        tests = [CustomTest(delta=delta)]\n",
-    "        return cls(tests, category)\n",
-    "\n",
-    "    # Signature should not be changed.\n",
-    "    def _outputs_to_batch_res(\n",
-    "        self,\n",
-    "        run_container: RunContainer,\n",
-    "        outputs: List[TestOutput],\n",
-    "        extra_infos: List[dict],\n",
-    "        duration: float,\n",
-    "    ) -> TestBatchResult:\n",
-    "        long_description_tabs = [\n",
-    "            {\"title\": \"Description\", \"contents\": self.long_description},\n",
-    "            {\"title\": \"Why it Matters\", \"contents\": \"Explain why this test matters.\"},\n",
-    "            {\n",
-    "                \"title\": \"Configuration\",\n",
-    "                \"contents\": \"Explain how this test is configured.\"\n",
-    "            },\n",
-    "            {\n",
-    "                \"title\": \"Example\",\n",
-    "                \"contents\": \"Include an example of how this test works.\"\n",
-    "            },\n",
-    "        ]\n",
-    "        return TestBatchResult(\n",
-    "            self.type,\n",
-    "            self.description,\n",
-    "            long_description_tabs,\n",
-    "            self.category,\n",
-    "            outputs,\n",
-    "            [],\n",
-    "            duration,\n",
-    "            extra_infos,\n",
-    "            [TableColumn(\"Severity\")],\n",
-    "            outputs[0].severity,\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    # Signature should not be changed.\n",
-    "    @property\n",
-    "    def description(self) -> str:\n",
-    "        return \"This is custom test\"\n",
-    "\n",
-    "    # Signature should not be changed.\n",
-    "    @property\n",
-    "    def long_description(self) -> str:\n",
-    "        return \"This is a long description of a custom test.\"\n",
-    "\n",
-    "    # Signature should not be changed.\n",
-    "    @property\n",
-    "    def type(self) -> str:\n",
-    "        return \"Example Custom Test\"\n"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {
-    "pycharm": {
-     "name": "#%%\n"
-    }
-   },
-   "outputs": [],
-   "source": [
-    "custom_test_path = client.upload_file(\"fraud/custom_test.py\", upload_path=upload_path)\n"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {
-    "pycharm": {
-     "name": "#%%\n"
-    }
-   },
-   "outputs": [],
-   "source": [
-    "stress_test_with_model_config = {\n",
-    "    \"run_name\": \"Custom Test Example\",\n",
-    "    \"data_info\": {\n",
-    "        \"ref_dataset_id\": ref_dataset_id, \n",
-    "        \"eval_dataset_id\": eval_dataset_id,\n",
-    "    },\n",
-    "    \"test_suite_config\": {\n",
-    "        \"custom_tests\": [\n",
-    "            {\n",
-    "                \"custom_test_category\": \"Data Cleanliness\", \n",
-    "                \"test_path\": custom_test_path\n",
-    "            }\n",
-    "        ],\n",
-    "    },\n",
-    "    \"model_id\": model_id\n",
-    "}\n",
-    "stress_job = client.start_stress_test(\n",
-    "    stress_test_with_model_config, project.project_id, agent_id=AGENT_ID\n",
-    ")\n",
-    "stress_job.get_status(verbose=True, wait_until_finish=True)\n"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {
-    "pycharm": {
-     "name": "#%%\n"
-    }
-   },
-   "outputs": [],
-   "source": [
-    "stress_job.get_test_run()\n"
    ]
   }
  ],
@@ -1099,7 +994,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.9.13"
+   "version": "3.9.7"
   }
  },
  "nbformat": 4,

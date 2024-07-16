@@ -60,7 +60,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.8.1
+                2.9.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -200,7 +200,7 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE API_KEY</span>
-<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
+<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (e.g., https://rime.example.rbst.io)</span>
 <span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">API_TOKEN</span><span class="p">)</span>
 <br/></pre></div>
@@ -230,8 +230,8 @@
 </div>
 <p><strong>Go back to the UI to see the Arxiv Project</strong></p>
 </section>
-<section id="Uploading-the-Model-+-Datasets-+-Predictions">
-<h2><strong>Uploading the Model + Datasets + Predictions</strong><a class="headerlink" href="#Uploading-the-Model-+-Datasets-+-Predictions" title="Permalink to this heading"></a></h2>
+<section id="Preparing-the-Model-+-Datasets-+-Predictions">
+<h2><strong>Preparing the Model + Datasets + Predictions</strong><a class="headerlink" href="#Preparing-the-Model-+-Datasets-+-Predictions" title="Permalink to this heading"></a></h2>
 <p>For this demo, we are going to use the prediction logs of a text classification model for arxiv, a popular research database.</p>
 <p>The model classifies the research paper into a number of different categories such as -</p>
 <ol class="arabic simple">
@@ -240,23 +240,53 @@
 <li><p>Dark Matter</p></li>
 </ol>
 <p>We now want to kick off RIME Stress Tests that will help us evaluate the model in further depth beyond basic performance metrics like accuracy, precision, recall. In order to do this, we will upload this pre-trained model, the reference dataset the model was trained on, and the evaluation dataset the model was evaluated on to an S3 bucket that can be accessed by RIME. Futhermore, we’ll need to register them with RIME.</p>
+<section id="Uploading-Artifacts-to-Blob-Storage">
+<h3><strong>Uploading Artifacts to Blob Storage</strong><a class="headerlink" href="#Uploading-Artifacts-to-Blob-Storage" title="Permalink to this heading"></a></h3>
+<p>For SaaS environments using the default S3 storage location, the Python SDK supports direct file uploads using <code class="docutils literal notranslate"><span class="pre">upload_*()</span></code>.</p>
+<p>For other environments and storage technologies, artifacts must be managed through alternate means.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">upload_path</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_arxiv&quot;</span>
-<span class="n">ref_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;arxiv/data/train.json.gz&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
-<span class="n">eval_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;arxiv/data/val_0_with_label.json.gz&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
-<span class="n">ref_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;arxiv/data/preds.train.jsonl.gz&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
-<span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;arxiv/data/preds.val_0.jsonl.gz&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IS_SAAS</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># TOGGLE True/False (Note: SaaS environments use URLs ending in &quot;rbst.io&quot; and have an &quot;Internal Agent&quot;)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">BLOB_STORE_URI</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># PROVIDE BLOB STORE URI (e.g., &quot;s3://acmecorp-rime&quot;)</span>
+    <span class="k">assert</span> <span class="n">BLOB_STORE_URI</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span>
+
+<span class="n">UPLOAD_PATH</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_arxiv&quot;</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">ref_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;arxiv/data/train.json.gz&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">eval_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;arxiv/data/val_0_with_label.json.gz&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">ref_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;arxiv/data/preds.train.jsonl.gz&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;arxiv/data/preds.val_0.jsonl.gz&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">ref_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/train.json.gz&quot;</span>
+    <span class="n">eval_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/val_0_with_label.json.gz&quot;</span>
+
+    <span class="n">ref_preds_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/preds.train.jsonl.gz&quot;</span>
+    <span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/preds.val_0.jsonl.gz&quot;</span>
 <br/></pre></div>
 </div>
 </div>
@@ -297,6 +327,7 @@
 <br/></pre></div>
 </div>
 </div>
+</section>
 </section>
 <section id="Running-a-Stress-Test">
 <h2><strong>Running a Stress Test</strong><a class="headerlink" href="#Running-a-Stress-Test" title="Permalink to this heading"></a></h2>
@@ -426,6 +457,7 @@
 <section id="Uploading-a-Batch-of-Production-Data-&amp;-Model-Predictions-to-Continuous-Testing">
 <h2><strong>Uploading a Batch of Production Data &amp; Model Predictions to Continuous Testing</strong><a class="headerlink" href="#Uploading-a-Batch-of-Production-Data-&-Model-Predictions-to-Continuous-Testing" title="Permalink to this heading"></a></h2>
 <p>The text classification model has been in production for the past week. Production data and model predictions have been collected and stored for the past week. Now, we will use Continuous Testing to track how the model performed across the last week.</p>
+<p><strong>Upload the Latest Batch of Production Data</strong></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -437,19 +469,25 @@
     <span class="p">],</span>
     <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span>
 <span class="p">}</span>
-<span class="n">prod_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;arxiv/data/val_1.json.gz&#39;</span><span class="p">),</span>
-    <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
+
+<span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">prod_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;arxiv/data/val_1.json.gz&#39;</span><span class="p">),</span>
+        <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">prod_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;arxiv/data/preds.val_1.jsonl.gz&#39;</span><span class="p">),</span>
+        <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">prod_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/val_1.json.gz&quot;</span>
+    <span class="n">prod_preds_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/preds.val_1.jsonl.gz&quot;</span>
+
 <span class="n">prod_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;prod_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
     <span class="n">prod_s3_path</span><span class="p">,</span>
     <span class="n">data_params</span><span class="o">=</span><span class="n">data_params</span><span class="p">,</span>
     <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
-<span class="p">)</span>
-<span class="n">prod_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;arxiv/data/preds.val_1.jsonl.gz&#39;</span><span class="p">),</span>
-    <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
     <span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">prod_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>

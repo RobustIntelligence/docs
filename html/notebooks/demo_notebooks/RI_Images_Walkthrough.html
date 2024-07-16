@@ -60,7 +60,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.8.1
+                2.9.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -178,6 +178,7 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rime_sdk</span> <span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <br/></pre></div>
 </div>
 </div>
@@ -203,10 +204,11 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE API_KEY</span>
-<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
+<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (e.g., https://rime.example.rbst.io)</span>
 <span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
+
 <span class="n">rime_client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CLUSTER_URL</span><span class="p">,</span> <span class="n">API_TOKEN</span><span class="p">)</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
 </section>
@@ -228,42 +230,101 @@
     <span class="s2">&quot;MODEL_TASK_MULTICLASS_CLASSIFICATION&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">project</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
-<p><strong>Go back to the UI or click on the link above to see the Project</strong></p>
+<p><strong>Go back to the UI or click on the link above to see the Project.</strong></p>
 </section>
-<section id="Uploading-the-Datasets-+-Predictions">
-<h2><strong>Uploading the Datasets + Predictions</strong><a class="headerlink" href="#Uploading-the-Datasets-+-Predictions" title="Permalink to this heading"></a></h2>
-<p>For this demo, we are going to use the predictions of a image classification model for animals. The dataset we will be using is from Animals With Attributes 2 (AWA2), a benchmarking image dataset that records features and labels for numerous animals in the wild. The model you have trained is a ResNet designed to predict on the images in this diverse dataset.</p>
+<section id="Preparing-the-Model-+-Datasets">
+<h2><strong>Preparing the Model + Datasets</strong><a class="headerlink" href="#Preparing-the-Model-+-Datasets" title="Permalink to this heading"></a></h2>
+<p>For this demo, we are going to use the predictions of a image classification model for animals. The dataset we will be using is from Animals With Attributes 2 (AWA2), a benchmarking image dataset that records features and labels for numerous animals in the wild. The model you have trained is a ResNet (<code class="docutils literal notranslate"><span class="pre">resnet18</span></code>) designed to predict on the images in this diverse dataset.</p>
 <p>The model classifies an image into a number of different categories such as -</p>
 <ol class="arabic simple">
 <li><p>Sheep</p></li>
 <li><p>Killer Whale</p></li>
 <li><p>Monkey</p></li>
 </ol>
-<p>We now want to kick off RIME Stress Tests that will help us evaluated the model in further depth beyond basic performance metrics like accuracy, precision, recall. In order to do this, we will upload this pre-trained model, the reference dataset the model was trained on, and the evaluation dataset the model was evaluated on to an S3 bucket that can be accessed by RIME.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">upload_path</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_awa2&quot;</span>
-<span class="n">rime_models_directory</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span><span class="s2">&quot;awa2/models&quot;</span><span class="p">,</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span><span class="p">)</span>
-<span class="n">rime_model_path</span> <span class="o">=</span> <span class="n">rime_models_directory</span> <span class="o">+</span> <span class="s2">&quot;/awa2_cpu.py&quot;</span>
-<br/></pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<p>We now want to kick off RIME Stress Tests that will help us evaluated the model in further depth beyond basic performance metrics like accuracy, precision, recall.</p>
+<section id="Define-the-Model-Interface">
+<h3><strong>Define the Model Interface</strong><a class="headerlink" href="#Define-the-Model-Interface" title="Permalink to this heading"></a></h3>
+<p>We will load and execute this model natively in the RIME product. To do so, a function <code class="docutils literal notranslate"><span class="pre">predict_dict()</span></code> (or <code class="docutils literal notranslate"><span class="pre">predict_df()</span></code>) must be implemented in a Python file that is uploaded to the RIME S3 bucket along with the model artifact(s).</p>
+<p><strong>For more details on implementing this function, see “Defining a Model Interface” in the product documentation.</strong></p>
+<p>The implementation for this ResNet model is shown below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
-<span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">from</span> <span class="nn">torchvision.io</span> <span class="kn">import</span> <span class="n">read_image</span><span class="p">,</span> <span class="n">ImageReadMode</span>
+<span class="kn">import</span> <span class="nn">torchvision.models</span> <span class="k">as</span> <span class="nn">models</span>
+<span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="nn">transforms</span>
 
-<span class="c1"># All registered resources need to have unique names, so we append the current</span>
-<span class="c1"># timestamp in case this notebook is rerun.</span>
-<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">rime_model_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
+
+<span class="n">IMG_SIZE</span><span class="o">=</span><span class="mi">224</span>
+<span class="n">NUM_CLASSES</span><span class="o">=</span><span class="mi">40</span>
+<span class="n">NUM_FEATURES</span><span class="o">=</span><span class="mi">512</span>
+<span class="n">MODEL_FOLDER_PATH</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Net</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backbone</span><span class="p">,</span> <span class="n">features_size</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Net</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1"># Resnet Backbone (includes avg pooling layer, takes off last FC layer)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="nb">list</span><span class="p">(</span><span class="n">backbone</span><span class="o">.</span><span class="n">children</span><span class="p">())[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">features_size</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns network outputs and the features &quot;&quot;&quot;</span>
+        <span class="c1"># put images through ResNet backbone</span>
+        <span class="n">img_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="n">img_features</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">img_features</span><span class="p">,</span> <span class="n">start_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">(</span><span class="n">img_features</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">outputs</span>
+
+
+<span class="n">backbone</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet18</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Net</span><span class="p">(</span><span class="n">backbone</span><span class="p">,</span> <span class="n">NUM_FEATURES</span><span class="p">,</span> <span class="n">NUM_CLASSES</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+        <span class="n">MODEL_FOLDER_PATH</span> <span class="o">/</span> <span class="s2">&quot;model.pt&quot;</span><span class="p">,</span>
+        <span class="n">map_location</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">train_mean</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">]</span>
+<span class="n">train_std</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">]</span>
+<span class="n">img_normalize</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">train_mean</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">train_std</span><span class="p">)</span>
+<span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">((</span><span class="n">IMG_SIZE</span><span class="p">,</span> <span class="n">IMG_SIZE</span><span class="p">)),</span>
+        <span class="n">transforms</span><span class="o">.</span><span class="n">ConvertImageDtype</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">),</span>
+        <span class="n">img_normalize</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">predict_dict</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Predicts on datapoint.&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;image_path&quot;</span><span class="p">])</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="n">probs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="Uploading-Artifacts-to-Blob-Storage">
+<h3><strong>Uploading Artifacts to Blob Storage</strong><a class="headerlink" href="#Uploading-Artifacts-to-Blob-Storage" title="Permalink to this heading"></a></h3>
+<p>For SaaS environments using the default S3 storage location, the Python SDK supports direct file uploads using <code class="docutils literal notranslate"><span class="pre">upload_*()</span></code>.</p>
+<p>For other environments and storage technologies, artifacts must be managed through alternate means.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IS_SAAS</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># TOGGLE True/False (Note: SaaS environments use URLs ending in &quot;rbst.io&quot; and have an &quot;Internal Agent&quot;)</span>
 <br/></pre></div>
 </div>
 </div>
@@ -271,17 +332,163 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_inputs_file</span> <span class="o">=</span> <span class="s2">&quot;awa2/data/train_inputs_trial.json&quot;</span>
-<span class="n">test_inputs_file</span> <span class="o">=</span> <span class="s2">&quot;awa2/data/test_inputs_trial.json&quot;</span>
-<span class="n">_</span><span class="p">,</span> <span class="n">train_inputs_path</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_local_image_dataset_file</span><span class="p">(</span>
-    <span class="n">train_inputs_file</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;image_path&quot;</span><span class="p">],</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
-<span class="n">_</span><span class="p">,</span> <span class="n">test_inputs_path</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_local_image_dataset_file</span><span class="p">(</span>
-    <span class="n">test_inputs_file</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;image_path&quot;</span><span class="p">],</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">BLOB_STORE_URI</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># PROVIDE BLOB STORE URI (e.g., &quot;s3://acmecorp-rime&quot;)</span>
+    <span class="k">assert</span> <span class="n">BLOB_STORE_URI</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span>
+
+<span class="n">UPLOAD_PATH</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_awa2&quot;</span>
 <br/></pre></div>
 </div>
 </div>
+<p><strong>This file and the pre-trained model artifact should be uploaded to the S3 bucket in a directory, like so:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>s3://acmecorp-rime/
+└── ri_public_examples_awa2/
+    └── models/
+        ├── awa2_cpu.py # The model interface.
+        └── model.pt    # The pre-trained model artifact.
+</pre></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">model_directory</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;awa2/models&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">model_path</span> <span class="o">=</span> <span class="n">model_directory</span> <span class="o">+</span> <span class="s2">&quot;/awa2_cpu.py&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">model_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/models/awa2_cpu.py&quot;</span>
+<br/></pre></div>
+</div>
+</div>
+</section>
+<section id="Prepare-the-Datasets">
+<h3><strong>Prepare the Datasets</strong><a class="headerlink" href="#Prepare-the-Datasets" title="Permalink to this heading"></a></h3>
+</section>
+<section id="Datasets">
+<h3>Datasets<a class="headerlink" href="#Datasets" title="Permalink to this heading"></a></h3>
+<p>Datasets used for Image Classification are treated similarly to those for other multi-class classification tasks; however, because these models require loading many separate image files, an index file is used to define how each image file can be accessed.</p>
+<p>This is a JSON list with the following schema:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>[
+  {
+    &quot;image_path&quot;: &quot;s3://acmecorp-rime/ri_public_examples_awa2/data/JPEGImages/rabbit_10567.jpg&quot;,
+    &quot;label&quot;: 22
+  },
+  {
+    &quot;image_path&quot;: &quot;s3://acmecorp-rime/ri_public_examples_awa2/data/JPEGImages/gorilla_10007.jpg&quot;,
+    &quot;label&quot;: 15
+  },
+  ...
+]
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">image_path</span></code>: The remote path (S3 URI in this case) to the actual image file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">label</span></code>: The index corresponding to the correct classification for this image.</p></li>
+</ul>
+<p><strong>Each index file represents a single dataset, so two index files should be made: one to represent the train set and another for the test set.</strong></p>
+</section>
+<section id="Prediction-Logs-(Recommended)">
+<h3>Prediction Logs (Recommended)<a class="headerlink" href="#Prediction-Logs-(Recommended)" title="Permalink to this heading"></a></h3>
+<p>Prediction logs for image classification can be provided as JSON lists as well, taking the following schema:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>[
+  [
+    1.1104089002456075e-11,
+    3.6050631924133825e-10,
+    4.1508294722951724e-20,
+    7.330719148032627e-13,
+    9.293689337846649e-18,
+    3.868183646115429e-14,
+    1.704536202851159e-06,
+    2.4145534558567857e-20,
+    2.8761520942666152e-11,
+    1.7608596601225573e-13,
+    4.269430989300993e-11,
+    1.116736217388059e-11,
+    7.042922902655846e-07,
+    9.716905014986454e-13,
+    1.7269354671120438e-18,
+    6.485594957761229e-17,
+    7.252261366040482e-15,
+    2.3613219823914733e-08,
+    4.920715087296506e-15,
+    3.4614554078545067e-15,
+    6.401289276425359e-09,
+    1.0357405715423831e-13,
+    0.999997615814209,
+    2.574246371622735e-10,
+    2.507005291297465e-13,
+    1.0043908760248854e-10,
+    8.996452888210271e-11,
+    1.1165354862896493e-08,
+    5.0673867879602597e-11,
+    4.4046667355135405e-13,
+    7.908640749394995e-16,
+    2.0289467883571888e-08,
+    9.762042285643702e-10,
+    6.997168686476152e-13,
+    5.562191263130956e-10,
+    6.239210708830989e-23,
+    4.135972814234279e-12,
+    9.318691202733309e-16,
+    1.6564650431887982e-15,
+    4.727699351794734e-13
+  ],
+  ...
+]
+</pre></div>
+</div>
+<p><strong>Each value corresponds to a prediction for the ``nth`` class, where ``n`` corresponds to the index of the class.</strong></p>
+<p>(e.g., in the above list, the model has predicted the class corresponding to index 22: a <code class="docutils literal notranslate"><span class="pre">&quot;rabbit&quot;</span></code>)</p>
+<p><strong>All datasets for this example should be uploaded to the RIME S3 bucket in a directory, like so:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>s3://acmecorp-rime/
+└── ri_public_examples_awa2/
+    └── data/
+        ├── train_inputs_trial.json   # Index file for train set.
+        ├── train_preds_trial.json    # Prediction logs for train set.
+        ├── test_inputs_trial.json    # Index file for test set.
+        ├── test_preds_trial.json     # Prediction logs for test set.
+        └── JPEGImages/               # Directory of raw image files.
+            ├── rabbit_10567.jpg
+            ├── gorilla_10007.jpg
+            └── ...
+</pre></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">ref_inputs_local_path</span> <span class="o">=</span> <span class="s2">&quot;awa2/data/train_inputs_trial.json&quot;</span>
+    <span class="n">eval_inputs_local_path</span> <span class="o">=</span> <span class="s2">&quot;awa2/data/test_inputs_trial.json&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">ref_inputs_path</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_local_image_dataset_file</span><span class="p">(</span>
+        <span class="n">ref_inputs_local_path</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;image_path&quot;</span><span class="p">],</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">eval_inputs_path</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_local_image_dataset_file</span><span class="p">(</span>
+        <span class="n">eval_inputs_local_path</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;image_path&quot;</span><span class="p">],</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+
+    <span class="n">ref_preds_path</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;awa2/data/train_preds_trial.json&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">eval_preds_path</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;awa2/data/test_preds_trial.json&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># The reference and evaluation dataset index files.</span>
+    <span class="n">ref_inputs_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/train_inputs_trial.json&quot;</span>
+    <span class="n">eval_inputs_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/test_inputs_trial.json&quot;</span>
+
+    <span class="c1"># Prediction logs for the reference and evaluation datasets.</span>
+    <span class="n">ref_preds_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/train_preds_trial.json&quot;</span>
+    <span class="n">eval_preds_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/test_preds_trial.json&quot;</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Register-the-Artifacts">
+<h3><strong>Register the Artifacts</strong><a class="headerlink" href="#Register-the-Artifacts" title="Permalink to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -328,12 +535,27 @@
     <span class="s2">&quot;cow&quot;</span><span class="p">,</span>
     <span class="s2">&quot;dolphin&quot;</span><span class="p">,</span>
 <span class="p">]</span>
+
 <span class="n">data_info</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;image_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;image_path&quot;</span><span class="p">],</span>
     <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span>
     <span class="s2">&quot;class_names&quot;</span><span class="p">:</span> <span class="n">class_names</span><span class="p">,</span>
 <span class="p">}</span>
-<br/></pre></div>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+
+<span class="c1"># All registered resources need to have unique names, so we append the current</span>
+<span class="c1"># timestamp in case this notebook is rerun.</span>
+<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">model_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
+</pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -342,37 +564,36 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ref_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;ref_set_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-    <span class="n">train_inputs_path</span><span class="p">,</span>
+    <span class="n">ref_inputs_path</span><span class="p">,</span>
     <span class="n">data_info</span><span class="p">,</span>
     <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">eval_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;eval_set_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-    <span class="n">test_inputs_path</span><span class="p">,</span>
+    <span class="n">eval_inputs_path</span><span class="p">,</span>
     <span class="n">data_info</span><span class="p">,</span>
     <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ref_preds_path</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="s2">&quot;awa2/data/train_preds_trial.json&quot;</span><span class="p">)</span>
-<span class="n">eval_preds_path</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="s2">&quot;awa2/data/test_preds_trial.json&quot;</span><span class="p">)</span>
-<span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
     <span class="n">ref_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">ref_preds_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
-    <span class="p">)</span>
+<span class="p">)</span>
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
     <span class="n">eval_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">eval_preds_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
 </section>
-<section id="Running-a-Stress-Test">
-<h2><strong>Running a Stress Test</strong><a class="headerlink" href="#Running-a-Stress-Test" title="Permalink to this heading"></a></h2>
+</section>
+<section id="Run-a-Stress-Test">
+<h2><strong>Run a Stress Test</strong><a class="headerlink" href="#Run-a-Stress-Test" title="Permalink to this heading"></a></h2>
 <p>AI Stress Tests allow you to test your data and model before deployment. They are a comprehensive suite of hundreds of tests that automatically identify implicit assumptions and weaknesses of pre-production models. Each stress test is run on a single model and its associated reference and evaluation datasets.</p>
 <p>Below is a sample configuration of how to setup and run a RIME Stress Test for Images.</p>
 <div class="nbinput nblast docutils container">
@@ -395,12 +616,12 @@
 <span class="p">}</span>
 <span class="n">stress_job</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span><span class="n">stress_test_config</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
 </section>
-<section id="Stress-Test-Results">
-<h2><strong>Stress Test Results</strong><a class="headerlink" href="#Stress-Test-Results" title="Permalink to this heading"></a></h2>
+<section id="Analyze-the-Stress-Test-Results">
+<h2><strong>Analyze the Stress Test Results</strong><a class="headerlink" href="#Analyze-the-Stress-Test-Results" title="Permalink to this heading"></a></h2>
 <p>Stress tests are grouped first by risk categories and then into categories that measure various aspects of model robustness (subset performance, distribution drift, adversarial, transformations). Key findings to improve your model are aggregated on the category level as well. Tests are ranked by default by a shared severity metric. Clicking on an individual test surfaces more detailed information.</p>
 <p>You can view the detailed results in the UI by running the below cell and redirecting to the generated link. This page shows granular results for a given AI Stress Test run.</p>
 <div class="nbinput nblast docutils container">
@@ -426,14 +647,14 @@
 <section id="Transformation-Tests">
 <h4>Transformation Tests<a class="headerlink" href="#Transformation-Tests" title="Permalink to this heading"></a></h4>
 <p>The results of the transformation tests are below. These tests can be thought as ways to test your models response to augmented image data, which can often occur in reality. They help to make sure that your model is invariant to such changes in your data.</p>
-<img alt="Image of subset results for an image perturbation feature of an image classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_images_walkthrough/image_perturb.png" />
+<img alt="Image of subset results for an image brightness feature of an image classification model" src="https://ri-documentation-public-release-images.s3.us-west-2.amazonaws.com/en/2.5-stable/_static/images/demo_notebooks/ri_images_walkthrough/image_perturb.png" />
 </section>
 </section>
-<section id="Programatically-Querying-the-Results">
-<h3>Programatically Querying the Results<a class="headerlink" href="#Programatically-Querying-the-Results" title="Permalink to this heading"></a></h3>
+<section id="Programatically-Query-the-Results">
+<h3>Programatically Query the Results<a class="headerlink" href="#Programatically-Query-the-Results" title="Permalink to this heading"></a></h3>
 <p>RIME not only provides you with an intuitive UI to visualize and explore these results, but also allows you to programmatically query these results. This allows customers to integrate with their MLOps pipeline, log results to experiment management tools like MLFlow, bring automated decision making to their ML practicies, or store these results for future references.</p>
 <p>Run the below cell to programmatically query the results. The results are outputed as a pandas dataframe.</p>
-<p><strong>Access results at the a test run overview level</strong></p>
+<p><strong>To access results at the a test run overview level:</strong></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -444,7 +665,7 @@
 <br/></pre></div>
 </div>
 </div>
-<p><strong>Access detailed test results at each individual test cases level</strong></p>
+<p><strong>To access detailed test results at each individual test cases level:</strong></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -459,7 +680,8 @@
 </section>
 <section id="Deploy-to-Production-and-set-up-Continuous-Testing">
 <h2><strong>Deploy to Production and set up Continuous Testing</strong><a class="headerlink" href="#Deploy-to-Production-and-set-up-Continuous-Testing" title="Permalink to this heading"></a></h2>
-<p>Once you have identified the best stress test run, you can deploy the associated model and set up Continuous Testing in order to automatically detect “bad” incoming data and statistically significant distributional drift.</p>
+<p>Assume that the image classification model has been in production for the past week, and production data and predictions have been collected for the past two weeks.</p>
+<p>Now, we can use Continuous Testing to track how the model performed during this time!</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -468,44 +690,108 @@
 
 <span class="n">ct_instance</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_ct</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 <span class="n">ct_instance</span>
-<br/></pre></div>
+</pre></div>
+</div>
+</div>
+<section id="Prepare-an-Incremental-Batch-of-Data">
+<h3><strong>Prepare an Incremental Batch of Data</strong><a class="headerlink" href="#Prepare-an-Incremental-Batch-of-Data" title="Permalink to this heading"></a></h3>
+<p>Data used in Continuous Testing follows the same formatting guidelines as indicated in <strong>Prepare the Datasets</strong> above, with the addition of a <code class="docutils literal notranslate"><span class="pre">&quot;timestamp&quot;</span></code> key to the JSON index file to indicate when the data was received:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>[
+  {
+    &quot;image_path&quot;: &quot;s3://acmecorp-rime/ri_public_examples_awa2/data/JPEGImages/antelope_10453.jpg&quot;,
+    &quot;label&quot;: 0,
+    &quot;timestamp&quot;: &quot;2022-03-01&quot;
+  },
+  {
+    &quot;image_path&quot;: &quot;s3://acmecorp-rime/ri_public_examples_awa2/data/JPEGImages/rhinoceros_10475.jpg&quot;,
+    &quot;label&quot;: 21,
+    &quot;timestamp&quot;: &quot;2022-03-01&quot;
+  },
+  ...
+]
+</pre></div>
+</div>
+<p><strong>An incremental dataset for this example should be uploaded to the S3 bucket in a directory, like so:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>s3://acmecorp-rime/
+└── ri_public_examples_awa2/
+    └── data/
+        ├── ...
+        ├── test_inputs_monitoring_trial.json  # Index file for the incremental batch.
+        ├── monitoring_preds_trial.json        # Prediction logs for the incremental batch.
+        └── JPEGImages/                        # Directory of raw image files.
+            ├── rabbit_10567.jpg
+            ├── gorilla_10007.jpg
+            └── ...
+</pre></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">monitoring_inputs_local_path</span> <span class="o">=</span> <span class="s2">&quot;awa2/data/test_inputs_monitoring_trial.json&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">monitoring_inputs_path</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_local_image_dataset_file</span><span class="p">(</span>
+        <span class="n">monitoring_inputs_local_path</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;image_path&quot;</span><span class="p">],</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">monitoring_preds_path</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;awa2/data/monitoring_preds_trial.json&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># The index file for the incremental batch.</span>
+    <span class="n">monitoring_inputs_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/test_inputs_monitoring_trial.json&quot;</span>
+
+    <span class="c1"># Prediction logs for the incremental batch.</span>
+    <span class="n">monitoring_preds_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/monitoring_preds_trial.json&quot;</span>
+</pre></div>
 </div>
 </div>
 </section>
-<section id="Uploading-a-Batch-of-Production-Data-with-Model-Predictions-to-Continuous-Testing">
-<h2><strong>Uploading a Batch of Production Data with Model Predictions to Continuous Testing</strong><a class="headerlink" href="#Uploading-a-Batch-of-Production-Data-with-Model-Predictions-to-Continuous-Testing" title="Permalink to this heading"></a></h2>
-<p>The image classification model has been in production for the past week. Production data and model predictions have been collected and stored for the past two weeks. Now, we will use Continuous Testing to track how the model performed across the last two week.</p>
-<p><strong>Upload an Incremental Batch of Data</strong></p>
+<section id="id1">
+<h3><strong>Register the Artifacts</strong><a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">monitoring_inputs_file</span> <span class="o">=</span> <span class="s2">&quot;awa2/data/test_inputs_monitoring_trial.json&quot;</span>
-<span class="n">_</span><span class="p">,</span> <span class="n">monitoring_inputs_path</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_local_image_dataset_file</span><span class="p">(</span>
-    <span class="n">monitoring_inputs_file</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;image_path&quot;</span><span class="p">],</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span><span class="p">)</span>
-<span class="n">monitoring_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;monitoring_set_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">monitoring_inputs_path</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;image_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;image_path&quot;</span><span class="p">],</span> <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;class_names&quot;</span><span class="p">:</span> <span class="n">class_names</span><span class="p">,</span> <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">},</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">monitoring_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;monitoring_set_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">monitoring_inputs_path</span><span class="p">,</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;image_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;image_path&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;class_names&quot;</span><span class="p">:</span> <span class="n">class_names</span><span class="p">,</span>
+        <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span> <span class="c1"># Indicates the name of the timestamp key in the JSON schema.</span>
+    <span class="p">},</span>
+    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
 
-<span class="n">monitoring_preds_path</span> <span class="o">=</span> <span class="n">rime_client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="s2">&quot;awa2/data/monitoring_preds_trial.json&quot;</span><span class="p">)</span>
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
     <span class="n">monitoring_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">monitoring_preds_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
-<p><strong>Run Continuous Testing over Batch of Data</strong></p>
+</section>
+</section>
+<section id="Run-a-Continuous-Test">
+<h2><strong>Run a Continuous Test</strong><a class="headerlink" href="#Run-a-Continuous-Test" title="Permalink to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">ct_instance</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">monitoring_id</span><span class="p">,</span> <span class="n">override_existing_bins</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">ct_instance</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span>
+    <span class="n">monitoring_id</span><span class="p">,</span>
+    <span class="n">override_existing_bins</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+
 <span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
 <p><strong>Wait for a couple minutes and your results will appear in the UI</strong></p>
 </section>
-<section id="CT-Results">
-<h2><strong>CT Results</strong><a class="headerlink" href="#CT-Results" title="Permalink to this heading"></a></h2>
+<section id="Analyze-the-Continuous-Test-Results">
+<h2><strong>Analyze the Continuous Test Results</strong><a class="headerlink" href="#Analyze-the-Continuous-Test-Results" title="Permalink to this heading"></a></h2>
 <p>The Continuous Tests operate at the batch level and provide a mechanism to monitor the health of ML deployments in production. They allow the user to understand when errors begin to occur and surface the underlying drivers of such errors.</p>
 <p>You can explore the results in the UI by running the below cell and redirecting to the generated link</p>
 <div class="nbinput nblast docutils container">
@@ -513,7 +799,7 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_instance</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
 </section>

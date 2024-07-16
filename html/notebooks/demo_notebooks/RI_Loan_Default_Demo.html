@@ -58,7 +58,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.8.1
+                2.9.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -227,18 +227,45 @@ used downstream for various purposes, such as loan approval or funding allocatio
 </section>
 <section id="4.-Uploading-the-Model-and-Datasets">
 <h2>4. <strong>Uploading the Model and Datasets</strong><a class="headerlink" href="#4.-Uploading-the-Model-and-Datasets" title="Permalink to this heading"></a></h2>
-<section id="4.1.-Uploading-Loan-Default-Model">
-<h3>4.1. Uploading Loan Default Model<a class="headerlink" href="#4.1.-Uploading-Loan-Default-Model" title="Permalink to this heading"></a></h3>
+<section id="Uploading-Artifacts-to-Blob-Storage">
+<h3><strong>Uploading Artifacts to Blob Storage</strong><a class="headerlink" href="#Uploading-Artifacts-to-Blob-Storage" title="Permalink to this heading"></a></h3>
+<p>For SaaS environments using the default S3 storage location, the Python SDK supports direct file uploads using <code class="docutils literal notranslate"><span class="pre">upload_*()</span></code>.</p>
+<p>For other environments and storage technologies, artifacts must be managed through alternate means.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_dir</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;lending/models&#39;</span><span class="p">),</span>
-    <span class="n">upload_path</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_lending&quot;</span>
-<span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IS_SAAS</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># TOGGLE True/False (Note: SaaS environments use URLs ending in &quot;rbst.io&quot; and have an &quot;Internal Agent&quot;)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">BLOB_STORE_URI</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># PROVIDE BLOB STORE URI (e.g., &quot;s3://acmecorp-rime&quot;)</span>
+    <span class="k">assert</span> <span class="n">BLOB_STORE_URI</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span>
 
-<span class="n">model_path</span> <span class="o">=</span> <span class="n">model_dir</span> <span class="o">+</span> <span class="s2">&quot;/model.py&quot;</span>
+<span class="n">UPLOAD_PATH</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_lending&quot;</span>
+<br/></pre></div>
+</div>
+</div>
+<section id="4.1.-Uploading-Loan-Default-Model">
+<h4>4.1. Uploading Loan Default Model<a class="headerlink" href="#4.1.-Uploading-Loan-Default-Model" title="Permalink to this heading"></a></h4>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">model_dir</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;lending/models&#39;</span><span class="p">),</span>
+        <span class="n">upload_path</span> <span class="o">=</span> <span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+
+    <span class="n">model_path</span> <span class="o">=</span> <span class="n">model_dir</span> <span class="o">+</span> <span class="s2">&quot;/model.py&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">model_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/models/model.py&quot;</span>
 
 <span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span>
     <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;model_</span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -249,15 +276,18 @@ used downstream for various purposes, such as loan approval or funding allocatio
 </div>
 </section>
 <section id="4.2.a-Uploading-and-registering-the-reference-dataset-(training-data)">
-<h3>4.2.a Uploading and registering the reference dataset (training data)<a class="headerlink" href="#4.2.a-Uploading-and-registering-the-reference-dataset-(training-data)" title="Permalink to this heading"></a></h3>
+<h4>4.2.a Uploading and registering the reference dataset (training data)<a class="headerlink" href="#4.2.a-Uploading-and-registering-the-reference-dataset-(training-data)" title="Permalink to this heading"></a></h4>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ref_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;lending/data/ref.csv&#39;</span><span class="p">),</span>
-    <span class="n">upload_path</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_lending&quot;</span>
-<span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">ref_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;lending/data/ref.csv&#39;</span><span class="p">),</span>
+        <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">ref_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/ref.csv&quot;</span>
 
 <span class="n">ref_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
     <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;ref_dataset_</span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -278,15 +308,18 @@ used downstream for various purposes, such as loan approval or funding allocatio
 </div>
 </section>
 <section id="4.2.b-Uploading-and-registering-reference-labels-dataset">
-<h3>4.2.b Uploading and registering reference labels dataset<a class="headerlink" href="#4.2.b-Uploading-and-registering-reference-labels-dataset" title="Permalink to this heading"></a></h3>
+<h4>4.2.b Uploading and registering reference labels dataset<a class="headerlink" href="#4.2.b-Uploading-and-registering-reference-labels-dataset" title="Permalink to this heading"></a></h4>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ref_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;lending/data/ref_preds.csv&quot;</span><span class="p">),</span>
-    <span class="n">upload_path</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_lending&quot;</span>
-<span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">ref_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;lending/data/ref_preds.csv&quot;</span><span class="p">),</span>
+        <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">ref_preds_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/ref_preds.csv&quot;</span>
 
 <span class="n">ref_pred_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
     <span class="n">dataset_id</span> <span class="o">=</span> <span class="n">ref_dataset_id</span><span class="p">,</span>
@@ -298,15 +331,18 @@ used downstream for various purposes, such as loan approval or funding allocatio
 </div>
 </section>
 <section id="4.3.a-Uploading-and-registering-evaluation-dataset">
-<h3>4.3.a Uploading and registering evaluation dataset<a class="headerlink" href="#4.3.a-Uploading-and-registering-evaluation-dataset" title="Permalink to this heading"></a></h3>
+<h4>4.3.a Uploading and registering evaluation dataset<a class="headerlink" href="#4.3.a-Uploading-and-registering-evaluation-dataset" title="Permalink to this heading"></a></h4>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eval_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;lending/data/eval.csv&#39;</span><span class="p">),</span>
-    <span class="n">upload_path</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_lending&quot;</span>
-<span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">eval_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;lending/data/eval.csv&#39;</span><span class="p">),</span>
+        <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">eval_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/eval.csv&quot;</span>
 
 <span class="n">eval_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
     <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;eval_dataset_</span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -328,15 +364,18 @@ used downstream for various purposes, such as loan approval or funding allocatio
 </div>
 </section>
 <section id="4.3.b-Uploading-and-registering-evaluation-predictions-dataset">
-<h3>4.3.b Uploading and registering evaluation predictions dataset<a class="headerlink" href="#4.3.b-Uploading-and-registering-evaluation-predictions-dataset" title="Permalink to this heading"></a></h3>
+<h4>4.3.b Uploading and registering evaluation predictions dataset<a class="headerlink" href="#4.3.b-Uploading-and-registering-evaluation-predictions-dataset" title="Permalink to this heading"></a></h4>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;lending/data/eval_preds.csv&quot;</span><span class="p">),</span>
-    <span class="n">upload_path</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_lending&quot;</span>
-<span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;lending/data/eval_preds.csv&quot;</span><span class="p">),</span>
+        <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/eval_preds.csv&quot;</span>
 
 <span class="n">eval_pred_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
     <span class="n">dataset_id</span> <span class="o">=</span> <span class="n">eval_dataset_id</span><span class="p">,</span>
@@ -346,6 +385,7 @@ used downstream for various purposes, such as loan approval or funding allocatio
 </pre></div>
 </div>
 </div>
+</section>
 </section>
 </section>
 <section id="5.-Running-a-Stress-Test">

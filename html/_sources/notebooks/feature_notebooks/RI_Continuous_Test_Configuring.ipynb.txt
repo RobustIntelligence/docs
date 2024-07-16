@@ -88,7 +88,7 @@
    "outputs": [],
    "source": [
     "API_TOKEN = '' # PASTE API_KEY \n",
-    "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)\n",
+    "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE (e.g., https://rime.example.rbst.io)\n",
     "AGENT_ID = '' # PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT"
    ]
   },
@@ -112,7 +112,7 @@
     "    \" Demonstration uses a tabular binary classification dataset\"\n",
     "    \" and model that simulates credit card fraud detection.\"\n",
     ")\n",
-    "project = client.create_ct(\n",
+    "project = client.create_project(\n",
     "    \"Continuous Testing Configuration Demo\", \n",
     "    description,\n",
     "    \"MODEL_TASK_BINARY_CLASSIFICATION\"\n",
@@ -127,16 +127,12 @@
    ]
   },
   {
-   "cell_type": "code",
-   "execution_count": null,
+   "cell_type": "markdown",
    "metadata": {},
-   "outputs": [],
    "source": [
-    "from datetime import datetime\n",
+    "For SaaS environments using the default S3 storage location, the Python SDK supports direct file uploads using `upload_*()`.\n",
     "\n",
-    "dt = str(datetime.now())\n",
-    "# Note: models and datasets need to have unique names.\n",
-    "model_id = project.register_model(f\"fraud_model_{dt}\", None, agent_id=AGENT_ID)"
+    "For other environments and storage technologies, artifacts must be managed through alternate means."
    ]
   },
   {
@@ -145,25 +141,66 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "upload_path = \"ri_public_examples_fraud\"\n",
+    "IS_SAAS = False # TOGGLE True/False (Note: SaaS environments use URLs ending in \"rbst.io\" and have an \"Internal Agent\")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "if not IS_SAAS:\n",
+    "    BLOB_STORE_URI = \"\" # PROVIDE BLOB STORE URI (e.g., \"s3://acmecorp-rime\")\n",
+    "    assert BLOB_STORE_URI != \"\"\n",
     "\n",
-    "def upload_and_register_data(dataset_name, **kwargs):\n",
-    "    dt = str(datetime.now())\n",
-    "    s3_path = client.upload_file(\n",
-    "        Path(f'fraud/data/fraud_{dataset_name}.csv'), upload_path=upload_path\n",
+    "UPLOAD_PATH = \"ri_public_examples_fraud\"\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "if IS_SAAS:\n",
+    "    ref_s3_path = client.upload_file(\n",
+    "        Path('fraud/data/fraud_ref.csv'), upload_path=UPLOAD_PATH\n",
+    "    )    \n",
+    "    ref_preds_s3_path = client.upload_file(\n",
+    "        Path(\"fraud/data/fraud_ref_preds.csv\"), upload_path=UPLOAD_PATH\n",
     "    )\n",
-    "    preds_s3_path = client.upload_file(\n",
-    "        Path(f\"fraud/data/fraud_{dataset_name}_preds.csv\"), upload_path=upload_path\n",
-    "    )\n",
-    "    dataset_id = project.register_dataset_from_file(\n",
-    "        f\"{dataset_name}_dataset_{dt}\", s3_path, data_params={\"label_col\": \"label\", **kwargs}, agent_id=AGENT_ID\n",
-    "    )\n",
-    "    project.register_predictions_from_file(\n",
-    "        dataset_id, model_id, preds_s3_path, agent_id=AGENT_ID\n",
-    "    )\n",
-    "    return dataset_id\n",
+    "else:    \n",
+    "    ref_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/fraud_ref.csv\"    \n",
+    "    ref_preds_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/fraud_ref_preds.csv\"\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Once the data and model are uploaded, we can register them to RIME. Once they're registered, we can refer to these resources using their RIME-generated ID's."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from datetime import datetime\n",
     "\n",
-    "ref_data_id = upload_and_register_data(\"ref\")"
+    "dt = str(datetime.now())\n",
+    "\n",
+    "# Note: models and datasets need to have unique names.\n",
+    "model_id = project.register_model(f\"fraud_model_{dt}\", None, agent_id=AGENT_ID)\n",
+    "\n",
+    "ref_dataset_id = project.register_dataset_from_file(\n",
+    "    f\"ref_dataset_{dt}\", ref_s3_path, data_params={\"label_col\": \"label\"}, agent_id=AGENT_ID\n",
+    ")\n",
+    "project.register_predictions_from_file(\n",
+    "    ref_dataset_id, model_id, ref_preds_s3_path, agent_id=AGENT_ID\n",
+    ")\n"
    ]
   },
   {
@@ -183,7 +220,7 @@
    "source": [
     "from datetime import timedelta\n",
     "\n",
-    "ct = project.create_ct(model_id, ref_data_id, timedelta(days=1))\n",
+    "ct = project.create_ct(model_id, ref_dataset_id, timedelta(days=1))\n",
     "ct"
    ]
   },
@@ -199,12 +236,32 @@
   {
    "cell_type": "code",
    "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "if IS_SAAS:\n",
+    "    ct_data_0_s3_path = client.upload_file(\n",
+    "        Path(\"fraud/data/fraud_incremental_0.csv\"), upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "else:\n",
+    "    ct_data_0_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/fraud_incremental_0.csv\"\n",
+    "\n",
+    "ct_data_0_id = project.register_dataset_from_file(\n",
+    "    f\"fraud_incremental_0_dataset_{dt}\", \n",
+    "    ct_data_0_s3_path, \n",
+    "    data_params={\"label_col\": \"label\", \"timestamp_col\": \"timestamp\"},\n",
+    "    agent_id=AGENT_ID\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
    "metadata": {
     "id": "EHxteK1gUklo"
    },
    "outputs": [],
    "source": [
-    "ct_data_0_id = upload_and_register_data(\"incremental_0\", timestamp_col=\"timestamp\")\n",
     "ct_job = ct.start_continuous_test(ct_data_0_id, agent_id=AGENT_ID)\n",
     "ct_job.get_status(verbose=True, wait_until_finish=True)"
    ]
@@ -224,7 +281,19 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "new_ref_data_id = upload_and_register_data(\"eval\")\n",
+    "if IS_SAAS:\n",
+    "    new_ref_data_s3_path = client.upload_file(\n",
+    "        Path(\"fraud/data/fraud_eval.csv\"), upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "else:\n",
+    "    new_ref_data_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/fraud_eval.csv\"\n",
+    "\n",
+    "new_ref_data_id = project.register_dataset_from_file(\n",
+    "    f\"eval_dataset_{dt}\", \n",
+    "    new_ref_data_s3_path, \n",
+    "    data_params={\"label_col\": \"label\"},\n",
+    "    agent_id=AGENT_ID\n",
+    ")\n",
     "\n",
     "# Update configuration based on the new stress test run\n",
     "ct.update_ct(ref_data_id=new_ref_data_id)\n",
@@ -246,7 +315,27 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "ct_data_1_id = upload_and_register_data(\"incremental_1\", timestamp_col=\"timestamp\")\n",
+    "if IS_SAAS:\n",
+    "    ct_data_1_s3_path = client.upload_file(\n",
+    "        Path(\"fraud/data/fraud_incremental_1.csv\"), upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "else:\n",
+    "    ct_data_1_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/fraud_incremental_1.csv\"\n",
+    "\n",
+    "ct_data_1_id = project.register_dataset_from_file(\n",
+    "    f\"fraud_incremental_1_dataset_{dt}\", \n",
+    "    ct_data_1_s3_path, \n",
+    "    data_params={\"label_col\": \"label\", \"timestamp_col\": \"timestamp\"},\n",
+    "    agent_id=AGENT_ID\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
     "ct_job = ct.start_continuous_test(ct_data_1_id, override_existing_bins=True, agent_id=AGENT_ID)\n",
     "ct_job.get_status(verbose=True, wait_until_finish=True)"
    ]

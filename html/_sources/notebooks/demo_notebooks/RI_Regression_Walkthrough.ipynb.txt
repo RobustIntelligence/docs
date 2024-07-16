@@ -33,7 +33,7 @@
    "outputs": [],
    "source": [
     "API_TOKEN = '' # PASTE API_KEY \n",
-    "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)\n",
+    "CLUSTER_URL = '' # PASTE DEDICATED DOMAIN OF RIME SERVICE (e.g., https://rime.example.rbst.io)\n",
     "AGENT_ID = '' # PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT\n"
    ]
   },
@@ -162,6 +162,86 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### **Uploading Artifacts to Blob Storage**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "For SaaS environments using the default S3 storage location, the Python SDK supports direct file uploads using `upload_*()`.\n",
+    "\n",
+    "For other environments and storage technologies, artifacts must be managed through alternate means."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "IS_SAAS = False # TOGGLE True/False (Note: SaaS environments use URLs ending in \"rbst.io\" and have an \"Internal Agent\")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "if not IS_SAAS:\n",
+    "    BLOB_STORE_URI = \"\" # PROVIDE BLOB STORE URI (e.g., \"s3://acmecorp-rime\")\n",
+    "    assert BLOB_STORE_URI != \"\"\n",
+    "\n",
+    "UPLOAD_PATH = \"ri_public_examples_nyc_tlc\"\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "if IS_SAAS:\n",
+    "    model_s3_dir = client.upload_directory(\n",
+    "        Path('nyc_tlc/models'), upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "    model_s3_path = model_s3_dir + \"/model.py\"\n",
+    "\n",
+    "    ref_s3_path = client.upload_file(\n",
+    "        Path('nyc_tlc/data/ref.csv'), upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "    eval_s3_path = client.upload_file(\n",
+    "        Path('nyc_tlc/data/eval.csv'), upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "    \n",
+    "    ref_preds_s3_path = client.upload_file(\n",
+    "        Path(\"nyc_tlc/data/ref_preds.csv\"), upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "    eval_preds_s3_path = client.upload_file(\n",
+    "        Path(\"nyc_tlc/data/eval_preds.csv\"), upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "else:\n",
+    "    model_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/models/model.py\"\n",
+    "    \n",
+    "    ref_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/ref.csv\"\n",
+    "    eval_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/eval.csv\"\n",
+    "    \n",
+    "    ref_preds_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/ref_preds.csv\"\n",
+    "    eval_preds_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/eval_preds.csv\"\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Once the data and model are uploaded to S3, we can register them to RIME. Once they're registered, we can refer to these resources using their RIME-generated ID's."
+   ]
+  },
+  {
    "cell_type": "code",
    "execution_count": null,
    "metadata": {},
@@ -169,24 +249,36 @@
    "source": [
     "from datetime import datetime\n",
     "\n",
-    "# Note: All registered models and datasets need to have unique names.\n",
     "dt = str(datetime.now())\n",
-    "upload_path = \"ri_public_examples_nyc_tlc\"\n",
     "\n",
-    "model_s3_path = client.upload_directory(Path(\"nyc_tlc/models\"), upload_path=upload_path)\n",
-    "model_id = project.register_model_from_path(f\"model_{dt}\", model_s3_path + \"/model.py\", agent_id=AGENT_ID)\n",
+    "# Note: models and datasets need to have unique names.\n",
+    "model_id = project.register_model_from_path(f\"model_{dt}\", model_s3_path, agent_id=AGENT_ID)\n",
     "\n",
-    "def upload_and_register_data(dataset, **kwargs):\n",
-    "    s3_path = client.upload_file(Path(f\"nyc_tlc/data/{dataset}.csv\"), upload_path=upload_path)\n",
-    "    dataset_id = project.register_dataset_from_file(f\"{dataset}_{dt}\", s3_path, {\"label_col\": \"TripDuration\", \n",
-    "                                                                                 \"protected_features\": [\"PULocationID\", \"TipAmount\"],\n",
-    "                                                                                 **kwargs}, agent_id=AGENT_ID)\n",
-    "    preds_s3_path = client.upload_file(Path(f\"nyc_tlc/data/{dataset}_preds.csv\"), upload_path=upload_path)\n",
-    "    project.register_predictions_from_file(dataset_id, model_id, preds_s3_path, agent_id=AGENT_ID)\n",
-    "    return dataset_id\n",
+    "ref_dataset_id = project.register_dataset_from_file(\n",
+    "    f\"ref_dataset_{dt}\",\n",
+    "    ref_s3_path,\n",
+    "    data_params={\n",
+    "        \"label_col\": \"TripDuration\",\n",
+    "        \"protected_features\": [\"PULocationID\", \"TipAmount\"]\n",
+    "    },\n",
+    "    agent_id=AGENT_ID\n",
+    ")\n",
+    "eval_dataset_id = project.register_dataset_from_file(\n",
+    "    f\"eval_dataset_{dt}\",\n",
+    "    eval_s3_path,\n",
+    "    data_params={\n",
+    "        \"label_col\": \"TripDuration\",\n",
+    "        \"protected_features\": [\"PULocationID\", \"TipAmount\"]\n",
+    "    },\n",
+    "    agent_id=AGENT_ID\n",
+    ")\n",
     "\n",
-    "ref_id = upload_and_register_data(\"ref\")\n",
-    "eval_id = upload_and_register_data(\"eval\")\n"
+    "project.register_predictions_from_file(\n",
+    "    ref_dataset_id, model_id, ref_preds_s3_path, agent_id=AGENT_ID\n",
+    ")\n",
+    "project.register_predictions_from_file(\n",
+    "    eval_dataset_id, model_id, eval_preds_s3_path, agent_id=AGENT_ID\n",
+    ")\n"
    ]
   },
   {
@@ -220,11 +312,16 @@
     "stress_test_config = {\n",
     "  \"run_name\": \"NYC TLC\",\n",
     "  \"data_info\": {\n",
-    "    \"ref_dataset_id\": ref_id,\n",
-    "    \"eval_dataset_id\": eval_id,\n",
+    "    \"ref_dataset_id\": ref_dataset_id,\n",
+    "    \"eval_dataset_id\": eval_dataset_id,\n",
     "  },\n",
     "  \"model_id\": model_id,\n",
-    "  \"categories\": [\"TEST_CATEGORY_TYPE_ADVERSARIAL\", \"TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE\", \"TEST_CATEGORY_TYPE_TRANSFORMATIONS\", \"TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS\"]\n",
+    "  \"categories\": [\n",
+    "      \"TEST_CATEGORY_TYPE_ADVERSARIAL\",\n",
+    "      \"TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE\",\n",
+    "      \"TEST_CATEGORY_TYPE_TRANSFORMATIONS\",\n",
+    "      \"TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS\"\n",
+    "  ]\n",
     "}\n",
     "stress_test_job = client.start_stress_test(\n",
     "    stress_test_config, \n",
@@ -293,7 +390,7 @@
    "source": [
     "from datetime import timedelta\n",
     "\n",
-    "ct_instance = project.create_ct(model_id, ref_id, timedelta(weeks=4))\n"
+    "ct_instance = project.create_ct(model_id, ref_dataset_id, timedelta(weeks=4))\n"
    ]
   },
   {
@@ -306,12 +403,46 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Upload the Latest Batch of Production Data**"
+   ]
+  },
+  {
    "cell_type": "code",
    "execution_count": null,
    "metadata": {},
    "outputs": [],
    "source": [
-    "prod_dataset_id = upload_and_register_data(\"test\", timestamp_col=\"PickupDatetime\")\n"
+    "dt = str(datetime.now())\n",
+    "\n",
+    "if IS_SAAS:\n",
+    "    prod_s3_path = client.upload_file(\n",
+    "        Path('nyc_tlc/data/test.csv'), \n",
+    "        upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "    prod_preds_s3_path = client.upload_file(\n",
+    "        Path('nyc_tlc/data/test_preds.csv'), \n",
+    "        upload_path=UPLOAD_PATH\n",
+    "    )\n",
+    "else:\n",
+    "    prod_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/test.csv\"\n",
+    "    prod_preds_s3_path = f\"{BLOB_STORE_URI}/{UPLOAD_PATH}/data/test_preds.csv\"\n",
+    "\n",
+    "prod_dataset_id = project.register_dataset_from_file(\n",
+    "    f\"prod_dataset_{dt}\", \n",
+    "    prod_s3_path, \n",
+    "    data_params={\n",
+    "        \"label_col\": \"TripDuration\",\n",
+    "        \"protected_features\": [\"PULocationID\", \"TipAmount\"],\n",
+    "        \"timestamp_col\": \"PickupDatetime\"\n",
+    "    },\n",
+    "    agent_id=AGENT_ID\n",
+    ")\n",
+    "project.register_predictions_from_file(\n",
+    "    prod_dataset_id, model_id, prod_preds_s3_path, agent_id=AGENT_ID\n",
+    ")"
    ]
   },
   {
@@ -400,7 +531,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.9.17"
+   "version": "3.9.7"
   }
  },
  "nbformat": 4,

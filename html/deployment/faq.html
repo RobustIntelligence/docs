@@ -57,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.8.1
+                2.9.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -173,6 +173,9 @@ Robust Intelligence will reach out beforehand to coordinate each upgrade.</p>
 <dt>5 - What logs and information are needed for assistance when an isssue is encountered?</dt><dd><p>If you encounter any issues and require assistance, please provide the logs and details of your agent deployment. To do so, execute the script below in the environment where your agent is deployed. You must have access to the environment and both <code class="docutils literal notranslate"><span class="pre">helm</span></code> and <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> tools installed.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 
+echo &quot;Enter the namespace the Rime Agent is installed in: &quot;
+read namespace
+
 current_datetime=$(date +&quot;%Y%m%d_%H%M%S&quot;)
 dir_name=&quot;rime_agent_logs-${current_datetime}&quot;
 mkdir &quot;$dir_name&quot;
@@ -182,16 +185,23 @@ exec 2&gt;errors.txt
 kubectl version &gt; k8s_version.txt
 helm version &gt; helm_version.txt
 
-helm get values rime-agent | awk &#39;!/USER-SUPPLIED VALUES/&#39; &gt; agent_values.yaml
+helm get values rime-agent -n $namespace | awk &#39;!/USER-SUPPLIED VALUES/&#39; &gt; agent_values.yaml
 
-kubectl get pods -o custom-columns=NAME:.metadata.name,READY:&quot;.status.containerStatuses[0].ready&quot;,STATUS:.status.phase,RESTARTS:&quot;.status.containerStatuses[0].restartCount&quot;,CREATED:.metadata.creationTimestamp,IMAGE:&quot;.spec.containers[0].image&quot; &gt; pods.txt
-for pod in $(kubectl get pods -o custom-columns=NAME:.metadata.name --no-headers); do
-        kubectl logs $pod &gt; ${pod}_logs.txt
+kubectl get pods -o custom-columns=NAME:.metadata.name,READY:&quot;.status.containerStatuses[0].ready&quot;,STATUS:.status.phase,RESTARTS:&quot;.status.containerStatuses[0].restartCount&quot;,CREATED:.metadata.creationTimestamp,IMAGE:&quot;.spec.containers[0].image&quot; -n $namespace &gt; pods.txt
+for pod in $(kubectl get pods -o custom-columns=NAME:.metadata.name --no-headers -n $namespace ); do
+                kubectl logs $pod -n $namespace &gt; ${pod}_logs.txt
 done
 
+kubectl get services -n $namespace &gt; services.txt
+for svc in $(kubectl get services -o custom-columns=NAME:.metadata.name --no-headers -n $namespace); do
+                kubectl describe service $svc -n $namespace &gt; ${svc}_service.txt
+done
+
+kubectl get events -n $namespace &gt; events.txt
+
 kubectl get crd | grep rbst &gt; rbst_crds.txt
-kubectl get rimejobs &gt; rimejobs.txt
-kubectl get crossplanerpcjobs &gt; crossplanejobs.txt
+kubectl get rimejobs -n $namespace &gt; rimejobs.txt
+kubectl get crossplanerpcjobs -n $namespace &gt; crossplanejobs.txt
 
 popd
 zip -r &quot;$dir_name.zip&quot; &quot;$dir_name&quot;

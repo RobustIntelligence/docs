@@ -60,7 +60,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.8.1
+                2.9.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -206,7 +206,7 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE API_KEY</span>
-<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
+<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (e.g., https://rime.example.rbst.io)</span>
 <span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
 </pre></div>
 </div>
@@ -228,7 +228,7 @@
     <span class="s2">&quot; Demonstration uses a tabular binary classification dataset&quot;</span>
     <span class="s2">&quot; and model that simulates credit card fraud detection.&quot;</span>
 <span class="p">)</span>
-<span class="n">project</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_ct</span><span class="p">(</span>
+<span class="n">project</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_project</span><span class="p">(</span>
     <span class="s2">&quot;Continuous Testing Configuration Demo&quot;</span><span class="p">,</span>
     <span class="n">description</span><span class="p">,</span>
     <span class="s2">&quot;MODEL_TASK_BINARY_CLASSIFICATION&quot;</span>
@@ -237,6 +237,46 @@
 </div>
 </div>
 <p><strong>Upload data to S3 and register dataset and prediction set</strong></p>
+<p>For SaaS environments using the default S3 storage location, the Python SDK supports direct file uploads using <code class="docutils literal notranslate"><span class="pre">upload_*()</span></code>.</p>
+<p>For other environments and storage technologies, artifacts must be managed through alternate means.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IS_SAAS</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># TOGGLE True/False (Note: SaaS environments use URLs ending in &quot;rbst.io&quot; and have an &quot;Internal Agent&quot;)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">BLOB_STORE_URI</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># PROVIDE BLOB STORE URI (e.g., &quot;s3://acmecorp-rime&quot;)</span>
+    <span class="k">assert</span> <span class="n">BLOB_STORE_URI</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span>
+
+<span class="n">UPLOAD_PATH</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_fraud&quot;</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">ref_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/data/fraud_ref.csv&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">ref_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;fraud/data/fraud_ref_preds.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">ref_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/fraud_ref.csv&quot;</span>
+    <span class="n">ref_preds_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/fraud_ref_preds.csv&quot;</span>
+<br/></pre></div>
+</div>
+</div>
+<p>Once the data and model are uploaded, we can register them to RIME. Once they’re registered, we can refer to these resources using their RIME-generated ID’s.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -244,35 +284,17 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
 <span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+
 <span class="c1"># Note: models and datasets need to have unique names.</span>
 <span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;fraud_model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">upload_path</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_fraud&quot;</span>
 
-<span class="k">def</span> <span class="nf">upload_and_register_data</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
-    <span class="n">s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-        <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;fraud/data/fraud_</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s1">.csv&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-    <span class="p">)</span>
-    <span class="n">preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-        <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;fraud/data/fraud_</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">_preds.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-    <span class="p">)</span>
-    <span class="n">dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">},</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
-    <span class="p">)</span>
-    <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
-        <span class="n">dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="n">dataset_id</span>
-
-<span class="n">ref_data_id</span> <span class="o">=</span> <span class="n">upload_and_register_data</span><span class="p">(</span><span class="s2">&quot;ref&quot;</span><span class="p">)</span>
-</pre></div>
+<span class="n">ref_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;ref_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ref_s3_path</span><span class="p">,</span> <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">},</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+<span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
+    <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">ref_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+<br/></pre></div>
 </div>
 </div>
 <p><strong>Create a Continuous Test</strong></p>
@@ -282,7 +304,7 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
 
-<span class="n">ct</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_ct</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_data_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">ct</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_ct</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 <span class="n">ct</span>
 </pre></div>
 </div>
@@ -292,8 +314,27 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_data_0_id</span> <span class="o">=</span> <span class="n">upload_and_register_data</span><span class="p">(</span><span class="s2">&quot;incremental_0&quot;</span><span class="p">,</span> <span class="n">timestamp_col</span><span class="o">=</span><span class="s2">&quot;timestamp&quot;</span><span class="p">)</span>
-<span class="n">ct_job</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">ct_data_0_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">ct_data_0_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;fraud/data/fraud_incremental_0.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">ct_data_0_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/fraud_incremental_0.csv&quot;</span>
+
+<span class="n">ct_data_0_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;fraud_incremental_0_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">ct_data_0_s3_path</span><span class="p">,</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">},</span>
+    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">ct_data_0_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -304,7 +345,19 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_ref_data_id</span> <span class="o">=</span> <span class="n">upload_and_register_data</span><span class="p">(</span><span class="s2">&quot;eval&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">new_ref_data_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;fraud/data/fraud_eval.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">new_ref_data_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/fraud_eval.csv&quot;</span>
+
+<span class="n">new_ref_data_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;eval_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">new_ref_data_s3_path</span><span class="p">,</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">},</span>
+    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
 
 <span class="c1"># Update configuration based on the new stress test run</span>
 <span class="n">ct</span><span class="o">.</span><span class="n">update_ct</span><span class="p">(</span><span class="n">ref_data_id</span><span class="o">=</span><span class="n">new_ref_data_id</span><span class="p">)</span>
@@ -318,8 +371,27 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_data_1_id</span> <span class="o">=</span> <span class="n">upload_and_register_data</span><span class="p">(</span><span class="s2">&quot;incremental_1&quot;</span><span class="p">,</span> <span class="n">timestamp_col</span><span class="o">=</span><span class="s2">&quot;timestamp&quot;</span><span class="p">)</span>
-<span class="n">ct_job</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">ct_data_1_id</span><span class="p">,</span> <span class="n">override_existing_bins</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">ct_data_1_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;fraud/data/fraud_incremental_1.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">ct_data_1_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/fraud_incremental_1.csv&quot;</span>
+
+<span class="n">ct_data_1_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;fraud_incremental_1_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">ct_data_1_s3_path</span><span class="p">,</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">},</span>
+    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct_job</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">start_continuous_test</span><span class="p">(</span><span class="n">ct_data_1_id</span><span class="p">,</span> <span class="n">override_existing_bins</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 <span class="n">ct_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>

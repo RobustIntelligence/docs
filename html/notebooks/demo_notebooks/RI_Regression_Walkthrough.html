@@ -60,7 +60,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.8.1
+                2.9.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -168,7 +168,7 @@ bunch of other information about the trip.</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE API_KEY</span>
-<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
+<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (e.g., https://rime.example.rbst.io)</span>
 <span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
 <br/></pre></div>
 </div>
@@ -244,33 +244,105 @@ bunch of other information about the trip.</p>
 <br/></pre></div>
 </div>
 </div>
+<section id="Uploading-Artifacts-to-Blob-Storage">
+<h3><strong>Uploading Artifacts to Blob Storage</strong><a class="headerlink" href="#Uploading-Artifacts-to-Blob-Storage" title="Permalink to this heading"></a></h3>
+<p>For SaaS environments using the default S3 storage location, the Python SDK supports direct file uploads using <code class="docutils literal notranslate"><span class="pre">upload_*()</span></code>.</p>
+<p>For other environments and storage technologies, artifacts must be managed through alternate means.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IS_SAAS</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># TOGGLE True/False (Note: SaaS environments use URLs ending in &quot;rbst.io&quot; and have an &quot;Internal Agent&quot;)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">BLOB_STORE_URI</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># PROVIDE BLOB STORE URI (e.g., &quot;s3://acmecorp-rime&quot;)</span>
+    <span class="k">assert</span> <span class="n">BLOB_STORE_URI</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span>
+
+<span class="n">UPLOAD_PATH</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_nyc_tlc&quot;</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">model_s3_dir</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;nyc_tlc/models&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">model_s3_path</span> <span class="o">=</span> <span class="n">model_s3_dir</span> <span class="o">+</span> <span class="s2">&quot;/model.py&quot;</span>
+
+    <span class="n">ref_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;nyc_tlc/data/ref.csv&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">eval_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;nyc_tlc/data/eval.csv&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+
+    <span class="n">ref_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;nyc_tlc/data/ref_preds.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;nyc_tlc/data/eval_preds.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">model_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/models/model.py&quot;</span>
+
+    <span class="n">ref_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/ref.csv&quot;</span>
+    <span class="n">eval_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/eval.csv&quot;</span>
+
+    <span class="n">ref_preds_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/ref_preds.csv&quot;</span>
+    <span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/eval_preds.csv&quot;</span>
+<br/></pre></div>
+</div>
+</div>
+<p>Once the data and model are uploaded to S3, we can register them to RIME. Once they’re registered, we can refer to these resources using their RIME-generated ID’s.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
-<span class="c1"># Note: All registered models and datasets need to have unique names.</span>
 <span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
-<span class="n">upload_path</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_nyc_tlc&quot;</span>
 
-<span class="n">model_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;nyc_tlc/models&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span><span class="p">)</span>
-<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">model_s3_path</span> <span class="o">+</span> <span class="s2">&quot;/model.py&quot;</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
+<span class="c1"># Note: models and datasets need to have unique names.</span>
+<span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">model_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">upload_and_register_data</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="n">s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;nyc_tlc/data/</span><span class="si">{</span><span class="n">dataset</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span><span class="p">)</span>
-    <span class="n">dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dataset</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">s3_path</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;TripDuration&quot;</span><span class="p">,</span>
-                                                                                 <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;PULocationID&quot;</span><span class="p">,</span> <span class="s2">&quot;TipAmount&quot;</span><span class="p">],</span>
-                                                                                 <span class="o">**</span><span class="n">kwargs</span><span class="p">},</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
-    <span class="n">preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;nyc_tlc/data/</span><span class="si">{</span><span class="n">dataset</span><span class="si">}</span><span class="s2">_preds.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span><span class="p">)</span>
-    <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span><span class="n">dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">dataset_id</span>
+<span class="n">ref_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;ref_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">ref_s3_path</span><span class="p">,</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;TripDuration&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;PULocationID&quot;</span><span class="p">,</span> <span class="s2">&quot;TipAmount&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
+    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+<span class="n">eval_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;eval_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">eval_s3_path</span><span class="p">,</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;TripDuration&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;PULocationID&quot;</span><span class="p">,</span> <span class="s2">&quot;TipAmount&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
+    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
 
-<span class="n">ref_id</span> <span class="o">=</span> <span class="n">upload_and_register_data</span><span class="p">(</span><span class="s2">&quot;ref&quot;</span><span class="p">)</span>
-<span class="n">eval_id</span> <span class="o">=</span> <span class="n">upload_and_register_data</span><span class="p">(</span><span class="s2">&quot;eval&quot;</span><span class="p">)</span>
+<span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
+    <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">ref_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+<span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
+    <span class="n">eval_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">eval_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
 <br/></pre></div>
 </div>
 </div>
+</section>
 </section>
 <section id="AI-Stress-Testing">
 <h2>AI Stress Testing<a class="headerlink" href="#AI-Stress-Testing" title="Permalink to this heading"></a></h2>
@@ -282,11 +354,16 @@ bunch of other information about the trip.</p>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stress_test_config</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;NYC TLC&quot;</span><span class="p">,</span>
   <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="n">ref_id</span><span class="p">,</span>
-    <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="n">eval_id</span><span class="p">,</span>
+    <span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="n">ref_dataset_id</span><span class="p">,</span>
+    <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="n">eval_dataset_id</span><span class="p">,</span>
   <span class="p">},</span>
   <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span><span class="p">,</span>
-  <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;TEST_CATEGORY_TYPE_ADVERSARIAL&quot;</span><span class="p">,</span> <span class="s2">&quot;TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE&quot;</span><span class="p">,</span> <span class="s2">&quot;TEST_CATEGORY_TYPE_TRANSFORMATIONS&quot;</span><span class="p">,</span> <span class="s2">&quot;TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS&quot;</span><span class="p">]</span>
+  <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;TEST_CATEGORY_TYPE_ADVERSARIAL&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;TEST_CATEGORY_TYPE_TRANSFORMATIONS&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;TEST_CATEGORY_TYPE_BIAS_AND_FAIRNESS&quot;</span>
+  <span class="p">]</span>
 <span class="p">}</span>
 <span class="n">stress_test_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
     <span class="n">stress_test_config</span><span class="p">,</span>
@@ -319,17 +396,45 @@ bunch of other information about the trip.</p>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
 
-<span class="n">ct_instance</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_ct</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">weeks</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ct_instance</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_ct</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">weeks</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
 <br/></pre></div>
 </div>
 </div>
 <p>Next, we’ll upload some incoming production data. The data we’re uploading here is from 2019 through to 2021, which will look substantially different from what the model saw in its training data from 2018 (the data will be automatically split into pieces based on the timestamps specified and the bin size set for this AI Continuous Testing instance). We’ll use AI Continuous Testing to identify the differences and understand how they’re impacting our model.</p>
+<p><strong>Upload the Latest Batch of Production Data</strong></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prod_dataset_id</span> <span class="o">=</span> <span class="n">upload_and_register_data</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">timestamp_col</span><span class="o">=</span><span class="s2">&quot;PickupDatetime&quot;</span><span class="p">)</span>
-<br/></pre></div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+
+<span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">prod_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;nyc_tlc/data/test.csv&#39;</span><span class="p">),</span>
+        <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">prod_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;nyc_tlc/data/test_preds.csv&#39;</span><span class="p">),</span>
+        <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">prod_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/test.csv&quot;</span>
+    <span class="n">prod_preds_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/test_preds.csv&quot;</span>
+
+<span class="n">prod_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;prod_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">prod_s3_path</span><span class="p">,</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;TripDuration&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;PULocationID&quot;</span><span class="p">,</span> <span class="s2">&quot;TipAmount&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;PickupDatetime&quot;</span>
+    <span class="p">},</span>
+    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+<span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
+    <span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">prod_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+</pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">

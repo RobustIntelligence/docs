@@ -57,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.8.1
+                2.9.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -1260,7 +1260,7 @@ value: str (optional)</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.Client.get_model_security_report">
-<span class="sig-name descname"><span class="pre">get_model_security_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#rime_sdk.Client.get_model_security_report" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_model_security_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#rime_sdk.Client.get_model_security_report" title="Permalink to this definition"></a></dt>
 <dd><p>Gets the supply chain risk report for a Hugging Face model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1876,8 +1876,6 @@ An optional dictionary of metadata to associate with the dataset.</p></li>
 An optional dictionary that contains the CT info.
 The CT info must match the API specification of the <cite>ct_info</cite>
 field in the <cite>RegisterDataset</cite> request.</p></li>
-<li><p><strong>skip_validation</strong> – Optional[bool] = False,
-The param is deprecated, validate is always performed.</p></li>
 <li><p><strong>agent_id</strong> – Optional[str] = None,
 Agent for running validation. If omitted the workspace’s default
 agent will be used.</p></li>
@@ -2113,8 +2111,6 @@ integration for access.</p></li>
 <li><p><strong>model_endpoint_integration_id</strong> – Optional[str] = None,
 Provide the integration ID for models that require an
 integration when running the model.</p></li>
-<li><p><strong>skip_validation</strong> – Optional[bool] = False,
-The param is deprecated, validate is always performed.</p></li>
 <li><p><strong>agent_id</strong> – Optional[str] = None,
 Agent for running validation. If omitted the workspace’s default
 agent will be used.</p></li>
@@ -2242,10 +2238,6 @@ An optional external ID that can be used to identify the model.</p></li>
 <li><p><strong>integration_id</strong> – Optional[str] = None,
 Provide the integration ID for models that require an
 integration for access.</p></li>
-<li><p><strong>skip_validation</strong> – Optional[bool] = False,
-An optional boolean that indicates whether to skip validation.
-Validation ensures that the model is valid for Robust
-Intelligence’s systems.</p></li>
 <li><p><strong>agent_id</strong> – Optional[str] = None,
 Agent for running validation. If omitted the workspace’s default
 agent will be used.</p></li>
@@ -4480,10 +4472,6 @@ integration to use.</p></li>
 An optional list of tags to associate with the predictions.</p></li>
 <li><p><strong>metadata</strong> – Optional[dict] = None,
 An optional dictionary of metadata to associate with the predictions.</p></li>
-<li><p><strong>skip_validation</strong> – Optional[bool] = False,
-An optional boolean that indicates whether to skip validation.
-Validation ensures that the predictions are valid for Robust
-Intelligence’s systems.</p></li>
 <li><p><strong>agent_id</strong> – Optional[str] = None,
 Agent for running validation. If omitted the workspace’s default
 agent will be used.</p></li>
@@ -4830,7 +4818,7 @@ the event occurred.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="rime_sdk.FirewallClient">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rime_sdk.</span></span><span class="sig-name descname"><span class="pre">FirewallClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">60.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rime_sdk.FirewallClient" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rime_sdk.</span></span><span class="sig-name descname"><span class="pre">FirewallClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">60.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rime_sdk.FirewallClient" title="Permalink to this definition"></a></dt>
 <dd><p>An interface to connect to FirewallInstances on a firewall cluster.</p>
 <p>Create a firewall instance by specifying the rule configuration.
 It will take anywhere from a few seconds to a few minutes to spin up, but
@@ -4843,9 +4831,6 @@ They are independent from each other.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>domain</strong> – str
 The base domain/address of the firewall.</p></li>
-<li><p><strong>api_key</strong> – str
-The API key is used to authenticate to the firewall. If an api_key is
-provided, you do not need to provide an auth_token.</p></li>
 <li><p><strong>auth_token</strong> – str
 The auth token is generated in the Firewall UI and is used to authenticate
 to the firewall. If the auth_token is provided, you do not need to provide
@@ -4884,7 +4869,7 @@ This flag specifies whether it is for a system account token or not.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="rime_sdk.FirewallClient.create_firewall_instance">
-<span class="sig-name descname"><span class="pre">create_firewall_instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_until_ready</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_until_ready_verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_until_ready_timeout_sec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_until_ready_poll_rate_sec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.FirewallInstance" title="rime_sdk.generative_firewall.FirewallInstance"><span class="pre">FirewallInstance</span></a></span></span><a class="headerlink" href="#rime_sdk.FirewallClient.create_firewall_instance" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_firewall_instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_until_ready</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_until_ready_verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_until_ready_timeout_sec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">900.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_until_ready_poll_rate_sec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rime_sdk.FirewallInstance" title="rime_sdk.generative_firewall.FirewallInstance"><span class="pre">FirewallInstance</span></a></span></span><a class="headerlink" href="#rime_sdk.FirewallClient.create_firewall_instance" title="Permalink to this definition"></a></dt>
 <dd><p>Create a FirewallInstance with the specified rule configuration.</p>
 <p>This method blocks until the FirewallInstance is ready.</p>
 <dl class="field-list simple">

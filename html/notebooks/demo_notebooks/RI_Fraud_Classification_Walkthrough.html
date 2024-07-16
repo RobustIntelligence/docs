@@ -60,7 +60,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.8.1
+                2.9.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -202,7 +202,7 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE API_KEY</span>
-<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
+<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (e.g., https://rime.example.rbst.io)</span>
 <span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
 <br/></pre></div>
 </div>
@@ -238,8 +238,8 @@
 </div>
 <p><strong>Go back to the UI to see the new Fraud Demo Project.</strong></p>
 </section>
-<section id="Uploading-the-Model-+-Datasets">
-<h2><strong>Uploading the Model + Datasets</strong><a class="headerlink" href="#Uploading-the-Model-+-Datasets" title="Permalink to this heading"></a></h2>
+<section id="Preparing-the-Model-+-Datasets">
+<h2><strong>Preparing the Model + Datasets</strong><a class="headerlink" href="#Preparing-the-Model-+-Datasets" title="Permalink to this heading"></a></h2>
 <p>Let’s first take a look at what the dataset looks like:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -263,34 +263,67 @@
 <li><p>country</p></li>
 </ol>
 <p>We now want to kick off RIME Stress Tests that will help us evaluate the model in further depth beyond basic performance metrics like accuracy, precision, recall. In order to do this, we will upload this pre-trained model, the reference dataset the model was trained on, and the evaluation dataset the model was evaluated on to an S3 bucket that can be accessed by RIME.</p>
+<section id="Uploading-Artifacts-to-Blob-Storage">
+<h3><strong>Uploading Artifacts to Blob Storage</strong><a class="headerlink" href="#Uploading-Artifacts-to-Blob-Storage" title="Permalink to this heading"></a></h3>
+<p>For SaaS environments using the default S3 storage location, the Python SDK supports direct file uploads using <code class="docutils literal notranslate"><span class="pre">upload_*()</span></code>.</p>
+<p>For other environments and storage technologies, artifacts must be managed through alternate means.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">upload_path</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_fraud&quot;</span>
-
-<span class="n">model_s3_dir</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/models&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
-<span class="n">model_s3_path</span> <span class="o">=</span> <span class="n">model_s3_dir</span> <span class="o">+</span> <span class="s2">&quot;/fraud_model.py&quot;</span>
-
-<span class="n">ref_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/data/fraud_ref.csv&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
-<span class="n">eval_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/data/fraud_eval.csv&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
-
-<span class="n">ref_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;fraud/data/fraud_ref_preds.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
-<span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;fraud/data/fraud_eval_preds.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IS_SAAS</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># TOGGLE True/False (Note: SaaS environments use URLs ending in &quot;rbst.io&quot; and have an &quot;Internal Agent&quot;)</span>
 <br/></pre></div>
 </div>
 </div>
-<p>Once the data and model are uploaded to S3, we can register them to RIME. Once they’re registered, we can refer to these resources using their RIME-generated ID’s.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">BLOB_STORE_URI</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># PROVIDE BLOB STORE URI (e.g., &quot;s3://acmecorp-rime&quot;)</span>
+    <span class="k">assert</span> <span class="n">BLOB_STORE_URI</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span>
+
+<span class="n">UPLOAD_PATH</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_fraud&quot;</span>
+<br/></pre></div>
+</div>
+</div>
+<p><strong>If your environment is not SaaS (or if you are using a storage mechanism other than AWS S3), be sure to upload the example artifacts before proceeding!</strong></p>
+<p>If your environment is SaaS, the cell below will automatically upload the example artifacts for you.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">model_s3_dir</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/models&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">model_s3_path</span> <span class="o">=</span> <span class="n">model_s3_dir</span> <span class="o">+</span> <span class="s2">&quot;/fraud_model.py&quot;</span>
+
+    <span class="n">ref_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/data/fraud_ref.csv&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">eval_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/data/fraud_eval.csv&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+
+    <span class="n">ref_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;fraud/data/fraud_ref_preds.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;fraud/data/fraud_eval_preds.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">model_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/models/fraud_model.py&quot;</span>
+
+    <span class="n">ref_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/fraud_ref.csv&quot;</span>
+    <span class="n">eval_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/fraud_eval.csv&quot;</span>
+
+    <span class="n">ref_preds_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/fraud_ref_preds.csv&quot;</span>
+    <span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/fraud_eval_preds.csv&quot;</span>
+<br/></pre></div>
+</div>
+</div>
+<p>Once the data and model are uploaded, we can register them to RIME. Once they’re registered, we can refer to these resources using their RIME-generated ID’s.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -319,6 +352,7 @@
 </div>
 </div>
 </section>
+</section>
 <section id="Running-a-Stress-Test">
 <h2><strong>Running a Stress Test</strong><a class="headerlink" href="#Running-a-Stress-Test" title="Permalink to this heading"></a></h2>
 <p>AI Stress Tests allow you to test your data and model before deployment. They are a comprehensive suite of hundreds of tests that automatically identify implicit assumptions and weaknesses of pre-production models. Each stress test is run on a single model and its associated reference and evaluation datasets.</p>
@@ -335,11 +369,12 @@
     <span class="p">},</span>
     <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span><span class="p">,</span>
     <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;TEST_CATEGORY_TYPE_ADVERSARIAL&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;TEST_CATEGORY_TYPE_TRANSFORMATIONS&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;TEST_CATEGORY_TYPE_ABNORMAL_INPUTS&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;TEST_CATEGORY_TYPE_DATA_CLEANLINESS&quot;</span><span class="p">]</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_ADVERSARIAL&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_SUBSET_PERFORMANCE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_TRANSFORMATIONS&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_ABNORMAL_INPUTS&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_DATA_CLEANLINESS&quot;</span>
+    <span class="p">]</span>
 <span class="p">}</span>
 <span class="n">stress_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
     <span class="n">stress_test_config</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
@@ -407,10 +442,13 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
 
-<span class="n">project</span><span class="o">.</span><span class="n">update_ct_categories</span><span class="p">([</span><span class="s2">&quot;TEST_CATEGORY_TYPE_ABNORMAL_INPUTS&quot;</span><span class="p">,</span>
-                              <span class="s2">&quot;TEST_CATEGORY_TYPE_DRIFT&quot;</span><span class="p">,</span>
-                              <span class="s2">&quot;TEST_CATEGORY_TYPE_EVASION_ATTACK_DETECTION&quot;</span>
-                            <span class="p">])</span>
+<span class="n">project</span><span class="o">.</span><span class="n">update_ct_categories</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_ABNORMAL_INPUTS&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_DRIFT&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TEST_CATEGORY_TYPE_EVASION_ATTACK_DETECTION&quot;</span>
+    <span class="p">]</span>
+<span class="p">)</span>
 
 <span class="n">ct_instance</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">create_ct</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 <br/></pre></div>
@@ -426,19 +464,25 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dt</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
-<span class="n">prod_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/data/fraud_incremental.csv&#39;</span><span class="p">),</span>
-    <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
+
+<span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">prod_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/data/fraud_incremental.csv&#39;</span><span class="p">),</span>
+        <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">prod_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/data/fraud_incremental_preds.csv&#39;</span><span class="p">),</span>
+        <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">prod_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/fraud_incremental.csv&quot;</span>
+    <span class="n">prod_preds_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/fraud_incremental_preds.csv&quot;</span>
+
 <span class="n">prod_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;prod_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
     <span class="n">prod_s3_path</span><span class="p">,</span>
     <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">},</span>
     <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
-<span class="p">)</span>
-<span class="n">prod_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/data/fraud_incremental_preds.csv&#39;</span><span class="p">),</span>
-    <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
 <span class="p">)</span>
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
     <span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">prod_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
@@ -540,14 +584,31 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Note that &#39;fraud/models&#39; directory already contains the &#39;fraud_model.catb&#39; file.</span>
-<span class="n">appendix_model_dir</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/models&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
-<span class="n">appendix_model_path</span> <span class="o">=</span> <span class="n">appendix_model_dir</span> <span class="o">+</span> <span class="s2">&quot;/fraud_model.py&quot;</span>
-<span class="n">appendix_model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span>
+<span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">appendix_model_dir</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;fraud/models&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">appendix_model_path</span> <span class="o">=</span> <span class="n">appendix_model_dir</span> <span class="o">+</span> <span class="s2">&quot;/fraud_model.py&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">appendix_model_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/models/fraud_model.py&quot;</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">appendix_model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;appendix_model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">appendix_model_path</span>
 <span class="p">)</span>
-<span class="n">stress_test_with_model_config</span> <span class="o">=</span> <span class="p">{</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stress_test_with_model_config</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Uploaded Model Example&quot;</span><span class="p">,</span>
     <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="n">ref_dataset_id</span><span class="p">,</span>
@@ -559,167 +620,6 @@
     <span class="n">stress_test_with_model_config</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
 <span class="p">)</span>
 <span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<br/></pre></div>
-</div>
-</div>
-</section>
-<section id="Running-a-Custom-Test">
-<h2><strong>Running a Custom Test</strong><a class="headerlink" href="#Running-a-Custom-Test" title="Permalink to this heading"></a></h2>
-<p>With RIME you can write your own custom tests, to encode any domain-specific validation you want to perform. These tests will run and be uploaded to the platform just like any of the built-in tests. To run a custom test you need to implement a specific interface in Python, upload the file to the platform, and point to it in your configuration. Below we provide a simple example of a custom test that checks if the difference in the length of the reference and evaluation datasets does not exceed
-some threshold.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> fraud/custom_test.py
-<span class="sd">&quot;&quot;&quot;Custom test batch runner.&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
-<span class="kn">from</span> <span class="nn">rime.core.schema.config</span> <span class="kn">import</span> <span class="n">CustomConfig</span>
-<span class="kn">from</span> <span class="nn">rime.protos.ri.api.resultsynthesizer.result_message_pb2</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">TestCaseStatus</span> <span class="k">as</span> <span class="n">Status</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="kn">from</span> <span class="nn">rime.core.stress_tests.schema.table_info</span> <span class="kn">import</span> <span class="n">TableColumn</span>
-<span class="kn">from</span> <span class="nn">rime.core.stress_tests.schema.test_result</span> <span class="kn">import</span> <span class="n">TestBatchResult</span><span class="p">,</span> <span class="n">TestOutput</span>
-<span class="kn">from</span> <span class="nn">rime.core.test</span> <span class="kn">import</span> <span class="n">BaseTest</span><span class="p">,</span> <span class="n">TestExtraInfo</span>
-<span class="kn">from</span> <span class="nn">rime.core.stress_tests.batch_runner</span> <span class="kn">import</span> <span class="n">DataTestBatchRunner</span>
-<span class="kn">from</span> <span class="nn">rime.core.stress_tests.schema.test_result</span> <span class="kn">import</span> <span class="n">TestBatchResult</span><span class="p">,</span> <span class="n">TestOutput</span>
-<span class="kn">from</span> <span class="nn">rime.core.profiler.run_containers</span> <span class="kn">import</span> <span class="n">RunContainer</span>
-<span class="kn">from</span> <span class="nn">rime.protos.ri.lib.common_pb2</span> <span class="kn">import</span> <span class="n">Severity</span>
-
-<span class="c1"># Signature should not be changed.</span>
-<span class="k">class</span> <span class="nc">CustomTest</span><span class="p">(</span><span class="n">BaseTest</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize with a delta between n_rows ref and eval.&quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">delta</span>
-
-    <span class="c1"># Signature should not be changed.</span>
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">run_container</span><span class="p">:</span> <span class="n">RunContainer</span><span class="p">,</span>
-        <span class="n">silent_errors</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">TestOutput</span><span class="p">,</span> <span class="n">TestExtraInfo</span><span class="p">]:</span>
-        <span class="n">ref_data_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">run_container</span><span class="o">.</span><span class="n">ref_data</span><span class="o">.</span><span class="n">df</span><span class="p">)</span>
-        <span class="n">eval_data_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">run_container</span><span class="o">.</span><span class="n">eval_data</span><span class="o">.</span><span class="n">df</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">ref_data_size</span> <span class="o">&gt;</span> <span class="n">eval_data_size</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">:</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="n">Status</span><span class="o">.</span><span class="n">TEST_CASE_STATUS_WARNING</span>
-            <span class="n">severity</span> <span class="o">=</span> <span class="n">Severity</span><span class="o">.</span><span class="n">SEVERITY_ALERT</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="n">Status</span><span class="o">.</span><span class="n">TEST_CASE_STATUS_PASS_UNSPECIFIED</span>
-            <span class="n">severity</span> <span class="o">=</span> <span class="n">Severity</span><span class="o">.</span><span class="n">SEVERITY_PASS</span>
-        <span class="n">test_output</span> <span class="o">=</span> <span class="n">TestOutput</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;Severity&quot;</span><span class="p">:</span> <span class="n">severity</span><span class="p">},</span> <span class="n">severity</span><span class="p">,</span> <span class="p">[],</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="n">test_output</span><span class="p">,</span> <span class="n">TestExtraInfo</span><span class="p">(</span><span class="n">severity</span><span class="p">)</span>
-
-
-<span class="c1"># Signature should not be changed.</span>
-<span class="k">class</span> <span class="nc">CustomBatchRunner</span><span class="p">(</span><span class="n">DataTestBatchRunner</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;TestBatchRunner for the CustomTest.&quot;&quot;&quot;</span>
-
-    <span class="c1"># Signature should not be changed.</span>
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_from_config</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span> <span class="n">run_container</span><span class="p">:</span> <span class="n">RunContainer</span><span class="p">,</span>  <span class="n">config</span><span class="p">:</span> <span class="n">CustomConfig</span><span class="p">,</span> <span class="n">category</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;DataTestBatchRunner&quot;</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">delta</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">delta</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;delta&quot;</span><span class="p">]</span>
-        <span class="n">tests</span> <span class="o">=</span> <span class="p">[</span><span class="n">CustomTest</span><span class="p">(</span><span class="n">delta</span><span class="o">=</span><span class="n">delta</span><span class="p">)]</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">tests</span><span class="p">,</span> <span class="n">category</span><span class="p">)</span>
-
-    <span class="c1"># Signature should not be changed.</span>
-    <span class="k">def</span> <span class="nf">_outputs_to_batch_res</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">run_container</span><span class="p">:</span> <span class="n">RunContainer</span><span class="p">,</span>
-        <span class="n">outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TestOutput</span><span class="p">],</span>
-        <span class="n">extra_infos</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span>
-        <span class="n">duration</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TestBatchResult</span><span class="p">:</span>
-        <span class="n">long_description_tabs</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Description&quot;</span><span class="p">,</span> <span class="s2">&quot;contents&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">long_description</span><span class="p">},</span>
-            <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Why it Matters&quot;</span><span class="p">,</span> <span class="s2">&quot;contents&quot;</span><span class="p">:</span> <span class="s2">&quot;Explain why this test matters.&quot;</span><span class="p">},</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Configuration&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;contents&quot;</span><span class="p">:</span> <span class="s2">&quot;Explain how this test is configured.&quot;</span>
-            <span class="p">},</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Example&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;contents&quot;</span><span class="p">:</span> <span class="s2">&quot;Include an example of how this test works.&quot;</span>
-            <span class="p">},</span>
-        <span class="p">]</span>
-        <span class="k">return</span> <span class="n">TestBatchResult</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
-            <span class="n">long_description_tabs</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">,</span>
-            <span class="n">outputs</span><span class="p">,</span>
-            <span class="p">[],</span>
-            <span class="n">duration</span><span class="p">,</span>
-            <span class="n">extra_infos</span><span class="p">,</span>
-            <span class="p">[</span><span class="n">TableColumn</span><span class="p">(</span><span class="s2">&quot;Severity&quot;</span><span class="p">)],</span>
-            <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">severity</span><span class="p">,</span>
-        <span class="p">)</span>
-
-
-    <span class="c1"># Signature should not be changed.</span>
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;This is custom test&quot;</span>
-
-    <span class="c1"># Signature should not be changed.</span>
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">long_description</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;This is a long description of a custom test.&quot;</span>
-
-    <span class="c1"># Signature should not be changed.</span>
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;Example Custom Test&quot;</span>
-<br/></pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">custom_test_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="s2">&quot;fraud/custom_test.py&quot;</span><span class="p">,</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span><span class="p">)</span>
-<br/></pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stress_test_with_model_config</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;run_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Custom Test Example&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;data_info&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;ref_dataset_id&quot;</span><span class="p">:</span> <span class="n">ref_dataset_id</span><span class="p">,</span>
-        <span class="s2">&quot;eval_dataset_id&quot;</span><span class="p">:</span> <span class="n">eval_dataset_id</span><span class="p">,</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;test_suite_config&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;custom_tests&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;custom_test_category&quot;</span><span class="p">:</span> <span class="s2">&quot;Data Cleanliness&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;test_path&quot;</span><span class="p">:</span> <span class="n">custom_test_path</span>
-            <span class="p">}</span>
-        <span class="p">],</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span>
-<span class="p">}</span>
-<span class="n">stress_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">start_stress_test</span><span class="p">(</span>
-    <span class="n">stress_test_with_model_config</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
-<span class="p">)</span>
-<span class="n">stress_job</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wait_until_finish</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<br/></pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stress_job</span><span class="o">.</span><span class="n">get_test_run</span><span class="p">()</span>
 <br/></pre></div>
 </div>
 </div>

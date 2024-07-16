@@ -60,7 +60,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.8.1
+                2.9.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -203,7 +203,7 @@ used downstream for various purposes, such as loan approval or funding allocatio
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">API_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE API_KEY</span>
-<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (eg: rime.stable.rbst.io)</span>
+<span class="n">CLUSTER_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE DEDICATED DOMAIN OF RIME SERVICE (e.g., https://rime.example.rbst.io)</span>
 <span class="n">AGENT_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># PASTE AGENT_ID IF USING AN AGENT THAT IS NOT THE DEFAULT</span>
 <br/></pre></div>
 </div>
@@ -262,31 +262,64 @@ used downstream for various purposes, such as loan approval or funding allocatio
 <p>For this demo, we are going to use a pretrained CatBoostClassifier Model.</p>
 <p>The model predicts whether an individual will default on their loan.</p>
 <p>We now want to kick off RIME Stress Tests, in a compliance setting, that will help us determine if the model is biased against protected attributes. In order to do this, we will upload this pre-trained model, the reference dataset the model was trained on, and the evaluation dataset the model was evaluated on to an S3 bucket that can be accessed by RIME.</p>
+<section id="Uploading-Artifacts-to-Blob-Storage">
+<h3><strong>Uploading Artifacts to Blob Storage</strong><a class="headerlink" href="#Uploading-Artifacts-to-Blob-Storage" title="Permalink to this heading"></a></h3>
+<p>For SaaS environments using the default S3 storage location, the Python SDK supports direct file uploads using <code class="docutils literal notranslate"><span class="pre">upload_*()</span></code>.</p>
+<p>For other environments and storage technologies, artifacts must be managed through alternate means.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">upload_path</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_lending&quot;</span>
-
-<span class="n">model_s3_dir</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;lending/models&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
-<span class="n">model_s3_path</span> <span class="o">=</span> <span class="n">model_s3_dir</span> <span class="o">+</span> <span class="s2">&quot;/model.py&quot;</span>
-
-<span class="n">ref_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;lending/data/ref.csv&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
-<span class="n">eval_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;lending/data/eval.csv&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
-
-<span class="n">ref_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;lending/data/ref_preds.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
-<span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;lending/data/eval_preds.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IS_SAAS</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># TOGGLE True/False (Note: SaaS environments use URLs ending in &quot;rbst.io&quot; and have an &quot;Internal Agent&quot;)</span>
 <br/></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">BLOB_STORE_URI</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># PROVIDE BLOB STORE URI (e.g., &quot;s3://acmecorp-rime&quot;)</span>
+    <span class="k">assert</span> <span class="n">BLOB_STORE_URI</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span>
+
+<span class="n">UPLOAD_PATH</span> <span class="o">=</span> <span class="s2">&quot;ri_public_examples_lending&quot;</span>
+<br/></pre></div>
+</div>
+</div>
+<p><strong>If your environment is not SaaS (or if you are using a storage mechanism other than AWS S3), be sure to upload the example artifacts before proceeding!</strong></p>
+<p>If your environment is SaaS, the cell below will automatically upload the example artifacts for you.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">model_s3_dir</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;lending/models&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">model_s3_path</span> <span class="o">=</span> <span class="n">model_s3_dir</span> <span class="o">+</span> <span class="s2">&quot;/model.py&quot;</span>
+
+    <span class="n">ref_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;lending/data/ref.csv&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">eval_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;lending/data/eval.csv&#39;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+
+    <span class="n">ref_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;lending/data/ref_preds.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;lending/data/eval_preds.csv&quot;</span><span class="p">),</span> <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">model_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/models/model.py&quot;</span>
+
+    <span class="n">ref_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/ref.csv&quot;</span>
+    <span class="n">eval_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/eval.csv&quot;</span>
+
+    <span class="n">ref_preds_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/ref_preds.csv&quot;</span>
+    <span class="n">eval_preds_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/eval_preds.csv&quot;</span>
+</pre></div>
 </div>
 </div>
 <p>Once the data and model are uploaded to S3, we can register them to RIME. In this bias and fairness setting, we require some additional information when registering datasets. Within the <code class="docutils literal notranslate"><span class="pre">data_params</span></code> parameter in the registering function, we include the protected features present in the data such that we can run our bias and fairness tests on those features. Once the datasets and models are registered, we can refer to these resources using their RIME-generated ID’s.</p>
@@ -301,24 +334,35 @@ used downstream for various purposes, such as loan approval or funding allocatio
 <span class="c1"># Note: models and datasets need to have unique names.</span>
 <span class="n">model_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_model_from_path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;model_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">model_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
 
-<span class="n">ref_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ref_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                                                    <span class="n">ref_s3_path</span><span class="p">,</span>
-                                                    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;loan_status&quot;</span><span class="p">,</span>
-                                                                 <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;addr_state&quot;</span><span class="p">]</span>
-                                                                <span class="p">},</span>
-                                                   <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
-<span class="n">eval_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;eval_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                                                     <span class="n">eval_s3_path</span><span class="p">,</span>
-                                                     <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;loan_status&quot;</span><span class="p">,</span>
-                                                                  <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;addr_state&quot;</span><span class="p">]</span>
-                                                                 <span class="p">},</span>
-                                                    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
-<span class="n">ref_pred_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span><span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">ref_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
+<span class="n">ref_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;ref_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">ref_s3_path</span><span class="p">,</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;loan_status&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;addr_state&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
+    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+<span class="n">eval_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;eval_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">eval_s3_path</span><span class="p">,</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;loan_status&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;addr_state&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
+    <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
 
-<span class="n">eval_pred_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span><span class="n">eval_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">eval_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span><span class="p">)</span>
+<span class="n">ref_pred_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
+    <span class="n">ref_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">ref_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
+<span class="n">eval_pred_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
+    <span class="n">eval_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">eval_preds_s3_path</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">AGENT_ID</span>
+<span class="p">)</span>
 <br/></pre></div>
 </div>
 </div>
+</section>
 </section>
 <section id="Running-a-Stress-Test-with-Bias-and-Fairness">
 <h2><strong>Running a Stress Test with Bias and Fairness</strong><a class="headerlink" href="#Running-a-Stress-Test-with-Bias-and-Fairness" title="Permalink to this heading"></a></h2>
@@ -439,20 +483,27 @@ split based on the feature values. We then test whether the Positive Prediction 
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prod_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;lending/data/incremental.csv&#39;</span><span class="p">),</span>
-    <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
-<span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">IS_SAAS</span><span class="p">:</span>
+    <span class="n">prod_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;lending/data/incremental.csv&#39;</span><span class="p">),</span>
+        <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+    <span class="n">prod_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;lending/data/incremental_preds.csv&#39;</span><span class="p">),</span>
+        <span class="n">upload_path</span><span class="o">=</span><span class="n">UPLOAD_PATH</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">prod_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/incremental.csv&quot;</span>
+    <span class="n">prod_preds_s3_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BLOB_STORE_URI</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">UPLOAD_PATH</span><span class="si">}</span><span class="s2">/data/incremental_preds.csv&quot;</span>
+
 <span class="n">prod_dataset_id</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">register_dataset_from_file</span><span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;prod_dataset_</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
     <span class="n">prod_s3_path</span><span class="p">,</span>
-    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;loan_status&quot;</span><span class="p">,</span>
-                 <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;addr_state&quot;</span><span class="p">],</span>
-                 <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">},</span>
-<span class="p">)</span>
-<span class="n">prod_preds_s3_path</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;lending/data/incremental_preds.csv&#39;</span><span class="p">),</span>
-    <span class="n">upload_path</span><span class="o">=</span><span class="n">upload_path</span>
+    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;label_col&quot;</span><span class="p">:</span> <span class="s2">&quot;loan_status&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;protected_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;addr_state&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;timestamp_col&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span>
+    <span class="p">}</span>
 <span class="p">)</span>
 <span class="n">project</span><span class="o">.</span><span class="n">register_predictions_from_file</span><span class="p">(</span>
     <span class="n">prod_dataset_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">prod_preds_s3_path</span>
