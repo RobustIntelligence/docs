@@ -7,6 +7,30 @@ Unless noted otherwise, you must [upgrade](../deployment/upgrade.rst)
 all Robust Intelligence components to take advantage of the changes
 listed here.
 
+## 2.10
+
+### Unified versioning across AI Firewall and validation
+
+Starting in the 2.10 release, the AI Firewall and Robust Intelligence
+validation (RIME) products share a common version number.
+
+### Option to choose which features which will be analyzed
+
+The [Data Profiling configuration](../testing_and_monitoring/configuring_test_runs/configuring_data_profiling.md)
+within the Stress Testing configuration now has a new optional
+parameter `features_to_profile`, which if specified, allows the user
+to select the specific features which will be analyzed by Robust
+Intelligence, rather than relying on our default [Smart Feature
+Sampling](../testing_and_monitoring/configuring_test_runs/feature_sampling.md)
+logic.
+
+### New DeleteFirewallInstance function to remove an AI Firewall instance
+
+The new `DeleteFirewallInstance` API endpoint marks the specified AI
+Firewall instance with `REQUESTED_DELETE` status. The AI Firewall
+Agent waits for the AI Firewall instance to become inactive and then
+deletes it.
+
 ## 2.9, FW 0.6
 
 ### AI Firewall now requires a control plane
@@ -30,6 +54,12 @@ Firewall auth token as explained in "Get your Firewall Auth Token" in
 the AI Firewall User Guide.
 
 ## 2.8, FW 0.5
+
+### End of Life for Terraform modules
+
+Official support for the deployment-related Terraform modules has concluded.
+Your Solutions Architect will guide you through migrating existing resources
+from these modules.
 
 ### Internal Agent replaced during upgrade
 
@@ -384,6 +414,7 @@ stress_test_config = {
 
 ## Related Topics  
 [API Changelog](../reference/api_changelog.md)  
+[Configuring Data Profiling](../testing_and_monitoring/configuring_test_runs/configuring_data_profiling.md)  
 [Configuring Runtime Information](../testing_and_monitoring/configuring_test_runs/configuring_runtime.md)  
 [Model Monitors](../testing_and_monitoring/monitoring_models/monitors/monitors.md)  
 [Overview](../deployment/index.rst)  

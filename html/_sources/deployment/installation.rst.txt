@@ -149,13 +149,6 @@ While log archival has been designed for AWS, it can also be
 configured to work with Azure or GCP storage. For help setting up with
 Azure or GCP, contact the Robust Intelligence solutions team.
 
-To set up log archival, see the section below that corresponds to your
-deployment approach:
-
-- :ref:`log-archival-helm`
-- :ref:`log-archival-terraform`
-
-
 .. _log-archival-helm:
 
 Helm Installation
@@ -249,34 +242,6 @@ If you manage your Robust Intelligence agent installation via Helm, follow the i
 
 6. Run ``helm install`` or ``helm upgrade``. You may also need to
    manually restart the operator to refresh its AWS credentials.
-
-Your log archival setup is complete.
-See :doc:`../testing_and_monitoring/querying_results/fetching_test_run_logs`
-to learn how to retrieve logs.
-
-   .. _log-archival-terraform:
-
-Terraform Installation
-```````````````````````````````
-
-If you manage your Robust Intelligence agent installation via Terraform, follow the instructions below.
-
-1. Set the following variables on the ``rime_agent`` module:
-
-   .. code-block::
-
-      module "rime_agent_release" {
-        ...
-        log_archival_config = {
-          enable = true
-          bucket_name = <S3_BUCKET_NAME>
-          endpoint = "s3.amazonaws.com"
-          type = "s3"
-        }
-      }
-
-2. Run ``terraform apply`` to create the configuration described in
-   the Helm section above. This will also install or upgrade the release.
 
 Your log archival setup is complete.
 See :doc:`../testing_and_monitoring/querying_results/fetching_test_run_logs`

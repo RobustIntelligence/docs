@@ -1,7 +1,5 @@
 # Using Managed Images for Testing
 
-> **Managed images are not currently supported in a Cloud deployment. Please reach out to Robust Intelligence for support if this functionality is required for your deployment.**
-
 The Managed Image Registry enables containerization of the
 dependencies for a given model. Docker images that contain the
 dependencies for models can be swapped to match the requirements of
@@ -26,57 +24,15 @@ Notes on using Managed Images:
 - The Managed Image Registry operates on
   [AWS ECR](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html).
 
-- The Managed Images feature is enabled by default in our Terraform
-  module.
+## Enabling Managed Images in your Environment
 
-## Enabling the Managed Images feature
+For SaaS environments, reach out to your account representative to enable the feature for your environment.
 
-Configuration for this feature uses the `image_registry_config` of the `rime` Terraform module:
+For Self-Hosted environments, your Solutions Architect will guide you through configuring the feature in your deployment.
 
-```
-module "rime" {
-  ...
-  image_registry_config = {
-    enable                       = true
-    allow_external_custom_images = true
-    repository_prefix            = ""
-  }
-  ...
-}
-```
+**Managed Images are not currently supported in Hybrid deployments.**
 
-The value of the `repository_prefix` variable specifies a string that identifies repositories that are managed by the Managed Image Registry. Repositories without the string specified by `repository_prefix` are not acted upon by the Managed Image Registry.
-
-
-## ECR permissions for the Managed Image Registry
-
-Permissions for Managed Images can be applied automatically by a user with the Organziation administrator [role](../security_and_compliance/user_account_roles.md) when applying the Robust Intelligence Terraform module.
-
-```
-ecr:CreateRepository
-ecr:DeleteRepository
-ecr:DescribeImages
-ecr:PutLifecyclePolicy
-ecr:ListImages
-```
-
-These permissions enable the registry server to create and modify repositories with names containing the string specified in `repository_prefix`. Additionally, the registry server requires `ecr:GetAuthorizationToken` for all resources in order to authorize itself.
-
-Jobs executed by the registry server use the following permissions to build new images:
-
-```
-ecr:BatchGetImage
-ecr:BatchCheckLayerAvailability
-ecr:CompleteLayerUpload
-ecr:GetDownloadUrlForLayer
-ecr:InitiateLayerUpload
-ecr:PutImage
-ecr:UploadLayerPart
-```
-
-These permissions enable these jobs to pull and push new images to the repositories created with prefix `repository_prefix`. These jobs also require the `ecr:GetAuthorizationToken` permission for all resources in order to authorize themeselves.
-
-## Managed Image management
+## Using Managed Images
 
 The [Robust Intelligence SDK](../../reference/python-sdk.rst) provides calls for creating, altering, and deleting Managed Images.
 

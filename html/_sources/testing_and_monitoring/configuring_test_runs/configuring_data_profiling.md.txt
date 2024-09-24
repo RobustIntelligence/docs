@@ -35,6 +35,7 @@ JSON object, which is part of the `data_profiling` configuration in the
             "unseen_values_allowed_criteria": 0.25,
         },
         "feature_relationship_info": {
+            "features_to_profile": ["foo", "bar", "baz"],
             "num_feats_to_profile": 30,
             "compute_feature_relationships": True,
             "compute_numeric_feature_relationships": False,
@@ -81,6 +82,10 @@ The properties of the `data_profiling` configuration in the
     - `unseen_values_allowed_criteria`:
 
 - `feature_relationship_info`:
+    - `features_to_profile`: List[str] or `null`, *default* = `null`
+
+        List of features to be analyzed by the Robust Intelligence platform. If specified, only the provided features (with a maximum of 750 features) are analyzed, and `num_feats_to_profile` is ignored.
+
     - `num_feats_to_profile`: string or `null`, *default* = `"30"`
 
         Number of features to profile for [Smart Feature Sampling](feature_sampling.md).

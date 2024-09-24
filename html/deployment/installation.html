@@ -57,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.9.2
+                2.10.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -111,7 +111,6 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#log-archival-setup-recommended">Log Archival Setup (recommended)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#log-archival-helm">Helm Installation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#terraform-installation">Terraform Installation</a></li>
 </ul>
 </li>
 </ul>
@@ -277,12 +276,6 @@ helm upgrade -i rime-extras robustintelligence/rime-extras \
 <p>While log archival has been designed for AWS, it can also be
 configured to work with Azure or GCP storage. For help setting up with
 Azure or GCP, contact the Robust Intelligence solutions team.</p>
-<p>To set up log archival, see the section below that corresponds to your
-deployment approach:</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="#log-archival-helm"><span class="std std-ref">Helm Installation</span></a></p></li>
-<li><p><a class="reference internal" href="#log-archival-terraform"><span class="std std-ref">Terraform Installation</span></a></p></li>
-</ul>
 <section id="log-archival-helm">
 <span id="id2"></span><h3>Helm Installation<a class="headerlink" href="#log-archival-helm" title="Permalink to this heading"></a></h3>
 <p>If you manage your Robust Intelligence agent installation via Helm, follow the instructions below.</p>
@@ -388,32 +381,6 @@ the following values:</p>
 </li>
 <li><p>Run <code class="docutils literal notranslate"><span class="pre">helm</span> <span class="pre">install</span></code> or <code class="docutils literal notranslate"><span class="pre">helm</span> <span class="pre">upgrade</span></code>. You may also need to
 manually restart the operator to refresh its AWS credentials.</p></li>
-</ol>
-<p>Your log archival setup is complete.
-See <a class="reference internal" href="../testing_and_monitoring/querying_results/fetching_test_run_logs.html"><span class="doc">Fetching Test Run Logs</span></a>
-to learn how to retrieve logs.</p>
-<blockquote>
-<div></div></blockquote>
-</section>
-<section id="terraform-installation">
-<span id="log-archival-terraform"></span><h3>Terraform Installation<a class="headerlink" href="#terraform-installation" title="Permalink to this heading"></a></h3>
-<p>If you manage your Robust Intelligence agent installation via Terraform, follow the instructions below.</p>
-<ol class="arabic">
-<li><p>Set the following variables on the <code class="docutils literal notranslate"><span class="pre">rime_agent</span></code> module:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="s2">&quot;rime_agent_release&quot;</span> <span class="p">{</span>
-  <span class="o">...</span>
-  <span class="n">log_archival_config</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">enable</span> <span class="o">=</span> <span class="n">true</span>
-    <span class="n">bucket_name</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">S3_BUCKET_NAME</span><span class="o">&gt;</span>
-    <span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;s3.amazonaws.com&quot;</span>
-    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;s3&quot;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</li>
-<li><p>Run <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">apply</span></code> to create the configuration described in
-the Helm section above. This will also install or upgrade the release.</p></li>
 </ol>
 <p>Your log archival setup is complete.
 See <a class="reference internal" href="../testing_and_monitoring/querying_results/fetching_test_run_logs.html"><span class="doc">Fetching Test Run Logs</span></a>

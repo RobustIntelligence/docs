@@ -57,7 +57,7 @@
             Robust Intelligence
           </a>
               <div class="version">
-                2.9.2
+                2.10.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -89,9 +89,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../organization_administration.html">Organization Administration</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="custom_images.html">Run Robust Intelligence on Custom Docker Images</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Using Managed Images for Testing</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#enabling-the-managed-images-feature">Enabling the Managed Images feature</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ecr-permissions-for-the-managed-image-registry">ECR permissions for the Managed Image Registry</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#managed-image-management">Managed Image management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#enabling-managed-images-in-your-environment">Enabling Managed Images in your Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-managed-images">Using Managed Images</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#creating-a-managed-image">Creating a Managed Image</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#deleting-a-managed-image">Deleting a Managed Image</a></li>
 </ul>
@@ -151,9 +150,6 @@
              
   <section id="using-managed-images-for-testing">
 <h1>Using Managed Images for Testing<a class="headerlink" href="#using-managed-images-for-testing" title="Permalink to this heading"></a></h1>
-<blockquote>
-<div><p><strong>Managed images are not currently supported in a Cloud deployment. Please reach out to Robust Intelligence for support if this functionality is required for your deployment.</strong></p>
-</div></blockquote>
 <p>The Managed Image Registry enables containerization of the
 dependencies for a given model. Docker images that contain the
 dependencies for models can be swapped to match the requirements of
@@ -174,50 +170,15 @@ address a given set of use cases. Users can build a managed image
 from a base image.</p></li>
 <li><p>The Managed Image Registry operates on
 <a class="reference external" href="https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html">AWS ECR</a>.</p></li>
-<li><p>The Managed Images feature is enabled by default in our Terraform
-module.</p></li>
 </ul>
-<section id="enabling-the-managed-images-feature">
-<h2>Enabling the Managed Images feature<a class="headerlink" href="#enabling-the-managed-images-feature" title="Permalink to this heading"></a></h2>
-<p>Configuration for this feature uses the <code class="docutils literal notranslate"><span class="pre">image_registry_config</span></code> of the <code class="docutils literal notranslate"><span class="pre">rime</span></code> Terraform module:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="s2">&quot;rime&quot;</span> <span class="p">{</span>
-  <span class="o">...</span>
-  <span class="n">image_registry_config</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">enable</span>                       <span class="o">=</span> <span class="n">true</span>
-    <span class="n">allow_external_custom_images</span> <span class="o">=</span> <span class="n">true</span>
-    <span class="n">repository_prefix</span>            <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-  <span class="p">}</span>
-  <span class="o">...</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>The value of the <code class="docutils literal notranslate"><span class="pre">repository_prefix</span></code> variable specifies a string that identifies repositories that are managed by the Managed Image Registry. Repositories without the string specified by <code class="docutils literal notranslate"><span class="pre">repository_prefix</span></code> are not acted upon by the Managed Image Registry.</p>
+<section id="enabling-managed-images-in-your-environment">
+<h2>Enabling Managed Images in your Environment<a class="headerlink" href="#enabling-managed-images-in-your-environment" title="Permalink to this heading"></a></h2>
+<p>For SaaS environments, reach out to your account representative to enable the feature for your environment.</p>
+<p>For Self-Hosted environments, your Solutions Architect will guide you through configuring the feature in your deployment.</p>
+<p><strong>Managed Images are not currently supported in Hybrid deployments.</strong></p>
 </section>
-<section id="ecr-permissions-for-the-managed-image-registry">
-<h2>ECR permissions for the Managed Image Registry<a class="headerlink" href="#ecr-permissions-for-the-managed-image-registry" title="Permalink to this heading"></a></h2>
-<p>Permissions for Managed Images can be applied automatically by a user with the Organziation administrator <a class="reference internal" href="../security_and_compliance/user_account_roles.html"><span class="std std-doc">role</span></a> when applying the Robust Intelligence Terraform module.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ecr</span><span class="p">:</span><span class="n">CreateRepository</span>
-<span class="n">ecr</span><span class="p">:</span><span class="n">DeleteRepository</span>
-<span class="n">ecr</span><span class="p">:</span><span class="n">DescribeImages</span>
-<span class="n">ecr</span><span class="p">:</span><span class="n">PutLifecyclePolicy</span>
-<span class="n">ecr</span><span class="p">:</span><span class="n">ListImages</span>
-</pre></div>
-</div>
-<p>These permissions enable the registry server to create and modify repositories with names containing the string specified in <code class="docutils literal notranslate"><span class="pre">repository_prefix</span></code>. Additionally, the registry server requires <code class="docutils literal notranslate"><span class="pre">ecr:GetAuthorizationToken</span></code> for all resources in order to authorize itself.</p>
-<p>Jobs executed by the registry server use the following permissions to build new images:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ecr</span><span class="p">:</span><span class="n">BatchGetImage</span>
-<span class="n">ecr</span><span class="p">:</span><span class="n">BatchCheckLayerAvailability</span>
-<span class="n">ecr</span><span class="p">:</span><span class="n">CompleteLayerUpload</span>
-<span class="n">ecr</span><span class="p">:</span><span class="n">GetDownloadUrlForLayer</span>
-<span class="n">ecr</span><span class="p">:</span><span class="n">InitiateLayerUpload</span>
-<span class="n">ecr</span><span class="p">:</span><span class="n">PutImage</span>
-<span class="n">ecr</span><span class="p">:</span><span class="n">UploadLayerPart</span>
-</pre></div>
-</div>
-<p>These permissions enable these jobs to pull and push new images to the repositories created with prefix <code class="docutils literal notranslate"><span class="pre">repository_prefix</span></code>. These jobs also require the <code class="docutils literal notranslate"><span class="pre">ecr:GetAuthorizationToken</span></code> permission for all resources in order to authorize themeselves.</p>
-</section>
-<section id="managed-image-management">
-<h2>Managed Image management<a class="headerlink" href="#managed-image-management" title="Permalink to this heading"></a></h2>
+<section id="using-managed-images">
+<h2>Using Managed Images<a class="headerlink" href="#using-managed-images" title="Permalink to this heading"></a></h2>
 <p>The <a class="reference internal" href="../../reference/python-sdk.html"><span class="std std-doc">Robust Intelligence SDK</span></a> provides calls for creating, altering, and deleting Managed Images.</p>
 <section id="creating-a-managed-image">
 <h3>Creating a Managed Image<a class="headerlink" href="#creating-a-managed-image" title="Permalink to this heading"></a></h3>
